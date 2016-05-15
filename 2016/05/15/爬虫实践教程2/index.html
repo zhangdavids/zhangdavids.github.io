@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>爬虫实践教程2 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="这里先介绍一下，我们使用工具selenium和Phantomjs来配合抓取。安装的话，install -U selenium```  12345678910111213141516171819202122232425262728293031323334353637383940而Phantomjs则通过brew来安装，不细说。  ```brew install phantomjs```  选择原因：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="爬虫实践教程2">
+<meta property="og:url" content="http://yoursite.com/2016/05/15/爬虫实践教程2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="这里先介绍一下，我们使用工具selenium和Phantomjs来配合抓取。安装的话，install -U selenium```  12345678910111213141516171819202122232425262728293031323334353637383940而Phantomjs则通过brew来安装，不细说。  ```brew install phantomjs```  选择原因：">
+<meta property="og:updated_time" content="2016-05-15T02:36:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="爬虫实践教程2">
+<meta name="twitter:description" content="这里先介绍一下，我们使用工具selenium和Phantomjs来配合抓取。安装的话，install -U selenium```  12345678910111213141516171819202122232425262728293031323334353637383940而Phantomjs则通过brew来安装，不细说。  ```brew install phantomjs```  选择原因：">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-爬虫实践教程2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/15/爬虫实践教程2/" class="article-date">
+  <time datetime="2016-05-15T01:55:40.000Z" itemprop="datePublished">2016-05-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      爬虫实践教程2
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这里先介绍一下，我们使用工具selenium和Phantomjs来配合抓取。<br>安装的话，<br><figure class="highlight plain"><figcaption><span>install -U selenium```  </span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">而Phantomjs则通过brew来安装，不细说。  </span><br><span class="line">```brew install phantomjs```  </span><br><span class="line">选择原因：  </span><br><span class="line">Phantomjs是基于webkit的没有界面的浏览器，可以像浏览器一样解析网页，个人感觉的效果比firefox和chrome稍微快些。  </span><br><span class="line">selenium是web的自动测试工具，可以模拟人的操作。几乎支持市面上所有的主流浏览器。  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">来看看代码  </span><br><span class="line"></span><br><span class="line">```python</span><br><span class="line">#coding:utf-8</span><br><span class="line">import unittest</span><br><span class="line">from selenium import webdriver</span><br><span class="line">from bs4 import BeautifulSoup</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class seleniumTest(unittest.TestCase):</span><br><span class="line">    def setUp(self):</span><br><span class="line">        self.driver = webdriver.PhantomJS()</span><br><span class="line"></span><br><span class="line">    def testEle(self):</span><br><span class="line">        driver = self.driver</span><br><span class="line">        driver.get(&apos;http://www.douyu.com/directory/all&apos;)</span><br><span class="line">        soup = BeautifulSoup(driver.page_source, &apos;xml&apos;)</span><br><span class="line">        while True:</span><br><span class="line">            titles = soup.find_all(&apos;h3&apos;, &#123;&apos;class&apos;: &apos;ellipsis&apos;&#125;)</span><br><span class="line">            nums = soup.find_all(&apos;span&apos;, &#123;&apos;class&apos;: &apos;dy-num fr&apos;&#125;)</span><br><span class="line">            for title, num in zip(titles, nums):</span><br><span class="line">                print title.get_text(), num.get_text()</span><br><span class="line">            if driver.page_source.find(&apos;shark-pager-disable-next&apos;) != -1:</span><br><span class="line">                break</span><br><span class="line">            elem = driver.find_element_by_class_name(&apos;shark-pager-next&apos;)</span><br><span class="line">            elem.click()</span><br><span class="line">            soup = BeautifulSoup(driver.page_source, &apos;xml&apos;)</span><br><span class="line"></span><br><span class="line">    def tearDown(self):</span><br><span class="line">        print &apos;down&apos;</span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">    unittest.main()</span><br></pre></td></tr></table></figure></p>
+<p>这里一些概念说明：<br>1.unittest  单元测试，简单的测试用例。以setup开头，中间测试的方法以test开头，测试完成之后会有一个teardown。<br>2.斗鱼tv是看直播时较常去的，直接用浏览器打开 <a href="http://www.douyu.com/directory/all" target="_blank" rel="external">斗鱼</a><br>网页源码中可以直接看到房间的信息，返回的不是json格式而是html，直接使用phantomjs模拟浏览器的访问过程，通过driver.get方法获取浏览器加载完成后的代码，无论是否是异步，取到的source都是和在浏览器中看到的完全一样！  </p>
+<p>这里lxml方式有数据丢失，原因未知。。后来尝试了xml无误，暂时不知原因。。   </p>
+<p>还有对比之前的瓜子和果壳，我们只从中抓取了部分页面。这里抓取全部我们需要加上条件判断，最后一页时斗鱼下一页的标签会变灰，这个时候我们就加上这个跳出循环。  </p>
+<pre><code>if driver.page_source.find(&apos;shark-pager-disable-next&apos;) != -1: 
+    break  
+</code></pre><p>还有这里  </p>
+<pre><code>elem = driver.find_element_by_class_name(&apos;shark-pager-next&apos;) 
+elem.click() 
+soup = BeautifulSoup(driver.page_source, &apos;xml&apos;)
+</code></pre><p>第一行代码是webdriver里面带有的定位标签的方法，直接使用class来定位，取到这个控件，<br>然后执行element的click（）方法模拟鼠标的点击，<br>页面会自动跳到下一页，接着解析网页的源码。  </p>
+<p><strong>tips</strong><br>这里加上一点selenium的小操作<br>编码学习的一个小突破感觉就是不断滴回顾学习吧，有些看完文档之后，觉得是这样没错，可是不久就好像啥也不剩了，在基础阶段模范性学习当中，要不断深化下已经学到的东西，适当做些归纳总结会很好。  </p>
+<p>填入表单数据  </p>
+<pre><code>#coding:utf-8
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+
+driver = webdriver.Firefox()
+driver.get(&apos;https://www.baidu.com/&apos;)
+elem = driver.find_element_by_id(&apos;kw&apos;)
+elem.send_keys(u&apos;爬虫&apos;)
+elem.send_keys(Keys.RETURN)
+print(driver.page_source)
+</code></pre><p>滚动页面至最下方  </p>
+<pre><code>#coding:utf-8
+from selenium import webdriver
+import time
+
+driver = webdriver.Firefox()
+driver.get(&apos;http://www.jianshu.com/collections&apos;)
+time.sleep(1)
+for i in range(10):
+    dirver.execute_script(&apos;window.scrollTo(0,document.body.scrollHeight)&apos;)
+    time.sleep(1)
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/05/15/爬虫实践教程2/" data-id="cio7z08360004452zrigpb14i" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/05/15/爬虫实践教程1/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">爬虫实践教程1</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/05/15/爬虫实践教程2/">爬虫实践教程2</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/15/爬虫实践教程1/">爬虫实践教程1</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/15/爬虫实践教程0/">爬虫实践教程0</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/15/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/12/mongo小试/">(no title)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Zhang Tony<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
