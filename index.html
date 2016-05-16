@@ -55,9 +55,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -95,7 +95,8 @@
 <p>##元组<br>tuple是由一系列元素组成的ds，所有元素被包含在一对圆括号中。创建元组时，可以不指定元素个数，但是一旦创建之后，就不能进行任何修改。<br>这里需要注意一下，如果创建的元组只包含一个元素，通常会忽略单元素后的逗号。正确写法如下：</p>
  <figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">tuple</span> = (apple,)</span><br><span class="line">print (<span class="keyword">tuple</span>[<span class="number">0</span>])</span><br><span class="line">print (<span class="keyword">type</span>(<span class="keyword">tuple</span>))</span><br><span class="line">```  </span><br><span class="line">这段代码定义了一个单元素的<span class="keyword">tuple</span>“apple”，并且类型为&lt;<span class="keyword">class</span> <span class="string">'tuple'</span>&gt;。  </span><br><span class="line"></span><br><span class="line">元组，列表，字典等都是从<span class="number">0</span>开始的，［<span class="number">0</span>］获取的就是第一个元素。  </span><br><span class="line"></span><br><span class="line">元组创建之后，不能进行修改，也不能进行赋值操作。  </span><br><span class="line"></span><br><span class="line">元组可以进行负数索引，分片索引，另外元组还可以由其他元组组成，就成了二元元组。 </span><br><span class="line"> </span><br><span class="line">元组的遍历  </span><br><span class="line">这里介绍下二元元组的遍历。</span><br></pre></td></tr></table></figure>
 <p> for i in tuple:<br>     for j in i:<br>         print(j)<br> <figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line"> </span><br><span class="line">##列表    </span><br><span class="line"> </span><br><span class="line"> 列表是方括号。  </span><br><span class="line"> </span><br><span class="line"> 列表可以实现添加 删除 查找等操作，元素的值可以被修改。  </span><br><span class="line"> </span><br><span class="line"> 添加使用<span class="keyword">append</span>（）  </span><br><span class="line"> 还可以考虑<span class="keyword">insert</span>（），不过<span class="keyword">insert</span>要指明位置。   </span><br><span class="line"> 删除直接用<span class="built_in">remove</span>（）  </span><br><span class="line"> <span class="keyword">pop</span>（）是取出最后一个元素。 </span><br><span class="line"> 列表的使用和元组十分相似，支持负数索引 分片还有多元列表等特性，但是列表中的元素可以进行修改。  </span><br><span class="line"> </span><br><span class="line"> 列表还可以进行连接操作。一种是<span class="built_in">extend</span>（）连接两个不同的列表，另外一种是使用运算符“＋”或“＋＝”。</span><br></pre></td></tr></table></figure></p>
-<p> list = [“apple”,”banana”,”orange”,”grape”]<br> print(list.index(“grape”))<br> print(“orange” in list)<br> <figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line"> 打印索引，  </span><br><span class="line"> 判断orange是否在列表中。  </span><br><span class="line"> </span><br><span class="line"> 列表排序和反转  </span><br><span class="line"> 	</span><br><span class="line"> 	<span class="keyword">list</span>.<span class="keyword">sort</span>()</span><br><span class="line"> 	<span class="keyword">list</span>.<span class="built_in">reverse</span>()  </span><br><span class="line"> 	</span><br><span class="line"> <span class="keyword">sort</span>()这个函数，需要仔细说明下，<span class="keyword">sort</span>（cmp,key=None,<span class="built_in">reverse</span>=False）  </span><br><span class="line"> </span><br><span class="line"> 在这和大家分享一下机器学习里的一个案例，看看列表的操作。  </span><br><span class="line"> </span><br><span class="line"> 统计 Python 中的字数  </span><br><span class="line">问题  </span><br><span class="line">在 Python 中实施函数“count_words()”，该函数将字符串“s”和数字“n”用作输入，并返回“s”中“n”个出现频率最高的单词。返回值应该是一个元组列表 - 出现频率最高的“n”个单词及其相应的出现次数“[(, ), (, ), ...]”，按出现次数的降序排列。</span><br><span class="line">您可以假设所有输入都是小写形式，并且不含标点符号或其他字符（只包含字母和单个分隔空格）。如果出现次数相同，则按字母顺序排列出现次数相同的单词。</span><br><span class="line">例如：</span><br><span class="line"></span><br><span class="line">	<span class="keyword">print</span> count_words(<span class="string">"betty bought a bit of butter but the butter was bitter"</span>,<span class="number">3</span>)</span><br><span class="line">Outpu<span class="variable">t:</span></span><br><span class="line">	</span><br><span class="line">	[(<span class="string">'butter'</span>, <span class="number">2</span>), (<span class="string">'a'</span>, <span class="number">1</span>), (<span class="string">'betty'</span>, <span class="number">1</span>)]</span><br></pre></td></tr></table></figure></p>
+<p>list = [“apple”,”banana”,”orange”,”grape”]<br>print(list.index(“grape”))<br>print(“orange” in list)</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"> </span><br><span class="line"> 打印索引，  </span><br><span class="line"> 判断orange是否在列表中。  </span><br><span class="line"> </span><br><span class="line"> 列表排序和反转  </span><br><span class="line"> 	</span><br><span class="line"> 	<span class="keyword">list</span>.<span class="keyword">sort</span>()</span><br><span class="line"> 	<span class="keyword">list</span>.<span class="built_in">reverse</span>()  </span><br><span class="line"> 	</span><br><span class="line"> <span class="keyword">sort</span>()这个函数，需要仔细说明下，<span class="keyword">sort</span>（cmp,key=None,<span class="built_in">reverse</span>=False）  </span><br><span class="line"> </span><br><span class="line"> 在这和大家分享一下机器学习里的一个案例，看看列表的操作。  </span><br><span class="line"> </span><br><span class="line"> 统计 Python 中的字数  </span><br><span class="line">问题  </span><br><span class="line">在 Python 中实施函数“count_words()”，该函数将字符串“s”和数字“n”用作输入，并返回“s”中“n”个出现频率最高的单词。返回值应该是一个元组列表 - 出现频率最高的“n”个单词及其相应的出现次数“[(, ), (, ), ...]”，按出现次数的降序排列。</span><br><span class="line">您可以假设所有输入都是小写形式，并且不含标点符号或其他字符（只包含字母和单个分隔空格）。如果出现次数相同，则按字母顺序排列出现次数相同的单词。</span><br><span class="line">例如：</span><br><span class="line"></span><br><span class="line">	<span class="keyword">print</span> count_words(<span class="string">"betty bought a bit of butter but the butter was bitter"</span>,<span class="number">3</span>)</span><br><span class="line">Outpu<span class="variable">t:</span></span><br><span class="line">	</span><br><span class="line">	[(<span class="string">'butter'</span>, <span class="number">2</span>), (<span class="string">'a'</span>, <span class="number">1</span>), (<span class="string">'betty'</span>, <span class="number">1</span>)]</span><br></pre></td></tr></table></figure>
 <p>  “””Count words.”””<br>from collections import Counter<br>from operator import itemgetter<br>def count_words(s, n):<br>    “””Return the n most frequently occuring words in s.”””<br>    cnt = Counter()<br>    for word in s.split(“ “):<br>        cnt[word] += 1<br>    a = cnt.items()<br>    b = sorted(a,key=lambda a:a[0],reverse=False)<br>    c = sorted(b,key=itemgetter(1),reverse=True)<br>    top_n = c[0:n]</p>
 <pre><code># TODO: Count the number of occurences of each word in s
 
@@ -169,7 +170,7 @@ sorted(b,key=itemgetter(1),reverse=True)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/16/python之数据结构/" data-id="cioa290r10005562z1cyzcsf1" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/05/16/python之数据结构/" data-id="cioa2g9080002do2ztn3pl28m" class="article-share-link">Share</a>
       
       
     </footer>
@@ -283,7 +284,7 @@ printf(&quot;Hello, Markdown.&quot;);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/15/macdown语法简介/" data-id="cioa290qs0001562zryfch2xq" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/05/15/macdown语法简介/" data-id="cioa2g9050001do2zqd1s6uqk" class="article-share-link">Share</a>
       
       
     </footer>
@@ -325,7 +326,7 @@ printf(&quot;Hello, Markdown.&quot;);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/15/爬虫实践教程3-多进程/" data-id="cioa290r50007562zys0a3n3c" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/05/15/爬虫实践教程3-多进程/" data-id="cioa2g9190007do2zgtvbqlww" class="article-share-link">Share</a>
       
       
     </footer>
@@ -401,7 +402,7 @@ for i in range(10):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/15/爬虫实践教程2/" data-id="cioa290r40006562z9de0un7z" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/05/15/爬虫实践教程2/" data-id="cioa2g90x0003do2zq0wwbvts" class="article-share-link">Share</a>
       
       
     </footer>
@@ -466,7 +467,7 @@ start()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/15/爬虫实践教程1/" data-id="cioa290qx0003562zpjyaeykn" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/05/15/爬虫实践教程1/" data-id="cioa2g9180006do2zki5j1h0c" class="article-share-link">Share</a>
       
       
     </footer>
@@ -536,7 +537,7 @@ if __name__ == &apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/15/爬虫实践教程0/" data-id="cioa290qz0004562zpbrtlzzb" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/05/15/爬虫实践教程0/" data-id="cioa2g9150005do2zpwao85lb" class="article-share-link">Share</a>
       
       
     </footer>
@@ -581,7 +582,7 @@ if __name__ == &apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/15/hello-world/" data-id="cioa290ql0000562zip60zopc" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/05/15/hello-world/" data-id="cioa2g8zy0000do2zz7cnd37u" class="article-share-link">Share</a>
       
       
     </footer>
@@ -741,7 +742,7 @@ db.foo.find( { a : 1 } )：对于当前数据库中的foo集合进行查找，�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/12/mongo小试/" data-id="cioa290qu0002562z7wsf2py5" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/05/12/mongo小试/" data-id="cioa2g9100004do2z22stkuww" class="article-share-link">Share</a>
       
       
     </footer>
@@ -776,7 +777,7 @@ db.foo.find( { a : 1 } )：对于当前数据库中的foo集合进行查找，�
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
@@ -813,7 +814,7 @@ db.foo.find( { a : 1 } )：对于当前数据库中的foo集合进行查找，�
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2016 Zhang Tony<br>
-      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
