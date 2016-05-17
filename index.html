@@ -68,6 +68,134 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-实战项目之爬取ganji网" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/17/实战项目之爬取ganji网/" class="article-date">
+  <time datetime="2016-05-17T03:06:04.000Z" itemprop="datePublished">2016-05-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/17/实战项目之爬取ganji网/">实战项目之爬取ganji网</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>爬取分类信息网站龙头  ganji网。  </p>
+<p>首先呢，来看看结构<br><img src="http://o7b8j5zne.bkt.clouddn.com/ganji%E5%9B%BE1.png" alt="图1"> </p>
+<p>我们需要来看看首页那里的所有类目，里面包含20项<br>基本上所有的帖子都会被分类在这20个下方，根据时间被分配不同的id，像这样<br><a href="http://bj.ganji.com/ershoubijibendiannao/2111373477x.htm" target="_blank" rel="external">http://bj.ganji.com/ershoubijibendiannao/2111373477x.htm</a><br>当然后面加了个x。。。  </p>
+<ul>
+<li>第一步<br>先把这20个类目的地址爬取出来。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">start_url = <span class="string">'http://bj.ganji.com/wu/'</span></span><br><span class="line">url_host = <span class="string">'http://bj.ganji.com'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_index_url</span><span class="params">(url)</span>:</span></span><br><span class="line">    <span class="comment"># url = start_url</span></span><br><span class="line">    wb_data = requests.get(url)</span><br><span class="line">    soup = BeautifulSoup(wb_data.text, <span class="string">'lxml'</span>)</span><br><span class="line">    links = soup.select(<span class="string">'.fenlei &gt; dt &gt; a'</span>)</span><br><span class="line">    <span class="keyword">for</span> link <span class="keyword">in</span> links:</span><br><span class="line">        page_url = url_host + link.get(<span class="string">'href'</span>)</span><br><span class="line">        print(page_url)</span><br><span class="line"></span><br><span class="line">get_index_url(start_url)</span><br><span class="line">```   </span><br><span class="line"></span><br><span class="line">程序的运行结果是<span class="number">20</span>个链接，</span><br></pre></td></tr></table></figure>
+<p><a href="http://bj.ganji.com/jiaju/" target="_blank" rel="external">http://bj.ganji.com/jiaju/</a><br><a href="http://bj.ganji.com/rirongbaihuo/" target="_blank" rel="external">http://bj.ganji.com/rirongbaihuo/</a><br><a href="http://bj.ganji.com/shouji/" target="_blank" rel="external">http://bj.ganji.com/shouji/</a><br><a href="http://bj.ganji.com/shoujihaoma/" target="_blank" rel="external">http://bj.ganji.com/shoujihaoma/</a><br><a href="http://bj.ganji.com/bangong/" target="_blank" rel="external">http://bj.ganji.com/bangong/</a><br><a href="http://bj.ganji.com/nongyongpin/" target="_blank" rel="external">http://bj.ganji.com/nongyongpin/</a><br><a href="http://bj.ganji.com/jiadian/" target="_blank" rel="external">http://bj.ganji.com/jiadian/</a><br><a href="http://bj.ganji.com/ershoubijibendiannao/" target="_blank" rel="external">http://bj.ganji.com/ershoubijibendiannao/</a><br><a href="http://bj.ganji.com/ruanjiantushu/" target="_blank" rel="external">http://bj.ganji.com/ruanjiantushu/</a><br><a href="http://bj.ganji.com/yingyouyunfu/" target="_blank" rel="external">http://bj.ganji.com/yingyouyunfu/</a><br><a href="http://bj.ganji.com/diannao/" target="_blank" rel="external">http://bj.ganji.com/diannao/</a><br><a href="http://bj.ganji.com/xianzhilipin/" target="_blank" rel="external">http://bj.ganji.com/xianzhilipin/</a><br><a href="http://bj.ganji.com/fushixiaobaxuemao/" target="_blank" rel="external">http://bj.ganji.com/fushixiaobaxuemao/</a><br><a href="http://bj.ganji.com/meironghuazhuang/" target="_blank" rel="external">http://bj.ganji.com/meironghuazhuang/</a><br><a href="http://bj.ganji.com/shuma/" target="_blank" rel="external">http://bj.ganji.com/shuma/</a><br><a href="http://bj.ganji.com/laonianyongpin/" target="_blank" rel="external">http://bj.ganji.com/laonianyongpin/</a><br><a href="http://bj.ganji.com/xuniwupin/" target="_blank" rel="external">http://bj.ganji.com/xuniwupin/</a><br><a href="http://bj.ganji.com/qitawupin/" target="_blank" rel="external">http://bj.ganji.com/qitawupin/</a><br><a href="http://bj.ganji.com/ershoufree/" target="_blank" rel="external">http://bj.ganji.com/ershoufree/</a><br><a href="http://bj.ganji.com/wupinjiaohuan/" target="_blank" rel="external">http://bj.ganji.com/wupinjiaohuan/</a></p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">把这20个链接放入程序中，成为channel\_list。  </span><br><span class="line">这也就是我们的第一个小程序 channel\_extracing.py。  </span><br><span class="line"></span><br><span class="line">---  </span><br><span class="line"><span class="bullet">- </span>第二步  </span><br><span class="line">从大的分类下获取单个帖子的链接，先来分析下页面结构，   </span><br><span class="line">![<span class="string">图2</span>](<span class="link">http://o7b8j5zne.bkt.clouddn.com/ganji%E5%9B%BE2.png</span>) </span><br><span class="line"></span><br><span class="line">以二手笔记本电脑为例，可以看到后面结构为o＋page，这里o代表的是个人发布的，后面是page。  </span><br><span class="line">那么首先考虑的是构造一个爬虫来抓取links</span><br></pre></td></tr></table></figure>
+<h1 id="spider-1"><a href="#spider-1" class="headerlink" title="spider 1"></a>spider 1</h1><p>def get_links_from(channel, pages, who_sells=’o’):</p>
+<pre><code># http://bj.ganji.com/ershoubijibendiannao/o3/
+# o for personal a for merchant
+list_view = &apos;{}{}{}/&apos;.format(channel, str(who_sells), str(pages))
+wb_data = requests.get(list_view,headers=headers,proxies=proxies)
+soup = BeautifulSoup(wb_data.text, &apos;lxml&apos;)
+if soup.find(&apos;ul&apos;, &apos;pageLink&apos;):
+    for link in soup.select(&apos;dd.feature div ul li a&apos;):
+        item_link = link.get(&apos;href&apos;)
+        if item_link != &quot;javascript:&quot;:                
+            url_list.insert_one({&apos;url&apos;: item_link})
+            print(item_link)
+        # return urls
+else:
+    # It&apos;s the last page !
+    pass
+</code></pre><figure class="highlight qml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">这里注意一下加了一个判断，判断这一页不是最后一页，就是看下方有无pageLink，俗称也就是翻页器类似的，还有就是直接加上了headers部分和proxy部分反爬取。  </span><br><span class="line"></span><br><span class="line">函数的结果是urls，并考虑使用mongo数据库来存储这个<span class="built_in">url</span>\_list。  </span><br><span class="line"></span><br><span class="line">接下来就是访问单个的<span class="built_in">url</span>来抓取里面的数据信息了。</span><br></pre></td></tr></table></figure>
+<h1 id="spider-2"><a href="#spider-2" class="headerlink" title="spider 2"></a>spider 2</h1><p>def get_item_info_from(url,data=None):<br>    wb_data = requests.get(url,headers=headers)<br>    if wb_data.status_code == 404:<br>        pass<br>    else:<br>        soup = BeautifulSoup(wb_data.text, ‘lxml’)<br>        data = {<br>            ‘title’:soup.title.text.strip(),<br>            ‘price’:soup.select(‘.f22.fc-orange.f-type’)[0].text.strip(),<br>            ‘pub_date’:soup.select(‘.pr-5’)[0].text.strip().split(‘ ‘)[0],<br>            ‘area’:list(map(lambda x:x.text,soup.select(‘ul.det-infor &gt; li:nth-of-type(3) &gt; a’))),<br>            ‘cates’:list(soup.select(‘ul.det-infor &gt; li:nth-of-type(1) &gt; span’)[0].stripped_strings),<br>            ‘url’:url<br>        }<br>        print(data)<br>        item_info.insert_one(data)<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">看图，单个页面我们考虑抓取，标题title 价格price 发布时间pub\_data 交易地点area 类型cates 另外再考虑把url也加入里面。大概先这样咯。  </span><br><span class="line">![<span class="string">图3</span>](<span class="link">http://o7b8j5zne.bkt.clouddn.com/ganji%E5%9B%BE3.png</span>)  </span><br><span class="line"></span><br><span class="line">把程序组织一下 组成第二个py程序 page\_parsing.py  </span><br><span class="line">当然详情页抓取的数据我们也放到mongo的数据库中。  </span><br><span class="line"></span><br><span class="line">到这里初步小结一下，实现了哪些呢？先是从ganji的首页获取分类，20个分类  </span><br><span class="line">然后在这20个分类下，获取单个帖子的详情页，然后通过详情页去抓取想要的数据。  </span><br><span class="line">爬取的初步流程完成了，接下来就是包装，    </span><br><span class="line">写个主函数，定义下我们抓取多少页的大分类，先url\<span class="emphasis">_list然后item\_</span>info都存入到mongo的数据库中。  </span><br><span class="line">ps 考虑写一个计数的函数观察我们抓取的信息数目。  </span><br><span class="line">  </span><br><span class="line">---  </span><br><span class="line"><span class="bullet">- </span>第三步   </span><br><span class="line">主函数的分析</span><br></pre></td></tr></table></figure></p>
+<p>from multiprocessing import Pool<br>from page_parsing import get_item_info_from,url_list,item_info,get_links_from<br>from channel_extracing import channel_list<br><figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">也就是前面的两个函数，我们实现了几个功能：</span><br><span class="line">  </span><br><span class="line">channel<span class="symbol">\_</span>list   </span><br><span class="line">两个方法 get<span class="symbol">\_</span>item<span class="symbol">\_</span>info<span class="symbol">\_</span>from	 get<span class="symbol">\_</span>links<span class="symbol">\_</span>from  </span><br><span class="line">两个mongo数据库的collections url<span class="symbol">\_</span>list item<span class="symbol">\_</span>info  </span><br><span class="line"></span><br><span class="line">另外这里使用多进程来加快抓取的速度</span><br></pre></td></tr></table></figure></p>
+<p>def get_all_links_from(channel):<br>    for i in range(1,100):<br>        get_links_from(channel,i)<br><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">注意前面定义的函数我们定义了页面，这里抓取<span class="number">1</span>-<span class="number">99</span>页，当然也许部分分类商品多，<span class="number">99</span>不足，部分分类商品不是很多，我们也已经有判断会<span class="keyword">pass</span>掉。。</span><br></pre></td></tr></table></figure></p>
+<p>if <strong>name</strong> == ‘<strong>main</strong>‘:<br>    pool = Pool(processes=6)</p>
+<pre><code># pool = Pool()
+pool.map(get_all_links_from,channel_list.split())
+pool.close()
+pool.join()
+</code></pre><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">开6个进程进行爬爬爬，先存url，再根据url访问抓取。    </span><br><span class="line"></span><br><span class="line">-<span class="ruby">--  </span><br><span class="line"></span>-<span class="ruby"> 第四步    </span><br><span class="line"></span>写上一个计数的函数，这样可以在运行main函数存入数据库时并打印链接的同时，统计已经写了多少数据进去。</span><br></pre></td></tr></table></figure>
+<p>import time<br>from page_parsing import url_list</p>
+<p>while True:<br>    print(url_list.find().count())<br>    time.sleep(5)<br>```  </p>
+<hr>
+<ul>
+<li>最后<br>附上项目github地址    <a href="https://github.com/zhangdavids/myganji" target="_blank" rel="external">项目地址</a></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/05/17/实战项目之爬取ganji网/" data-id="ciob5ugq10005im2zst5evwvb" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-python实战之一发送电子邮件" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/17/python实战之一发送电子邮件/" class="article-date">
+  <time datetime="2016-05-17T00:42:04.000Z" itemprop="datePublished">2016-05-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/17/python实战之一发送电子邮件/">python实战之一发送电子邮件</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>把曾经做过的东西做下小结吧。<br>如何来使用python发送电子邮件呢？  </p>
+<p>一般而言，官方提供的思路就是使用smtplib包，但是实现起来个人感觉还是稍显复杂，需要按照要求书写好多比如smtp mime 手动添加邮件头，还需要一些email标准的某些知识。<br>like this：  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment">#-*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> smtplib</span><br><span class="line"><span class="keyword">from</span> email.mime.text <span class="keyword">import</span> MIMEText</span><br><span class="line"><span class="keyword">from</span> email.mime.multipart <span class="keyword">import</span> MIMEMultipart</span><br><span class="line"><span class="keyword">from</span> email.header <span class="keyword">import</span> Header</span><br><span class="line"></span><br><span class="line">sender = <span class="string">'z.j19910903@163.com'</span><span class="comment"># 发件人</span></span><br><span class="line">to = [<span class="string">"815012839@qq.com"</span>, <span class="string">"a@qq.com"</span>]  <span class="comment"># 多个收件人的写法</span></span><br><span class="line">subject = <span class="string">'From Python Email test'</span><span class="comment"># 邮件主题</span></span><br><span class="line">smtpserver = <span class="string">'smtp.163.com'</span><span class="comment"># smtp服务器</span></span><br><span class="line">username = <span class="string">'z.j19910903'</span><span class="comment"># 发件人邮箱用户名</span></span><br><span class="line">password = <span class="string">'******'</span><span class="comment"># 发件人邮箱密码</span></span><br><span class="line">mail_postfix = <span class="string">'163.com'</span></span><br><span class="line">contents = <span class="string">'这是一个Python的邮件，收到请勿回复，谢谢！！'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">send_mail</span><span class="params">(to_list, sub, content)</span>:</span></span><br><span class="line">    me = sender</span><br><span class="line">    msg = MIMEText(content, _subtype=<span class="string">'plain'</span>, _charset=<span class="string">'utf-8'</span>)</span><br><span class="line">    msg[<span class="string">'Subject'</span>] = subject</span><br><span class="line">    msg[<span class="string">'From'</span>] = me</span><br><span class="line">    msg[<span class="string">'To'</span>] = <span class="string">";"</span>.join(to_list)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        server = smtplib.SMTP()</span><br><span class="line">        server.connect(smtpserver)</span><br><span class="line">        server.login(username, password)</span><br><span class="line">        server.sendmail(me, to_list, msg.as_string())</span><br><span class="line">        server.close()</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">    <span class="keyword">except</span> Exception, e:</span><br><span class="line">        <span class="keyword">print</span> str(e)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="keyword">if</span> send_mail(to, subject, contents):</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"邮件发送成功! "</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"失败!!!"</span></span><br></pre></td></tr></table></figure>
+<p>可能看起来也不是很多，但是还是感觉稍稍有点麻烦。python让人着迷的地方，就是有大量的优秀开发人员开发的各种第三方库，现在我们需要的只是yagmail。  </p>
+<hr>
+<p>##yagmail<br>安装不多说，直接pip  </p>
+<pre><code>pip install yagmail
+</code></pre><p>它支持python2.7＋  </p>
+<p>使用的话也相对简单  </p>
+<pre><code>import yagmail
+yag = yagmail(zhangjohn202@gmail.com,&apos;&apos;your2-steppassword)
+contents=&apos;i love you more!&apos;
+yag.send(to=&apos;815012839@qq.com&apos;,subject=&apos;fall love at first sight&apos;,contents=contents)
+</code></pre><p>这里说下，一般的邮箱都是用户名和登录密码，别的邮箱我不知道现在有多少改进，感觉gmail不愧是属于全人类的邮箱，这里采用更为安全的方式来进行登录，两步验证密码。  </p>
+<p>自然只是最简单的举例，yagmail实现的功能还有富文本邮件 邮件附件以及使用邮件模板这较为常见的三项，详细可以参考yagmail的github主页。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/05/17/python实战之一发送电子邮件/" data-id="ciob5ugpq0001im2zwrbnka34" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-python之数据结构" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/05/16/python之数据结构/" class="article-date">
@@ -214,7 +342,7 @@ sorted(b,key=itemgetter(1),reverse=True)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/16/python之数据结构/" data-id="cioa2g9080002do2ztn3pl28m" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/05/16/python之数据结构/" data-id="ciob5ugpz0004im2zaumjk7pg" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -328,7 +456,7 @@ printf(&quot;Hello, Markdown.&quot;);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/15/macdown语法简介/" data-id="cioa2g9050001do2zqd1s6uqk" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/05/15/macdown语法简介/" data-id="ciob5ugpt0002im2zzc5md56u" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -370,7 +498,7 @@ printf(&quot;Hello, Markdown.&quot;);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/15/爬虫实践教程3-多进程/" data-id="cioa2g9190007do2zgtvbqlww" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/05/15/爬虫实践教程3-多进程/" data-id="ciob5ugrb0009im2zs131i3vv" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -446,7 +574,7 @@ for i in range(10):
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/15/爬虫实践教程2/" data-id="cioa2g90x0003do2zq0wwbvts" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/05/15/爬虫实践教程2/" data-id="ciob5ugr20008im2ziq7ql0db" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -511,7 +639,7 @@ start()
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/15/爬虫实践教程1/" data-id="cioa2g9180006do2zki5j1h0c" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/05/15/爬虫实践教程1/" data-id="ciob5ugqf0006im2z2ylo4a5m" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -581,7 +709,7 @@ if __name__ == &apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/15/爬虫实践教程0/" data-id="cioa2g9150005do2zpwao85lb" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/05/15/爬虫实践教程0/" data-id="ciob5ugqg0007im2zjuvj76xz" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -626,7 +754,7 @@ if __name__ == &apos;__main__&apos;:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/15/hello-world/" data-id="cioa2g8zy0000do2zz7cnd37u" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/05/15/hello-world/" data-id="ciob5ugpj0000im2ze9vn2yqr" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -786,7 +914,7 @@ db.foo.find( { a : 1 } )：对于当前数据库中的foo集合进行查找，�
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/12/mongo小试/" data-id="cioa2g9100004do2z22stkuww" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/05/12/mongo小试/" data-id="ciob5ugpw0003im2z8telpmdw" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -826,6 +954,14 @@ db.foo.find( { a : 1 } )：对于当前数据库中的foo集合进行查找，�
       <ul>
         
           <li>
+            <a href="/2016/05/17/实战项目之爬取ganji网/">实战项目之爬取ganji网</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/17/python实战之一发送电子邮件/">python实战之一发送电子邮件</a>
+          </li>
+        
+          <li>
             <a href="/2016/05/16/python之数据结构/">python之数据结构</a>
           </li>
         
@@ -835,14 +971,6 @@ db.foo.find( { a : 1 } )：对于当前数据库中的foo集合进行查找，�
         
           <li>
             <a href="/2016/05/15/爬虫实践教程3-多进程/">爬虫实践教程3-多进程</a>
-          </li>
-        
-          <li>
-            <a href="/2016/05/15/爬虫实践教程2/">爬虫实践教程2</a>
-          </li>
-        
-          <li>
-            <a href="/2016/05/15/爬虫实践教程1/">爬虫实践教程1</a>
           </li>
         
       </ul>

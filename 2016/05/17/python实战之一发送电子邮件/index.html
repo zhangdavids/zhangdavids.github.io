@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>python实战之一发送电子邮件 | 上药三品，神与气精</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="把曾经做过的东西做下小结吧。如何来使用python发送电子邮件呢？  
+一般而言，官方提供的思路就是使用smtplib包，但是实现起来个人感觉还是稍显复杂，需要按照要求书写好多比如smtp mime 手动添加邮件头，还需要一些email标准的某些知识。like this：  
+1234567891011121314151617181920212223242526272829303132333435">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python实战之一发送电子邮件">
+<meta property="og:url" content="http://yoursite.com/2016/05/17/python实战之一发送电子邮件/index.html">
+<meta property="og:site_name" content="上药三品，神与气精">
+<meta property="og:description" content="把曾经做过的东西做下小结吧。如何来使用python发送电子邮件呢？  
+一般而言，官方提供的思路就是使用smtplib包，但是实现起来个人感觉还是稍显复杂，需要按照要求书写好多比如smtp mime 手动添加邮件头，还需要一些email标准的某些知识。like this：  
+1234567891011121314151617181920212223242526272829303132333435">
+<meta property="og:updated_time" content="2016-05-17T01:20:28.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python实战之一发送电子邮件">
+<meta name="twitter:description" content="把曾经做过的东西做下小结吧。如何来使用python发送电子邮件呢？  
+一般而言，官方提供的思路就是使用smtplib包，但是实现起来个人感觉还是稍显复杂，需要按照要求书写好多比如smtp mime 手动添加邮件头，还需要一些email标准的某些知识。like this：  
+1234567891011121314151617181920212223242526272829303132333435">
+  
+    <link rel="alternate" href="/atom.xml" title="上药三品，神与气精" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">上药三品，神与气精</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">寿本乎仁 乐生于智　勤能补拙 俭可养廉</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-python实战之一发送电子邮件" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/17/python实战之一发送电子邮件/" class="article-date">
+  <time datetime="2016-05-17T00:42:04.000Z" itemprop="datePublished">2016-05-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      python实战之一发送电子邮件
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>把曾经做过的东西做下小结吧。<br>如何来使用python发送电子邮件呢？  </p>
+<p>一般而言，官方提供的思路就是使用smtplib包，但是实现起来个人感觉还是稍显复杂，需要按照要求书写好多比如smtp mime 手动添加邮件头，还需要一些email标准的某些知识。<br>like this：  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment">#-*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> smtplib</span><br><span class="line"><span class="keyword">from</span> email.mime.text <span class="keyword">import</span> MIMEText</span><br><span class="line"><span class="keyword">from</span> email.mime.multipart <span class="keyword">import</span> MIMEMultipart</span><br><span class="line"><span class="keyword">from</span> email.header <span class="keyword">import</span> Header</span><br><span class="line"></span><br><span class="line">sender = <span class="string">'z.j19910903@163.com'</span><span class="comment"># 发件人</span></span><br><span class="line">to = [<span class="string">"815012839@qq.com"</span>, <span class="string">"a@qq.com"</span>]  <span class="comment"># 多个收件人的写法</span></span><br><span class="line">subject = <span class="string">'From Python Email test'</span><span class="comment"># 邮件主题</span></span><br><span class="line">smtpserver = <span class="string">'smtp.163.com'</span><span class="comment"># smtp服务器</span></span><br><span class="line">username = <span class="string">'z.j19910903'</span><span class="comment"># 发件人邮箱用户名</span></span><br><span class="line">password = <span class="string">'******'</span><span class="comment"># 发件人邮箱密码</span></span><br><span class="line">mail_postfix = <span class="string">'163.com'</span></span><br><span class="line">contents = <span class="string">'这是一个Python的邮件，收到请勿回复，谢谢！！'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">send_mail</span><span class="params">(to_list, sub, content)</span>:</span></span><br><span class="line">    me = sender</span><br><span class="line">    msg = MIMEText(content, _subtype=<span class="string">'plain'</span>, _charset=<span class="string">'utf-8'</span>)</span><br><span class="line">    msg[<span class="string">'Subject'</span>] = subject</span><br><span class="line">    msg[<span class="string">'From'</span>] = me</span><br><span class="line">    msg[<span class="string">'To'</span>] = <span class="string">";"</span>.join(to_list)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        server = smtplib.SMTP()</span><br><span class="line">        server.connect(smtpserver)</span><br><span class="line">        server.login(username, password)</span><br><span class="line">        server.sendmail(me, to_list, msg.as_string())</span><br><span class="line">        server.close()</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">    <span class="keyword">except</span> Exception, e:</span><br><span class="line">        <span class="keyword">print</span> str(e)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="keyword">if</span> send_mail(to, subject, contents):</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"邮件发送成功! "</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"失败!!!"</span></span><br></pre></td></tr></table></figure>
+<p>可能看起来也不是很多，但是还是感觉稍稍有点麻烦。python让人着迷的地方，就是有大量的优秀开发人员开发的各种第三方库，现在我们需要的只是yagmail。  </p>
+<hr>
+<p>##yagmail<br>安装不多说，直接pip  </p>
+<pre><code>pip install yagmail
+</code></pre><p>它支持python2.7＋  </p>
+<p>使用的话也相对简单  </p>
+<pre><code>import yagmail
+yag = yagmail(zhangjohn202@gmail.com,&apos;&apos;your2-steppassword)
+contents=&apos;i love you more!&apos;
+yag.send(to=&apos;815012839@qq.com&apos;,subject=&apos;fall love at first sight&apos;,contents=contents)
+</code></pre><p>这里说下，一般的邮箱都是用户名和登录密码，别的邮箱我不知道现在有多少改进，感觉gmail不愧是属于全人类的邮箱，这里采用更为安全的方式来进行登录，两步验证密码。  </p>
+<p>自然只是最简单的举例，yagmail实现的功能还有富文本邮件 邮件附件以及使用邮件模板这较为常见的三项，详细可以参考yagmail的github主页。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/05/17/python实战之一发送电子邮件/" data-id="ciob5ugpq0001im2zwrbnka34" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/05/17/实战项目之爬取ganji网/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          实战项目之爬取ganji网
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/05/16/python之数据结构/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">python之数据结构</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/05/17/实战项目之爬取ganji网/">实战项目之爬取ganji网</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/17/python实战之一发送电子邮件/">python实战之一发送电子邮件</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/16/python之数据结构/">python之数据结构</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/15/macdown语法简介/">macdown语法简介</a>
+          </li>
+        
+          <li>
+            <a href="/2016/05/15/爬虫实践教程3-多进程/">爬虫实践教程3-多进程</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Zhang Tony<br>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
