@@ -57,7 +57,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Søk"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -96,37 +96,129 @@
 <ul>
 <li>第一步<br>先把这20个类目的地址爬取出来。</li>
 </ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">start_url = <span class="string">'http://bj.ganji.com/wu/'</span></span><br><span class="line">url_host = <span class="string">'http://bj.ganji.com'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_index_url</span><span class="params">(url)</span>:</span></span><br><span class="line">    <span class="comment"># url = start_url</span></span><br><span class="line">    wb_data = requests.get(url)</span><br><span class="line">    soup = BeautifulSoup(wb_data.text, <span class="string">'lxml'</span>)</span><br><span class="line">    links = soup.select(<span class="string">'.fenlei &gt; dt &gt; a'</span>)</span><br><span class="line">    <span class="keyword">for</span> link <span class="keyword">in</span> links:</span><br><span class="line">        page_url = url_host + link.get(<span class="string">'href'</span>)</span><br><span class="line">        print(page_url)</span><br><span class="line"></span><br><span class="line">get_index_url(start_url)</span><br><span class="line">```   </span><br><span class="line"></span><br><span class="line">程序的运行结果是<span class="number">20</span>个链接，</span><br></pre></td></tr></table></figure>
-<p><a href="http://bj.ganji.com/jiaju/" target="_blank" rel="external">http://bj.ganji.com/jiaju/</a><br><a href="http://bj.ganji.com/rirongbaihuo/" target="_blank" rel="external">http://bj.ganji.com/rirongbaihuo/</a><br><a href="http://bj.ganji.com/shouji/" target="_blank" rel="external">http://bj.ganji.com/shouji/</a><br><a href="http://bj.ganji.com/shoujihaoma/" target="_blank" rel="external">http://bj.ganji.com/shoujihaoma/</a><br><a href="http://bj.ganji.com/bangong/" target="_blank" rel="external">http://bj.ganji.com/bangong/</a><br><a href="http://bj.ganji.com/nongyongpin/" target="_blank" rel="external">http://bj.ganji.com/nongyongpin/</a><br><a href="http://bj.ganji.com/jiadian/" target="_blank" rel="external">http://bj.ganji.com/jiadian/</a><br><a href="http://bj.ganji.com/ershoubijibendiannao/" target="_blank" rel="external">http://bj.ganji.com/ershoubijibendiannao/</a><br><a href="http://bj.ganji.com/ruanjiantushu/" target="_blank" rel="external">http://bj.ganji.com/ruanjiantushu/</a><br><a href="http://bj.ganji.com/yingyouyunfu/" target="_blank" rel="external">http://bj.ganji.com/yingyouyunfu/</a><br><a href="http://bj.ganji.com/diannao/" target="_blank" rel="external">http://bj.ganji.com/diannao/</a><br><a href="http://bj.ganji.com/xianzhilipin/" target="_blank" rel="external">http://bj.ganji.com/xianzhilipin/</a><br><a href="http://bj.ganji.com/fushixiaobaxuemao/" target="_blank" rel="external">http://bj.ganji.com/fushixiaobaxuemao/</a><br><a href="http://bj.ganji.com/meironghuazhuang/" target="_blank" rel="external">http://bj.ganji.com/meironghuazhuang/</a><br><a href="http://bj.ganji.com/shuma/" target="_blank" rel="external">http://bj.ganji.com/shuma/</a><br><a href="http://bj.ganji.com/laonianyongpin/" target="_blank" rel="external">http://bj.ganji.com/laonianyongpin/</a><br><a href="http://bj.ganji.com/xuniwupin/" target="_blank" rel="external">http://bj.ganji.com/xuniwupin/</a><br><a href="http://bj.ganji.com/qitawupin/" target="_blank" rel="external">http://bj.ganji.com/qitawupin/</a><br><a href="http://bj.ganji.com/ershoufree/" target="_blank" rel="external">http://bj.ganji.com/ershoufree/</a><br><a href="http://bj.ganji.com/wupinjiaohuan/" target="_blank" rel="external">http://bj.ganji.com/wupinjiaohuan/</a></p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">把这20个链接放入程序中，成为channel\_list。  </span><br><span class="line">这也就是我们的第一个小程序 channel\_extracing.py。  </span><br><span class="line"></span><br><span class="line">---  </span><br><span class="line"><span class="bullet">- </span>第二步  </span><br><span class="line">从大的分类下获取单个帖子的链接，先来分析下页面结构，   </span><br><span class="line">![<span class="string">图2</span>](<span class="link">http://o7b8j5zne.bkt.clouddn.com/ganji%E5%9B%BE2.png</span>) </span><br><span class="line"></span><br><span class="line">以二手笔记本电脑为例，可以看到后面结构为o＋page，这里o代表的是个人发布的，后面是page。  </span><br><span class="line">那么首先考虑的是构造一个爬虫来抓取links</span><br></pre></td></tr></table></figure>
-<h1 id="spider-1"><a href="#spider-1" class="headerlink" title="spider 1"></a>spider 1</h1><p>def get_links_from(channel, pages, who_sells=’o’):</p>
-<pre><code># http://bj.ganji.com/ershoubijibendiannao/o3/
-# o for personal a for merchant
-list_view = &apos;{}{}{}/&apos;.format(channel, str(who_sells), str(pages))
-wb_data = requests.get(list_view,headers=headers,proxies=proxies)
-soup = BeautifulSoup(wb_data.text, &apos;lxml&apos;)
-if soup.find(&apos;ul&apos;, &apos;pageLink&apos;):
-    for link in soup.select(&apos;dd.feature div ul li a&apos;):
-        item_link = link.get(&apos;href&apos;)
-        if item_link != &quot;javascript:&quot;:                
-            url_list.insert_one({&apos;url&apos;: item_link})
-            print(item_link)
-        # return urls
-else:
-    # It&apos;s the last page !
-    pass
-</code></pre><figure class="highlight qml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">这里注意一下加了一个判断，判断这一页不是最后一页，就是看下方有无pageLink，俗称也就是翻页器类似的，还有就是直接加上了headers部分和proxy部分反爬取。  </span><br><span class="line"></span><br><span class="line">函数的结果是urls，并考虑使用mongo数据库来存储这个<span class="built_in">url</span>\_list。  </span><br><span class="line"></span><br><span class="line">接下来就是访问单个的<span class="built_in">url</span>来抓取里面的数据信息了。</span><br></pre></td></tr></table></figure>
-<h1 id="spider-2"><a href="#spider-2" class="headerlink" title="spider 2"></a>spider 2</h1><p>def get_item_info_from(url,data=None):<br>    wb_data = requests.get(url,headers=headers)<br>    if wb_data.status_code == 404:<br>        pass<br>    else:<br>        soup = BeautifulSoup(wb_data.text, ‘lxml’)<br>        data = {<br>            ‘title’:soup.title.text.strip(),<br>            ‘price’:soup.select(‘.f22.fc-orange.f-type’)[0].text.strip(),<br>            ‘pub_date’:soup.select(‘.pr-5’)[0].text.strip().split(‘ ‘)[0],<br>            ‘area’:list(map(lambda x:x.text,soup.select(‘ul.det-infor &gt; li:nth-of-type(3) &gt; a’))),<br>            ‘cates’:list(soup.select(‘ul.det-infor &gt; li:nth-of-type(1) &gt; span’)[0].stripped_strings),<br>            ‘url’:url<br>        }<br>        print(data)<br>        item_info.insert_one(data)<br><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">看图，单个页面我们考虑抓取，标题title 价格price 发布时间pub\_data 交易地点area 类型cates 另外再考虑把url也加入里面。大概先这样咯。  </span><br><span class="line">![<span class="string">图3</span>](<span class="link">http://o7b8j5zne.bkt.clouddn.com/ganji%E5%9B%BE3.png</span>)  </span><br><span class="line"></span><br><span class="line">把程序组织一下 组成第二个py程序 page\_parsing.py  </span><br><span class="line">当然详情页抓取的数据我们也放到mongo的数据库中。  </span><br><span class="line"></span><br><span class="line">到这里初步小结一下，实现了哪些呢？先是从ganji的首页获取分类，20个分类  </span><br><span class="line">然后在这20个分类下，获取单个帖子的详情页，然后通过详情页去抓取想要的数据。  </span><br><span class="line">爬取的初步流程完成了，接下来就是包装，    </span><br><span class="line">写个主函数，定义下我们抓取多少页的大分类，先url\<span class="emphasis">_list然后item\_</span>info都存入到mongo的数据库中。  </span><br><span class="line">ps 考虑写一个计数的函数观察我们抓取的信息数目。  </span><br><span class="line">  </span><br><span class="line">---  </span><br><span class="line"><span class="bullet">- </span>第三步   </span><br><span class="line">主函数的分析</span><br></pre></td></tr></table></figure></p>
-<p>from multiprocessing import Pool<br>from page_parsing import get_item_info_from,url_list,item_info,get_links_from<br>from channel_extracing import channel_list<br><figure class="highlight taggerscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">也就是前面的两个函数，我们实现了几个功能：</span><br><span class="line">  </span><br><span class="line">channel<span class="symbol">\_</span>list   </span><br><span class="line">两个方法 get<span class="symbol">\_</span>item<span class="symbol">\_</span>info<span class="symbol">\_</span>from	 get<span class="symbol">\_</span>links<span class="symbol">\_</span>from  </span><br><span class="line">两个mongo数据库的collections url<span class="symbol">\_</span>list item<span class="symbol">\_</span>info  </span><br><span class="line"></span><br><span class="line">另外这里使用多进程来加快抓取的速度</span><br></pre></td></tr></table></figure></p>
-<p>def get_all_links_from(channel):<br>    for i in range(1,100):<br>        get_links_from(channel,i)<br><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">注意前面定义的函数我们定义了页面，这里抓取<span class="number">1</span>-<span class="number">99</span>页，当然也许部分分类商品多，<span class="number">99</span>不足，部分分类商品不是很多，我们也已经有判断会<span class="keyword">pass</span>掉。。</span><br></pre></td></tr></table></figure></p>
-<p>if <strong>name</strong> == ‘<strong>main</strong>‘:<br>    pool = Pool(processes=6)</p>
-<pre><code># pool = Pool()
-pool.map(get_all_links_from,channel_list.split())
-pool.close()
-pool.join()
-</code></pre><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">开6个进程进行爬爬爬，先存url，再根据url访问抓取。    </span><br><span class="line"></span><br><span class="line">-<span class="ruby">--  </span><br><span class="line"></span>-<span class="ruby"> 第四步    </span><br><span class="line"></span>写上一个计数的函数，这样可以在运行main函数存入数据库时并打印链接的同时，统计已经写了多少数据进去。</span><br></pre></td></tr></table></figure>
-<p>import time<br>from page_parsing import url_list</p>
-<p>while True:<br>    print(url_list.find().count())<br>    time.sleep(5)<br>```  </p>
+<pre><code class="python"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup
+<span class="keyword">import</span> requests
+
+
+start_url = <span class="string">'http://bj.ganji.com/wu/'</span>
+url_host = <span class="string">'http://bj.ganji.com'</span>
+
+<span class="function"><span class="keyword">def</span> <span class="title">get_index_url</span><span class="params">(url)</span>:</span>
+    <span class="comment"># url = start_url</span>
+    wb_data = requests.get(url)
+    soup = BeautifulSoup(wb_data.text, <span class="string">'lxml'</span>)
+    links = soup.select(<span class="string">'.fenlei &gt; dt &gt; a'</span>)
+    <span class="keyword">for</span> link <span class="keyword">in</span> links:
+        page_url = url_host + link.get(<span class="string">'href'</span>)
+        print(page_url)
+
+get_index_url(start_url)
+</code></pre>
+<p>程序的运行结果是20个链接，  </p>
+<pre><code class="python">http://bj.ganji.com/jiaju/
+http://bj.ganji.com/rirongbaihuo/
+http://bj.ganji.com/shouji/
+http://bj.ganji.com/shoujihaoma/
+http://bj.ganji.com/bangong/
+http://bj.ganji.com/nongyongpin/
+http://bj.ganji.com/jiadian/
+http://bj.ganji.com/ershoubijibendiannao/
+http://bj.ganji.com/ruanjiantushu/
+http://bj.ganji.com/yingyouyunfu/
+http://bj.ganji.com/diannao/
+http://bj.ganji.com/xianzhilipin/
+http://bj.ganji.com/fushixiaobaxuemao/
+http://bj.ganji.com/meironghuazhuang/
+http://bj.ganji.com/shuma/
+http://bj.ganji.com/laonianyongpin/
+http://bj.ganji.com/xuniwupin/
+http://bj.ganji.com/qitawupin/
+http://bj.ganji.com/ershoufree/
+http://bj.ganji.com/wupinjiaohuan/
+</code></pre>
+<p>把这20个链接放入程序中，成为channel_list。<br>这也就是我们的第一个小程序 channel_extracing.py。  </p>
+<hr>
+<ul>
+<li>第二步<br>从大的分类下获取单个帖子的链接，先来分析下页面结构，<br><img src="http://o7b8j5zne.bkt.clouddn.com/ganji%E5%9B%BE2.png" alt="图2"> </li>
+</ul>
+<p>以二手笔记本电脑为例，可以看到后面结构为o＋page，这里o代表的是个人发布的，后面是page。<br>那么首先考虑的是构造一个爬虫来抓取links</p>
+<pre><code class="python"><span class="comment"># spider 1</span>
+<span class="function"><span class="keyword">def</span> <span class="title">get_links_from</span><span class="params">(channel, pages, who_sells=<span class="string">'o'</span>)</span>:</span>
+    <span class="comment"># http://bj.ganji.com/ershoubijibendiannao/o3/</span>
+    <span class="comment"># o for personal a for merchant</span>
+    list_view = <span class="string">'{}{}{}/'</span>.format(channel, str(who_sells), str(pages))
+    wb_data = requests.get(list_view,headers=headers,proxies=proxies)
+    soup = BeautifulSoup(wb_data.text, <span class="string">'lxml'</span>)
+    <span class="keyword">if</span> soup.find(<span class="string">'ul'</span>, <span class="string">'pageLink'</span>):
+        <span class="keyword">for</span> link <span class="keyword">in</span> soup.select(<span class="string">'dd.feature div ul li a'</span>):
+            item_link = link.get(<span class="string">'href'</span>)
+            <span class="keyword">if</span> item_link != <span class="string">"javascript:"</span>:                
+                url_list.insert_one({<span class="string">'url'</span>: item_link})
+                print(item_link)
+            <span class="comment"># return urls</span>
+    <span class="keyword">else</span>:
+        <span class="comment"># It's the last page !</span>
+        <span class="keyword">pass</span>
+</code></pre>
+<p>这里注意一下加了一个判断，判断这一页不是最后一页，就是看下方有无pageLink，俗称也就是翻页器类似的，还有就是直接加上了headers部分和proxy部分反爬取。  </p>
+<p>函数的结果是urls，并考虑使用mongo数据库来存储这个url_list。  </p>
+<p>接下来就是访问单个的url来抓取里面的数据信息了。  </p>
+<pre><code class="python"><span class="comment"># spider 2</span>
+<span class="function"><span class="keyword">def</span> <span class="title">get_item_info_from</span><span class="params">(url,data=None)</span>:</span>
+    wb_data = requests.get(url,headers=headers)
+    <span class="keyword">if</span> wb_data.status_code == <span class="number">404</span>:
+        <span class="keyword">pass</span>
+    <span class="keyword">else</span>:
+        soup = BeautifulSoup(wb_data.text, <span class="string">'lxml'</span>)
+        data = {
+            <span class="string">'title'</span>:soup.title.text.strip(),
+            <span class="string">'price'</span>:soup.select(<span class="string">'.f22.fc-orange.f-type'</span>)[<span class="number">0</span>].text.strip(),
+            <span class="string">'pub_date'</span>:soup.select(<span class="string">'.pr-5'</span>)[<span class="number">0</span>].text.strip().split(<span class="string">' '</span>)[<span class="number">0</span>],
+            <span class="string">'area'</span>:list(map(<span class="keyword">lambda</span> x:x.text,soup.select(<span class="string">'ul.det-infor &gt; li:nth-of-type(3) &gt; a'</span>))),
+            <span class="string">'cates'</span>:list(soup.select(<span class="string">'ul.det-infor &gt; li:nth-of-type(1) &gt; span'</span>)[<span class="number">0</span>].stripped_strings),
+            <span class="string">'url'</span>:url
+        }
+        print(data)
+        item_info.insert_one(data)
+</code></pre>
+<p>看图，单个页面我们考虑抓取，标题title 价格price 发布时间pub_data 交易地点area 类型cates 另外再考虑把url也加入里面。大概先这样咯。<br><img src="http://o7b8j5zne.bkt.clouddn.com/ganji%E5%9B%BE3.png" alt="图3">  </p>
+<p>把程序组织一下 组成第二个py程序 page_parsing.py<br>当然详情页抓取的数据我们也放到mongo的数据库中。  </p>
+<p>到这里初步小结一下，实现了哪些呢？先是从ganji的首页获取分类，20个分类<br>然后在这20个分类下，获取单个帖子的详情页，然后通过详情页去抓取想要的数据。<br>爬取的初步流程完成了，接下来就是包装，<br>写个主函数，定义下我们抓取多少页的大分类，先url_list然后item_info都存入到mongo的数据库中。<br>ps 考虑写一个计数的函数观察我们抓取的信息数目。  </p>
+<hr>
+<ul>
+<li>第三步<br>主函数的分析   </li>
+</ul>
+<pre><code class="python"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Pool  
+<span class="keyword">from</span> page_parsing <span class="keyword">import</span> get_item_info_from,url_list,item_info,get_links_from  
+<span class="keyword">from</span> channel_extracing <span class="keyword">import</span> channel_list
+</code></pre>
+<p>也就是前面的两个函数，我们实现了几个功能：</p>
+<p>channel_list<br>两个方法 get_item_info_from     get_links_from<br>两个mongo数据库的collections url_list item_info  </p>
+<p>另外这里使用多进程来加快抓取的速度      </p>
+<pre><code class="python"><span class="function"><span class="keyword">def</span> <span class="title">get_all_links_from</span><span class="params">(channel)</span>:</span>
+    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">100</span>):
+        get_links_from(channel,i)
+</code></pre>
+<p>注意前面定义的函数我们定义了页面，这里抓取1-99页，当然也许部分分类商品多，99不足，部分分类商品不是很多，我们也已经有判断会pass掉。。  </p>
+<pre><code class="python"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:
+    pool = Pool(processes=<span class="number">6</span>)
+    <span class="comment"># pool = Pool()</span>
+    pool.map(get_all_links_from,channel_list.split())
+    pool.close()
+    pool.join()
+</code></pre>
+<p>开6个进程进行爬爬爬，先存url，再根据url访问抓取。    </p>
+<hr>
+<ul>
+<li>第四步<br>写上一个计数的函数，这样可以在运行main函数存入数据库时并打印链接的同时，统计已经写了多少数据进去。  </li>
+</ul>
+<pre><code class="python"><span class="keyword">import</span> time
+<span class="keyword">from</span> page_parsing <span class="keyword">import</span> url_list
+
+<span class="keyword">while</span> <span class="keyword">True</span>:
+    print(url_list.find().count())
+    time.sleep(<span class="number">5</span>)
+</code></pre>
 <hr>
 <ul>
 <li>最后<br>附上项目github地址    <a href="https://github.com/zhangdavids/myganji" target="_blank" rel="external">项目地址</a></li>
@@ -939,7 +1031,7 @@ db.foo.find( { a : 1 } )：对于当前数据库中的foo集合进行查找，�
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Arkiv</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li></ul>
     </div>
@@ -949,7 +1041,7 @@ db.foo.find( { a : 1 } )：对于当前数据库中的foo集合进行查找，�
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Siste innlegg</h3>
     <div class="widget">
       <ul>
         
