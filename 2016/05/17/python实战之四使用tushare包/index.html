@@ -3,39 +3,30 @@
 <head>
   <meta charset="utf-8">
   
-  <title>爬虫实践教程0 | 上药三品，神与气精</title>
+  <title>python实战之四使用tushare包 | 上药三品，神与气精</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="爬虫的基本就是从网页上获取我们需要的信息。  
-# coding=utf-8
-from bs4 import BeautifulSoup
-import requests
-from pymongo import MongoClient
-
-client = MongoClient(&amp;apos;localhost&amp;apos;,27017)
-db = client[&amp;apos;guazigz&amp;apos;]">
+  <meta name="description" content="tushare是比较著名的金融财经的包。通过pip安装tushare包之后，直接就可以调用  
+import tushare as ts
+df = ts.get_sina_dd(&amp;apos;600848&amp;apos;, date=&amp;apos;2015-12-24&amp;apos;, vol=500)
+#指定大于等于500手的数据
+数据是直接dataframe，比较方便存储。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="爬虫实践教程0">
-<meta property="og:url" content="http://yoursite.com/2016/05/15/爬虫实践教程0/index.html">
+<meta property="og:title" content="python实战之四使用tushare包">
+<meta property="og:url" content="http://yoursite.com/2016/05/17/python实战之四使用tushare包/index.html">
 <meta property="og:site_name" content="上药三品，神与气精">
-<meta property="og:description" content="爬虫的基本就是从网页上获取我们需要的信息。  
-# coding=utf-8
-from bs4 import BeautifulSoup
-import requests
-from pymongo import MongoClient
-
-client = MongoClient(&amp;apos;localhost&amp;apos;,27017)
-db = client[&amp;apos;guazigz&amp;apos;]">
-<meta property="og:updated_time" content="2016-05-14T18:22:13.000Z">
+<meta property="og:description" content="tushare是比较著名的金融财经的包。通过pip安装tushare包之后，直接就可以调用  
+import tushare as ts
+df = ts.get_sina_dd(&amp;apos;600848&amp;apos;, date=&amp;apos;2015-12-24&amp;apos;, vol=500)
+#指定大于等于500手的数据
+数据是直接dataframe，比较方便存储。">
+<meta property="og:updated_time" content="2016-05-20T13:38:29.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="爬虫实践教程0">
-<meta name="twitter:description" content="爬虫的基本就是从网页上获取我们需要的信息。  
-# coding=utf-8
-from bs4 import BeautifulSoup
-import requests
-from pymongo import MongoClient
-
-client = MongoClient(&amp;apos;localhost&amp;apos;,27017)
-db = client[&amp;apos;guazigz&amp;apos;]">
+<meta name="twitter:title" content="python实战之四使用tushare包">
+<meta name="twitter:description" content="tushare是比较著名的金融财经的包。通过pip安装tushare包之后，直接就可以调用  
+import tushare as ts
+df = ts.get_sina_dd(&amp;apos;600848&amp;apos;, date=&amp;apos;2015-12-24&amp;apos;, vol=500)
+#指定大于等于500手的数据
+数据是直接dataframe，比较方便存储。">
   
     <link rel="alternate" href="/atom.xml" title="上药三品，神与气精" type="application/atom+xml">
   
@@ -88,10 +79,10 @@ db = client[&amp;apos;guazigz&amp;apos;]">
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-爬虫实践教程0" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-python实战之四使用tushare包" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/05/15/爬虫实践教程0/" class="article-date">
-  <time datetime="2016-05-14T18:04:34.000Z" itemprop="datePublished">2016-05-15</time>
+    <a href="/2016/05/17/python实战之四使用tushare包/" class="article-date">
+  <time datetime="2016-05-17T09:23:00.000Z" itemprop="datePublished">2016-05-17</time>
 </a>
     
   </div>
@@ -102,7 +93,7 @@ db = client[&amp;apos;guazigz&amp;apos;]">
         
   
     <h1 class="article-title" itemprop="name">
-      爬虫实践教程0
+      python实战之四使用tushare包
     </h1>
   
 
@@ -110,45 +101,16 @@ db = client[&amp;apos;guazigz&amp;apos;]">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>爬虫的基本就是从网页上获取我们需要的信息。  </p>
-<pre><code># coding=utf-8
-from bs4 import BeautifulSoup
-import requests
-from pymongo import MongoClient
-
-client = MongoClient(&apos;localhost&apos;,27017)
-db = client[&apos;guazigz&apos;]
-item_info = db[&apos;item_info&apos;]
-
-
-def detailOper(url):
-    web_data = requests.get(url)
-    web_data.encoding=&apos;utf-8&apos;
-    soup = BeautifulSoup(web_data.text, &apos;lxml&apos;)
-    titles = soup.select(&apos;div.list &gt; ul &gt; li &gt; div &gt; p.infoBox &gt; a&apos;)
-    prices = soup.select(&apos;div.list &gt; ul &gt; li &gt; div &gt; p.priType-s &gt; span &gt; i.fc-org.priType&apos;)
-    for title, price in zip(titles, prices):
-        data = {
-            &apos;title&apos;: title.get_text(),
-            &apos;detailHerf&apos;: title.get(&apos;href&apos;),
-            &apos;price&apos;:price.get_text().replace(u&apos;万&apos;, &apos;&apos;).replace(&apos; &apos;,&apos;&apos;).replace(&apos;\n&apos;,&apos;&apos;)
-    }
-        item_info.insert_one(data)
-        print(data)
-
-def start():
-    urls = [&apos;http://www.guazi.com/gz/buy/o{}/&apos;.format(str(i)) for i in range(1, 30, 1)]
-    for url in urls:
-        detailOper(url)
-
-if __name__ == &apos;__main__&apos;:
-    start()
-</code></pre><p>  如上的程序相对来说很好阅读，<br>  从瓜子二手车网站抓取了29页数据，每页40条，共1160条数据存入到名为guazigz的mongo数据库中。集合名为item_info,注意一下，print（data）是为了能清晰显示数据，实际是可以删除注释掉的。</p>
+        <p>tushare是比较著名的金融财经的包。<br>通过pip安装tushare包之后，<br>直接就可以调用  </p>
+<pre><code>import tushare as ts
+df = ts.get_sina_dd(&apos;600848&apos;, date=&apos;2015-12-24&apos;, vol=500)
+#指定大于等于500手的数据
+</code></pre><p>数据是直接dataframe，比较方便存储。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/15/爬虫实践教程0/" data-id="cioooloze000jyd2zr4wxqscz" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/05/17/python实战之四使用tushare包/" data-id="cioooloyy000cyd2zv59dz88l" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -157,19 +119,19 @@ if __name__ == &apos;__main__&apos;:
     
 <nav id="article-nav">
   
-    <a href="/2016/05/15/爬虫实践教程1/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/05/17/python实战之五推特数据流分析/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Récent</strong>
       <div class="article-nav-title">
         
-          爬虫实践教程1
+          python实战之五推特数据流分析
         
       </div>
     </a>
   
   
-    <a href="/2016/05/15/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2016/05/17/python实战之三读取大文件/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Ancien</strong>
-      <div class="article-nav-title">Hello World</div>
+      <div class="article-nav-title">python实战之三读取大文件</div>
     </a>
   
 </nav>
