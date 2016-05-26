@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="上药三品，神与气精">
 <meta property="og:description" content="对数据的处理现在普遍就是两种方案，python 或者 R。  
 一组学生参加了数学 科学和英语的考试。考试完成之后，需要給学生确定一个成绩衡量指标。会把综合成绩的前20%评定为A，接着是B C D F。可以看到数据处理的一个障碍，三科成绩无法比较，或者说比较没有意义。。:)  当然有人认为可以这么处理，比如知道数学的总分是700，将成绩全部换为以100分为计量单位的。。当然英语也是，，计总分为50">
-<meta property="og:updated_time" content="2016-05-24T06:56:36.000Z">
+<meta property="og:updated_time" content="2016-05-26T19:23:45.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="R实战0-数据处理难题的一套解决方案">
 <meta name="twitter:description" content="对数据的处理现在普遍就是两种方案，python 或者 R。  
@@ -59,9 +59,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -107,20 +107,27 @@
 <li>由于三科考试的分值不同，如何让它们变得可以进行比较。一种方式是将数据进行标准化，使用单位标准差来表示，这个过程使用scale（）函数来实现。  </li>
 </ul>
 <figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">z &lt;- scale(roster[,2:</span><span class="number">4</span>])</span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">we get</span><br></pre></td></tr></table></figure>
-<p>z<br>        Math Science English<br> [1,]  0.013   1.078   0.587<br> [2,]  1.143   1.591   0.037<br> [3,] -1.026  -0.847  -0.697<br> [4,] -1.649  -0.590  -1.247<br> [5,] -0.068  -1.489  -0.330<br> [6,]  0.128  -0.205   1.137<br> [7,] -1.049  -0.847  -1.247<br> [8,]  1.432   1.078   1.504<br> [9,]  0.832   0.308   0.954<br>[10,]  0.243  -0.077  -0.697<br>attr(,”scaled:center”)<br>   Math Science English<br>    501      87      22<br>attr(,”scaled:scale”)<br>   Math Science English<br>   86.7     7.8     5.5<br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">- </span>使用mean（）函数计算各行的均值来获得综合得分，并且使用函数cbind（）函数将其添加到花名册当中。</span><br></pre></td></tr></table></figure></p>
-<p>score &lt;- apply(z, 1, mean)<br>roster &lt;- cbind(roster, score)<br><figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">计算均值之后，并把score分数加进去。  </span><br><span class="line"> </span><br><span class="line">-<span class="ruby"> 函数quantile（）给出学生综合得分的百分位数。   </span><br><span class="line"></span>这个函数可以综合得分的百分位数</span><br></pre></td></tr></table></figure></p>
-<p>y &lt;- quantile(score, c(.8, .6, .4, .2))<br><figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- 使用逻辑运算符，重编码为A B <span class="keyword">C</span> <span class="keyword">D</span> F。</span><br></pre></td></tr></table></figure></p>
+<p>z<br>        Math Science English<br> [1,]  0.013   1.078   0.587<br> [2,]  1.143   1.591   0.037<br> [3,] -1.026  -0.847  -0.697<br> [4,] -1.649  -0.590  -1.247<br> [5,] -0.068  -1.489  -0.330<br> [6,]  0.128  -0.205   1.137<br> [7,] -1.049  -0.847  -1.247<br> [8,]  1.432   1.078   1.504<br> [9,]  0.832   0.308   0.954<br>[10,]  0.243  -0.077  -0.697<br>attr(,”scaled:center”)<br>   Math Science English<br>    501      87      22<br>attr(,”scaled:scale”)<br>   Math Science English<br>   86.7     7.8     5.5 </p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">- </span>使用mean（）函数计算各行的均值来获得综合得分，并且使用函数cbind（）函数将其添加到花名册当中。</span><br></pre></td></tr></table></figure>
+<p>score &lt;- apply(z, 1, mean)<br>roster &lt;- cbind(roster, score)</p>
+<figure class="highlight haml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">计算均值之后，并把score分数加进去。  </span><br><span class="line"> </span><br><span class="line">-<span class="ruby"> 函数quantile（）给出学生综合得分的百分位数。   </span><br><span class="line"></span>这个函数可以综合得分的百分位数</span><br></pre></td></tr></table></figure>
+<p>y &lt;- quantile(score, c(.8, .6, .4, .2))</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- 使用逻辑运算符，重编码为A B <span class="keyword">C</span> <span class="keyword">D</span> F。</span><br></pre></td></tr></table></figure>
 <p>roster$grade[score &gt;= y[1]] &lt;- “A”<br>roster$grade[score &lt;= y[1] &amp; score &gt;=y[2]] &lt;- “B”<br>roster$grade[score &lt;= y[2] &amp; score &gt;=y[3]] &lt;- “C”<br>roster$grade[score &lt;= y[3] &amp; score &gt;=y[4]] &lt;- “D”<br>roster$grade[score &lt;= y[4]] &lt;- “F”<br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">- </span>使用函数strsplit（）以空格为界，将学生姓名拆分为姓和名。</span><br></pre></td></tr></table></figure></p>
-<p>name &lt;- strsplit((roster$stduent), “ “)<br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">注意返回的是什么值，这里是列表！！</span><br><span class="line"></span><br><span class="line"><span class="code"> </span></span><br><span class="line"><span class="bullet">- </span>使用函数sapply（）提取列表元素。</span><br></pre></td></tr></table></figure></p>
-<p>lastname &lt;- sapply(name, “[“, 2)<br>firstname &lt;- sapply(name, “[“, 1)<br>roster &lt;- cbind(firstname, lastname, roster[, -1])<br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">将原来的student化成两列，一列是姓，一列是名，同时也将student列舍弃掉。</span><br><span class="line"><span class="code">  </span></span><br><span class="line"><span class="bullet">- </span>使用order（）函数依据姓氏和名字对数据集进行排序</span><br></pre></td></tr></table></figure></p>
-<p>roster &lt;- roster[order(lastname, firstname),]<br>roster<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">finally</span> we <span class="keyword">get</span></span><br></pre></td></tr></table></figure></p>
-<p>roster<br>   firstname   lastname Math Science English score grade<br>6     Cherry    Cushing  512      85      28  0.35     C<br>1       John      Davis  502      95      25  0.56     B<br>9       Joel    England  573      89      27  0.70     B<br>4      David      Jones  358      82      15 -1.16     F<br>8       Greg       Knox  625      95      30  1.34     A<br>5     Janice Markhammer  495      75      20 -0.63     D<br>3      Bully      Moose  412      80      18 -0.86     D<br>10      Mary    Rayburn  522      86      18 -0.18     C<br>2     Angela    Willams  600      99      22  0.92     A<br>7     Reuven    Ytzrhak  410      80      15 -1.05     F<br>```</p>
+<p>name &lt;- strsplit((roster$stduent), “ “)</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">注意返回的是什么值，这里是列表！！</span><br><span class="line"></span><br><span class="line"><span class="code"> </span></span><br><span class="line"><span class="bullet">- </span>使用函数sapply（）提取列表元素。</span><br></pre></td></tr></table></figure>
+<p>lastname &lt;- sapply(name, “[“, 2)<br>firstname &lt;- sapply(name, “[“, 1)<br>roster &lt;- cbind(firstname, lastname, roster[, -1])</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">将原来的student化成两列，一列是姓，一列是名，同时也将student列舍弃掉。</span><br><span class="line"><span class="code">  </span></span><br><span class="line"><span class="bullet">- </span>使用order（）函数依据姓氏和名字对数据集进行排序</span><br></pre></td></tr></table></figure>
+<p>roster &lt;- roster[order(lastname, firstname),]<br>roster</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">finally</span> we <span class="keyword">get</span></span><br></pre></td></tr></table></figure>
+<p>roster<br>   firstname   lastname Math Science English score grade<br>6     Cherry    Cushing  512      85      28  0.35     C<br>1       John      Davis  502      95      25  0.56     B<br>9       Joel    England  573      89      27  0.70     B<br>4      David      Jones  358      82      15 -1.16     F<br>8       Greg       Knox  625      95      30  1.34     A<br>5     Janice Markhammer  495      75      20 -0.63     D<br>3      Bully      Moose  412      80      18 -0.86     D<br>10      Mary    Rayburn  522      86      18 -0.18     C<br>2     Angela    Willams  600      99      22  0.92     A<br>7     Reuven    Ytzrhak  410      80      15 -1.05     F</p>
+<p>```</p>
 <p>Done!!!!!!</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/24/R实战0-数据处理难题的一套解决方案/" data-id="cioooloxu0000yd2zsl0rt5ek" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/05/24/R实战0-数据处理难题的一套解决方案/" data-id="cioooui4q0005902z3klw3ra0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -130,7 +137,7 @@
 <nav id="article-nav">
   
     <a href="/2016/05/24/为何你学不好高等数学/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Récent</strong>
+      <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
           为何你学不好高等数学
@@ -140,7 +147,7 @@
   
   
     <a href="/2016/05/19/scrapy爬虫实践详解/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Ancien</strong>
+      <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title">scrapy爬虫实践详解</div>
     </a>
   
@@ -173,7 +180,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
@@ -210,7 +217,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2016 Zhang Tony<br>
-      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
