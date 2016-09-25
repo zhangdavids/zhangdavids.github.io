@@ -57,7 +57,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Søk"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Zoeken"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -67,6 +67,205 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-how-to-use-awk" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/09/25/how-to-use-awk/" class="article-date">
+  <time datetime="2016-09-25T11:37:38.000Z" itemprop="datePublished">2016-09-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/25/how-to-use-awk/">how-to-use-awk.md</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>说起linux下的几个用的人不多的上古神器，基本会想到sed awk，这里先总结下awk的用法。  </p>
+<p>直接上实例吧  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$ cat netstat.txt</span><br><span class="line">Proto Recv-Q Send-Q Local-Address          Foreign-Address             State</span><br><span class="line">tcp        0      0 0.0.0.0:3306           0.0.0.0:*                   LISTEN</span><br><span class="line">tcp        0      0 0.0.0.0:80             0.0.0.0:*                   LISTEN</span><br><span class="line">tcp        0      0 127.0.0.1:9000         0.0.0.0:*                   LISTEN</span><br><span class="line">tcp        0      0 coolshell.cn:80        124.205.5.146:18245         TIME_WAIT</span><br><span class="line">tcp        0      0 coolshell.cn:80        61.140.101.185:37538        FIN_WAIT2</span><br><span class="line">tcp        0      0 coolshell.cn:80        110.194.134.189:1032        ESTABLISHED</span><br><span class="line">tcp        0      0 coolshell.cn:80        123.169.124.111:49809       ESTABLISHED</span><br><span class="line">tcp        0      0 coolshell.cn:80        116.234.127.77:11502        FIN_WAIT2</span><br><span class="line">tcp        0      0 coolshell.cn:80        123.169.124.111:49829       ESTABLISHED</span><br><span class="line">tcp        0      0 coolshell.cn:80        183.60.215.36:36970         TIME_WAIT</span><br><span class="line">tcp        0   4166 coolshell.cn:80        61.148.242.38:30901         ESTABLISHED</span><br><span class="line">tcp        0      1 coolshell.cn:80        124.152.181.209:26825       FIN_WAIT1</span><br><span class="line">tcp        0      0 coolshell.cn:80        110.194.134.189:4796        ESTABLISHED</span><br><span class="line">tcp        0      0 coolshell.cn:80        183.60.212.163:51082        TIME_WAIT</span><br><span class="line">tcp        0      1 coolshell.cn:80        208.115.113.92:50601        LAST_ACK</span><br><span class="line">tcp        0      0 coolshell.cn:80        123.169.124.111:49840       ESTABLISHED</span><br><span class="line">tcp        0      0 coolshell.cn:80        117.136.20.85:50025         FIN_WAIT2</span><br><span class="line">tcp        0      0 :::22                  :::*                        LISTEN</span><br></pre></td></tr></table></figure>
+<p>从netstat命令中提取了如上信息作为用例  </p>
+<p>输出第1列和第4例  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">'&#123;print $1, $4&#125;'</span> netstat.txt</span><br></pre></td></tr></table></figure>
+<ul>
+<li>其中单引号中的被大括号括着的就是awk的语句，注意，其只能被单引号包含。</li>
+<li>其中的$1..$n表示第几例。注：$0表示整个行。</li>
+</ul>
+<p>再来看看awk的格式化输出，和C语言的printf没什么两样：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">'&#123;printf "%-8s %-8s %-8s %-18s %-22s %-15s\n",$1,$2,$3,$4,$5,$6&#125;'</span> netstat.txt</span><br></pre></td></tr></table></figure>
+<p>再来看看如何过滤记录（下面过滤条件为：第三列的值为0 &amp;&amp; 第6列的值为LISTEN）  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">'$3==0 &amp;&amp; $6=="LISTEN" '</span> netstat.txt</span><br></pre></td></tr></table></figure>
+<p>其中的“==”为比较运算符。其他比较运算符：!=, &gt;, &lt;, &gt;=, &lt;=</p>
+<p>我们来看看各种过滤记录的方式：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">' $3&gt;0 &#123;print $0&#125;'</span> netstat.txt</span><br></pre></td></tr></table></figure>
+<p>需要表头的话，我们可以引入内建变量NR：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">'$3==0 &amp;&amp; $6=="LISTEN" || NR==1 '</span> netstat.txt</span><br></pre></td></tr></table></figure>
+<p>加上格式化输出：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">'$3==0 &amp;&amp; $6=="LISTEN" || NR==1 &#123;printf "%-20s %-20s %s\n",$4,$5,$6&#125;'</span> netstat.txt</span><br></pre></td></tr></table></figure>
+<p>说到了内建变量，我们可以来看看awk的一些内建变量：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">变量</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$0</td>
+<td style="text-align:left">当前记录（这个变量中存放着整个行的内容）</td>
+</tr>
+<tr>
+<td style="text-align:center">$1~$n</td>
+<td style="text-align:left">当前记录的第n个字段，字段间由FS分隔</td>
+</tr>
+<tr>
+<td style="text-align:center">FS</td>
+<td style="text-align:left">输入字段分隔符 默认是空格或Tab</td>
+</tr>
+<tr>
+<td style="text-align:center">NF</td>
+<td style="text-align:left">当前记录中的字段个数，就是有多少列</td>
+</tr>
+<tr>
+<td style="text-align:center">NR</td>
+<td style="text-align:left">已经读出的记录数，就是行号，从1开始，如果有多个文件话，这个值也是不断累加中。</td>
+</tr>
+<tr>
+<td style="text-align:center">FNR</td>
+<td style="text-align:left">当前记录数，与NR不同的是，这个值会是各个文件自己的行号</td>
+</tr>
+<tr>
+<td style="text-align:center">RS</td>
+<td style="text-align:left">输入的记录分隔符， 默认为换行符</td>
+</tr>
+<tr>
+<td style="text-align:center">OFS</td>
+<td style="text-align:left">输出字段分隔符， 默认也是空格</td>
+</tr>
+<tr>
+<td style="text-align:center">ORS</td>
+<td style="text-align:left">输出的记录分隔符，默认为换行符</td>
+</tr>
+<tr>
+<td style="text-align:center">FILENAME</td>
+<td style="text-align:left">当前输入文件的名字</td>
+</tr>
+</tbody>
+</table>
+<p>如果要输出行号：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">'$3==0 &amp;&amp; $6=="ESTABLISHED" || NR==1 &#123;printf "%02s %s %-20s %-20s %s\n",NR, FNR, $4,$5,$6&#125;'</span> netstat.txt</span><br></pre></td></tr></table></figure>
+<p>未完待续  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/09/25/how-to-use-awk/" data-id="citiq6mu4000dn32z9q6aoii3" class="article-share-link">Delen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-how-to-use-sed-in-linux" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/08/08/how-to-use-sed-in-linux/" class="article-date">
+  <time datetime="2016-08-08T12:08:19.000Z" itemprop="datePublished">2016-08-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/08/how-to-use-sed-in-linux/">how-to-use-sed-in-linux</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>sed是一个很好的文件处理工具，本身是一个管道命令，主要是以行为单位进行处理，可以将数据行进行替换、删除、新增、选取等特定工作，下面先了解一下sed的用法<br>sed命令行格式为：  </p>
+<pre><code>sed [-nefri] ‘command’ 输入文本        
+</code></pre><p>常用选项：</p>
+<pre><code>-n∶使用安静(silent)模式。在一般 sed 的用法中，所有来自 STDIN的资料一般都会被列出到萤幕上。但如果加上 -n 参数后，则只有经过sed 特殊处理的那一行(或者动作)才会被列出来。  
+-e∶直接在指令列模式上进行 sed 的动作编辑；  
+-f∶直接将 sed 的动作写在一个档案内， -f filename 则可以执行 filename 内的sed 动作；  
+-r∶sed 的动作支援的是延伸型正规表示法的语法。(预设是基础正规表示法语法)  
+-i∶直接修改读取的档案内容，而不是由萤幕输出。         
+</code></pre><p>常用命令：</p>
+<pre><code>a  ∶新增， a 的后面可以接字串，而这些字串会在新的一行出现(目前的下一行)～
+c  ∶取代， c 的后面可以接字串，这些字串可以取代 n1,n2 之间的行！
+d  ∶删除，因为是删除啊，所以 d 后面通常不接任何咚咚；
+i  ∶插入， i 的后面可以接字串，而这些字串会在新的一行出现(目前的上一行)；
+p  ∶列印，亦即将某个选择的资料印出。通常 p 会与参数 sed -n 一起运作～
+s  ∶取代，可以直接进行取代的工作哩！通常这个 s 的动作可以搭配正规表示法！例如 1,20s/old/new/g 就是啦！
+</code></pre><p>举例：（假设我们有一文件名为ab）  </p>
+<p>   删除某行</p>
+<pre><code>[root@localhost ruby] # sed &apos;1d&apos; ab              #删除第一行 
+[root@localhost ruby] # sed &apos;$d&apos; ab              #删除最后一行
+[root@localhost ruby] # sed &apos;1,2d&apos; ab           #删除第一行到第二行
+[root@localhost ruby] # sed &apos;2,$d&apos; ab           #删除第二行到最后一行
+</code></pre><p>　显示某行  
+　</p>
+<pre><code>[root@localhost ruby] # sed -n &apos;1p&apos; ab           #显示第一行
+
+[root@localhost ruby] # sed -n &apos;$p&apos; ab           #显示最后一行  
+
+[root@localhost ruby] # sed -n &apos;1,2p&apos; ab        #显示第一行到第二行 
+
+[root@localhost ruby] # sed -n &apos;2,$p&apos; ab        #显示第二行到最后一行  
+</code></pre><p>　使用模式进行查询</p>
+<pre><code>[root@localhost ruby] # sed -n &apos;/ruby/p&apos; ab    #查询包括关键字ruby所在所有行   
+[root@localhost ruby] # sed -n &apos;/\$/p&apos; ab        #查询包括关键字$所在所有行，使用反斜线\屏蔽特殊含义
+</code></pre><p>　增加一行或多行字符串<br>　<br>　<br>　        [root@localhost ruby]# cat ab<br>    Hello!<br>    ruby is me,welcome to my blog.<br>    end    </p>
+<p>   [root@localhost ruby] # sed ‘1a drink tea’ ab  #第一行后增加字符串”drink tea”<br>     Hello!<br>     drink tea<br>     ruby is me,welcome to my blog.<br>     end<br>     [root@localhost ruby] # sed ‘1,3a drink tea’ ab #第一行到第三行后增加字符串”drink tea”<br>     Hello!<br>     drink tea<br>     ruby is me,welcome to my blog.<br>     drink tea<br>     end<br>     drink tea<br>     [root@localhost ruby] # sed ‘1a drink tea\nor coffee’ ab   #第一行后增加多行，使用换行符\n<br>     Hello!<br>     drink tea<br>     or coffee<br>     ruby is me,welcome to my blog.<br>     end</p>
+<p>　　代替一行或多行<br>     [root@localhost ruby] # sed ‘1c Hi’ ab                #第一行代替为Hi<br>     Hi<br>     ruby is me,welcome to my blog.<br>     end<br>     [root@localhost ruby] # sed ‘1,2c Hi’ ab             #第一行到第二行代替为Hi<br>     Hi<br>     end</p>
+<p>　　替换一行中的某部分<br>　　格式：sed ‘s/要替换的字符串/新的字符串/g’   （要替换的字符串可以用正则表达式）<br>     [root@localhost ruby] # sed -n ‘/ruby/p’ ab | sed ‘s/ruby/bird/g’    #替换ruby为bird<br>　  [root@localhost ruby] # sed -n ‘/ruby/p’ ab | sed ‘s/ruby//g’        #删除ruby</p>
+<pre><code>插入
+[root@localhost ruby] # sed -i &apos;$a bye&apos; ab         #在文件ab中最后一行直接输入&quot;bye&quot;
+[root@localhost ruby]# cat ab
+Hello!
+ruby is me,welcome to my blog.
+end
+bye
+
+删除匹配行
+
+ sed -i &apos;/匹配字符串/d&apos;  filename  （注：若匹配字符串是变量，则需要“”，而不是‘’。记得好像是）
+
+ 替换匹配行中的某个字符串
+
+ sed -i &apos;/匹配字符串/s/替换源字符串/替换目标字符串/g&apos; filename
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/08/08/how-to-use-sed-in-linux/" data-id="citiq6mtd0004n32zts2xqi5n" class="article-share-link">Delen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-为何你学不好高等数学" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -105,7 +304,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/24/为何你学不好高等数学/" data-id="cioooui5y000f902zji8nmmkd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/05/24/为何你学不好高等数学/" data-id="citiq6mu6000en32zedpdg4wv" class="article-share-link">Delen</a>
       
       
     </footer>
@@ -151,11 +350,11 @@
 <ul>
 <li>由于三科考试的分值不同，如何让它们变得可以进行比较。一种方式是将数据进行标准化，使用单位标准差来表示，这个过程使用scale（）函数来实现。  </li>
 </ul>
-<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">z &lt;- scale(roster[,<span class="number">2</span>:<span class="number">4</span>])</span><br><span class="line"></span><br><span class="line">``` </span><br><span class="line">we get </span><br><span class="line"> </span><br><span class="line">```R</span><br><span class="line">z</span><br><span class="line">        Math Science English</span><br><span class="line"> [<span class="number">1</span>,]  <span class="number">0.013</span>   <span class="number">1.078</span>   <span class="number">0.587</span></span><br><span class="line"> [<span class="number">2</span>,]  <span class="number">1.143</span>   <span class="number">1.591</span>   <span class="number">0.037</span></span><br><span class="line"> [<span class="number">3</span>,] -<span class="number">1.026</span>  -<span class="number">0.847</span>  -<span class="number">0.697</span></span><br><span class="line"> [<span class="number">4</span>,] -<span class="number">1.649</span>  -<span class="number">0.590</span>  -<span class="number">1.247</span></span><br><span class="line"> [<span class="number">5</span>,] -<span class="number">0.068</span>  -<span class="number">1.489</span>  -<span class="number">0.330</span></span><br><span class="line"> [<span class="number">6</span>,]  <span class="number">0.128</span>  -<span class="number">0.205</span>   <span class="number">1.137</span></span><br><span class="line"> [<span class="number">7</span>,] -<span class="number">1.049</span>  -<span class="number">0.847</span>  -<span class="number">1.247</span></span><br><span class="line"> [<span class="number">8</span>,]  <span class="number">1.432</span>   <span class="number">1.078</span>   <span class="number">1.504</span></span><br><span class="line"> [<span class="number">9</span>,]  <span class="number">0.832</span>   <span class="number">0.308</span>   <span class="number">0.954</span></span><br><span class="line">[<span class="number">10</span>,]  <span class="number">0.243</span>  -<span class="number">0.077</span>  -<span class="number">0.697</span></span><br><span class="line">attr(,<span class="string">"scaled:center"</span>)</span><br><span class="line">   Math Science English </span><br><span class="line">    <span class="number">501</span>      <span class="number">87</span>      <span class="number">22</span> </span><br><span class="line">attr(,<span class="string">"scaled:scale"</span>)</span><br><span class="line">   Math Science English </span><br><span class="line">   <span class="number">86.7</span>     <span class="number">7.8</span>     <span class="number">5.5</span> </span><br><span class="line">   </span><br><span class="line">   </span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">- 使用mean（）函数计算各行的均值来获得综合得分，并且使用函数cbind（）函数将其添加到花名册当中。</span><br><span class="line"></span><br><span class="line">```R</span><br><span class="line"></span><br><span class="line">score &lt;- apply(z, <span class="number">1</span>, mean)</span><br><span class="line">roster &lt;- cbind(roster, score)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">计算均值之后，并把score分数加进去。  </span><br><span class="line"> </span><br><span class="line">- 函数quantile（）给出学生综合得分的百分位数。   </span><br><span class="line">这个函数可以综合得分的百分位数  </span><br><span class="line"></span><br><span class="line">```R</span><br><span class="line"></span><br><span class="line">y &lt;- quantile(score, c(<span class="number">.8</span>, <span class="number">.6</span>, <span class="number">.4</span>, <span class="number">.2</span>))</span><br><span class="line"></span><br><span class="line">``` </span><br><span class="line">- 使用逻辑运算符，重编码为A B C D F。  </span><br><span class="line"></span><br><span class="line">```R</span><br><span class="line"></span><br><span class="line">roster$grade[score &gt;= y[<span class="number">1</span>]] &lt;- <span class="string">"A"</span></span><br><span class="line">roster$grade[score &lt;= y[<span class="number">1</span>] &amp; score &gt;=y[<span class="number">2</span>]] &lt;- <span class="string">"B"</span></span><br><span class="line">roster$grade[score &lt;= y[<span class="number">2</span>] &amp; score &gt;=y[<span class="number">3</span>]] &lt;- <span class="string">"C"</span></span><br><span class="line">roster$grade[score &lt;= y[<span class="number">3</span>] &amp; score &gt;=y[<span class="number">4</span>]] &lt;- <span class="string">"D"</span></span><br><span class="line">roster$grade[score &lt;= y[<span class="number">4</span>]] &lt;- <span class="string">"F"</span></span><br><span class="line"></span><br><span class="line">```  </span><br><span class="line">- 使用函数strsplit（）以空格为界，将学生姓名拆分为姓和名。</span><br></pre></td></tr></table></figure>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">z &lt;- scale(roster[,<span class="number">2</span>:<span class="number">4</span>])    </span><br><span class="line">``` </span><br><span class="line">we get     </span><br><span class="line"></span><br><span class="line">```R</span><br><span class="line">z</span><br><span class="line">        Math Science English</span><br><span class="line"> [<span class="number">1</span>,]  <span class="number">0.013</span>   <span class="number">1.078</span>   <span class="number">0.587</span></span><br><span class="line"> [<span class="number">2</span>,]  <span class="number">1.143</span>   <span class="number">1.591</span>   <span class="number">0.037</span></span><br><span class="line"> [<span class="number">3</span>,] -<span class="number">1.026</span>  -<span class="number">0.847</span>  -<span class="number">0.697</span></span><br><span class="line"> [<span class="number">4</span>,] -<span class="number">1.649</span>  -<span class="number">0.590</span>  -<span class="number">1.247</span></span><br><span class="line"> [<span class="number">5</span>,] -<span class="number">0.068</span>  -<span class="number">1.489</span>  -<span class="number">0.330</span></span><br><span class="line"> [<span class="number">6</span>,]  <span class="number">0.128</span>  -<span class="number">0.205</span>   <span class="number">1.137</span></span><br><span class="line"> [<span class="number">7</span>,] -<span class="number">1.049</span>  -<span class="number">0.847</span>  -<span class="number">1.247</span></span><br><span class="line"> [<span class="number">8</span>,]  <span class="number">1.432</span>   <span class="number">1.078</span>   <span class="number">1.504</span></span><br><span class="line"> [<span class="number">9</span>,]  <span class="number">0.832</span>   <span class="number">0.308</span>   <span class="number">0.954</span></span><br><span class="line">[<span class="number">10</span>,]  <span class="number">0.243</span>  -<span class="number">0.077</span>  -<span class="number">0.697</span></span><br><span class="line">attr(,<span class="string">"scaled:center"</span>)</span><br><span class="line">   Math Science English </span><br><span class="line">    <span class="number">501</span>      <span class="number">87</span>      <span class="number">22</span> </span><br><span class="line">attr(,<span class="string">"scaled:scale"</span>)</span><br><span class="line">   Math Science English </span><br><span class="line">   <span class="number">86.7</span>     <span class="number">7.8</span>     <span class="number">5.5</span> </span><br><span class="line">   </span><br><span class="line">   </span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">- 使用mean（）函数计算各行的均值来获得综合得分，并且使用函数cbind（）函数将其添加到花名册当中。</span><br><span class="line"></span><br><span class="line">```R</span><br><span class="line"></span><br><span class="line">score &lt;- apply(z, <span class="number">1</span>, mean)</span><br><span class="line">roster &lt;- cbind(roster, score)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">计算均值之后，并把score分数加进去。  </span><br><span class="line"> </span><br><span class="line">- 函数quantile（）给出学生综合得分的百分位数。   </span><br><span class="line">这个函数可以综合得分的百分位数  </span><br><span class="line"></span><br><span class="line">```R</span><br><span class="line"></span><br><span class="line">y &lt;- quantile(score, c(<span class="number">.8</span>, <span class="number">.6</span>, <span class="number">.4</span>, <span class="number">.2</span>))</span><br><span class="line"></span><br><span class="line">``` </span><br><span class="line">- 使用逻辑运算符，重编码为A B C D F。  </span><br><span class="line"></span><br><span class="line">```R</span><br><span class="line"></span><br><span class="line">roster$grade[score &gt;= y[<span class="number">1</span>]] &lt;- <span class="string">"A"</span></span><br><span class="line">roster$grade[score &lt;= y[<span class="number">1</span>] &amp; score &gt;=y[<span class="number">2</span>]] &lt;- <span class="string">"B"</span></span><br><span class="line">roster$grade[score &lt;= y[<span class="number">2</span>] &amp; score &gt;=y[<span class="number">3</span>]] &lt;- <span class="string">"C"</span></span><br><span class="line">roster$grade[score &lt;= y[<span class="number">3</span>] &amp; score &gt;=y[<span class="number">4</span>]] &lt;- <span class="string">"D"</span></span><br><span class="line">roster$grade[score &lt;= y[<span class="number">4</span>]] &lt;- <span class="string">"F"</span></span><br><span class="line"></span><br><span class="line">```  </span><br><span class="line">- 使用函数strsplit（）以空格为界，将学生姓名拆分为姓和名。</span><br></pre></td></tr></table></figure>
 <p>name &lt;- strsplit((roster$stduent), “ “)</p>
 <figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">注意返回的是什么值，这里是列表！！</span><br><span class="line"></span><br><span class="line"><span class="code"> </span></span><br><span class="line"><span class="bullet">- </span>使用函数sapply（）提取列表元素。</span><br></pre></td></tr></table></figure>
 <p>lastname &lt;- sapply(name, “[“, 2)<br>firstname &lt;- sapply(name, “[“, 1)<br>roster &lt;- cbind(firstname, lastname, roster[, -1])</p>
-<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">将原来的student化成两列，一列是姓，一列是名，同时也将student列舍弃掉。</span><br><span class="line"><span class="code">  </span></span><br><span class="line"><span class="bullet">- </span>使用order（）函数依据姓氏和名字对数据集进行排序</span><br></pre></td></tr></table></figure>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">将原来的student化成两列，一列是姓，一列是名，同时也将student列舍弃掉。</span><br><span class="line"><span class="code">  </span></span><br><span class="line"><span class="bullet">- </span>使用order（）函数依据姓氏和名字对数据集进行排序</span><br></pre></td></tr></table></figure>
 <p>roster &lt;- roster[order(lastname, firstname),]<br>roster</p>
 <figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">finally</span> we <span class="keyword">get</span></span><br></pre></td></tr></table></figure>
 <p>roster<br>   firstname   lastname Math Science English score grade<br>6     Cherry    Cushing  512      85      28  0.35     C<br>1       John      Davis  502      95      25  0.56     B<br>9       Joel    England  573      89      27  0.70     B<br>4      David      Jones  358      82      15 -1.16     F<br>8       Greg       Knox  625      95      30  1.34     A<br>5     Janice Markhammer  495      75      20 -0.63     D<br>3      Bully      Moose  412      80      18 -0.86     D<br>10      Mary    Rayburn  522      86      18 -0.18     C<br>2     Angela    Willams  600      99      22  0.92     A<br>7     Reuven    Ytzrhak  410      80      15 -1.05     F</p>
@@ -165,7 +364,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/24/R实战0-数据处理难题的一套解决方案/" data-id="cioooui4q0005902z3klw3ra0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/05/24/R实战0-数据处理难题的一套解决方案/" data-id="citiq6msy0000n32zel1yfnlr" class="article-share-link">Delen</a>
       
       
     </footer>
@@ -244,7 +443,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/19/scrapy爬虫实践详解/" data-id="cioooui5v000d902za3wgkc9b" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/05/19/scrapy爬虫实践详解/" data-id="citiq6mu8000fn32zn3akwbxe" class="article-share-link">Delen</a>
       
       
     </footer>
@@ -280,7 +479,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/17/python实战之django小试/" data-id="cioooui4j0002902zao84h0md" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/05/17/python实战之django小试/" data-id="citiq6mtk0006n32zz3ussfg4" class="article-share-link">Delen</a>
       
       
     </footer>
@@ -316,7 +515,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/17/python实战之使用webpy构建小型电影网站/" data-id="cioooui5m0009902zuwvwg4mo" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/05/17/python实战之使用webpy构建小型电影网站/" data-id="citiq6mu0000bn32zq7hw1otv" class="article-share-link">Delen</a>
       
       
     </footer>
@@ -352,7 +551,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/17/python实战之六抓取58同城数据/" data-id="cioooui5r000b902zvo917kif" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/05/17/python实战之六抓取58同城数据/" data-id="citiq6mu2000cn32zgg9xqi0r" class="article-share-link">Delen</a>
       
       
     </footer>
@@ -389,7 +588,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/17/python实战之五推特数据流分析/" data-id="cioooui5e0007902zxjb5c3a2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/05/17/python实战之五推特数据流分析/" data-id="citiq6mtt0009n32z3cikpedq" class="article-share-link">Delen</a>
       
       
     </footer>
@@ -430,110 +629,7 @@ df = ts.get_sina_dd(&apos;600848&apos;, date=&apos;2015-12-24&apos;, vol=500)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/17/python实战之四使用tushare包/" data-id="cioooui5t000c902zc8qikfcm" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-python实战之三读取大文件" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/05/17/python实战之三读取大文件/" class="article-date">
-  <time datetime="2016-05-17T09:20:36.000Z" itemprop="datePublished">2016-05-17</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/17/python实战之三读取大文件/">python实战之三读取大文件</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>这篇呢，就是如何来读取一个大型的excel表格，考虑文件大小在500M以上的这种如何进行读取和分析。  </p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/17/python实战之三读取大文件/" data-id="cioooui5b0006902ztjecu83w" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-python实战之二发送微博" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/05/17/python实战之二发送微博/" class="article-date">
-  <time datetime="2016-05-17T09:18:21.000Z" itemprop="datePublished">2016-05-17</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/17/python实战之二发送微博/">python实战之二发送微博</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>python能不能发微博呢？  </p>
-<p>我们知道很多应用都有开发者平台，只要成为开发者，就可以调用其中的数据。当然初级的开发者调用的次数等都有限制。  </p>
-<p>廖雪峰老师开发了weibo的python  sdk<br>直接安装一下就好  </p>
-<p>##代码预览    </p>
-<pre><code class="python"><span class="comment">#!/usr/bin/env python</span>
-<span class="comment"># _*_ coding: utf-8 _*_</span>
-
-<span class="keyword">from</span> weibo <span class="keyword">import</span> APIClient
-
-APP_KEY = <span class="string">'2234125265'</span> <span class="comment"># app key</span>
-APP_SECRET = <span class="string">'******'</span> <span class="comment"># app secret</span>
-CALLBACK_URL = <span class="string">'https://api.weibo.com/oauth2/default.html'</span> <span class="comment"># callback url 授权回调页,与OAuth2.0 授权设置的一致</span>
-
-<span class="function"><span class="keyword">def</span> <span class="title">press_sina_weibo</span><span class="params">()</span>:</span>
-
-    client = APIClient(app_key=APP_KEY, app_secret=APP_SECRET, redirect_uri=CALLBACK_URL)
-    <span class="keyword">print</span> client.get_authorize_url()
-
-    r = client.request_access_token(raw_input(<span class="string">"input code:"</span>).strip())
-    client.set_access_token(r.access_token, r.expires_in)
-
-    <span class="keyword">print</span> client.post.statuses__update(status=<span class="string">u'这是来自ipad pro客户端的微博信息'</span>)
-
-<span class="comment">#print client.statuses.user_timeline.get()</span>
-
-<span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:
-    press_sina_weibo()
-</code></pre>
-<p>这里不太方便的是需要手动输入下参数进去。<br>看过一些sina的官方开发者文档，感觉限制很多的，也试过尝试一些开发者开源项目爬取微博，导致微博被盗。。  </p>
-<p>文档很重要，还可能思维方面与国外人差异有点大 ，跟不上，看全英文的又吃力。。。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/17/python实战之二发送微博/" data-id="cioooui5p000a902zwzbl33bd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/05/17/python实战之四使用tushare包/" data-id="citiq6mu9000gn32zoda9xwb8" class="article-share-link">Delen</a>
       
       
     </footer>
@@ -546,7 +642,7 @@ CALLBACK_URL = <span class="string">'https://api.weibo.com/oauth2/default.html'<
 
 
   <nav id="page-nav">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">__('next') &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">__('next') &raquo;</a>
   </nav>
 </section>
         
@@ -562,9 +658,9 @@ CALLBACK_URL = <span class="string">'https://api.weibo.com/oauth2/default.html'<
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Arkiv</h3>
+    <h3 class="widget-title">Archieven</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li></ul>
     </div>
   </div>
 
@@ -572,9 +668,17 @@ CALLBACK_URL = <span class="string">'https://api.weibo.com/oauth2/default.html'<
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Siste innlegg</h3>
+    <h3 class="widget-title">Recente berichten</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/09/25/how-to-use-awk/">how-to-use-awk.md</a>
+          </li>
+        
+          <li>
+            <a href="/2016/08/08/how-to-use-sed-in-linux/">how-to-use-sed-in-linux</a>
+          </li>
         
           <li>
             <a href="/2016/05/24/为何你学不好高等数学/">为何你学不好高等数学</a>
@@ -586,14 +690,6 @@ CALLBACK_URL = <span class="string">'https://api.weibo.com/oauth2/default.html'<
         
           <li>
             <a href="/2016/05/19/scrapy爬虫实践详解/">scrapy爬虫实践详解</a>
-          </li>
-        
-          <li>
-            <a href="/2016/05/17/python实战之django小试/">python实战之django小试</a>
-          </li>
-        
-          <li>
-            <a href="/2016/05/17/python实战之使用webpy构建小型电影网站/">python实战之使用webpy构建小型电影网站</a>
           </li>
         
       </ul>
