@@ -70,13 +70,23 @@
   
     <article id="post-django-rest-framework-tutorial-4" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/07/13/django-rest-framework-tutorial-4/" class="article-date">
-  <time datetime="2017-07-13T13:37:43.000Z" itemprop="datePublished">2017-07-13</time>
+    <a href="/2017/07/14/django-rest-framework-tutorial-4/" class="article-date">
+  <time datetime="2017-07-13T16:28:49.000Z" itemprop="datePublished">2017-07-14</time>
 </a>
     
   </div>
   <div class="article-inner">
     
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/14/django-rest-framework-tutorial-4/">django-rest-framework-tutorial-4.md</a>
+    </h1>
+  
+
+      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
@@ -94,7 +104,7 @@
 <li>非认证的请求只拥有只读的权限</li>
 </ul>
 <p>对model做一些修改，增加一个表示创建者，另外增加一个用来存储代码中的HTML高亮。  </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># snippets/models.py</span></span><br><span class="line">owner = models.ForeignKey(<span class="string">'auth.User'</span>, </span><br><span class="line">						  related_name=<span class="string">'snippets'</span>, on_delete=models.CASCADE)</span><br><span class="line">highlighted = models.TextField()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># snippets/models.py</span></span><br><span class="line">owner = models.ForeignKey(<span class="string">'auth.User'</span>,</span><br><span class="line">						  related_name=<span class="string">'snippets'</span>, on_delete=models.CASCADE)</span><br><span class="line">highlighted = models.TextField()</span><br></pre></td></tr></table></figure>
 <p>另外 我们需要确保模型保存的时候，我们能够生成高亮的字段，这里使用pygments代码高亮库。  </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pygments.lexers <span class="keyword">import</span> get_lexer_by_name</span><br><span class="line"><span class="keyword">from</span> pygments.formatters.html <span class="keyword">import</span> HtmlFormatter</span><br><span class="line"><span class="keyword">from</span> pygments <span class="keyword">import</span> highlight</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">save</span><span class="params">(self, *args, **kwargs)</span>:</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">    Use the `pygments` library to create a highlighted HTML</span><br><span class="line">    representation of the code snippet.</span><br><span class="line">    """</span></span><br><span class="line">    lexer = get_lexer_by_name(self.language)</span><br><span class="line">    linenos = self.linenos <span class="keyword">and</span> <span class="string">'table'</span> <span class="keyword">or</span> <span class="keyword">False</span></span><br><span class="line">    options = self.title <span class="keyword">and</span> &#123;<span class="string">'title'</span>: self.title&#125; <span class="keyword">or</span> &#123;&#125;</span><br><span class="line">    formatter = HtmlFormatter(style=self.style, linenos=linenos,</span><br><span class="line">                              full=<span class="keyword">True</span>, **options)</span><br><span class="line">    self.highlighted = highlight(self.code, lexer, formatter)</span><br><span class="line">    super(Snippet, self).save(*args, **kwargs)</span><br></pre></td></tr></table></figure>
 <h4 id="为用户模型增加endpoints"><a href="#为用户模型增加endpoints" class="headerlink" title="为用户模型增加endpoints"></a>为用户模型增加endpoints</h4><p>现在我们有一些用户了，我们最好也把用户增加到API上，创建一个新的序列化脚本serializers.py  </p>
@@ -103,7 +113,7 @@
 <p>我们还需要创建一些对用户呈现而言的views，最好使用只读的view，所以使用ListAPIView和RetrieveAPIView泛型类Views。</p>
 <figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"># snippets/views.py</span></span><br><span class="line"><span class="title">from</span> django.contrib.auth.models <span class="keyword">import</span> User</span><br><span class="line"><span class="class"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="type">UserList</span>(<span class="title">generics</span>.<span class="type">ListAPIView</span>):</span><br><span class="line">    queryset = <span class="type">User</span>.objects.all()</span><br><span class="line">    serializer_class = <span class="type">UserSerializer</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="type">UserDetail</span>(<span class="title">generics</span>.<span class="type">RetrieveAPIView</span>):</span><br><span class="line">    queryset = <span class="type">User</span>.objects.all()</span><br><span class="line">    serializer_class = <span class="type">UserSerializer</span></span></span><br></pre></td></tr></table></figure>
 <p>确保导入了UserSerializers类  </p>
-<figure class="highlight capnproto"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> snippets.serializers <span class="keyword">import</span> UserSerializer</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> snippets.serializers <span class="keyword">import</span> UserSerializer</span><br></pre></td></tr></table></figure>
 <p>修改url  </p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">url(<span class="string">r'^users/$'</span>, views.UserList.as_view()),</span><br><span class="line">url(<span class="string">r'^users/(?P&lt;pk&gt;[0-9]+)/$'</span>, views.UserDetail.as_view()),</span><br></pre></td></tr></table></figure>
 <h4 id="snippets与users关联"><a href="#snippets与users关联" class="headerlink" title="snippets与users关联"></a>snippets与users关联</h4><p>现在，如果我们创建一个code snippet，还没有方法指定其创建者。User并没有作为序列化内容的一部分发送，而是作为request的一个属性。</p>
@@ -155,7 +165,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2017/07/13/django-rest-framework-tutorial-4/" data-id="cj52n6ocq0001pl2zej7yqs0f" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2017/07/14/django-rest-framework-tutorial-4/" data-id="cj52nnjus0001ew2z3y4o20q9" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -202,7 +212,7 @@ puts response.status <span class="comment"># 200</span>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/11/24/a-gem-named-faraday/" data-id="cj52n6ocu0002pl2zifp9na86" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/11/24/a-gem-named-faraday/" data-id="cj52nnjum0000ew2zux5htxwf" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -313,7 +323,7 @@ puts response.status <span class="comment"># 200</span>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/09/25/how-to-use-awk/" data-id="cj52n6od30006pl2zgsn2ey6v" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/09/25/how-to-use-awk/" data-id="cj52nnjv10004ew2zmrhvyh38" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -401,7 +411,7 @@ bye
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/08/08/how-to-use-sed-in-linux/" data-id="cj52n6ocy0004pl2zyhj6zd05" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/08/08/how-to-use-sed-in-linux/" data-id="cj52nnjuz0003ew2z6egvv124" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -448,7 +458,7 @@ bye
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/24/为何你学不好高等数学/" data-id="cj52n6odr000fpl2z2o0rsr5b" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/05/24/为何你学不好高等数学/" data-id="cj52nnjwf000kew2z6cvf12w5" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -508,7 +518,7 @@ bye
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/24/R实战0-数据处理难题的一套解决方案/" data-id="cj52n6ocj0000pl2z04qw11xg" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/05/24/R实战0-数据处理难题的一套解决方案/" data-id="cj52nnjuw0002ew2zyxperkxg" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -587,7 +597,7 @@ bye
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/19/scrapy爬虫实践详解/" data-id="cj52n6odx000ipl2z2hckfis5" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/05/19/scrapy爬虫实践详解/" data-id="cj52nnjw2000gew2zgwv0dqnt" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -623,7 +633,7 @@ bye
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/17/python实战之django小试/" data-id="cj52n6odh000apl2zi1gt038o" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/05/17/python实战之django小试/" data-id="cj52nnjvs000bew2zu97cexdt" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -659,7 +669,7 @@ bye
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/17/python实战之使用webpy构建小型电影网站/" data-id="cj52n6odp000epl2zqfwn0te3" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/05/17/python实战之使用webpy构建小型电影网站/" data-id="cj52nnjvx000eew2zb90pjk2i" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -695,7 +705,7 @@ bye
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/05/17/python实战之六抓取58同城数据/" data-id="cj52n6odv000hpl2z88a9bgse" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/05/17/python实战之六抓取58同城数据/" data-id="cj52nnjwc000jew2z5jget3av" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -739,7 +749,7 @@ bye
       <ul>
         
           <li>
-            <a href="/2017/07/13/django-rest-framework-tutorial-4/">(no title)</a>
+            <a href="/2017/07/14/django-rest-framework-tutorial-4/">django-rest-framework-tutorial-4.md</a>
           </li>
         
           <li>
