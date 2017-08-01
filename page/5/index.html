@@ -79,7 +79,7 @@
             <div id="search-form-wrap">
 
     <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Cari" />
         <button type="submit" class="search-form-submit"></button>
     </form>
     <div class="ins-search">
@@ -98,10 +98,10 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Posts',
+            POSTS: 'pos',
             PAGES: 'Pages',
-            CATEGORIES: 'Categories',
-            TAGS: 'Tags',
+            CATEGORIES: 'kategori',
+            TAGS: 'tag',
             UNTITLED: '(Untitled)',
         },
         ROOT_URL: '/',
@@ -132,7 +132,7 @@
                 <td>
                     
     <div class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Cari" />
     </div>
 
                 </td>
@@ -152,16 +152,16 @@
             <h2 id="name">PPOffice</h2>
             <h3 id="title">Web Developer &amp; Designer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Harbin, China</span>
-            <a id="follow" target="_blank" href="https://github.com/ppoffice/">FOLLOW</a>
+            <a id="follow" target="_blank" href="https://github.com/ppoffice/">IKUTI</a>
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                26
-                <span>posts</span>
+                27
+                <span>pos</span>
             </div>
             <div class="article-info-block">
                 4
-                <span>tags</span>
+                <span>tag</span>
             </div>
         </div>
         
@@ -209,7 +209,7 @@
 
             
             <section id="main">
-    <article id="post-爬虫实践教程3-多进程" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-macdown语法简介" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -217,7 +217,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2016/05/15/爬虫实践教程3-多进程/">爬虫实践教程3-多进程</a>
+            <a class="article-title" href="/2016/05/15/macdown语法简介/">macdown语法简介</a>
         </h1>
     
 
@@ -226,8 +226,8 @@
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2016/05/15/爬虫实践教程3-多进程/">
-            <time datetime="2016-05-15T03:40:05.000Z" itemprop="datePublished">2016-05-15</time>
+        <a href="/2016/05/15/macdown语法简介/">
+            <time datetime="2016-05-15T07:06:44.000Z" itemprop="datePublished">2016-05-15</time>
         </a>
     </div>
 
@@ -242,12 +242,84 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p>python爬虫多数都是运行在linux内核的服务器上的，多进程比多线程更合适，调度开销差不多，但是进程性能更好。<br>爬虫不是服务器交互，一般情况下提升几倍效率即可。  </p>
-<p>直接来看看代码  </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding:utf-8</span></span><br><span class="line"><span class="keyword">import</span> multiprocessing</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"><span class="comment">#url详情页</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pageUrls</span><span class="params">(url)</span>:</span></span><br><span class="line">    web_data = requests.get(url)</span><br><span class="line">    soup = BeautifulSoup(web_data.text, <span class="string">'lxml'</span>)</span><br><span class="line">    sum = int(soup.select(<span class="string">'span.total &gt; em:nth-of-type(1)'</span>)[<span class="number">0</span>].get_text())</span><br><span class="line">    pageNum = sum/<span class="number">50</span></span><br><span class="line">    <span class="keyword">return</span> [url+<span class="string">'/loupan/s?p=&#123;&#125;'</span>.format(str(i)) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, pageNum+<span class="number">2</span>, <span class="number">1</span>)]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">detailPage</span><span class="params">(myurl)</span>:</span></span><br><span class="line">    urls = pageUrls(myurl)</span><br><span class="line">    <span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">        web_data = requests.get(url)</span><br><span class="line">        soup = BeautifulSoup(web_data.text, <span class="string">'lxml'</span>)</span><br><span class="line">        titles = soup.select(<span class="string">'div.list-results &gt; div.key-list &gt; div &gt; div.infos &gt; div &gt; h3 &gt; a'</span>)</span><br><span class="line">        <span class="keyword">for</span> title <span class="keyword">in</span> titles:</span><br><span class="line">            <span class="keyword">print</span> url</span><br><span class="line">            <span class="keyword">print</span> title.get_text()</span><br><span class="line">            <span class="keyword">print</span> title.get(<span class="string">'href'</span>)</span><br><span class="line">            <span class="keyword">print</span> <span class="string">"**********"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(urls)</span>:</span></span><br><span class="line">    pool = multiprocessing.Pool(multiprocessing.cpu_count())</span><br><span class="line">    <span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">        pool.apply_async(detailPage, (url, ))</span><br><span class="line">    <span class="comment"># pool.map(detailPage, urls)</span></span><br><span class="line">    pool.close()</span><br><span class="line">    pool.join()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    startUrl = <span class="string">'http://gz.fang.anjuke.com/?from=navigation'</span></span><br><span class="line">    web_data = requests.get(startUrl)</span><br><span class="line">    soup = BeautifulSoup(web_data.text, <span class="string">'lxml'</span>)</span><br><span class="line">    urls = [url.get(<span class="string">'href'</span>) <span class="keyword">for</span> url <span class="keyword">in</span> soup.select(<span class="string">'.city-mod &gt; dl &gt; dd &gt; a'</span>)]</span><br><span class="line">    main(urls)</span><br></pre></td></tr></table></figure>
-<p>这次我们准备爬取的是安居客的网站。<br>先从主代码开始，startUrl，使用requests和beautifulsoup进行解析。获取地址之后，进入main函数。<br>multiprocessing 创建一个进程池，进程个数为cpu内核数，一般写4或6个即可。<br>apply_async函数从进程池中取出一个进程执行func，args为func的参数，我们这段代码不断地从进程池中取出进程去执行我们的detailPage方法。当然，也可以采用下面这种方式：  </p>
-<pre><code>pool.map(detailPage, urls)
-</code></pre><p>接着就是关闭进程池还有wait进程池中的全部进程。  </p>
+            <p>#markdown语法简介</p>
+<p>1.标题<br>1）使用＝和－标记一级和二级标题<br>使用方法是文字下方加上＝＝＝＝＝＝这样  </p>
+<h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题  "></a>一级标题  </h1><p>2） 使用＃，可以表示1-6级标题  </p>
+<p>##二级标题  </p>
+<p>2.段落<br>段落的前后要有空行，所谓的空行是指没有文字内容。<br>若想在段内强制换行的方式是使用两个以上空格加上回车（引用中换行省略回车）。  </p>
+<p>3.区块引用<br>在段落的每行或者只在第一行使用符号&gt;,还可以使用多个嵌套引用，如：</p>
+<blockquote>
+<p>区块引用</p>
+<blockquote>
+<p>嵌套引用  </p>
+</blockquote>
+</blockquote>
+<p>4.代码区块<br>代码区块的建立是在每行加上4个空格或者一个制表符（如同写代码一样）。如<br>普通段落：  </p>
+<pre><code>void main()
+{
+printf(&quot;Hello, Markdown.&quot;);
+}
+</code></pre><p>注意:需要和普通段落之间存在空行。</p>
+<p>5.强调<br>在强调内容两侧分别加上<em>或者_，如：  
+</em>,  <em>还是斜体</em></p>
+<p><em>粗体</em>，  <em>还是粗体</em>  </p>
+<p>6.列表<br>使用*、+、或-标记无序列表，如：</p>
+<ul>
+<li>为什么   </li>
+</ul>
+<ul>
+<li>怎么办  </li>
+</ul>
+<ul>
+<li>啥时候  </li>
+</ul>
+<p>有序列表的标记方式是将上述的符号换成数字,并且加上点  </p>
+<ol>
+<li>第一点 </li>
+</ol>
+<p>7.分割线  </p>
+<p>分割线最常使用就是三个或以上*，还可以使用_。  </p>
+<p>大道至简  </p>
+<hr>
+<p>道法三千</p>
+<hr>
+<p>杏杏冥冥  </p>
+<p>8.链接<br>链接可以由两种形式生成：行内式和参考式。</p>
+<p>行内式：<br><a href="https:://github.com/younghz/Markdown" title="Markdown" target="_blank" rel="external">markdown库</a></p>
+<p>参考式：<br><a href="https:://github.com/younghz/Markdown" title="Markdown" target="_blank" rel="external">younghz的Markdown库1</a><br><a href="https:://github.com/younghz/Markdown" title="Markdown" target="_blank" rel="external">younghz的Markdown库2</a></p>
+<p>9.图片  </p>
+<p> 添加图片的形式和链接相似，只需在链接的基础上前方加一个！。<br>10.反斜杠\  </p>
+<p>相当于反转义作用。使符号成为普通符号。  </p>
+<p>11.符号``</p>
+<p>起到表记作用。如：  </p>
+<p><code>ctrl+a</code>  </p>
+<p>12.表格  </p>
+<table>
+<thead>
+<tr>
+<th>Tables</th>
+<th style="text-align:center">Are</th>
+<th style="text-align:right">Cool</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>col 3 is</td>
+<td style="text-align:center">right-aligned</td>
+<td style="text-align:right">$1600</td>
+</tr>
+<tr>
+<td>col 2 is</td>
+<td style="text-align:center">centered</td>
+<td style="text-align:right">$12</td>
+</tr>
+<tr>
+<td>zebra stripes</td>
+<td style="text-align:center">are neat</td>
+<td style="text-align:right">$1</td>
+</tr>
+</tbody>
+</table>
 
         
         </div>
@@ -258,7 +330,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2016/05/15/爬虫实践教程3-多进程/" data-id="cj55nrt2r000una2znnds2q5s" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2016/05/15/macdown语法简介/" data-id="cj5trwe6c000e6h2z6xh58h7v" class="article-share-link"><i class="fa fa-share"></i>Bagikan</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -326,7 +398,134 @@
 
             
     
-        <a href="http://yoursite.com/2016/05/15/爬虫实践教程3-多进程/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2016/05/15/爬虫实践教程3-多进程/">Comments</a>
+        <a href="http://yoursite.com/2016/05/15/macdown语法简介/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2016/05/15/macdown语法简介/">Komentar</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-爬虫实践教程3-多进程" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/05/15/爬虫实践教程3-多进程/">爬虫实践教程3-多进程</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/05/15/爬虫实践教程3-多进程/">
+            <time datetime="2016-05-15T03:40:05.000Z" itemprop="datePublished">2016-05-15</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>python爬虫多数都是运行在linux内核的服务器上的，多进程比多线程更合适，调度开销差不多，但是进程性能更好。<br>爬虫不是服务器交互，一般情况下提升几倍效率即可。  </p>
+<p>直接来看看代码  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding:utf-8</span></span><br><span class="line"><span class="keyword">import</span> multiprocessing</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"><span class="comment">#url详情页</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pageUrls</span><span class="params">(url)</span>:</span></span><br><span class="line">    web_data = requests.get(url)</span><br><span class="line">    soup = BeautifulSoup(web_data.text, <span class="string">'lxml'</span>)</span><br><span class="line">    sum = int(soup.select(<span class="string">'span.total &gt; em:nth-of-type(1)'</span>)[<span class="number">0</span>].get_text())</span><br><span class="line">    pageNum = sum/<span class="number">50</span></span><br><span class="line">    <span class="keyword">return</span> [url+<span class="string">'/loupan/s?p=&#123;&#125;'</span>.format(str(i)) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, pageNum+<span class="number">2</span>, <span class="number">1</span>)]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">detailPage</span><span class="params">(myurl)</span>:</span></span><br><span class="line">    urls = pageUrls(myurl)</span><br><span class="line">    <span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">        web_data = requests.get(url)</span><br><span class="line">        soup = BeautifulSoup(web_data.text, <span class="string">'lxml'</span>)</span><br><span class="line">        titles = soup.select(<span class="string">'div.list-results &gt; div.key-list &gt; div &gt; div.infos &gt; div &gt; h3 &gt; a'</span>)</span><br><span class="line">        <span class="keyword">for</span> title <span class="keyword">in</span> titles:</span><br><span class="line">            <span class="keyword">print</span> url</span><br><span class="line">            <span class="keyword">print</span> title.get_text()</span><br><span class="line">            <span class="keyword">print</span> title.get(<span class="string">'href'</span>)</span><br><span class="line">            <span class="keyword">print</span> <span class="string">"**********"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(urls)</span>:</span></span><br><span class="line">    pool = multiprocessing.Pool(multiprocessing.cpu_count())</span><br><span class="line">    <span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">        pool.apply_async(detailPage, (url, ))</span><br><span class="line">    <span class="comment"># pool.map(detailPage, urls)</span></span><br><span class="line">    pool.close()</span><br><span class="line">    pool.join()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    startUrl = <span class="string">'http://gz.fang.anjuke.com/?from=navigation'</span></span><br><span class="line">    web_data = requests.get(startUrl)</span><br><span class="line">    soup = BeautifulSoup(web_data.text, <span class="string">'lxml'</span>)</span><br><span class="line">    urls = [url.get(<span class="string">'href'</span>) <span class="keyword">for</span> url <span class="keyword">in</span> soup.select(<span class="string">'.city-mod &gt; dl &gt; dd &gt; a'</span>)]</span><br><span class="line">    main(urls)</span><br></pre></td></tr></table></figure>
+<p>这次我们准备爬取的是安居客的网站。<br>先从主代码开始，startUrl，使用requests和beautifulsoup进行解析。获取地址之后，进入main函数。<br>multiprocessing 创建一个进程池，进程个数为cpu内核数，一般写4或6个即可。<br>apply_async函数从进程池中取出一个进程执行func，args为func的参数，我们这段代码不断地从进程池中取出进程去执行我们的detailPage方法。当然，也可以采用下面这种方式：  </p>
+<pre><code>pool.map(detailPage, urls)
+</code></pre><p>接着就是关闭进程池还有wait进程池中的全部进程。  </p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2016/05/15/爬虫实践教程3-多进程/" data-id="cj5trwe7g000u6h2zug4it7d7" class="article-share-link"><i class="fa fa-share"></i>Bagikan</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2016/05/15/爬虫实践教程3-多进程/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2016/05/15/爬虫实践教程3-多进程/">Komentar</a>
     
 
         </footer>
@@ -419,7 +618,7 @@ for i in range(10):
 
 </div>
 
-    <a data-url="http://yoursite.com/2016/05/15/爬虫实践教程2/" data-id="cj55nrt2o000sna2zat31otwn" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2016/05/15/爬虫实践教程2/" data-id="cj5trwe7e000t6h2zizy544y0" class="article-share-link"><i class="fa fa-share"></i>Bagikan</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -487,7 +686,7 @@ for i in range(10):
 
             
     
-        <a href="http://yoursite.com/2016/05/15/爬虫实践教程2/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2016/05/15/爬虫实践教程2/">Comments</a>
+        <a href="http://yoursite.com/2016/05/15/爬虫实践教程2/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2016/05/15/爬虫实践教程2/">Komentar</a>
     
 
         </footer>
@@ -574,7 +773,7 @@ start()
 
 </div>
 
-    <a data-url="http://yoursite.com/2016/05/15/爬虫实践教程1/" data-id="cj55nrt2q000tna2z9gxo4spv" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2016/05/15/爬虫实践教程1/" data-id="cj5trwe7k000v6h2z18tq0ggo" class="article-share-link"><i class="fa fa-share"></i>Bagikan</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -642,7 +841,7 @@ start()
 
             
     
-        <a href="http://yoursite.com/2016/05/15/爬虫实践教程1/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2016/05/15/爬虫实践教程1/">Comments</a>
+        <a href="http://yoursite.com/2016/05/15/爬虫实践教程1/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2016/05/15/爬虫实践教程1/">Komentar</a>
     
 
         </footer>
@@ -734,7 +933,7 @@ if __name__ == &apos;__main__&apos;:
 
 </div>
 
-    <a data-url="http://yoursite.com/2016/05/15/爬虫实践教程0/" data-id="cj55nrt2g000pna2z5n9s3cb5" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2016/05/15/爬虫实践教程0/" data-id="cj5trwe78000q6h2zbiqu6o91" class="article-share-link"><i class="fa fa-share"></i>Bagikan</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -802,137 +1001,7 @@ if __name__ == &apos;__main__&apos;:
 
             
     
-        <a href="http://yoursite.com/2016/05/15/爬虫实践教程0/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2016/05/15/爬虫实践教程0/">Comments</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2016/05/15/hello-world/">Hello World</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2016/05/15/hello-world/">
-            <time datetime="2016-05-14T16:51:47.000Z" itemprop="datePublished">2016-05-15</time>
-        </a>
-    </div>
-
-
-                        
-                        
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://yoursite.com/2016/05/15/hello-world/" data-id="cj55nrt140005na2zq489pplb" class="article-share-link"><i class="fa fa-share"></i>Share</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://yoursite.com/2016/05/15/hello-world/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2016/05/15/hello-world/">Comments</a>
+        <a href="http://yoursite.com/2016/05/15/爬虫实践教程0/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2016/05/15/爬虫实践教程0/">Komentar</a>
     
 
         </footer>
@@ -943,7 +1012,7 @@ if __name__ == &apos;__main__&apos;:
 
 
     <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
+        <a class="extend prev" rel="prev" href="/page/4/">&laquo; Sebelumnya</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/">Berikutnya &raquo;</a>
     </nav>
 </section>
             
@@ -952,9 +1021,28 @@ if __name__ == &apos;__main__&apos;:
    
         
     <div class="widget-wrap">
-        <h3 class="widget-title">recent</h3>
+        <h3 class="widget-title">terbaru</h3>
         <div class="widget">
             <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/08/01/adaptor/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/08/01/adaptor/" class="title">adaptor</a></p>
+                            <p class="item-date"><time datetime="2017-08-01T15:57:30.000Z" itemprop="datePublished">2017-08-01</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -1032,25 +1120,6 @@ if __name__ == &apos;__main__&apos;:
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2016/09/25/how-to-use-awk/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2016/09/25/how-to-use-awk/" class="title">how-to-use-awk</a></p>
-                            <p class="item-date"><time datetime="2016-09-25T11:37:38.000Z" itemprop="datePublished">2016-09-25</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -1060,16 +1129,16 @@ if __name__ == &apos;__main__&apos;:
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">archives</h3>
+        <h3 class="widget-title">arsip</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
         </div>
     </div>
 
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">tags</h3>
+        <h3 class="widget-title">tag</h3>
         <div class="widget">
             <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-requests/">python, requests</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/requests-python/">requests, python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/">ruby</a><span class="tag-list-count">1</span></li></ul>
         </div>
@@ -1078,7 +1147,7 @@ if __name__ == &apos;__main__&apos;:
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">tag cloud</h3>
+        <h3 class="widget-title">awan tag</h3>
         <div class="widget tagcloud">
             <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/python-requests/" style="font-size: 10px;">python, requests</a> <a href="/tags/requests-python/" style="font-size: 10px;">requests, python</a> <a href="/tags/ruby/" style="font-size: 10px;">ruby</a>
         </div>
@@ -1087,7 +1156,7 @@ if __name__ == &apos;__main__&apos;:
     
         
     <div class="widget-wrap widget-list">
-        <h3 class="widget-title">links</h3>
+        <h3 class="widget-title">tautan</h3>
         <div class="widget">
             <ul>
                 
