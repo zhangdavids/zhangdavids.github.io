@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>tensorflow note 2017.12.03 | 上药三品，神与气精</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="TensorflowTensorflow既是机器学习算法实现接口，又是机器学习算法执行框架。TensorFlow的前端支持Python、C++、Go、Java等，目前推荐优先使用Python。后端使用C++、CUDA等。TensorFlow算法在异构系统方便移植，Android、iOS、CPU服务器、GPU集群等。可以实现机器学习、线性回归、逻辑回归、随机森林等算法。在语音识别、自然语言处理、计算">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tensorflow note 2017.12.03">
+<meta property="og:url" content="http://yoursite.com/2017/12/03/tensorflow-note-2017-12-03/index.html">
+<meta property="og:site_name" content="上药三品，神与气精">
+<meta property="og:description" content="TensorflowTensorflow既是机器学习算法实现接口，又是机器学习算法执行框架。TensorFlow的前端支持Python、C++、Go、Java等，目前推荐优先使用Python。后端使用C++、CUDA等。TensorFlow算法在异构系统方便移植，Android、iOS、CPU服务器、GPU集群等。可以实现机器学习、线性回归、逻辑回归、随机森林等算法。在语音识别、自然语言处理、计算">
+<meta property="og:updated_time" content="2017-12-03T13:38:19.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="tensorflow note 2017.12.03">
+<meta name="twitter:description" content="TensorflowTensorflow既是机器学习算法实现接口，又是机器学习算法执行框架。TensorFlow的前端支持Python、C++、Go、Java等，目前推荐优先使用Python。后端使用C++、CUDA等。TensorFlow算法在异构系统方便移植，Android、iOS、CPU服务器、GPU集群等。可以实现机器学习、线性回归、逻辑回归、随机森林等算法。在语音识别、自然语言处理、计算">
+    
+
+    
+        <link rel="alternate" href="/" title="上药三品，神与气精" type="application/atom+xml" />
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">上药三品，神与气精</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/me.jpeg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Cari" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'pos',
+            PAGES: 'Pages',
+            CATEGORIES: 'kategori',
+            TAGS: 'tag',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Cari" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/me.jpeg" />
+            <h2 id="name">Kelly Cheung</h2>
+            <h3 id="title">Python Web Development Engineer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Wuhan, China</span>
+            <a id="follow" target="_blank" href="https://github.com/zhangdavids/">IKUTI</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                51
+                <span>pos</span>
+            </div>
+            <div class="article-info-block">
+                4
+                <span>tag</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/ppoffice/hexo-theme-icarus" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="dribbble" class=tooltip>
+                            <i class="fa fa-dribbble"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="rss" class=tooltip>
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-tensorflow-note-2017-12-03" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            tensorflow note 2017.12.03
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/12/03/tensorflow-note-2017-12-03/">
+            <time datetime="2017-12-03T13:27:19.000Z" itemprop="datePublished">2017-12-03</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h3 id="Tensorflow"><a href="#Tensorflow" class="headerlink" title="Tensorflow"></a>Tensorflow</h3><p>Tensorflow既是机器学习算法实现接口，又是机器学习算法执行框架。TensorFlow的前端支持Python、C++、Go、Java等，目前推荐优先使用Python。后端使用C++、CUDA等。TensorFlow算法在异构系统方便移植，Android、iOS、CPU服务器、GPU集群等。可以实现机器学习、线性回归、逻辑回归、随机森林等算法。在语音识别、自然语言处理、计算机视觉、机器人控制、信息抽取、药物研发、分子活动预测等方面应用广泛。</p>
+<p>TensorFlow方便设计神经网络结构。</p>
+<p>不必写C++、CUDA。自动求导。</p>
+<p>C++核心方便线上部署。支持低配置嵌入式设备。通过SWIG添加其他脚本支持。</p>
+<p>每个mini-batch要从Python feed到网络，延迟大。</p>
+<p>内置TF.lean、TF.Slim快速设计网络。兼容scikit-lean estimator接口，实现evaluate、grid、search、cross、validation等功能。</p>
+<p>自动将分支转为子图。灵活移值，轻易部署任意数量设备。编译快。</p>
+<p>TensorBoard可视化网络结构、过程。支持常见网络结构（卷积神经网络CNN，循环神经网络RNN）、深度强化学习、计算密集科学计算等。</p>
+<p>缺点，计算图必须为静态图。异构支持各种硬件和操作系统。框架分布式性能是关键。TensorFlow 单机reduction只能用CPU，分布式通信使用socket RPC,不是RDMA，待优化。TensorFlow Serving 组件可导出训练好的模型，部署成对外提供预测是服务RESTful接口。实现应用机器学习全流程，训练模型、调试参数、打包模型、部署服务。</p>
+<p>TensorBoard，监控运行过程关键指标，支持标量、图片、直方图、计算图可视化。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2017/12/03/tensorflow-note-2017-12-03/" data-id="cjatgs0790014i12zgga7kzdv" class="article-share-link"><i class="fa fa-share"></i>Bagikan</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2017/12/03/tensorflow-note-2017-12-03/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2017/12/03/tensorflow-note-2017-12-03/">Komentar</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2017/12/03/tensorflow-note-how-to-install/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Lebih baru</strong>
+            <div class="article-nav-title">
+                
+                    tensorflow note how to install
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2017/11/29/javascript-foundation/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Lebih Tua</strong>
+            <div class="article-nav-title">javascript foundation</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+</section>
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">terbaru</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/12/03/tensorflow-note-learn-ways/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/12/03/tensorflow-note-learn-ways/" class="title">tensorflow note learn ways</a></p>
+                            <p class="item-date"><time datetime="2017-12-03T14:07:24.000Z" itemprop="datePublished">2017-12-03</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/12/03/tensorflow-note-how-to-install/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/12/03/tensorflow-note-how-to-install/" class="title">tensorflow note how to install</a></p>
+                            <p class="item-date"><time datetime="2017-12-03T13:41:39.000Z" itemprop="datePublished">2017-12-03</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/12/03/tensorflow-note-2017-12-03/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/12/03/tensorflow-note-2017-12-03/" class="title">tensorflow note 2017.12.03</a></p>
+                            <p class="item-date"><time datetime="2017-12-03T13:27:19.000Z" itemprop="datePublished">2017-12-03</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/11/29/javascript-foundation/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/11/29/javascript-foundation/" class="title">javascript foundation</a></p>
+                            <p class="item-date"><time datetime="2017-11-28T16:05:29.000Z" itemprop="datePublished">2017-11-29</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/11/28/scrapy-middleware/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/11/28/scrapy-middleware/" class="title">scrapy middleware</a></p>
+                            <p class="item-date"><time datetime="2017-11-28T15:43:44.000Z" itemprop="datePublished">2017-11-28</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">arsip</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tag</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-requests/">python, requests</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/requests-python/">requests, python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/">ruby</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">awan tag</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/python-requests/" style="font-size: 10px;">python, requests</a> <a href="/tags/requests-python/" style="font-size: 10px;">requests, python</a> <a href="/tags/ruby/" style="font-size: 10px;">ruby</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">tautan</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2017 Zhang John<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_config = function () {
+        
+            this.page.url = 'http://yoursite.com/2017/12/03/tensorflow-note-2017-12-03/';
+        
+        this.page.identifier = 'tensorflow-note-2017-12-03';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'hexo-theme-icarus' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
