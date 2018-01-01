@@ -79,7 +79,7 @@
             <div id="search-form-wrap">
 
     <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Cari" />
         <button type="submit" class="search-form-submit"></button>
     </form>
     <div class="ins-search">
@@ -98,10 +98,10 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Entradas',
+            POSTS: 'pos',
             PAGES: 'Pages',
-            CATEGORIES: 'Categorias',
-            TAGS: 'Etiquetas',
+            CATEGORIES: 'kategori',
+            TAGS: 'tag',
             UNTITLED: '(Untitled)',
         },
         ROOT_URL: '/',
@@ -132,7 +132,7 @@
                 <td>
                     
     <div class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Cari" />
     </div>
 
                 </td>
@@ -152,16 +152,16 @@
             <h2 id="name">Kelly Cheung</h2>
             <h3 id="title">Python Web Development Engineer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Wuhan, China</span>
-            <a id="follow" target="_blank" href="https://github.com/zhangdavids/">SEGUIR</a>
+            <a id="follow" target="_blank" href="https://github.com/zhangdavids/">IKUTI</a>
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                54
-                <span>Entradas</span>
+                55
+                <span>pos</span>
             </div>
             <div class="article-info-block">
                 4
-                <span>Etiquetas</span>
+                <span>tag</span>
             </div>
         </div>
         
@@ -209,7 +209,7 @@
 
             
             <section id="main">
-    <article id="post-tensorflow-note-2017-12-03" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-tensorflow-note-how-to-install" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -217,7 +217,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2017/12/03/tensorflow-note-2017-12-03/">tensorflow note 2017.12.03</a>
+            <a class="article-title" href="/2017/12/03/tensorflow-note-how-to-install/">tensorflow note how to install</a>
         </h1>
     
 
@@ -226,8 +226,8 @@
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2017/12/03/tensorflow-note-2017-12-03/">
-            <time datetime="2017-12-03T13:27:19.000Z" itemprop="datePublished">2017-12-03</time>
+        <a href="/2017/12/03/tensorflow-note-how-to-install/">
+            <time datetime="2017-12-03T13:41:39.000Z" itemprop="datePublished">2017-12-03</time>
         </a>
     </div>
 
@@ -242,16 +242,29 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <h3 id="Tensorflow"><a href="#Tensorflow" class="headerlink" title="Tensorflow"></a>Tensorflow</h3><p>Tensorflow既是机器学习算法实现接口，又是机器学习算法执行框架。TensorFlow的前端支持Python、C++、Go、Java等，目前推荐优先使用Python。后端使用C++、CUDA等。TensorFlow算法在异构系统方便移植，Android、iOS、CPU服务器、GPU集群等。可以实现机器学习、线性回归、逻辑回归、随机森林等算法。在语音识别、自然语言处理、计算机视觉、机器人控制、信息抽取、药物研发、分子活动预测等方面应用广泛。</p>
-<p>TensorFlow方便设计神经网络结构。</p>
-<p>不必写C++、CUDA。自动求导。</p>
-<p>C++核心方便线上部署。支持低配置嵌入式设备。通过SWIG添加其他脚本支持。</p>
-<p>每个mini-batch要从Python feed到网络，延迟大。</p>
-<p>内置TF.lean、TF.Slim快速设计网络。兼容scikit-lean estimator接口，实现evaluate、grid、search、cross、validation等功能。</p>
-<p>自动将分支转为子图。灵活移值，轻易部署任意数量设备。编译快。</p>
-<p>TensorBoard可视化网络结构、过程。支持常见网络结构（卷积神经网络CNN，循环神经网络RNN）、深度强化学习、计算密集科学计算等。</p>
-<p>缺点，计算图必须为静态图。异构支持各种硬件和操作系统。框架分布式性能是关键。TensorFlow 单机reduction只能用CPU，分布式通信使用socket RPC,不是RDMA，待优化。TensorFlow Serving 组件可导出训练好的模型，部署成对外提供预测是服务RESTful接口。实现应用机器学习全流程，训练模型、调试参数、打包模型、部署服务。</p>
-<p>TensorBoard，监控运行过程关键指标，支持标量、图片、直方图、计算图可视化。</p>
+            <p>考虑到软件依赖项，依赖冲突。</p>
+<p>单机建议用Virturalenv，分布式用Docker。</p>
+<p>解决依赖冲突有以下方式：代码库内部的软件包依赖，依赖库放到代码中，局部引用。重复占用空间，手工更改。用户无法修改。使用依赖环境，虚拟环境。Virturalenv、Anaconda。使用容器，软件、文件系统、运行时、依赖库打包轻量级方案。典型应用有Docker。</p>
+<p>TensorFlow需要用到两个经典库：Jupyter(iPython) Notebook、matplotlib。Jupyter Notebook可以交互式编写可视化结果文档，代码展示，Markdown单元，设计原型，代码写入逻辑块，方便调试脚本特定部分。matplotlib是绘图库，可以实现数据可视化，典型应用Seaborn。</p>
+<p>Virtualenv环境安装  </p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo easy_install pip</span><br><span class="line">sudo pip <span class="keyword">install</span> <span class="comment">--upgrade virtualenv</span></span><br></pre></td></tr></table></figure>
+<p>创建虚拟环境目录：</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">mkdir</span> ~/env</span><br></pre></td></tr></table></figure>
+<p>创建虚拟环境：</p>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virtualenv --<span class="keyword">system</span>-site-packages ~/<span class="keyword">env</span>/tensorflow</span><br></pre></td></tr></table></figure>
+<p>激活虚拟环境：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">source</span> ~<span class="regexp">/env/</span>tensorflow<span class="regexp">/bin/</span>activate</span><br></pre></td></tr></table></figure>
+<p>关闭虚拟环境：</p>
+<figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">deactivate</span></span><br></pre></td></tr></table></figure>
+<p>安装TensorFlow:</p>
+<p>Python 3.6: pip3 install –upgrade tensorflow</p>
+<p>最后是把需要的whl下载下来，直接通过pip install 装本地的文件。</p>
+<p>安装Jupyter、matplotlib</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo pip <span class="keyword">install </span><span class="keyword">jupyter</span><br><span class="line"></span>sudo pip <span class="keyword">install </span>matplotlib</span><br></pre></td></tr></table></figure>
+<p>其中widgetsnbextension没有办法下载下来装，因为下下来的是3.0.0的，需要的是2.0.0的。</p>
+<p>装完之后，在Jupyter上跑一个。</p>
+<p>Test Code  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">%matplotlib inline</span><br><span class="line">a = tf.random_normal([<span class="number">2</span>,<span class="number">20</span>])</span><br><span class="line">sess = tf.Session()</span><br><span class="line">out = sess.run(a)</span><br><span class="line">x,y = out</span><br><span class="line"></span><br><span class="line">plt.scatter(x,y)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
 
         
         </div>
@@ -262,7 +275,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2017/12/03/tensorflow-note-2017-12-03/" data-id="cjbvtplye0017jx2zuyzqmyf4" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://yoursite.com/2017/12/03/tensorflow-note-how-to-install/" data-id="cjbw6zazi001a6e2zxs8w0nwm" class="article-share-link"><i class="fa fa-share"></i>Bagikan</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -330,7 +343,138 @@
 
             
     
-        <a href="http://yoursite.com/2017/12/03/tensorflow-note-2017-12-03/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2017/12/03/tensorflow-note-2017-12-03/">Comentarios</a>
+        <a href="http://yoursite.com/2017/12/03/tensorflow-note-how-to-install/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2017/12/03/tensorflow-note-how-to-install/">Komentar</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-tensorflow-note-2017-12-03" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2017/12/03/tensorflow-note-2017-12-03/">tensorflow note 2017.12.03</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/12/03/tensorflow-note-2017-12-03/">
+            <time datetime="2017-12-03T13:27:19.000Z" itemprop="datePublished">2017-12-03</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h3 id="Tensorflow"><a href="#Tensorflow" class="headerlink" title="Tensorflow"></a>Tensorflow</h3><p>Tensorflow既是机器学习算法实现接口，又是机器学习算法执行框架。TensorFlow的前端支持Python、C++、Go、Java等，目前推荐优先使用Python。后端使用C++、CUDA等。TensorFlow算法在异构系统方便移植，Android、iOS、CPU服务器、GPU集群等。可以实现机器学习、线性回归、逻辑回归、随机森林等算法。在语音识别、自然语言处理、计算机视觉、机器人控制、信息抽取、药物研发、分子活动预测等方面应用广泛。</p>
+<p>TensorFlow方便设计神经网络结构。</p>
+<p>不必写C++、CUDA。自动求导。</p>
+<p>C++核心方便线上部署。支持低配置嵌入式设备。通过SWIG添加其他脚本支持。</p>
+<p>每个mini-batch要从Python feed到网络，延迟大。</p>
+<p>内置TF.lean、TF.Slim快速设计网络。兼容scikit-lean estimator接口，实现evaluate、grid、search、cross、validation等功能。</p>
+<p>自动将分支转为子图。灵活移值，轻易部署任意数量设备。编译快。</p>
+<p>TensorBoard可视化网络结构、过程。支持常见网络结构（卷积神经网络CNN，循环神经网络RNN）、深度强化学习、计算密集科学计算等。</p>
+<p>缺点，计算图必须为静态图。异构支持各种硬件和操作系统。框架分布式性能是关键。TensorFlow 单机reduction只能用CPU，分布式通信使用socket RPC,不是RDMA，待优化。TensorFlow Serving 组件可导出训练好的模型，部署成对外提供预测是服务RESTful接口。实现应用机器学习全流程，训练模型、调试参数、打包模型、部署服务。</p>
+<p>TensorBoard，监控运行过程关键指标，支持标量、图片、直方图、计算图可视化。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2017/12/03/tensorflow-note-2017-12-03/" data-id="cjbw6zazf00196e2z2wzvewii" class="article-share-link"><i class="fa fa-share"></i>Bagikan</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2017/12/03/tensorflow-note-2017-12-03/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2017/12/03/tensorflow-note-2017-12-03/">Komentar</a>
     
 
         </footer>
@@ -393,7 +537,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2017/11/29/javascript-foundation/" data-id="cjbvtplxv000jjx2z8ltwysxj" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://yoursite.com/2017/11/29/javascript-foundation/" data-id="cjbw6zay4000i6e2ze02zofpp" class="article-share-link"><i class="fa fa-share"></i>Bagikan</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -461,7 +605,7 @@
 
             
     
-        <a href="http://yoursite.com/2017/11/29/javascript-foundation/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2017/11/29/javascript-foundation/">Comentarios</a>
+        <a href="http://yoursite.com/2017/11/29/javascript-foundation/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2017/11/29/javascript-foundation/">Komentar</a>
     
 
         </footer>
@@ -564,7 +708,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2017/11/28/scrapy-middleware/" data-id="cjbvtplyd0015jx2zcfwq3l9y" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://yoursite.com/2017/11/28/scrapy-middleware/" data-id="cjbw6zaz500136e2zrknd9kbc" class="article-share-link"><i class="fa fa-share"></i>Bagikan</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -632,7 +776,7 @@
 
             
     
-        <a href="http://yoursite.com/2017/11/28/scrapy-middleware/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2017/11/28/scrapy-middleware/">Comentarios</a>
+        <a href="http://yoursite.com/2017/11/28/scrapy-middleware/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2017/11/28/scrapy-middleware/">Komentar</a>
     
 
         </footer>
@@ -699,7 +843,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2017/11/28/cookie-and-session/" data-id="cjbvtplw90003jx2zowr27neg" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://yoursite.com/2017/11/28/cookie-and-session/" data-id="cjbw6zaxi00036e2zw863bytk" class="article-share-link"><i class="fa fa-share"></i>Bagikan</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -767,128 +911,7 @@
 
             
     
-        <a href="http://yoursite.com/2017/11/28/cookie-and-session/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2017/11/28/cookie-and-session/">Comentarios</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-js-foundation" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2017/11/27/js-foundation/">js-foundation</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2017/11/27/js-foundation/">
-            <time datetime="2017-11-27T15:32:55.000Z" itemprop="datePublished">2017-11-27</time>
-        </a>
-    </div>
-
-
-                        
-                        
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://yoursite.com/2017/11/27/js-foundation/" data-id="cjbvtplxt000ijx2za8504noy" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://yoursite.com/2017/11/27/js-foundation/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2017/11/27/js-foundation/">Comentarios</a>
+        <a href="http://yoursite.com/2017/11/28/cookie-and-session/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2017/11/28/cookie-and-session/">Komentar</a>
     
 
         </footer>
@@ -899,7 +922,7 @@
 
 
     <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/">&laquo; Anterior</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/3/">Siguiente  &raquo;</a>
+        <a class="extend prev" rel="prev" href="/">&laquo; Sebelumnya</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/3/">Berikutnya &raquo;</a>
     </nav>
 </section>
             
@@ -908,9 +931,28 @@
    
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Recientes</h3>
+        <h3 class="widget-title">terbaru</h3>
         <div class="widget">
             <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/01/01/sanic-00/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/01/01/sanic-00/" class="title">sanic-00</a></p>
+                            <p class="item-date"><time datetime="2018-01-01T12:14:17.000Z" itemprop="datePublished">2018-01-01</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -988,25 +1030,6 @@
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2017/12/03/tensorflow-note-how-to-install/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2017/12/03/tensorflow-note-how-to-install/" class="title">tensorflow note how to install</a></p>
-                            <p class="item-date"><time datetime="2017-12-03T13:41:39.000Z" itemprop="datePublished">2017-12-03</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -1016,16 +1039,16 @@
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Archivos</h3>
+        <h3 class="widget-title">arsip</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
         </div>
     </div>
 
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Etiquetas</h3>
+        <h3 class="widget-title">tag</h3>
         <div class="widget">
             <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-requests/">python, requests</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/requests-python/">requests, python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/">ruby</a><span class="tag-list-count">1</span></li></ul>
         </div>
@@ -1034,7 +1057,7 @@
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Nube de etiquetas</h3>
+        <h3 class="widget-title">awan tag</h3>
         <div class="widget tagcloud">
             <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/python-requests/" style="font-size: 10px;">python, requests</a> <a href="/tags/requests-python/" style="font-size: 10px;">requests, python</a> <a href="/tags/ruby/" style="font-size: 10px;">ruby</a>
         </div>
@@ -1043,7 +1066,7 @@
     
         
     <div class="widget-wrap widget-list">
-        <h3 class="widget-title">Links</h3>
+        <h3 class="widget-title">tautan</h3>
         <div class="widget">
             <ul>
                 
