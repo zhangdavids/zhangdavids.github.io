@@ -79,7 +79,7 @@
             <div id="search-form-wrap">
 
     <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher" />
         <button type="submit" class="search-form-submit"></button>
     </form>
     <div class="ins-search">
@@ -98,10 +98,10 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Entradas',
+            POSTS: 'Articles',
             PAGES: 'Pages',
-            CATEGORIES: 'Categorias',
-            TAGS: 'Etiquetas',
+            CATEGORIES: 'Catégories',
+            TAGS: 'Tags',
             UNTITLED: '(Untitled)',
         },
         ROOT_URL: '/',
@@ -132,7 +132,7 @@
                 <td>
                     
     <div class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher" />
     </div>
 
                 </td>
@@ -152,16 +152,16 @@
             <h2 id="name">Aaron Cheung</h2>
             <h3 id="title">Python Engineer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Wuhan, China</span>
-            <a id="follow" target="_blank" href="https://github.com/zhangdavids/">SEGUIR</a>
+            <a id="follow" target="_blank" href="https://github.com/zhangdavids/">SUIVRE</a>
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                72
-                <span>Entradas</span>
+                76
+                <span>Articles</span>
             </div>
             <div class="article-info-block">
                 5
-                <span>Etiquetas</span>
+                <span>Tags</span>
             </div>
         </div>
         
@@ -209,6 +209,557 @@
 
             
             <section id="main">
+    <article id="post-lagou-spider" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2017/11/05/lagou-spider/">lagou-spider</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/11/05/lagou-spider/">
+            <time datetime="2017-11-05T12:26:44.000Z" itemprop="datePublished">2017-11-05</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h2 id="很久没有写爬虫了"><a href="#很久没有写爬虫了" class="headerlink" title="很久没有写爬虫了"></a>很久没有写爬虫了</h2><p>今天试着爬了一下 拉勾网站 深圳 python 的前 150 个职位</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> pprint <span class="keyword">import</span> pprint</span><br><span class="line"><span class="keyword">from</span> fake_useragent <span class="keyword">import</span> UserAgent</span><br><span class="line">ua = UserAgent()</span><br><span class="line"><span class="keyword">import</span> pymongo</span><br><span class="line">client = pymongo.MongoClient(<span class="string">"localhost"</span>, <span class="number">27017</span>)</span><br><span class="line">db = client.job</span><br><span class="line"></span><br><span class="line">user_agent = ua.random</span><br><span class="line"></span><br><span class="line">url = <span class="string">'https://www.lagou.com/jobs/positionAjax.json?px=default&amp;city=%E6%B7%B1%E5%9C%B3&amp;needAddtionalResult=false&amp;isSchoolJob=0'</span></span><br><span class="line"></span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">"Cookie"</span>: <span class="string">"user_trace_token=20171105173814-0b824fa6-c20d-11e7-978b-5254005c3644; LGUID=20171105173814-0b825535-c20d-11e7-978b-5254005c3644; index_location_city=%E6%B7%B1%E5%9C%B3; TG-TRACK-CODE=index_search; SEARCH_ID=5bb5150d5d314f32a34bdb68f6e2dbbc; _gid=GA1.2.1886275699.1509874693; _ga=GA1.2.1197843841.1509874693; LGRID=20171105173909-2cac9846-c20d-11e7-978b-5254005c3644; Hm_lvt_4233e74dff0ae5bd0a3d81c6ccf756e6=1509874693; Hm_lpvt_4233e74dff0ae5bd0a3d81c6ccf756e6=1509874749; JSESSIONID=ABAAABAAAFCAAEG674AE53B34CFB49996425F9659B657CF"</span>,</span><br><span class="line">    <span class="string">"Referer"</span>: <span class="string">"https://www.lagou.com/jobs/list_python?px=default&amp;city=%E6%B7%B1%E5%9C%B3"</span>,</span><br><span class="line">    <span class="string">"User-Agent"</span>: user_agent</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_job_data</span><span class="params">(num)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(num):</span><br><span class="line">        payload = &#123;</span><br><span class="line">            <span class="string">"first"</span>: <span class="string">"false"</span>,</span><br><span class="line">            <span class="string">"pn"</span>: str(i+<span class="number">1</span>),</span><br><span class="line">            <span class="string">"kd"</span>: <span class="string">"python"</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        response = requests.post(url, data=payload, headers=headers)</span><br><span class="line">        time.sleep(<span class="number">5</span>)</span><br><span class="line">        <span class="comment"># pprint(response.json()['content']['positionResult']['result'])</span></span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> response.json()[<span class="string">'content'</span>][<span class="string">'positionResult'</span>][<span class="string">'result'</span>]:</span><br><span class="line">            db.my_collection.insert_one(item)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    get_job_data(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<p>还想着做一些可视化的东西。。。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2017/11/05/lagou-spider/" data-id="cje8erwlc001b3b2z03d4xllg" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2017/11/05/lagou-spider/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2017/11/05/lagou-spider/">Commentaires</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-how-fabric-works" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2017/09/17/how-fabric-works/">how fabric works</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/09/17/how-fabric-works/">
+            <time datetime="2017-09-17T14:13:30.000Z" itemprop="datePublished">2017-09-17</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2017/09/17/how-fabric-works/" data-id="cje8erwky000t3b2z2iozhr9c" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2017/09/17/how-fabric-works/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2017/09/17/how-fabric-works/">Commentaires</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-how-ansible-works" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2017/09/17/how-ansible-works/">how ansible works</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/09/17/how-ansible-works/">
+            <time datetime="2017-09-17T14:13:14.000Z" itemprop="datePublished">2017-09-17</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>ansible 是什么？    </p>
+<p>ansible 是如何工作的：  </p>
+<p>使用者认证通过之后在管理节点通过 ansible 工具调用各应用模块将指令推送到被管理端。  </p>
+<p>并且在执行完毕后自动删除产生的临时文件。</p>
+<p>主要由六个部分组成：</p>
+<ol>
+<li>playbooks 通常是 json 格式的 yml 文件</li>
+<li>inventory 管理主机的清单</li>
+<li>modules 执行命令的功能模块</li>
+<li>plugins 模块功能的补充，如循环插件等，功能不常用</li>
+<li>api  供第三方程序调用的应用程序编程接口</li>
+<li>ansible  ansible 命令工具</li>
+</ol>
+<p>遵循预先编排的规则将 playbook 逐条拆解为 play，将 play 组织成 ansible 可识别的任务 task，随后调用任务涉及的所有模块和插件，根据 inventory 中定义的主机列表通过 ssh 将任务集以临时文件或命令的形式传输到远程客户端执行并返回执行结果，如果是临时文件则执行完毕后自动删除。  </p>
+<p>下面会详细介绍一个企业级的应用，elk 日志系统基于 ansible 的自动化实现。  </p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2017/09/17/how-ansible-works/" data-id="cje8erwkt000r3b2zaqoevo5v" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2017/09/17/how-ansible-works/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2017/09/17/how-ansible-works/">Commentaires</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-tensorflow-foundation" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2017/09/17/tensorflow-foundation/">tensorflow foundation</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/09/17/tensorflow-foundation/">
+            <time datetime="2017-09-17T04:24:30.000Z" itemprop="datePublished">2017-09-17</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h2 id="1-基础架构"><a href="#1-基础架构" class="headerlink" title="1. 基础架构"></a>1. 基础架构</h2><p>自底向上分为：  </p>
+<ul>
+<li>网络层和设备层</li>
+<li>数据操作层</li>
+<li>图计算层</li>
+<li>API 层</li>
+<li>应用层</li>
+</ul>
+<p>1.1 网络通信层和设备管理层</p>
+<p>网络通信层包括 gRPC 和 RDMA ，都是分布式计算时需要用到的。<br>设备管理层包括 tf 分别在 CPU GPU FPGA 等设备上的实现，也就是对上层提供了一个统一的接口，使得上层只需要处理卷积等逻辑，而不需要关心在硬件上的卷积的实现过程。  </p>
+<p>1.2  数据操作层</p>
+<p>包括卷积函数、激活函数等操作。  </p>
+<p>1.3 图计算层  </p>
+<p>本地计算图和分布式计算图的实现  </p>
+<p>1.4 API 层</p>
+<p>python实现和其他语言的实现  </p>
+<p>1.5 应用层  </p>
+<p>主要是训练相关类库和预测相关类库   </p>
+<h2 id="2-设计理念"><a href="#2-设计理念" class="headerlink" title="2. 设计理念"></a>2. 设计理念</h2><p>2.1 图的定义和图的实现完全分开  </p>
+<p>符号式编程涉及很多的嵌入和优化，不容易理解和调试，但是运行速度有所提升。  </p>
+<p>2.2 涉及的运算全部放在图中，图的运行只是发生在会话 session 中。  </p>
+<p>下面是举例：  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">a = tf.constant([<span class="number">1.0</span>, <span class="number">2.0</span>])</span><br><span class="line">b = tf.constant([<span class="number">3.0</span>, <span class="number">4.0</span>])</span><br><span class="line">c = a * b</span><br><span class="line"></span><br><span class="line">sess = tf.Session()</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> sess.run(c)</span><br><span class="line">sess.close()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 当然 一般写法是这样</span></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">	<span class="keyword">print</span> sess.run(c)</span><br></pre></td></tr></table></figure>
+<ol>
+<li>编程模型</li>
+</ol>
+<p>运行原理：</p>
+<ul>
+<li>输入input</li>
+<li>塑形reshape</li>
+<li>Relu层</li>
+<li>Logit层</li>
+<li>Softmax</li>
+<li>交叉熵cross entropy</li>
+<li>梯度gradient</li>
+<li>SGD 训练</li>
+</ul>
+<p>从输入开始，经过塑形后，一层一层进行前向传播运算。Relu层里会有两个参数，在输出前使用Relu激活函数来做非线性处理。然后进入Logit层，学习两个参数。用softmax来计算输出结果中各个类别的概率分布。用交叉熵来度量两个概率分布之间的相似性。然后开始计算梯度，以及交叉墒后的结果。随后进入SGD训练，也就是反向传播的过程，从上往下计算每一层的参数，依次进行更新。  </p>
+<p>tensorflow 顾名思义就是指“张量的流动”，数据流图是由节点node和边edge组成的有向无环图。</p>
+<p>3.1 边</p>
+<p>张量具有数据属性 如tf.float32等。</p>
+<p>3.2 节点</p>
+<p>节点的运算操作有数学、数组等。详细代码在源码tensorflow/python/ops/目录下。</p>
+<p>3.3 设备</p>
+<p>设备device是指一块可以用来运算且拥有自己地址空间的硬件。</p>
+<p>3.4 变量</p>
+<p>变量variable是一种特殊的数据，在图中有固定的位置，不像张量那样可以流动。  </p>
+<p>3.5 内核  </p>
+<p>操作是对抽象操作的一个统称，而内核kernel则是能够运行在特定设备上的一种对操作的实现。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2017/09/17/tensorflow-foundation/" data-id="cje8erwlu001t3b2zakda72j0" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2017/09/17/tensorflow-foundation/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2017/09/17/tensorflow-foundation/">Commentaires</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-texas-poker" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -254,7 +805,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2017/09/02/texas-poker/" data-id="cjdzuv37g0023no2ztt53zc8d" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://yoursite.com/2017/09/02/texas-poker/" data-id="cje8erwm0001z3b2za4lpt7bb" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -322,1098 +873,7 @@
 
             
     
-        <a href="http://yoursite.com/2017/09/02/texas-poker/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2017/09/02/texas-poker/">Comentarios</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-vim-table-cheatsheet" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2017/08/27/vim-table-cheatsheet/">vim table cheatsheet</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2017/08/27/vim-table-cheatsheet/">
-            <time datetime="2017-08-27T03:24:08.000Z" itemprop="datePublished">2017-08-27</time>
-        </a>
-    </div>
-
-
-                        
-                        
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <table>
-<thead>
-<tr>
-<th style="text-align:left">命令</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">进入 vim</td>
-<td style="text-align:left">-</td>
-</tr>
-<tr>
-<td style="text-align:left">vim filename</td>
-<td style="text-align:left">打开或者新建文件，光标置于第一行行首</td>
-</tr>
-<tr>
-<td style="text-align:left">vim +n filename</td>
-<td style="text-align:left">n行行首</td>
-</tr>
-<tr>
-<td style="text-align:left">vim + filename</td>
-<td style="text-align:left">最后一行行首</td>
-</tr>
-<tr>
-<td style="text-align:left">vim +/pattern filename</td>
-<td style="text-align:left">第一个与pattern匹配的串处</td>
-</tr>
-<tr>
-<td style="text-align:left">vim -r filename</td>
-<td style="text-align:left">恢复</td>
-</tr>
-<tr>
-<td style="text-align:left">vim filename … filename</td>
-<td style="text-align:left">打开多个</td>
-</tr>
-<tr>
-<td style="text-align:left">vim 配置</td>
-<td style="text-align:left">-</td>
-</tr>
-<tr>
-<td style="text-align:left">all</td>
-<td style="text-align:left">列出所有选项设置情况</td>
-</tr>
-<tr>
-<td style="text-align:left">term</td>
-<td style="text-align:left">设置终端类型</td>
-</tr>
-<tr>
-<td style="text-align:left">ignorance</td>
-<td style="text-align:left">忽略大小写</td>
-</tr>
-<tr>
-<td style="text-align:left">list</td>
-<td style="text-align:left">显示制表位和行尾标志</td>
-</tr>
-<tr>
-<td style="text-align:left">number</td>
-<td style="text-align:left">显示行号</td>
-</tr>
-<tr>
-<td style="text-align:left">report</td>
-<td style="text-align:left">显示由面向行的命令修改过的数目</td>
-</tr>
-<tr>
-<td style="text-align:left">terse</td>
-<td style="text-align:left">显示简短的警告信息</td>
-</tr>
-<tr>
-<td style="text-align:left">warn</td>
-<td style="text-align:left">显示no write信息</td>
-</tr>
-<tr>
-<td style="text-align:left">nomagic</td>
-<td style="text-align:left">搜索模式使用前面不带\的特殊字符</td>
-</tr>
-<tr>
-<td style="text-align:left">nowrapscan</td>
-<td style="text-align:left">禁止vi在搜索到达文件两端时，又从另一端开始</td>
-</tr>
-<tr>
-<td style="text-align:left">mesg</td>
-<td style="text-align:left">允许vi显示其他用户用write写到自己终端上的信息</td>
-</tr>
-<tr>
-<td style="text-align:left">:set number</td>
-<td style="text-align:left">显示行号 加no不显示</td>
-</tr>
-<tr>
-<td style="text-align:left">:set ruler</td>
-<td style="text-align:left">标尺 有no</td>
-</tr>
-<tr>
-<td style="text-align:left">:set hisearch</td>
-<td style="text-align:left">高亮显示查找到的单词</td>
-</tr>
-<tr>
-<td style="text-align:left">:syntax on</td>
-<td style="text-align:left">语法高亮</td>
-</tr>
-<tr>
-<td style="text-align:left">:set tabstop=8</td>
-<td style="text-align:left">tab大小为8</td>
-</tr>
-<tr>
-<td style="text-align:left">:set softtabstop=8</td>
-<td style="text-align:left">4: 4个空格，8:正常制表符，16:两个制表符</td>
-</tr>
-<tr>
-<td style="text-align:left">:set autoindent</td>
-<td style="text-align:left">自动缩进</td>
-</tr>
-<tr>
-<td style="text-align:left">:set cindent</td>
-<td style="text-align:left">c语言格式自动缩进</td>
-</tr>
-<tr>
-<td style="text-align:left">移动光标</td>
-<td style="text-align:left">-</td>
-</tr>
-<tr>
-<td style="text-align:left">k nk</td>
-<td style="text-align:left">上</td>
-</tr>
-<tr>
-<td style="text-align:left">j nj</td>
-<td style="text-align:left">下</td>
-</tr>
-<tr>
-<td style="text-align:left">h nh</td>
-<td style="text-align:left">左</td>
-</tr>
-<tr>
-<td style="text-align:left">l nl</td>
-<td style="text-align:left">右</td>
-</tr>
-<tr>
-<td style="text-align:left">Space</td>
-<td style="text-align:left">光标右移一个字符</td>
-</tr>
-<tr>
-<td style="text-align:left">BackSpace</td>
-<td style="text-align:left">左移</td>
-</tr>
-<tr>
-<td style="text-align:left">Enter</td>
-<td style="text-align:left">下移动一行</td>
-</tr>
-<tr>
-<td style="text-align:left">w/W</td>
-<td style="text-align:left">右移动一个字至字首</td>
-</tr>
-<tr>
-<td style="text-align:left">b/B</td>
-<td style="text-align:left">左移</td>
-</tr>
-<tr>
-<td style="text-align:left">e/E</td>
-<td style="text-align:left">右移到字尾</td>
-</tr>
-<tr>
-<td style="text-align:left">)</td>
-<td style="text-align:left">句尾</td>
-</tr>
-<tr>
-<td style="text-align:left">(</td>
-<td style="text-align:left">句首</td>
-</tr>
-<tr>
-<td style="text-align:left">}</td>
-<td style="text-align:left">段落结尾</td>
-</tr>
-<tr>
-<td style="text-align:left">{</td>
-<td style="text-align:left">开头</td>
-</tr>
-<tr>
-<td style="text-align:left">n$</td>
-<td style="text-align:left">n行尾</td>
-</tr>
-<tr>
-<td style="text-align:left">H</td>
-<td style="text-align:left">屏幕顶行</td>
-</tr>
-<tr>
-<td style="text-align:left">M</td>
-<td style="text-align:left">中间行</td>
-</tr>
-<tr>
-<td style="text-align:left">L</td>
-<td style="text-align:left">最后行</td>
-</tr>
-<tr>
-<td style="text-align:left">0</td>
-<td style="text-align:left">当前行首</td>
-</tr>
-<tr>
-<td style="text-align:left">^</td>
-<td style="text-align:left">第一个非空字符上</td>
-</tr>
-<tr>
-<td style="text-align:left">$</td>
-<td style="text-align:left">当前行尾</td>
-</tr>
-<tr>
-<td style="text-align:left">gg</td>
-<td style="text-align:left">第一行</td>
-</tr>
-<tr>
-<td style="text-align:left">G</td>
-<td style="text-align:left">最后一行</td>
-</tr>
-<tr>
-<td style="text-align:left">f</td>
-<td style="text-align:left">当前行的字符a上</td>
-</tr>
-<tr>
-<td style="text-align:left">F</td>
-<td style="text-align:left">相反</td>
-</tr>
-<tr>
-<td style="text-align:left">%</td>
-<td style="text-align:left">匹配的符号如（）、[]、{}、&lt;&gt;等</td>
-</tr>
-<tr>
-<td style="text-align:left">nG</td>
-<td style="text-align:left">n行上</td>
-</tr>
-<tr>
-<td style="text-align:left">G</td>
-<td style="text-align:left">最后一行</td>
-</tr>
-<tr>
-<td style="text-align:left">屏幕滚动</td>
-<td style="text-align:left">-</td>
-</tr>
-<tr>
-<td style="text-align:left">ctrl + u</td>
-<td style="text-align:left">向文件首翻半屏</td>
-</tr>
-<tr>
-<td style="text-align:left">ctrl + d</td>
-<td style="text-align:left">尾</td>
-</tr>
-<tr>
-<td style="text-align:left">ctrl + f</td>
-<td style="text-align:left">文件尾一屏</td>
-</tr>
-<tr>
-<td style="text-align:left">ctrl + b</td>
-<td style="text-align:left">首一屏</td>
-</tr>
-<tr>
-<td style="text-align:left">nz</td>
-<td style="text-align:left">将第n行滚动至屏幕顶部，不指定n行时将当前行滚动到屏幕顶部</td>
-</tr>
-<tr>
-<td style="text-align:left">插入文本</td>
-<td style="text-align:left">-</td>
-</tr>
-<tr>
-<td style="text-align:left">i</td>
-<td style="text-align:left">光标前</td>
-</tr>
-<tr>
-<td style="text-align:left">I</td>
-<td style="text-align:left">行首</td>
-</tr>
-<tr>
-<td style="text-align:left">a</td>
-<td style="text-align:left">光标后</td>
-</tr>
-<tr>
-<td style="text-align:left">A</td>
-<td style="text-align:left">行尾</td>
-</tr>
-<tr>
-<td style="text-align:left">o</td>
-<td style="text-align:left">当前行之下新开一行</td>
-</tr>
-<tr>
-<td style="text-align:left">O</td>
-<td style="text-align:left">之上</td>
-</tr>
-<tr>
-<td style="text-align:left">r</td>
-<td style="text-align:left">替换当前字符</td>
-</tr>
-<tr>
-<td style="text-align:left">R</td>
-<td style="text-align:left">替换当前字符以及以后的字符，直到按esc键</td>
-</tr>
-<tr>
-<td style="text-align:left">s</td>
-<td style="text-align:left">从当前光标位置处开始，以输入的文本替代指定数目的字符</td>
-</tr>
-<tr>
-<td style="text-align:left">S</td>
-<td style="text-align:left">删除指定数目的行，并以所输入的文本代替之</td>
-</tr>
-<tr>
-<td style="text-align:left">ncw/W</td>
-<td style="text-align:left">修改指定数目的字</td>
-</tr>
-<tr>
-<td style="text-align:left">nCC</td>
-<td style="text-align:left">修改指定数目的行</td>
-</tr>
-<tr>
-<td style="text-align:left">删除命令</td>
-<td style="text-align:left">-</td>
-</tr>
-<tr>
-<td style="text-align:left">x/X</td>
-<td style="text-align:left">删除一个字符，一个后一个前</td>
-</tr>
-<tr>
-<td style="text-align:left">dw</td>
-<td style="text-align:left">删除一个单词</td>
-</tr>
-<tr>
-<td style="text-align:left">dnw</td>
-<td style="text-align:left">n个</td>
-</tr>
-<tr>
-<td style="text-align:left">dne</td>
-<td style="text-align:left">删除到单词尾</td>
-</tr>
-<tr>
-<td style="text-align:left">do</td>
-<td style="text-align:left">删除到行首</td>
-</tr>
-<tr>
-<td style="text-align:left">d$</td>
-<td style="text-align:left">行尾</td>
-</tr>
-<tr>
-<td style="text-align:left">dd</td>
-<td style="text-align:left">删除当前行</td>
-</tr>
-<tr>
-<td style="text-align:left">ndd</td>
-<td style="text-align:left">当前行和后面n-1行</td>
-</tr>
-<tr>
-<td style="text-align:left">dnl</td>
-<td style="text-align:left">向右删除n个字母</td>
-</tr>
-<tr>
-<td style="text-align:left">dnh</td>
-<td style="text-align:left">左</td>
-</tr>
-<tr>
-<td style="text-align:left">dnj</td>
-<td style="text-align:left">下n行（n不含当前行）</td>
-</tr>
-<tr>
-<td style="text-align:left">dnk</td>
-<td style="text-align:left">上n行</td>
-</tr>
-<tr>
-<td style="text-align:left">cnw[word]</td>
-<td style="text-align:left">将n个word改变为word</td>
-</tr>
-<tr>
-<td style="text-align:left">C$</td>
-<td style="text-align:left">改变到行尾</td>
-</tr>
-<tr>
-<td style="text-align:left">cc</td>
-<td style="text-align:left">改变整行</td>
-</tr>
-<tr>
-<td style="text-align:left">shift+j</td>
-<td style="text-align:left">删除行尾的换行符，下一行接上来了</td>
-</tr>
-<tr>
-<td style="text-align:left">复制粘贴</td>
-<td style="text-align:left">-</td>
-</tr>
-<tr>
-<td style="text-align:left">p</td>
-<td style="text-align:left">粘贴用x或者d删除的文本</td>
-</tr>
-<tr>
-<td style="text-align:left">ynw</td>
-<td style="text-align:left">复制n个单词</td>
-</tr>
-<tr>
-<td style="text-align:left">yy</td>
-<td style="text-align:left">复制一行</td>
-</tr>
-<tr>
-<td style="text-align:left">ynl</td>
-<td style="text-align:left">n个字符</td>
-</tr>
-<tr>
-<td style="text-align:left">y$</td>
-<td style="text-align:left">复制当前光标至行尾处</td>
-</tr>
-<tr>
-<td style="text-align:left">nyy</td>
-<td style="text-align:left">拷贝n行</td>
-</tr>
-<tr>
-<td style="text-align:left">撤销</td>
-<td style="text-align:left">-</td>
-</tr>
-<tr>
-<td style="text-align:left">u</td>
-<td style="text-align:left">撤销前一次的操作</td>
-</tr>
-<tr>
-<td style="text-align:left">shift+u</td>
-<td style="text-align:left">撤销对该行的所有操作</td>
-</tr>
-<tr>
-<td style="text-align:left">搜索以及替换</td>
-<td style="text-align:left">-</td>
-</tr>
-<tr>
-<td style="text-align:left">/pattern</td>
-<td style="text-align:left">光标开始处向文件尾搜索</td>
-</tr>
-<tr>
-<td style="text-align:left">?pattern</td>
-<td style="text-align:left">文件首</td>
-</tr>
-<tr>
-<td style="text-align:left">n</td>
-<td style="text-align:left">在同一个方向重复上一次搜索命令</td>
-</tr>
-<tr>
-<td style="text-align:left">N</td>
-<td style="text-align:left">反方向</td>
-</tr>
-<tr>
-<td style="text-align:left">cw newword</td>
-<td style="text-align:left">替换为newword</td>
-</tr>
-<tr>
-<td style="text-align:left">n</td>
-<td style="text-align:left">继续查找</td>
-</tr>
-<tr>
-<td style="text-align:left">.</td>
-<td style="text-align:left">执行替换</td>
-</tr>
-<tr>
-<td style="text-align:left">:s/p1/p2/g</td>
-<td style="text-align:left">将当前行中所有p1均用p2替代</td>
-</tr>
-<tr>
-<td style="text-align:left">:n1,n2 s/p1/p2/g</td>
-<td style="text-align:left">n1到n2行</td>
-</tr>
-<tr>
-<td style="text-align:left">:g/p1/s/p2/g</td>
-<td style="text-align:left">文件中所有</td>
-</tr>
-<tr>
-<td style="text-align:left">:1,$ s/string1/string2/g</td>
-<td style="text-align:left">全文中替换</td>
-</tr>
-<tr>
-<td style="text-align:left">书签</td>
-<td style="text-align:left">-</td>
-</tr>
-<tr>
-<td style="text-align:left">m[a-z]</td>
-<td style="text-align:left">标记</td>
-</tr>
-<tr>
-<td style="text-align:left">`a</td>
-<td style="text-align:left">移动到标记a处</td>
-</tr>
-<tr>
-<td style="text-align:left">visual模式</td>
-<td style="text-align:left">-</td>
-</tr>
-<tr>
-<td style="text-align:left">v</td>
-<td style="text-align:left">进入模式</td>
-</tr>
-<tr>
-<td style="text-align:left">V</td>
-<td style="text-align:left">行的</td>
-</tr>
-<tr>
-<td style="text-align:left">ctrl+v</td>
-<td style="text-align:left">进入块操作</td>
-</tr>
-<tr>
-<td style="text-align:left">行方式命令</td>
-<td style="text-align:left">-</td>
-</tr>
-<tr>
-<td style="text-align:left">:n1,n2 co n3</td>
-<td style="text-align:left">n1到n2行拷贝到第n3行下</td>
-</tr>
-<tr>
-<td style="text-align:left">:n1,n2 m n3</td>
-<td style="text-align:left">移动</td>
-</tr>
-<tr>
-<td style="text-align:left">:n1,n2 d</td>
-<td style="text-align:left">删除</td>
-</tr>
-<tr>
-<td style="text-align:left">:n1,n2 wlcommand</td>
-<td style="text-align:left">作为command的输入并执行之</td>
-</tr>
-<tr>
-<td style="text-align:left">宏</td>
-<td style="text-align:left">-</td>
-</tr>
-<tr>
-<td style="text-align:left">q[a-z]</td>
-<td style="text-align:left">q终止录宏</td>
-</tr>
-<tr>
-<td style="text-align:left">reg</td>
-<td style="text-align:left">显示当前所定义的所有宏</td>
-</tr>
-<tr>
-<td style="text-align:left">窗口操作</td>
-<td style="text-align:left">-</td>
-</tr>
-<tr>
-<td style="text-align:left">:split</td>
-<td style="text-align:left">分割一个</td>
-</tr>
-<tr>
-<td style="text-align:left">:split file.c</td>
-<td style="text-align:left">为另一个file.c分隔窗口</td>
-</tr>
-<tr>
-<td style="text-align:left">:nsplit file.c</td>
-<td style="text-align:left">并且指定行数</td>
-</tr>
-<tr>
-<td style="text-align:left">ctrl+w</td>
-<td style="text-align:left">在窗口中切换</td>
-</tr>
-<tr>
-<td style="text-align:left">:close</td>
-<td style="text-align:left">关闭当前窗口</td>
-</tr>
-<tr>
-<td style="text-align:left">文件及其他</td>
-<td style="text-align:left">-</td>
-</tr>
-<tr>
-<td style="text-align:left">:q</td>
-<td style="text-align:left">退出</td>
-</tr>
-<tr>
-<td style="text-align:left">:q!</td>
-<td style="text-align:left">强制</td>
-</tr>
-<tr>
-<td style="text-align:left">:e filename</td>
-<td style="text-align:left">打开文件并且进行编辑</td>
-</tr>
-<tr>
-<td style="text-align:left">:e!</td>
-<td style="text-align:left">放弃修改，并重载</td>
-</tr>
-<tr>
-<td style="text-align:left">:w</td>
-<td style="text-align:left">保存</td>
-</tr>
-<tr>
-<td style="text-align:left">:wq</td>
-<td style="text-align:left">存盘退出</td>
-</tr>
-<tr>
-<td style="text-align:left">:ZZ</td>
-<td style="text-align:left">保存退出</td>
-</tr>
-<tr>
-<td style="text-align:left">:!command</td>
-<td style="text-align:left">执行shell命令command</td>
-</tr>
-<tr>
-<td style="text-align:left">:r!command</td>
-<td style="text-align:left">输出结果放到当前行</td>
-</tr>
-<tr>
-<td style="text-align:left">:n1,n2 write temp.c</td>
-<td style="text-align:left"></td>
-</tr>
-<tr>
-<td style="text-align:left">:read file.c</td>
-<td style="text-align:left">将文件file.c的内容放到当前光标所在的下面</td>
-</tr>
-</tbody>
-</table>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://yoursite.com/2017/08/27/vim-table-cheatsheet/" data-id="cjdzuv37h0024no2zie6nw8w7" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://yoursite.com/2017/08/27/vim-table-cheatsheet/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2017/08/27/vim-table-cheatsheet/">Comentarios</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-make-a-forum-with-django" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2017/08/24/make-a-forum-with-django/">make a forum with django</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2017/08/24/make-a-forum-with-django/">
-            <time datetime="2017-08-23T17:12:25.000Z" itemprop="datePublished">2017-08-24</time>
-        </a>
-    </div>
-
-
-                        
-                        
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>每次想写点东西的时候，总是自己骗自己说，哎呀，哪有时间去搞这些东西。  </p>
-<p>决定还是一点点尝试写一个论坛系统出来。  </p>
-<p>Django这个框架非常庞大，可能在实际的开发过程中，我们用到的只是一小部分，比如创建model，view，然后根据这些写一些html的文件等。</p>
-<p>再在页面调试的过程当中发现一些问题，对代码进行不断地修正。</p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://yoursite.com/2017/08/24/make-a-forum-with-django/" data-id="cjdzuv366000yno2zoe1kgfhq" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://yoursite.com/2017/08/24/make-a-forum-with-django/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2017/08/24/make-a-forum-with-django/">Comentarios</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-wechat-delete-friends" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2017/08/03/wechat-delete-friends/">wechat-delete-friends</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2017/08/03/wechat-delete-friends/">
-            <time datetime="2017-08-03T13:42:14.000Z" itemprop="datePublished">2017-08-03</time>
-        </a>
-    </div>
-
-
-                        
-                        
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>在终端中执行:</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git  <span class="built_in">clone</span>  https://github.com/0x5e/wechat-deleted-friends.git</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span>  wechat-deleted-friends</span><br><span class="line"></span><br><span class="line">python  wdf.py</span><br></pre></td></tr></table></figure>
-<p>然后按照提示操作就可以了.</p>
-<p>完成之后手动删除生成的一个群聊, 不要在里面说话, 不说话好友们是不知情的. </p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://yoursite.com/2017/08/03/wechat-delete-friends/" data-id="cjdzuv37g0021no2zky9o0ks7" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://yoursite.com/2017/08/03/wechat-delete-friends/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2017/08/03/wechat-delete-friends/">Comentarios</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-ftp-download" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2017/08/03/ftp-download/">ftp-download</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2017/08/03/ftp-download/">
-            <time datetime="2017-08-03T12:45:52.000Z" itemprop="datePublished">2017-08-03</time>
-        </a>
-    </div>
-
-
-                        
-                        
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># encoding: utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> ftplib</span><br><span class="line"><span class="keyword">import</span> traceback</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FtpDownloader</span><span class="params">(object)</span>:</span></span><br><span class="line">    PATH_TYPE_UNKNOWN = <span class="number">-1</span></span><br><span class="line">    PATH_TYPE_FILE = <span class="number">0</span></span><br><span class="line">    PATH_TYPE_DIR = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, host, user=None, passwd=None, port=<span class="number">21</span>, timeout=<span class="number">10</span>)</span>:</span></span><br><span class="line">        self.conn = ftplib.FTP(</span><br><span class="line">            host=host,</span><br><span class="line">            user=user,</span><br><span class="line">            passwd=passwd,</span><br><span class="line">            timeout=timeout</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">dir</span><span class="params">(self, *args)</span>:</span></span><br><span class="line">        <span class="string">'''</span><br><span class="line">        by defualt, ftplib.FTP.dir() does not return any value.</span><br><span class="line">        Instead, it prints the dir info to the stdout.</span><br><span class="line">        So we re-implement it in FtpDownloader, which is able to return the dir info.</span><br><span class="line">        '''</span></span><br><span class="line">        info = []</span><br><span class="line">        cmd = <span class="string">'LIST'</span></span><br><span class="line">        <span class="keyword">for</span> arg <span class="keyword">in</span> args:</span><br><span class="line">            <span class="keyword">if</span> arg:</span><br><span class="line">                cmd = cmd + (<span class="string">' '</span> + arg)</span><br><span class="line">        self.conn.retrlines(cmd, <span class="keyword">lambda</span> x: info.append(x.strip().split()))</span><br><span class="line">        <span class="keyword">return</span> info</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">tree</span><span class="params">(self, rdir=None, init=True)</span>:</span></span><br><span class="line">        <span class="string">'''</span><br><span class="line">        recursively get the tree structure of a directory on FTP Server.</span><br><span class="line">        args:</span><br><span class="line">            rdir - remote direcotry path of the FTP Server.</span><br><span class="line">            init - flag showing whether in a recursion.</span><br><span class="line">        '''</span></span><br><span class="line">        <span class="keyword">if</span> init <span class="keyword">and</span> rdir <span class="keyword">in</span> (<span class="string">'.'</span>, <span class="keyword">None</span>):</span><br><span class="line">            rdir = self.conn.pwd()</span><br><span class="line">        tree = []</span><br><span class="line">        tree.append((rdir, self.PATH_TYPE_DIR))</span><br><span class="line"></span><br><span class="line">        dir_info = self.dir(rdir)</span><br><span class="line">        <span class="keyword">for</span> info <span class="keyword">in</span> dir_info:</span><br><span class="line">            attr = info[<span class="number">0</span>]  <span class="comment"># attribute</span></span><br><span class="line">            name = info[<span class="number">-1</span>]</span><br><span class="line">            path = os.path.join(rdir, name)</span><br><span class="line">            <span class="keyword">if</span> attr.startswith(<span class="string">'-'</span>):</span><br><span class="line">                tree.append((path, self.PATH_TYPE_FILE))</span><br><span class="line">            <span class="keyword">elif</span> attr.startswith(<span class="string">'d'</span>):</span><br><span class="line">                <span class="keyword">if</span> (name == <span class="string">'.'</span> <span class="keyword">or</span> name == <span class="string">'..'</span>):  <span class="comment"># skip . and ..</span></span><br><span class="line">                    <span class="keyword">continue</span></span><br><span class="line">                tree.extend(self.tree(rdir=path,init=<span class="keyword">False</span>))  <span class="comment"># recurse</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                tree.append(path, self.PATH_TYPE_UNKNOWN)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> tree</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">downloadFile</span><span class="params">(self, rfile, lfile)</span>:</span></span><br><span class="line">        <span class="string">'''</span><br><span class="line">        download a file with path %rfile on a FTP Server and save it to locate</span><br><span class="line">        path %lfile.</span><br><span class="line">        '''</span></span><br><span class="line">        ldir = os.path.dirname(lfile)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(ldir):</span><br><span class="line">            os.makedirs(ldir)</span><br><span class="line">        f = open(lfile, <span class="string">'wb'</span>)</span><br><span class="line">        self.conn.retrbinary(<span class="string">'RETR %s'</span> % rfile, f.write)</span><br><span class="line">        f.close()</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">treeStat</span><span class="params">(self, tree)</span>:</span></span><br><span class="line">        numDir = <span class="number">0</span></span><br><span class="line">        numFile = <span class="number">0</span></span><br><span class="line">        numUnknown = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> path, pathType <span class="keyword">in</span> tree:</span><br><span class="line">            <span class="keyword">if</span> pathType == self.PATH_TYPE_DIR:</span><br><span class="line">                numDir += <span class="number">1</span></span><br><span class="line">            <span class="keyword">elif</span> pathType == self.PATH_TYPE_FILE:</span><br><span class="line">                numFile += <span class="number">1</span></span><br><span class="line">            <span class="keyword">elif</span> pathType == self.PATH_TYPE_UNKNOWN:</span><br><span class="line">                numUnknown += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> numDir, numFile, numUnknown</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">downloadDir</span><span class="params">(self, rdir=<span class="string">'.'</span>, ldir=<span class="string">'.'</span>, tree=None,</span><br><span class="line">                    errHandleFunc=None, verbose=True)</span>:</span></span><br><span class="line">        <span class="string">'''</span><br><span class="line">        download a direcotry with path %rdir on a FTP Server and save it to</span><br><span class="line">        locate path %ldir.</span><br><span class="line">        args:</span><br><span class="line">            tree - the tree structure return by function FtpDownloader.tree()</span><br><span class="line">            errHandleFunc - error handling function when error happens in</span><br><span class="line">                downloading one file, such as a function that writes a log.</span><br><span class="line">                By default, the error is print to the stdout.</span><br><span class="line">        '''</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> tree:</span><br><span class="line">            tree = self.tree(rdir=rdir, init=<span class="keyword">True</span>)</span><br><span class="line">        numDir, numFile, numUnknown = self.treeStat(tree)</span><br><span class="line">        <span class="keyword">if</span> verbose:</span><br><span class="line">            <span class="keyword">print</span> <span class="string">'Host %s tree statistic:'</span> % self.conn.host</span><br><span class="line">            <span class="keyword">print</span> <span class="string">'%d directories, %d files, %d unknown type'</span> % (</span><br><span class="line">                numDir,</span><br><span class="line">                numFile,</span><br><span class="line">                numUnknown</span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(ldir):</span><br><span class="line">            os.makedirs(ldir)</span><br><span class="line">        ldir = os.path.abspath(ldir)</span><br><span class="line"></span><br><span class="line">        numDownOk = <span class="number">0</span></span><br><span class="line">        numDownErr = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> rpath, pathType <span class="keyword">in</span> tree:</span><br><span class="line">            lpath = os.path.join(ldir, rpath.strip(<span class="string">'/'</span>).strip(<span class="string">'\\'</span>))</span><br><span class="line">            <span class="keyword">if</span> pathType == self.PATH_TYPE_DIR:</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(lpath):</span><br><span class="line">                    os.makedirs(lpath)</span><br><span class="line">            <span class="keyword">elif</span> pathType == self.PATH_TYPE_FILE:</span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    self.downloadFile(rpath, lpath)</span><br><span class="line">                    numDownOk += <span class="number">1</span></span><br><span class="line">                <span class="keyword">except</span> Exception <span class="keyword">as</span> err:</span><br><span class="line">                    numDownErr += <span class="number">1</span></span><br><span class="line">                    <span class="keyword">if</span> errHandleFunc:</span><br><span class="line">                        errHandleFunc(err, rpath, lpath)</span><br><span class="line">                    <span class="keyword">elif</span> verbose:</span><br><span class="line">                        <span class="keyword">print</span> <span class="string">'An Error occurred when downloading '</span>\</span><br><span class="line">                              <span class="string">'remote file %s'</span> % rpath</span><br><span class="line">                        traceback.print_exc()</span><br><span class="line">                        <span class="keyword">print</span></span><br><span class="line">                <span class="keyword">if</span> verbose:</span><br><span class="line">                    <span class="keyword">print</span> <span class="string">'Host %s: %d/%d/%d(ok/err/total) files downloaded'</span> % (</span><br><span class="line">                        self.conn.host,</span><br><span class="line">                        numDownOk,</span><br><span class="line">                        numDownErr,</span><br><span class="line">                        numFile</span><br><span class="line">                    )</span><br><span class="line">            <span class="keyword">elif</span> pathType == self.PATH_TYPE_UNKNOWN:</span><br><span class="line">                <span class="keyword">if</span> verbose:</span><br><span class="line">                    <span class="keyword">print</span> <span class="string">'Unknown type romote path got: %s'</span> % rpath</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> verbose:</span><br><span class="line">            <span class="keyword">print</span> <span class="string">'Host %s directory %s download finished:'</span> % (</span><br><span class="line">                self.conn.host, rdir</span><br><span class="line">            )</span><br><span class="line">            <span class="keyword">print</span> <span class="string">'%d directories, %d(%d failed) files, %d unknown type.'</span> % (</span><br><span class="line">                numDir,</span><br><span class="line">                numFile,</span><br><span class="line">                numDownErr,</span><br><span class="line">                numUnknown</span><br><span class="line">            )</span><br><span class="line">        <span class="keyword">return</span> numDir, numFile, numUnknown, numDownErr</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="keyword">import</span> sys</span><br><span class="line">    <span class="keyword">import</span> traceback</span><br><span class="line">    <span class="keyword">from</span> pprint <span class="keyword">import</span> pprint <span class="keyword">as</span> pr</span><br><span class="line"></span><br><span class="line">    flog = open(<span class="string">'err.log'</span>, <span class="string">'wb'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(host)</span>:</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            fd = FtpDownloader(</span><br><span class="line">                host=host,</span><br><span class="line">                user=<span class="string">'test'</span>,</span><br><span class="line">                passwd=<span class="string">'test'</span>,</span><br><span class="line">                port=<span class="number">21</span>,</span><br><span class="line">                timeout=<span class="number">10</span></span><br><span class="line">            )</span><br><span class="line">            numDir, numFile, numUnknown, numDownErr = fd.downloadDir(</span><br><span class="line">                rdir=<span class="string">'.'</span>,</span><br><span class="line">                ldir=<span class="string">'download'</span>,</span><br><span class="line">                tree=<span class="keyword">None</span>,</span><br><span class="line">                errHandleFunc=<span class="keyword">None</span>,</span><br><span class="line">                verbose=<span class="keyword">True</span></span><br><span class="line">            )</span><br><span class="line">            flog.write(</span><br><span class="line">                <span class="string">'%s\nok\n'</span></span><br><span class="line">                <span class="string">'%d directories, %d(%d failed) files, %d unknown type\n\n\n'</span> % (</span><br><span class="line">                    host,</span><br><span class="line">                    numDir,</span><br><span class="line">                    numFile,</span><br><span class="line">                    numDownErr,</span><br><span class="line">                    numUnknown</span><br><span class="line">                )</span><br><span class="line">            )</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> err:</span><br><span class="line">            traceback.print_exc()</span><br><span class="line">            flog.write(</span><br><span class="line">                <span class="string">'%s\nerror\n%s\n\n\n'</span> % (</span><br><span class="line">                    host,</span><br><span class="line">                    traceback.format_exc()</span><br><span class="line">                )</span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">    pr(run(sys.argv[<span class="number">1</span>]))</span><br><span class="line">    flog.close()</span><br></pre></td></tr></table></figure>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://yoursite.com/2017/08/03/ftp-download/" data-id="cjdzuv34p000lno2zaountb0r" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://yoursite.com/2017/08/03/ftp-download/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2017/08/03/ftp-download/">Comentarios</a>
+        <a href="http://yoursite.com/2017/09/02/texas-poker/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2017/09/02/texas-poker/">Commentaires</a>
     
 
         </footer>
@@ -1424,7 +884,7 @@
 
 
     <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/page/8/">&laquo; Anterior</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/15/">15</a><a class="extend next" rel="next" href="/page/10/">Siguiente  &raquo;</a>
+        <a class="extend prev" rel="prev" href="/page/8/">&laquo; Préc</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="page-number current">9</span><a class="page-number" href="/page/10/">10</a><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/10/">Suiv &raquo;</a>
     </nav>
 </section>
             
@@ -1433,9 +893,85 @@
    
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Recientes</h3>
+        <h3 class="widget-title">Récents</h3>
         <div class="widget">
             <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/02/28/about-flask/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/02/28/about-flask/" class="title">about-flask</a></p>
+                            <p class="item-date"><time datetime="2018-02-28T12:47:07.000Z" itemprop="datePublished">2018-02-28</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/02/26/python-text/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/02/26/python-text/" class="title">python-text</a></p>
+                            <p class="item-date"><time datetime="2018-02-26T02:40:57.000Z" itemprop="datePublished">2018-02-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/02/23/运维题目搜集/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/02/23/运维题目搜集/" class="title">运维题目搜集</a></p>
+                            <p class="item-date"><time datetime="2018-02-23T11:40:03.000Z" itemprop="datePublished">2018-02-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/02/23/Japronto介绍/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/02/23/Japronto介绍/" class="title">Japronto介绍</a></p>
+                            <p class="item-date"><time datetime="2018-02-23T11:36:34.000Z" itemprop="datePublished">2018-02-23</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -1456,82 +992,6 @@
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/02/22/2月好书推荐201802/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/02/22/2月好书推荐201802/" class="title">2月好书推荐201802</a></p>
-                            <p class="item-date"><time datetime="2018-02-22T08:52:48.000Z" itemprop="datePublished">2018-02-22</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/02/21/10-to-illustriousness/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/02/21/10-to-illustriousness/" class="title">10-to-illustriousness</a></p>
-                            <p class="item-date"><time datetime="2018-02-21T09:16:07.000Z" itemprop="datePublished">2018-02-21</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/02/21/django-api-interfaces/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/02/21/django-api-interfaces/" class="title">django api interfaces</a></p>
-                            <p class="item-date"><time datetime="2018-02-21T08:28:36.000Z" itemprop="datePublished">2018-02-21</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/02/18/js-inter/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/02/18/js-inter/" class="title">js-inter</a></p>
-                            <p class="item-date"><time datetime="2018-02-18T03:23:00.000Z" itemprop="datePublished">2018-02-18</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -1541,16 +1001,16 @@
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Archivos</h3>
+        <h3 class="widget-title">Archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
         </div>
     </div>
 
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Etiquetas</h3>
+        <h3 class="widget-title">Tags</h3>
         <div class="widget">
             <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/deep-learning/">deep learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-requests/">python, requests</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/requests-python/">requests, python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/">ruby</a><span class="tag-list-count">1</span></li></ul>
         </div>
@@ -1559,7 +1019,7 @@
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Nube de etiquetas</h3>
+        <h3 class="widget-title">Nuage de tags</h3>
         <div class="widget tagcloud">
             <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/deep-learning/" style="font-size: 10px;">deep learning</a> <a href="/tags/python-requests/" style="font-size: 10px;">python, requests</a> <a href="/tags/requests-python/" style="font-size: 10px;">requests, python</a> <a href="/tags/ruby/" style="font-size: 10px;">ruby</a>
         </div>
@@ -1568,7 +1028,7 @@
     
         
     <div class="widget-wrap widget-list">
-        <h3 class="widget-title">Links</h3>
+        <h3 class="widget-title">Liens</h3>
         <div class="widget">
             <ul>
                 

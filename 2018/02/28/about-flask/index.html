@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>about-flask | 上药三品，神与气精</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="谈一谈 flask
+从http 请求开始到响应
+前置技能 wsgi
+WSGI，全称 Web Server Gateway Interface，或者 Python Web Server Gateway Interface ，是为 Python 语言定义的 Web 服务器和 Web 应用程序或框架之间的一种简单而通用的接口。自从 WSGI 被开发出来以后，许多其它语言中也出现了类似接口。
+WSGI 的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="about-flask">
+<meta property="og:url" content="http://yoursite.com/2018/02/28/about-flask/index.html">
+<meta property="og:site_name" content="上药三品，神与气精">
+<meta property="og:description" content="谈一谈 flask
+从http 请求开始到响应
+前置技能 wsgi
+WSGI，全称 Web Server Gateway Interface，或者 Python Web Server Gateway Interface ，是为 Python 语言定义的 Web 服务器和 Web 应用程序或框架之间的一种简单而通用的接口。自从 WSGI 被开发出来以后，许多其它语言中也出现了类似接口。
+WSGI 的">
+<meta property="og:updated_time" content="2018-02-28T14:20:26.442Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="about-flask">
+<meta name="twitter:description" content="谈一谈 flask
+从http 请求开始到响应
+前置技能 wsgi
+WSGI，全称 Web Server Gateway Interface，或者 Python Web Server Gateway Interface ，是为 Python 语言定义的 Web 服务器和 Web 应用程序或框架之间的一种简单而通用的接口。自从 WSGI 被开发出来以后，许多其它语言中也出现了类似接口。
+WSGI 的">
+    
+
+    
+        <link rel="alternate" href="/" title="上药三品，神与气精" type="application/atom+xml" />
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">上药三品，神与气精</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/me.jpeg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Articles',
+            PAGES: 'Pages',
+            CATEGORIES: 'Catégories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/me.jpeg" />
+            <h2 id="name">Aaron Cheung</h2>
+            <h3 id="title">Python Engineer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Wuhan, China</span>
+            <a id="follow" target="_blank" href="https://github.com/zhangdavids/">SUIVRE</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                76
+                <span>Articles</span>
+            </div>
+            <div class="article-info-block">
+                5
+                <span>Tags</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/zhangdavids/" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="dribbble" class=tooltip>
+                            <i class="fa fa-dribbble"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="rss" class=tooltip>
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-about-flask" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            about-flask
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/02/28/about-flask/">
+            <time datetime="2018-02-28T12:47:07.000Z" itemprop="datePublished">2018-02-28</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>谈一谈 flask</p>
+<p>从http 请求开始到响应</p>
+<p>前置技能 wsgi</p>
+<p>WSGI，全称 Web Server Gateway Interface，或者 Python Web Server Gateway Interface ，是为 Python 语言定义的 Web 服务器和 Web 应用程序或框架之间的一种简单而通用的接口。自从 WSGI 被开发出来以后，许多其它语言中也出现了类似接口。</p>
+<p>WSGI 的官方定义是，the Python Web Server Gateway Interface。从名字就可以看出来，这东西是一个Gateway，也就是网关。网关的作用就是在协议之间进行转换。</p>
+<p>WSGI 是作为 Web 服务器与 Web 应用程序或应用框架之间的一种低级别的接口，以提升可移植 Web 应用开发的共同点。WSGI 是基于现存的 CGI 标准而设计的。</p>
+<p>很多框架都自带了 WSGI server ，比如 Flask，webpy，Django、CherryPy等等。当然性能都不好，自带的 web server 更多的是测试用途，发布时则使用生产环境的 WSGI server或者是联合 nginx 做 uwsgi 。</p>
+<p>在网上搜过WSGI的人应该会看到一个图，左边是Server，右边是APP，中间有一个连接纽带是WSGI。</p>
+<p>不过，我看了源码以后的理解和这个有些不同，我个人觉得，实际上不应该单独写一个APP，因为，这个WSGI的使用方法实际上也是包含在APP里面的，最右端的app实际上应该指的是逻辑功能，包括URL和view function的对应关系。</p>
+<p>WSGI其实是作为一个接口，来接受Server传递过来的信息, 然后通过这个接口调用后台app里的view function进行响应。</p>
+<p><strong>起到一个接口的功能，前面对接服务器，后面对接app的具体功能</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">application</span><span class="params">(environ, start_response)</span>:</span>               <span class="comment"># 一个符合wsgi协议的应用程序写法应该接受2个参数</span></span><br><span class="line">    start_response(<span class="string">'200 OK'</span>, [(<span class="string">'Content-Type'</span>, <span class="string">'text/html'</span>)])  <span class="comment"># environ为http的相关信息，如请求头等 start_response则是响应信息</span></span><br><span class="line">    <span class="keyword">return</span> [<span class="string">b'&lt;h1&gt;Hello, web!&lt;/h1&gt;'</span>]        <span class="comment"># return出来是响应内容</span></span><br><span class="line">    </span><br><span class="line">```    </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">但是，作为app本身，你就算启动了程序，你也没办法给application传递参数？</span><br><span class="line"></span><br><span class="line">所以，实际上，调用application和传递<span class="number">2</span>个参数的动作，是服务器来进行的，比如Gunicorn.</span><br><span class="line"></span><br><span class="line">而这个叫做application的东西，在Flask框架内部的名字，叫做wsgi_app，请看下面章节的源码。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">from</span> flask <span class="keyword">import</span> Flask  </span><br><span class="line">	  </span><br><span class="line">	app = Flask(__name__)         <span class="comment">#生成app实例  </span></span><br><span class="line">	 </span><br><span class="line"><span class="meta">	@app.route('/')  </span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">()</span>:</span>  </span><br><span class="line">	        <span class="keyword">return</span> <span class="string">'Hello World'</span>  </span><br><span class="line">	        </span><br><span class="line">	        </span><br><span class="line">这样，一个flask app就生成了</span><br><span class="line"></span><br><span class="line">但是这里有一个概念必须要搞清楚，就是当你的gunicorn收到http请求，去调用app的时候，他实际上是用了Flask 的 __call__方法，这点非常重要！！！</span><br><span class="line"></span><br><span class="line">因为__call__方法怎么写，决定了你整个流程从哪里开始。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">flask类的__call__方法</span><br><span class="line"></span><br><span class="line">	<span class="class"><span class="keyword">class</span> <span class="title">Flask</span><span class="params">(_PackageBoundObject)</span>:</span>        <span class="comment">#Flask类  </span></span><br><span class="line">	  </span><br><span class="line">	<span class="comment">#中间省略一些代码  </span></span><br><span class="line">	  </span><br><span class="line">	    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, environ, start_response)</span>:</span>    <span class="comment">#Flask实例的__call__方法  </span></span><br><span class="line">	        <span class="string">"""Shortcut for :attr:`wsgi_app`."""</span>  </span><br><span class="line">	        <span class="keyword">return</span> self.wsgi_app(environ, start_response)  <span class="comment">#注意他的return，他返回的时候，实际上是调用了wsgi_app这个功能      </span></span><br><span class="line">	        </span><br><span class="line">	        </span><br><span class="line">如此一来，我们便知道，当http请求从server发送过来的时候，他会启动__call__功能，最终实际是调用了wsgi_app功能并传入environ和start_response</span><br></pre></td></tr></table></figure>
+<p>class Flask(_PackageBoundObject):  </p>
+<p>#中间省略一些代码  </p>
+<pre><code>                            #请注意函数的说明，说得非常准确，这个wsgi_app是一个真正的WSGI应用  
+def wsgi_app(self, environ, start_response):    #他扮演的是一个中间角色  
+    &quot;&quot;&quot;The actual WSGI application.  This is not implemented in 
+    `__call__` so that middlewares can be applied without losing a 
+    reference to the class.  So instead of doing this:: 
+
+        app = MyMiddleware(app) 
+
+    It&apos;s a better idea to do this instead:: 
+
+        app.wsgi_app = MyMiddleware(app.wsgi_app) 
+
+    Then you still have the original application object around and 
+    can continue to call methods on it. 
+
+    :param environ: a WSGI environment 
+    :param start_response: a callable accepting a status code, 
+                           a list of headers and an optional 
+                           exception context to start the response 
+    &quot;&quot;&quot;  
+    ctx = self.request_context(environ)  
+    ctx.push()  
+    error = None  
+    try:  
+        try:  
+            response = self.full_dispatch_request()    #full_dispatch_request起到了预处理和错误处理以及分发请求的作用  
+        except Exception as e:  
+            error = e  
+            response = self.make_response(self.handle_exception(e))  #如果有错误发生，则生成错误响应  
+        return response(environ, start_response)       #如果没有错误发生，则正常响应请求，返回响应内容  
+    finally:  
+        if self.should_ignore_error(error):  
+            error = None  
+        ctx.auto_pop(error)  
+</code></pre><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="python"><span class="comment">### WSGI_APP 的内部流程</span></span><br><span class="line"></span><br><span class="line"><span class="number">1.</span> 生成request请求对象和请求上下文环境</span><br><span class="line"><span class="number">2.</span> 请求进入预处理，错误处理及请求转发到响应的过程</span><br><span class="line"></span><br><span class="line">		<span class="class"><span class="keyword">class</span> <span class="title">Flask</span><span class="params">(_PackageBoundObject)</span>:</span>  </span><br><span class="line">		  </span><br><span class="line">		<span class="comment">#此处省略一些代码  </span></span><br><span class="line">	  </span><br><span class="line">	    <span class="function"><span class="keyword">def</span> <span class="title">full_dispatch_request</span><span class="params">(self)</span>:</span>  </span><br><span class="line">	        <span class="string">"""Dispatches the request and on top of that performs request </span><br><span class="line">	        pre and postprocessing as well as HTTP exception catching and </span><br><span class="line">	        error handling. </span><br><span class="line">	 </span><br><span class="line">	        .. versionadded:: 0.7 </span><br><span class="line">	        """</span>  </span><br><span class="line">	        self.try_trigger_before_first_request_functions()  <span class="comment">#进行发生真实请求前的处理  </span></span><br><span class="line">	        <span class="keyword">try</span>:  </span><br><span class="line">	            request_started.send(self)                     <span class="comment">#socket部分的操作  </span></span><br><span class="line">	            rv = self.preprocess_request()                 <span class="comment">#进行请求的预处理  </span></span><br><span class="line">	            <span class="keyword">if</span> rv <span class="keyword">is</span> <span class="keyword">None</span>:  </span><br><span class="line">	                rv = self.dispatch_request()  </span><br><span class="line">	        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:  </span><br><span class="line">	            rv = self.handle_user_exception(e)  </span><br><span class="line">	        response = self.make_response(rv)  </span><br><span class="line">	        response = self.process_response(response)  </span><br><span class="line">	        request_finished.send(self, response=response)  </span><br><span class="line">	        <span class="keyword">return</span> response  </span><br><span class="line">	        </span><br><span class="line">	        </span><br><span class="line">	        </span><br><span class="line"><span class="number">3.</span> 请求分发</span></span><br></pre></td></tr></table></figure>
+<p>class Flask(_PackageBoundObject):  </p>
+<p>#省略一些代码  </p>
+<pre><code>def dispatch_request(self):   #看函数定义，matches the URL and returns the value of the view or error.  
+    &quot;&quot;&quot;Does the request dispatching.  Matches the URL and returns the 
+    return value of the view or error handler.  This does not have to 
+    be a response object.  In order to convert the return value to a 
+    proper response object, call :func:`make_response`. 
+
+    .. versionchanged:: 0.7 
+       This no longer does the exception handling, this code was 
+       moved to the new :meth:`full_dispatch_request`. 
+    &quot;&quot;&quot;  
+    req = _request_ctx_stack.top.request  
+    if req.routing_exception is not None:  
+        self.raise_routing_exception(req)  
+    rule = req.url_rule  
+    # if we provide automatic options for this URL and the  
+    # request came with the OPTIONS method, reply automatically  
+    if getattr(rule, &apos;provide_automatic_options&apos;, False) \  
+       and req.method == &apos;OPTIONS&apos;:  
+        return self.make_default_options_response()  
+    # otherwise dispatch to the handler for that endpoint  
+    return self.view_functions[rule.endpoint](**req.view_args)   #最终进入view_functions，取出url对应的视图函数的返回值  
+</code></pre><p>```  </p>
+<p> req = _request_ctx_stack.top.request 可以暂时理解为，将请求对象赋值给req</p>
+<p>这里先简单讲下，每个url进来以后，他都会对应一个view_function</p>
+<p>另外说下view_functions 是一个字典形式，他的key和value的关系是endpoint ——&gt; view function</p>
+<p>所以每个有效的URL进来，都能找到他对应的视图函数view function，取得返回值并赋值给  rv</p>
+<p>这时候，通过make_response函数，将刚才取得的 rv 生成响应，重新赋值response</p>
+<p>再通过process_response功能主要是处理一个after_request的功能，比如你在请求后，要把数据库连接关闭等动作，和上面提到的before_request对应和类似。</p>
+<p>之后再进行request_finished.send的处理，也是和socket处理有关，暂时不详细深入。</p>
+<p>之后返回新的response对象</p>
+<p>这里特别需要注意的是，make_response函数是一个非常重要的函数，他的作用是返回一个response_class的实例对象，也就是可以接受environ和start_reponse两个参数的对象</p>
+<ol>
+<li>返回wsgi_app 内部</li>
+</ol>
+<p>当response从刚刚的full_dispatch_request功能返回之后，函数会对这个response加上environ, start_response的参数并返回给Gunicorn</p>
+<p>至此，一个HTTP从请求到响应的流程就完毕了.  </p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2018/02/28/about-flask/" data-id="cje8erwj100033b2zpj8r1ck0" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2018/02/28/about-flask/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/02/28/about-flask/">Commentaires</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/02/26/python-text/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Plus ancien</strong>
+            <div class="article-nav-title">python-text</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+</section>
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Récents</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/02/28/about-flask/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/02/28/about-flask/" class="title">about-flask</a></p>
+                            <p class="item-date"><time datetime="2018-02-28T12:47:07.000Z" itemprop="datePublished">2018-02-28</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/02/26/python-text/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/02/26/python-text/" class="title">python-text</a></p>
+                            <p class="item-date"><time datetime="2018-02-26T02:40:57.000Z" itemprop="datePublished">2018-02-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/02/23/运维题目搜集/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/02/23/运维题目搜集/" class="title">运维题目搜集</a></p>
+                            <p class="item-date"><time datetime="2018-02-23T11:40:03.000Z" itemprop="datePublished">2018-02-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/02/23/Japronto介绍/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/02/23/Japronto介绍/" class="title">Japronto介绍</a></p>
+                            <p class="item-date"><time datetime="2018-02-23T11:36:34.000Z" itemprop="datePublished">2018-02-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/02/23/it从业人员的核心竞争力/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/02/23/it从业人员的核心竞争力/" class="title">it从业人员的核心竞争力</a></p>
+                            <p class="item-date"><time datetime="2018-02-23T06:09:11.000Z" itemprop="datePublished">2018-02-23</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/deep-learning/">deep learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-requests/">python, requests</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/requests-python/">requests, python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/">ruby</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Nuage de tags</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/deep-learning/" style="font-size: 10px;">deep learning</a> <a href="/tags/python-requests/" style="font-size: 10px;">python, requests</a> <a href="/tags/requests-python/" style="font-size: 10px;">requests, python</a> <a href="/tags/ruby/" style="font-size: 10px;">ruby</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">Liens</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 Zhang John<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_config = function () {
+        
+            this.page.url = 'http://yoursite.com/2018/02/28/about-flask/';
+        
+        this.page.identifier = 'about-flask';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'hexo-theme-icarus' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
