@@ -19,7 +19,7 @@ WSGI 的">
 前置技能 wsgi
 WSGI，全称 Web Server Gateway Interface，或者 Python Web Server Gateway Interface ，是为 Python 语言定义的 Web 服务器和 Web 应用程序或框架之间的一种简单而通用的接口。自从 WSGI 被开发出来以后，许多其它语言中也出现了类似接口。
 WSGI 的">
-<meta property="og:updated_time" content="2018-02-28T14:20:26.442Z">
+<meta property="og:updated_time" content="2018-03-01T11:14:23.004Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="about-flask">
 <meta name="twitter:description" content="谈一谈 flask
@@ -92,7 +92,7 @@ WSGI 的">
             <div id="search-form-wrap">
 
     <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
         <button type="submit" class="search-form-submit"></button>
     </form>
     <div class="ins-search">
@@ -111,9 +111,9 @@ WSGI 的">
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Articles',
+            POSTS: 'Posts',
             PAGES: 'Pages',
-            CATEGORIES: 'Catégories',
+            CATEGORIES: 'Categories',
             TAGS: 'Tags',
             UNTITLED: '(Untitled)',
         },
@@ -145,7 +145,7 @@ WSGI 的">
                 <td>
                     
     <div class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
     </div>
 
                 </td>
@@ -165,16 +165,16 @@ WSGI 的">
             <h2 id="name">Aaron Cheung</h2>
             <h3 id="title">Python Engineer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Wuhan, China</span>
-            <a id="follow" target="_blank" href="https://github.com/zhangdavids/">SUIVRE</a>
+            <a id="follow" target="_blank" href="https://github.com/zhangdavids/">FOLLOW</a>
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
                 76
-                <span>Articles</span>
+                <span>posts</span>
             </div>
             <div class="article-info-block">
                 5
-                <span>Tags</span>
+                <span>tags</span>
             </div>
         </div>
         
@@ -265,68 +265,128 @@ WSGI 的">
 <p>不过，我看了源码以后的理解和这个有些不同，我个人觉得，实际上不应该单独写一个APP，因为，这个WSGI的使用方法实际上也是包含在APP里面的，最右端的app实际上应该指的是逻辑功能，包括URL和view function的对应关系。</p>
 <p>WSGI其实是作为一个接口，来接受Server传递过来的信息, 然后通过这个接口调用后台app里的view function进行响应。</p>
 <p><strong>起到一个接口的功能，前面对接服务器，后面对接app的具体功能</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">application</span><span class="params">(environ, start_response)</span>:</span>               <span class="comment"># 一个符合wsgi协议的应用程序写法应该接受2个参数</span></span><br><span class="line">    start_response(<span class="string">'200 OK'</span>, [(<span class="string">'Content-Type'</span>, <span class="string">'text/html'</span>)])  <span class="comment"># environ为http的相关信息，如请求头等 start_response则是响应信息</span></span><br><span class="line">    <span class="keyword">return</span> [<span class="string">b'&lt;h1&gt;Hello, web!&lt;/h1&gt;'</span>]        <span class="comment"># return出来是响应内容</span></span><br><span class="line">    </span><br><span class="line">```    </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">但是，作为app本身，你就算启动了程序，你也没办法给application传递参数？</span><br><span class="line"></span><br><span class="line">所以，实际上，调用application和传递<span class="number">2</span>个参数的动作，是服务器来进行的，比如Gunicorn.</span><br><span class="line"></span><br><span class="line">而这个叫做application的东西，在Flask框架内部的名字，叫做wsgi_app，请看下面章节的源码。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">from</span> flask <span class="keyword">import</span> Flask  </span><br><span class="line">	  </span><br><span class="line">	app = Flask(__name__)         <span class="comment">#生成app实例  </span></span><br><span class="line">	 </span><br><span class="line"><span class="meta">	@app.route('/')  </span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">()</span>:</span>  </span><br><span class="line">	        <span class="keyword">return</span> <span class="string">'Hello World'</span>  </span><br><span class="line">	        </span><br><span class="line">	        </span><br><span class="line">这样，一个flask app就生成了</span><br><span class="line"></span><br><span class="line">但是这里有一个概念必须要搞清楚，就是当你的gunicorn收到http请求，去调用app的时候，他实际上是用了Flask 的 __call__方法，这点非常重要！！！</span><br><span class="line"></span><br><span class="line">因为__call__方法怎么写，决定了你整个流程从哪里开始。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">flask类的__call__方法</span><br><span class="line"></span><br><span class="line">	<span class="class"><span class="keyword">class</span> <span class="title">Flask</span><span class="params">(_PackageBoundObject)</span>:</span>        <span class="comment">#Flask类  </span></span><br><span class="line">	  </span><br><span class="line">	<span class="comment">#中间省略一些代码  </span></span><br><span class="line">	  </span><br><span class="line">	    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, environ, start_response)</span>:</span>    <span class="comment">#Flask实例的__call__方法  </span></span><br><span class="line">	        <span class="string">"""Shortcut for :attr:`wsgi_app`."""</span>  </span><br><span class="line">	        <span class="keyword">return</span> self.wsgi_app(environ, start_response)  <span class="comment">#注意他的return，他返回的时候，实际上是调用了wsgi_app这个功能      </span></span><br><span class="line">	        </span><br><span class="line">	        </span><br><span class="line">如此一来，我们便知道，当http请求从server发送过来的时候，他会启动__call__功能，最终实际是调用了wsgi_app功能并传入environ和start_response</span><br></pre></td></tr></table></figure>
-<p>class Flask(_PackageBoundObject):  </p>
-<p>#中间省略一些代码  </p>
-<pre><code>                            #请注意函数的说明，说得非常准确，这个wsgi_app是一个真正的WSGI应用  
-def wsgi_app(self, environ, start_response):    #他扮演的是一个中间角色  
-    &quot;&quot;&quot;The actual WSGI application.  This is not implemented in 
-    `__call__` so that middlewares can be applied without losing a 
-    reference to the class.  So instead of doing this:: 
+<pre><code>def application(environ, start_response):               # 一个符合wsgi协议的应用程序写法应该接受2个参数
+    start_response(&apos;200 OK&apos;, [(&apos;Content-Type&apos;, &apos;text/html&apos;)])  # environ为http的相关信息，如请求头等 start_response则是响应信息
+    return [b&apos;&lt;h1&gt;Hello, web!&lt;/h1&gt;&apos;]        # return出来是响应内容
+</code></pre><p>但是，作为app本身，你就算启动了程序，你也没办法给application传递参数？</p>
+<p>所以，实际上，调用application和传递2个参数的动作，是服务器来进行的，比如Gunicorn.</p>
+<p>而这个叫做application的东西，在Flask框架内部的名字，叫做wsgi_app，请看下面章节的源码。</p>
+<pre><code>from flask import Flask  
 
-        app = MyMiddleware(app) 
+app = Flask(__name__)         #生成app实例  
 
-    It&apos;s a better idea to do this instead:: 
+@app.route(&apos;/&apos;)  
+def index():  
+        return &apos;Hello World&apos;  
+</code></pre><p>这样，一个flask app就生成了</p>
+<p>但是这里有一个概念必须要搞清楚，就是当你的gunicorn收到http请求，去调用app的时候，他实际上是用了Flask 的 <strong>call</strong>方法，这点非常重要！！！</p>
+<p>因为<strong>call</strong>方法怎么写，决定了你整个流程从哪里开始。</p>
+<p>flask类的<strong>call</strong>方法</p>
+<pre><code>class Flask(_PackageBoundObject):        #Flask类  
 
-        app.wsgi_app = MyMiddleware(app.wsgi_app) 
+#中间省略一些代码  
 
-    Then you still have the original application object around and 
-    can continue to call methods on it. 
+    def __call__(self, environ, start_response):    #Flask实例的__call__方法  
+        &quot;&quot;&quot;Shortcut for :attr:`wsgi_app`.&quot;&quot;&quot;  
+        return self.wsgi_app(environ, start_response)  #注意他的return，他返回的时候，实际上是调用了wsgi_app这个功能      
+</code></pre><p>如此一来，我们便知道，当http请求从server发送过来的时候，他会启动<strong>call</strong>功能，最终实际是调用了wsgi_app功能并传入environ和start_response</p>
+<pre><code class="python">
+<span class="class"><span class="keyword">class</span> <span class="title">Flask</span><span class="params">(_PackageBoundObject)</span>:</span>  
 
-    :param environ: a WSGI environment 
-    :param start_response: a callable accepting a status code, 
-                           a list of headers and an optional 
-                           exception context to start the response 
+<span class="comment">#中间省略一些代码  </span>
+                                <span class="comment">#请注意函数的说明，说得非常准确，这个wsgi_app是一个真正的WSGI应用  </span>
+    <span class="function"><span class="keyword">def</span> <span class="title">wsgi_app</span><span class="params">(self, environ, start_response)</span>:</span>    <span class="comment">#他扮演的是一个中间角色  </span>
+        <span class="string">"""The actual WSGI application.  This is not implemented in 
+        `__call__` so that middlewares can be applied without losing a 
+        reference to the class.  So instead of doing this:: 
+
+            app = MyMiddleware(app) 
+
+        It's a better idea to do this instead:: 
+
+            app.wsgi_app = MyMiddleware(app.wsgi_app) 
+
+        Then you still have the original application object around and 
+        can continue to call methods on it. 
+
+        :param environ: a WSGI environment 
+        :param start_response: a callable accepting a status code, 
+                               a list of headers and an optional 
+                               exception context to start the response 
+        """</span>  
+        ctx = self.request_context(environ)  
+        ctx.push()  
+        error = <span class="keyword">None</span>  
+        <span class="keyword">try</span>:  
+            <span class="keyword">try</span>:  
+                response = self.full_dispatch_request()    <span class="comment">#full_dispatch_request起到了预处理和错误处理以及分发请求的作用  </span>
+            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:  
+                error = e  
+                response = self.make_response(self.handle_exception(e))  <span class="comment">#如果有错误发生，则生成错误响应  </span>
+            <span class="keyword">return</span> response(environ, start_response)       <span class="comment">#如果没有错误发生，则正常响应请求，返回响应内容  </span>
+        <span class="keyword">finally</span>:  
+            <span class="keyword">if</span> self.should_ignore_error(error):  
+                error = <span class="keyword">None</span>  
+            ctx.auto_pop(error)
+</code></pre>
+<h3 id="WSGI-APP-的内部流程"><a href="#WSGI-APP-的内部流程" class="headerlink" title="WSGI_APP 的内部流程"></a>WSGI_APP 的内部流程</h3><ol>
+<li>生成request请求对象和请求上下文环境</li>
+<li><p>请求进入预处理，错误处理及请求转发到响应的过程</p>
+<pre><code>class Flask(_PackageBoundObject):  
+
+#此处省略一些代码  
+
+def full_dispatch_request(self):  
+    &quot;&quot;&quot;Dispatches the request and on top of that performs request 
+    pre and postprocessing as well as HTTP exception catching and 
+    error handling. 
+
+    .. versionadded:: 0.7 
     &quot;&quot;&quot;  
-    ctx = self.request_context(environ)  
-    ctx.push()  
-    error = None  
+    self.try_trigger_before_first_request_functions()  #进行发生真实请求前的处理  
     try:  
-        try:  
-            response = self.full_dispatch_request()    #full_dispatch_request起到了预处理和错误处理以及分发请求的作用  
-        except Exception as e:  
-            error = e  
-            response = self.make_response(self.handle_exception(e))  #如果有错误发生，则生成错误响应  
-        return response(environ, start_response)       #如果没有错误发生，则正常响应请求，返回响应内容  
-    finally:  
-        if self.should_ignore_error(error):  
-            error = None  
-        ctx.auto_pop(error)  
-</code></pre><figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="python"><span class="comment">### WSGI_APP 的内部流程</span></span><br><span class="line"></span><br><span class="line"><span class="number">1.</span> 生成request请求对象和请求上下文环境</span><br><span class="line"><span class="number">2.</span> 请求进入预处理，错误处理及请求转发到响应的过程</span><br><span class="line"></span><br><span class="line">		<span class="class"><span class="keyword">class</span> <span class="title">Flask</span><span class="params">(_PackageBoundObject)</span>:</span>  </span><br><span class="line">		  </span><br><span class="line">		<span class="comment">#此处省略一些代码  </span></span><br><span class="line">	  </span><br><span class="line">	    <span class="function"><span class="keyword">def</span> <span class="title">full_dispatch_request</span><span class="params">(self)</span>:</span>  </span><br><span class="line">	        <span class="string">"""Dispatches the request and on top of that performs request </span><br><span class="line">	        pre and postprocessing as well as HTTP exception catching and </span><br><span class="line">	        error handling. </span><br><span class="line">	 </span><br><span class="line">	        .. versionadded:: 0.7 </span><br><span class="line">	        """</span>  </span><br><span class="line">	        self.try_trigger_before_first_request_functions()  <span class="comment">#进行发生真实请求前的处理  </span></span><br><span class="line">	        <span class="keyword">try</span>:  </span><br><span class="line">	            request_started.send(self)                     <span class="comment">#socket部分的操作  </span></span><br><span class="line">	            rv = self.preprocess_request()                 <span class="comment">#进行请求的预处理  </span></span><br><span class="line">	            <span class="keyword">if</span> rv <span class="keyword">is</span> <span class="keyword">None</span>:  </span><br><span class="line">	                rv = self.dispatch_request()  </span><br><span class="line">	        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:  </span><br><span class="line">	            rv = self.handle_user_exception(e)  </span><br><span class="line">	        response = self.make_response(rv)  </span><br><span class="line">	        response = self.process_response(response)  </span><br><span class="line">	        request_finished.send(self, response=response)  </span><br><span class="line">	        <span class="keyword">return</span> response  </span><br><span class="line">	        </span><br><span class="line">	        </span><br><span class="line">	        </span><br><span class="line"><span class="number">3.</span> 请求分发</span></span><br></pre></td></tr></table></figure>
-<p>class Flask(_PackageBoundObject):  </p>
-<p>#省略一些代码  </p>
-<pre><code>def dispatch_request(self):   #看函数定义，matches the URL and returns the value of the view or error.  
-    &quot;&quot;&quot;Does the request dispatching.  Matches the URL and returns the 
-    return value of the view or error handler.  This does not have to 
-    be a response object.  In order to convert the return value to a 
-    proper response object, call :func:`make_response`. 
+        request_started.send(self)                     #socket部分的操作  
+        rv = self.preprocess_request()                 #进行请求的预处理  
+        if rv is None:  
+            rv = self.dispatch_request()  
+    except Exception as e:  
+        rv = self.handle_user_exception(e)  
+    response = self.make_response(rv)  
+    response = self.process_response(response)  
+    request_finished.send(self, response=response)  
+    return response  
+</code></pre></li>
+</ol>
+<ol>
+<li>请求分发</li>
+</ol>
+<pre><code class="python">
+<span class="class"><span class="keyword">class</span> <span class="title">Flask</span><span class="params">(_PackageBoundObject)</span>:</span>  
 
-    .. versionchanged:: 0.7 
-       This no longer does the exception handling, this code was 
-       moved to the new :meth:`full_dispatch_request`. 
-    &quot;&quot;&quot;  
-    req = _request_ctx_stack.top.request  
-    if req.routing_exception is not None:  
-        self.raise_routing_exception(req)  
-    rule = req.url_rule  
-    # if we provide automatic options for this URL and the  
-    # request came with the OPTIONS method, reply automatically  
-    if getattr(rule, &apos;provide_automatic_options&apos;, False) \  
-       and req.method == &apos;OPTIONS&apos;:  
-        return self.make_default_options_response()  
-    # otherwise dispatch to the handler for that endpoint  
-    return self.view_functions[rule.endpoint](**req.view_args)   #最终进入view_functions，取出url对应的视图函数的返回值  
-</code></pre><p>```  </p>
+<span class="comment">#省略一些代码  </span>
+
+    <span class="function"><span class="keyword">def</span> <span class="title">dispatch_request</span><span class="params">(self)</span>:</span>   <span class="comment">#看函数定义，matches the URL and returns the value of the view or error.  </span>
+        <span class="string">"""Does the request dispatching.  Matches the URL and returns the 
+        return value of the view or error handler.  This does not have to 
+        be a response object.  In order to convert the return value to a 
+        proper response object, call :func:`make_response`. 
+
+        .. versionchanged:: 0.7 
+           This no longer does the exception handling, this code was 
+           moved to the new :meth:`full_dispatch_request`. 
+        """</span>  
+        req = _request_ctx_stack.top.request  
+        <span class="keyword">if</span> req.routing_exception <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:  
+            self.raise_routing_exception(req)  
+        rule = req.url_rule  
+        <span class="comment"># if we provide automatic options for this URL and the  </span>
+        <span class="comment"># request came with the OPTIONS method, reply automatically  </span>
+        <span class="keyword">if</span> getattr(rule, <span class="string">'provide_automatic_options'</span>, <span class="keyword">False</span>) \  
+           <span class="keyword">and</span> req.method == <span class="string">'OPTIONS'</span>:  
+            <span class="keyword">return</span> self.make_default_options_response()  
+        <span class="comment"># otherwise dispatch to the handler for that endpoint  </span>
+        <span class="keyword">return</span> self.view_functions[rule.endpoint](**req.view_args)   <span class="comment">#最终进入view_functions，取出url对应的视图函数的返回值</span>
+</code></pre>
 <p> req = _request_ctx_stack.top.request 可以暂时理解为，将请求对象赋值给req</p>
 <p>这里先简单讲下，每个url进来以后，他都会对应一个view_function</p>
 <p>另外说下view_functions 是一个字典形式，他的key和value的关系是endpoint ——&gt; view function</p>
@@ -351,7 +411,7 @@ def wsgi_app(self, environ, start_response):    #他扮演的是一个中间角�
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/02/28/about-flask/" data-id="cje8erwj100033b2zpj8r1ck0" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
+    <a data-url="http://yoursite.com/2018/02/28/about-flask/" data-id="cje8exiet0005aw2zegsrmpw5" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -419,7 +479,7 @@ def wsgi_app(self, environ, start_response):    #他扮演的是一个中间角�
 
             
     
-        <a href="http://yoursite.com/2018/02/28/about-flask/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/02/28/about-flask/">Commentaires</a>
+        <a href="http://yoursite.com/2018/02/28/about-flask/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/02/28/about-flask/">Comments</a>
     
 
         </footer>
@@ -430,7 +490,7 @@ def wsgi_app(self, environ, start_response):    #他扮演的是一个中间角�
     
     
         <a href="/2018/02/26/python-text/" id="article-nav-older" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">Plus ancien</strong>
+            <strong class="article-nav-caption">Older</strong>
             <div class="article-nav-title">python-text</div>
         </a>
     
@@ -457,7 +517,7 @@ def wsgi_app(self, environ, start_response):    #他扮演的是一个中间角�
    
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Récents</h3>
+        <h3 class="widget-title">recent</h3>
         <div class="widget">
             <ul id="recent-post" class="">
                 
@@ -565,7 +625,7 @@ def wsgi_app(self, environ, start_response):    #他扮演的是一个中间角�
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Archives</h3>
+        <h3 class="widget-title">archives</h3>
         <div class="widget">
             <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
         </div>
@@ -574,7 +634,7 @@ def wsgi_app(self, environ, start_response):    #他扮演的是一个中间角�
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Tags</h3>
+        <h3 class="widget-title">tags</h3>
         <div class="widget">
             <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/deep-learning/">deep learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-requests/">python, requests</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/requests-python/">requests, python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/">ruby</a><span class="tag-list-count">1</span></li></ul>
         </div>
@@ -583,7 +643,7 @@ def wsgi_app(self, environ, start_response):    #他扮演的是一个中间角�
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Nuage de tags</h3>
+        <h3 class="widget-title">tag cloud</h3>
         <div class="widget tagcloud">
             <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/deep-learning/" style="font-size: 10px;">deep learning</a> <a href="/tags/python-requests/" style="font-size: 10px;">python, requests</a> <a href="/tags/requests-python/" style="font-size: 10px;">requests, python</a> <a href="/tags/ruby/" style="font-size: 10px;">ruby</a>
         </div>
@@ -592,7 +652,7 @@ def wsgi_app(self, environ, start_response):    #他扮演的是一个中间角�
     
         
     <div class="widget-wrap widget-list">
-        <h3 class="widget-title">Liens</h3>
+        <h3 class="widget-title">links</h3>
         <div class="widget">
             <ul>
                 
