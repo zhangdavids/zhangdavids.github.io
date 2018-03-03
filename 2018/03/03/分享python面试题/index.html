@@ -3,17 +3,39 @@
 <head>
     <meta charset="utf-8">
     
-    <title>Archivo | 上药三品，神与气精</title>
+    <title>分享python面试题 | 上药三品，神与气精</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="莫道前路无知己 天下谁人不识君">
-<meta property="og:type" content="website">
-<meta property="og:title" content="上药三品，神与气精">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+    <meta name="description" content="1.is和==有什么区别？
+python当中对象包含三要素，分别是id（身份标识）、type（数据类型）、value（值）
+==是python的比较运算符，用于比较value值是否相等
+is是同一性运算符，比较的是id是否相同
+a、b值相同
+只有数值型和字符串型时， a is b 为true是tuple list dict 或者 set时，a is b 为false
+2.解释装饰器
+写代码要遵循开">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分享python面试题">
+<meta property="og:url" content="http://yoursite.com/2018/03/03/分享python面试题/index.html">
 <meta property="og:site_name" content="上药三品，神与气精">
-<meta property="og:description" content="莫道前路无知己 天下谁人不识君">
+<meta property="og:description" content="1.is和==有什么区别？
+python当中对象包含三要素，分别是id（身份标识）、type（数据类型）、value（值）
+==是python的比较运算符，用于比较value值是否相等
+is是同一性运算符，比较的是id是否相同
+a、b值相同
+只有数值型和字符串型时， a is b 为true是tuple list dict 或者 set时，a is b 为false
+2.解释装饰器
+写代码要遵循开">
+<meta property="og:updated_time" content="2018-03-03T06:21:19.002Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="上药三品，神与气精">
-<meta name="twitter:description" content="莫道前路无知己 天下谁人不识君">
+<meta name="twitter:title" content="分享python面试题">
+<meta name="twitter:description" content="1.is和==有什么区别？
+python当中对象包含三要素，分别是id（身份标识）、type（数据类型）、value（值）
+==是python的比较运算符，用于比较value值是否相等
+is是同一性运算符，比较的是id是否相同
+a、b值相同
+只有数值型和字符串型时， a is b 为true是tuple list dict 或者 set时，a is b 为false
+2.解释装饰器
+写代码要遵循开">
     
 
     
@@ -208,25 +230,21 @@
 </aside>
 
             
-            <section id="main"><div class="timeline timeline-wrap">
-    
-            <div class="timeline-row timeline-row-major">
-                <span class="node"><i class="fa fa-calendar"></i></span>
-                <h1 class="title">2018</h1>
-            </div>
+            <section id="main"><article id="post-分享python面试题" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
         
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+        
+            <header class="article-header">
                 
     
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/03/03/分享python面试题/">分享python面试题</a>
+        <h1 class="article-title" itemprop="name">
+            分享python面试题
         </h1>
     
 
-                <div class="article-meta">
-                    
+                
+                    <div class="article-meta">
+                        
     <div class="article-date">
         <i class="fa fa-calendar"></i>
         <a href="/2018/03/03/分享python面试题/">
@@ -235,121 +253,176 @@
     </div>
 
 
-                    
-                    
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
+                        
+                        
+                    </div>
                 
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/03/03/normal-library/">normal-library</a>
-        </h1>
-    
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>1.is和==有什么区别？</p>
+<p>python当中对象包含三要素，分别是id（身份标识）、type（数据类型）、value（值）</p>
+<p>==是python的比较运算符，用于比较value值是否相等</p>
+<p>is是同一性运算符，比较的是id是否相同</p>
+<p>a、b值相同</p>
+<p>只有数值型和字符串型时， a is b 为true<br>是tuple list dict 或者 set时，a is b 为false</p>
+<p>2.解释装饰器</p>
+<p>写代码要遵循开发封闭原则，虽然在这个原则是用的面向对象开发，但是也适用于函数式编程，简单来说，它规定已经实现的功能代码不允许被修改，但可以被扩展，</p>
+<pre><code>def w1(func):
+    def inner():
+        # 验证1
+        # 验证2
+        # 验证3
+        return func()
+    return inner
 
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/03/03/normal-library/">
-            <time datetime="2018-03-03T00:14:00.000Z" itemprop="datePublished">2018-03-03</time>
-        </a>
-    </div>
+@w1
+def f1():
+    print &apos;f1&apos;
+@w1
+def f2():
+    print &apos;f2&apos;
+@w1
+def f3():
+    print &apos;f3&apos;
+@w1
+def f4():
+    print &apos;f4&apos;
+</code></pre><p>如上例@w1内部会执行以下操作：</p>
+<ul>
+<li>执行w1函数，并将 @w1 下面的 函数 作为w1函数的参数，即：@w1 等价于 w1(f1)</li>
+</ul>
+<p>所以，内部就会去执行：</p>
+<pre><code>def inner:
+    #验证
+    return f1()   # func是参数，此时 func 等于 f1
+return inner     # 返回的 inner，inner代表的是函数，非执行函数
+</code></pre><p>其实就是将原来的 f1 函数塞进另外一个函数中</p>
+<ul>
+<li>将执行完的 w1 函数返回值赋值给@w1下面的函数的函数名</li>
+</ul>
+<p>w1函数的返回值是：</p>
+<pre><code>def inner:
+    #验证
+    return 原来f1()  # 此处的 f1 表示原来的f1函数
+</code></pre><p>然后，将此返回值再重新赋值给 f1，即：</p>
+<pre><code>新f1 = def inner:
+        #验证
+        return 原来f1() 
+</code></pre><p>所以，以后业务部门想要执行 f1 函数时，就会执行 新f1 函数，在 新f1 函数内部先执行验证，再执行原来的f1函数，然后将 原来f1 函数的返回值 返回给了业务调用者。</p>
+<p>如此一来， 即执行了验证的功能，又执行了原来f1函数的内容，并将原f1函数返回值 返回给业务调用着    </p>
 
-
-                    
-                    
-                </div>
-            </div>
+        
         </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/03/03/python-fp/">python-fp</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/03/03/python-fp/">
-            <time datetime="2018-03-03T00:01:38.000Z" itemprop="datePublished">2018-03-03</time>
-        </a>
-    </div>
+        <footer class="article-footer">
+            <div class="share-container">
 
 
-                    
-                    
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/03/01/python-interview-0/">python-interview-0</a>
-        </h1>
-    
 
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/03/01/python-interview-0/">
-            <time datetime="2018-03-01T15:01:05.000Z" itemprop="datePublished">2018-03-01</time>
-        </a>
-    </div>
-
-
-                    
-                    
-                </div>
-            </div>
-        </div>
-    
-        <div class="timeline-row">
-            <span class="node"></span>
-            <div class="content">
-                
-    
-        <h1 itemprop="name">
-            <a class="timeline-article-title" href="/2018/03/01/about-react/">about-react</a>
-        </h1>
-    
-
-                <div class="article-meta">
-                    
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/03/01/about-react/">
-            <time datetime="2018-03-01T12:39:31.000Z" itemprop="datePublished">2018-03-01</time>
-        </a>
-    </div>
-
-
-                    
-                    
-                </div>
-            </div>
-        </div>
-    
 </div>
 
-    <nav id="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/17/">17</a><a class="extend next" rel="next" href="/archives/page/2/">Siguiente  &raquo;</a>
-    </nav>
+    <a data-url="http://yoursite.com/2018/03/03/分享python面试题/" data-id="cjeb49qmq00263p2zn3dnw6hk" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2018/03/03/分享python面试题/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/03/分享python面试题/">Comentarios</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/03/03/normal-library/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Más viejo</strong>
+            <div class="article-nav-title">normal-library</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+</section>
+    
+
 </section>
             
                 
@@ -524,11 +597,13 @@
     <script>
     var disqus_config = function () {
         
-        this.page.identifier = 'undefined';
+            this.page.url = 'http://yoursite.com/2018/03/03/分享python面试题/';
+        
+        this.page.identifier = '分享python面试题';
     };
     (function() { 
         var d = document, s = d.createElement('script');  
-        s.src = '//' + 'hexo-theme-icarus' + '.disqus.com/count.js';
+        s.src = '//' + 'hexo-theme-icarus' + '.disqus.com/embed.js';
         s.setAttribute('data-timestamp', +new Date());
         (d.head || d.body).appendChild(s);
     })();
