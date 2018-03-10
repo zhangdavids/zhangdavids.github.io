@@ -156,7 +156,7 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                83
+                84
                 <span>Entradas</span>
             </div>
             <div class="article-info-block">
@@ -209,6 +209,168 @@
 
             
             <section id="main">
+    <article id="post-how-to-understand-unittest" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2017/11/16/how-to-understand-unittest/">how-to-understand-unittest</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2017/11/16/how-to-understand-unittest/">
+            <time datetime="2017-11-16T10:46:05.000Z" itemprop="datePublished">2017-11-16</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h1 id="关于测试"><a href="#关于测试" class="headerlink" title="关于测试"></a>关于测试</h1><p>有段时间被领导叫过去写单元测试。</p>
+<p>这段时间决定对此段经历做一些总结。</p>
+<p>单元测试是一种软件测试过程，测试的是软件应用程序的独立单元，确保能做预期中的事情。</p>
+<p>分为不同的层级，可以测试单个方法，看它能否返回正确的值以及能否处理正确的数据，</p>
+<p>也可以测试整个方法组件，确保一系列用户输入能得到所需的结果。</p>
+<p>单元测试背后，有四个基本的概念：</p>
+<ul>
+<li><p>测试固件 fixture 执行测试所需要的设置。包含数据库、示例数据集合服务器搭建。可能还包括测试完毕之后执行的清理操作。</p>
+</li>
+<li><p>用例 case 测试的基本单元。检查指定的输入能否得到预期的结果。</p>
+</li>
+<li>组件 suit 一系列测试用例或者其他测试组件，作为一个整体执行</li>
+<li>运行程序 runner 负责执行测试并把结果反馈給用户的软件程序。</li>
+</ul>
+<h2 id="自动化测试"><a href="#自动化测试" class="headerlink" title="自动化测试"></a>自动化测试</h2><h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ul>
+<li><p>节省时间</p>
+</li>
+<li><p>避免出问题</p>
+</li>
+<li><p>看起来专业</p>
+</li>
+<li><p>增进团队协作</p>
+</li>
+</ul>
+<p>将测试代码封装到一个类中，并且增加断言。</p>
+<p>django的单元测试</p>
+<p>会在app应用中查找测试</p>
+<p>找到 testcase 的一个子类</p>
+<p>为测试创建一个特殊的数据库</p>
+<p>查找以test开头的测试方法</p>
+<p>报告失败的测试</p>
+<p>Django 为 编写测试提供了一些便利的工具</p>
+<p>测试客户端</p>
+<p>伪装成一个web浏览器</p>
+<p>模拟对URL 的 GET POST 请求</p>
+<p>跟踪重定向</p>
+<p>测试指定的请求由指定的django 模板渲染，而且模板上下文包含特定的值</p>
+<p>客户端的目的不是取代 selenium 或者是其他操作浏览器的框架</p>
+<p>用于确认是否渲染了正确的模板，而且为模板传入了正确的上下文数据</p>
+<p>TestCase 有一些扩展</p>
+<p>Simple的<br>Transaction的<br>等等…</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2017/11/16/how-to-understand-unittest/" data-id="cjekqgs0c000wjy2z5y59afvm" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2017/11/16/how-to-understand-unittest/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2017/11/16/how-to-understand-unittest/">Comentarios</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-tf-note-2" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -252,7 +414,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2017/11/06/tf-note-2/" data-id="cjee9wgtv0026mu2zgrw7z6tq" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://yoursite.com/2017/11/06/tf-note-2/" data-id="cjekqgs1s0028jy2z3zckksc8" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -391,7 +553,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2017/11/06/tf-note-1/" data-id="cjee9wgtt0023mu2zrj09b0nn" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://yoursite.com/2017/11/06/tf-note-1/" data-id="cjekqgs1r0026jy2z560cyr8f" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -515,7 +677,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2017/11/05/lagou-spider/" data-id="cjee9wgt40015mu2zgka8pxpv" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://yoursite.com/2017/11/05/lagou-spider/" data-id="cjekqgs0i0016jy2zdz2otrnm" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -636,7 +798,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2017/09/17/how-fabric-works/" data-id="cjee9wgsu000smu2ztmkxmhoz" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://yoursite.com/2017/09/17/how-fabric-works/" data-id="cjekqgs0b000ujy2zew35m9ak" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -714,142 +876,6 @@
 
 
 
-    <article id="post-how-ansible-works" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2017/09/17/how-ansible-works/">how ansible works</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2017/09/17/how-ansible-works/">
-            <time datetime="2017-09-17T14:13:14.000Z" itemprop="datePublished">2017-09-17</time>
-        </a>
-    </div>
-
-
-                        
-                        
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>ansible 是什么？    </p>
-<p>ansible 是如何工作的：  </p>
-<p>使用者认证通过之后在管理节点通过 ansible 工具调用各应用模块将指令推送到被管理端。  </p>
-<p>并且在执行完毕后自动删除产生的临时文件。</p>
-<p>主要由六个部分组成：</p>
-<ol>
-<li>playbooks 通常是 json 格式的 yml 文件</li>
-<li>inventory 管理主机的清单</li>
-<li>modules 执行命令的功能模块</li>
-<li>plugins 模块功能的补充，如循环插件等，功能不常用</li>
-<li>api  供第三方程序调用的应用程序编程接口</li>
-<li>ansible  ansible 命令工具</li>
-</ol>
-<p>遵循预先编排的规则将 playbook 逐条拆解为 play，将 play 组织成 ansible 可识别的任务 task，随后调用任务涉及的所有模块和插件，根据 inventory 中定义的主机列表通过 ssh 将任务集以临时文件或命令的形式传输到远程客户端执行并返回执行结果，如果是临时文件则执行完毕后自动删除。  </p>
-<p>下面会详细介绍一个企业级的应用，elk 日志系统基于 ansible 的自动化实现。  </p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://yoursite.com/2017/09/17/how-ansible-works/" data-id="cjee9wgss000pmu2z14xaca3p" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://yoursite.com/2017/09/17/how-ansible-works/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2017/09/17/how-ansible-works/">Comentarios</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
     <nav id="page-nav">
         <a class="extend prev" rel="prev" href="/page/9/">&laquo; Anterior</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/11/">Siguiente  &raquo;</a>
     </nav>
@@ -863,6 +889,25 @@
         <h3 class="widget-title">Recientes</h3>
         <div class="widget">
             <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/10/python基础小结25/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/03/10/python基础小结25/" class="title">python基础小结25</a></p>
+                            <p class="item-date"><time datetime="2018-03-10T01:37:32.000Z" itemprop="datePublished">2018-03-10</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -940,25 +985,6 @@
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/03/03/python-fp/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/03/03/python-fp/" class="title">python-fp</a></p>
-                            <p class="item-date"><time datetime="2018-03-03T00:01:38.000Z" itemprop="datePublished">2018-03-03</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -970,7 +996,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">Archivos</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
         </div>
     </div>
 

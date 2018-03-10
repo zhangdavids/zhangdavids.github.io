@@ -156,7 +156,7 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                83
+                84
                 <span>Entradas</span>
             </div>
             <div class="article-info-block">
@@ -209,6 +209,151 @@
 
             
             <section id="main">
+    <article id="post-R实战0-数据处理难题的一套解决方案" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/05/24/R实战0-数据处理难题的一套解决方案/">R实战0-数据处理难题的一套解决方案</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/05/24/R实战0-数据处理难题的一套解决方案/">
+            <time datetime="2016-05-24T06:03:53.000Z" itemprop="datePublished">2016-05-24</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>对数据的处理现在普遍就是两种方案，python 或者 R。  </p>
+<p>一组学生参加了数学 科学和英语的考试。考试完成之后，需要給学生确定一个成绩衡量指标。会把综合成绩的前20%评定为A，接着是B C D F。<br><img src="" alt="数据原始集"><br>可以看到数据处理的一个障碍，三科成绩无法比较，或者说比较没有意义。。<br>:)  当然有人认为可以这么处理，比如知道数学的总分是700，将成绩全部换为以100分为计量单位的。。<br>当然英语也是，，计总分为50分，换成对应100的来处理。。。  </p>
+<p>也许吧，可以试试 :)  </p>
+<p>在这我们使用R来进行处理。</p>
+<ul>
+<li>根据原始的学生花名册将数据采集进去，自然是选择数据框的格式。</li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">options(digits = <span class="number">2</span>)</span><br><span class="line">stduent &lt;- c(<span class="string">"John Davis"</span>, <span class="string">"Angela Willams"</span>, <span class="string">"Bully Moose"</span>, <span class="string">"David Jones"</span>, <span class="string">"Janice Markhammer"</span>, <span class="string">"Cherry Cushing"</span>, <span class="string">"Reuven Ytzrhak"</span>,  <span class="string">"Greg Knox"</span>, <span class="string">"Joel England"</span>, <span class="string">"Mary Rayburn"</span>)</span><br><span class="line">Math &lt;- c(<span class="number">502</span>, <span class="number">600</span>, <span class="number">412</span>, <span class="number">358</span>, <span class="number">495</span>, <span class="number">512</span>, <span class="number">410</span>, <span class="number">625</span>, <span class="number">573</span>, <span class="number">522</span>)</span><br><span class="line">Science &lt;- c(<span class="number">95</span>, <span class="number">99</span>, <span class="number">80</span>, <span class="number">82</span>, <span class="number">75</span>, <span class="number">85</span>, <span class="number">80</span>, <span class="number">95</span>, <span class="number">89</span>, <span class="number">86</span>)</span><br><span class="line">English &lt;- c(<span class="number">25</span>, <span class="number">22</span>, <span class="number">18</span>, <span class="number">15</span>, <span class="number">20</span>, <span class="number">28</span>, <span class="number">15</span>, <span class="number">30</span>, <span class="number">27</span>, <span class="number">18</span>)</span><br><span class="line">roster &lt;- data.frame(stduent, Math, Science, English, stringsAsFactors = <span class="literal">FALSE</span>)</span><br><span class="line">roster</span><br></pre></td></tr></table></figure>
+<p>we get  </p>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&gt; roster</span><br><span class="line">             stduent Math Science English</span><br><span class="line"><span class="number">1</span>         John Davis  <span class="number">502</span>      <span class="number">95</span>      <span class="number">25</span></span><br><span class="line"><span class="number">2</span>     Angela Willams  <span class="number">600</span>      <span class="number">99</span>      <span class="number">22</span></span><br><span class="line"><span class="number">3</span>        Bully Moose  <span class="number">412</span>      <span class="number">80</span>      <span class="number">18</span></span><br><span class="line"><span class="number">4</span>        David Jones  <span class="number">358</span>      <span class="number">82</span>      <span class="number">15</span></span><br><span class="line"><span class="number">5</span>  Janice Markhammer  <span class="number">495</span>      <span class="number">75</span>      <span class="number">20</span></span><br><span class="line"><span class="number">6</span>     Cherry Cushing  <span class="number">512</span>      <span class="number">85</span>      <span class="number">28</span></span><br><span class="line"><span class="number">7</span>     Reuven Ytzrhak  <span class="number">410</span>      <span class="number">80</span>      <span class="number">15</span></span><br><span class="line"><span class="number">8</span>          Greg Knox  <span class="number">625</span>      <span class="number">95</span>      <span class="number">30</span></span><br><span class="line"><span class="number">9</span>       Joel England  <span class="number">573</span>      <span class="number">89</span>      <span class="number">27</span></span><br><span class="line"><span class="number">10</span>      Mary Rayburn  <span class="number">522</span>      <span class="number">86</span>      <span class="number">18</span></span><br></pre></td></tr></table></figure>
+<p>这里有两个细节没有注意。。<br>一个是刚好十个学生；另外一个是貌似student单词貌似拼写错了。。  </p>
+<ul>
+<li>由于三科考试的分值不同，如何让它们变得可以进行比较。一种方式是将数据进行标准化，使用单位标准差来表示，这个过程使用scale（）函数来实现。  </li>
+</ul>
+<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">z &lt;- scale(roster[,<span class="number">2</span>:<span class="number">4</span>])    </span><br><span class="line">``` </span><br><span class="line">we get     </span><br><span class="line"></span><br><span class="line">```R</span><br><span class="line">z</span><br><span class="line">        Math Science English</span><br><span class="line"> [<span class="number">1</span>,]  <span class="number">0.013</span>   <span class="number">1.078</span>   <span class="number">0.587</span></span><br><span class="line"> [<span class="number">2</span>,]  <span class="number">1.143</span>   <span class="number">1.591</span>   <span class="number">0.037</span></span><br><span class="line"> [<span class="number">3</span>,] -<span class="number">1.026</span>  -<span class="number">0.847</span>  -<span class="number">0.697</span></span><br><span class="line"> [<span class="number">4</span>,] -<span class="number">1.649</span>  -<span class="number">0.590</span>  -<span class="number">1.247</span></span><br><span class="line"> [<span class="number">5</span>,] -<span class="number">0.068</span>  -<span class="number">1.489</span>  -<span class="number">0.330</span></span><br><span class="line"> [<span class="number">6</span>,]  <span class="number">0.128</span>  -<span class="number">0.205</span>   <span class="number">1.137</span></span><br><span class="line"> [<span class="number">7</span>,] -<span class="number">1.049</span>  -<span class="number">0.847</span>  -<span class="number">1.247</span></span><br><span class="line"> [<span class="number">8</span>,]  <span class="number">1.432</span>   <span class="number">1.078</span>   <span class="number">1.504</span></span><br><span class="line"> [<span class="number">9</span>,]  <span class="number">0.832</span>   <span class="number">0.308</span>   <span class="number">0.954</span></span><br><span class="line">[<span class="number">10</span>,]  <span class="number">0.243</span>  -<span class="number">0.077</span>  -<span class="number">0.697</span></span><br><span class="line">attr(,<span class="string">"scaled:center"</span>)</span><br><span class="line">   Math Science English </span><br><span class="line">    <span class="number">501</span>      <span class="number">87</span>      <span class="number">22</span> </span><br><span class="line">attr(,<span class="string">"scaled:scale"</span>)</span><br><span class="line">   Math Science English </span><br><span class="line">   <span class="number">86.7</span>     <span class="number">7.8</span>     <span class="number">5.5</span> </span><br><span class="line">   </span><br><span class="line">   </span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">- 使用mean（）函数计算各行的均值来获得综合得分，并且使用函数cbind（）函数将其添加到花名册当中。</span><br><span class="line"></span><br><span class="line">```R</span><br><span class="line"></span><br><span class="line">score &lt;- apply(z, <span class="number">1</span>, mean)</span><br><span class="line">roster &lt;- cbind(roster, score)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">计算均值之后，并把score分数加进去。  </span><br><span class="line"> </span><br><span class="line">- 函数quantile（）给出学生综合得分的百分位数。   </span><br><span class="line">这个函数可以综合得分的百分位数  </span><br><span class="line"></span><br><span class="line">```R</span><br><span class="line"></span><br><span class="line">y &lt;- quantile(score, c(<span class="number">.8</span>, <span class="number">.6</span>, <span class="number">.4</span>, <span class="number">.2</span>))</span><br><span class="line"></span><br><span class="line">``` </span><br><span class="line">- 使用逻辑运算符，重编码为A B C D F。  </span><br><span class="line"></span><br><span class="line">```R</span><br><span class="line"></span><br><span class="line">roster$grade[score &gt;= y[<span class="number">1</span>]] &lt;- <span class="string">"A"</span></span><br><span class="line">roster$grade[score &lt;= y[<span class="number">1</span>] &amp; score &gt;=y[<span class="number">2</span>]] &lt;- <span class="string">"B"</span></span><br><span class="line">roster$grade[score &lt;= y[<span class="number">2</span>] &amp; score &gt;=y[<span class="number">3</span>]] &lt;- <span class="string">"C"</span></span><br><span class="line">roster$grade[score &lt;= y[<span class="number">3</span>] &amp; score &gt;=y[<span class="number">4</span>]] &lt;- <span class="string">"D"</span></span><br><span class="line">roster$grade[score &lt;= y[<span class="number">4</span>]] &lt;- <span class="string">"F"</span></span><br><span class="line"></span><br><span class="line">```  </span><br><span class="line">- 使用函数strsplit（）以空格为界，将学生姓名拆分为姓和名。</span><br></pre></td></tr></table></figure>
+<p>name &lt;- strsplit((roster$stduent), “ “)</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">注意返回的是什么值，这里是列表！！</span><br><span class="line"></span><br><span class="line"><span class="code"> </span></span><br><span class="line"><span class="bullet">- </span>使用函数sapply（）提取列表元素。</span><br></pre></td></tr></table></figure>
+<p>lastname &lt;- sapply(name, “[“, 2)<br>firstname &lt;- sapply(name, “[“, 1)<br>roster &lt;- cbind(firstname, lastname, roster[, -1])</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">将原来的student化成两列，一列是姓，一列是名，同时也将student列舍弃掉。</span><br><span class="line"><span class="code">  </span></span><br><span class="line"><span class="bullet">- </span>使用order（）函数依据姓氏和名字对数据集进行排序</span><br></pre></td></tr></table></figure>
+<p>roster &lt;- roster[order(lastname, firstname),]<br>roster</p>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">finally</span> we <span class="keyword">get</span></span><br></pre></td></tr></table></figure>
+<p>roster<br>   firstname   lastname Math Science English score grade<br>6     Cherry    Cushing  512      85      28  0.35     C<br>1       John      Davis  502      95      25  0.56     B<br>9       Joel    England  573      89      27  0.70     B<br>4      David      Jones  358      82      15 -1.16     F<br>8       Greg       Knox  625      95      30  1.34     A<br>5     Janice Markhammer  495      75      20 -0.63     D<br>3      Bully      Moose  412      80      18 -0.86     D<br>10      Mary    Rayburn  522      86      18 -0.18     C<br>2     Angela    Willams  600      99      22  0.92     A<br>7     Reuven    Ytzrhak  410      80      15 -1.05     F</p>
+<p>```</p>
+<p>Done!!!!!!</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2016/05/24/R实战0-数据处理难题的一套解决方案/" data-id="cjekqgrzp0006jy2zoygwyjzk" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2016/05/24/R实战0-数据处理难题的一套解决方案/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2016/05/24/R实战0-数据处理难题的一套解决方案/">Comentarios</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-scrapy爬虫实践详解" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -295,7 +440,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2016/05/19/scrapy爬虫实践详解/" data-id="cjee9wgtn001wmu2zuusvls19" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://yoursite.com/2016/05/19/scrapy爬虫实践详解/" data-id="cjekqgs1l001yjy2z7we020hn" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -416,7 +561,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2016/05/17/python实战之django小试/" data-id="cjee9wgte001kmu2zyt9yp0ea" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://yoursite.com/2016/05/17/python实战之django小试/" data-id="cjekqgs15001njy2z44ft2lt5" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -537,7 +682,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2016/05/17/python实战之使用webpy构建小型电影网站/" data-id="cjee9wgth001omu2zmj6lvz81" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://yoursite.com/2016/05/17/python实战之使用webpy构建小型电影网站/" data-id="cjekqgs17001pjy2zgcxidyi6" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -658,7 +803,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2016/05/17/python实战之六抓取58同城数据/" data-id="cjee9wgtj001rmu2z68nmtggu" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://yoursite.com/2016/05/17/python实战之六抓取58同城数据/" data-id="cjekqgs1a001rjy2zvia4fhv3" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -736,128 +881,6 @@
 
 
 
-    <article id="post-python实战之五推特数据流分析" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2016/05/17/python实战之五推特数据流分析/">python实战之五推特数据流分析</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2016/05/17/python实战之五推特数据流分析/">
-            <time datetime="2016-05-17T09:23:45.000Z" itemprop="datePublished">2016-05-17</time>
-        </a>
-    </div>
-
-
-                        
-                        
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>一直想着能够从twitter获取一些数据来做些分析。  </p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://yoursite.com/2016/05/17/python实战之五推特数据流分析/" data-id="cjee9wgth001pmu2zxqcj108a" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://yoursite.com/2016/05/17/python实战之五推特数据流分析/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2016/05/17/python实战之五推特数据流分析/">Comentarios</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
     <nav id="page-nav">
         <a class="extend prev" rel="prev" href="/page/13/">&laquo; Anterior</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><a class="page-number" href="/page/16/">16</a><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/15/">Siguiente  &raquo;</a>
     </nav>
@@ -871,6 +894,25 @@
         <h3 class="widget-title">Recientes</h3>
         <div class="widget">
             <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/10/python基础小结25/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/03/10/python基础小结25/" class="title">python基础小结25</a></p>
+                            <p class="item-date"><time datetime="2018-03-10T01:37:32.000Z" itemprop="datePublished">2018-03-10</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -948,25 +990,6 @@
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/03/03/python-fp/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/03/03/python-fp/" class="title">python-fp</a></p>
-                            <p class="item-date"><time datetime="2018-03-03T00:01:38.000Z" itemprop="datePublished">2018-03-03</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -978,7 +1001,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">Archivos</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
         </div>
     </div>
 
