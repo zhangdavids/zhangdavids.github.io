@@ -156,7 +156,7 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                89
+                90
                 <span>Entradas</span>
             </div>
             <div class="article-info-block">
@@ -209,6 +209,167 @@
 
             
             <section id="main">
+    <article id="post-爬虫实践教程2" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/05/15/爬虫实践教程2/">爬虫实践教程2</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/05/15/爬虫实践教程2/">
+            <time datetime="2016-05-15T01:55:40.000Z" itemprop="datePublished">2016-05-15</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>这里先介绍一下，我们使用工具selenium和Phantomjs来配合抓取。<br>安装的话， 直接   </p>
+<pre><code>pip install -U selenium
+</code></pre><p>而Phantomjs则通过brew来安装，不细说。  </p>
+<pre><code>brew install phantomjs
+</code></pre><p>选择原因：<br>Phantomjs是基于webkit的没有界面的浏览器，可以像浏览器一样解析网页，个人感觉的效果比firefox和chrome稍微快些。<br>selenium是web的自动测试工具，可以模拟人的操作。几乎支持市面上所有的主流浏览器。  </p>
+<p>来看看代码  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding:utf-8</span></span><br><span class="line"><span class="keyword">import</span> unittest</span><br><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">seleniumTest</span><span class="params">(unittest.TestCase)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">setUp</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.driver = webdriver.PhantomJS()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">testEle</span><span class="params">(self)</span>:</span></span><br><span class="line">        driver = self.driver</span><br><span class="line">        driver.get(<span class="string">'http://www.douyu.com/directory/all'</span>)</span><br><span class="line">        soup = BeautifulSoup(driver.page_source, <span class="string">'xml'</span>)</span><br><span class="line">        <span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">            titles = soup.find_all(<span class="string">'h3'</span>, &#123;<span class="string">'class'</span>: <span class="string">'ellipsis'</span>&#125;)</span><br><span class="line">            nums = soup.find_all(<span class="string">'span'</span>, &#123;<span class="string">'class'</span>: <span class="string">'dy-num fr'</span>&#125;)</span><br><span class="line">            <span class="keyword">for</span> title, num <span class="keyword">in</span> zip(titles, nums):</span><br><span class="line">                <span class="keyword">print</span> title.get_text(), num.get_text()</span><br><span class="line">            <span class="keyword">if</span> driver.page_source.find(<span class="string">'shark-pager-disable-next'</span>) != <span class="number">-1</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            elem = driver.find_element_by_class_name(<span class="string">'shark-pager-next'</span>)</span><br><span class="line">            elem.click()</span><br><span class="line">            soup = BeautifulSoup(driver.page_source, <span class="string">'xml'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">tearDown</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">'down'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    unittest.main()</span><br></pre></td></tr></table></figure>
+<p>这里一些概念说明：<br>1.unittest  单元测试，简单的测试用例。以setup开头，中间测试的方法以test开头，测试完成之后会有一个teardown。<br>2.斗鱼tv是看直播时较常去的，直接用浏览器打开 <a href="http://www.douyu.com/directory/all" target="_blank" rel="external">斗鱼</a><br>网页源码中可以直接看到房间的信息，返回的不是json格式而是html，直接使用phantomjs模拟浏览器的访问过程，通过driver.get方法获取浏览器加载完成后的代码，无论是否是异步，取到的source都是和在浏览器中看到的完全一样！  </p>
+<p>这里lxml方式有数据丢失，原因未知。。后来尝试了xml无误，暂时不知原因。。   </p>
+<p>还有对比之前的瓜子和果壳，我们只从中抓取了部分页面。这里抓取全部我们需要加上条件判断，最后一页时斗鱼下一页的标签会变灰，这个时候我们就加上这个跳出循环。  </p>
+<pre><code>if driver.page_source.find(&apos;shark-pager-disable-next&apos;) != -1: 
+    break  
+</code></pre><p>还有这里  </p>
+<pre><code>elem = driver.find_element_by_class_name(&apos;shark-pager-next&apos;) 
+elem.click() 
+soup = BeautifulSoup(driver.page_source, &apos;xml&apos;)
+</code></pre><p>第一行代码是webdriver里面带有的定位标签的方法，直接使用class来定位，取到这个控件，<br>然后执行element的click（）方法模拟鼠标的点击，<br>页面会自动跳到下一页，接着解析网页的源码。  </p>
+<p><strong>tips</strong><br>这里加上一点selenium的小操作<br>编码学习的一个小突破感觉就是不断滴回顾学习吧，有些看完文档之后，觉得是这样没错，可是不久就好像啥也不剩了，在基础阶段模范性学习当中，要不断深化下已经学到的东西，适当做些归纳总结会很好。  </p>
+<p>填入表单数据  </p>
+<pre><code>#coding:utf-8
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+
+driver = webdriver.Firefox()
+driver.get(&apos;https://www.baidu.com/&apos;)
+elem = driver.find_element_by_id(&apos;kw&apos;)
+elem.send_keys(u&apos;爬虫&apos;)
+elem.send_keys(Keys.RETURN)
+print(driver.page_source)
+</code></pre><p>滚动页面至最下方  </p>
+<pre><code>#coding:utf-8
+from selenium import webdriver
+import time
+
+driver = webdriver.Firefox()
+driver.get(&apos;http://www.jianshu.com/collections&apos;)
+time.sleep(1)
+for i in range(10):
+    dirver.execute_script(&apos;window.scrollTo(0,document.body.scrollHeight)&apos;)
+    time.sleep(1)
+</code></pre>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2016/05/15/爬虫实践教程2/" data-id="cjespka1m002min2zzmttidwa" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2016/05/15/爬虫实践教程2/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2016/05/15/爬虫实践教程2/">Comentarios</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-爬虫实践教程1" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -286,7 +447,7 @@ start()
 
 </div>
 
-    <a data-url="http://yoursite.com/2016/05/15/爬虫实践教程1/" data-id="cjer6ahr9002fkg2z0fggi4pq" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://yoursite.com/2016/05/15/爬虫实践教程1/" data-id="cjespka1n002nin2zo7rkcedd" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -446,7 +607,7 @@ if __name__ == &apos;__main__&apos;:
 
 </div>
 
-    <a data-url="http://yoursite.com/2016/05/15/爬虫实践教程0/" data-id="cjer6ahrb002ikg2zp0p4yhc4" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://yoursite.com/2016/05/15/爬虫实践教程0/" data-id="cjespka1h002iin2z2pioyhyr" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -576,7 +737,7 @@ if __name__ == &apos;__main__&apos;:
 
 </div>
 
-    <a data-url="http://yoursite.com/2016/05/15/hello-world/" data-id="cjer6ahpr000ukg2zvwau9x85" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://yoursite.com/2016/05/15/hello-world/" data-id="cjespk9yp000rin2zkt7zzfh8" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -806,7 +967,7 @@ db.foo.find( { a : 1 } )：对于当前数据库中的foo集合进行查找，�
 
 </div>
 
-    <a data-url="http://yoursite.com/2016/05/12/mongo小试/" data-id="cjer6ahq40019kg2z3ryjmnqa" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://yoursite.com/2016/05/12/mongo小试/" data-id="cjespk9z30019in2zftdx5hda" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -901,6 +1062,25 @@ db.foo.find( { a : 1 } )：对于当前数据库中的foo集合进行查找，�
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/2018/03/15/简单看看汤不热的网站/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/03/15/简单看看汤不热的网站/" class="title">简单看看汤不热的网站</a></p>
+                            <p class="item-date"><time datetime="2018-03-15T13:31:12.000Z" itemprop="datePublished">2018-03-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/2018/03/14/django项目配置小结/" class="thumbnail">
     
     
@@ -974,25 +1154,6 @@ db.foo.find( { a : 1 } )：对于当前数据库中的foo集合进行查找，�
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/03/10/python基础20题/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/03/10/python基础20题/" class="title">python基础20题</a></p>
-                            <p class="item-date"><time datetime="2018-03-10T02:20:36.000Z" itemprop="datePublished">2018-03-10</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -1004,7 +1165,7 @@ db.foo.find( { a : 1 } )：对于当前数据库中的foo集合进行查找，�
     <div class="widget-wrap">
         <h3 class="widget-title">Archivos</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">14</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
         </div>
     </div>
 
