@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>one-blockchain-src-anal | 上药三品，神与气精</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="看看代码的实现：
+import hashlib
+import json
+from time import time
+from urllib.parse import urlparse
+from uuid import uuid4
+
+import requests
+from flask import Flask, jsonify, request
+
+
+class Blockchain:
+    de">
+<meta property="og:type" content="article">
+<meta property="og:title" content="one-blockchain-src-anal">
+<meta property="og:url" content="http://yoursite.com/2018/03/27/one-blockchain-src-anal/index.html">
+<meta property="og:site_name" content="上药三品，神与气精">
+<meta property="og:description" content="看看代码的实现：
+import hashlib
+import json
+from time import time
+from urllib.parse import urlparse
+from uuid import uuid4
+
+import requests
+from flask import Flask, jsonify, request
+
+
+class Blockchain:
+    de">
+<meta property="og:updated_time" content="2018-03-27T15:08:08.482Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="one-blockchain-src-anal">
+<meta name="twitter:description" content="看看代码的实现：
+import hashlib
+import json
+from time import time
+from urllib.parse import urlparse
+from uuid import uuid4
+
+import requests
+from flask import Flask, jsonify, request
+
+
+class Blockchain:
+    de">
+    
+
+    
+        <link rel="alternate" href="/" title="上药三品，神与气精" type="application/atom+xml" />
+    
+
+    
+
+    <link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/libs/open-sans/styles.css">
+    <link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/libs/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+    
+    
+        <link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+    
+    
+    
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">上药三品，神与气精</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/categories">Categories</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+                    <a class="main-nav-link" href="/about">About</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/me.jpeg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="Type something..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Posts',
+            PAGES: 'Pages',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
+            UNTITLED: '(Untitled)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/categories">Categories</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                    <td><a class="main-nav-link" href="/about">About</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/me.jpeg" />
+            <h2 id="name">Aaron Cheung</h2>
+            <h3 id="title">Python Engineer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Wuhan, China</span>
+            <a id="follow" target="_blank" href="https://github.com/zhangdavids/">FOLLOW</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                98
+                <span>posts</span>
+            </div>
+            <div class="article-info-block">
+                5
+                <span>tags</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="http://github.com/zhangdavids/" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="dribbble" class=tooltip>
+                            <i class="fa fa-dribbble"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="/" target="_blank" title="rss" class=tooltip>
+                            <i class="fa fa-rss"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-one-blockchain-src-anal" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            one-blockchain-src-anal
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/03/27/one-blockchain-src-anal/">
+            <time datetime="2018-03-27T14:37:51.000Z" itemprop="datePublished">2018-03-27</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>看看代码的实现：</p>
+<pre><code>import hashlib
+import json
+from time import time
+from urllib.parse import urlparse
+from uuid import uuid4
+
+import requests
+from flask import Flask, jsonify, request
+
+
+class Blockchain:
+    def __init__(self):
+        self.current_transactions = []
+        self.chain = []
+        self.nodes = set()
+
+        # Create the genesis block
+        self.new_block(previous_hash=&apos;1&apos;, proof=100)
+
+    def register_node(self, address):
+        &quot;&quot;&quot;
+        Add a new node to the list of nodes
+
+        :param address: Address of node. Eg. &apos;http://192.168.0.5:5000&apos;
+        &quot;&quot;&quot;
+
+        parsed_url = urlparse(address)
+        if parsed_url.netloc:
+            self.nodes.add(parsed_url.netloc)
+        elif parsed_url.path:
+            # Accepts an URL without scheme like &apos;192.168.0.5:5000&apos;.
+            self.nodes.add(parsed_url.path)
+        else:
+            raise ValueError(&apos;Invalid URL&apos;)
+
+
+    def valid_chain(self, chain):
+        &quot;&quot;&quot;
+        Determine if a given blockchain is valid
+
+        :param chain: A blockchain
+        :return: True if valid, False if not
+        &quot;&quot;&quot;
+
+        last_block = chain[0]
+        current_index = 1
+
+        while current_index &lt; len(chain):
+            block = chain[current_index]
+            print(f&apos;{last_block}&apos;)
+            print(f&apos;{block}&apos;)
+            print(&quot;\n-----------\n&quot;)
+            # Check that the hash of the block is correct
+            if block[&apos;previous_hash&apos;] != self.hash(last_block):
+                return False
+
+            # Check that the Proof of Work is correct
+            if not self.valid_proof(last_block[&apos;proof&apos;], block[&apos;proof&apos;], last_block[&apos;previous_hash&apos;]):
+                return False
+
+            last_block = block
+            current_index += 1
+
+        return True
+
+    def resolve_conflicts(self):
+        &quot;&quot;&quot;
+        This is our consensus algorithm, it resolves conflicts
+        by replacing our chain with the longest one in the network.
+
+        :return: True if our chain was replaced, False if not
+        &quot;&quot;&quot;
+
+        neighbours = self.nodes
+        new_chain = None
+
+        # We&apos;re only looking for chains longer than ours
+        max_length = len(self.chain)
+
+        # Grab and verify the chains from all the nodes in our network
+        for node in neighbours:
+            response = requests.get(f&apos;http://{node}/chain&apos;)
+
+            if response.status_code == 200:
+                length = response.json()[&apos;length&apos;]
+                chain = response.json()[&apos;chain&apos;]
+
+                # Check if the length is longer and the chain is valid
+                if length &gt; max_length and self.valid_chain(chain):
+                    max_length = length
+                    new_chain = chain
+
+        # Replace our chain if we discovered a new, valid chain longer than ours
+        if new_chain:
+            self.chain = new_chain
+            return True
+
+        return False
+
+    def new_block(self, proof, previous_hash):
+        &quot;&quot;&quot;
+        Create a new Block in the Blockchain
+
+        :param proof: The proof given by the Proof of Work algorithm
+        :param previous_hash: Hash of previous Block
+        :return: New Block
+        &quot;&quot;&quot;
+
+        block = {
+            &apos;index&apos;: len(self.chain) + 1,
+            &apos;timestamp&apos;: time(),
+            &apos;transactions&apos;: self.current_transactions,
+            &apos;proof&apos;: proof,
+            &apos;previous_hash&apos;: previous_hash or self.hash(self.chain[-1]),
+        }
+
+        # Reset the current list of transactions
+        self.current_transactions = []
+
+        self.chain.append(block)
+        return block
+
+    def new_transaction(self, sender, recipient, amount):
+        &quot;&quot;&quot;
+        Creates a new transaction to go into the next mined Block
+
+        :param sender: Address of the Sender
+        :param recipient: Address of the Recipient
+        :param amount: Amount
+        :return: The index of the Block that will hold this transaction
+        &quot;&quot;&quot;
+        self.current_transactions.append({
+            &apos;sender&apos;: sender,
+            &apos;recipient&apos;: recipient,
+            &apos;amount&apos;: amount,
+        })
+
+        return self.last_block[&apos;index&apos;] + 1
+
+    @property
+    def last_block(self):
+        return self.chain[-1]
+
+    @staticmethod
+    def hash(block):
+        &quot;&quot;&quot;
+        Creates a SHA-256 hash of a Block
+
+        :param block: Block
+        &quot;&quot;&quot;
+
+        # We must make sure that the Dictionary is Ordered, or we&apos;ll have inconsistent hashes
+        block_string = json.dumps(block, sort_keys=True).encode()
+        return hashlib.sha256(block_string).hexdigest()
+
+    def proof_of_work(self, last_block):
+        &quot;&quot;&quot;
+        Simple Proof of Work Algorithm:
+
+         - Find a number p&apos; such that hash(pp&apos;) contains leading 4 zeroes
+         - Where p is the previous proof, and p&apos; is the new proof
+
+        :param last_block: &lt;dict&gt; last Block
+        :return: &lt;int&gt;
+        &quot;&quot;&quot;
+
+        last_proof = last_block[&apos;proof&apos;]
+        last_hash = self.hash(last_block)
+
+        proof = 0
+        while self.valid_proof(last_proof, proof, last_hash) is False:
+            proof += 1
+
+        return proof
+
+    @staticmethod
+    def valid_proof(last_proof, proof, last_hash):
+        &quot;&quot;&quot;
+        Validates the Proof
+
+        :param last_proof: &lt;int&gt; Previous Proof
+        :param proof: &lt;int&gt; Current Proof
+        :param last_hash: &lt;str&gt; The hash of the Previous Block
+        :return: &lt;bool&gt; True if correct, False if not.
+
+        &quot;&quot;&quot;
+
+        guess = f&apos;{last_proof}{proof}{last_hash}&apos;.encode()
+        guess_hash = hashlib.sha256(guess).hexdigest()
+        return guess_hash[:4] == &quot;0000&quot;
+
+
+# Instantiate the Node
+app = Flask(__name__)
+
+# Generate a globally unique address for this node
+node_identifier = str(uuid4()).replace(&apos;-&apos;, &apos;&apos;)
+
+# Instantiate the Blockchain
+blockchain = Blockchain()
+
+
+@app.route(&apos;/mine&apos;, methods=[&apos;GET&apos;])
+def mine():
+    # We run the proof of work algorithm to get the next proof...
+    last_block = blockchain.last_block
+    proof = blockchain.proof_of_work(last_block)
+
+    # We must receive a reward for finding the proof.
+    # The sender is &quot;0&quot; to signify that this node has mined a new coin.
+    blockchain.new_transaction(
+        sender=&quot;0&quot;,
+        recipient=node_identifier,
+        amount=1,
+    )
+
+    # Forge the new Block by adding it to the chain
+    previous_hash = blockchain.hash(last_block)
+    block = blockchain.new_block(proof, previous_hash)
+
+    response = {
+        &apos;message&apos;: &quot;New Block Forged&quot;,
+        &apos;index&apos;: block[&apos;index&apos;],
+        &apos;transactions&apos;: block[&apos;transactions&apos;],
+        &apos;proof&apos;: block[&apos;proof&apos;],
+        &apos;previous_hash&apos;: block[&apos;previous_hash&apos;],
+    }
+    return jsonify(response), 200
+
+
+@app.route(&apos;/transactions/new&apos;, methods=[&apos;POST&apos;])
+def new_transaction():
+    values = request.get_json()
+
+    # Check that the required fields are in the POST&apos;ed data
+    required = [&apos;sender&apos;, &apos;recipient&apos;, &apos;amount&apos;]
+    if not all(k in values for k in required):
+        return &apos;Missing values&apos;, 400
+
+    # Create a new Transaction
+    index = blockchain.new_transaction(values[&apos;sender&apos;], values[&apos;recipient&apos;], values[&apos;amount&apos;])
+
+    response = {&apos;message&apos;: f&apos;Transaction will be added to Block {index}&apos;}
+    return jsonify(response), 201
+
+
+@app.route(&apos;/chain&apos;, methods=[&apos;GET&apos;])
+def full_chain():
+    response = {
+        &apos;chain&apos;: blockchain.chain,
+        &apos;length&apos;: len(blockchain.chain),
+    }
+    return jsonify(response), 200
+
+
+@app.route(&apos;/nodes/register&apos;, methods=[&apos;POST&apos;])
+def register_nodes():
+    values = request.get_json()
+
+    nodes = values.get(&apos;nodes&apos;)
+    if nodes is None:
+        return &quot;Error: Please supply a valid list of nodes&quot;, 400
+
+    for node in nodes:
+        blockchain.register_node(node)
+
+    response = {
+        &apos;message&apos;: &apos;New nodes have been added&apos;,
+        &apos;total_nodes&apos;: list(blockchain.nodes),
+    }
+    return jsonify(response), 201
+
+
+@app.route(&apos;/nodes/resolve&apos;, methods=[&apos;GET&apos;])
+def consensus():
+    replaced = blockchain.resolve_conflicts()
+
+    if replaced:
+        response = {
+            &apos;message&apos;: &apos;Our chain was replaced&apos;,
+            &apos;new_chain&apos;: blockchain.chain
+        }
+    else:
+        response = {
+            &apos;message&apos;: &apos;Our chain is authoritative&apos;,
+            &apos;chain&apos;: blockchain.chain
+        }
+
+    return jsonify(response), 200
+
+
+if __name__ == &apos;__main__&apos;:
+    from argparse import ArgumentParser
+
+    parser = ArgumentParser()
+    parser.add_argument(&apos;-p&apos;, &apos;--port&apos;, default=5000, type=int, help=&apos;port to listen on&apos;)
+    args = parser.parse_args()
+    port = args.port
+
+    app.run(host=&apos;0.0.0.0&apos;, port=port)
+</code></pre><p> 提供了几个url:</p>
+<pre><code>mine GET
+
+transactions/new POST
+
+chain GET
+
+nodes/register POST
+
+nodes/resolve GET
+
+/transactions/new to create a new transaction to a block
+/mine to tell our server to mine a new block.
+/chain to return the full Blockchain.
+/nodes/register to accept a list of new nodes in the form of URLs.
+/nodes/resolve to implement our Consensus Algorithm, which resolves any 
+        conflicts—to ensure a node has the correct chain.
+</code></pre><p>单个区块：</p>
+<pre><code>block = {
+    &apos;index&apos;: 1,
+    &apos;timestamp&apos;: 1506057125.900785,
+    &apos;transactions&apos;: [
+        {
+            &apos;sender&apos;: &quot;8527147fe1f5426f9dd545de4b27ee00&quot;,
+            &apos;recipient&apos;: &quot;a77f5cdfa2934df3954a5c7c7da5df1f&quot;,
+            &apos;amount&apos;: 5,
+        }
+    ],
+    &apos;proof&apos;: 324984774000,
+    &apos;previous_hash&apos;: &quot;2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824&quot;
+}    
+</code></pre>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2018/03/27/one-blockchain-src-anal/" data-id="cjf9t1k8f001fv82zy9omfb40" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2018/03/27/one-blockchain-src-anal/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/27/one-blockchain-src-anal/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+    
+        <a href="/2018/03/27/blockchain-note/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">Older</strong>
+            <div class="article-nav-title">blockchain-note</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    
+        <section id="comments">
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+</section>
+    
+
+</section>
+            
+                
+<aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">recent</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/27/one-blockchain-src-anal/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/03/27/one-blockchain-src-anal/" class="title">one-blockchain-src-anal</a></p>
+                            <p class="item-date"><time datetime="2018-03-27T14:37:51.000Z" itemprop="datePublished">2018-03-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/27/blockchain-note/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/03/27/blockchain-note/" class="title">blockchain-note</a></p>
+                            <p class="item-date"><time datetime="2018-03-27T11:21:12.000Z" itemprop="datePublished">2018-03-27</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/23/云计算综述/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/03/23/云计算综述/" class="title">云计算综述</a></p>
+                            <p class="item-date"><time datetime="2018-03-23T14:51:10.000Z" itemprop="datePublished">2018-03-23</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/19/mac-use-tips/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/03/19/mac-use-tips/" class="title">mac-use-tips</a></p>
+                            <p class="item-date"><time datetime="2018-03-19T14:52:03.000Z" itemprop="datePublished">2018-03-19</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/03/18/elk-redis/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/03/18/elk-redis/" class="title">elk+redis</a></p>
+                            <p class="item-date"><time datetime="2018-03-18T14:09:32.000Z" itemprop="datePublished">2018-03-18</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">archives</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">22</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/deep-learning/">deep learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-requests/">python, requests</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/requests-python/">requests, python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/">ruby</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">tag cloud</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/deep-learning/" style="font-size: 10px;">deep learning</a> <a href="/tags/python-requests/" style="font-size: 10px;">python, requests</a> <a href="/tags/requests-python/" style="font-size: 10px;">requests, python</a> <a href="/tags/ruby/" style="font-size: 10px;">ruby</a>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">links</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2018 Zhang John<br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="http://github.com/ppoffice">PPOffice</a>
+        </div>
+    </div>
+</footer>
+        
+    
+    <script>
+    var disqus_config = function () {
+        
+            this.page.url = 'http://yoursite.com/2018/03/27/one-blockchain-src-anal/';
+        
+        this.page.identifier = 'one-blockchain-src-anal';
+    };
+    (function() { 
+        var d = document, s = d.createElement('script');  
+        s.src = '//' + 'hexo-theme-icarus' + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+
+
+
+
+    
+        <script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-share.min.js"></script>
+        <script src="/libs/lightgallery/js/lg-video.min.js"></script>
+    
+    
+        <script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
