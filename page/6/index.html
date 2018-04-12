@@ -79,7 +79,7 @@
             <div id="search-form-wrap">
 
     <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
         <button type="submit" class="search-form-submit"></button>
     </form>
     <div class="ins-search">
@@ -98,10 +98,10 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Posts',
+            POSTS: 'Entradas',
             PAGES: 'Pages',
-            CATEGORIES: 'Categories',
-            TAGS: 'Tags',
+            CATEGORIES: 'Categorias',
+            TAGS: 'Etiquetas',
             UNTITLED: '(Untitled)',
         },
         ROOT_URL: '/',
@@ -132,7 +132,7 @@
                 <td>
                     
     <div class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
     </div>
 
                 </td>
@@ -152,16 +152,16 @@
             <h2 id="name">Aaron Cheung</h2>
             <h3 id="title">Python Engineer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Wuhan, China</span>
-            <a id="follow" target="_blank" href="https://github.com/zhangdavids/">FOLLOW</a>
+            <a id="follow" target="_blank" href="https://github.com/zhangdavids/">SEGUIR</a>
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                104
-                <span>posts</span>
+                106
+                <span>Entradas</span>
             </div>
             <div class="article-info-block">
                 5
-                <span>tags</span>
+                <span>Etiquetas</span>
             </div>
         </div>
         
@@ -209,6 +209,364 @@
 
             
             <section id="main">
+    <article id="post-分享python面试题" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/03/03/分享python面试题/">分享python面试题</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/03/03/分享python面试题/">
+            <time datetime="2018-03-03T06:01:01.000Z" itemprop="datePublished">2018-03-03</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>1.is和==有什么区别？</p>
+<p>python当中对象包含三要素，分别是id（身份标识）、type（数据类型）、value（值）</p>
+<p>==是python的比较运算符，用于比较value值是否相等</p>
+<p>is是同一性运算符，比较的是id是否相同</p>
+<p>a、b值相同</p>
+<p>只有数值型和字符串型时， a is b 为true<br>是tuple list dict 或者 set时，a is b 为false</p>
+<p>2.解释装饰器</p>
+<p>写代码要遵循开发封闭原则，虽然在这个原则是用的面向对象开发，但是也适用于函数式编程，简单来说，它规定已经实现的功能代码不允许被修改，但可以被扩展，</p>
+<pre><code>def w1(func):
+    def inner():
+        # 验证1
+        # 验证2
+        # 验证3
+        return func()
+    return inner
+
+@w1
+def f1():
+    print &apos;f1&apos;
+@w1
+def f2():
+    print &apos;f2&apos;
+@w1
+def f3():
+    print &apos;f3&apos;
+@w1
+def f4():
+    print &apos;f4&apos;
+</code></pre><p>如上例@w1内部会执行以下操作：</p>
+<ul>
+<li>执行w1函数，并将 @w1 下面的 函数 作为w1函数的参数，即：@w1 等价于 w1(f1)</li>
+</ul>
+<p>所以，内部就会去执行：</p>
+<pre><code>def inner:
+    #验证
+    return f1()   # func是参数，此时 func 等于 f1
+return inner     # 返回的 inner，inner代表的是函数，非执行函数
+</code></pre><p>其实就是将原来的 f1 函数塞进另外一个函数中</p>
+<ul>
+<li>将执行完的 w1 函数返回值赋值给@w1下面的函数的函数名</li>
+</ul>
+<p>w1函数的返回值是：</p>
+<pre><code>def inner:
+    #验证
+    return 原来f1()  # 此处的 f1 表示原来的f1函数
+</code></pre><p>然后，将此返回值再重新赋值给 f1，即：</p>
+<pre><code>新f1 = def inner:
+        #验证
+        return 原来f1() 
+</code></pre><p>所以，以后业务部门想要执行 f1 函数时，就会执行 新f1 函数，在 新f1 函数内部先执行验证，再执行原来的f1函数，然后将 原来f1 函数的返回值 返回给了业务调用者。</p>
+<p>如此一来， 即执行了验证的功能，又执行了原来f1函数的内容，并将原f1函数返回值 返回给业务调用者  </p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2018/03/03/分享python面试题/" data-id="cjfwq2d69002vk32zvlgsw8ha" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2018/03/03/分享python面试题/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/03/分享python面试题/">Comentarios</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-normal-library" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/03/03/normal-library/">normal-library</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/03/03/normal-library/">
+            <time datetime="2018-03-03T00:14:00.000Z" itemprop="datePublished">2018-03-03</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <ol>
+<li><p>我做运维的时候，使用Python完成了一些打包和备份的脚本，也就是把某个目录压缩成各种格式（tar.gz、tar.bz2、zip）。 这个脚本其实打包压缩的部分还是比较复杂的。直到我看到了这个：</p>
+<p> In : from shutil import make_archive<br> In : make_archive(‘archive_xxx’, ‘bztar’)<br> Out: ‘archive_xxx.tar.bz2’  </p>
+</li>
+</ol>
+<p>有兴趣的可以翻一下源码。你想要的说不定标准库里面已经实现。当然，有标准库不满足的额外需求，也可以参照它实现。</p>
+<ol>
+<li><p>你可能接触过定时任务（crontab），它管理的任务很规矩，到点执行（当然精确度不那么高）。现在设想你有更复杂的任务需求：这个任务是动态的，也就是不一定啥时候就来排上队约定一个事件等着执行。这时候你可以想，这可以使用队列（Queue模块）啊，嗯也不错。难度再提高：加上优先级策略并能取消某个指定的已经放入队列的任务。现在思考下，这个怎么实现？其实很多工程实践的最好范例都在标准库中。sched模块中的scheduler类就是一个这样的通用的事件调度类。你可以学习它的实现。你问我它的实现多复杂？整个模块加上大幅的注释才134行。</p>
+</li>
+<li><p>学习Python的过程中，一开始我对于装饰器contextmanager+yield怎么都不懂。直到我看了contextmanager的源代码, 其实非常简单就懂了。它的docstring清楚地不能再清楚了：</p>
+</li>
+</ol>
+<pre><code class="python">
+Typical usage:                                                                               
+
+<span class="meta">@contextmanager                                                                          </span>
+<span class="function"><span class="keyword">def</span> <span class="title">some_generator</span><span class="params">(&lt;arguments&gt;)</span>:</span>                                                         
+    &lt;setup&gt;                                                                              
+    <span class="keyword">try</span>:                                                                                 
+        <span class="keyword">yield</span> &lt;value&gt;                                                                    
+    <span class="keyword">finally</span>:                                                                             
+        &lt;cleanup&gt;                                                                        
+
+This makes this:                                                                             
+
+<span class="keyword">with</span> some_generator(&lt;arguments&gt;) <span class="keyword">as</span> &lt;variable&gt;:                                          
+    &lt;body&gt;                                                                               
+
+equivalent to this:                                                                          
+
+&lt;setup&gt;                                                                                  
+<span class="keyword">try</span>:                                                                                     
+    &lt;variable&gt; = &lt;value&gt;                                                                 
+    &lt;body&gt;                                                                               
+<span class="keyword">finally</span>:                                                                                 
+&lt;cleanup&gt;
+</code></pre>
+<ol>
+<li>我之前使用多线程编程都这样用，在好长一段时间里面对于多进程和多线程之前怎么选择都搞得不清楚。看多了开源项目代码，我发现了好多人在用multiprocessing.dummy这个子模块，「dummy」这个词本身好奇怪，我决定去看多进程（multiprocessing）库的代码。「咦！怎么和多线程的接口一样呢」。后知后觉的我看到文档中这样说：</li>
+</ol>
+<p>multiprocessing.dummy replicates the API of multiprocessing but is no more than a wrapper around the threading module.<br>恍然大悟！！！如果分不清任务是CPU密集型还是IO密集型，我就用如下2个方法分别试：</p>
+<p>from multiprocessing import Pool<br>from multiprocessing.dummy import Pool<br>哪个速度快就用那个。从此以后我都尽量在写兼容的方式，这样在多线程/多进程之间切换非常方便。</p>
+<ol>
+<li>13-14年间，Flask还没怎么火，那时候装饰器风格的Web框架还有一个Bottle。我当时就直接想去看Bottle代码，发现一上来import了一堆模块，你先感受下bottle/bottle.py at master · bottlepy/bottle · GitHub ，第一感觉就是懵啊，这都是干什么的啊，为什么要用啊？这就是促使我去看标准库实现最重要的原因：学会了我才能更好的看懂别人写的代码。</li>
+</ol>
+<p>但是不是所有的标准库都要一视同仁的看呢？你可以设置优先级，先看那些不可不知道的模块。我在这里列一下，并对它的用途和其中重要的类、函数的作用加以说明等。要是每个都写例子实在太多太密集，怕大家看不下去，我都用外部链接了。</p>
+<ol>
+<li>argparse。 用来替代optparse的命令行解析库。如果你考虑用更直观的，推荐docopt，它使用docstring所见即所得实现命令行解析。</li>
+<li>collections。 包含了一些额外的数据类型。其中的OrderedDict（有序列的字典）、defaultdict（带有默认值的字典）、namedtuple（通过创建带有字段属性的元组子类）和deque（高效实现插入和删除操作的双向列表）非常常用。</li>
+<li>functools。 这个模块有一些非常有用的工具，其中的partial（偏函数）、wraps（将被包装函数的信息拷贝过来）、total_ordering（只需要定义2个<strong>XX</strong>方法就可实现对象对比的类装饰器）、cmp_to_key（将老式的比较函数转化为关键字函数）非常常用。</li>
+<li>glob。 文件名的shell模式匹配，你不用遍历整个目录判断每个文件是不是符合，使用glob一句话就解决。</li>
+<li>multiprocessing。多进程模块，这重要性就不说了。</li>
+<li><p>os。应该是日常工作最常用的模块了，你是否了解它里面所有的函数和实现呢？举个例子，获取环境变量，我之前这样用：<br>In : os.environ.get(‘PYTHONPATH’)<br>读完源码之后我学了一招：<br>os.getenv(‘PYTHONPATH’)<br>好吧，省了5个字符。</p>
+</li>
+<li><p>Queue。这个模块用于多线程编程，它是一个线程安全的FIFO（先进先出）的队列实现。如果是多进程编程，选用multiprocessing.queues中的Queue、SimpleQueue、JoinableQueue这三个队列实现。 </p>
+</li>
+<li><p>SimpleHTTPServer。最简单地HTTP Server实现。不使用Web框架，一句：</p>
+<pre><code>python -m SimpleHTTPServer PORT
+</code></pre><p> 就可以运行起来静态服务。平时用它预览和下载文件太方便了。</p>
+</li>
+<li><p>subprocess。 如果你还被某些书籍引导使用os.system或者os.popen等模块，现在是放弃它们的时候了，这个模块会满足你绝大多数的系统命令执行、执行结果获取和解析等需求。其中最有用的是call（执行系统命令）、check_call（执行结果不为0则抛出异常）、check_output（最方便的获取执行的输出的函数）、Popen+PIPE（支持管道的多命令执行）。</p>
+</li>
+<li><p>threading。多线程模块，重要性也不必说。</p>
+</li>
+</ol>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2018/03/03/normal-library/" data-id="cjfwq2d4f001mk32z26yvc7e3" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2018/03/03/normal-library/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/03/normal-library/">Comentarios</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-python-fp" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -280,7 +638,7 @@ map(cal(QUIZE), students)
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/03/03/python-fp/" data-id="cjffikc7c001osd2zwf0g3223" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2018/03/03/python-fp/" data-id="cjfwq2d4i001pk32zfccagt9r" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -348,7 +706,7 @@ map(cal(QUIZE), students)
 
             
     
-        <a href="http://yoursite.com/2018/03/03/python-fp/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/03/python-fp/">Comments</a>
+        <a href="http://yoursite.com/2018/03/03/python-fp/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/03/python-fp/">Comentarios</a>
     
 
         </footer>
@@ -452,7 +810,7 @@ map(cal(QUIZE), students)
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/03/01/python-interview-0/" data-id="cjffikc7j001usd2z2bgr2fl0" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2018/03/01/python-interview-0/" data-id="cjfwq2d4q001uk32z8e1ak6i2" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -520,7 +878,7 @@ map(cal(QUIZE), students)
 
             
     
-        <a href="http://yoursite.com/2018/03/01/python-interview-0/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/01/python-interview-0/">Comments</a>
+        <a href="http://yoursite.com/2018/03/01/python-interview-0/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/01/python-interview-0/">Comentarios</a>
     
 
         </footer>
@@ -600,7 +958,7 @@ map(cal(QUIZE), students)
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/03/01/about-react/" data-id="cjffikc4g000csd2zw078sexq" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2018/03/01/about-react/" data-id="cjfwq2d2u000dk32zz0jd9yda" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -668,403 +1026,7 @@ map(cal(QUIZE), students)
 
             
     
-        <a href="http://yoursite.com/2018/03/01/about-react/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/01/about-react/">Comments</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-about-flask" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/02/28/about-flask/">about-flask</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/02/28/about-flask/">
-            <time datetime="2018-02-28T12:47:07.000Z" itemprop="datePublished">2018-02-28</time>
-        </a>
-    </div>
-
-
-                        
-                        
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>谈一谈 flask</p>
-<p>从http 请求开始到响应</p>
-<p>前置技能 wsgi</p>
-<p>WSGI，全称 Web Server Gateway Interface，或者 Python Web Server Gateway Interface ，是为 Python 语言定义的 Web 服务器和 Web 应用程序或框架之间的一种简单而通用的接口。自从 WSGI 被开发出来以后，许多其它语言中也出现了类似接口。</p>
-<p>WSGI 的官方定义是，the Python Web Server Gateway Interface。从名字就可以看出来，这东西是一个Gateway，也就是网关。网关的作用就是在协议之间进行转换。</p>
-<p>WSGI 是作为 Web 服务器与 Web 应用程序或应用框架之间的一种低级别的接口，以提升可移植 Web 应用开发的共同点。WSGI 是基于现存的 CGI 标准而设计的。</p>
-<p>很多框架都自带了 WSGI server ，比如 Flask，webpy，Django、CherryPy等等。当然性能都不好，自带的 web server 更多的是测试用途，发布时则使用生产环境的 WSGI server或者是联合 nginx 做 uwsgi 。</p>
-<p>在网上搜过WSGI的人应该会看到一个图，左边是Server，右边是APP，中间有一个连接纽带是WSGI。</p>
-<p>不过，我看了源码以后的理解和这个有些不同，我个人觉得，实际上不应该单独写一个APP，因为，这个WSGI的使用方法实际上也是包含在APP里面的，最右端的app实际上应该指的是逻辑功能，包括URL和view function的对应关系。</p>
-<p>WSGI其实是作为一个接口，来接受Server传递过来的信息, 然后通过这个接口调用后台app里的view function进行响应。</p>
-<p><strong>起到一个接口的功能，前面对接服务器，后面对接app的具体功能</strong></p>
-<pre><code>def application(environ, start_response):               # 一个符合wsgi协议的应用程序写法应该接受2个参数
-    start_response(&apos;200 OK&apos;, [(&apos;Content-Type&apos;, &apos;text/html&apos;)])  # environ为http的相关信息，如请求头等 start_response则是响应信息
-    return [b&apos;&lt;h1&gt;Hello, web!&lt;/h1&gt;&apos;]        # return出来是响应内容
-</code></pre><p>但是，作为app本身，你就算启动了程序，你也没办法给application传递参数？</p>
-<p>所以，实际上，调用application和传递2个参数的动作，是服务器来进行的，比如Gunicorn.</p>
-<p>而这个叫做application的东西，在Flask框架内部的名字，叫做wsgi_app，请看下面章节的源码。</p>
-<pre><code>from flask import Flask  
-
-app = Flask(__name__)         #生成app实例  
-
-@app.route(&apos;/&apos;)  
-def index():  
-        return &apos;Hello World&apos;  
-</code></pre><p>这样，一个flask app就生成了</p>
-<p>但是这里有一个概念必须要搞清楚，就是当你的gunicorn收到http请求，去调用app的时候，他实际上是用了Flask 的 <strong>call</strong>方法，这点非常重要！！！</p>
-<p>因为<strong>call</strong>方法怎么写，决定了你整个流程从哪里开始。</p>
-<p>flask类的<strong>call</strong>方法</p>
-<pre><code>class Flask(_PackageBoundObject):        #Flask类  
-
-#中间省略一些代码  
-
-    def __call__(self, environ, start_response):    #Flask实例的__call__方法  
-        &quot;&quot;&quot;Shortcut for :attr:`wsgi_app`.&quot;&quot;&quot;  
-        return self.wsgi_app(environ, start_response)  #注意他的return，他返回的时候，实际上是调用了wsgi_app这个功能      
-</code></pre><p>如此一来，我们便知道，当http请求从server发送过来的时候，他会启动<strong>call</strong>功能，最终实际是调用了wsgi_app功能并传入environ和start_response</p>
-<pre><code class="python">
-<span class="class"><span class="keyword">class</span> <span class="title">Flask</span><span class="params">(_PackageBoundObject)</span>:</span>  
-
-<span class="comment">#中间省略一些代码  </span>
-                                <span class="comment">#请注意函数的说明，说得非常准确，这个wsgi_app是一个真正的WSGI应用  </span>
-    <span class="function"><span class="keyword">def</span> <span class="title">wsgi_app</span><span class="params">(self, environ, start_response)</span>:</span>    <span class="comment">#他扮演的是一个中间角色  </span>
-        <span class="string">"""The actual WSGI application.  This is not implemented in 
-        `__call__` so that middlewares can be applied without losing a 
-        reference to the class.  So instead of doing this:: 
-
-            app = MyMiddleware(app) 
-
-        It's a better idea to do this instead:: 
-
-            app.wsgi_app = MyMiddleware(app.wsgi_app) 
-
-        Then you still have the original application object around and 
-        can continue to call methods on it. 
-
-        :param environ: a WSGI environment 
-        :param start_response: a callable accepting a status code, 
-                               a list of headers and an optional 
-                               exception context to start the response 
-        """</span>  
-        ctx = self.request_context(environ)  
-        ctx.push()  
-        error = <span class="keyword">None</span>  
-        <span class="keyword">try</span>:  
-            <span class="keyword">try</span>:  
-                response = self.full_dispatch_request()    <span class="comment">#full_dispatch_request起到了预处理和错误处理以及分发请求的作用  </span>
-            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:  
-                error = e  
-                response = self.make_response(self.handle_exception(e))  <span class="comment">#如果有错误发生，则生成错误响应  </span>
-            <span class="keyword">return</span> response(environ, start_response)       <span class="comment">#如果没有错误发生，则正常响应请求，返回响应内容  </span>
-        <span class="keyword">finally</span>:  
-            <span class="keyword">if</span> self.should_ignore_error(error):  
-                error = <span class="keyword">None</span>  
-            ctx.auto_pop(error)
-</code></pre>
-<h3 id="WSGI-APP-的内部流程"><a href="#WSGI-APP-的内部流程" class="headerlink" title="WSGI_APP 的内部流程"></a>WSGI_APP 的内部流程</h3><ol>
-<li>生成request请求对象和请求上下文环境</li>
-<li><p>请求进入预处理，错误处理及请求转发到响应的过程</p>
-<pre><code>class Flask(_PackageBoundObject):  
-
-#此处省略一些代码  
-
-def full_dispatch_request(self):  
-    &quot;&quot;&quot;Dispatches the request and on top of that performs request 
-    pre and postprocessing as well as HTTP exception catching and 
-    error handling. 
-
-    .. versionadded:: 0.7 
-    &quot;&quot;&quot;  
-    self.try_trigger_before_first_request_functions()  #进行发生真实请求前的处理  
-    try:  
-        request_started.send(self)                     #socket部分的操作  
-        rv = self.preprocess_request()                 #进行请求的预处理  
-        if rv is None:  
-            rv = self.dispatch_request()  
-    except Exception as e:  
-        rv = self.handle_user_exception(e)  
-    response = self.make_response(rv)  
-    response = self.process_response(response)  
-    request_finished.send(self, response=response)  
-    return response  
-</code></pre></li>
-</ol>
-<ol>
-<li>请求分发</li>
-</ol>
-<pre><code class="python">
-<span class="class"><span class="keyword">class</span> <span class="title">Flask</span><span class="params">(_PackageBoundObject)</span>:</span>  
-
-<span class="comment">#省略一些代码  </span>
-
-    <span class="function"><span class="keyword">def</span> <span class="title">dispatch_request</span><span class="params">(self)</span>:</span>   <span class="comment">#看函数定义，matches the URL and returns the value of the view or error.  </span>
-        <span class="string">"""Does the request dispatching.  Matches the URL and returns the 
-        return value of the view or error handler.  This does not have to 
-        be a response object.  In order to convert the return value to a 
-        proper response object, call :func:`make_response`. 
-
-        .. versionchanged:: 0.7 
-           This no longer does the exception handling, this code was 
-           moved to the new :meth:`full_dispatch_request`. 
-        """</span>  
-        req = _request_ctx_stack.top.request  
-        <span class="keyword">if</span> req.routing_exception <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:  
-            self.raise_routing_exception(req)  
-        rule = req.url_rule  
-        <span class="comment"># if we provide automatic options for this URL and the  </span>
-        <span class="comment"># request came with the OPTIONS method, reply automatically  </span>
-        <span class="keyword">if</span> getattr(rule, <span class="string">'provide_automatic_options'</span>, <span class="keyword">False</span>) \  
-           <span class="keyword">and</span> req.method == <span class="string">'OPTIONS'</span>:  
-            <span class="keyword">return</span> self.make_default_options_response()  
-        <span class="comment"># otherwise dispatch to the handler for that endpoint  </span>
-        <span class="keyword">return</span> self.view_functions[rule.endpoint](**req.view_args)   <span class="comment">#最终进入view_functions，取出url对应的视图函数的返回值</span>
-</code></pre>
-<p> req = _request_ctx_stack.top.request 可以暂时理解为，将请求对象赋值给req</p>
-<p>这里先简单讲下，每个url进来以后，他都会对应一个view_function</p>
-<p>另外说下view_functions 是一个字典形式，他的key和value的关系是endpoint ——&gt; view function</p>
-<p>所以每个有效的URL进来，都能找到他对应的视图函数view function，取得返回值并赋值给  rv</p>
-<p>这时候，通过make_response函数，将刚才取得的 rv 生成响应，重新赋值response</p>
-<p>再通过process_response功能主要是处理一个after_request的功能，比如你在请求后，要把数据库连接关闭等动作，和上面提到的before_request对应和类似。</p>
-<p>之后再进行request_finished.send的处理，也是和socket处理有关，暂时不详细深入。</p>
-<p>之后返回新的response对象</p>
-<p>这里特别需要注意的是，make_response函数是一个非常重要的函数，他的作用是返回一个response_class的实例对象，也就是可以接受environ和start_reponse两个参数的对象</p>
-<ol>
-<li>返回wsgi_app 内部</li>
-</ol>
-<p>当response从刚刚的full_dispatch_request功能返回之后，函数会对这个response加上environ, start_response的参数并返回给Gunicorn</p>
-<p>至此，一个HTTP从请求到响应的流程就完毕了.  </p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://yoursite.com/2018/02/28/about-flask/" data-id="cjffikc4e0009sd2zmbnjzmsx" class="article-share-link"><i class="fa fa-share"></i>Share</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://yoursite.com/2018/02/28/about-flask/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/02/28/about-flask/">Comments</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-python-text" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/02/26/python-text/">python-text</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/02/26/python-text/">
-            <time datetime="2018-02-26T02:40:57.000Z" itemprop="datePublished">2018-02-26</time>
-        </a>
-    </div>
-
-
-                        
-                        
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>六款比较不错的特殊文本格式处理库</p>
-<p>1.tablib</p>
-<p>2.openpyxl  算是xlwt xlrd的替代品</p>
-<p>3.unoconv</p>
-<p>4.pypdf2</p>
-<p>5.mistune</p>
-<p>6.csvkit 命令行工具</p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://yoursite.com/2018/02/26/python-text/" data-id="cjffikc7i001tsd2z3a4kkp5z" class="article-share-link"><i class="fa fa-share"></i>Share</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://yoursite.com/2018/02/26/python-text/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/02/26/python-text/">Comments</a>
+        <a href="http://yoursite.com/2018/03/01/about-react/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/01/about-react/">Comentarios</a>
     
 
         </footer>
@@ -1075,7 +1037,7 @@ def full_dispatch_request(self):
 
 
     <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
+        <a class="extend prev" rel="prev" href="/page/5/">&laquo; Anterior</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/7/">Siguiente  &raquo;</a>
     </nav>
 </section>
             
@@ -1084,9 +1046,47 @@ def full_dispatch_request(self):
    
         
     <div class="widget-wrap">
-        <h3 class="widget-title">recent</h3>
+        <h3 class="widget-title">Recientes</h3>
         <div class="widget">
             <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/13/github-big-things/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/04/13/github-big-things/" class="title">github-big-things</a></p>
+                            <p class="item-date"><time datetime="2018-04-12T16:07:45.000Z" itemprop="datePublished">2018-04-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/01/python面试12题/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/04/01/python面试12题/" class="title"></a></p>
+                            <p class="item-date"><time datetime="2018-04-01T08:52:12.960Z" itemprop="datePublished">2018-04-01</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -1145,44 +1145,6 @@ def full_dispatch_request(self):
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/03/28/threading源码分析/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/03/28/threading源码分析/" class="title">threading源码分析</a></p>
-                            <p class="item-date"><time datetime="2018-03-28T14:38:15.000Z" itemprop="datePublished">2018-03-28</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/03/28/inspect源码分析/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/03/28/inspect源码分析/" class="title">inspect源码分析</a></p>
-                            <p class="item-date"><time datetime="2018-03-28T14:37:56.000Z" itemprop="datePublished">2018-03-28</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -1192,16 +1154,16 @@ def full_dispatch_request(self):
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">archives</h3>
+        <h3 class="widget-title">Archivos</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
         </div>
     </div>
 
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">tags</h3>
+        <h3 class="widget-title">Etiquetas</h3>
         <div class="widget">
             <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/deep-learning/">deep learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-requests/">python, requests</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/requests-python/">requests, python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/">ruby</a><span class="tag-list-count">1</span></li></ul>
         </div>
@@ -1210,7 +1172,7 @@ def full_dispatch_request(self):
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">tag cloud</h3>
+        <h3 class="widget-title">Nube de etiquetas</h3>
         <div class="widget tagcloud">
             <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/deep-learning/" style="font-size: 10px;">deep learning</a> <a href="/tags/python-requests/" style="font-size: 10px;">python, requests</a> <a href="/tags/requests-python/" style="font-size: 10px;">requests, python</a> <a href="/tags/ruby/" style="font-size: 10px;">ruby</a>
         </div>
@@ -1219,7 +1181,7 @@ def full_dispatch_request(self):
     
         
     <div class="widget-wrap widget-list">
-        <h3 class="widget-title">links</h3>
+        <h3 class="widget-title">Links</h3>
         <div class="widget">
             <ul>
                 
