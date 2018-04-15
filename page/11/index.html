@@ -79,7 +79,7 @@
             <div id="search-form-wrap">
 
     <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
         <button type="submit" class="search-form-submit"></button>
     </form>
     <div class="ins-search">
@@ -98,10 +98,10 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Entradas',
+            POSTS: 'Posts',
             PAGES: 'Pages',
-            CATEGORIES: 'Categorias',
-            TAGS: 'Etiquetas',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
             UNTITLED: '(Untitled)',
         },
         ROOT_URL: '/',
@@ -132,7 +132,7 @@
                 <td>
                     
     <div class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
     </div>
 
                 </td>
@@ -152,16 +152,16 @@
             <h2 id="name">Aaron Cheung</h2>
             <h3 id="title">Python Engineer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Wuhan, China</span>
-            <a id="follow" target="_blank" href="https://github.com/zhangdavids/">SEGUIR</a>
+            <a id="follow" target="_blank" href="https://github.com/zhangdavids/">FOLLOW</a>
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                106
-                <span>Entradas</span>
+                107
+                <span>posts</span>
             </div>
             <div class="article-info-block">
                 5
-                <span>Etiquetas</span>
+                <span>tags</span>
             </div>
         </div>
         
@@ -209,7 +209,7 @@
 
             
             <section id="main">
-    <article id="post-sanic-01" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-mnist-keras" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -217,7 +217,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/01/01/sanic-01/">sanic-01</a>
+            <a class="article-title" href="/2018/01/06/mnist-keras/">mnist-keras</a>
         </h1>
     
 
@@ -226,8 +226,8 @@
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/01/01/sanic-01/">
-            <time datetime="2018-01-01T13:22:07.000Z" itemprop="datePublished">2018-01-01</time>
+        <a href="/2018/01/06/mnist-keras/">
+            <time datetime="2018-01-06T08:32:52.000Z" itemprop="datePublished">2018-01-06</time>
         </a>
     </div>
 
@@ -242,7 +242,8 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            
+            <p>keras 训练卷积神经网络：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> keras.datasets <span class="keyword">import</span> mnist</span><br><span class="line"></span><br><span class="line"><span class="comment"># 引入卷积模块</span></span><br><span class="line"><span class="keyword">from</span> keras.models <span class="keyword">import</span> Sequential</span><br><span class="line"><span class="keyword">from</span> keras.layers <span class="keyword">import</span> Dense, Dropout, Flatten</span><br><span class="line"><span class="keyword">from</span> keras.layers.convolutional <span class="keyword">import</span> Conv2D, MaxPooling2D</span><br><span class="line"></span><br><span class="line"><span class="comment"># 读入数据</span></span><br><span class="line">(X_train, y_train), (X_test, y_test) = mnist.load_data()</span><br><span class="line"></span><br><span class="line">print(X_train[<span class="number">0</span>].shape)</span><br><span class="line">print(y_train[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 图像是 28 * 28 的格式 标签是0-9的数字</span></span><br><span class="line"><span class="comment"># 手写黑白字体变成四维张量形式 样本数量 长 宽 1</span></span><br><span class="line">X_train = X_train.reshape(X_train.shape[<span class="number">0</span>], <span class="number">28</span>, <span class="number">28</span>, <span class="number">1</span>).astype(<span class="string">'float32'</span>)</span><br><span class="line">X_test = X_test.reshape(X_test.shape[<span class="number">0</span>], <span class="number">28</span>, <span class="number">28</span>, <span class="number">1</span>).astype(<span class="string">'float32'</span>)</span><br><span class="line"></span><br><span class="line">X_train /= <span class="number">255</span></span><br><span class="line">X_test /= <span class="number">255</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">tran_y</span><span class="params">(y)</span>:</span></span><br><span class="line">	y_ohe = np.zeros(<span class="number">10</span>)</span><br><span class="line">	y_ohe[y] = <span class="number">1</span></span><br><span class="line">	<span class="keyword">return</span> y_ohe</span><br><span class="line"></span><br><span class="line">y_train_ohe = np.array([tran_y(y_train[i]) <span class="keyword">for</span> i <span class="keyword">in</span> range(len(y_train))])</span><br><span class="line">y_test_ohe = np.array([tran_y(y_test[i]) <span class="keyword">for</span> i <span class="keyword">in</span> range(len(y_test))])</span><br><span class="line"></span><br><span class="line">model = Sequential()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 第一层卷积 64个过滤器 每个覆盖范围3*3*1 图像四周补0， relu进行非线性变化</span></span><br><span class="line">model.add(Conv2D(filters=<span class="number">64</span>, kernel_size=(<span class="number">3</span>, <span class="number">3</span>), strides=(<span class="number">1</span>, <span class="number">1</span>),</span><br><span class="line">		  padding=<span class="string">'same'</span>, input_shape=(<span class="number">28</span>, <span class="number">28</span>, <span class="number">1</span>), activation=<span class="string">'relu'</span>))</span><br><span class="line">model.add(MaxPooling2D(pool_size=(<span class="number">2</span>, <span class="number">2</span>)))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 设立 dropout 层</span></span><br><span class="line">model.add(Dropout(<span class="number">0.5</span>))</span><br><span class="line"></span><br><span class="line">model.add(Conv2D(<span class="number">128</span>, kernel_size=(<span class="number">3</span>, <span class="number">3</span>), strides=(<span class="number">1</span>, <span class="number">1</span>), padding=<span class="string">'same'</span>, activation=<span class="string">'relu'</span>))</span><br><span class="line">model.add(MaxPooling2D(pool_size=(<span class="number">2</span>, <span class="number">2</span>)))</span><br><span class="line">model.add(Dropout(<span class="number">0.5</span>))</span><br><span class="line">model.add(Conv2D(<span class="number">256</span>, kernel_size=(<span class="number">3</span>, <span class="number">3</span>), strides=(<span class="number">1</span>, <span class="number">1</span>), padding=<span class="string">'same'</span>, activation=<span class="string">'relu'</span>))</span><br><span class="line">model.add(MaxPooling2D(pool_size=(<span class="number">2</span>, <span class="number">2</span>)))</span><br><span class="line">model.add(Dropout(<span class="number">0.5</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 当前层节点展平</span></span><br><span class="line">model.add(Flatten())</span><br><span class="line"></span><br><span class="line"><span class="comment"># 构造全连接神经网络层</span></span><br><span class="line">model.add(Dense(<span class="number">128</span>, activation=<span class="string">'relu'</span>))</span><br><span class="line">model.add(Dense(<span class="number">64</span>, activation=<span class="string">'relu'</span>))</span><br><span class="line">model.add(Dense(<span class="number">32</span>, activation=<span class="string">'relu'</span>))</span><br><span class="line">model.add(Dense(<span class="number">10</span>, activation=<span class="string">'softmax'</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 损失函数选择交叉熵</span></span><br><span class="line">model.compile(loss=<span class="string">'categorical_crossentropy'</span>,</span><br><span class="line">			  optimizer=<span class="string">'adagrad'</span>,</span><br><span class="line">			  metrics=[<span class="string">'accuracy'</span>])</span><br><span class="line"></span><br><span class="line">model.fit(X_train, y_train_ohe,</span><br><span class="line">		  validation_data=(X_test, y_test_ohe),</span><br><span class="line">		  epochs=<span class="number">20</span>, batch_size=<span class="number">128</span>)</span><br><span class="line"></span><br><span class="line">scores = model.evaluate(X_test, y_test_ohe, verbose=<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
         
         </div>
         <footer class="article-footer">
@@ -252,7 +253,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/01/01/sanic-01/" data-id="cjfwsn52p002fy92zjqja9se0" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://yoursite.com/2018/01/06/mnist-keras/" data-id="cjg0t91sm001gxx2z2z93ywm2" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -320,7 +321,128 @@
 
             
     
-        <a href="http://yoursite.com/2018/01/01/sanic-01/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/01/01/sanic-01/">Comentarios</a>
+        <a href="http://yoursite.com/2018/01/06/mnist-keras/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/01/06/mnist-keras/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-sanic-01" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/01/01/sanic-01/">sanic-01</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/01/01/sanic-01/">
+            <time datetime="2018-01-01T13:22:07.000Z" itemprop="datePublished">2018-01-01</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2018/01/01/sanic-01/" data-id="cjg0t91tr002exx2zd8akyj1i" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2018/01/01/sanic-01/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/01/01/sanic-01/">Comments</a>
     
 
         </footer>
@@ -376,7 +498,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/01/01/sanic-00/" data-id="cjfwsn52j0028y92ztpkookyy" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://yoursite.com/2018/01/01/sanic-00/" data-id="cjg0t91tp002cxx2z3cb2lvgo" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -444,7 +566,7 @@
 
             
     
-        <a href="http://yoursite.com/2018/01/01/sanic-00/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/01/01/sanic-00/">Comentarios</a>
+        <a href="http://yoursite.com/2018/01/01/sanic-00/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/01/01/sanic-00/">Comments</a>
     
 
         </footer>
@@ -508,7 +630,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/01/01/2018-python-new/" data-id="cjfwsn50o0001y92zm8gvnt61" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://yoursite.com/2018/01/01/2018-python-new/" data-id="cjg0t91qn0000xx2z4f6juvvg" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -576,7 +698,7 @@
 
             
     
-        <a href="http://yoursite.com/2018/01/01/2018-python-new/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/01/01/2018-python-new/">Comentarios</a>
+        <a href="http://yoursite.com/2018/01/01/2018-python-new/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/01/01/2018-python-new/">Comments</a>
     
 
         </footer>
@@ -639,7 +761,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2017/12/30/ten-dl-algorithm/" data-id="cjfwsn54t002ny92z0ix0adpp" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://yoursite.com/2017/12/30/ten-dl-algorithm/" data-id="cjg0t91tt002gxx2zqm4a0lon" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -707,129 +829,7 @@
 
             
     
-        <a href="http://yoursite.com/2017/12/30/ten-dl-algorithm/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2017/12/30/ten-dl-algorithm/">Comentarios</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-scrapy-note" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2017/12/05/scrapy-note/">scrapy note</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2017/12/05/scrapy-note/">
-            <time datetime="2017-12-05T10:32:45.000Z" itemprop="datePublished">2017-12-05</time>
-        </a>
-    </div>
-
-
-                        
-                        
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>scrapy 总结整理</p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://yoursite.com/2017/12/05/scrapy-note/" data-id="cjfwsn52o002dy92zphk4gnh1" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://yoursite.com/2017/12/05/scrapy-note/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2017/12/05/scrapy-note/">Comentarios</a>
+        <a href="http://yoursite.com/2017/12/30/ten-dl-algorithm/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2017/12/30/ten-dl-algorithm/">Comments</a>
     
 
         </footer>
@@ -840,7 +840,7 @@
 
 
     <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/page/10/">&laquo; Anterior</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/12/">Siguiente  &raquo;</a>
+        <a class="extend prev" rel="prev" href="/page/10/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="page-number current">11</span><a class="page-number" href="/page/12/">12</a><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/12/">Next &raquo;</a>
     </nav>
 </section>
             
@@ -849,9 +849,28 @@
    
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Recientes</h3>
+        <h3 class="widget-title">recent</h3>
         <div class="widget">
             <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/15/js-learn-note-2018/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/04/15/js-learn-note-2018/" class="title">js-learn-note-2018</a></p>
+                            <p class="item-date"><time datetime="2018-04-15T12:28:08.000Z" itemprop="datePublished">2018-04-15</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -929,25 +948,6 @@
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/03/28/multiprocessing源码分析/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/03/28/multiprocessing源码分析/" class="title">multiprocessing源码分析</a></p>
-                            <p class="item-date"><time datetime="2018-03-28T14:38:30.000Z" itemprop="datePublished">2018-03-28</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -957,16 +957,16 @@
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Archivos</h3>
+        <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
         </div>
     </div>
 
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Etiquetas</h3>
+        <h3 class="widget-title">tags</h3>
         <div class="widget">
             <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/deep-learning/">deep learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-requests/">python, requests</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/requests-python/">requests, python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/">ruby</a><span class="tag-list-count">1</span></li></ul>
         </div>
@@ -975,7 +975,7 @@
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Nube de etiquetas</h3>
+        <h3 class="widget-title">tag cloud</h3>
         <div class="widget tagcloud">
             <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/deep-learning/" style="font-size: 10px;">deep learning</a> <a href="/tags/python-requests/" style="font-size: 10px;">python, requests</a> <a href="/tags/requests-python/" style="font-size: 10px;">requests, python</a> <a href="/tags/ruby/" style="font-size: 10px;">ruby</a>
         </div>
@@ -984,7 +984,7 @@
     
         
     <div class="widget-wrap widget-list">
-        <h3 class="widget-title">Links</h3>
+        <h3 class="widget-title">links</h3>
         <div class="widget">
             <ul>
                 

@@ -79,7 +79,7 @@
             <div id="search-form-wrap">
 
     <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
         <button type="submit" class="search-form-submit"></button>
     </form>
     <div class="ins-search">
@@ -98,10 +98,10 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Entradas',
+            POSTS: 'Posts',
             PAGES: 'Pages',
-            CATEGORIES: 'Categorias',
-            TAGS: 'Etiquetas',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
             UNTITLED: '(Untitled)',
         },
         ROOT_URL: '/',
@@ -132,7 +132,7 @@
                 <td>
                     
     <div class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
     </div>
 
                 </td>
@@ -152,16 +152,16 @@
             <h2 id="name">Aaron Cheung</h2>
             <h3 id="title">Python Engineer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Wuhan, China</span>
-            <a id="follow" target="_blank" href="https://github.com/zhangdavids/">SEGUIR</a>
+            <a id="follow" target="_blank" href="https://github.com/zhangdavids/">FOLLOW</a>
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                106
-                <span>Entradas</span>
+                107
+                <span>posts</span>
             </div>
             <div class="article-info-block">
                 5
-                <span>Etiquetas</span>
+                <span>tags</span>
             </div>
         </div>
         
@@ -209,6 +209,171 @@
 
             
             <section id="main">
+    <article id="post-python-big-web-project" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/03/17/python-big-web-project/">python-big-web-project</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/03/17/python-big-web-project/">
+            <time datetime="2018-03-17T13:30:04.000Z" itemprop="datePublished">2018-03-17</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>严格来说，MVC是一个古老的概念，从早期的Smalltalk开始已经不再适合于web应用开发。Django的开发人员已经正确意识到在Python中我们实际使用的是MTV（model，template，view）：</p>
+<ul>
+<li><p>模板包含了HTML的内容以及页面显示逻辑。它是使用模板语言如Kajiki来编写，从视图（view）中获取数据，然后展示在页面中。</p>
+</li>
+<li><p>视图（有时也称为“控制器”），仅仅是使用Python语言编写的中间代码。它借助于web框架将所有的内容放在一起。它可以看到其他的所有层，并且定义了URLs，将它们映射到web框架中用于接收数据的函数，然后利用其他层以最终发送响应给web框架。它应该尽可能得小，因为它的代码是不能重复利用的，即使你尽量地缩减它，web表单也会促使其逐渐地变得复杂。</p>
+</li>
+<li><p>模型层本质上是一个持久层：它最重要的依赖就是SQLAlchemy。模型知道如何去保存数据，构成整个项目中最可重用的代码。当然它并不清楚HTTP相关的内容和你所使用的框架。它代表了排除用户界面细节的系统本质内容。</p>
+</li>
+</ul>
+<p>但是稍等下，哪里？在视图还是模型中？你应该在哪里放置程序的灵魂：业务规则？模板层已经自动被排除掉，因为它并不是Python编写的。所以剩下3个可能的答案：</p>
+<ul>
+<li><p>视图层，这是最糟糕的选择。视图层应该仅仅包含中间代码，将代码数量保持尽可能得小，并且同系统中的其他部分隔离开，所以系统应该能在web框架中、使用中以及单元测试中独立访问。另外，业务逻辑应该存在于更加可重用的地方。视图层被视为展示逻辑的一部分，所以业务逻辑被排除在外。实际上，除了Web UI之外，在创建desktop UI时，开发者应该忽略视图和HTTP相关的内容，需要业务逻辑尽可能地被重用，因此，我们应该排除掉视图层。</p>
+</li>
+<li><p>模型层，这个是可能的选择，因为模型层至少是可重用的。但是模型层主要关注于持久化，它应该更少地依赖于SQLAlchemy（它已经是一个非常复杂的东西）。</p>
+</li>
+</ul>
+<p>新的层，这才是正确的答案。下面将举例来更好地理解这部分内容。</p>
+<p>如果你要创建一个博客，那么MTV正好满足你的需求。但是对于更加复杂的项目来说，其实还是至少缺了一层。你应该将业务逻辑旋转到一个新的、可重用的层次中，大多数人称之为“Service”层，但是我更喜欢称之为”Action“层。</p>
+<p>为什么你需要这层？</p>
+<p>在大型应用中，单个用户的操作引起多项活动是非常常见的。比如，用户成功地注册了你的服务，那么你的业务逻辑中可能会触发非常多的后台处理：</p>
+<p>在关系数据库多张表中新增数据，使用了模型层。</p>
+<p>将发送邮件给用户的任务放置到队列中。</p>
+<p>将发送短信给用户的任务放置到队列中。</p>
+<p>将创建实际使用服务时必需的空间和其他准备性资源的任务放置到队列中。</p>
+<p>将更新用户数据的任务放置到队列中。</p>
+<p>….</p>
+<p>这是一个理解“业务逻辑“的好例子：给定一个用户操作（比如注册），系统就要做一些必需的操作。这种业务逻辑被单个函数捕获会更好；这个函数应该在哪一层呢？</p>
+<p>如果所有的这些都实现在模型层，你能想象到它将变得多复杂吗？模型层在只面对持久化时已经很艰难了。现在想象一下模型层处理所有这些事务，它要使用多少外部服务？文件头部应该包括多少imports？反过来看，有多少模块愿意引入这个模型，可能在系统启动前就因为创建的循环依赖而导致系统崩溃。</p>
+<p>循环依赖其实就是你没有正确认清系统架构的明显的标识。</p>
+<p>对于依赖于Celery的模型来说，了解如何去发送邮件、短信以及使用外部服务等是不应该的做法。持久化对于模型层来说已经是非常复杂的主题了。你应该在模型层之外去处理这些业务逻辑——在模型层和视图层之间的一层。所以称之为”Action“层。</p>
+<p>另外，模型层在关系型数据库中经常被映射到一张单独的表。如果你在用户表和订阅表中插入一条记录，哪一个模型应该包含上述逻辑呢？这几乎是不能确定的。因为实际执行的操作远超过了用户表和订阅表的范围。因此，业务逻辑应该被定义在任何模型之外。</p>
+<p>当开发人员执行维护时，有时她想按步骤地执行每一步，而有时她想一次性执行完所有操作。分别地实现这些操作并在单个Action层函数中调用是有帮助的。</p>
+<p>你可能会怀疑我提出的方法难道不是反面模式域模型的一种吗？没有动作的模型恰恰与面向对象设计相反！我并没有说“将所有的方法从模型中移除”。我的意思是指“将需要外部调用的方法移除”。模型中的方法仅仅用来使用它所需要的数据，并且属于模型中的那些数据。一个面向世界的，调用外部服务的并且很少使用自身数据的方法不应该被放置在模型中。</p>
+<p>另一个使得这种架构成功的原因就是测试。TDD教会了程序员去让程序变得解耦，这样做通常会使得软件更加健壮。如果你想要创建一个Celery的应用，并且在你测试之前已经知道了其他的外部服务，那么你将经常陷入头痛中。</p>
+<p>还有将业务逻辑放置在视图层之外的最后一个原因。在未来，当你最终决定从Flask过渡到Pyramid时，你很乐意将视图层保持简洁。如果所有的视图都是在与web框架间交互，并且动作层会执行所有的函数，那么你的代码就做到了非常好的隔离。Web框架通常都很贪婪，不要让你的系统跟随他们的脚步。</p>
+<p>所以下面就是我所提议的在Python中构建大型应用的层次结构：</p>
+<p>模型层是最底层的，最可重用并且可见的层。它仅专注于持久化，模型层是可以包含动作的，只不过这个动作仅仅属于这个模型。模型可以被其他层所返回，以各种方式在请求的结尾返回给模板。</p>
+<p>外部服务。对每个服务都创建一个比如说发送邮件。</p>
+<p>动作层。这是系统中的核心层，它包含了业务逻辑以及工作流。它使用外部服务去实现特定的目标并且借助模型层来持久化数据。通过以上这些层，它支撑起了整个系统，包括配置，除了用户界面。</p>
+<p>模板层仅包括了页面展示逻辑比如说从列表中循环输出构成一个HTML表格。</p>
+<p>视图层，这是最高层的，最不可重用的层。它依赖于（与系统中其他层隔离）web框架。并且依赖于表单验证库。它可以看到模板层以及动作层，但是不能直接调用模型层——它必须通过动作层。但是当一个动作层返回了模型数据，那么它可以被传递给模板中（一个Celery任务可以类比于一个web视图）。</p>
+<p>这种体系结构有助于避免了在会话层中进行调试因为它清楚地定义了各自的职责。同时它也是明显经得起检测的，因为它做到了很好的解耦，因此可以减少测试的并且减少了模拟的次数。</p>
+<p>好的架构总是解耦性非常好的。如果你曾经陷入到一个循环依赖中，你可以想一下是否真的定义好了每一层的职责。当你放弃了并且从一个函数中引入内容，那么你的架构已经失败了。</p>
+<p>这并不是说你的web应用必须与Celery应用隔离开。在他们之间可以重用代码——特别是模型——但是对于Celery应用来说，不应该引入web框架！获取配置也不例外，因为在Python中读取配置是非常简单的。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2018/03/17/python-big-web-project/" data-id="cjg0t91sy001oxx2z98mxoslh" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2018/03/17/python-big-web-project/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/17/python-big-web-project/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-python-top-30" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -282,7 +447,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/03/17/python-top-30/" data-id="cjfwsn52a001wy92zipb8wlcj" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://yoursite.com/2018/03/17/python-top-30/" data-id="cjg0t91t6001vxx2zmlypr5ui" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -350,7 +515,7 @@
 
             
     
-        <a href="http://yoursite.com/2018/03/17/python-top-30/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/17/python-top-30/">Comentarios</a>
+        <a href="http://yoursite.com/2018/03/17/python-top-30/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/17/python-top-30/">Comments</a>
     
 
         </footer>
@@ -435,7 +600,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/03/15/简单看看汤不热的网站/" data-id="cjfwsn5570037y92zf3e0hzoz" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://yoursite.com/2018/03/15/简单看看汤不热的网站/" data-id="cjg0t91xe0034xx2zk24yii42" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -503,7 +668,7 @@
 
             
     
-        <a href="http://yoursite.com/2018/03/15/简单看看汤不热的网站/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/15/简单看看汤不热的网站/">Comentarios</a>
+        <a href="http://yoursite.com/2018/03/15/简单看看汤不热的网站/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/15/简单看看汤不热的网站/">Comments</a>
     
 
         </footer>
@@ -763,7 +928,7 @@ gevent.joinall(jobs)
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/03/14/django项目配置小结/" data-id="cjfwsn51f000sy92ztni0y4pi" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://yoursite.com/2018/03/14/django项目配置小结/" data-id="cjg0t91rl000pxx2zpxy5igbe" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -831,7 +996,7 @@ gevent.joinall(jobs)
 
             
     
-        <a href="http://yoursite.com/2018/03/14/django项目配置小结/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/14/django项目配置小结/">Comentarios</a>
+        <a href="http://yoursite.com/2018/03/14/django项目配置小结/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/14/django项目配置小结/">Comments</a>
     
 
         </footer>
@@ -941,7 +1106,7 @@ python async_flask.py &amp; siege -c 1000 -t 5s http://127.0.0.1:5000/Seattle.jp
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/03/14/flask-gevent使用实例/" data-id="cjfwsn51g000uy92ztdmwouj5" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://yoursite.com/2018/03/14/flask-gevent使用实例/" data-id="cjg0t91ru000wxx2zdbdyuc8z" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -1009,157 +1174,7 @@ python async_flask.py &amp; siege -c 1000 -t 5s http://127.0.0.1:5000/Seattle.jp
 
             
     
-        <a href="http://yoursite.com/2018/03/14/flask-gevent使用实例/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/14/flask-gevent使用实例/">Comentarios</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-python当中的并发" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/03/13/python当中的并发/">python当中的并发</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/03/13/python当中的并发/">
-            <time datetime="2018-03-13T15:19:15.000Z" itemprop="datePublished">2018-03-13</time>
-        </a>
-    </div>
-
-
-                        
-                        
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>并发的表现形式，并行处理是软件工程领域最广泛的话题之一。</p>
-<p>两个事件互不影响，则两个事件是并发的。<br>CPython的线程实现中带有一些麻烦的细节，使得实用性降低了。</p>
-<p>GIL 只是强制在任何时候只有一个线程可以执行python代码</p>
-<p>多线程可以使用的场景：</p>
-<ul>
-<li>构建响应式界面</li>
-<li>委派工作</li>
-<li>构建多用户应用程序</li>
-</ul>
-<p>如何让用户控制使用哪个处理后端（进程或者线程）</p>
-<pre><code>from multiprocessing import Pool as ProcessPool
-from multiprocessing.dummpy import Pool as ThreadPool
-
-
-def main(use_threads=False):
-    if use_threads:
-        pool_cls = ThreadPool
-    else:
-        pool_cls = ProcessPool
-
-    with pool_cls(4) as p:
-        results = p.map(fetch_place, PLACES)
-
-    for result in results:
-        present_result(result)
-</code></pre><h2 id="异步编程"><a href="#异步编程" class="headerlink" title="异步编程"></a>异步编程</h2><p>异步编程的解决方案，如twisted tornado eventlet,真的值得了解</p>
-<p>协同多任务是异步编程的核心。每个进程都在空闲时自动释放控制以允许同时执行多个程序。</p>
-<p>gevent 的工作方式，gevent 的作用一条线程跑多个协程，适合多 IO 操作。</p>
-<p>需要强调的是引入 gevent 不会加快获取数据的速度，例如，原来是 30ms，引入之后不会变少，只会变多，那么引入的好处是什么？原来你能在1秒之内接待33个客户端请求，引入之后可能可以接待100个/s，也可能接待 300个/s，这才是 gevent 的好处。</p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://yoursite.com/2018/03/13/python当中的并发/" data-id="cjfwsn52i0027y92z4ktfp0p6" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://yoursite.com/2018/03/13/python当中的并发/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/13/python当中的并发/">Comentarios</a>
+        <a href="http://yoursite.com/2018/03/14/flask-gevent使用实例/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/14/flask-gevent使用实例/">Comments</a>
     
 
         </footer>
@@ -1170,7 +1185,7 @@ def main(use_threads=False):
 
 
     <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/page/3/">&laquo; Anterior</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/5/">Siguiente  &raquo;</a>
+        <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
     </nav>
 </section>
             
@@ -1179,9 +1194,28 @@ def main(use_threads=False):
    
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Recientes</h3>
+        <h3 class="widget-title">recent</h3>
         <div class="widget">
             <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/15/js-learn-note-2018/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/04/15/js-learn-note-2018/" class="title">js-learn-note-2018</a></p>
+                            <p class="item-date"><time datetime="2018-04-15T12:28:08.000Z" itemprop="datePublished">2018-04-15</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -1259,25 +1293,6 @@ def main(use_threads=False):
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/03/28/multiprocessing源码分析/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/03/28/multiprocessing源码分析/" class="title">multiprocessing源码分析</a></p>
-                            <p class="item-date"><time datetime="2018-03-28T14:38:30.000Z" itemprop="datePublished">2018-03-28</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -1287,16 +1302,16 @@ def main(use_threads=False):
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Archivos</h3>
+        <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
         </div>
     </div>
 
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Etiquetas</h3>
+        <h3 class="widget-title">tags</h3>
         <div class="widget">
             <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/deep-learning/">deep learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-requests/">python, requests</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/requests-python/">requests, python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/">ruby</a><span class="tag-list-count">1</span></li></ul>
         </div>
@@ -1305,7 +1320,7 @@ def main(use_threads=False):
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Nube de etiquetas</h3>
+        <h3 class="widget-title">tag cloud</h3>
         <div class="widget tagcloud">
             <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/deep-learning/" style="font-size: 10px;">deep learning</a> <a href="/tags/python-requests/" style="font-size: 10px;">python, requests</a> <a href="/tags/requests-python/" style="font-size: 10px;">requests, python</a> <a href="/tags/ruby/" style="font-size: 10px;">ruby</a>
         </div>
@@ -1314,7 +1329,7 @@ def main(use_threads=False):
     
         
     <div class="widget-wrap widget-list">
-        <h3 class="widget-title">Links</h3>
+        <h3 class="widget-title">links</h3>
         <div class="widget">
             <ul>
                 
