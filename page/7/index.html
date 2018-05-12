@@ -156,7 +156,7 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                108
+                110
                 <span>Entradas</span>
             </div>
             <div class="article-info-block">
@@ -209,6 +209,341 @@
 
             
             <section id="main">
+    <article id="post-normal-library" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/03/03/normal-library/">normal-library</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/03/03/normal-library/">
+            <time datetime="2018-03-03T00:14:00.000Z" itemprop="datePublished">2018-03-03</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <ol>
+<li><p>我做运维的时候，使用Python完成了一些打包和备份的脚本，也就是把某个目录压缩成各种格式（tar.gz、tar.bz2、zip）。 这个脚本其实打包压缩的部分还是比较复杂的。直到我看到了这个：</p>
+<p> In : from shutil import make_archive<br> In : make_archive(‘archive_xxx’, ‘bztar’)<br> Out: ‘archive_xxx.tar.bz2’  </p>
+</li>
+</ol>
+<p>有兴趣的可以翻一下源码。你想要的说不定标准库里面已经实现。当然，有标准库不满足的额外需求，也可以参照它实现。</p>
+<ol>
+<li><p>你可能接触过定时任务（crontab），它管理的任务很规矩，到点执行（当然精确度不那么高）。现在设想你有更复杂的任务需求：这个任务是动态的，也就是不一定啥时候就来排上队约定一个事件等着执行。这时候你可以想，这可以使用队列（Queue模块）啊，嗯也不错。难度再提高：加上优先级策略并能取消某个指定的已经放入队列的任务。现在思考下，这个怎么实现？其实很多工程实践的最好范例都在标准库中。sched模块中的scheduler类就是一个这样的通用的事件调度类。你可以学习它的实现。你问我它的实现多复杂？整个模块加上大幅的注释才134行。</p>
+</li>
+<li><p>学习Python的过程中，一开始我对于装饰器contextmanager+yield怎么都不懂。直到我看了contextmanager的源代码, 其实非常简单就懂了。它的docstring清楚地不能再清楚了：</p>
+</li>
+</ol>
+<pre><code class="python">
+Typical usage:                                                                               
+
+<span class="meta">@contextmanager                                                                          </span>
+<span class="function"><span class="keyword">def</span> <span class="title">some_generator</span><span class="params">(&lt;arguments&gt;)</span>:</span>                                                         
+    &lt;setup&gt;                                                                              
+    <span class="keyword">try</span>:                                                                                 
+        <span class="keyword">yield</span> &lt;value&gt;                                                                    
+    <span class="keyword">finally</span>:                                                                             
+        &lt;cleanup&gt;                                                                        
+
+This makes this:                                                                             
+
+<span class="keyword">with</span> some_generator(&lt;arguments&gt;) <span class="keyword">as</span> &lt;variable&gt;:                                          
+    &lt;body&gt;                                                                               
+
+equivalent to this:                                                                          
+
+&lt;setup&gt;                                                                                  
+<span class="keyword">try</span>:                                                                                     
+    &lt;variable&gt; = &lt;value&gt;                                                                 
+    &lt;body&gt;                                                                               
+<span class="keyword">finally</span>:                                                                                 
+&lt;cleanup&gt;
+</code></pre>
+<ol>
+<li>我之前使用多线程编程都这样用，在好长一段时间里面对于多进程和多线程之前怎么选择都搞得不清楚。看多了开源项目代码，我发现了好多人在用multiprocessing.dummy这个子模块，「dummy」这个词本身好奇怪，我决定去看多进程（multiprocessing）库的代码。「咦！怎么和多线程的接口一样呢」。后知后觉的我看到文档中这样说：</li>
+</ol>
+<p>multiprocessing.dummy replicates the API of multiprocessing but is no more than a wrapper around the threading module.<br>恍然大悟！！！如果分不清任务是CPU密集型还是IO密集型，我就用如下2个方法分别试：</p>
+<p>from multiprocessing import Pool<br>from multiprocessing.dummy import Pool<br>哪个速度快就用那个。从此以后我都尽量在写兼容的方式，这样在多线程/多进程之间切换非常方便。</p>
+<ol>
+<li>13-14年间，Flask还没怎么火，那时候装饰器风格的Web框架还有一个Bottle。我当时就直接想去看Bottle代码，发现一上来import了一堆模块，你先感受下bottle/bottle.py at master · bottlepy/bottle · GitHub ，第一感觉就是懵啊，这都是干什么的啊，为什么要用啊？这就是促使我去看标准库实现最重要的原因：学会了我才能更好的看懂别人写的代码。</li>
+</ol>
+<p>但是不是所有的标准库都要一视同仁的看呢？你可以设置优先级，先看那些不可不知道的模块。我在这里列一下，并对它的用途和其中重要的类、函数的作用加以说明等。要是每个都写例子实在太多太密集，怕大家看不下去，我都用外部链接了。</p>
+<ol>
+<li>argparse。 用来替代optparse的命令行解析库。如果你考虑用更直观的，推荐docopt，它使用docstring所见即所得实现命令行解析。</li>
+<li>collections。 包含了一些额外的数据类型。其中的OrderedDict（有序列的字典）、defaultdict（带有默认值的字典）、namedtuple（通过创建带有字段属性的元组子类）和deque（高效实现插入和删除操作的双向列表）非常常用。</li>
+<li>functools。 这个模块有一些非常有用的工具，其中的partial（偏函数）、wraps（将被包装函数的信息拷贝过来）、total_ordering（只需要定义2个<strong>XX</strong>方法就可实现对象对比的类装饰器）、cmp_to_key（将老式的比较函数转化为关键字函数）非常常用。</li>
+<li>glob。 文件名的shell模式匹配，你不用遍历整个目录判断每个文件是不是符合，使用glob一句话就解决。</li>
+<li>multiprocessing。多进程模块，这重要性就不说了。</li>
+<li><p>os。应该是日常工作最常用的模块了，你是否了解它里面所有的函数和实现呢？举个例子，获取环境变量，我之前这样用：<br>In : os.environ.get(‘PYTHONPATH’)<br>读完源码之后我学了一招：<br>os.getenv(‘PYTHONPATH’)<br>好吧，省了5个字符。</p>
+</li>
+<li><p>Queue。这个模块用于多线程编程，它是一个线程安全的FIFO（先进先出）的队列实现。如果是多进程编程，选用multiprocessing.queues中的Queue、SimpleQueue、JoinableQueue这三个队列实现。 </p>
+</li>
+<li><p>SimpleHTTPServer。最简单地HTTP Server实现。不使用Web框架，一句：</p>
+<pre><code>python -m SimpleHTTPServer PORT
+</code></pre><p> 就可以运行起来静态服务。平时用它预览和下载文件太方便了。</p>
+</li>
+<li><p>subprocess。 如果你还被某些书籍引导使用os.system或者os.popen等模块，现在是放弃它们的时候了，这个模块会满足你绝大多数的系统命令执行、执行结果获取和解析等需求。其中最有用的是call（执行系统命令）、check_call（执行结果不为0则抛出异常）、check_output（最方便的获取执行的输出的函数）、Popen+PIPE（支持管道的多命令执行）。</p>
+</li>
+<li><p>threading。多线程模块，重要性也不必说。</p>
+</li>
+</ol>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2018/03/03/normal-library/" data-id="cjh3h24dp001p8l2z5lieqkar" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2018/03/03/normal-library/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/03/normal-library/">Comentarios</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-python-fp" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/03/03/python-fp/">python-fp</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/03/03/python-fp/">
+            <time datetime="2018-03-03T00:01:38.000Z" itemprop="datePublished">2018-03-03</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h2 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h2><p>函数式编程源自于数学理论，它似乎也更适用于数学计算相关的场景，因此本文以一个简单的数据处理问题为例，逐步介绍 Python 函数式编程从入门到走火入魔的过程。</p>
+<pre><code>问题：计算 N 位同学在某份试卷的 M 道选择题上的得分（每道题目的分值不同）。
+</code></pre><p>首先来生成一组用于计算的伪造数据：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># @file: data.py</span></span><br><span class="line"><span class="keyword">import</span> random  </span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> namedtuple</span><br><span class="line"> </span><br><span class="line">Student = namedtuple(<span class="string">'Student'</span>, [<span class="string">'id'</span>, <span class="string">'ans'</span>])</span><br><span class="line"> </span><br><span class="line">N_Questions = <span class="number">25</span>  </span><br><span class="line">N_Students = <span class="number">20</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gen_random_list</span><span class="params">(opts, n)</span>:</span>  </span><br><span class="line">    <span class="keyword">return</span> [random.choice(opts) <span class="keyword">for</span> i <span class="keyword">in</span> range(n)]</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 问题答案 'ABCD' 随机</span></span><br><span class="line">ANS   = gen_random_list(<span class="string">'ABCD'</span>, N_Questions)  </span><br><span class="line"><span class="comment"># 题目分值 1~5 分</span></span><br><span class="line">SCORE = gen_random_list(range(<span class="number">1</span>,<span class="number">6</span>), N_Questions)</span><br><span class="line"> </span><br><span class="line">QUIZE = zip(ANS, SCORE)  </span><br><span class="line">students = [  </span><br><span class="line">    <span class="comment"># 学生答案为 'ABCD*' 随机，'*' 代表未作答</span></span><br><span class="line">    Student(_id, gen_random_list(<span class="string">'ABCD*'</span>, N_Questions))</span><br><span class="line">    <span class="keyword">for</span> _id <span class="keyword">in</span> range(<span class="number">1</span>, N_Students+<span class="number">1</span>)</span><br><span class="line">]</span><br><span class="line"> </span><br><span class="line">print(QUIZE)  </span><br><span class="line"><span class="comment"># [('A', 3), ('B', 1), ('D', 1), ...</span></span><br><span class="line">print(students)  </span><br><span class="line"><span class="comment"># [Student(id=1, ans=['C', 'B', 'A', ...</span></span><br><span class="line"></span><br><span class="line">```	</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">常规的面向过程编程风格，我们需要遍历每个学生，然后遍历每个学生对每道题目的答案并与真实答案进行比较，然后将正确答案的分数累计：</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">```python</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> data  </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">normal</span><span class="params">(students, quize)</span>:</span>  </span><br><span class="line">    <span class="keyword">for</span> student <span class="keyword">in</span> students:</span><br><span class="line">        sid = student.id</span><br><span class="line">        score = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(quize)):</span><br><span class="line">            <span class="keyword">if</span> quize[i][<span class="number">0</span>] == student.ans[i]:</span><br><span class="line">                score += quize[i][<span class="number">1</span>]</span><br><span class="line">        print(sid, <span class="string">'\t'</span>, score)</span><br><span class="line"> </span><br><span class="line">print(<span class="string">'ID\tScore\n=================='</span>)  </span><br><span class="line">normal(data.students, data.quize)  </span><br><span class="line"><span class="string">"""</span><br><span class="line">ID    Score  </span><br><span class="line">==================</span><br><span class="line">1      5  </span><br><span class="line">2      12  </span><br><span class="line">...</span><br><span class="line">"""</span></span><br></pre></td></tr></table></figure>
+<p>通过创建嵌套两个 for 循环来遍历所有题目答案的判断和评分，这完全是为计算机服务的思路，虽然说 Python 中的 for 循环已经比 C 语言更进了一步，通常不需要额外的状态变量来记录当前循环的次数，但有时候也不得不使用状态变量，如上例中第二个循环中比较两个列表的元素。函数式编程的一大特点就是<strong>尽量抛弃这种明显循环遍历的做法，而是把注意集中在解决问题本身</strong>，一如在现实中我们批改试卷时，只需要将两组答案并列进行比较即可：</p>
+<pre><code>from data import students, QUIZE
+
+student = students[0]
+
+# 将学生答案与正确答案合并到一起
+# 然后过滤出答案一致的题目
+filtered = filter(lambda x: x[0] == x[1][0], zip(student.ans, QUIZE))
+
+print(list(filtered))  
+# [(&apos;A&apos;, (&apos;A&apos;, 3)), (&apos;D&apos;, (&apos;D&apos;, 1)), ...]
+</code></pre><p>正确题目的分数进行累加：    </p>
+<pre><code>from functools import reduce
+
+reduced = reduce(lambda x, y: x + y[1][1], filtered, 0)  
+print(reduced)      
+</code></pre><p>接下来进行推广：</p>
+<pre><code>def cal(quize):  
+    def inner(student):
+        filtered = filter(lambda x: x[0] == x[1][0], zip(student.ans, quize))
+        reduced = reduce(lambda x, y: x + y[1][1], filtered, 0)
+        print(student.id, &apos;\t&apos;, reduced)
+    return inner
+map(cal(QUIZE), students)      
+</code></pre>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2018/03/03/python-fp/" data-id="cjh3h24dv001u8l2zh3fd76u6" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2018/03/03/python-fp/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/03/python-fp/">Comentarios</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-python-interview-0" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -303,7 +638,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/03/01/python-interview-0/" data-id="cjg2i8hrz001ucx2zpm8pbg7c" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://yoursite.com/2018/03/01/python-interview-0/" data-id="cjh3h24dx001x8l2z6fspn1f9" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -451,7 +786,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/03/01/about-react/" data-id="cjg2i8hpk000bcx2z2nmb2ev1" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://yoursite.com/2018/03/01/about-react/" data-id="cjh3h24c400098l2zsvitbwub" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -719,7 +1054,7 @@ def full_dispatch_request(self):
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/02/28/about-flask/" data-id="cjg2i8hpi0009cx2zvy9tjtn7" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://yoursite.com/2018/02/28/about-flask/" data-id="cjh3h24c200078l2z29w8dz0f" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -797,269 +1132,6 @@ def full_dispatch_request(self):
 
 
 
-    <article id="post-python-text" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/02/26/python-text/">python-text</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/02/26/python-text/">
-            <time datetime="2018-02-26T02:40:57.000Z" itemprop="datePublished">2018-02-26</time>
-        </a>
-    </div>
-
-
-                        
-                        
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>六款比较不错的特殊文本格式处理库</p>
-<p>1.tablib</p>
-<p>2.openpyxl  算是xlwt xlrd的替代品</p>
-<p>3.unoconv</p>
-<p>4.pypdf2</p>
-<p>5.mistune</p>
-<p>6.csvkit 命令行工具</p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://yoursite.com/2018/02/26/python-text/" data-id="cjg2i8hs2001ycx2ze5too2vt" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://yoursite.com/2018/02/26/python-text/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/02/26/python-text/">Comentarios</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-运维题目搜集" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/02/23/运维题目搜集/">运维题目搜集</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/02/23/运维题目搜集/">
-            <time datetime="2018-02-23T11:40:03.000Z" itemprop="datePublished">2018-02-23</time>
-        </a>
-    </div>
-
-
-                        
-                        
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>三百台服务器  如何进行管理</p>
-<p>1.设定跳板机 使用统一的账户登陆 便于安全与登陆的考量</p>
-<p>2.使用salt、ansible、puppet 进行系统的统一调度与配置统一的管理</p>
-<p>3.建立简单的服务器的系统、配置、应用的cmdb信息管理。便于查阅每台服务器上的各种信息记录</p>
-<hr>
-<p>rabbitMQ 也就是消息队列中间件，消息中间件是在消息的传息过程中保存消息的容器</p>
-<hr>
-<ul>
-<li>使用像pyflakes 这样的静态代码分析工具</li>
-<li>选定一个特定的代码风格</li>
-<li>开发工具保存高响应速度</li>
-<li>找到合适的编辑器</li>
-<li>感到舒服和更有效率的工具值得花钱</li>
-</ul>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://yoursite.com/2018/02/23/运维题目搜集/" data-id="cjg2i8hsv0036cx2zdbmx7y8o" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://yoursite.com/2018/02/23/运维题目搜集/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/02/23/运维题目搜集/">Comentarios</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
     <nav id="page-nav">
         <a class="extend prev" rel="prev" href="/page/6/">&laquo; Anterior</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="page-number" href="/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/page/22/">22</a><a class="extend next" rel="next" href="/page/8/">Siguiente  &raquo;</a>
     </nav>
@@ -1073,6 +1145,44 @@ def full_dispatch_request(self):
         <h3 class="widget-title">Recientes</h3>
         <div class="widget">
             <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/12/how-identify-tech-man/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/05/12/how-identify-tech-man/" class="title">how-identify-tech-man</a></p>
+                            <p class="item-date"><time datetime="2018-05-12T14:07:06.000Z" itemprop="datePublished">2018-05-12</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/04/18/what-can-python-do/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/04/18/what-can-python-do/" class="title">what-can-python-do</a></p>
+                            <p class="item-date"><time datetime="2018-04-18T15:59:37.000Z" itemprop="datePublished">2018-04-18</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -1131,44 +1241,6 @@ def full_dispatch_request(self):
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/04/01/python面试12题/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/04/01/python面试12题/" class="title">python面试常考十二道题目</a></p>
-                            <p class="item-date"><time datetime="2018-04-01T08:52:48.000Z" itemprop="datePublished">2018-04-01</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/03/31/以太坊区块链简介/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/03/31/以太坊区块链简介/" class="title">以太坊区块链简介</a></p>
-                            <p class="item-date"><time datetime="2018-03-31T15:09:13.000Z" itemprop="datePublished">2018-03-31</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -1180,7 +1252,7 @@ def full_dispatch_request(self):
     <div class="widget-wrap">
         <h3 class="widget-title">Archivos</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
         </div>
     </div>
 
