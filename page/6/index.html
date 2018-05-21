@@ -79,7 +79,7 @@
             <div id="search-form-wrap">
 
     <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
         <button type="submit" class="search-form-submit"></button>
     </form>
     <div class="ins-search">
@@ -98,10 +98,10 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Posts',
+            POSTS: 'Entradas',
             PAGES: 'Pages',
-            CATEGORIES: 'Categories',
-            TAGS: 'Tags',
+            CATEGORIES: 'Categorias',
+            TAGS: 'Etiquetas',
             UNTITLED: '(Untitled)',
         },
         ROOT_URL: '/',
@@ -132,7 +132,7 @@
                 <td>
                     
     <div class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
     </div>
 
                 </td>
@@ -152,16 +152,16 @@
             <h2 id="name">Aaron Cheung</h2>
             <h3 id="title">Python Engineer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Wuhan, China</span>
-            <a id="follow" target="_blank" href="https://github.com/zhangdavids/">FOLLOW</a>
+            <a id="follow" target="_blank" href="https://github.com/zhangdavids/">SEGUIR</a>
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                113
-                <span>posts</span>
+                114
+                <span>Entradas</span>
             </div>
             <div class="article-info-block">
                 5
-                <span>tags</span>
+                <span>Etiquetas</span>
             </div>
         </div>
         
@@ -209,6 +209,334 @@
 
             
             <section id="main">
+    <article id="post-django项目配置小结" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/03/14/django项目配置小结/">django项目配置小结</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/03/14/django项目配置小结/">
+            <time datetime="2018-03-14T11:10:55.000Z" itemprop="datePublished">2018-03-14</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h3 id="dockerfile-的配置"><a href="#dockerfile-的配置" class="headerlink" title="dockerfile 的配置"></a>dockerfile 的配置</h3><pre><code>FROM python:3.5
+
+COPY ./requirements.txt /src
+WORKDIR /src
+RUN pip install -r requirements.txt
+
+COPY . /src
+EXPOSE &lt;PORT&gt;
+CMD uwsgi --http :&lt;PORT&gt; --wsgi-file &lt;path/to/wsgi.py&gt;
+</code></pre><p>python 3.3开始     标准库已经支持创建虚拟环境</p>
+<pre><code>pyvenv ENV
+# 使用k神的pipenv 管理项目依赖
+# 使用ensurepip 模块来引导启动pip python 3.4开始
+python -m ensurepip 
+</code></pre><p>使用 <a href="https://www.gitignore.io" target="_blank" rel="external">gitignore.io</a>这个网站提供的 .gitignore 文件管理代码库文件</p>
+<p>日志管理的话（以下是直接写到标准输出）</p>
+<pre><code># settings.py 
+
+# ...
+
+LOGGING = {
+    &apos;version&apos;: 1,
+    &apos;disable_existing_loggers&apos;: False,
+    &apos;formatters&apos;: {
+        &apos;verbose&apos;: {
+            &apos;format&apos;: &apos;[application] %(levelname)s %(asctime)s %(module)s %(message)s&apos;
+        }
+    },
+    &apos;handlers&apos;: {
+        &apos;console&apos;: {
+            &apos;level&apos;: &apos;DEBUG&apos;,
+            &apos;class&apos;: &apos;logging.StreamHandler&apos;,
+            &apos;stream&apos;: sys.stdout,
+            &apos;formatter&apos;: &apos;verbose&apos;
+        },
+    },
+    &apos;loggers&apos;: {
+        &apos;app&apos;: {
+            &apos;handlers&apos;: [&apos;console&apos;],
+            &apos;level&apos;: &apos;DEBUG&apos;,
+            &apos;propagate&apos;: True,
+        },
+    },
+}
+</code></pre><h3 id="自动化测试"><a href="#自动化测试" class="headerlink" title="自动化测试"></a>自动化测试</h3><p>既然是纯后端项目，工程师完全可以通过自动化测试来检测自己的代码。Django 本身对测试提供了很好的支持，可以通过 sqlite 来搭建测试数据库，还有基于内存的缓存，做测试不会增加对其他系统的依赖。开发起来事半功倍。</p>
+<p>除了要写自动化测试代码，还要能统计测试覆盖率。目前我们用的是 coverage.py 这个工具，说实话没有 node.js 的 istanbul 好用，输出的报告没有 Istanbul 详细和易读。不过用来检查 “死代码” 还是够用的。</p>
+<h3 id="针对-http-代码的测试"><a href="#针对-http-代码的测试" class="headerlink" title="针对 http 代码的测试"></a>针对 http 代码的测试</h3><p>有些项目需要对接的第三方系统比较多，比如微信认证、支付、短信等常见的，可能还有其他一些垂直业务领域的系统。这部分接口对接的代码，也应该纳入到测试当中，毕竟 Python 作为脚本语言，代码很容易出现错误。</p>
+<p>这块一般是用 responses 这个模块来 mock http 请求。</p>
+<h3 id="定时任务"><a href="#定时任务" class="headerlink" title="定时任务"></a>定时任务</h3><p>封装到command</p>
+<pre><code>import schedule
+from django.core.management.base import BaseCommand
+
+class Command(BaseCommand):
+
+    def handle(self, *args, **kwargs):
+
+        schedule.every(45).minutes.do(do_this)
+        schedule.every().day.at(&apos;04:00&apos;).do(do_that)
+
+        while True:
+            schedule.run_pending()
+            time.sleep(1)    
+</code></pre><h3 id="Django如何处理并发"><a href="#Django如何处理并发" class="headerlink" title="Django如何处理并发"></a>Django如何处理并发</h3><ul>
+<li><p>django本身提供了一个wsgi的接口，可以通过gevent，uwsgi，fastcgi等实现高并发，这里的高并发采用协程，线程，和进程都可能，或者同时采用几种。</p>
+</li>
+<li><p>对于操作数据库来说，线程安全其实不用太考虑，因为数据库的链接已经由数据库的连接池处理了，反而是数据库的竞争性的访问需要考虑多进程安全的问题，比如同时写某一个统计信息，那么就需要对这样的请求加锁，或这cas这样的机制来保证这种写操作不会冲突。</p>
+</li>
+</ul>
+<h2 id="配置举例："><a href="#配置举例：" class="headerlink" title="配置举例："></a>配置举例：</h2><pre><code># /usr/local/nginx/conf/nginx.conf
+server {  
+    listen       8088;  
+    server_name  localhost;  
+
+    #charset koi8-r;  
+
+    #access_log  logs/host.access.log  main;  
+
+    location / {  
+        root   html;  
+        index  index.html index.htm;  
+    }  
+
+
+
+## 修改配置文件
+server {
+        listen       8088;
+        server_name  localhost;
+        #charset koi8-r;
+        #access_log  logs/host.access.log  main;
+       #注释以下四行
+        #location / {
+            #root   html;
+            #index  index.html index.htm;
+        #}
+       #添加以下内容
+        location / {
+            try_files @uri @pp;
+        }
+        location @pp {
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header Host $http_host;
+            proxy_pass http://127.0.0.1:5000;
+            #反向代理的这个IP和端口
+        }
+
+
+## gun 配置文件 config.py
+
+import gevent.monkey
+import multiprocessing
+
+gevent.monkey.patch_all()
+
+#监听本机的5000端口
+bind=&apos;0.0.0.0:5000&apos;
+
+preload_app = True
+
+#开启进程
+#workers=4
+workers = multiprocessing.cpu_count() * 2 + 1
+
+#每个进程的开启线程
+threads = multiprocessing.cpu_count() * 2
+
+backlog=2048
+
+#工作模式为gevent
+worker_class=&quot;gevent&quot;
+
+# debug=True
+
+#如果不使用supervisord之类的进程管理工具可以是进程成为守护进程，否则会出问题
+daemon = True
+
+#进程名称
+proc_name=&apos;gunicorn.pid&apos;
+
+#进程pid记录文件
+pidfile=&apos;app_pid.log&apos;
+
+loglevel=&apos;debug&apos;
+logfile = &apos;debug.log&apos;
+accesslog = &apos;access.log&apos;
+access_log_format = &apos;%(h)s %(t)s %(U)s %(q)s&apos;
+errorlog = &apos;error.log’
+</code></pre><p>启动：</p>
+<pre><code>gunicorn -c config.py(gunicorn配置文件)  flask_nginx(flask启动文件):app
+</code></pre><p>启动nginx: </p>
+<pre><code>sudo /usr/local/nginx/sbin/nginx    
+</code></pre><p>Siege命令常用参数</p>
+<pre><code>-c 500 指定并发数500
+-r 5 指定测试的次数5
+-f urls.txt 制定url的文件
+-i internet系统，随机发送url
+-b 请求无需等待 delay=0
+-t 5 持续测试5分钟，默认是分，5s为5秒
+# -t和-r不能同时使用
+</code></pre><p>模拟1000个并发向URL发送5次<br>测试：</p>
+<pre><code>siege -c 1000 -r 5 http://127.0.0.1:8088(gunicorn+gevent+nginx+flask)
+</code></pre><hr>
+<h2 id="从-Tornado-说起"><a href="#从-Tornado-说起" class="headerlink" title="从 Tornado 说起"></a>从 Tornado 说起</h2><p>刚开始，对 Tornado 的感觉最为新鲜，在官网介绍里其是一个无阻塞的Web服务器以及相关工具的集合，但 个人更为倾向其为一个颇为完备的微型 web 框架。Tornado 性能好的关键是其无阻塞异步的特性，但这魔术 似的效果是如何达成的呢？迷思与困惑。我那小脑袋里的思维还停留于多进程（多线程）那样的并发模型中， 实在有点难以理解 Tornado 的异步机制。</p>
+<p>通过查阅各式文章以及源代码，整体的框架脉络开始逐渐在脑海中显现出来。其实，Tornado 的异步模型 是由事件驱动以及特定的回调函数（callback）所组成的！一直没有弄明白，Tornado 具体是如何实现 无阻塞异步，当清楚了事件驱动和回调函数的概念后，事情似乎又变得简单起来了。</p>
+<p>对于一般的程序，在执行阶段若遇到 I/O 事件，整个进程将被阻塞住，直到 I/O 事件结束，程序又继续执行。 接设我们对一些 I/O 事件进行了定制，使其可以立即返回（即无阻塞），那么程序将能立即继续执行。但 问题又来了，那当 I/O 事件完成后又该怎么办呢？此时，回调函数的威力就出来了，我只需要将进行特定 处理的回调函数与该 I/O 事件绑定起来，当该 I/O 事件完成后就调用绑定的回调函数，就可以处理具体的 I/O 事件啦。啊，似乎还有一个问题，回调函数要如何与 I/O 事件绑定起来？最简单的想法是，直接通过 一个 while True 循环不断的轮询，当检测到 I/O 事件完成了即触发回调函数。但是，这样的效率当然不会 高，利用系统中高效的 I/O 事件轮询机制（epoll on Linux, kqueue on most BSD）就是最明智的 解决方案。于是，无阻塞 I/O +事件驱动+高效轮询方式便组成了 Tornado 的异步模型。</p>
+<p>Tornado 的核心是 ioloop 和 iostream 这两个模块，前者提供了一个高效的 I/O 事件循环，后者则封装了 一个无阻塞的 socket 。通过向 ioloop 中添加网络 I/O 事件，利用无阻塞的 socket ，再搭配相应的回调 函数，便可达到梦寐以求的高效异步执行啦。多说无益，来看一下具体的示例：</p>
+<pre><code>from tornado import ioloop
+from tornado.httpclient import AsyncHTTPClient
+
+urls = [&apos;http://www.google.com&apos;, &apos;http://www.yandex.ru&apos;, &apos;http://www.python.org&apos;]
+
+def print_head(response):
+    print (&apos;%s: %s bytes: %r&apos; % (response.request.url,
+                                 len(response.body),
+                                 response.body[:50]))
+
+http_client = AsyncHTTPClient()
+for url in urls:
+    print (&apos;Starting %s&apos; % url)
+    http_client.fetch(url, print_head)
+ioloop.IOLoop.instance().start()    
+</code></pre><p>因为使用了 AsyncHTTPClient 来处理请求操作，整个示例是异步执行的，即三个url请求无等待的依次发出。 我们可以看到 fetch 方法使用了 print_head 函数来作为回调函数，这意味着，当 fetch 完成了请求操作， 相应的 print_head 函数便会被触发调用。恩，… 额，…，乍看起来，使用 Tornado 进行异步编程似乎 并不难，让人跃跃欲试。但实际上，在现实生活中，事件驱动的编程还是会很费脑力，需要一定的创造性思维。 不过，这也许是 Tornado 受欢迎的原因之一呢。</p>
+<hr>
+<h2 id="看下-Gevent"><a href="#看下-Gevent" class="headerlink" title="看下 Gevent"></a>看下 Gevent</h2><p>Gevent 是基于协程（coroutine）实现的 Python 网络库，使用了轻量级的 greenlet 作为执行单元，并 基于 libevent 事件循环构建了直观的调用接口。</p>
+<p>当时看到这样的描述，脑袋的第一反应是，协程？？稍稍了解后，发现协程其实也不是什么高深的概念，协程 也被称为微线程，一看这别名就知道跟线程应该很类似。作为类比倒也可以这么认为，两者关键的区别在于， 线程是由系统进行调度的，而协程是由用户自己进行调度的。当知道这一事实后，立刻想到，这自行调度灵活 肯定是会很灵活，但要调度的话可是很有难度的吧？调度的方法暂时不谈，除了更为灵活外，自行调度的直接 结果当然就是省去了系统调度（什么用户态转内核态，以及什么 context switch），因此协程间切换的资源 消耗很小，再配合协程生成成本很低的另一特点，这可真是相当的美妙。事实上，Python 语言本身就支持基础 的协程的概念，generator 是其中的产物（这里）。</p>
+<p>对于 Gevent，其使用的协程实际上就是 greenlet 。当你使用 greenlet 生成了一些协程，就可以在这些 协程里不断跳转执行，两个 greenlet 之间的跳转被称为切换（switch）。通过切换，我们就可以实现对协程 的调度。还应该知道的是，每个 greenlet 都拥有一个父 greenlet ，这是在 greenlet 初始化时就确定的。 当一个 greenlet 执行完毕后，执行权会切换到其父 greenlet 中。实际上，所有的 greenlet 会被组织成 一颗树，树根便是最“老资格”的 greenlet ，这个老 greenlet 确定了各 greenlet 间的逻辑关系。</p>
+<p>上面说到协程必须自行调度，不会是要自己构造一个调度器吧？这当然可以做到，但不是必须，因为 Gevent 已经基于 greenlet 和 libevent 封装了许多基础常用的库，例如 socket 、event 和 queue 等，只要使用 这些库进行开发，或者对使用的标准库或第三方库打一下补丁（monket patch），就能保证生成的各协程在 I/O 等待时正确地进行切换，从而实现无阻塞的异步执行。</p>
+<p>刚接触 Gevent 时，感觉跟传统的并发编程很类似，但了解渐深后，才发现这货实际上跟 Tornado 更为类似。 因为， Gevent 本质上也是事件驱动。实现的策略可以是，在将要执行 I/O 阻塞事件时，先在事件循环中对该事件 进行注册，关联的回调函数便是对当前协程的切换操作（current_greenlet.switch()），注册成功后即 切换回当前协程的父协程中进行执行（current_greenlet.parent.switch()）。当注册的 I/O 事件被 触发后，事件循环在恰当时机便会执行该回调函数，也就是切换到原先的协程继续执行程序。从而，就实现 无阻塞的 I/O 事件处理。怎样，是否感觉相当的有趣？ :)</p>
+<p>Gevent 了不得的地方还在于，我们能像编写一般程序那样来编写异步程序，这可是弥足珍贵。为了更直观的 显示，让我们来看一下具体的运行示例:    </p>
+<pre><code>import gevent
+from gevent import monkey
+# patches stdlib (including socket and ssl modules) to cooperate with other greenlets
+monkey.patch_all()
+
+import urllib2
+
+urls = [&apos;http://www.google.com&apos;, &apos;http://www.yandex.ru&apos;, &apos;http://www.python.org&apos;]
+
+def print_head(url):
+    print (&apos;Starting %s&apos; % url)
+    data = urllib2.urlopen(url).read()
+    print (&apos;%s: %s bytes: %r&apos; % (url, len(data), data[:50]))
+
+jobs = [gevent.spawn(print_head, url) for url in urls]
+
+gevent.joinall(jobs)
+</code></pre><p>上面示例做的事情实际上跟前面 Tornado 的示例是一样，同样是异步的对url进行请求。在我看来，使用 Gevent 进行编程，无论是可读性还是可操作性都能让人满意。但也要清楚，在实际操作中，为了达到较理想 效果，经常还是需要根据不同的情况对代码进行一些相应的“雕琢”。还有一点很常被人忽略， Gevent 是 基于协程实现的 Python 网络库，其适用面更多的是在于网络 I/O 频繁的需求里，很多情况下 Gevent 可能 并不是很好的选择。总的来说，Gevent 确实很讨人喜爱，性能好，开销小，代码易维护，是广大 pythoner 手中的一大利器。    </p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2018/03/14/django项目配置小结/" data-id="cjhg5ri1c000stk2ztkkhsi26" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2018/03/14/django项目配置小结/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/14/django项目配置小结/">Comentarios</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-flask-gevent使用实例" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -309,7 +637,7 @@ python async_flask.py &amp; siege -c 1000 -t 5s http://127.0.0.1:5000/Seattle.jp
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/03/14/flask-gevent使用实例/" data-id="cjhex8f6s000uuo2zlieejvgb" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2018/03/14/flask-gevent使用实例/" data-id="cjhg5ri1f000vtk2zko4kpfea" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -377,7 +705,7 @@ python async_flask.py &amp; siege -c 1000 -t 5s http://127.0.0.1:5000/Seattle.jp
 
             
     
-        <a href="http://yoursite.com/2018/03/14/flask-gevent使用实例/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/14/flask-gevent使用实例/">Comments</a>
+        <a href="http://yoursite.com/2018/03/14/flask-gevent使用实例/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/14/flask-gevent使用实例/">Comentarios</a>
     
 
         </footer>
@@ -459,7 +787,7 @@ def main(use_threads=False):
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/03/13/python当中的并发/" data-id="cjhex8f86002euo2zv74mq9u1" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2018/03/13/python当中的并发/" data-id="cjhg5ri2r002ftk2zup5gfav0" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -527,7 +855,7 @@ def main(use_threads=False):
 
             
     
-        <a href="http://yoursite.com/2018/03/13/python当中的并发/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/13/python当中的并发/">Comments</a>
+        <a href="http://yoursite.com/2018/03/13/python当中的并发/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/13/python当中的并发/">Comentarios</a>
     
 
         </footer>
@@ -599,7 +927,7 @@ server.serve_forever()
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/03/13/flask-and-gevent/" data-id="cjhex8f6q000ruo2z6483ndjo" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2018/03/13/flask-and-gevent/" data-id="cjhg5ri1d000utk2zgnfzsmi7" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -667,7 +995,7 @@ server.serve_forever()
 
             
     
-        <a href="http://yoursite.com/2018/03/13/flask-and-gevent/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/13/flask-and-gevent/">Comments</a>
+        <a href="http://yoursite.com/2018/03/13/flask-and-gevent/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/13/flask-and-gevent/">Comentarios</a>
     
 
         </footer>
@@ -855,7 +1183,7 @@ if __name__ == &apos;__main__&apos;:
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/03/10/python基础20题/" data-id="cjhex8f800026uo2zlds9xbvo" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2018/03/10/python基础20题/" data-id="cjhg5ri2l0028tk2zkjf3v6dw" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -923,213 +1251,7 @@ if __name__ == &apos;__main__&apos;:
 
             
     
-        <a href="http://yoursite.com/2018/03/10/python基础20题/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/10/python基础20题/">Comments</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-python基础小结25" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/03/10/python基础小结25/">python基础小结25</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/03/10/python基础小结25/">
-            <time datetime="2018-03-10T01:37:32.000Z" itemprop="datePublished">2018-03-10</time>
-        </a>
-    </div>
-
-
-                        
-                        
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>1.什么是Python？使用Python有什么好处？</p>
-<pre><code>Python是一种编程语言，它有对象、模块、线程、异常处理和自动内存管理。
-
-它简洁、简单、方便、容易扩展，有许多自带的数据结构，而且它开源。
-</code></pre><p>2.什么是PEP8？</p>
-<pre><code>PEP8是一个编程规范，内容是一些关于如何让你的程序更具可读性的建议。
-</code></pre><p>3.什么是pickling和unpickling？</p>
-<pre><code>Pickle模块读入任何Python对象，将它们转换成字符串，然后使用dump函数将其转储到一个文件中——
-
-这个过程叫做pickling。反之从存储的字符串文件中提取原始Python对象的过程，叫做
-
-unpickling。
-</code></pre><p>4.Python是如何被解释的？</p>
-<pre><code>Python是一种解释性语言，它的源代码可以直接运行。Python解释器会将源代码转换成中间语言，
-
-之后再翻译成机器码再执行。
-</code></pre><p>5.Python是怎样管理内存的？</p>
-<pre><code>Python的内存管理是由私有heap空间管理的。所有的Python对象和数据结构都在一个私有heap中。    
-程序员没有访问该heap的权限，只有解释器才能对它进行操作。为Python的heap空间分配内存是由    
-Python的内存管理模块进行的，其核心API会提供一些访问该模块的方法供程序员使用。Python有自    
-带的垃圾回收系统，它回收并释放没有被使用的内存，让它们能够被其他程序使用。
-</code></pre><p>6.有哪些工具可以帮助debug或做静态分析？</p>
-<pre><code>PyChecker是一个静态分析工具，它不仅能报告源代码中的错误，并且会报告错误类型和复杂度。    
-Pylint是检验模块是否达到代码标准的另一个工具。
-</code></pre><p>7.什么是Python装饰器？</p>
-<pre><code>Python装饰器是Python中的特有变动，可以使修改函数变得更容易。
-</code></pre><p>8.数组和元组之间的区别是什么？</p>
-<pre><code>数组和元组之间的区别：数组内容是可以被修改的，而元组内容是只读的。另外，元组可以被哈希，比    
-如作为字典的关键字。
-</code></pre><p>9.参数按值传递和引用传递是怎样实现的？</p>
-<pre><code>Python中的一切都是类，所有的变量都是一个对象的引用。引用的值是由函数确定的，因此无法被改    
-变。但是如果一个对象是可以被修改的，你可以改动对象。
-</code></pre><p>10.字典推导式和列表推导式是什么？</p>
-<pre><code>它们是可以轻松创建字典和列表的语法结构。
-</code></pre><p>11.Python都有哪些自带的数据结构？</p>
-<pre><code>Python自带的数据结构分为可变的和不可变的。
-
-可变的有：数组、集合、字典；
-
-不可变的有：字符串、元组、数。    
-</code></pre><p>12.什么是Python的命名空间？</p>
-<pre><code>在Python中，所有的名字都存在于一个空间中，它们在该空间中存在和被操作——这就是命名空间。它    
-就好像一个盒子，每一个变量名字都对应装着一个对象。当查询变量的时候，会从该盒子里面寻找相应    
-的对象。
-</code></pre><p>13.Python中的lambda是什么？</p>
-<pre><code>这是一个常被用于代码中的单个表达式的匿名函数。
-</code></pre><p>14.为什么lambda没有语句？</p>
-<pre><code>匿名函数lambda没有语句的原因，是它被用于在代码被执行的时候构建新的函数对象并且返回。
-</code></pre><p>15.Python中的pass是什么？</p>
-<pre><code>Pass是一个在Python中不会被执行的语句。在复杂语句中，如果一个地方需要暂时被留白，它常常被    
-用于占位符。
-</code></pre><p>16.Python中什么是遍历器？</p>
-<pre><code>遍历器用于遍历一组元素，比如列表这样的容器。
-</code></pre><p>17.Python中的unittest是什么？</p>
-<pre><code>在Python中，unittest是Python中的单元测试框架。它拥有支持共享搭建、自动测试、在测试中暂    
-停代码、将不同测试迭代成一组，等等的功能。
-</code></pre><p>18.在Python中什么是slicing（分片）？</p>
-<pre><code>Slicing是一种在有序的对象类型中（数组，元组，字符串）节选某一段的语法。
-</code></pre><p>19.在Python中什么是构造器？</p>
-<pre><code>生成器是实现迭代器的一种机制。它功能的实现依赖于yield表达式，
-
-除此之外它跟普通的函数没有两样。
-</code></pre><p>20.Python中的docstring是什么？</p>
-<pre><code>Python中文档字符串被称为docstring，
-
-它在Python中的作用是为函数、模块和类注释生成文档。
-</code></pre><p>21.如何在Python中拷贝一个对象？</p>
-<pre><code>如果要在Python中拷贝一个对象，大多时候你可以用copy.copy()或者copy.deepcopy()。但并    
-不是所有的对象都可以被拷贝。
-</code></pre><p>22.Python中的负索引是什么？</p>
-<pre><code>Python中的序列索引可以是正也可以是负。如果是正索引，0是序列中的第一个索引，1是第二个索    
-引。如果是负索引，（-1）是最后一个索引而（-2）是倒数第二个索引。
-</code></pre><p>23.如何将一个数字转换成一个字符串？</p>
-<pre><code>你可以使用自带函数str()将一个数字转换为字符串。
-
-如果你想要八进制或者十六进制数，可以用oct()或hex()。
-</code></pre><p>24.Xrange和range的区别是什么？</p>
-<pre><code>Xrange用于返回一个xrange对象，而range用于返回一个数组。不管那个范围多大，Xrange都使用    
-同样的内存。
-</code></pre><p>25.Python中的模块和包是什么？</p>
-<pre><code>在Python中，模块是搭建程序的一种方式。每一个Python代码文件都是一个模块，并可以引用其他
-
-的模块，比如对象和属性。
-
-一个包含许多Python代码的文件夹是一个包。一个包可以包含模块和子文件夹。    
-</code></pre>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://yoursite.com/2018/03/10/python基础小结25/" data-id="cjhex8f7y0024uo2z2gg532x5" class="article-share-link"><i class="fa fa-share"></i>Share</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://yoursite.com/2018/03/10/python基础小结25/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/10/python基础小结25/">Comments</a>
+        <a href="http://yoursite.com/2018/03/10/python基础20题/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/10/python基础20题/">Comentarios</a>
     
 
         </footer>
@@ -1140,7 +1262,7 @@ Pylint是检验模块是否达到代码标准的另一个工具。
 
 
     <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/page/5/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/7/">Next &raquo;</a>
+        <a class="extend prev" rel="prev" href="/page/5/">&laquo; Anterior</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/7/">Siguiente  &raquo;</a>
     </nav>
 </section>
             
@@ -1149,9 +1271,28 @@ Pylint是检验模块是否达到代码标准的另一个工具。
    
         
     <div class="widget-wrap">
-        <h3 class="widget-title">recent</h3>
+        <h3 class="widget-title">Recientes</h3>
         <div class="widget">
             <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/05/21/drl-does-not-work-yet/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/05/21/drl-does-not-work-yet/" class="title">drl does not work yet</a></p>
+                            <p class="item-date"><time datetime="2018-05-21T11:08:32.000Z" itemprop="datePublished">2018-05-21</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -1229,25 +1370,6 @@ Pylint是检验模块是否达到代码标准的另一个工具。
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/04/18/what-can-python-do/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/04/18/what-can-python-do/" class="title">what-can-python-do</a></p>
-                            <p class="item-date"><time datetime="2018-04-18T15:59:37.000Z" itemprop="datePublished">2018-04-18</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -1257,16 +1379,16 @@ Pylint是检验模块是否达到代码标准的另一个工具。
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">archives</h3>
+        <h3 class="widget-title">Archivos</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
         </div>
     </div>
 
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">tags</h3>
+        <h3 class="widget-title">Etiquetas</h3>
         <div class="widget">
             <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/deep-learning/">deep learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-requests/">python, requests</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/requests-python/">requests, python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/">ruby</a><span class="tag-list-count">1</span></li></ul>
         </div>
@@ -1275,7 +1397,7 @@ Pylint是检验模块是否达到代码标准的另一个工具。
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">tag cloud</h3>
+        <h3 class="widget-title">Nube de etiquetas</h3>
         <div class="widget tagcloud">
             <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/deep-learning/" style="font-size: 10px;">deep learning</a> <a href="/tags/python-requests/" style="font-size: 10px;">python, requests</a> <a href="/tags/requests-python/" style="font-size: 10px;">requests, python</a> <a href="/tags/ruby/" style="font-size: 10px;">ruby</a>
         </div>
@@ -1284,7 +1406,7 @@ Pylint是检验模块是否达到代码标准的另一个工具。
     
         
     <div class="widget-wrap widget-list">
-        <h3 class="widget-title">links</h3>
+        <h3 class="widget-title">Links</h3>
         <div class="widget">
             <ul>
                 
