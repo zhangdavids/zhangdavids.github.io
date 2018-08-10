@@ -79,7 +79,7 @@
             <div id="search-form-wrap">
 
     <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
         <button type="submit" class="search-form-submit"></button>
     </form>
     <div class="ins-search">
@@ -98,10 +98,10 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Entradas',
+            POSTS: 'Posts',
             PAGES: 'Pages',
-            CATEGORIES: 'Categorias',
-            TAGS: 'Etiquetas',
+            CATEGORIES: 'Categories',
+            TAGS: 'Tags',
             UNTITLED: '(Untitled)',
         },
         ROOT_URL: '/',
@@ -132,7 +132,7 @@
                 <td>
                     
     <div class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Buscar" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
     </div>
 
                 </td>
@@ -152,16 +152,16 @@
             <h2 id="name">Aaron Cheung</h2>
             <h3 id="title">Python Engineer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Wuhan, China</span>
-            <a id="follow" target="_blank" href="https://github.com/zhangdavids/">SEGUIR</a>
+            <a id="follow" target="_blank" href="https://github.com/zhangdavids/">FOLLOW</a>
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                115
-                <span>Entradas</span>
+                116
+                <span>posts</span>
             </div>
             <div class="article-info-block">
                 5
-                <span>Etiquetas</span>
+                <span>tags</span>
             </div>
         </div>
         
@@ -209,6 +209,187 @@
 
             
             <section id="main">
+    <article id="post-云计算综述" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/03/23/云计算综述/">云计算综述</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/03/23/云计算综述/">
+            <time datetime="2018-03-23T14:51:10.000Z" itemprop="datePublished">2018-03-23</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>neutron nova keystone 各种组件</p>
+<p>网络技术领域知识</p>
+<p>平安科技（深圳）有限公司</p>
+<p>1.image 创建命令：</p>
+<pre><code class="shell">glance image-create --name cirros --file /tmp/cirros-0.3.4-x86_64-disk.img --
+disk-format qcow2 --container-format bare --progress
+</code></pre>
+<p>2.详细命令：</p>
+<pre><code>keystone user-list # 被取代
+openstack user list
+
+glance image-create
+glance image-delete
+glance image-update
+glance image-list
+glance image-show    
+
+neutron net-create
+neutron net -delete
+neutron net -update
+neutron net -list
+neutron net –show    
+
+neutron subnet-create
+neutron subnet -delete
+neutron subnet -update
+neutron subnet -list
+neutron subnet–show
+
+nova boot
+nova delete
+nova list
+nova show    
+
+# 每个对象都有id
+</code></pre><p><strong>tcp/ip协议</strong>不是一个协议，而是一个协议族的统称。里面包括了IP协议，IMCP协议，TCP协议，以及我们更加熟悉的http、ftp、pop3协议等等</p>
+<p>1．为什么建立连接协议是三次握手，而关闭连接却是四次握手呢？</p>
+<p>这是因为服务端的LISTEN状态下的SOCKET当收到SYN报文的建连请求后，它可以把ACK和SYN（ACK起应答作用，而SYN起同步作用）放在一个报文里来发送。但关闭连接时，当收到对方的FIN报文通知时，它仅仅表示对方没有数据发送给你了；但未必你所有的数据都全部发送给对方了，所以你可以未必会马上会关闭SOCKET,也即你可能还需要发送一些数据给对方之后，再发送FIN报文给对方来表示你同意现在可以关闭连接了，所以它这里的ACK报文和FIN报文多数情况下都是分开发送的。</p>
+<p>2．为什么TIME_WAIT状态还需要等2MSL后才能返回到CLOSED状态？</p>
+<p>这是因为虽然双方都同意关闭连接了，而且握手的4个报文也都协调和发送完毕，按理可以直接回到CLOSED状态（就好比从SYN_SEND状态到ESTABLISH状态那样）；但是因为我们必须要假想网络是不可靠的，你无法保证你最后发送的ACK报文会一定被对方收到，因此对方处于LAST_ACK状态下的SOCKET可能会因为超时未收到ACK报文，而重发FIN报文，所以这个TIME_WAIT状态的作用就是用来重发可能丢失的ACK报文。</p>
+<p>sdn</p>
+<p>SDN采用与传统网络截然不同的控制架构，将网络控制平面分离和转发平面分离，采用集中控制替代原有分布式控制，并通过开放和可编程接口实现“软件定义”。与传统的网络架构相比，SDN通过软硬件分离，实现了网络虚拟化、IT化及软件化，并降低了设备的复杂度、简化网络运维、提高网络利用率、加速网络创新。</p>
+<p>evpn</p>
+<p>EVPN是一种虚拟私有网络，那么在一套物理设备上必然可以有多个同时存在的EVPN实例，每个实例独立存在。每个EVI连接了一组或者多组用户网络，构成一个或者多个跨地域的二层网络。</p>
+<p>vxlan   </p>
+<p>虚拟可拓展局域网</p>
+<p>from multiprocessing import Pool<br>from multiprocessing.dummy import Pool<br>哪个速度快就用那个。尽量在写兼容的方式，这样在多线程/多进程之间切换非常方便。</p>
+<p>现在，如果一个任务拿不准是CPU密集还是I/O密集型，且没有其它不能选择多进程方式的因素，都统一直接上多进程模式。</p>
+<p>使用多线程(threading)和多进程(multiprocessing)完成常规的需求，在启动的时候start、jon等步骤不能省，复杂的需要还要用1-2个队列。随着需求越来越复杂，如果没有良好的设计和抽象这部分的功能层次，代码量越多调试的难度就越大。有没有什么好的方法把这些步骤抽象一下呢，让我们不关注这些细节，轻装上阵呢？</p>
+<p>答案是：有的。</p>
+<p>从Python3.2开始一个叫做concurrent.futures被纳入了标准库，而在Python2它属于第三方的futures库，需要手动安装：</p>
+<p>这个模块中有2个类：ThreadPoolExecutor和ProcessPoolExecutor，也就是对threading和multiprocessing的进行了高级别的抽象，<br>暴露出统一的接口，帮助开发者非常方便的实现异步调用</p>
+<ul>
+<li>lsvirtualenv: 列出全部的虚拟环境</li>
+<li>showvirtualenv: 列出单个虚拟环境的信息</li>
+<li>rmvirtualenv: 删除一个虚拟环境</li>
+<li>cpvirtualenv: 拷贝虚拟环境</li>
+<li>allvirtualenv: 对当前虚拟环境执行统一的命令。 比如， 要给 venv1 和 venv2 都安装flask, 就可以用allvirtualenv pip install flask</li>
+<li>cdvirtualenv: 可以直接切换到虚拟环境的子目录里面</li>
+</ul>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2018/03/23/云计算综述/" data-id="cjko18p2o002znq2zyqyiejkf" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2018/03/23/云计算综述/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/23/云计算综述/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-mac-use-tips" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -378,7 +559,7 @@ rm -rf /Library/Caches/Homebrew
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/03/19/mac-use-tips/" data-id="cjkb1wdr3001k9b2zoo5qgbme" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://yoursite.com/2018/03/19/mac-use-tips/" data-id="cjko18p18001gnq2zbgb2zio3" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -446,7 +627,7 @@ rm -rf /Library/Caches/Homebrew
 
             
     
-        <a href="http://yoursite.com/2018/03/19/mac-use-tips/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/19/mac-use-tips/">Comentarios</a>
+        <a href="http://yoursite.com/2018/03/19/mac-use-tips/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/19/mac-use-tips/">Comments</a>
     
 
         </footer>
@@ -545,7 +726,7 @@ output {
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/03/18/elk-redis/" data-id="cjkb1wdqn000y9b2z9octbocv" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://yoursite.com/2018/03/18/elk-redis/" data-id="cjko18p0n000unq2zmkaa42sy" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -613,7 +794,7 @@ output {
 
             
     
-        <a href="http://yoursite.com/2018/03/18/elk-redis/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/18/elk-redis/">Comentarios</a>
+        <a href="http://yoursite.com/2018/03/18/elk-redis/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/18/elk-redis/">Comments</a>
     
 
         </footer>
@@ -736,7 +917,7 @@ print(time)
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/03/17/top-questions-python/" data-id="cjkb1wds5002w9b2zjt7jecfp" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://yoursite.com/2018/03/17/top-questions-python/" data-id="cjko18p2j002tnq2zzzd3k9y4" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -804,7 +985,7 @@ print(time)
 
             
     
-        <a href="http://yoursite.com/2018/03/17/top-questions-python/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/17/top-questions-python/">Comentarios</a>
+        <a href="http://yoursite.com/2018/03/17/top-questions-python/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/17/top-questions-python/">Comments</a>
     
 
         </footer>
@@ -901,7 +1082,7 @@ print(time)
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/03/17/python-big-web-project/" data-id="cjkb1wdrc001y9b2z461bcs7p" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
+    <a data-url="http://yoursite.com/2018/03/17/python-big-web-project/" data-id="cjko18p1l001wnq2zz585gh0o" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -969,158 +1150,7 @@ print(time)
 
             
     
-        <a href="http://yoursite.com/2018/03/17/python-big-web-project/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/17/python-big-web-project/">Comentarios</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-python-top-30" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/03/17/python-top-30/">python-top-30</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/03/17/python-top-30/">
-            <time datetime="2018-03-17T06:42:17.000Z" itemprop="datePublished">2018-03-17</time>
-        </a>
-    </div>
-
-
-                        
-                        
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>1.家庭助理</p>
-<p>2.PyTorch</p>
-<p>3.Grumpy</p>
-<p>4.sanic</p>
-<p>5.Python-fire</p>
-<p>6.spaCy</p>
-<p>7.pipenv</p>
-<p>8.micropython</p>
-<p>9.prophet</p>
-<p>10.SerpentAI</p>
-<p>11.dash</p>
-<p>12.instaPy</p>
-<p>13.apistar</p>
-<p>14.faiss</p>
-<p>15.MechanicalSoup：一个与网站自动化交互的Python库</p>
-<p>16.Better-exceptions：用Python编写的自动地漂亮的和有用的异常处理</p>
-<p>17.Flashtext：从句子中提取关键词或替换句子中的关键词</p>
-<p>18.Maya：用Python实现人类的日期时间</p>
-<p>19.Mimesis (v1.0)：Python库，有助于为不同的目的以不同的语言生成模拟数据。这些数据在软件开发和测试的不同阶段特别有用</p>
-<p>20.开放式无纸化：扫描、索引和归档所有的纸质文档。一个文档管理系统</p>
-<p>21.Fsociety：黑客工具包。渗透测试框架</p>
-<p>22.LivePython：实时可视化跟踪Python代码</p>
-<p>23.Hatch：用于Python的现代项目、包和虚拟环境管理器</p>
-<p>24.Tangent:用纯Python实现源到源的可调试导数</p>
-<p>25.Clairvoyant：识别和监控短期股票走势的历史线索的Python程序</p>
-<p>26.MonkeyType：Python通过收集运行时类型生成静态类型注释的系统</p>
-<p>27.Eel：一个小的Python库，用于制作简单的电子类HTML / js GUI应用程序</p>
-<p>28.Surprise v1.0：建立和分析推荐系统的Python scikit**</p>
-<p>29.Gain：获取每个人的Web爬行框架</p>
-<p>30.PDFTabExtract: 一组从PDF文件中提取表的工具，有助于对扫描文档进行数据挖掘</p>
-
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://yoursite.com/2018/03/17/python-top-30/" data-id="cjkb1wdrk00239b2zycjbfaa9" class="article-share-link"><i class="fa fa-share"></i>Compartir</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://yoursite.com/2018/03/17/python-top-30/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/17/python-top-30/">Comentarios</a>
+        <a href="http://yoursite.com/2018/03/17/python-big-web-project/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/17/python-big-web-project/">Comments</a>
     
 
         </footer>
@@ -1131,7 +1161,7 @@ print(time)
 
 
     <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/page/4/">&laquo; Anterior</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><a class="extend next" rel="next" href="/page/6/">Siguiente  &raquo;</a>
+        <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
     </nav>
 </section>
             
@@ -1140,9 +1170,28 @@ print(time)
    
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Recientes</h3>
+        <h3 class="widget-title">recent</h3>
         <div class="widget">
             <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/10/数据科学起步01/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/08/10/数据科学起步01/" class="title">数据科学起步01</a></p>
+                            <p class="item-date"><time datetime="2018-08-10T13:14:20.000Z" itemprop="datePublished">2018-08-10</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -1220,25 +1269,6 @@ print(time)
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/05/15/how-dl/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/05/15/how-dl/" class="title">how-dl</a></p>
-                            <p class="item-date"><time datetime="2018-05-15T14:30:37.000Z" itemprop="datePublished">2018-05-15</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -1248,16 +1278,16 @@ print(time)
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Archivos</h3>
+        <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
         </div>
     </div>
 
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Etiquetas</h3>
+        <h3 class="widget-title">tags</h3>
         <div class="widget">
             <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/deep-learning/">deep learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-requests/">python, requests</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/requests-python/">requests, python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/">ruby</a><span class="tag-list-count">1</span></li></ul>
         </div>
@@ -1266,7 +1296,7 @@ print(time)
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">Nube de etiquetas</h3>
+        <h3 class="widget-title">tag cloud</h3>
         <div class="widget tagcloud">
             <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/deep-learning/" style="font-size: 10px;">deep learning</a> <a href="/tags/python-requests/" style="font-size: 10px;">python, requests</a> <a href="/tags/requests-python/" style="font-size: 10px;">requests, python</a> <a href="/tags/ruby/" style="font-size: 10px;">ruby</a>
         </div>
@@ -1275,7 +1305,7 @@ print(time)
     
         
     <div class="widget-wrap widget-list">
-        <h3 class="widget-title">Links</h3>
+        <h3 class="widget-title">links</h3>
         <div class="widget">
             <ul>
                 
