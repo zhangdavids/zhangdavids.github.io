@@ -79,7 +79,7 @@
             <div id="search-form-wrap">
 
     <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher" />
         <button type="submit" class="search-form-submit"></button>
     </form>
     <div class="ins-search">
@@ -98,9 +98,9 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Posts',
+            POSTS: 'Articles',
             PAGES: 'Pages',
-            CATEGORIES: 'Categories',
+            CATEGORIES: 'Catégories',
             TAGS: 'Tags',
             UNTITLED: '(Untitled)',
         },
@@ -132,7 +132,7 @@
                 <td>
                     
     <div class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher" />
     </div>
 
                 </td>
@@ -152,16 +152,16 @@
             <h2 id="name">Aaron Cheung</h2>
             <h3 id="title">Python Engineer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Wuhan, China</span>
-            <a id="follow" target="_blank" href="https://github.com/zhangdavids/">FOLLOW</a>
+            <a id="follow" target="_blank" href="https://github.com/zhangdavids/">SUIVRE</a>
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                116
-                <span>posts</span>
+                117
+                <span>Articles</span>
             </div>
             <div class="article-info-block">
                 5
-                <span>tags</span>
+                <span>Tags</span>
             </div>
         </div>
         
@@ -209,6 +209,477 @@
 
             
             <section id="main">
+    <article id="post-python-toolkit" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/08/12/python-toolkit/">python-toolkit</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/08/12/python-toolkit/">
+            <time datetime="2018-08-12T14:31:29.000Z" itemprop="datePublished">2018-08-12</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>整理部分代码</p>
+<h1 id="python常见代码的归纳总结"><a href="#python常见代码的归纳总结" class="headerlink" title="python常见代码的归纳总结"></a>python常见代码的归纳总结</h1><p>判断文件或者文件夹是否存在</p>
+<pre><code>if(os.path.exists(rootdir) == False)
+</code></pre><p>创建文件夹</p>
+<pre><code>os.mkdir(rootdir)
+</code></pre><p>调用系统命令</p>
+<pre><code>os.system(cmd)
+</code></pre><p>字典循环</p>
+<pre><code>for key,value in dict.items()
+</code></pre><p>打开文件并读取内容进行处理</p>
+<pre><code>fd = open(&apos;xxxx.txt&apos;, encoding=&apos;utf-8&apos;)
+for line in fd:
+    print line
+fd.close()
+</code></pre><p>创建文件并写入内容</p>
+<pre><code>fd = open(&apos;xxxx.txt&apos;, &apos;a+&apos;, encoding=&apos;utf-8&apos;)
+fd.write(&apos;aaaaa&apos; + &apos;\n&apos;)
+fd.close()
+</code></pre><p>使用xlrd读取EXCEL</p>
+<p>导入</p>
+<pre><code>import xlrd
+</code></pre><p>打开excel</p>
+<pre><code>data = xlrd.open_workbook(&apos;demo.xls&apos;)     # 注意这里的workbook首字母是小写
+</code></pre><p>查看文件中包含sheet的名称</p>
+<pre><code>data.sheet_names()
+</code></pre><p>得到第一个工作表，或者通过索引顺序 或 工作表名称</p>
+<pre><code>table = data.sheets()[0]
+table = data.sheet_by_index(0)
+table = data.sheet_by_name(u&apos;Sheet1&apos;)
+</code></pre><p>获取行数和列数</p>
+<pre><code>nrows = table.nrows
+ncols = table.ncols
+</code></pre><p>获取整行和整列的值（数组）</p>
+<pre><code>table.row_values(i)
+table.col_values(i)
+</code></pre><p>循环行,得到索引的列表</p>
+<pre><code>for rownum in range(table.nrows):
+    print table.row_values(rownum)
+</code></pre><p>单元格</p>
+<pre><code>cell_A1 = table.cell(0,0).value
+cell_C4 = table.cell(2,3).value
+</code></pre><p>分别使用行列索引</p>
+<pre><code>cell_A1 = table.row(0)[0].value
+cell_A2 = table.col(1)[0].value
+</code></pre><p>简单的写入</p>
+<pre><code>row = 0
+col = 0
+ctype = 1 # 类型 0 empty,1 string, 2 number, 3 date, 4 boolean, 5 error
+value = &apos;lixiaoluo&apos;
+xf = 0 # 扩展的格式化 (默认是0)
+table.put_cell(row, col, ctype, value, xf)
+table.cell(0,0) # 文本:u&apos;lixiaoluo&apos;
+table.cell(0,0).value # &apos;lixiaoluo&apos;
+</code></pre><p>使用xlwt写入EXCEL</p>
+<p>导入xlwt</p>
+<pre><code>import xlwt
+</code></pre><p>新建一个excel文件</p>
+<pre><code>file = xlwt.Workbook() #注意这里的Workbook首字母是大写，无语吧
+</code></pre><p>新建一个sheet</p>
+<pre><code>table = file.add_sheet(&apos;sheet name&apos;)
+</code></pre><p>写入数据table.write(行,列,value)</p>
+<pre><code>table.write(0,0,&apos;test&apos;)
+</code></pre><p>如果对一个单元格重复操作，会引发</p>
+<pre><code>returns error:
+# Exception: Attempt to overwrite cell:
+# sheetname=u&apos;sheet 1&apos; rowx=0 colx=0
+</code></pre><p>所以在打开时加cell_overwrite_ok=True解决</p>
+<pre><code>table = file.add_sheet(&apos;sheet name&apos;,cell_overwrite_ok=True)
+</code></pre><p>保存文件</p>
+<pre><code>file.save(&apos;demo.xls&apos;)
+</code></pre><p>另外，使用style</p>
+<pre><code>style = xlwt.XFStyle() #初始化样式
+
+font = xlwt.Font() #为样式创建字体
+
+font.name = &apos;Times New Roman&apos;
+
+font.bold = True
+
+style.font = font #为样式设置字体
+
+table.write(0, 0, &apos;some bold Times text&apos;, style) # 使用样式
+</code></pre><p>命令行 getopt</p>
+<pre><code>try:
+     options,args = getopt.getopt(sys.argv[1:],&quot;hp:i:&quot;,[&quot;help&quot;,&quot;ip=&quot;,&quot;port=&quot;])
+except getopt.GetoptError:
+     sys.exit()
+for name,value in options:
+     if name in (&quot;-h&quot;,&quot;--help&quot;):
+          usage()
+     if name in (&quot;-i&quot;,&quot;--ip&quot;):
+          print(value)
+     if name in (&quot;-p&quot;,&quot;--port&quot;):
+          print(value)
+</code></pre><p>简单爬虫</p>
+<pre><code>import requests
+AGENT = &apos;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36&apos;
+HEADERS = {
+        &apos;User-Agent&apos;: AGENT,
+        &apos;Content-Type&apos;:&apos;application/x-www-form-urlencoded; charset=UTF-8&apos;,
+        &apos;X-Requested-With&apos;:&apos;XMLHttpRequest&apos;,
+        &apos;Accept&apos;:&apos;*/*&apos;
+session = requests.session()
+</code></pre><h2 id="模拟登录"><a href="#模拟登录" class="headerlink" title="模拟登录"></a>模拟登录</h2><pre><code>postdata = {
+    &apos;defaults&apos;:&apos;xxx&apos;,
+    &apos;fromLogin&apos;:&apos;xxx&apos;,
+    &apos;userName&apos;:&apos;xxx&apos;,
+    &apos;password&apos;:&apos;xxxx&apos;
+}
+url = &apos;xxxxxxxx&apos;
+login_info = session.post(url, headers = HEADERS, data = postdata,verify = False)
+if(login_info.status_code == requests.codes.ok):
+    print(&apos;login success&apos;)
+    return True
+else:
+    print(&apos;login err&apos;)
+    return False
+}
+</code></pre><h2 id="下载html页面"><a href="#下载html页面" class="headerlink" title="下载html页面"></a>下载html页面</h2><pre><code>def downloadUrl(rootdir, url, orgid, page):
+    html = session.get(url, headers=global_config.HEADERS, verify=False)
+    if(html.text[1:7] == &apos;script&apos;):
+        print(html.text)
+        return &quot;err&quot;
+    if(len(html.text) &lt; 60):
+        return &quot;err&quot;
+    sample = open(rootdir + &quot;/&quot; + str(orgid) + &apos;_&apos; + str(page) + &quot;.html&quot;, &quot;w&quot;, encoding=&apos;utf-8&apos;)
+    sample.write(html.text)
+    sample.close()
+    return &apos;ok&apos;
+</code></pre><p>解析JOSN文件内容</p>
+<pre><code>def scrapy_by_file(json_file_name):
+    #读取JSON文件的内容
+    text = open(json_file_name, encoding=&apos;utf-8&apos;).read()
+    #特殊处理,去除从WINDOWS系统带过来的BOM特殊字符
+    if text.startswith(u&apos;\ufeff&apos;):
+        text = text.encode(&apos;utf8&apos;)[3:].decode(&apos;utf8&apos;)
+    #将文本内容的JSON数据转换成自定义的JSON对象
+    try:
+        json_data = json.loads(text)
+    except:
+        print(json_file_name)
+        return
+    for row in json_data[&apos;rows&apos;]:
+
+def scrapy_by_row(row):
+    try:
+        orgid = row[&apos;organization&apos;][&apos;id&apos;]
+        familyid = row[&apos;censusRegisterFamily&apos;][&apos;id&apos;]
+    except:
+        print(&apos;errrr&apos;)
+        return
+        scrapy_by_row(row)
+</code></pre><p>遍历文件夹</p>
+<h2 id="遍历目录-rootdir-遍历到的每个文件都执行dirFunc"><a href="#遍历目录-rootdir-遍历到的每个文件都执行dirFunc" class="headerlink" title="遍历目录(rootdir) 遍历到的每个文件都执行dirFunc"></a>遍历目录(rootdir) 遍历到的每个文件都执行dirFunc</h2><pre><code>def waklThroughDir(rootdir, dirFunc):
+    for parent, dirnames, filenames in os.walk(rootdir):
+        for filename in filenames:
+            print(filename)
+            #获取后缀为txt的文件
+            if(filename.split(&apos;.&apos;)[-1] == &apos;html&apos;):
+                dirFunc(os.path.join(parent, filename))
+</code></pre><p>##采集温州房产网基本信息</p>
+<pre><code class="python"><span class="comment"># -*- coding: utf-8 -*-</span>
+<span class="keyword">import</span> re
+<span class="keyword">import</span> requests
+<span class="keyword">import</span> time
+
+<span class="comment">#-----------------------------用于解析的正则表达式常量------------------------------------------------------------------</span>
+<span class="comment">#解析页数</span>
+PAGE_NUM = <span class="string">'共找到 (.*?) 符合条件的记录'</span>
+<span class="comment">#解析小区名称</span>
+NAME = <span class="string">'texttext_title"&gt;&lt;ahref(.*?)&lt;/a&gt;&lt;/div&gt;&lt;divclass="texttext_moreinfo"&gt;'</span>
+<span class="comment">#解析小区价格</span>
+PRICE = <span class="string">'class="hot_price"&gt;(.*?)&lt;/span&gt;'</span>
+<span class="comment">#解析小区地址</span>
+ADDRESS = <span class="string">'text_moreinfo"&gt;(.*?)&lt;/div&gt;&lt;divclass="texttext_moreinfo"&gt;&lt;span&gt;'</span>
+<span class="comment">#文件生成路径</span>
+ROOTDIR = <span class="string">'F:\\test\\'</span>
+
+<span class="comment">#-----------------------------模拟请求的头部信息，否则将被识别出是程序抓包而被拦截--------------------------------------</span>
+HEADERS = {
+    <span class="string">'Accept'</span>: <span class="string">'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'</span>,
+    <span class="string">'Accept-Encoding'</span>: <span class="string">'gzip, deflate, sdch'</span>,
+    <span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36'</span>,
+    <span class="string">'Host'</span>: <span class="string">'www.0577home.net'</span>,
+    <span class="string">'Upgrade-Insecure-Requests'</span>: <span class="string">'1'</span>
+}
+
+<span class="comment">#-----------------------------抓取某一页的房产信息，pageNo为页号--------------------------------------------------------</span>
+<span class="function"><span class="keyword">def</span> <span class="title">getHouseListByPageno</span><span class="params">(pageNo)</span>:</span>
+    <span class="comment">#建立一个连接用于后续发起请求</span>
+    session = requests.session()
+    url = <span class="string">'http://www.0577home.net/xiaoqu/list_0_0_0_0_0_0_0_'</span> + str(pageNo) + <span class="string">'.html'</span>
+    houseList = session.get(url, headers = HEADERS, verify = <span class="keyword">False</span>)
+    <span class="comment">#以写入模式打开文件</span>
+    fh = open(ROOTDIR + <span class="string">"houseList_pageNo"</span> + str(pageNo) + <span class="string">".txt"</span>,  <span class="string">'w'</span> ,encoding=<span class="string">'utf-8'</span>)
+    <span class="comment">#将movieList写入文件</span>
+    fh.write(houseList.text)
+    <span class="comment">#关闭文件</span>
+    fh.close()
+
+<span class="comment">#-------------------------------获取需要抓取的页面总数------------------------------------------------------------------</span>
+<span class="function"><span class="keyword">def</span> <span class="title">getPageNum</span><span class="params">()</span>:</span>
+    <span class="comment">#打开已经下载好的第一页房产内容</span>
+    f = open(ROOTDIR + <span class="string">'houseList_pageNo1.txt'</span>, encoding=<span class="string">'utf-8'</span>)
+    <span class="comment">#获取文件内容</span>
+    rawContent = f.read()
+    <span class="comment">#用正则表达式解析页面内容</span>
+    pageNum = re.findall(PAGE_NUM, rawContent)
+    <span class="comment">#返回页面号</span>
+    <span class="keyword">return</span> int(pageNum[<span class="number">0</span>]) / <span class="number">20</span> + <span class="number">1</span>
+
+<span class="function"><span class="keyword">def</span> <span class="title">parseHouseListToFile</span><span class="params">(srcFile, dstFile)</span>:</span>
+    <span class="comment">#打开待解析的文件</span>
+    f = open(srcFile, encoding=<span class="string">'utf-8'</span>)
+    <span class="comment">#读取文件内容以备解析</span>
+    rawContent = f.read()
+    p = re.compile(<span class="string">'\s+'</span>)
+    content = re.sub(p, <span class="string">''</span>, rawContent)
+    dnames = re.findall(NAME, content)
+    names = []
+    <span class="keyword">for</span> dname <span class="keyword">in</span> dnames:
+        idx = dname.rfind(<span class="string">'&gt;'</span>)
+        names.append(dname[idx + <span class="number">1</span>:])
+    prices = re.findall(PRICE, content)
+    daddress = re.findall(ADDRESS, content)
+    address = []
+    <span class="keyword">for</span> daddr <span class="keyword">in</span> daddress:
+        id = daddr.rfind(<span class="string">'&gt;'</span>)
+        address.append(daddr[id + <span class="number">1</span>:])
+    i = <span class="number">0</span>
+    <span class="keyword">for</span> x <span class="keyword">in</span> names:
+        <span class="comment">#写入时用'$'做分割，结尾加上回车符</span>
+        dstFile.write(names[i] + <span class="string">'$'</span> + prices[i] + <span class="string">'$'</span> + address[i] + <span class="string">'\n'</span>)
+        i = i + <span class="number">1</span>
+
+<span class="comment"># -------------------------------主函数，下载并解析房产信息--------------------------------------------------------------</span>
+<span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:
+    <span class="comment">#---------------------抓取页面-----------------------------</span>
+    <span class="comment">#抓取第一页房产信息</span>
+    getHouseListByPageno(<span class="number">1</span>)
+    <span class="comment">#通过第一页房产信息获取总共要抓取的页面数量</span>
+    pageNum = getPageNum()
+    <span class="comment">#抓取剩余的页面</span>
+    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>, int(pageNum) + <span class="number">1</span>):
+        getHouseListByPageno(str(i))
+    <span class="comment">#---------------------解析页面-----------------------------</span>
+    <span class="comment">#获取当前年月日</span>
+    localtime = time.strftime(<span class="string">'%Y%m%d'</span>, time.localtime(time.time()))
+    <span class="comment">#创建一个文件，文件名前面带上年月日</span>
+    f = open(ROOTDIR + localtime + <span class="string">'_houseList.txt'</span>, <span class="string">'a+'</span>, encoding=<span class="string">'utf-8'</span>)
+    <span class="comment">#解析所有的页面</span>
+    <span class="comment">#for k in range(1, int(pageNum) + 1):</span>
+    <span class="keyword">for</span> k <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">115</span>):
+        parseHouseListToFile(ROOTDIR + <span class="string">"houseList_pageNo"</span> + str(k) + <span class="string">".txt"</span>, f)
+    <span class="comment">#关闭文件</span>
+    f.close()
+    f = open(ROOTDIR + localtime + <span class="string">'_houseList.txt'</span>, encoding=<span class="string">'utf-8'</span>)
+    fd = open(ROOTDIR + localtime + <span class="string">'_houseInfo.txt'</span>, <span class="string">'w'</span>, encoding=<span class="string">'utf-8'</span>)
+    k = <span class="number">0</span>
+    <span class="keyword">for</span> line <span class="keyword">in</span> f:
+        data = line.strip(<span class="string">'\n'</span>)
+        data = data.split(<span class="string">'$'</span>)
+        idx = data[<span class="number">3</span>]
+        getHouseInfoByPageno(idx, k)
+        houseInfo = parseHouseInfo(ROOTDIR + <span class="string">"houseInfo_pageNo"</span> + str(idx) + <span class="string">".html"</span>)
+        print(str(k) + <span class="string">"$"</span>.join(data) + <span class="string">'$'</span> + <span class="string">"$"</span>.join(houseInfo))
+        fd.write(<span class="string">"$"</span>.join(data) + <span class="string">'$'</span> + <span class="string">"$"</span>.join(houseInfo) + <span class="string">'\n'</span>)
+        k += <span class="number">1</span>
+    f.close()
+    fd.close()
+</code></pre>
+<p>调用java</p>
+<pre><code>import sys
+import jpype
+
+name = sys.argv[1]
+jarpath = &apos;/home/dsadm/why/python&apos;
+jpype.startJVM(jpype.getDefaultJVMPath(), &quot;-Djava.ext.dirs=%s&quot; % jarpath)
+DECRYPT = jpype.JClass(&apos;why.fmrt.decrypt.DECRYPT&apos;)
+upperName =DECRYPT.decrypt(name)
+print(upperName)
+jpype.shutdownJVM()
+</code></pre><p> 构建 web 页面</p>
+<pre><code>import os
+
+import tornado.httpserver
+import tornado.ioloop
+import tornado.options
+import tornado.web
+
+from view import *
+
+from tornado.options import define, options
+define(&quot;port&quot;, default=8000, help=&quot;run on the given port&quot;, type=int)
+
+class Application(tornado.web.Application):
+    def __init__(self):
+        handlers = [
+            (r&quot;/&quot;, Indexhandler),
+        ]
+        settings = dict(
+            template_path=os.path.join(os.path.dirname(__file__), &apos;templates&apos;),
+            autoescape=None,
+            debug=False,
+        )
+        tornado.web.Application.__init__(self, handlers, **settings)
+
+if __name__ == &quot;__main__&quot;:
+    tornado.options.parse_command_line()
+    http_server = tornado.httpserver.HTTPServer(Application(), xheaders=True)
+    http_server.listen(options.port)
+    tornado.ioloop.IOLoop.instance().start()
+</code></pre><p>多进程</p>
+<pre><code>import multiprocessing
+for process_id in range(PROCESS_NUM):
+    p = multiprocessing.Process(target=worker, args=(process_id,))
+    jobs.append(p)
+    p.start()
+</code></pre><p>多线程</p>
+<pre><code># -*- coding: utf-8 -*-
+
+import threading
+
+class Threadconfig():
+    def __init__(self, thread_size):
+        self.thread_size = thread_size
+
+    def topen(self):
+        self.thread_tasks = []
+
+    def build(self, func, **kwargs):
+        self.thread_task = threading.Thread(target=func, kwargs=(kwargs))
+        self.thread_tasks.append(self.thread_task)
+
+    def run(self):
+        for thread_task in self.thread_tasks:
+            thread_task.setDaemon(True)
+            thread_task.start()
+        while 1:
+            alive = False
+            for thread_num in range(0, self.thread_size):
+                alive = alive or self.thread_tasks[thread_num].isAlive()
+            if not alive:
+                break
+
+    def __del__(self):
+        self.thread_tasks = []
+</code></pre><p>  移除中文分隔符号</p>
+<pre><code>  cmd = &quot;sed &apos;:a;N;$ s/\\r\\n//g;ba&apos; &quot; + oldfile + &quot; &gt; &quot; + newfile
+os.system(cmd)  
+</code></pre>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2018/08/12/python-toolkit/" data-id="cjkqy8do10022a22zhuzuljqz" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2018/08/12/python-toolkit/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/08/12/python-toolkit/">Commentaires</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-数据科学起步01" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -358,7 +829,7 @@ Warnings:
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/08/10/数据科学起步01/" data-id="cjko18p2t0035nq2z58a8hii4" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2018/08/10/数据科学起步01/" data-id="cjkqy8dp10034a22z37n6hpcb" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -426,7 +897,7 @@ Warnings:
 
             
     
-        <a href="http://yoursite.com/2018/08/10/数据科学起步01/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/08/10/数据科学起步01/">Comments</a>
+        <a href="http://yoursite.com/2018/08/10/数据科学起步01/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/08/10/数据科学起步01/">Commentaires</a>
     
 
         </footer>
@@ -487,7 +958,7 @@ Warnings:
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/08/01/数据分析/" data-id="cjko18p2s0033nq2zbav4bwn7" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2018/08/01/数据分析/" data-id="cjkqy8dp00032a22zmjrrzn3j" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -555,7 +1026,7 @@ Warnings:
 
             
     
-        <a href="http://yoursite.com/2018/08/01/数据分析/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/08/01/数据分析/">Comments</a>
+        <a href="http://yoursite.com/2018/08/01/数据分析/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/08/01/数据分析/">Commentaires</a>
     
 
         </footer>
@@ -666,7 +1137,7 @@ Warnings:
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/05/21/drl-does-not-work-yet/" data-id="cjko18p0m000tnq2zk765y6jk" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2018/05/21/drl-does-not-work-yet/" data-id="cjkqy8dle000ra22zbdywkx8x" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -734,7 +1205,7 @@ Warnings:
 
             
     
-        <a href="http://yoursite.com/2018/05/21/drl-does-not-work-yet/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/05/21/drl-does-not-work-yet/">Comments</a>
+        <a href="http://yoursite.com/2018/05/21/drl-does-not-work-yet/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/05/21/drl-does-not-work-yet/">Commentaires</a>
     
 
         </footer>
@@ -790,7 +1261,7 @@ Warnings:
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/05/20/linux高级命令/" data-id="cjko18p1c001knq2z2dihcn4h" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2018/05/20/linux高级命令/" data-id="cjkqy8dmd001ia22zc6l7bd6x" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -858,128 +1329,7 @@ Warnings:
 
             
     
-        <a href="http://yoursite.com/2018/05/20/linux高级命令/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/05/20/linux高级命令/">Comments</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-hadoop-intro" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/05/15/hadoop-intro/">hadoop-intro</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/05/15/hadoop-intro/">
-            <time datetime="2018-05-15T15:12:57.000Z" itemprop="datePublished">2018-05-15</time>
-        </a>
-    </div>
-
-
-                        
-                        
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://yoursite.com/2018/05/15/hadoop-intro/" data-id="cjko18p0w0011nq2zf5xuk05r" class="article-share-link"><i class="fa fa-share"></i>Share</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://yoursite.com/2018/05/15/hadoop-intro/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/05/15/hadoop-intro/">Comments</a>
+        <a href="http://yoursite.com/2018/05/20/linux高级命令/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/05/20/linux高级命令/">Commentaires</a>
     
 
         </footer>
@@ -990,7 +1340,7 @@ Warnings:
 
 
     <nav id="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><a class="extend next" rel="next" href="/page/2/">Suiv &raquo;</a>
     </nav>
 </section>
             
@@ -999,9 +1349,28 @@ Warnings:
    
         
     <div class="widget-wrap">
-        <h3 class="widget-title">recent</h3>
+        <h3 class="widget-title">Récents</h3>
         <div class="widget">
             <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/12/python-toolkit/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/08/12/python-toolkit/" class="title">python-toolkit</a></p>
+                            <p class="item-date"><time datetime="2018-08-12T14:31:29.000Z" itemprop="datePublished">2018-08-12</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -1079,25 +1448,6 @@ Warnings:
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/05/15/hadoop-intro/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/05/15/hadoop-intro/" class="title">hadoop-intro</a></p>
-                            <p class="item-date"><time datetime="2018-05-15T15:12:57.000Z" itemprop="datePublished">2018-05-15</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -1107,16 +1457,16 @@ Warnings:
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">archives</h3>
+        <h3 class="widget-title">Archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
         </div>
     </div>
 
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">tags</h3>
+        <h3 class="widget-title">Tags</h3>
         <div class="widget">
             <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/deep-learning/">deep learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-requests/">python, requests</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/requests-python/">requests, python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/">ruby</a><span class="tag-list-count">1</span></li></ul>
         </div>
@@ -1125,7 +1475,7 @@ Warnings:
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">tag cloud</h3>
+        <h3 class="widget-title">Nuage de tags</h3>
         <div class="widget tagcloud">
             <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/deep-learning/" style="font-size: 10px;">deep learning</a> <a href="/tags/python-requests/" style="font-size: 10px;">python, requests</a> <a href="/tags/requests-python/" style="font-size: 10px;">requests, python</a> <a href="/tags/ruby/" style="font-size: 10px;">ruby</a>
         </div>
@@ -1134,7 +1484,7 @@ Warnings:
     
         
     <div class="widget-wrap widget-list">
-        <h3 class="widget-title">links</h3>
+        <h3 class="widget-title">Liens</h3>
         <div class="widget">
             <ul>
                 
