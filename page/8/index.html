@@ -79,7 +79,7 @@
             <div id="search-form-wrap">
 
     <form class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher" />
         <button type="submit" class="search-form-submit"></button>
     </form>
     <div class="ins-search">
@@ -98,9 +98,9 @@
 (function (window) {
     var INSIGHT_CONFIG = {
         TRANSLATION: {
-            POSTS: 'Posts',
+            POSTS: 'Articles',
             PAGES: 'Pages',
-            CATEGORIES: 'Categories',
+            CATEGORIES: 'Catégories',
             TAGS: 'Tags',
             UNTITLED: '(Untitled)',
         },
@@ -132,7 +132,7 @@
                 <td>
                     
     <div class="search-form">
-        <input type="text" class="ins-search-input search-form-input" placeholder="Search" />
+        <input type="text" class="ins-search-input search-form-input" placeholder="Rechercher" />
     </div>
 
                 </td>
@@ -152,16 +152,16 @@
             <h2 id="name">Aaron Cheung</h2>
             <h3 id="title">Python Engineer</h3>
             <span id="location"><i class="fa fa-map-marker"></i>Wuhan, China</span>
-            <a id="follow" target="_blank" href="https://github.com/zhangdavids/">FOLLOW</a>
+            <a id="follow" target="_blank" href="https://github.com/zhangdavids/">SUIVRE</a>
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                121
-                <span>posts</span>
+                122
+                <span>Articles</span>
             </div>
             <div class="article-info-block">
                 5
-                <span>tags</span>
+                <span>Tags</span>
             </div>
         </div>
         
@@ -209,7 +209,7 @@
 
             
             <section id="main">
-    <article id="post-flask-and-gevent" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-python当中的并发" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -217,7 +217,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/03/13/flask-and-gevent/">flask and gevent</a>
+            <a class="article-title" href="/2018/03/13/python当中的并发/">python当中的并发</a>
         </h1>
     
 
@@ -226,8 +226,8 @@
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/03/13/flask-and-gevent/">
-            <time datetime="2018-03-13T10:29:27.000Z" itemprop="datePublished">2018-03-13</time>
+        <a href="/2018/03/13/python当中的并发/">
+            <time datetime="2018-03-13T15:19:15.000Z" itemprop="datePublished">2018-03-13</time>
         </a>
     </div>
 
@@ -242,25 +242,35 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <h3 id="异步-WEB-架构的特点："><a href="#异步-WEB-架构的特点：" class="headerlink" title="异步 WEB 架构的特点："></a>异步 WEB 架构的特点：</h3><p>gevent 为 Python 提供了比较完善的协程支持，其基于 greenlet 实现协程。</p>
-<p>当 greenlet 遇到如网络访问、磁盘 IO 等操作时，就将自动切换至其他的 greenlet，待操作完成后，在适合的时间点回切 greenlet 继续执行。由于网络访问、磁盘 IO 等操作耗时较长，且实际 CPU 使用率较低（大部分工作由 DMA 等设备完成）。所以倘若非异步，涉及以上操作并发将以顺序执行， CPU 长期处于空闲状态。而异步模式将能实现并发程序间的切换，从而保证 CPU 有较高的利用率，而不是等待如网络访问、磁盘 IO 等操作。 </p>
-<p><em>注意：gevent 的使用并不能减少实际 CPU 的使用量，所以若程序的执行过程消耗的全为 CPU 资源，则其异步也是毫无意义的。</em></p>
-<h3 id="Flask-gevent-的最小程序实例："><a href="#Flask-gevent-的最小程序实例：" class="headerlink" title="Flask+gevent 的最小程序实例："></a>Flask+gevent 的最小程序实例：</h3><p>最小程序实例如下。</p>
-<pre><code>from gevent import monkey
-monkey.patch_all()
-from flask import Flask
-from gevent import pywsgi
+            <p>并发的表现形式，并行处理是软件工程领域最广泛的话题之一。</p>
+<p>两个事件互不影响，则两个事件是并发的。<br>CPython的线程实现中带有一些麻烦的细节，使得实用性降低了。</p>
+<p>GIL 只是强制在任何时候只有一个线程可以执行python代码</p>
+<p>多线程可以使用的场景：</p>
+<ul>
+<li>构建响应式界面</li>
+<li>委派工作</li>
+<li>构建多用户应用程序</li>
+</ul>
+<p>如何让用户控制使用哪个处理后端（进程或者线程）</p>
+<pre><code>from multiprocessing import Pool as ProcessPool
+from multiprocessing.dummpy import Pool as ThreadPool
 
-app = Flask(__name__)
 
-@app.route(&apos;/&apos;)
-def index():
-    return &apos;Hello World&apos;
+def main(use_threads=False):
+    if use_threads:
+        pool_cls = ThreadPool
+    else:
+        pool_cls = ProcessPool
 
-server = pywsgi.WSGIServer((&apos;127.0.0.1&apos;, 5000), app)
-server.serve_forever()
-</code></pre><p>注意：为实现 Flask 与 gevent 的结合，需在程序开头引入 monkey patch。monkey patch 将以闭包的形式修改可以实现异步的标准库，从而实现异步。</p>
-<p>注意：需使用支持 gevent 的 WSGI，例如：gevent.pywsgi、gunicorn 等。</p>
+    with pool_cls(4) as p:
+        results = p.map(fetch_place, PLACES)
+
+    for result in results:
+        present_result(result)
+</code></pre><h2 id="异步编程"><a href="#异步编程" class="headerlink" title="异步编程"></a>异步编程</h2><p>异步编程的解决方案，如twisted tornado eventlet,真的值得了解</p>
+<p>协同多任务是异步编程的核心。每个进程都在空闲时自动释放控制以允许同时执行多个程序。</p>
+<p>gevent 的工作方式，gevent 的作用一条线程跑多个协程，适合多 IO 操作。</p>
+<p>需要强调的是引入 gevent 不会加快获取数据的速度，例如，原来是 30ms，引入之后不会变少，只会变多，那么引入的好处是什么？原来你能在1秒之内接待33个客户端请求，引入之后可能可以接待100个/s，也可能接待 300个/s，这才是 gevent 的好处。</p>
 
         
         </div>
@@ -271,7 +281,7 @@ server.serve_forever()
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/03/13/flask-and-gevent/" data-id="cjks1cbf4000t372z10zv5hhf" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2018/03/13/python当中的并发/" data-id="cjks2b5d9002jumz3wnp531c5" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -339,7 +349,147 @@ server.serve_forever()
 
             
     
-        <a href="http://yoursite.com/2018/03/13/flask-and-gevent/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/13/flask-and-gevent/">Comments</a>
+        <a href="http://yoursite.com/2018/03/13/python当中的并发/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/13/python当中的并发/">Commentaires</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-flask-and-gevent" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2018/03/13/flask-and-gevent/">flask and gevent</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2018/03/13/flask-and-gevent/">
+            <time datetime="2018-03-13T10:29:27.000Z" itemprop="datePublished">2018-03-13</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h3 id="异步-WEB-架构的特点："><a href="#异步-WEB-架构的特点：" class="headerlink" title="异步 WEB 架构的特点："></a>异步 WEB 架构的特点：</h3><p>gevent 为 Python 提供了比较完善的协程支持，其基于 greenlet 实现协程。</p>
+<p>当 greenlet 遇到如网络访问、磁盘 IO 等操作时，就将自动切换至其他的 greenlet，待操作完成后，在适合的时间点回切 greenlet 继续执行。由于网络访问、磁盘 IO 等操作耗时较长，且实际 CPU 使用率较低（大部分工作由 DMA 等设备完成）。所以倘若非异步，涉及以上操作并发将以顺序执行， CPU 长期处于空闲状态。而异步模式将能实现并发程序间的切换，从而保证 CPU 有较高的利用率，而不是等待如网络访问、磁盘 IO 等操作。 </p>
+<p><em>注意：gevent 的使用并不能减少实际 CPU 的使用量，所以若程序的执行过程消耗的全为 CPU 资源，则其异步也是毫无意义的。</em></p>
+<h3 id="Flask-gevent-的最小程序实例："><a href="#Flask-gevent-的最小程序实例：" class="headerlink" title="Flask+gevent 的最小程序实例："></a>Flask+gevent 的最小程序实例：</h3><p>最小程序实例如下。</p>
+<pre><code>from gevent import monkey
+monkey.patch_all()
+from flask import Flask
+from gevent import pywsgi
+
+app = Flask(__name__)
+
+@app.route(&apos;/&apos;)
+def index():
+    return &apos;Hello World&apos;
+
+server = pywsgi.WSGIServer((&apos;127.0.0.1&apos;, 5000), app)
+server.serve_forever()
+</code></pre><p>注意：为实现 Flask 与 gevent 的结合，需在程序开头引入 monkey patch。monkey patch 将以闭包的形式修改可以实现异步的标准库，从而实现异步。</p>
+<p>注意：需使用支持 gevent 的 WSGI，例如：gevent.pywsgi、gunicorn 等。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2018/03/13/flask-and-gevent/" data-id="cjks2b5bm000vumz3f4j3zq2o" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2018/03/13/flask-and-gevent/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/13/flask-and-gevent/">Commentaires</a>
     
 
         </footer>
@@ -527,7 +677,7 @@ if __name__ == &apos;__main__&apos;:
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/03/10/python基础20题/" data-id="cjks1cbge0029372zeooskjrc" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2018/03/10/python基础20题/" data-id="cjks2b5d10029umz3gmzgf9n5" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -595,7 +745,7 @@ if __name__ == &apos;__main__&apos;:
 
             
     
-        <a href="http://yoursite.com/2018/03/10/python基础20题/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/10/python基础20题/">Comments</a>
+        <a href="http://yoursite.com/2018/03/10/python基础20题/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/10/python基础20题/">Commentaires</a>
     
 
         </footer>
@@ -733,7 +883,7 @@ Pylint是检验模块是否达到代码标准的另一个工具。
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/03/10/python基础小结25/" data-id="cjks1cbge0028372zjvgjz6jc" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2018/03/10/python基础小结25/" data-id="cjks2b5d3002aumz3oyxvkqop" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -801,7 +951,7 @@ Pylint是检验模块是否达到代码标准的另一个工具。
 
             
     
-        <a href="http://yoursite.com/2018/03/10/python基础小结25/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/10/python基础小结25/">Comments</a>
+        <a href="http://yoursite.com/2018/03/10/python基础小结25/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/10/python基础小结25/">Commentaires</a>
     
 
         </footer>
@@ -913,7 +1063,7 @@ None
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/03/05/分享python面试题2/" data-id="cjks1cbic0034372zhoghhz5q" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2018/03/05/分享python面试题2/" data-id="cjks2b5ef0039umz3p4z5w5fq" class="article-share-link"><i class="fa fa-share"></i>Partager</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -981,242 +1131,7 @@ None
 
             
     
-        <a href="http://yoursite.com/2018/03/05/分享python面试题2/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/05/分享python面试题2/">Comments</a>
-    
-
-        </footer>
-    </div>
-    
-</article>
-
-
-
-    <article id="post-python装饰器全解" class="article article-type-post" itemscope itemprop="blogPost">
-    <div class="article-inner">
-        
-        
-            <header class="article-header">
-                
-    
-        <h1 itemprop="name">
-            <a class="article-title" href="/2018/03/03/python装饰器全解/">python装饰器全解</a>
-        </h1>
-    
-
-                
-                    <div class="article-meta">
-                        
-    <div class="article-date">
-        <i class="fa fa-calendar"></i>
-        <a href="/2018/03/03/python装饰器全解/">
-            <time datetime="2018-03-03T08:48:13.000Z" itemprop="datePublished">2018-03-03</time>
-        </a>
-    </div>
-
-
-                        
-                        
-                    </div>
-                
-            </header>
-        
-        
-        <div class="article-entry" itemprop="articleBody">
-        
-            
-            <p>python装饰器的作用 <strong>使得函数包装和方法包装变得更容易阅读和理解</strong></p>
-<p>1.一般语法和可能的实现</p>
-<ul>
-<li>作为一个函数</li>
-<li>作为一个类</li>
-<li>参数化装饰器</li>
-<li>保存内省的装饰器</li>
-</ul>
-<p>2.用法和有用的例子</p>
-<ul>
-<li>参数检查</li>
-<li>缓存</li>
-<li>代理</li>
-<li>上下文提供者</li>
-</ul>
-<p><em>Python 函数不同于其他编程语言，它可以作为第一类对象使用，这是关键。因为装饰器本质上还是函数</em></p>
-<p>很多人对装饰器难以理解，原因是由于以下三点内容没有搞清楚：</p>
-<p>关于函数“变量”（或“变量”函数）的理解</p>
-<p>关于高阶函数的理解</p>
-<p>关于嵌套函数的理解</p>
-<p>那么如果能对以上的问题一一攻破，同时遵循装饰器的基本原则，相信会对装饰器有个很好的理解的。那么我们先来看以下装饰器的目的及其原则。</p>
-<p>1、装饰器</p>
-<p>装饰器实际上就是为了给某程序增添功能，但该程序已经上线或已经被使用，那么就不能大批量的修改源代码，这样是不科学的也是不现实的，因为就产生了装饰器，使得其满足：</p>
-<ul>
-<li>不能修改被装饰的函数的源代码</li>
-<li>不能修改被装饰的函数的调用方式</li>
-<li>满足1、2的情况下给程序增添功能<br>那么根据需求，同时满足了这三点原则，这才是我们的目的。因为，下面我们从解决这三点原则入手来理解装饰器。</li>
-</ul>
-<p>等等，我要在需求之前先说装饰器的原则组成：</p>
-<p>&lt; 函数+实参高阶函数+返回值高阶函数+嵌套函数+语法糖 = 装饰器 &gt;</p>
-<p>这个式子是贯穿装饰器的灵魂所在！</p>
-<p>2、需求实现</p>
-<pre><code>improt time
-def test():
-    time.sleep(2)
-    print(&quot;test is running!&quot;)
-test()
-</code></pre><p>给程序添加统计运行时间（2 second）功能</p>
-<p>如何进行呢？</p>
-<p>很显然，函数和变量是一样的，都是“一个名字对应内存地址中的一些内容”<br>那么根据这样的原则，我们就可以理解两个事情：</p>
-<p>test1表示的是函数的内存地址</p>
-<p>test1()就是调用对在test1这个地址的内容，即函数</p>
-<p>如果这两个问题可以理解，那么我们就可以进入到下一个原因(关于高阶函数的理解)</p>
-<p>那么对于高阶函数的形式可以有两种：</p>
-<p>把一个函数名当作实参传给另外一个函数（“实参高阶函数”）</p>
-<p>返回值中包含函数名（“返回值高阶函数”）</p>
-<p>那么这里面所说的函数名，实际上就是函数的地址，也可以认为是函数的一个标签而已，并不是调用，是个名词。如果可以把函数名当做实参，那么也就是说可以把函数传递到另一个函数，然后在另一个函数里面做一些操作，根据这些分析来看，这岂不是满足了装饰器三原则中的第一条，即不修改源代码而增加功能。那我们看来一下具体的做法：</p>
-<p>还是针对上面那段代码：</p>
-<pre><code>improt time
-
-def test():
-    time.sleep(2)
-    print(&quot;test is running!&quot;)
-
-def deco(func):  
-    start = time.time()
-    func() #2
-    stop = time.time()
-    print(stop-start)
-
-deco(test) #1
-</code></pre><p>装饰有参数的函数</p>
-<pre><code>improt time
-
-def timer(func)
-    def deco(*args, **kwargs):  
-        start = time.time()
-        res = func(*args, **kwargs)
-        stop = time.time()
-        print(stop-start)
-        return res 
-    return deco
-
-@timer
-def test(parameter): #8
-    time.sleep(2)
-    print(&quot;test is running!&quot;)   
-    return &quot;Returned value&quot;
-test()     
-</code></pre><p>带参数的装饰器</p>
-<pre><code>import time
-
-def timer(parameter):
-
-    def outer_wrapper(func):
-
-        def wrapper(*args, **kwargs):
-            if parameter == &apos;task1&apos;:
-                start = time.time()
-                func(*args, **kwargs)
-                stop = time.time()
-                print(&quot;the task1 run time is :&quot;, stop - start)
-            elif parameter == &apos;task2&apos;:
-                start = time.time()
-                func(*args, **kwargs)
-                stop = time.time()
-                print(&quot;the task2 run time is :&quot;, stop - start)
-
-        return wrapper
-
-    return outer_wrapper
-
-@timer(parameter=&apos;task1&apos;)
-def task1():
-    time.sleep(2)
-    print(&quot;in the task1&quot;)
-
-@timer(parameter=&apos;task2&apos;)
-def task2():
-    time.sleep(2)
-    print(&quot;in the task2&quot;)
-
-task1()
-task2()    
-</code></pre>
-        
-        </div>
-        <footer class="article-footer">
-            <div class="share-container">
-
-
-
-</div>
-
-    <a data-url="http://yoursite.com/2018/03/03/python装饰器全解/" data-id="cjks1cbgr002o372ziwvgpute" class="article-share-link"><i class="fa fa-share"></i>Share</a>
-<script>
-    (function ($) {
-        // Prevent duplicate binding
-        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
-            __SHARE_BUTTON_BINDED__ = true;
-        } else {
-            return;
-        }
-        $('body').on('click', function() {
-            $('.article-share-box.on').removeClass('on');
-        }).on('click', '.article-share-link', function(e) {
-            e.stopPropagation();
-
-            var $this = $(this),
-                url = $this.attr('data-url'),
-                encodedUrl = encodeURIComponent(url),
-                id = 'article-share-box-' + $this.attr('data-id'),
-                offset = $this.offset(),
-                box;
-
-            if ($('#' + id).length) {
-                box = $('#' + id);
-
-                if (box.hasClass('on')){
-                    box.removeClass('on');
-                    return;
-                }
-            } else {
-                var html = [
-                    '<div id="' + id + '" class="article-share-box">',
-                        '<input class="article-share-input" value="' + url + '">',
-                        '<div class="article-share-links">',
-                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
-                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
-                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
-                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
-                        '</div>',
-                    '</div>'
-                ].join('');
-
-              box = $(html);
-
-              $('body').append(box);
-            }
-
-            $('.article-share-box.on').hide();
-
-            box.css({
-                top: offset.top + 25,
-                left: offset.left
-            }).addClass('on');
-
-        }).on('click', '.article-share-box', function (e) {
-            e.stopPropagation();
-        }).on('click', '.article-share-box-input', function () {
-            $(this).select();
-        }).on('click', '.article-share-box-link', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-
-            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
-        });
-    })(jQuery);
-</script>
-
-            
-    
-        <a href="http://yoursite.com/2018/03/03/python装饰器全解/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/03/python装饰器全解/">Comments</a>
+        <a href="http://yoursite.com/2018/03/05/分享python面试题2/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/03/05/分享python面试题2/">Commentaires</a>
     
 
         </footer>
@@ -1227,7 +1142,7 @@ task2()
 
 
     <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/page/7/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><a class="extend next" rel="next" href="/page/9/">Next &raquo;</a>
+        <a class="extend prev" rel="prev" href="/page/7/">&laquo; Préc</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/page/9/">9</a><a class="page-number" href="/page/10/">10</a><span class="space">&hellip;</span><a class="page-number" href="/page/25/">25</a><a class="extend next" rel="next" href="/page/9/">Suiv &raquo;</a>
     </nav>
 </section>
             
@@ -1236,9 +1151,28 @@ task2()
    
         
     <div class="widget-wrap">
-        <h3 class="widget-title">recent</h3>
+        <h3 class="widget-title">Récents</h3>
         <div class="widget">
             <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2018/08/13/cha-duoshao/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2018/08/13/cha-duoshao/" class="title">cha-duoshao</a></p>
+                            <p class="item-date"><time datetime="2018-08-13T09:13:00.000Z" itemprop="datePublished">2018-08-13</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -1316,25 +1250,6 @@ task2()
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2018/08/12/python-toolkit/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/08/12/python-toolkit/" class="title">python-toolkit</a></p>
-                            <p class="item-date"><time datetime="2018-08-12T14:31:29.000Z" itemprop="datePublished">2018-08-12</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -1344,16 +1259,16 @@ task2()
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">archives</h3>
+        <h3 class="widget-title">Archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">7</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">8</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
         </div>
     </div>
 
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">tags</h3>
+        <h3 class="widget-title">Tags</h3>
         <div class="widget">
             <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/">algorithm</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/deep-learning/">deep learning</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python-requests/">python, requests</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/requests-python/">requests, python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ruby/">ruby</a><span class="tag-list-count">1</span></li></ul>
         </div>
@@ -1362,7 +1277,7 @@ task2()
     
         
     <div class="widget-wrap">
-        <h3 class="widget-title">tag cloud</h3>
+        <h3 class="widget-title">Nuage de tags</h3>
         <div class="widget tagcloud">
             <a href="/tags/algorithm/" style="font-size: 10px;">algorithm</a> <a href="/tags/deep-learning/" style="font-size: 10px;">deep learning</a> <a href="/tags/python-requests/" style="font-size: 10px;">python, requests</a> <a href="/tags/requests-python/" style="font-size: 10px;">requests, python</a> <a href="/tags/ruby/" style="font-size: 10px;">ruby</a>
         </div>
@@ -1371,7 +1286,7 @@ task2()
     
         
     <div class="widget-wrap widget-list">
-        <h3 class="widget-title">links</h3>
+        <h3 class="widget-title">Liens</h3>
         <div class="widget">
             <ul>
                 
