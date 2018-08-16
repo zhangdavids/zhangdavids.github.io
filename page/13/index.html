@@ -156,7 +156,7 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                127
+                135
                 <span>posts</span>
             </div>
             <div class="article-info-block">
@@ -209,7 +209,7 @@
 
             
             <section id="main">
-    <article id="post-python-hardest" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-python-text" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -217,7 +217,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/02/18/python-hardest/">python-hardest</a>
+            <a class="article-title" href="/2018/02/26/python-text/">python-text</a>
         </h1>
     
 
@@ -226,8 +226,8 @@
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/02/18/python-hardest/">
-            <time datetime="2018-02-18T02:33:45.000Z" itemprop="datePublished">2018-02-18</time>
+        <a href="/2018/02/26/python-text/">
+            <time datetime="2018-02-26T02:40:57.000Z" itemprop="datePublished">2018-02-26</time>
         </a>
     </div>
 
@@ -242,17 +242,13 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <h2 id="Python社区会有如此多的人关注于这样的问题-“对于解释器全局锁能做什么-”"><a href="#Python社区会有如此多的人关注于这样的问题-“对于解释器全局锁能做什么-”" class="headerlink" title="Python社区会有如此多的人关注于这样的问题: “对于解释器全局锁能做什么?”"></a>Python社区会有如此多的人关注于这样的问题: “对于解释器全局锁能做什么?”</h2><ol>
-<li>要理解GIL的含义，我们需要从Python的基础讲起。像C++这样的语言是编译型语言，所谓编译型语言，是指程序输入到编译器，编译器再根据语言的语法进行解析，然后翻译成语言独立的中间表示，最终链接成具有高度优化的机器码的可执行程序。编译器之所以可以深层次的对代码进行优化，是因为它可以看到整个程序（或者一大块独立的部分）。这使得它可以对不同的语言指令之间的交互进行推理，从而给出更有效的优化手段。</li>
-<li>与此相反，Python是解释型语言。程序被输入到解释器来运行。解释器在程序执行之前对其并不了解；它所知道的只是Python的规则，以及在执行过程中怎样去动态的应用这些规则。它也有一些优化，但是这基本上只是另一个级别的优化。由于解释器没法很好的对程序进行推导，Python的大部分优化其实是解释器自身的优化。更快的解释器自然意味着程序的运行也能“免费”的更快。也就是说，解释器优化后，Python程序不用做修改就可以享受优化后的好处。</li>
-</ol>
-<p><em>如果其他条件不变，Python程序的执行速度直接与解释器的“速度”相关。不管你怎样优化自己的程序，你的程序的执行速度还是依赖于解释器执行你的程序的效率。这就很明显的解释了为什么我们需要对优化Python解释器做这么多的工作了。对于Python程序员来说，这恐怕是与免费午餐最接近的了。</em></p>
-<p>大部分开发者听到“并发”通常会立刻想到多线程的程序。目前来说，多线程执行还是利用多核系统最常用的方式。尽管多线程编程大大好于“顺序”编程，不过即便是仔细的程序员也没法在代码中将并发性做到最好。编程语言在这方面应该做的更好，大部分应用广泛的现代编程语言都会支持多线程编程。</p>
-<p>要想利用多核系统，Python必须支持多线程运行。作为解释型语言，Python的解释器必须做到既安全又高效。我们都知道多线程编程会遇到的问题。解释器要留意的是避免在不同的线程操作内部共享的数据。同时它还要保证在管理用户线程时保证总是有最大化的计算资源。</p>
-<p>那么，不同线程同时访问时，数据的保护机制是怎样的呢？答案是解释器全局锁。从名字上看能告诉我们很多东西，很显然，这是一个加在解释器上的全局（从解释器的角度看）锁（从互斥或者类似角度看）。这种方式当然很安全，但是它有一层隐含的意思（Python初学者需要了解这个）：对于任何Python程序，不管有多少的处理器，任何时候都总是只有一个线程在执行。</p>
-<p><strong>不要使用多线程，请使用多进程</strong></p>
-<p>基于线程的编程毫无疑问是困难的。每当某个人觉得他了解关于线程是如何工作的一切的时候，总是会悄无声息的出现一些新的问题。因为在这方面想要得到正确合理的一致性真的是太难了，因此有一些非常知名的语言设计者和研究者已经总结得出了一些线程模型。就像某个写过多线程应用的人可以告诉你的一样，不管是多线程应用的开发还是调试都会比单线程的应用难上数倍。程序员通常所具有的顺序执行的思维模恰恰就是与并行执行模式不相匹配。GIL的出现无意中帮助了开发者免于陷入困境。在使用多线程时仍然需要同步原语的情况下，GIL事实上帮助我们保持不同线程之间的数据一致性问题。</p>
-<p>那么现在看起来讨论Python最难得问题是有点问错了问题。我们有非常好的理由来说明为什么Python专家推荐我们使用多进程代替多线程，而不是去试图隐藏Python线程实现的不足。更进一步，我们鼓励开发者使用更安全更直接的方式实现并发模型，同时保留使用多线程进行开发除非你觉的真的非常必要的话。对于大多数人来说什么是最好的并行编程模型可能并不是十分清楚。但是目前我们清楚的是多线程的方式可能并不是最好的。</p>
+            <p>六款比较不错的特殊文本格式处理库</p>
+<p>1.tablib</p>
+<p>2.openpyxl  算是xlwt xlrd的替代品</p>
+<p>3.unoconv</p>
+<p>4.pypdf2</p>
+<p>5.mistune</p>
+<p>6.csvkit 命令行工具</p>
 
         
         </div>
@@ -263,7 +259,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/02/18/python-hardest/" data-id="cjkv88w870025hw2zaext96oe" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2018/02/26/python-text/" data-id="cjkw02qzn002e4v2zmi85761h" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -331,7 +327,7 @@
 
             
     
-        <a href="http://yoursite.com/2018/02/18/python-hardest/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/02/18/python-hardest/">Comments</a>
+        <a href="http://yoursite.com/2018/02/26/python-text/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/02/26/python-text/">Comments</a>
     
 
         </footer>
@@ -341,7 +337,7 @@
 
 
 
-    <article id="post-ai-keyword" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-运维题目搜集" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -349,7 +345,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/02/16/ai-keyword/">ai-keyword</a>
+            <a class="article-title" href="/2018/02/23/运维题目搜集/">运维题目搜集</a>
         </h1>
     
 
@@ -358,19 +354,14 @@
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/02/16/ai-keyword/">
-            <time datetime="2018-02-16T07:45:31.000Z" itemprop="datePublished">2018-02-16</time>
+        <a href="/2018/02/23/运维题目搜集/">
+            <time datetime="2018-02-23T11:40:03.000Z" itemprop="datePublished">2018-02-23</time>
         </a>
     </div>
 
 
                         
                         
-    <div class="article-tag">
-        <i class="fa fa-tag"></i>
-        <a class="tag-link" href="/tags/deep-learning/">deep learning</a>
-    </div>
-
                     </div>
                 
             </header>
@@ -379,63 +370,20 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p>深度学习</p>
-<p>进化策略</p>
-<p>迁移学习</p>
-<p>卷积神经网络</p>
-<p>知识图谱</p>
-<p>聚类</p>
-<p>回归</p>
-<p>PCA</p>
-<p>t-SNE</p>
-<p>贝叶斯</p>
-<p>决策树</p>
-<p>随机森林</p>
-<p>遗传算法</p>
-<p>强化学习</p>
-<p>马尔科夫</p>
-<p>概率图</p>
-<h2 id="什么是深度学习？"><a href="#什么是深度学习？" class="headerlink" title="什么是深度学习？"></a>什么是深度学习？</h2><p>深度学习是表征学习的通用框架，它有以下特征：</p>
-<ol>
-<li>给定一个目标（objective）</li>
-<li>学习能够实现目标的特征</li>
-<li>直接的原始输入</li>
-<li>使用最少的领域知识深度</li>
-</ol>
-<p>深度学习是一项实现机器学习的技术。它仅仅是一种机器学习的方法。</p>
-<p>深度神经网络通常被人们用来理解深度表征。</p>
-<p>循环神经网络 RNN</p>
-<p>卷积神经网络 CNN</p>
-<p>工作方式：</p>
-<ol>
-<li>选择数据： 训练 验证 测试</li>
-<li>模型数据</li>
-<li>验证模型</li>
-<li>测试模型</li>
-<li>使用模型</li>
-<li>调优模型</li>
-</ol>
-<p>机器学习所处在的位置：</p>
-<p>数据科学家使用训练数据集来教计算机应该怎么做，</p>
-<p>然后系统执行该任务</p>
-<p>首先存在大数据</p>
-<p>机器会学习使用训练数据集来进行分类，调节特定的算法来实现目标分类</p>
-<p>该计算机可学习识别数据中的关系、趋势和模式</p>
-<p>如何使用？</p>
-<p>快速三维地图测绘和建模</p>
-<p>增强分析以降低风险</p>
-<p>预测表现最佳的目标</p>
-<h3 id="九大算法"><a href="#九大算法" class="headerlink" title="九大算法"></a>九大算法</h3><ol>
-<li>决策树 在进行逐步应答过程中，典型的决策树分析会使用分层变量或决策节点，例如，可将一个给定用户分类成信用可靠或不可靠</li>
-<li>支持向量机</li>
-<li>回归</li>
-<li>朴素贝叶斯分类</li>
-<li>隐马尔可夫模型</li>
-<li>随机森林</li>
-<li>循环神经网络</li>
-<li>长短期记忆与门控循环单元神经网络</li>
-<li>卷积神经网络</li>
-</ol>
+            <p>三百台服务器  如何进行管理</p>
+<p>1.设定跳板机 使用统一的账户登陆 便于安全与登陆的考量</p>
+<p>2.使用salt、ansible、puppet 进行系统的统一调度与配置统一的管理</p>
+<p>3.建立简单的服务器的系统、配置、应用的cmdb信息管理。便于查阅每台服务器上的各种信息记录</p>
+<hr>
+<p>rabbitMQ 也就是消息队列中间件，消息中间件是在消息的传息过程中保存消息的容器</p>
+<hr>
+<ul>
+<li>使用像pyflakes 这样的静态代码分析工具</li>
+<li>选定一个特定的代码风格</li>
+<li>开发工具保存高响应速度</li>
+<li>找到合适的编辑器</li>
+<li>感到舒服和更有效率的工具值得花钱</li>
+</ul>
 
         
         </div>
@@ -446,7 +394,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/02/16/ai-keyword/" data-id="cjkv88w6w000fhw2z9vofp8c0" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2018/02/23/运维题目搜集/" data-id="cjkw02r0g003v4v2z6xmtmpdc" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -514,7 +462,7 @@
 
             
     
-        <a href="http://yoursite.com/2018/02/16/ai-keyword/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/02/16/ai-keyword/">Comments</a>
+        <a href="http://yoursite.com/2018/02/23/运维题目搜集/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/02/23/运维题目搜集/">Comments</a>
     
 
         </footer>
@@ -524,7 +472,7 @@
 
 
 
-    <article id="post-artificial-intelligence" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Japronto介绍" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -532,7 +480,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/02/15/artificial-intelligence/">artificial intelligence</a>
+            <a class="article-title" href="/2018/02/23/Japronto介绍/">Japronto介绍</a>
         </h1>
     
 
@@ -541,8 +489,8 @@
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/02/15/artificial-intelligence/">
-            <time datetime="2018-02-15T13:00:03.000Z" itemprop="datePublished">2018-02-15</time>
+        <a href="/2018/02/23/Japronto介绍/">
+            <time datetime="2018-02-23T11:36:34.000Z" itemprop="datePublished">2018-02-23</time>
         </a>
     </div>
 
@@ -557,13 +505,15 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p>面向对象编程</p>
-<p>函数式编程</p>
-<p>了解CNN RCNN</p>
-<p>主流人工智能平台 熟悉一个 比如 keras</p>
-<p>会要求手写至少一个算法实现。。</p>
-<p>数据库 mysql 优化设计</p>
-<p>django 登陆 详细源码！！</p>
+            <ul>
+<li>实现 HTTP 1.x 并且支持分片上传</li>
+<li>完整支持 HTTP 流水线</li>
+<li>可配置是否让链接 Keep-alive</li>
+<li>支持同步和异步视图</li>
+<li>多任务处理</li>
+<li>代码热加载</li>
+<li>简单易用的路由规则</li>
+</ul>
 
         
         </div>
@@ -574,7 +524,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/02/15/artificial-intelligence/" data-id="cjkv88w6v000ehw2zupj85wta" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2018/02/23/Japronto介绍/" data-id="cjkw02qw800024v2zewnmncpk" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -642,7 +592,7 @@
 
             
     
-        <a href="http://yoursite.com/2018/02/15/artificial-intelligence/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/02/15/artificial-intelligence/">Comments</a>
+        <a href="http://yoursite.com/2018/02/23/Japronto介绍/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/02/23/Japronto介绍/">Comments</a>
     
 
         </footer>
@@ -652,7 +602,7 @@
 
 
 
-    <article id="post-inner-strength" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-it从业人员的核心竞争力" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -660,7 +610,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/02/12/inner-strength/">inner-strength</a>
+            <a class="article-title" href="/2018/02/23/it从业人员的核心竞争力/">it从业人员的核心竞争力</a>
         </h1>
     
 
@@ -669,8 +619,8 @@
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/02/12/inner-strength/">
-            <time datetime="2018-02-12T14:24:25.000Z" itemprop="datePublished">2018-02-12</time>
+        <a href="/2018/02/23/it从业人员的核心竞争力/">
+            <time datetime="2018-02-23T06:09:11.000Z" itemprop="datePublished">2018-02-23</time>
         </a>
     </div>
 
@@ -685,10 +635,20 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <h2 id="从尊敬一事无成的自己开始"><a href="#从尊敬一事无成的自己开始" class="headerlink" title="从尊敬一事无成的自己开始"></a>从尊敬一事无成的自己开始</h2><p>尊敬自己 才能拥有改变的力量</p>
-<p>别在疲惫不堪时反省自己</p>
-<p>乐于付出才能得到最纯粹的喜悦</p>
-<p>喜悦永远不嫌多</p>
+            <p>以前的长辈会说， 你要小心，你会的东西千万不能交给别人。俗话说的好，教会了徒弟饿死了师傅。</p>
+<p>BUT， 在 IT 行业 ，这个是一个讲究分享的行业，业内有一句话叫做， <strong>if you can’t be replaced,you won’t get promoted</strong></p>
+<hr>
+<p>多写几条query Google 一下，从理论论文到工业实现到best practice code 瞬间一网打尽</p>
+<ul>
+<li>沟通能力</li>
+<li>学习能力</li>
+<li>全局眼光和行业洞察力</li>
+<li>创新能力</li>
+</ul>
+<p>体察对方，表达自己，将需求转化为design，将task拆解为AI 的能力</p>
+<p>从实际工作中总结提炼的能力，即将现实问题转换为经验，并举一反三推而广之的能力</p>
+<p>形成这种行业性的vision 需要时间积累。</p>
+<p>主要是 <em>顺利理解和跟进，以最快的速度将他人原创应用到自己所从事的领域和正在实践的具体业务上，这就是一种跟进式创新</em></p>
 
         
         </div>
@@ -699,7 +659,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/02/12/inner-strength/" data-id="cjkv88w7j001chw2z8yydbu2b" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2018/02/23/it从业人员的核心竞争力/" data-id="cjkw02qy2001n4v2zqwhhm0jn" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -767,7 +727,7 @@
 
             
     
-        <a href="http://yoursite.com/2018/02/12/inner-strength/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/02/12/inner-strength/">Comments</a>
+        <a href="http://yoursite.com/2018/02/23/it从业人员的核心竞争力/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/02/23/it从业人员的核心竞争力/">Comments</a>
     
 
         </footer>
@@ -777,7 +737,7 @@
 
 
 
-    <article id="post-diverting-python" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-2月好书推荐201802" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -785,7 +745,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2018/02/10/diverting-python/">diverting-python</a>
+            <a class="article-title" href="/2018/02/22/2月好书推荐201802/">2月好书推荐201802</a>
         </h1>
     
 
@@ -794,8 +754,8 @@
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2018/02/10/diverting-python/">
-            <time datetime="2018-02-10T10:44:14.000Z" itemprop="datePublished">2018-02-10</time>
+        <a href="/2018/02/22/2月好书推荐201802/">
+            <time datetime="2018-02-22T08:52:48.000Z" itemprop="datePublished">2018-02-22</time>
         </a>
     </div>
 
@@ -810,87 +770,16 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <h2 id="有趣的python"><a href="#有趣的python" class="headerlink" title="有趣的python"></a>有趣的python</h2><ul>
-<li>廖雪峰老师的 app</li>
-</ul>
-<p><a href="https://github.com/michaelliao/awesome-python-webapp" target="_blank" rel="external">awesome-python-app</a></p>
-<ul>
-<li>社区系统</li>
-</ul>
-<p><a href="https://github.com/phith0n/Minos" target="_blank" rel="external">Minos</a></p>
-<ul>
-<li>北京公交</li>
-</ul>
-<p><a href="https://github.com/wong2/beijing_bus" target="_blank" rel="external">beijing_bus</a></p>
-<ul>
-<li>螺壳网</li>
-</ul>
-<p><a href="https://github.com/alvan/luokr.com" target="_blank" rel="external">luokr.com</a></p>
-<ul>
-<li>种子搜索网站</li>
-</ul>
-<p><a href="https://github.com/78/ssbc" target="_blank" rel="external">ssbc</a></p>
-<ul>
-<li>在线音乐网站</li>
-</ul>
-<p><a href="https://github.com/listen1" target="_blank" rel="external">listen1</a></p>
-<ul>
-<li>小代码合集</li>
-</ul>
-<p><a href="https://github.com/RealHacker/python-gems" target="_blank" rel="external">python-gems</a></p>
-<ul>
-<li>算法课程</li>
-</ul>
-<p><a href="https://github.com/qiwsir/algorithm" target="_blank" rel="external">algorithm</a></p>
-<ul>
-<li>分词器</li>
-</ul>
-<p><a href="https://github.com/grangier/python-goose" target="_blank" rel="external">python-goose</a></p>
-<ul>
-<li>过滤敏感词</li>
-</ul>
-<p><a href="https://github.com/observerss/textfilter" target="_blank" rel="external">https://github.com/observerss/textfilter</a></p>
-<ul>
-<li>社区项目 基于tornado mongodb</li>
-</ul>
-<p><a href="https://github.com/shiyanhui/Young" target="_blank" rel="external">https://github.com/shiyanhui/Young</a></p>
-<ul>
-<li>模拟登陆</li>
-</ul>
-<p><a href="https://github.com/xchaoinfo/fuck-login" target="_blank" rel="external">https://github.com/xchaoinfo/fuck-login</a></p>
-<ul>
-<li>flask 论坛</li>
-</ul>
-<p><a href="https://github.com/sh4nks/flaskbb" target="_blank" rel="external">https://github.com/sh4nks/flaskbb</a></p>
-<ul>
-<li>数据探索平台</li>
-</ul>
-<p><a href="https://github.com/apache/incubator-superset" target="_blank" rel="external">https://github.com/apache/incubator-superset</a></p>
-<ul>
-<li>python-sdk</li>
-</ul>
-<p><a href="https://github.com/qiniu/python-sdk" target="_blank" rel="external">https://github.com/qiniu/python-sdk</a></p>
-<ul>
-<li>flask-admin</li>
-</ul>
-<p><a href="https://github.com/flask-admin/flask-admin" target="_blank" rel="external">https://github.com/flask-admin/flask-admin</a></p>
-<ul>
-<li><strong>python-guide</strong></li>
-</ul>
-<p><a href="https://github.com/kennethreitz/python-guide" target="_blank" rel="external">https://github.com/kennethreitz/python-guide</a></p>
-<ul>
-<li>mincss</li>
-</ul>
-<p><a href="https://github.com/peterbe/mincss" target="_blank" rel="external">https://github.com/peterbe/mincss</a></p>
-<ul>
-<li><em>pymysql</em></li>
-</ul>
-<p>纯 Pyton 写的 MySQL 库，纯 Python 的好处就是可以运行在任何装有 Python 解释器（CPython、PyPy、IronPython）的平台上。</p>
-<p><a href="https://github.com/PyMySQL/PyMySQL" target="_blank" rel="external">https://github.com/PyMySQL/PyMySQL</a></p>
-<ul>
-<li>系统情况监测</li>
-</ul>
-<p><a href="https://github.com/nicolargo/glances" target="_blank" rel="external">https://github.com/nicolargo/glances</a></p>
+            <p>精益数据分析</p>
+<p>定位  视觉锤</p>
+<p>毛主席语录</p>
+<p>金字塔原理</p>
+<p>学会提问</p>
+<p>鬼谷子</p>
+<p>零秒思考</p>
+<hr>
+<p>SWOT分析法</p>
+<p>竞争分析</p>
 
         
         </div>
@@ -901,7 +790,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2018/02/10/diverting-python/" data-id="cjkv88w70000mhw2zroxu8o5h" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2018/02/22/2月好书推荐201802/" data-id="cjkw02qw400014v2zehyyrfkx" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -969,7 +858,7 @@
 
             
     
-        <a href="http://yoursite.com/2018/02/10/diverting-python/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/02/10/diverting-python/">Comments</a>
+        <a href="http://yoursite.com/2018/02/22/2月好书推荐201802/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2018/02/22/2月好书推荐201802/">Comments</a>
     
 
         </footer>
@@ -980,7 +869,7 @@
 
 
     <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/page/12/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><a class="extend next" rel="next" href="/page/14/">Next &raquo;</a>
+        <a class="extend prev" rel="prev" href="/page/12/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="page-number" href="/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/page/14/">14</a><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><a class="extend next" rel="next" href="/page/14/">Next &raquo;</a>
     </nav>
 </section>
             
@@ -996,7 +885,7 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/08/15/how-to-be-a-data-scientist-02/" class="thumbnail">
+                            <a href="/2018/08/16/how-to-be-a-data-scientist-10/" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -1007,15 +896,15 @@
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/08/15/how-to-be-a-data-scientist-02/" class="title">how to be a data scientist 02</a></p>
-                            <p class="item-date"><time datetime="2018-08-15T13:16:26.000Z" itemprop="datePublished">2018-08-15</time></p>
+                            <p class="item-title"><a href="/2018/08/16/how-to-be-a-data-scientist-10/" class="title">how to be a data scientist 10</a></p>
+                            <p class="item-date"><time datetime="2018-08-16T03:17:16.000Z" itemprop="datePublished">2018-08-16</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/08/15/how-to-be-a-data-scientist-01/" class="thumbnail">
+                            <a href="/2018/08/16/how-to-be-a-data-scientist-09/" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -1026,15 +915,15 @@
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/08/15/how-to-be-a-data-scientist-01/" class="title">how to be a data scientist 01</a></p>
-                            <p class="item-date"><time datetime="2018-08-15T10:17:45.000Z" itemprop="datePublished">2018-08-15</time></p>
+                            <p class="item-title"><a href="/2018/08/16/how-to-be-a-data-scientist-09/" class="title">how to be a data scientist 09</a></p>
+                            <p class="item-date"><time datetime="2018-08-16T03:17:04.000Z" itemprop="datePublished">2018-08-16</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/08/15/tensorflow-new/" class="thumbnail">
+                            <a href="/2018/08/16/how-to-be-a-data-scientist-08/" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -1045,15 +934,15 @@
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/08/15/tensorflow-new/" class="title">tensorflow-new</a></p>
-                            <p class="item-date"><time datetime="2018-08-15T00:12:18.000Z" itemprop="datePublished">2018-08-15</time></p>
+                            <p class="item-title"><a href="/2018/08/16/how-to-be-a-data-scientist-08/" class="title">how to be a data scientist 08</a></p>
+                            <p class="item-date"><time datetime="2018-08-16T03:09:50.000Z" itemprop="datePublished">2018-08-16</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/08/14/why-sanic/" class="thumbnail">
+                            <a href="/2018/08/16/how-to-be-a-data-scientist-07/" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -1064,15 +953,15 @@
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/08/14/why-sanic/" class="title">why-sanic</a></p>
-                            <p class="item-date"><time datetime="2018-08-14T02:38:42.000Z" itemprop="datePublished">2018-08-14</time></p>
+                            <p class="item-title"><a href="/2018/08/16/how-to-be-a-data-scientist-07/" class="title">how to be a data scientist 07</a></p>
+                            <p class="item-date"><time datetime="2018-08-16T03:04:29.000Z" itemprop="datePublished">2018-08-16</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/08/14/your-first-nn/" class="thumbnail">
+                            <a href="/2018/08/16/how-to-be-a-data-scientist-06/" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -1083,8 +972,8 @@
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/08/14/your-first-nn/" class="title">your_first_nn</a></p>
-                            <p class="item-date"><time datetime="2018-08-14T01:59:18.000Z" itemprop="datePublished">2018-08-14</time></p>
+                            <p class="item-title"><a href="/2018/08/16/how-to-be-a-data-scientist-06/" class="title">how to be a data scientist 06</a></p>
+                            <p class="item-date"><time datetime="2018-08-16T02:49:38.000Z" itemprop="datePublished">2018-08-16</time></p>
                         </div>
                     </li>
                 
@@ -1099,7 +988,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
         </div>
     </div>
 

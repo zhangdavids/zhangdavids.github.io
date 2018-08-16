@@ -156,7 +156,7 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                127
+                135
                 <span>posts</span>
             </div>
             <div class="article-info-block">
@@ -209,7 +209,7 @@
 
             
             <section id="main">
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-实战项目之爬取ganji网" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
         
@@ -217,7 +217,7 @@
                 
     
         <h1 itemprop="name">
-            <a class="article-title" href="/2016/05/15/hello-world/">Hello World</a>
+            <a class="article-title" href="/2016/05/17/实战项目之爬取ganji网/">实战项目之爬取ganji网</a>
         </h1>
     
 
@@ -226,8 +226,8 @@
                         
     <div class="article-date">
         <i class="fa fa-calendar"></i>
-        <a href="/2016/05/15/hello-world/">
-            <time datetime="2016-05-14T16:51:47.000Z" itemprop="datePublished">2016-05-15</time>
+        <a href="/2016/05/17/实战项目之爬取ganji网/">
+            <time datetime="2016-05-17T03:06:04.000Z" itemprop="datePublished">2016-05-17</time>
         </a>
     </div>
 
@@ -242,15 +242,139 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+            <p>爬取分类信息网站龙头  ganji网。  </p>
+<p>首先呢，来看看结构<br><img src="http://o7b8j5zne.bkt.clouddn.com/ganji%E5%9B%BE1.png" alt="图1"> </p>
+<p>我们需要来看看首页那里的所有类目，里面包含20项<br>基本上所有的帖子都会被分类在这20个下方，根据时间被分配不同的id，像这样<br><a href="http://bj.ganji.com/ershoubijibendiannao/2111373477x.htm" target="_blank" rel="external">http://bj.ganji.com/ershoubijibendiannao/2111373477x.htm</a><br>当然后面加了个x。。。  </p>
+<ul>
+<li>第一步<br>先把这20个类目的地址爬取出来。</li>
+</ul>
+<pre><code class="python"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup
+<span class="keyword">import</span> requests
+
+
+start_url = <span class="string">'http://bj.ganji.com/wu/'</span>
+url_host = <span class="string">'http://bj.ganji.com'</span>
+
+<span class="function"><span class="keyword">def</span> <span class="title">get_index_url</span><span class="params">(url)</span>:</span>
+    <span class="comment"># url = start_url</span>
+    wb_data = requests.get(url)
+    soup = BeautifulSoup(wb_data.text, <span class="string">'lxml'</span>)
+    links = soup.select(<span class="string">'.fenlei &gt; dt &gt; a'</span>)
+    <span class="keyword">for</span> link <span class="keyword">in</span> links:
+        page_url = url_host + link.get(<span class="string">'href'</span>)
+        print(page_url)
+
+get_index_url(start_url)
+</code></pre>
+<p>程序的运行结果是20个链接，  </p>
+<pre><code class="python">http://bj.ganji.com/jiaju/
+http://bj.ganji.com/rirongbaihuo/
+http://bj.ganji.com/shouji/
+http://bj.ganji.com/shoujihaoma/
+http://bj.ganji.com/bangong/
+http://bj.ganji.com/nongyongpin/
+http://bj.ganji.com/jiadian/
+http://bj.ganji.com/ershoubijibendiannao/
+http://bj.ganji.com/ruanjiantushu/
+http://bj.ganji.com/yingyouyunfu/
+http://bj.ganji.com/diannao/
+http://bj.ganji.com/xianzhilipin/
+http://bj.ganji.com/fushixiaobaxuemao/
+http://bj.ganji.com/meironghuazhuang/
+http://bj.ganji.com/shuma/
+http://bj.ganji.com/laonianyongpin/
+http://bj.ganji.com/xuniwupin/
+http://bj.ganji.com/qitawupin/
+http://bj.ganji.com/ershoufree/
+http://bj.ganji.com/wupinjiaohuan/
+</code></pre>
+<p>把这20个链接放入程序中，成为channel_list。<br>这也就是我们的第一个小程序 channel_extracing.py。  </p>
+<hr>
+<ul>
+<li>第二步<br>从大的分类下获取单个帖子的链接，先来分析下页面结构，<br><img src="http://o7b8j5zne.bkt.clouddn.com/ganji%E5%9B%BE2.png" alt="图2"> </li>
+</ul>
+<p>以二手笔记本电脑为例，可以看到后面结构为o＋page，这里o代表的是个人发布的，后面是page。<br>那么首先考虑的是构造一个爬虫来抓取links</p>
+<pre><code class="python"><span class="comment"># spider 1</span>
+<span class="function"><span class="keyword">def</span> <span class="title">get_links_from</span><span class="params">(channel, pages, who_sells=<span class="string">'o'</span>)</span>:</span>
+    <span class="comment"># http://bj.ganji.com/ershoubijibendiannao/o3/</span>
+    <span class="comment"># o for personal a for merchant</span>
+    list_view = <span class="string">'{}{}{}/'</span>.format(channel, str(who_sells), str(pages))
+    wb_data = requests.get(list_view,headers=headers,proxies=proxies)
+    soup = BeautifulSoup(wb_data.text, <span class="string">'lxml'</span>)
+    <span class="keyword">if</span> soup.find(<span class="string">'ul'</span>, <span class="string">'pageLink'</span>):
+        <span class="keyword">for</span> link <span class="keyword">in</span> soup.select(<span class="string">'dd.feature div ul li a'</span>):
+            item_link = link.get(<span class="string">'href'</span>)
+            <span class="keyword">if</span> item_link != <span class="string">"javascript:"</span>:                
+                url_list.insert_one({<span class="string">'url'</span>: item_link})
+                print(item_link)
+            <span class="comment"># return urls</span>
+    <span class="keyword">else</span>:
+        <span class="comment"># It's the last page !</span>
+        <span class="keyword">pass</span>
+</code></pre>
+<p>这里注意一下加了一个判断，判断这一页不是最后一页，就是看下方有无pageLink，俗称也就是翻页器类似的，还有就是直接加上了headers部分和proxy部分反爬取。  </p>
+<p>函数的结果是urls，并考虑使用mongo数据库来存储这个url_list。  </p>
+<p>接下来就是访问单个的url来抓取里面的数据信息了。  </p>
+<pre><code class="python"><span class="comment"># spider 2</span>
+<span class="function"><span class="keyword">def</span> <span class="title">get_item_info_from</span><span class="params">(url,data=None)</span>:</span>
+    wb_data = requests.get(url,headers=headers)
+    <span class="keyword">if</span> wb_data.status_code == <span class="number">404</span>:
+        <span class="keyword">pass</span>
+    <span class="keyword">else</span>:
+        soup = BeautifulSoup(wb_data.text, <span class="string">'lxml'</span>)
+        data = {
+            <span class="string">'title'</span>:soup.title.text.strip(),
+            <span class="string">'price'</span>:soup.select(<span class="string">'.f22.fc-orange.f-type'</span>)[<span class="number">0</span>].text.strip(),
+            <span class="string">'pub_date'</span>:soup.select(<span class="string">'.pr-5'</span>)[<span class="number">0</span>].text.strip().split(<span class="string">' '</span>)[<span class="number">0</span>],
+            <span class="string">'area'</span>:list(map(<span class="keyword">lambda</span> x:x.text,soup.select(<span class="string">'ul.det-infor &gt; li:nth-of-type(3) &gt; a'</span>))),
+            <span class="string">'cates'</span>:list(soup.select(<span class="string">'ul.det-infor &gt; li:nth-of-type(1) &gt; span'</span>)[<span class="number">0</span>].stripped_strings),
+            <span class="string">'url'</span>:url
+        }
+        print(data)
+        item_info.insert_one(data)
+</code></pre>
+<p>看图，单个页面我们考虑抓取，标题title 价格price 发布时间pub_data 交易地点area 类型cates 另外再考虑把url也加入里面。大概先这样咯。<br><img src="http://o7b8j5zne.bkt.clouddn.com/ganji%E5%9B%BE3.png" alt="图3">  </p>
+<p>把程序组织一下 组成第二个py程序 page_parsing.py<br>当然详情页抓取的数据我们也放到mongo的数据库中。  </p>
+<p>到这里初步小结一下，实现了哪些呢？先是从ganji的首页获取分类，20个分类<br>然后在这20个分类下，获取单个帖子的详情页，然后通过详情页去抓取想要的数据。<br>爬取的初步流程完成了，接下来就是包装，<br>写个主函数，定义下我们抓取多少页的大分类，先url_list然后item_info都存入到mongo的数据库中。<br>ps 考虑写一个计数的函数观察我们抓取的信息数目。  </p>
+<hr>
+<ul>
+<li>第三步<br>主函数的分析   </li>
+</ul>
+<pre><code class="python"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Pool  
+<span class="keyword">from</span> page_parsing <span class="keyword">import</span> get_item_info_from,url_list,item_info,get_links_from  
+<span class="keyword">from</span> channel_extracing <span class="keyword">import</span> channel_list
+</code></pre>
+<p>也就是前面的两个函数，我们实现了几个功能：</p>
+<p>channel_list<br>两个方法 get_item_info_from     get_links_from<br>两个mongo数据库的collections url_list item_info  </p>
+<p>另外这里使用多进程来加快抓取的速度      </p>
+<pre><code class="python"><span class="function"><span class="keyword">def</span> <span class="title">get_all_links_from</span><span class="params">(channel)</span>:</span>
+    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">100</span>):
+        get_links_from(channel,i)
+</code></pre>
+<p>注意前面定义的函数我们定义了页面，这里抓取1-99页，当然也许部分分类商品多，99不足，部分分类商品不是很多，我们也已经有判断会pass掉。。  </p>
+<pre><code class="python"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:
+    pool = Pool(processes=<span class="number">6</span>)
+    <span class="comment"># pool = Pool()</span>
+    pool.map(get_all_links_from,channel_list.split())
+    pool.close()
+    pool.join()
+</code></pre>
+<p>开6个进程进行爬爬爬，先存url，再根据url访问抓取。    </p>
+<hr>
+<ul>
+<li>第四步<br>写上一个计数的函数，这样可以在运行main函数存入数据库时并打印链接的同时，统计已经写了多少数据进去。  </li>
+</ul>
+<pre><code class="python"><span class="keyword">import</span> time
+<span class="keyword">from</span> page_parsing <span class="keyword">import</span> url_list
+
+<span class="keyword">while</span> <span class="keyword">True</span>:
+    print(url_list.find().count())
+    time.sleep(<span class="number">5</span>)
+</code></pre>
+<hr>
+<ul>
+<li>最后<br>附上项目github地址    <a href="https://github.com/zhangdavids/myganji" target="_blank" rel="external">项目地址</a></li>
+</ul>
 
         
         </div>
@@ -261,7 +385,7 @@
 
 </div>
 
-    <a data-url="http://yoursite.com/2016/05/15/hello-world/" data-id="cjkv88w79000yhw2ztsnct7fj" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2016/05/17/实战项目之爬取ganji网/" data-id="cjkw02r0d003o4v2zm0zymxus" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -329,7 +453,7 @@
 
             
     
-        <a href="http://yoursite.com/2016/05/15/hello-world/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2016/05/15/hello-world/">Comments</a>
+        <a href="http://yoursite.com/2016/05/17/实战项目之爬取ganji网/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2016/05/17/实战项目之爬取ganji网/">Comments</a>
     
 
         </footer>
@@ -339,149 +463,55 @@
 
 
 
-    <article id="post-mongo小试" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-python实战之一发送电子邮件" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/05/17/python实战之一发送电子邮件/">python实战之一发送电子邮件</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/05/17/python实战之一发送电子邮件/">
+            <time datetime="2016-05-17T00:42:04.000Z" itemprop="datePublished">2016-05-17</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
         
         
         <div class="article-entry" itemprop="articleBody">
         
             
-            <p>#MongoDB的一些小结</p>
-<p>##强大 灵活 可扩展<br>1.扩展了关系型数据库的辅助索引 范围查询（range query）和排序。<br>内置的对MapReduce式聚合的支持，以及对地理空间索引的支持。</p>
-<p>2.面向文档的数据库，思路首先就是将原来的“行”（row）的概念换成更加灵活的“文档”（documents）。面向文档的方式可以将文档或者数组内嵌进来，所以用一条记录就可以表示非常复杂的层次关系。这对于面向对象语言的开发者来说，是非常自然的事情。  </p>
-<p>我们先来看看一些常见的操作命令<br>首先进入命令行之后默认的是test数据库，一般而言我们首先需要切换到我们需要的数据库，比如这里举例一下 guazigz<br><code>use guazigz</code><br>再来详细学习    </p>
-<p>一.数据库常用命令    </p>
-<p>1.help查看命令提示  </p>
-<pre><code>help
-db.help();
-db.yourColl.help();
-db.youColl.find().help();
-rs.help();
-</code></pre><p>这里的youColl换成你数据库里对应的集合（Collection）即可  </p>
-<p>2.查询数据库  </p>
-<pre><code>show dbs;
-</code></pre><p>3.删除当前使用数据库  </p>
-<pre><code>db.dropDatabase();
-</code></pre><p>4.从指定的主机上克隆数据库  </p>
-<pre><code>db.cloneDatabase(&quot;127.0.0.1&quot;);
-</code></pre><p>5.从指定的机器上复制指定数据库数据到某个数据库  </p>
-<pre><code>db.copyDatabase(&quot;mydb&quot;,&quot;temp&quot;,&quot;127.0.0.1&quot;)
-</code></pre><p>6.修复当前数据库  </p>
-<pre><code>db.repairDatabase();
-</code></pre><p>7.查看当前使用的数据库  </p>
-<pre><code>db.getName();
-db;
-</code></pre><p>8.显示当前db状态  </p>
-<pre><code>db.stats();
-</code></pre><p>9.查看当前db的链接机器地址  </p>
-<pre><code>db.getMongo();
-</code></pre><p>二.Collection聚集集合<br>1.创建一个聚集集合（table）  </p>
-<pre><code>db.createCollection(“collName”, {size: 20, capped: 5, max: 100});//创建成功会显示{“ok”:1}
-//判断集合是否为定容量db.collName.isCapped();
-</code></pre><p>2.得到指定名称  </p>
-<pre><code>db.getCollection(&quot;account&quot;);
-</code></pre><p>3.得到当前db的所有集合  </p>
-<pre><code>db.getCollectionNames();
-</code></pre><p>4.显示当前db所有聚集索引的状态  </p>
-<pre><code>db.printCollectionStats();
-</code></pre><p>三.用户相关<br>1.添加一个用户  </p>
-<pre><code>db.addUser(&quot;name&quot;);
-db.addUser(&quot;userName&quot;, &quot;pwd123&quot;, true); //添加用户、设置密码、是否只读  
-</code></pre><p>2.数据库认证 安全模式  </p>
-<pre><code>db.auth(&quot;userName&quot;, &quot;123123&quot;);
-</code></pre><p>3.显示当前所有用户  </p>
-<pre><code>show users；
-</code></pre><p>4.删除用户  </p>
-<pre><code>db.removeUser(&quot;userName&quot;);
-</code></pre><p>四.聚合集合查询  </p>
-<p>1.查询所有记录  </p>
-<pre><code>db.userInfo.find();
-//相当于： select* from userInfo;
-</code></pre><p>默认每页显示20条记录，当显示不下的情况下，可以用it迭代命令查询下一页数据。注意：键入it命令不能带“；”<br>但是你可以设置每页显示数据的大小，用DBQuery.shellBatchSize= 50;这样每页就显示50条记录了。</p>
-<p>2.查询去掉后的当前聚集集合中的某列的重复数据  </p>
-<pre><code>db.userInfo.distinct(&quot;name&quot;);
-//会过滤掉name中的相同数据
-//相当于：select distict name from userInfo;
-</code></pre><p>3.查询数值范围内数据  </p>
-<pre><code>db.userInfo.find({age: {$gte: 23, $lte: 26}});
-//大于等于23，小于等于26
-</code></pre><p>4.查询name中包含mongo的数据  </p>
-<pre><code>db.userInfo.find({name: /mongo/});
-//相当于%%
-[code]select * from userInfo where name like ‘%mongo%&apos;;
-</code></pre><p>5.查询name中以mongo开头的  </p>
-<pre><code>db.userInfo.find({name: /^mongo/});
-//select * from userInfo where name like ‘mongo%&apos;;
-</code></pre><p>6.查询指定列name age数据  </p>
-<pre><code>db.userInfo.find({}, {name: 1, age: 1});
-//相当于：select name, age from userInfo;
-</code></pre><p>7.查询前5条数据</p>
-<pre><code>db.userInfo.find().limit(5);
-//相当于：selecttop 5 * from userInfo;
-</code></pre><p>8.查询10条以后的数据  </p>
-<pre><code>db.userInfo.find().skip(10);
-//相当于：select * from userInfo where id not in (
-selecttop 10 * from userInfo
-);
-</code></pre><p>9.查询某个结果集的记录条数  </p>
-<pre><code>db.userInfo.find({age: {$gte: 20}}).count();
-//相当于：select count(*) from userInfo where age &gt;= 20;
-</code></pre><p>10.按照某列进行排序  </p>
-<pre><code>db.userInfo.find({sex: {$exists: true}}).count();
-//相当于：select count(sex) from userInfo;
-</code></pre><p><strong>这一段里是比较重要的索引部分</strong><br>五.索引 (index)<br>1.创建  </p>
-<pre><code>db.userInfo.ensureIndex({name: 1});
-db.userInfo.ensureIndex({name: 1, ts: -1});
-</code></pre><p>2.查询当前聚集集合所有索引  </p>
-<pre><code>db.userInfo.getIndexes();
-</code></pre><p>3.查看总索引记录大小  </p>
-<pre><code>db.userInfo.totalIndexSize();
-</code></pre><p>4.读取当前集合的所有index信息  </p>
-<pre><code>db.users.reIndex();
-</code></pre><p>5.删除指定索引  </p>
-<pre><code>db.users.dropIndex(&quot;name_1&quot;);
-</code></pre><p>6.删除所有索引  </p>
-<pre><code>db.users.dropIndexes();
-</code></pre><p><em>索引这块可能详细说，有很所需要注意的地方，要不断翻阅琢磨！</em></p>
-<p><strong>这一段里是比较重要的索引部分</strong> </p>
-<p>六. 修改 添加 删除集合数据  </p>
-<p>1.添加（save）  </p>
-<pre><code>db.users.save({name: ‘zhangsan&apos;, age: 25, sex: true});
-//添加的数据的数据列，没有固定，根据添加的数据为准
-</code></pre><p>2.修改（update）</p>
-<pre><code>db.users.update({age: 25}, {$set: {name: &apos;changeName&apos;}}, false, true);
-//相当于：update users set name = ‘changeName&apos; where age = 25;
-db.users.update({name: &apos;Lisi&apos;}, {$inc: {age: 50}}, false, true);
-//相当于：update users set age = age + 50 where name = ‘Lisi&apos;;
-db.users.update({name: &apos;Lisi&apos;}, {$inc: {age: 50}, $set: {name: &apos;hoho&apos;}}, false, true);
-//相当于：update users set age = age + 50, name = ‘hoho&apos; where name = ‘Lisi&apos;;
-</code></pre><p>3.删除（remove）  </p>
-<pre><code>db.users.remove({age: 132});
-</code></pre><p>4.查询修改删除  </p>
-<pre><code>db.users.findAndModify({
-    query: {age: {$gte: 25}}, 
-    sort: {age: -1}, 
-    update: {$set: {name: &apos;a2&apos;}, $inc: {age: 2}},
-    remove: true
-});
-db.runCommand({ findandmodify : &quot;users&quot;, 
-    query: {age: {$gte: 25}}, 
-    sort: {age: -1}, 
-    update: {$set: {name: &apos;a2&apos;}, $inc: {age: 2}},
-    remove: true
-});
-</code></pre><p>七.查看基本信息  </p>
-<p>查看聚集集合基本信息<br>1、查看帮助  db.yourColl.help();<br>2、查询当前集合的数据条数  db.yourColl.count();<br>3、查看数据空间大小 db.userInfo.dataSize();<br>4、得到当前聚集集合所在的db db.userInfo.getDB();<br>5、得到当前聚集的状态 db.userInfo.stats();<br>6、得到聚集集合总大小 db.userInfo.totalSize();<br>7、聚集集合储存空间大小 db.userInfo.storageSize();<br>8、Shard版本信息  db.userInfo.getShardVersion();<br>9、聚集集合重命名 db.userInfo.renameCollection(“users”); //将userInfo重命名为users<br>10、删除当前聚集集合 db.userInfo.drop();</p>
-<pre><code>show dbs:显示数据库列表 
-show collections：显示当前数据库中的集合（类似关系数据库中的表） 
-show users：显示用户 
-use &lt;db name&gt;：切换当前数据库，这和MS-SQL里面的意思一样 
-db.help()：显示数据库操作命令，里面有很多的命令 
-db.foo.help()：显示集合操作命令，同样有很多的命令，foo指的是当前数据库下，一个叫foo的集合，并非真正意义上的命令 
-db.foo.find()：对于当前数据库中的foo集合进行数据查找（由于没有条件，会列出所有数据） 
-db.foo.find( { a : 1 } )：对于当前数据库中的foo集合进行查找，条件是数据中有一个属性叫a，且a的值为1
-</code></pre>
+            <p>把曾经做过的东西做下小结吧。<br>如何来使用python发送电子邮件呢？  </p>
+<p>一般而言，官方提供的思路就是使用smtplib包，但是实现起来个人感觉还是稍显复杂，需要按照要求书写好多比如smtp mime 手动添加邮件头，还需要一些email标准的某些知识。<br>like this：  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment">#-*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> smtplib</span><br><span class="line"><span class="keyword">from</span> email.mime.text <span class="keyword">import</span> MIMEText</span><br><span class="line"><span class="keyword">from</span> email.mime.multipart <span class="keyword">import</span> MIMEMultipart</span><br><span class="line"><span class="keyword">from</span> email.header <span class="keyword">import</span> Header</span><br><span class="line"></span><br><span class="line">sender = <span class="string">'z.j19910903@163.com'</span><span class="comment"># 发件人</span></span><br><span class="line">to = [<span class="string">"815012839@qq.com"</span>, <span class="string">"a@qq.com"</span>]  <span class="comment"># 多个收件人的写法</span></span><br><span class="line">subject = <span class="string">'From Python Email test'</span><span class="comment"># 邮件主题</span></span><br><span class="line">smtpserver = <span class="string">'smtp.163.com'</span><span class="comment"># smtp服务器</span></span><br><span class="line">username = <span class="string">'z.j19910903'</span><span class="comment"># 发件人邮箱用户名</span></span><br><span class="line">password = <span class="string">'******'</span><span class="comment"># 发件人邮箱密码</span></span><br><span class="line">mail_postfix = <span class="string">'163.com'</span></span><br><span class="line">contents = <span class="string">'这是一个Python的邮件，收到请勿回复，谢谢！！'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">send_mail</span><span class="params">(to_list, sub, content)</span>:</span></span><br><span class="line">    me = sender</span><br><span class="line">    msg = MIMEText(content, _subtype=<span class="string">'plain'</span>, _charset=<span class="string">'utf-8'</span>)</span><br><span class="line">    msg[<span class="string">'Subject'</span>] = subject</span><br><span class="line">    msg[<span class="string">'From'</span>] = me</span><br><span class="line">    msg[<span class="string">'To'</span>] = <span class="string">";"</span>.join(to_list)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        server = smtplib.SMTP()</span><br><span class="line">        server.connect(smtpserver)</span><br><span class="line">        server.login(username, password)</span><br><span class="line">        server.sendmail(me, to_list, msg.as_string())</span><br><span class="line">        server.close()</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">    <span class="keyword">except</span> Exception, e:</span><br><span class="line">        <span class="keyword">print</span> str(e)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="keyword">if</span> send_mail(to, subject, contents):</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"邮件发送成功! "</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"失败!!!"</span></span><br></pre></td></tr></table></figure>
+<p>可能看起来也不是很多，但是还是感觉稍稍有点麻烦。python让人着迷的地方，就是有大量的优秀开发人员开发的各种第三方库，现在我们需要的只是yagmail。  </p>
+<hr>
+<p>##yagmail<br>安装不多说，直接pip  </p>
+<pre><code>pip install yagmail
+</code></pre><p>它支持python2.7＋  </p>
+<p>使用的话也相对简单  </p>
+<pre><code>import yagmail
+yag = yagmail(zhangjohn202@gmail.com,&apos;your2-steppassword&apos;)
+contents=&apos;i love you more!&apos;
+yag.send(to=&apos;815012839@qq.com&apos;,subject=&apos;fall love at first sight&apos;,contents=contents)
+</code></pre><p>这里说下，一般的邮箱都是用户名和登录密码，别的邮箱我不知道现在有多少改进，感觉gmail不愧是属于全人类的邮箱，这里采用更为安全的方式来进行登录，两步验证密码。  </p>
+<p>自然只是最简单的举例，yagmail实现的功能还有富文本邮件 邮件附件以及使用邮件模板这较为常见的三项，详细可以参考yagmail的github主页。</p>
+
         
         </div>
         <footer class="article-footer">
@@ -491,7 +521,7 @@ db.foo.find( { a : 1 } )：对于当前数据库中的foo集合进行查找，�
 
 </div>
 
-    <a data-url="http://yoursite.com/2016/05/12/mongo小试/" data-id="cjkv88w7w001phw2z55z9tcnx" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://yoursite.com/2016/05/17/python实战之一发送电子邮件/" data-id="cjkw02qzt002m4v2zukp293tc" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -559,7 +589,574 @@ db.foo.find( { a : 1 } )：对于当前数据库中的foo集合进行查找，�
 
             
     
-        <a href="http://yoursite.com/2016/05/12/mongo小试/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2016/05/12/mongo小试/">Comments</a>
+        <a href="http://yoursite.com/2016/05/17/python实战之一发送电子邮件/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2016/05/17/python实战之一发送电子邮件/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-python之数据结构" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/05/16/python之数据结构/">python之数据结构</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/05/16/python之数据结构/">
+            <time datetime="2016-05-16T11:04:29.000Z" itemprop="datePublished">2016-05-16</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>对于一门语言来说，数据结构是其所有精华的所在，是python开发的基础。对于很多新人来说，就是觉得挺简单的，实际上手还是较困难。    </p>
+<p>python这里介绍四种数据结构：<br><em>1.元组<br>2.列表<br>3.字典<br>4.序列</em>  </p>
+<h2 id="元组"><a href="#元组" class="headerlink" title="元组"></a>元组</h2><p>tuple是由一系列元素组成的ds，所有元素被包含在一对圆括号中。创建元组时，可以不指定元素个数，但是一旦创建之后，就不能进行任何修改。<br>这里需要注意一下，如果创建的元组只包含一个元素，通常会忽略单元素后的逗号。正确写法如下：</p>
+<pre><code>tuple = (apple,)
+print (tuple[0])
+print (type(tuple))
+</code></pre><p> 这段代码定义了一个单元素的tuple“apple”，并且类型为<class 'tuple'="">。  </class></p>
+<p> 元组，列表，字典等都是从0开始的，［0］获取的就是第一个元素。  </p>
+<p> 元组创建之后，不能进行修改，也不能进行赋值操作。  </p>
+<p> 元组可以进行负数索引，分片索引，另外元组还可以由其他元组组成，就成了二元元组。</p>
+<p> 元组的遍历<br> 这里介绍下二元元组的遍历。</p>
+<pre><code>for i in tuple:
+    for j in i:
+        print(j)
+</code></pre><p>##列表    </p>
+<p> 列表是方括号。  </p>
+<p> 列表可以实现添加 删除 查找等操作，元素的值可以被修改。  </p>
+<p> 添加使用append（）<br> 还可以考虑insert（），不过insert要指明位置。<br> 删除直接用remove（）<br> pop（）是取出最后一个元素。<br> 列表的使用和元组十分相似，支持负数索引 分片还有多元列表等特性，但是列表中的元素可以进行修改。  </p>
+<p> 列表还可以进行连接操作。一种是extend（）连接两个不同的列表，另外一种是使用运算符“＋”或“＋＝”。</p>
+<pre><code>list = [&quot;apple&quot;,&quot;banana&quot;,&quot;orange&quot;,&quot;grape&quot;]  
+print(list.index(&quot;grape&quot;))  
+print(&quot;orange&quot; in list)
+</code></pre><p> 打印索引，<br> 判断orange是否在列表中。  </p>
+<p> 列表排序和反转  </p>
+<pre><code>list.sort()
+list.reverse()  
+</code></pre><p> sort()这个函数，需要仔细说明下，sort（cmp,key=None,reverse=False）  </p>
+<p> 在这和大家分享一下机器学习里的一个案例，看看列表的操作。  </p>
+<p> 统计 Python 中的字数<br>问题<br>在 Python 中实施函数“count_words()”，该函数将字符串“s”和数字“n”用作输入，并返回“s”中“n”个出现频率最高的单词。返回值应该是一个元组列表 - 出现频率最高的“n”个单词及其相应的出现次数“[(, ), (, ), …]”，按出现次数的降序排列。<br>您可以假设所有输入都是小写形式，并且不含标点符号或其他字符（只包含字母和单个分隔空格）。如果出现次数相同，则按字母顺序排列出现次数相同的单词。<br>例如：</p>
+<pre><code>print count_words(&quot;betty bought a bit of butter but the butter was bitter&quot;,3)
+</code></pre><p>Output:</p>
+<pre><code>[(&apos;butter&apos;, 2), (&apos;a&apos;, 1), (&apos;betty&apos;, 1)]
+</code></pre><pre><code>  &quot;&quot;&quot;Count words.&quot;&quot;&quot;
+from collections import Counter
+from operator import itemgetter
+def count_words(s, n):
+    &quot;&quot;&quot;Return the n most frequently occuring words in s.&quot;&quot;&quot;
+    cnt = Counter()
+    for word in s.split(&quot; &quot;):
+        cnt[word] += 1
+    a = cnt.items()
+    b = sorted(a,key=lambda a:a[0],reverse=False)
+    c = sorted(b,key=itemgetter(1),reverse=True)
+    top_n = c[0:n]
+    # TODO: Count the number of occurences of each word in s
+
+    # TODO: Sort the occurences in descending order (alphabetically in case of ties)
+
+    # TODO: Return the top n words as a list of tuples (&lt;word&gt;, &lt;count&gt;)
+    return top_n
+
+
+def test_run():
+    &quot;&quot;&quot;Test count_words() with some inputs.&quot;&quot;&quot;
+    print count_words(&quot;cat bat mat cat bat cat&quot;, 3)
+    print count_words(&quot;betty bought a bit of butter but the butter was bitter&quot;, 3)
+
+
+if __name__ == &apos;__main__&apos;:
+    test_run()
+</code></pre><p>如何来分析这个案例呢？  </p>
+<p>首先是定义一个字符串  </p>
+<pre><code>s＝“betty bought a bit of butter but the butter was bitter”
+</code></pre><p>接着使用文档中提到的collections来处理这个统计</p>
+<pre><code>from collections import Counter
+cnt = Counter()
+for word in s.split(&quot; &quot;):
+    cnt[word] += 1
+</code></pre><p>这里处理完之后，需要停下来检查一下cnt是啥类型<br>class ‘collections.Counter’  </p>
+<pre><code>Counter({&apos;butter&apos;: 2, &apos;a&apos;: 1, &apos;bitter&apos;: 1, &apos;of&apos;: 1, &apos;but&apos;: 1, &apos;betty&apos;: 1, &apos;bit&apos;: 1, &apos;was&apos;: 1, &apos;the&apos;: 1, &apos;bought&apos;: 1})
+</code></pre><p>这个形式应该就是我们后续要介绍的dict字典类型，我们需要把它转换为列表  </p>
+<p>cnt.items()  </p>
+<p>转换了之后，我们还需要做哪些处理呢？</p>
+<pre><code>[(&apos;a&apos;, 1), (&apos;butter&apos;, 2), (&apos;bitter&apos;, 1), (&apos;of&apos;, 1), (&apos;but&apos;, 1), (&apos;betty&apos;, 1), (&apos;bit&apos;, 1), (&apos;was&apos;, 1), (&apos;the&apos;, 1), (&apos;bought&apos;, 1)]   
+</code></pre><p>看看题目的要求，统计次数多的在前，一是数值大的要靠前站；<br>另外就是数值一样，按照字典顺序，a-z这种排列一下。  </p>
+<p>这里我就考虑使用这种顺序尝试一下咯。  </p>
+<p>先根据字典顺序，排列一下</p>
+<pre><code>sorted(a,key=lambda a:a[0],reverse=False)
+</code></pre><p>这个是正常的升序排列，得到结果：</p>
+<pre><code>[(&apos;a&apos;, 1), (&apos;betty&apos;, 1), (&apos;bit&apos;, 1), (&apos;bitter&apos;, 1), (&apos;bought&apos;, 1), (&apos;but&apos;, 1), (&apos;butter&apos;, 2), (&apos;of&apos;, 1), (&apos;the&apos;, 1), (&apos;was&apos;, 1)]
+</code></pre><p>接下来就是把数值大的调到前面去，也就是比较一下第二个值，按照降序排列处理一下  </p>
+<pre><code>from operator import itemgetter
+sorted(b,key=itemgetter(1),reverse=True)
+</code></pre><p>这样就基本实现了对列表里的排序，接着分片处理下就达到了题目要求。</p>
+<p>这个方案是我的初步方案，可能不是最简便的，供大家参考下，嘻嘻。  </p>
+<p>列表还有一个操作就是实现堆栈和队列，这个在大学的数据结构课程有简单接触的，问题就是很多只知道大概了啊。。</p>
+<p>堆栈就是后进先出</p>
+<p>队列则是先进先出<br>使用列表的append（）和pop（）操作可以模拟这两个数据结构<br>append（）可以把一个元素添加到堆栈的顶部，<br>pop（）把堆栈的最后一个元素弹出来。  </p>
+<p>队列的不同之处在于弹出时参数设置不一样，<br>pop（－1）弹出第一个元素  </p>
+<p>##字典  </p>
+<p>字典也是较为常见的，也是比较的重要的数据结构。key-value这种键值对，也是数据库的一种基本模式。  </p>
+<p>字典是花括号｛｝  </p>
+<p>这里需要注意一下，键是区分大小写的。一般而言，创建字典时，可以使用数字作为索引。<br>键值对这种结构，  </p>
+<pre><code>value=dict[key]
+</code></pre><p>说下字典的遍历：</p>
+<pre><code>for (k,v) in  dict.items():
+    print (&quot;dict[%s] =&quot;% k,v)
+</code></pre><p>值也可以是字典 元组 或者是字典，这种称为混合型字典。<br>字典有这么些方法：</p>
+<p>keys（） 返回keys列表<br>value（）返回value列表<br>get（）<br>get（）访问字典中的value值减少了代码的长度，而且表达方式容易理解，避免了使用if语句带来的维护代价。<br>update（）<br>update（）函数相当于一个合并函数，把一个字典的key和value值全部复制到另外一个字典中。<br>D.update(E) -&gt; None  </p>
+<p>把字典E的内容合并到字典D中，有相同的键值，e的值会覆盖d的。<br>setdefault（）<br>可以创建新的元素并设置默认值，声明如下：</p>
+<p>D.setdefault(k,[d]) -&gt; D.get(k,[d])  </p>
+<p>还有一些常用方法：<br>items（） 返回（key，value）元组组成的列表<br>iteritems（） 返回指向字典的遍历器  </p>
+<p>字典还有排序和复制  </p>
+<p>排序的话和列表的差不多  </p>
+<pre><code>print （sorted(dict.items(), key=lambda d:d[0])）
+</code></pre><p>这是按照key排序  </p>
+<p>前面提到的update函数，比如把a字典的内容复制到b字典，并且b字典原有的顺序保持不变，从而实现字典b的扩展。但是，如果需要把a的内容复制到b，并且清除b中的原有内容的话，则需要使用copy（）。  </p>
+<p>copy（）是浅拷贝<br>还有deepcopy（）是深拷贝  </p>
+<p>深拷贝能够拷贝对象内部所有的数据和引用，很像c语言中的指针。<br>字典b浅拷贝a的数据，如何b的数据发生添加 删除或者修改，a中的数据也将发生变化。<br>如果是深拷贝，a的数据是不会受到b的变化而变化的。  </p>
+<p><strong>深拷贝和浅拷贝适用于python的任何对象，不只是局限于字典。</strong>  </p>
+<p>另外，还有全局字典 sys.modules模块，这个字典是python启动时就加载在内存当中的，这个起到缓存的作用。  </p>
+<p>##序列  </p>
+<p>序列是具有索引和切片能力的集合，元组 列表 字符串都属于序列。  </p>
+<p>这里主要是元组和列表的区别。  </p>
+<p>元组是只读的，而且元组没有提供排序和查找的方法。<br>列表可读写，而且提供丰富的操作，支持排序 查找。<br>元组的数据通常具有不同的含义，而列表的数据通常具有相同的含义。<br>相同之处则是都支持负数索引和分片的操作。  </p>
+<p>每天能适当做一些自己的总结，对于知识的掌握还是很有好处的。<br>希望自己能够好好坚持。<br>有目标的人咋个说呢？<br>今天看到一个前辈说，真正的牛人也许一辈子只投4次简历。<br>你就错过了毕业就去好公司的机会，所以需要更加努力学习。<br>对于初级的程序员来说，很想做出一点东西来，但是又不知道哪些重要哪些不重要，到底该学到什么程度，不知道导致不确定，不确定导致决策瘫痪，干脆就啥也不动，整年整年苦闷的像没头苍蝇一样到处乱撞，荒废时间。  </p>
+<p>今年不论在哪里工作，决定給自己设定一个目标，在博客上写下52篇博客，虽然前期可能借鉴他人的经验较多，但是希望自己还是能保持到平均一周一篇的水平，不断写写写去积累。  </p>
+<p>周博客这里可能局限于一些技术见闻，所见所感这块，另外希望自己能写下10篇左右的读书笔记。</p>
+<hr>
+<p>没有什么面试比持续两年的面试更具有信息量，书单加上github。  </p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2016/05/16/python之数据结构/" data-id="cjkw02qzq002i4v2zpwx9qqim" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2016/05/16/python之数据结构/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2016/05/16/python之数据结构/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-macdown语法简介" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/05/15/macdown语法简介/">macdown语法简介</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/05/15/macdown语法简介/">
+            <time datetime="2016-05-15T07:06:44.000Z" itemprop="datePublished">2016-05-15</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>#markdown语法简介</p>
+<p>1.标题<br>1）使用＝和－标记一级和二级标题<br>使用方法是文字下方加上＝＝＝＝＝＝这样  </p>
+<h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题  "></a>一级标题  </h1><p>2） 使用＃，可以表示1-6级标题  </p>
+<p>##二级标题  </p>
+<p>2.段落<br>段落的前后要有空行，所谓的空行是指没有文字内容。<br>若想在段内强制换行的方式是使用两个以上空格加上回车（引用中换行省略回车）。  </p>
+<p>3.区块引用<br>在段落的每行或者只在第一行使用符号&gt;,还可以使用多个嵌套引用，如：</p>
+<blockquote>
+<p>区块引用</p>
+<blockquote>
+<p>嵌套引用  </p>
+</blockquote>
+</blockquote>
+<p>4.代码区块<br>代码区块的建立是在每行加上4个空格或者一个制表符（如同写代码一样）。如<br>普通段落：  </p>
+<pre><code>void main()
+{
+printf(&quot;Hello, Markdown.&quot;);
+}
+</code></pre><p>注意:需要和普通段落之间存在空行。</p>
+<p>5.强调<br>在强调内容两侧分别加上<em>或者_，如：  
+</em>,  <em>还是斜体</em></p>
+<p><em>粗体</em>，  <em>还是粗体</em>  </p>
+<p>6.列表<br>使用*、+、或-标记无序列表，如：</p>
+<ul>
+<li>为什么   </li>
+</ul>
+<ul>
+<li>怎么办  </li>
+</ul>
+<ul>
+<li>啥时候  </li>
+</ul>
+<p>有序列表的标记方式是将上述的符号换成数字,并且加上点  </p>
+<ol>
+<li>第一点 </li>
+</ol>
+<p>7.分割线  </p>
+<p>分割线最常使用就是三个或以上*，还可以使用_。  </p>
+<p>大道至简  </p>
+<hr>
+<p>道法三千</p>
+<hr>
+<p>杏杏冥冥  </p>
+<p>8.链接<br>链接可以由两种形式生成：行内式和参考式。</p>
+<p>行内式：<br><a href="https:://github.com/younghz/Markdown" title="Markdown" target="_blank" rel="external">markdown库</a></p>
+<p>参考式：<br><a href="https:://github.com/younghz/Markdown" title="Markdown" target="_blank" rel="external">younghz的Markdown库1</a><br><a href="https:://github.com/younghz/Markdown" title="Markdown" target="_blank" rel="external">younghz的Markdown库2</a></p>
+<p>9.图片  </p>
+<p> 添加图片的形式和链接相似，只需在链接的基础上前方加一个！。<br>10.反斜杠\  </p>
+<p>相当于反转义作用。使符号成为普通符号。  </p>
+<p>11.符号``</p>
+<p>起到表记作用。如：  </p>
+<p><code>ctrl+a</code>  </p>
+<p>12.表格  </p>
+<table>
+<thead>
+<tr>
+<th>Tables</th>
+<th style="text-align:center">Are</th>
+<th style="text-align:right">Cool</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>col 3 is</td>
+<td style="text-align:center">right-aligned</td>
+<td style="text-align:right">$1600</td>
+</tr>
+<tr>
+<td>col 2 is</td>
+<td style="text-align:center">centered</td>
+<td style="text-align:right">$12</td>
+</tr>
+<tr>
+<td>zebra stripes</td>
+<td style="text-align:center">are neat</td>
+<td style="text-align:right">$1</td>
+</tr>
+</tbody>
+</table>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2016/05/15/macdown语法简介/" data-id="cjkw02qyb001x4v2z32wzqk56" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2016/05/15/macdown语法简介/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2016/05/15/macdown语法简介/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-爬虫实践教程3-多进程" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/05/15/爬虫实践教程3-多进程/">爬虫实践教程3-多进程</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/05/15/爬虫实践教程3-多进程/">
+            <time datetime="2016-05-15T03:40:05.000Z" itemprop="datePublished">2016-05-15</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>python爬虫多数都是运行在linux内核的服务器上的，多进程比多线程更合适，调度开销差不多，但是进程性能更好。<br>爬虫不是服务器交互，一般情况下提升几倍效率即可。  </p>
+<p>直接来看看代码  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding:utf-8</span></span><br><span class="line"><span class="keyword">import</span> multiprocessing</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"><span class="comment">#url详情页</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pageUrls</span><span class="params">(url)</span>:</span></span><br><span class="line">    web_data = requests.get(url)</span><br><span class="line">    soup = BeautifulSoup(web_data.text, <span class="string">'lxml'</span>)</span><br><span class="line">    sum = int(soup.select(<span class="string">'span.total &gt; em:nth-of-type(1)'</span>)[<span class="number">0</span>].get_text())</span><br><span class="line">    pageNum = sum/<span class="number">50</span></span><br><span class="line">    <span class="keyword">return</span> [url+<span class="string">'/loupan/s?p=&#123;&#125;'</span>.format(str(i)) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, pageNum+<span class="number">2</span>, <span class="number">1</span>)]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">detailPage</span><span class="params">(myurl)</span>:</span></span><br><span class="line">    urls = pageUrls(myurl)</span><br><span class="line">    <span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">        web_data = requests.get(url)</span><br><span class="line">        soup = BeautifulSoup(web_data.text, <span class="string">'lxml'</span>)</span><br><span class="line">        titles = soup.select(<span class="string">'div.list-results &gt; div.key-list &gt; div &gt; div.infos &gt; div &gt; h3 &gt; a'</span>)</span><br><span class="line">        <span class="keyword">for</span> title <span class="keyword">in</span> titles:</span><br><span class="line">            <span class="keyword">print</span> url</span><br><span class="line">            <span class="keyword">print</span> title.get_text()</span><br><span class="line">            <span class="keyword">print</span> title.get(<span class="string">'href'</span>)</span><br><span class="line">            <span class="keyword">print</span> <span class="string">"**********"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(urls)</span>:</span></span><br><span class="line">    pool = multiprocessing.Pool(multiprocessing.cpu_count())</span><br><span class="line">    <span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">        pool.apply_async(detailPage, (url, ))</span><br><span class="line">    <span class="comment"># pool.map(detailPage, urls)</span></span><br><span class="line">    pool.close()</span><br><span class="line">    pool.join()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    startUrl = <span class="string">'http://gz.fang.anjuke.com/?from=navigation'</span></span><br><span class="line">    web_data = requests.get(startUrl)</span><br><span class="line">    soup = BeautifulSoup(web_data.text, <span class="string">'lxml'</span>)</span><br><span class="line">    urls = [url.get(<span class="string">'href'</span>) <span class="keyword">for</span> url <span class="keyword">in</span> soup.select(<span class="string">'.city-mod &gt; dl &gt; dd &gt; a'</span>)]</span><br><span class="line">    main(urls)</span><br></pre></td></tr></table></figure>
+<p>这次我们准备爬取的是安居客的网站。<br>先从主代码开始，startUrl，使用requests和beautifulsoup进行解析。获取地址之后，进入main函数。<br>multiprocessing 创建一个进程池，进程个数为cpu内核数，一般写4或6个即可。<br>apply_async函数从进程池中取出一个进程执行func，args为func的参数，我们这段代码不断地从进程池中取出进程去执行我们的detailPage方法。当然，也可以采用下面这种方式：  </p>
+<pre><code>pool.map(detailPage, urls)
+</code></pre><p>接着就是关闭进程池还有wait进程池中的全部进程。  </p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://yoursite.com/2016/05/15/爬虫实践教程3-多进程/" data-id="cjkw02r0f003t4v2z8oufdkbu" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://yoursite.com/2016/05/15/爬虫实践教程3-多进程/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://yoursite.com/2016/05/15/爬虫实践教程3-多进程/">Comments</a>
     
 
         </footer>
@@ -570,7 +1167,7 @@ db.foo.find( { a : 1 } )：对于当前数据库中的foo集合进行查找，�
 
 
     <nav id="page-nav">
-        <a class="extend prev" rel="prev" href="/page/25/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><a class="page-number" href="/page/25/">25</a><span class="page-number current">26</span>
+        <a class="extend prev" rel="prev" href="/page/25/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/24/">24</a><a class="page-number" href="/page/25/">25</a><span class="page-number current">26</span><a class="page-number" href="/page/27/">27</a><a class="extend next" rel="next" href="/page/27/">Next &raquo;</a>
     </nav>
 </section>
             
@@ -586,7 +1183,7 @@ db.foo.find( { a : 1 } )：对于当前数据库中的foo集合进行查找，�
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/08/15/how-to-be-a-data-scientist-02/" class="thumbnail">
+                            <a href="/2018/08/16/how-to-be-a-data-scientist-10/" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -597,15 +1194,15 @@ db.foo.find( { a : 1 } )：对于当前数据库中的foo集合进行查找，�
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/08/15/how-to-be-a-data-scientist-02/" class="title">how to be a data scientist 02</a></p>
-                            <p class="item-date"><time datetime="2018-08-15T13:16:26.000Z" itemprop="datePublished">2018-08-15</time></p>
+                            <p class="item-title"><a href="/2018/08/16/how-to-be-a-data-scientist-10/" class="title">how to be a data scientist 10</a></p>
+                            <p class="item-date"><time datetime="2018-08-16T03:17:16.000Z" itemprop="datePublished">2018-08-16</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/08/15/how-to-be-a-data-scientist-01/" class="thumbnail">
+                            <a href="/2018/08/16/how-to-be-a-data-scientist-09/" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -616,15 +1213,15 @@ db.foo.find( { a : 1 } )：对于当前数据库中的foo集合进行查找，�
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/08/15/how-to-be-a-data-scientist-01/" class="title">how to be a data scientist 01</a></p>
-                            <p class="item-date"><time datetime="2018-08-15T10:17:45.000Z" itemprop="datePublished">2018-08-15</time></p>
+                            <p class="item-title"><a href="/2018/08/16/how-to-be-a-data-scientist-09/" class="title">how to be a data scientist 09</a></p>
+                            <p class="item-date"><time datetime="2018-08-16T03:17:04.000Z" itemprop="datePublished">2018-08-16</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/08/15/tensorflow-new/" class="thumbnail">
+                            <a href="/2018/08/16/how-to-be-a-data-scientist-08/" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -635,15 +1232,15 @@ db.foo.find( { a : 1 } )：对于当前数据库中的foo集合进行查找，�
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/08/15/tensorflow-new/" class="title">tensorflow-new</a></p>
-                            <p class="item-date"><time datetime="2018-08-15T00:12:18.000Z" itemprop="datePublished">2018-08-15</time></p>
+                            <p class="item-title"><a href="/2018/08/16/how-to-be-a-data-scientist-08/" class="title">how to be a data scientist 08</a></p>
+                            <p class="item-date"><time datetime="2018-08-16T03:09:50.000Z" itemprop="datePublished">2018-08-16</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/08/14/why-sanic/" class="thumbnail">
+                            <a href="/2018/08/16/how-to-be-a-data-scientist-07/" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -654,15 +1251,15 @@ db.foo.find( { a : 1 } )：对于当前数据库中的foo集合进行查找，�
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/08/14/why-sanic/" class="title">why-sanic</a></p>
-                            <p class="item-date"><time datetime="2018-08-14T02:38:42.000Z" itemprop="datePublished">2018-08-14</time></p>
+                            <p class="item-title"><a href="/2018/08/16/how-to-be-a-data-scientist-07/" class="title">how to be a data scientist 07</a></p>
+                            <p class="item-date"><time datetime="2018-08-16T03:04:29.000Z" itemprop="datePublished">2018-08-16</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2018/08/14/your-first-nn/" class="thumbnail">
+                            <a href="/2018/08/16/how-to-be-a-data-scientist-06/" class="thumbnail">
     
     
         <span class="thumbnail-image thumbnail-none"></span>
@@ -673,8 +1270,8 @@ db.foo.find( { a : 1 } )：对于当前数据库中的foo集合进行查找，�
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
-                            <p class="item-title"><a href="/2018/08/14/your-first-nn/" class="title">your_first_nn</a></p>
-                            <p class="item-date"><time datetime="2018-08-14T01:59:18.000Z" itemprop="datePublished">2018-08-14</time></p>
+                            <p class="item-title"><a href="/2018/08/16/how-to-be-a-data-scientist-06/" class="title">how to be a data scientist 06</a></p>
+                            <p class="item-date"><time datetime="2018-08-16T02:49:38.000Z" itemprop="datePublished">2018-08-16</time></p>
                         </div>
                     </li>
                 
@@ -689,7 +1286,7 @@ db.foo.find( { a : 1 } )：对于当前数据库中的foo集合进行查找，�
     <div class="widget-wrap">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/08/">August 2018</a><span class="archive-list-count">21</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a><span class="archive-list-count">28</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a><span class="archive-list-count">17</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">November 2017</a><span class="archive-list-count">13</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a><span class="archive-list-count">20</span></li></ul>
         </div>
     </div>
 
