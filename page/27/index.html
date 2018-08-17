@@ -263,6 +263,392 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/17/实战项目之爬取ganji网/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/05/17/实战项目之爬取ganji网/" itemprop="url">实战项目之爬取ganji网</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-17T11:06:04+08:00">
+                2016-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>爬取分类信息网站龙头  ganji网。  </p>
+<p>首先呢，来看看结构<br><img src="http://o7b8j5zne.bkt.clouddn.com/ganji%E5%9B%BE1.png" alt="图1"> </p>
+<p>我们需要来看看首页那里的所有类目，里面包含20项<br>基本上所有的帖子都会被分类在这20个下方，根据时间被分配不同的id，像这样<br><a href="http://bj.ganji.com/ershoubijibendiannao/2111373477x.htm" target="_blank" rel="external">http://bj.ganji.com/ershoubijibendiannao/2111373477x.htm</a><br>当然后面加了个x。。。  </p>
+<ul>
+<li>第一步<br>先把这20个类目的地址爬取出来。</li>
+</ul>
+<pre><code class="python"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup
+<span class="keyword">import</span> requests
+
+
+start_url = <span class="string">'http://bj.ganji.com/wu/'</span>
+url_host = <span class="string">'http://bj.ganji.com'</span>
+
+<span class="function"><span class="keyword">def</span> <span class="title">get_index_url</span><span class="params">(url)</span>:</span>
+    <span class="comment"># url = start_url</span>
+    wb_data = requests.get(url)
+    soup = BeautifulSoup(wb_data.text, <span class="string">'lxml'</span>)
+    links = soup.select(<span class="string">'.fenlei &gt; dt &gt; a'</span>)
+    <span class="keyword">for</span> link <span class="keyword">in</span> links:
+        page_url = url_host + link.get(<span class="string">'href'</span>)
+        print(page_url)
+
+get_index_url(start_url)
+</code></pre>
+<p>程序的运行结果是20个链接，  </p>
+<pre><code class="python">http://bj.ganji.com/jiaju/
+http://bj.ganji.com/rirongbaihuo/
+http://bj.ganji.com/shouji/
+http://bj.ganji.com/shoujihaoma/
+http://bj.ganji.com/bangong/
+http://bj.ganji.com/nongyongpin/
+http://bj.ganji.com/jiadian/
+http://bj.ganji.com/ershoubijibendiannao/
+http://bj.ganji.com/ruanjiantushu/
+http://bj.ganji.com/yingyouyunfu/
+http://bj.ganji.com/diannao/
+http://bj.ganji.com/xianzhilipin/
+http://bj.ganji.com/fushixiaobaxuemao/
+http://bj.ganji.com/meironghuazhuang/
+http://bj.ganji.com/shuma/
+http://bj.ganji.com/laonianyongpin/
+http://bj.ganji.com/xuniwupin/
+http://bj.ganji.com/qitawupin/
+http://bj.ganji.com/ershoufree/
+http://bj.ganji.com/wupinjiaohuan/
+</code></pre>
+<p>把这20个链接放入程序中，成为channel_list。<br>这也就是我们的第一个小程序 channel_extracing.py。  </p>
+<hr>
+<ul>
+<li>第二步<br>从大的分类下获取单个帖子的链接，先来分析下页面结构，<br><img src="http://o7b8j5zne.bkt.clouddn.com/ganji%E5%9B%BE2.png" alt="图2"> </li>
+</ul>
+<p>以二手笔记本电脑为例，可以看到后面结构为o＋page，这里o代表的是个人发布的，后面是page。<br>那么首先考虑的是构造一个爬虫来抓取links</p>
+<pre><code class="python"><span class="comment"># spider 1</span>
+<span class="function"><span class="keyword">def</span> <span class="title">get_links_from</span><span class="params">(channel, pages, who_sells=<span class="string">'o'</span>)</span>:</span>
+    <span class="comment"># http://bj.ganji.com/ershoubijibendiannao/o3/</span>
+    <span class="comment"># o for personal a for merchant</span>
+    list_view = <span class="string">'{}{}{}/'</span>.format(channel, str(who_sells), str(pages))
+    wb_data = requests.get(list_view,headers=headers,proxies=proxies)
+    soup = BeautifulSoup(wb_data.text, <span class="string">'lxml'</span>)
+    <span class="keyword">if</span> soup.find(<span class="string">'ul'</span>, <span class="string">'pageLink'</span>):
+        <span class="keyword">for</span> link <span class="keyword">in</span> soup.select(<span class="string">'dd.feature div ul li a'</span>):
+            item_link = link.get(<span class="string">'href'</span>)
+            <span class="keyword">if</span> item_link != <span class="string">"javascript:"</span>:                
+                url_list.insert_one({<span class="string">'url'</span>: item_link})
+                print(item_link)
+            <span class="comment"># return urls</span>
+    <span class="keyword">else</span>:
+        <span class="comment"># It's the last page !</span>
+        <span class="keyword">pass</span>
+</code></pre>
+<p>这里注意一下加了一个判断，判断这一页不是最后一页，就是看下方有无pageLink，俗称也就是翻页器类似的，还有就是直接加上了headers部分和proxy部分反爬取。  </p>
+<p>函数的结果是urls，并考虑使用mongo数据库来存储这个url_list。  </p>
+<p>接下来就是访问单个的url来抓取里面的数据信息了。  </p>
+<pre><code class="python"><span class="comment"># spider 2</span>
+<span class="function"><span class="keyword">def</span> <span class="title">get_item_info_from</span><span class="params">(url,data=None)</span>:</span>
+    wb_data = requests.get(url,headers=headers)
+    <span class="keyword">if</span> wb_data.status_code == <span class="number">404</span>:
+        <span class="keyword">pass</span>
+    <span class="keyword">else</span>:
+        soup = BeautifulSoup(wb_data.text, <span class="string">'lxml'</span>)
+        data = {
+            <span class="string">'title'</span>:soup.title.text.strip(),
+            <span class="string">'price'</span>:soup.select(<span class="string">'.f22.fc-orange.f-type'</span>)[<span class="number">0</span>].text.strip(),
+            <span class="string">'pub_date'</span>:soup.select(<span class="string">'.pr-5'</span>)[<span class="number">0</span>].text.strip().split(<span class="string">' '</span>)[<span class="number">0</span>],
+            <span class="string">'area'</span>:list(map(<span class="keyword">lambda</span> x:x.text,soup.select(<span class="string">'ul.det-infor &gt; li:nth-of-type(3) &gt; a'</span>))),
+            <span class="string">'cates'</span>:list(soup.select(<span class="string">'ul.det-infor &gt; li:nth-of-type(1) &gt; span'</span>)[<span class="number">0</span>].stripped_strings),
+            <span class="string">'url'</span>:url
+        }
+        print(data)
+        item_info.insert_one(data)
+</code></pre>
+<p>看图，单个页面我们考虑抓取，标题title 价格price 发布时间pub_data 交易地点area 类型cates 另外再考虑把url也加入里面。大概先这样咯。<br><img src="http://o7b8j5zne.bkt.clouddn.com/ganji%E5%9B%BE3.png" alt="图3">  </p>
+<p>把程序组织一下 组成第二个py程序 page_parsing.py<br>当然详情页抓取的数据我们也放到mongo的数据库中。  </p>
+<p>到这里初步小结一下，实现了哪些呢？先是从ganji的首页获取分类，20个分类<br>然后在这20个分类下，获取单个帖子的详情页，然后通过详情页去抓取想要的数据。<br>爬取的初步流程完成了，接下来就是包装，<br>写个主函数，定义下我们抓取多少页的大分类，先url_list然后item_info都存入到mongo的数据库中。<br>ps 考虑写一个计数的函数观察我们抓取的信息数目。  </p>
+<hr>
+<ul>
+<li>第三步<br>主函数的分析   </li>
+</ul>
+<pre><code class="python"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Pool  
+<span class="keyword">from</span> page_parsing <span class="keyword">import</span> get_item_info_from,url_list,item_info,get_links_from  
+<span class="keyword">from</span> channel_extracing <span class="keyword">import</span> channel_list
+</code></pre>
+<p>也就是前面的两个函数，我们实现了几个功能：</p>
+<p>channel_list<br>两个方法 get_item_info_from     get_links_from<br>两个mongo数据库的collections url_list item_info  </p>
+<p>另外这里使用多进程来加快抓取的速度      </p>
+<pre><code class="python"><span class="function"><span class="keyword">def</span> <span class="title">get_all_links_from</span><span class="params">(channel)</span>:</span>
+    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">100</span>):
+        get_links_from(channel,i)
+</code></pre>
+<p>注意前面定义的函数我们定义了页面，这里抓取1-99页，当然也许部分分类商品多，99不足，部分分类商品不是很多，我们也已经有判断会pass掉。。  </p>
+<pre><code class="python"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:
+    pool = Pool(processes=<span class="number">6</span>)
+    <span class="comment"># pool = Pool()</span>
+    pool.map(get_all_links_from,channel_list.split())
+    pool.close()
+    pool.join()
+</code></pre>
+<p>开6个进程进行爬爬爬，先存url，再根据url访问抓取。    </p>
+<hr>
+<ul>
+<li>第四步<br>写上一个计数的函数，这样可以在运行main函数存入数据库时并打印链接的同时，统计已经写了多少数据进去。  </li>
+</ul>
+<pre><code class="python"><span class="keyword">import</span> time
+<span class="keyword">from</span> page_parsing <span class="keyword">import</span> url_list
+
+<span class="keyword">while</span> <span class="keyword">True</span>:
+    print(url_list.find().count())
+    time.sleep(<span class="number">5</span>)
+</code></pre>
+<hr>
+<ul>
+<li>最后<br>附上项目github地址    <a href="https://github.com/zhangdavids/myganji" target="_blank" rel="external">项目地址</a></li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/17/python实战之一发送电子邮件/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/05/17/python实战之一发送电子邮件/" itemprop="url">python实战之一发送电子邮件</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-17T08:42:04+08:00">
+                2016-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>把曾经做过的东西做下小结吧。<br>如何来使用python发送电子邮件呢？  </p>
+<p>一般而言，官方提供的思路就是使用smtplib包，但是实现起来个人感觉还是稍显复杂，需要按照要求书写好多比如smtp mime 手动添加邮件头，还需要一些email标准的某些知识。<br>like this：  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line"><span class="comment">#-*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> smtplib</span><br><span class="line"><span class="keyword">from</span> email.mime.text <span class="keyword">import</span> MIMEText</span><br><span class="line"><span class="keyword">from</span> email.mime.multipart <span class="keyword">import</span> MIMEMultipart</span><br><span class="line"><span class="keyword">from</span> email.header <span class="keyword">import</span> Header</span><br><span class="line"></span><br><span class="line">sender = <span class="string">'z.j19910903@163.com'</span><span class="comment"># 发件人</span></span><br><span class="line">to = [<span class="string">"815012839@qq.com"</span>, <span class="string">"a@qq.com"</span>]  <span class="comment"># 多个收件人的写法</span></span><br><span class="line">subject = <span class="string">'From Python Email test'</span><span class="comment"># 邮件主题</span></span><br><span class="line">smtpserver = <span class="string">'smtp.163.com'</span><span class="comment"># smtp服务器</span></span><br><span class="line">username = <span class="string">'z.j19910903'</span><span class="comment"># 发件人邮箱用户名</span></span><br><span class="line">password = <span class="string">'******'</span><span class="comment"># 发件人邮箱密码</span></span><br><span class="line">mail_postfix = <span class="string">'163.com'</span></span><br><span class="line">contents = <span class="string">'这是一个Python的邮件，收到请勿回复，谢谢！！'</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">send_mail</span><span class="params">(to_list, sub, content)</span>:</span></span><br><span class="line">    me = sender</span><br><span class="line">    msg = MIMEText(content, _subtype=<span class="string">'plain'</span>, _charset=<span class="string">'utf-8'</span>)</span><br><span class="line">    msg[<span class="string">'Subject'</span>] = subject</span><br><span class="line">    msg[<span class="string">'From'</span>] = me</span><br><span class="line">    msg[<span class="string">'To'</span>] = <span class="string">";"</span>.join(to_list)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        server = smtplib.SMTP()</span><br><span class="line">        server.connect(smtpserver)</span><br><span class="line">        server.login(username, password)</span><br><span class="line">        server.sendmail(me, to_list, msg.as_string())</span><br><span class="line">        server.close()</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line">    <span class="keyword">except</span> Exception, e:</span><br><span class="line">        <span class="keyword">print</span> str(e)</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="keyword">if</span> send_mail(to, subject, contents):</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"邮件发送成功! "</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"失败!!!"</span></span><br></pre></td></tr></table></figure>
+<p>可能看起来也不是很多，但是还是感觉稍稍有点麻烦。python让人着迷的地方，就是有大量的优秀开发人员开发的各种第三方库，现在我们需要的只是yagmail。  </p>
+<hr>
+<p>##yagmail<br>安装不多说，直接pip  </p>
+<pre><code>pip install yagmail
+</code></pre><p>它支持python2.7＋  </p>
+<p>使用的话也相对简单  </p>
+<pre><code>import yagmail
+yag = yagmail(zhangjohn202@gmail.com,&apos;your2-steppassword&apos;)
+contents=&apos;i love you more!&apos;
+yag.send(to=&apos;815012839@qq.com&apos;,subject=&apos;fall love at first sight&apos;,contents=contents)
+</code></pre><p>这里说下，一般的邮箱都是用户名和登录密码，别的邮箱我不知道现在有多少改进，感觉gmail不愧是属于全人类的邮箱，这里采用更为安全的方式来进行登录，两步验证密码。  </p>
+<p>自然只是最简单的举例，yagmail实现的功能还有富文本邮件 邮件附件以及使用邮件模板这较为常见的三项，详细可以参考yagmail的github主页。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/16/python之数据结构/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -811,313 +1197,6 @@ printf(&quot;Hello, Markdown.&quot;);
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/15/爬虫实践教程2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/05/15/爬虫实践教程2/" itemprop="url">爬虫实践教程2</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-15T09:55:40+08:00">
-                2016-05-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>这里先介绍一下，我们使用工具selenium和Phantomjs来配合抓取。<br>安装的话， 直接   </p>
-<pre><code>pip install -U selenium
-</code></pre><p>而Phantomjs则通过brew来安装，不细说。  </p>
-<pre><code>brew install phantomjs
-</code></pre><p>选择原因：<br>Phantomjs是基于webkit的没有界面的浏览器，可以像浏览器一样解析网页，个人感觉的效果比firefox和chrome稍微快些。<br>selenium是web的自动测试工具，可以模拟人的操作。几乎支持市面上所有的主流浏览器。  </p>
-<p>来看看代码  </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding:utf-8</span></span><br><span class="line"><span class="keyword">import</span> unittest</span><br><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">seleniumTest</span><span class="params">(unittest.TestCase)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">setUp</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.driver = webdriver.PhantomJS()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">testEle</span><span class="params">(self)</span>:</span></span><br><span class="line">        driver = self.driver</span><br><span class="line">        driver.get(<span class="string">'http://www.douyu.com/directory/all'</span>)</span><br><span class="line">        soup = BeautifulSoup(driver.page_source, <span class="string">'xml'</span>)</span><br><span class="line">        <span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">            titles = soup.find_all(<span class="string">'h3'</span>, &#123;<span class="string">'class'</span>: <span class="string">'ellipsis'</span>&#125;)</span><br><span class="line">            nums = soup.find_all(<span class="string">'span'</span>, &#123;<span class="string">'class'</span>: <span class="string">'dy-num fr'</span>&#125;)</span><br><span class="line">            <span class="keyword">for</span> title, num <span class="keyword">in</span> zip(titles, nums):</span><br><span class="line">                <span class="keyword">print</span> title.get_text(), num.get_text()</span><br><span class="line">            <span class="keyword">if</span> driver.page_source.find(<span class="string">'shark-pager-disable-next'</span>) != <span class="number">-1</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            elem = driver.find_element_by_class_name(<span class="string">'shark-pager-next'</span>)</span><br><span class="line">            elem.click()</span><br><span class="line">            soup = BeautifulSoup(driver.page_source, <span class="string">'xml'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">tearDown</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">'down'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    unittest.main()</span><br></pre></td></tr></table></figure>
-<p>这里一些概念说明：<br>1.unittest  单元测试，简单的测试用例。以setup开头，中间测试的方法以test开头，测试完成之后会有一个teardown。<br>2.斗鱼tv是看直播时较常去的，直接用浏览器打开 <a href="http://www.douyu.com/directory/all" target="_blank" rel="external">斗鱼</a><br>网页源码中可以直接看到房间的信息，返回的不是json格式而是html，直接使用phantomjs模拟浏览器的访问过程，通过driver.get方法获取浏览器加载完成后的代码，无论是否是异步，取到的source都是和在浏览器中看到的完全一样！  </p>
-<p>这里lxml方式有数据丢失，原因未知。。后来尝试了xml无误，暂时不知原因。。   </p>
-<p>还有对比之前的瓜子和果壳，我们只从中抓取了部分页面。这里抓取全部我们需要加上条件判断，最后一页时斗鱼下一页的标签会变灰，这个时候我们就加上这个跳出循环。  </p>
-<pre><code>if driver.page_source.find(&apos;shark-pager-disable-next&apos;) != -1: 
-    break  
-</code></pre><p>还有这里  </p>
-<pre><code>elem = driver.find_element_by_class_name(&apos;shark-pager-next&apos;) 
-elem.click() 
-soup = BeautifulSoup(driver.page_source, &apos;xml&apos;)
-</code></pre><p>第一行代码是webdriver里面带有的定位标签的方法，直接使用class来定位，取到这个控件，<br>然后执行element的click（）方法模拟鼠标的点击，<br>页面会自动跳到下一页，接着解析网页的源码。  </p>
-<p><strong>tips</strong><br>这里加上一点selenium的小操作<br>编码学习的一个小突破感觉就是不断滴回顾学习吧，有些看完文档之后，觉得是这样没错，可是不久就好像啥也不剩了，在基础阶段模范性学习当中，要不断深化下已经学到的东西，适当做些归纳总结会很好。  </p>
-<p>填入表单数据  </p>
-<pre><code>#coding:utf-8
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-
-driver = webdriver.Firefox()
-driver.get(&apos;https://www.baidu.com/&apos;)
-elem = driver.find_element_by_id(&apos;kw&apos;)
-elem.send_keys(u&apos;爬虫&apos;)
-elem.send_keys(Keys.RETURN)
-print(driver.page_source)
-</code></pre><p>滚动页面至最下方  </p>
-<pre><code>#coding:utf-8
-from selenium import webdriver
-import time
-
-driver = webdriver.Firefox()
-driver.get(&apos;http://www.jianshu.com/collections&apos;)
-time.sleep(1)
-for i in range(10):
-    dirver.execute_script(&apos;window.scrollTo(0,document.body.scrollHeight)&apos;)
-    time.sleep(1)
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/15/爬虫实践教程1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/05/15/爬虫实践教程1/" itemprop="url">爬虫实践教程1</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-15T09:34:43+08:00">
-                2016-05-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>一般来说呢，很多网页都是直接分好页面直接下一页这样。不过还有很多网页是ajax异步请求数据的网页，以果壳网为例，我们尝试一下抓取。</p>
-<pre><code># coding:utf-8
-from bs4 import BeautifulSoup
-import requests
-import json
-import pymongo
-
-url = &apos;http://www.guokr.com/scientific/&apos;
-
-def dealData(url):
-    client = pymongo.MongoClient(&apos;localhost&apos;, 27017)
-    guoke = client[&apos;guoke&apos;]
-    guokeData = guoke[&apos;guokeData&apos;]
-    web_data = requests.get(url)
-    datas = json.loads(web_data.text)
-    print datas.keys()
-    for data in datas[&apos;result&apos;]:
-        guokeData.insert_one(data)
-
-def start():
-    urls = [&apos;http://www.guokr.com/apis/minisite/article.json?retrieve_type=by_subject&amp;limit=20&amp;offset={}&amp;_=1462252453410&apos;.format(str(i)) for i in range(20, 100, 20)]
-    for url in urls:
-        dealData(url)
-
-start()
-&apos;&apos;&apos;
-异步加载的网站  这里比如果壳网的抓取
-&apos;&apos;&apos;
-</code></pre><p>网页的抓取大概流程就是这样：<br>1.使用谷歌或者火狐浏览器，检查元素，分析下我们想抓取什么，有啥子障碍。<br>2.异步加载的数据不在返回的网页源码中，在网络标签和xhr分页面，向下滑动鼠标可以发现新的get请求被列出来。偏移量是多少，需要好好总结规律，然后不断尝试。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1172,7 +1251,7 @@ start()
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">138</span>
+                  <span class="site-state-item-count">140</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
