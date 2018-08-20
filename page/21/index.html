@@ -263,6 +263,144 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/26/django-template/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/26/django-template/" itemprop="url">django template</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-26T22:52:07+08:00">
+                2017-11-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="django-template-知识点总结"><a href="#django-template-知识点总结" class="headerlink" title="django_template 知识点总结"></a>django_template 知识点总结</h2><p>模板有三个知识点</p>
+<p><em>变量</em><br><em>标签</em><br><em>过滤器</em></p>
+<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><ul>
+<li>变量的形式是：， 当模板引擎碰到变量的时候，引擎使用变量的值代替变量。</li>
+<li>使用dot(.)能够访问变量的属性</li>
+<li><p>当模板引擎碰到dot的时候，查找的顺序是什么样子呢？</p>
+<ul>
+<li>字典查找，例如：foo[“var1”]  </li>
+<li>属性查找，例如：foo.bar  </li>
+<li>方法查找，例如：foo.bar()  </li>
+<li>list-index查找，例如：foo[bar]</li>
+</ul>
+</li>
+</ul>
+<p>注意：方法查找比一般的查找要复杂一些<br>(1)如果调用方法期间，方法抛出一个异常，那么异常将会产生，除非异常对象带有一个属性silent_variable_failure，<br>如果这个值是True，那么将会返回一个空字串。<br>(2)方法调用仅仅对那些没有参数的方法才会生效<br>(3)一些方法会产生副作用，所以系统允许方法设置一个属性alters_data，如果值为True，那么将不能够调用<br>其设置方法是：  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sensitive_function</span><span class="params">(self)</span>:</span></span><br><span class="line"></span><br><span class="line">    *** </span><br><span class="line">    </span><br><span class="line">sensitive_function.alters_data = <span class="keyword">True</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果模板中使用的某个变量不存在，那么模板系统将使用setting.py中 变量TEMPLATE_STRING_IF_INVALID的值进行替代，在默认情况下，该变量的值是’’。</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/23/multiprocessing/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -841,143 +979,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/06/tf-note-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/06/tf-note-1/" itemprop="url">tf-note-1</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-06T23:29:30+08:00">
-                2017-11-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>andrew ng </p>
-<p>深度学习 是 什么？</p>
-<p>简单点来说 是训练神经网络。 神经网络有时候规模会很大。 非常传统的例子， 是房价的预测。</p>
-<p>假设有一个六间房的数据集，已知房屋的面积 房屋价格 想要找到一个函数来预测房价。</p>
-<p>很显然，懂线性回归的同学会知道直接拟合一条直线就好。</p>
-<p>这就是最简单的神经网络。</p>
-<p>输入x， 经过一个神经元，得到预测价格y</p>
-<p>这个函数被称为 ReLU 函数，全称是修正线性单元，修正指的是取不小于0的值。</p>
-<p>大点的神经网络是把这些单个神经元堆叠起来形成的，你可以想象成搭乐高积木。</p>
-<p>预测房屋价格，现在可能还有一些其他的特征，如卧室的数量，邮编也可以作为一个特性，因为说明了步行化程度。还有其他等等特性。。。</p>
-<p>对于神经网络，只有你喂给它足够多的x和y的数据，得到足够多的x y 训练样本，就非常擅于计算从x到y的精准映射函数。这就是一个基本的神经网络，自己的神经网络在监督学习的环境下是如此有效和强大。</p>
-<p>常见的应用有<br>预测房价<br>在线广告<br>还有图像 文本等的处理<br>语言翻译<br>自动驾驶  </p>
-<p>图像领域，经常使用卷积神经网络，也就是CNN  </p>
-<p>对于序列数据，例如音频中含有时间成分，则使用 RNN </p>
-<p>英语翻译 也 属于序列数据， RNN</p>
-<p>无人驾驶，基于图片， </p>
-<p>另外  就是 GAN  无监督学习了。</p>
-<p>待续 。。。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1032,7 +1033,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-count">142</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

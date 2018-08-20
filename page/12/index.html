@@ -263,6 +263,154 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/13/python当中的并发/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/13/python当中的并发/" itemprop="url">python当中的并发</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-13T23:19:15+08:00">
+                2018-03-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>并发的表现形式，并行处理是软件工程领域最广泛的话题之一。</p>
+<p>两个事件互不影响，则两个事件是并发的。<br>CPython的线程实现中带有一些麻烦的细节，使得实用性降低了。</p>
+<p>GIL 只是强制在任何时候只有一个线程可以执行python代码</p>
+<p>多线程可以使用的场景：</p>
+<ul>
+<li>构建响应式界面</li>
+<li>委派工作</li>
+<li>构建多用户应用程序</li>
+</ul>
+<p>如何让用户控制使用哪个处理后端（进程或者线程）</p>
+<pre><code>from multiprocessing import Pool as ProcessPool
+from multiprocessing.dummpy import Pool as ThreadPool
+
+
+def main(use_threads=False):
+    if use_threads:
+        pool_cls = ThreadPool
+    else:
+        pool_cls = ProcessPool
+
+    with pool_cls(4) as p:
+        results = p.map(fetch_place, PLACES)
+
+    for result in results:
+        present_result(result)
+</code></pre><h2 id="异步编程"><a href="#异步编程" class="headerlink" title="异步编程"></a>异步编程</h2><p>异步编程的解决方案，如twisted tornado eventlet,真的值得了解</p>
+<p>协同多任务是异步编程的核心。每个进程都在空闲时自动释放控制以允许同时执行多个程序。</p>
+<p>gevent 的工作方式，gevent 的作用一条线程跑多个协程，适合多 IO 操作。</p>
+<p>需要强调的是引入 gevent 不会加快获取数据的速度，例如，原来是 30ms，引入之后不会变少，只会变多，那么引入的好处是什么？原来你能在1秒之内接待33个客户端请求，引入之后可能可以接待100个/s，也可能接待 300个/s，这才是 gevent 的好处。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/13/flask-and-gevent/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1024,239 +1172,6 @@ None
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/03/python装饰器全解/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/03/python装饰器全解/" itemprop="url">python装饰器全解</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-03T16:48:13+08:00">
-                2018-03-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>python装饰器的作用 <strong>使得函数包装和方法包装变得更容易阅读和理解</strong></p>
-<p>1.一般语法和可能的实现</p>
-<ul>
-<li>作为一个函数</li>
-<li>作为一个类</li>
-<li>参数化装饰器</li>
-<li>保存内省的装饰器</li>
-</ul>
-<p>2.用法和有用的例子</p>
-<ul>
-<li>参数检查</li>
-<li>缓存</li>
-<li>代理</li>
-<li>上下文提供者</li>
-</ul>
-<p><em>Python 函数不同于其他编程语言，它可以作为第一类对象使用，这是关键。因为装饰器本质上还是函数</em></p>
-<p>很多人对装饰器难以理解，原因是由于以下三点内容没有搞清楚：</p>
-<p>关于函数“变量”（或“变量”函数）的理解</p>
-<p>关于高阶函数的理解</p>
-<p>关于嵌套函数的理解</p>
-<p>那么如果能对以上的问题一一攻破，同时遵循装饰器的基本原则，相信会对装饰器有个很好的理解的。那么我们先来看以下装饰器的目的及其原则。</p>
-<p>1、装饰器</p>
-<p>装饰器实际上就是为了给某程序增添功能，但该程序已经上线或已经被使用，那么就不能大批量的修改源代码，这样是不科学的也是不现实的，因为就产生了装饰器，使得其满足：</p>
-<ul>
-<li>不能修改被装饰的函数的源代码</li>
-<li>不能修改被装饰的函数的调用方式</li>
-<li>满足1、2的情况下给程序增添功能<br>那么根据需求，同时满足了这三点原则，这才是我们的目的。因为，下面我们从解决这三点原则入手来理解装饰器。</li>
-</ul>
-<p>等等，我要在需求之前先说装饰器的原则组成：</p>
-<p>&lt; 函数+实参高阶函数+返回值高阶函数+嵌套函数+语法糖 = 装饰器 &gt;</p>
-<p>这个式子是贯穿装饰器的灵魂所在！</p>
-<p>2、需求实现</p>
-<pre><code>improt time
-def test():
-    time.sleep(2)
-    print(&quot;test is running!&quot;)
-test()
-</code></pre><p>给程序添加统计运行时间（2 second）功能</p>
-<p>如何进行呢？</p>
-<p>很显然，函数和变量是一样的，都是“一个名字对应内存地址中的一些内容”<br>那么根据这样的原则，我们就可以理解两个事情：</p>
-<p>test1表示的是函数的内存地址</p>
-<p>test1()就是调用对在test1这个地址的内容，即函数</p>
-<p>如果这两个问题可以理解，那么我们就可以进入到下一个原因(关于高阶函数的理解)</p>
-<p>那么对于高阶函数的形式可以有两种：</p>
-<p>把一个函数名当作实参传给另外一个函数（“实参高阶函数”）</p>
-<p>返回值中包含函数名（“返回值高阶函数”）</p>
-<p>那么这里面所说的函数名，实际上就是函数的地址，也可以认为是函数的一个标签而已，并不是调用，是个名词。如果可以把函数名当做实参，那么也就是说可以把函数传递到另一个函数，然后在另一个函数里面做一些操作，根据这些分析来看，这岂不是满足了装饰器三原则中的第一条，即不修改源代码而增加功能。那我们看来一下具体的做法：</p>
-<p>还是针对上面那段代码：</p>
-<pre><code>improt time
-
-def test():
-    time.sleep(2)
-    print(&quot;test is running!&quot;)
-
-def deco(func):  
-    start = time.time()
-    func() #2
-    stop = time.time()
-    print(stop-start)
-
-deco(test) #1
-</code></pre><p>装饰有参数的函数</p>
-<pre><code>improt time
-
-def timer(func)
-    def deco(*args, **kwargs):  
-        start = time.time()
-        res = func(*args, **kwargs)
-        stop = time.time()
-        print(stop-start)
-        return res 
-    return deco
-
-@timer
-def test(parameter): #8
-    time.sleep(2)
-    print(&quot;test is running!&quot;)   
-    return &quot;Returned value&quot;
-test()     
-</code></pre><p>带参数的装饰器</p>
-<pre><code>import time
-
-def timer(parameter):
-
-    def outer_wrapper(func):
-
-        def wrapper(*args, **kwargs):
-            if parameter == &apos;task1&apos;:
-                start = time.time()
-                func(*args, **kwargs)
-                stop = time.time()
-                print(&quot;the task1 run time is :&quot;, stop - start)
-            elif parameter == &apos;task2&apos;:
-                start = time.time()
-                func(*args, **kwargs)
-                stop = time.time()
-                print(&quot;the task2 run time is :&quot;, stop - start)
-
-        return wrapper
-
-    return outer_wrapper
-
-@timer(parameter=&apos;task1&apos;)
-def task1():
-    time.sleep(2)
-    print(&quot;in the task1&quot;)
-
-@timer(parameter=&apos;task2&apos;)
-def task2():
-    time.sleep(2)
-    print(&quot;in the task2&quot;)
-
-task1()
-task2()    
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1311,7 +1226,7 @@ task2()
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-count">142</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
