@@ -263,6 +263,185 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/23/云计算综述/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/23/云计算综述/" itemprop="url">云计算综述</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-23T22:51:10+08:00">
+                2018-03-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>neutron nova keystone 各种组件</p>
+<p>网络技术领域知识</p>
+<p>平安科技（深圳）有限公司</p>
+<p>1.image 创建命令：</p>
+<pre><code class="shell">glance image-create --name cirros --file /tmp/cirros-0.3.4-x86_64-disk.img --
+disk-format qcow2 --container-format bare --progress
+</code></pre>
+<p>2.详细命令：</p>
+<pre><code>keystone user-list # 被取代
+openstack user list
+
+glance image-create
+glance image-delete
+glance image-update
+glance image-list
+glance image-show    
+
+neutron net-create
+neutron net -delete
+neutron net -update
+neutron net -list
+neutron net –show    
+
+neutron subnet-create
+neutron subnet -delete
+neutron subnet -update
+neutron subnet -list
+neutron subnet–show
+
+nova boot
+nova delete
+nova list
+nova show    
+
+# 每个对象都有id
+</code></pre><p><strong>tcp/ip协议</strong>不是一个协议，而是一个协议族的统称。里面包括了IP协议，IMCP协议，TCP协议，以及我们更加熟悉的http、ftp、pop3协议等等</p>
+<p>1．为什么建立连接协议是三次握手，而关闭连接却是四次握手呢？</p>
+<p>这是因为服务端的LISTEN状态下的SOCKET当收到SYN报文的建连请求后，它可以把ACK和SYN（ACK起应答作用，而SYN起同步作用）放在一个报文里来发送。但关闭连接时，当收到对方的FIN报文通知时，它仅仅表示对方没有数据发送给你了；但未必你所有的数据都全部发送给对方了，所以你可以未必会马上会关闭SOCKET,也即你可能还需要发送一些数据给对方之后，再发送FIN报文给对方来表示你同意现在可以关闭连接了，所以它这里的ACK报文和FIN报文多数情况下都是分开发送的。</p>
+<p>2．为什么TIME_WAIT状态还需要等2MSL后才能返回到CLOSED状态？</p>
+<p>这是因为虽然双方都同意关闭连接了，而且握手的4个报文也都协调和发送完毕，按理可以直接回到CLOSED状态（就好比从SYN_SEND状态到ESTABLISH状态那样）；但是因为我们必须要假想网络是不可靠的，你无法保证你最后发送的ACK报文会一定被对方收到，因此对方处于LAST_ACK状态下的SOCKET可能会因为超时未收到ACK报文，而重发FIN报文，所以这个TIME_WAIT状态的作用就是用来重发可能丢失的ACK报文。</p>
+<p>sdn</p>
+<p>SDN采用与传统网络截然不同的控制架构，将网络控制平面分离和转发平面分离，采用集中控制替代原有分布式控制，并通过开放和可编程接口实现“软件定义”。与传统的网络架构相比，SDN通过软硬件分离，实现了网络虚拟化、IT化及软件化，并降低了设备的复杂度、简化网络运维、提高网络利用率、加速网络创新。</p>
+<p>evpn</p>
+<p>EVPN是一种虚拟私有网络，那么在一套物理设备上必然可以有多个同时存在的EVPN实例，每个实例独立存在。每个EVI连接了一组或者多组用户网络，构成一个或者多个跨地域的二层网络。</p>
+<p>vxlan   </p>
+<p>虚拟可拓展局域网</p>
+<p>from multiprocessing import Pool<br>from multiprocessing.dummy import Pool<br>哪个速度快就用那个。尽量在写兼容的方式，这样在多线程/多进程之间切换非常方便。</p>
+<p>现在，如果一个任务拿不准是CPU密集还是I/O密集型，且没有其它不能选择多进程方式的因素，都统一直接上多进程模式。</p>
+<p>使用多线程(threading)和多进程(multiprocessing)完成常规的需求，在启动的时候start、jon等步骤不能省，复杂的需要还要用1-2个队列。随着需求越来越复杂，如果没有良好的设计和抽象这部分的功能层次，代码量越多调试的难度就越大。有没有什么好的方法把这些步骤抽象一下呢，让我们不关注这些细节，轻装上阵呢？</p>
+<p>答案是：有的。</p>
+<p>从Python3.2开始一个叫做concurrent.futures被纳入了标准库，而在Python2它属于第三方的futures库，需要手动安装：</p>
+<p>这个模块中有2个类：ThreadPoolExecutor和ProcessPoolExecutor，也就是对threading和multiprocessing的进行了高级别的抽象，<br>暴露出统一的接口，帮助开发者非常方便的实现异步调用</p>
+<ul>
+<li>lsvirtualenv: 列出全部的虚拟环境</li>
+<li>showvirtualenv: 列出单个虚拟环境的信息</li>
+<li>rmvirtualenv: 删除一个虚拟环境</li>
+<li>cpvirtualenv: 拷贝虚拟环境</li>
+<li>allvirtualenv: 对当前虚拟环境执行统一的命令。 比如， 要给 venv1 和 venv2 都安装flask, 就可以用allvirtualenv pip install flask</li>
+<li>cdvirtualenv: 可以直接切换到虚拟环境的子目录里面</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/19/mac-use-tips/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1012,160 +1191,11 @@ print(time)
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/17/python-top-30/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/17/python-top-30/" itemprop="url">python-top-30</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-17T14:42:17+08:00">
-                2018-03-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.家庭助理</p>
-<p>2.PyTorch</p>
-<p>3.Grumpy</p>
-<p>4.sanic</p>
-<p>5.Python-fire</p>
-<p>6.spaCy</p>
-<p>7.pipenv</p>
-<p>8.micropython</p>
-<p>9.prophet</p>
-<p>10.SerpentAI</p>
-<p>11.dash</p>
-<p>12.instaPy</p>
-<p>13.apistar</p>
-<p>14.faiss</p>
-<p>15.MechanicalSoup：一个与网站自动化交互的Python库</p>
-<p>16.Better-exceptions：用Python编写的自动地漂亮的和有用的异常处理</p>
-<p>17.Flashtext：从句子中提取关键词或替换句子中的关键词</p>
-<p>18.Maya：用Python实现人类的日期时间</p>
-<p>19.Mimesis (v1.0)：Python库，有助于为不同的目的以不同的语言生成模拟数据。这些数据在软件开发和测试的不同阶段特别有用</p>
-<p>20.开放式无纸化：扫描、索引和归档所有的纸质文档。一个文档管理系统</p>
-<p>21.Fsociety：黑客工具包。渗透测试框架</p>
-<p>22.LivePython：实时可视化跟踪Python代码</p>
-<p>23.Hatch：用于Python的现代项目、包和虚拟环境管理器</p>
-<p>24.Tangent:用纯Python实现源到源的可调试导数</p>
-<p>25.Clairvoyant：识别和监控短期股票走势的历史线索的Python程序</p>
-<p>26.MonkeyType：Python通过收集运行时类型生成静态类型注释的系统</p>
-<p>27.Eel：一个小的Python库，用于制作简单的电子类HTML / js GUI应用程序</p>
-<p>28.Surprise v1.0：建立和分析推荐系统的Python scikit**</p>
-<p>29.Gain：获取每个人的Web爬行框架</p>
-<p>30.PDFTabExtract: 一组从PDF文件中提取表的工具，有助于对扫描文档进行数据挖掘</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/9/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><span class="page-number current">10</span><a class="page-number" href="/page/11/">11</a><span class="space">&hellip;</span><a class="page-number" href="/page/29/">29</a><a class="extend next" rel="next" href="/page/11/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1215,7 +1245,7 @@ print(time)
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">140</span>
+                  <span class="site-state-item-count">141</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
