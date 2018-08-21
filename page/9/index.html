@@ -263,6 +263,585 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/31/以太坊区块链简介/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/31/以太坊区块链简介/" itemprop="url">以太坊区块链简介</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-31T23:09:13+08:00">
+                2018-03-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>以太坊区块链到底是什么？区块链有 2 个主要组件：</p>
+<p>数据库：网络中每笔交易都存储在区块链上。当你部署合约时，就是一笔交易。当你为候选者投票时，又是另一笔交易。所有的这些交易都是公开的，每个人都可以看到并进行验证。这个数据永远也无法篡改。为了确保网络中的所有节点都有着同一份数据拷贝，并且没有向数据库中写入任何的无效数据，以太坊使用一个叫做工作量证明的算法来保证网络安全。(<a href="http://ethereum.stackexchange.com/questions/14/what-proof-of-work-function-does-ethereum-use" target="_blank" rel="external">http://ethereum.stackexchange.com/questions/14/what-proof-of-work-function-does-ethereum-use</a>)</p>
+<p>代码：就数据库的层面而言，区块链就是存储交易。那么给候选者投票，检索所有投票的逻辑放在哪儿呢？在以太坊的世界里，你可以通过一个叫 Solidity 的语言编写逻辑/应用代码（也就是合约）。然后用 solidity 编译器将代码编译为以太坊字节码，并将字节码部署到区块链上（也有一些其他的语言可以写合约，不过 solidity 是到目前为止用得最多也是相对更容易的选择）。所以，以太坊不仅仅会存储交易，它还会存储和执行合约代码。</p>
+<p>基本上，区块链就是存储数据和代码，并在 EVM（Ethereum Virtual Machine，以太坊虚拟机）中执行代码。为了构建基于 web 的 Dapp，以太坊也有一个非常方便的 JavaScript 库，叫做 web3.js，它可以连接到区块链节点。所以，你可以在一些有名的 js 框架，比如 reactjs，angularjs 等等中直接引入该库构建应用。</p>
+<p>在异步的网络模型中，所有的节点由于没有时钟仅仅能根据接收到的消息作出判断，这时完全不能同时保证一致性、可用性和分区容错性，每一个系统只能在这三种特性中选择两种。<br>不过这里讨论的一致性其实都是强一致性，也就是所有节点接收到同样的操作时会按照完全相同的顺序执行，被一个节点提交的更新操作会立刻反映在其他通过异步或部分同步网络连接的节点上，如果想要同时满足一致性和分区容错性，在异步的网络中，我们只能中心化存储所有数据，通过其他节点将请求路由给中心节点达到这两个目的。</p>
+<p>最终一致性允许多个节点的状态出现冲突，但是所有能够沟通的节点都能够在有限的时间内解决冲突，从不一致的状态恢复到一致，这里列出的两个条件比较重要，一是节点直接可以正常通信，二是冲突需要在有限的时间内解决，只有在这两个条件成立时才能达到最终一致性。</p>
+<h3 id="拜占庭将军问题"><a href="#拜占庭将军问题" class="headerlink" title="拜占庭将军问题"></a>拜占庭将军问题</h3><p>FLP 不可能定理是分布式系统领域最重要的定理之一，它给出了一个非常重要的结论：在网络可靠并且存在节点失效的异步模型系统中，不存在一个可以解决一致性问题的确定性算法。</p>
+<p>这个定理其实也就是告诉我们不要浪费时间去为异步分布式系统设计在任意场景上都能够实现共识的算法，异步系统完全没有办法保证能在有限时间内达成一致。</p>
+<p>在整个共识算法运行的过程中，Proposer 负责提出提案并向 Acceptor 分别发出两次 RPC 请求，Prepare 和 Accept；Acceptor 会根据其持有的信息 minProposal、acceptedProposal 和 acceptedValue 选择接受或者拒绝当前的提案，当某一个提案被过半数的 Acceptor 接受之后，我们就认为当前提案被整个集群接受了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/28/pep8规范/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/28/pep8规范/" itemprop="url">pep8规范</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-28T23:01:05+08:00">
+                2018-03-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="缩进"><a href="#缩进" class="headerlink" title="缩进"></a>缩进</h2><p>每层缩进使用 4 个空格</p>
+<h2 id="断行风格"><a href="#断行风格" class="headerlink" title="断行风格"></a>断行风格</h2><p>断行首字母与括号开启符垂直对齐</p>
+<pre><code># 这是正确的例子：
+foo = long_function_name(var_one, var_two,
+                         var_three, var_four)
+
+悬挂缩进，首行不能有参数; 后面还有其它代码部分时，断行要添加一层缩进，使其与其它代码部分能区别开来
+# 这是正确的例子，额外添加了一层缩进：
+def long_function_name(
+        var_one, var_two, var_three,
+        var_four):
+    print(var_one)
+# 这是错误的例子，悬挂缩进，后面还有其它代码时，需要添加一层额外的缩进加以区别：
+def long_function_name(
+    var_one, var_two, var_three,
+    var_four):
+    print(var_one)
+# 这是正确的例子，悬挂缩进方式应该有一层缩进
+foo = long_function_name(
+    var_one, var_two,
+    var_three, var_four)
+# 这是错误的例子，悬挂方式首行不能有参数：
+foo = long_function_name(var_one, var_two,
+    var_three, var_four)
+</code></pre><h2 id="if-条件断行"><a href="#if-条件断行" class="headerlink" title="if 条件断行"></a>if 条件断行</h2><p>if ( 刚好有 4 个字条，相当于一层缩进。<br>对于 if 条件断行，以下几种风格都可以：</p>
+<pre><code>没有额外的缩进
+if (this_is_one_thing and
+    that_is_another_thing):
+    do_something()
+添加注释加以区分
+# Add a comment, which will provide some distinction in editors
+# supporting syntax highlighting.
+if (this_is_one_thing and
+    that_is_another_thing):
+    # Since both conditions are true, we can frobnicate.
+    do_something()
+添加额外的缩进加以区分
+# Add some extra indentation on the conditional continuation line.
+if (this_is_one_thing
+        and that_is_another_thing):
+    do_something()
+</code></pre><h2 id="多行的括号"><a href="#多行的括号" class="headerlink" title="多行的括号"></a>多行的括号</h2><pre><code>括号结束符与最后行的首字符对齐，如：
+my_list = [
+    1, 2, 3,
+    4, 5, 6,
+    ]
+
+result = some_function_that_takes_arguments(
+    &apos;a&apos;, &apos;b&apos;, &apos;c&apos;,
+    &apos;d&apos;, &apos;e&apos;, &apos;f&apos;,
+    )
+括号结束符与首行的首字符对齐, 如：
+my_list = [
+    1, 2, 3,
+    4, 5, 6,
+]
+result = some_function_that_takes_arguments(
+    &apos;a&apos;, &apos;b&apos;, &apos;c&apos;,
+    &apos;d&apos;, &apos;e&apos;, &apos;f&apos;,
+)
+</code></pre><h2 id="Tab-符还是空格"><a href="#Tab-符还是空格" class="headerlink" title="Tab 符还是空格"></a>Tab 符还是空格</h2><p>用空格</p>
+<h2 id="每行最长长度"><a href="#每行最长长度" class="headerlink" title="每行最长长度"></a>每行最长长度</h2><p>所有行都不超过 80 个字符：<br>限制编辑器窗口的宽度，使能并排同时打开多个文件。<br>设置编辑器宽度（ set width to 80），来避免 wrapping<br>对于较少结构限制的长文本（如 docstring 或注释），行长应限制为 72 个字符。<br>如果团队成员都同意使用长行，则可以将行长增加到不超过 100 个字符，但是 docstring 和注释还必须为 72 个字符。<br>有括号的长行可以用 implicit continuation 来断行，其它的可以用 \ 来断行，如：</p>
+<pre><code>with open(&apos;/path/to/some/file/you/want/to/read&apos;) as file_1, \
+     open(&apos;/path/to/some/file/being/written&apos;, &apos;w&apos;) as file_2:
+    file_2.write(file_1.read())
+</code></pre><h2 id="操作符要和操作数在一起"><a href="#操作符要和操作数在一起" class="headerlink" title="操作符要和操作数在一起"></a>操作符要和操作数在一起</h2><pre><code># 推荐的正确的风格，这样很容易将操作符与操作数匹配：
+income = (gross_wages
+          + taxable_interest
+          + (dividends - qualified_dividends)
+          - ira_deduction
+          - student_loan_interest)
+# 这种风格现成已不推荐使用了：
+income = (gross_wages +
+          taxable_interest +
+          (dividends - qualified_dividends) -
+          ira_deduction -
+          student_loan_interest)
+</code></pre><h2 id="空行分隔"><a href="#空行分隔" class="headerlink" title="空行分隔"></a>空行分隔</h2><p>模块中最顶层的函数和类定义都要用两行空行分隔<br>类中的方法定义用单行分隔<br>要把一组相关的函数分组，可以用一些额外的空行<br>函数中的逻辑区块可以加空行来分隔</p>
+<h2 id="源文件的编码"><a href="#源文件的编码" class="headerlink" title="源文件的编码"></a>源文件的编码</h2><p>Python 核心库文件的编码都必须用 UTF-8（Python 2 是 ASCII)。<br>使用默认的编码时（Python 3: UTF-8，Python 2: ASCII)，不能使用编码声明<br>标准库中，只有测试、作者名才能使用非默认的编码，其它情况下的非 ASCII 字符用 \x, \u, \u, \N 表示法表示。</p>
+<h2 id="Import"><a href="#Import" class="headerlink" title="Import"></a>Import</h2><p>每行 import 只导入一个包：</p>
+<pre><code># 正确:
+import os
+import sys
+# 错误：
+import sys, os
+# 正确：同一包中的内容可以在同一行导入
+from subprocess import Popen, PIPE
+import 语句要在文件的前面，在模块注释及 docstring 之后，在模块全局变量和常数定义之前。
+import 分组及导入顺序，每个分组之间用一行空行分隔 1). 标准库 2). 相关第三方库 3). 本地应用/库的特殊导入
+推荐使用绝对导入，如：
+import mypkg.sibling
+from mypkg import sibling
+from mypkg.sibling import example
+在复杂的包布局中，也可以用显式的相对导入，如：
+from . import sibling
+from .sibling import example
+从一个模块中导入一个类时，要显示拼写出类名，如：
+from myclass import MyClass
+from foo.bar.yourclass import YourClass
+如果与本地名称冲突，可以先导入模块：
+import myclass
+import foo.bar.yourclass
+然后使用：&quot;myclass.MyClass&quot; 和 &quot;foo.bar.yourclass.YourClass&quot;。
+应该避免使用 from &lt;module&gt; import *
+</code></pre><h2 id="模块级的特殊名称（如all-的位置："><a href="#模块级的特殊名称（如all-的位置：" class="headerlink" title="模块级的特殊名称（如all)的位置："></a>模块级的特殊名称（如<strong>all</strong>)的位置：</h2><p>必须在模块的 docstring 或注释之后，但在任何的 import 语句之前。from <strong>future</strong> 比较特殊，Python 强制该语句必须在 docstring 或注释之后，因此风格如下：</p>
+<pre><code>&quot;&quot;&quot;This is the example module.
+
+This module does stuff.
+&quot;&quot;&quot;
+
+from __future__ import barry_as_FLUFL
+
+__all__ = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;]
+__version__ = &apos;0.1&apos;
+__author__ = &apos;Cardinal Biggles&apos;
+
+import os
+import sys
+</code></pre><h2 id="字符引号"><a href="#字符引号" class="headerlink" title="字符引号"></a>字符引号</h2><p>单引号和双引号的功能是等同的。<br>对于多行字符串，应该用双引号字符形式的三引号””“，以便与 PEP257 中的 docstring 规范兼容</p>
+<h2 id="表达式和语句中的空格"><a href="#表达式和语句中的空格" class="headerlink" title="表达式和语句中的空格"></a>表达式和语句中的空格</h2><p>()、[]、{} 等括号内不要有多余的空格，如：</p>
+<pre><code># 正确：
+spam(ham[1], {eggs: 2})
+# 错误：
+spam( ham[ 1 ], { eggs: 2 } )
+,、;、: 之前不要有空格，如：
+# 正确：
+if x == 4: print x, y; x, y = y, x
+# 错误：
+if x == 4 : print x , y ; x , y = y , x
+在 slice 语句中的 :实际上是一个二元操作符，因此其两侧的空格数必须相同; 但当无 slice 参数时，两侧的空格可以都省略，如：
+# 以下是正确的风格：
+ham[1:9], ham[1:9:3], ham[:9:3], ham[1::3], ham[1:9:]
+ham[lower:upper], ham[lower:upper:], ham[lower::step]
+ham[lower+offset : upper+offset]
+ham[: upper_fn(x) : step_fn(x)], ham[:: step_fn(x)]
+ham[lower + offset : upper + offset]
+# 以下是错误的风格：
+ham[lower + offset:upper + offset]
+ham[1: 9], ham[1 :9], ham[1:9 :3]
+ham[lower : : upper]
+ham[ : upper]
+函数调用的 () 及索引的 [] 前不要加空格，如：
+# 正确风格：
+spam(1)
+dct[&apos;key&apos;] = lst[index]
+# 错误风格：
+spam (1)
+dct [&apos;key&apos;] = lst [index]
+不要在赋值语句中加入额外的空格来对齐，如：
+# 正确的风格：
+x = 1
+y = 2
+long_variable = 3
+# 错误的风格:
+x             = 1
+y             = 2
+long_variable = 3
+</code></pre><h2 id="其它推荐风格"><a href="#其它推荐风格" class="headerlink" title="其它推荐风格"></a>其它推荐风格</h2><p>任何行的行尾都不要有空白符。<br>在二元操作符两侧一般都要加一个空格，一般的二元操作符如：<br>赋值: =, +=, -=<br>比较：==, &lt;, &gt;, !=, &lt;&gt;, &lt;=, &gt;=, in, not in, is, is not<br>布尔操作： and, or, not<br>在分优先级的表达式中，在最低优先级的操作符两侧加一个空格，但至多只能加一个空格，如：</p>
+<pre><code># 正确的风格：
+x = x*2 - 1
+hypot2 = x*x + y*y
+c = (a+b) * (a-b)
+# 错误的风格：
+x = x * 2 - 1
+hypot2 = x * x + y * y
+c = (a + b) * (a - b)
+在关键字参数和默认参数值中的 = 两侧不要加空格，如：
+# 正确的风格：
+def complex(real, imag=0.0):
+    return magic(r=real, i=imag)
+错误的风格：
+def complex(real, imag = 0.0):
+    return magic(r = real, i = imag)
+函数注解中的 : 前不要加空格，这符合 : 的常规风格，但是 -&gt; 两侧要加空格，如：
+# 正确的风格：
+def munge(input: AnyStr): ...
+def munge() -&gt; AnyStr: ...
+# 错误的风格：
+def munge(input:AnyStr): ...
+def munge()-&gt;PosInt: ...
+参数注解中，如果注解的参数有默认值，指定默认值的 = 两侧要加空格，如：
+# 正确的风格：
+def munge(sep: AnyStr = None): ...
+def munge(input: AnyStr, sep: AnyStr = None, limit=1000): ...
+# 错误的风格：
+def munge(input: AnyStr=None): ...
+def munge(input: AnyStr, limit = 1000): ...
+不要将多条语句组合在一行中，如：
+# 正确的风格：
+if foo == &apos;blah&apos;:
+    do_blah_thing()
+do_one()
+do_two()
+do_three()
+# 错误风格：
+if foo == &apos;blah&apos;: do_blah_thing()
+do_one(); do_two(); do_three()
+# 如果 if/for/while 体很小，组合在一行有时还是可以接受的，
+# 但是不推荐，如：
+if foo == &apos;blah&apos;: do_blah_thing()
+for x in lst: total += x
+while t &lt; 10: t = delay()
+# 但是在有多段语句时，绝对不能这样，如：
+if foo == &apos;blah&apos;: do_blah_thing()
+else: do_non_blah_thing()
+
+try: something()
+finally: cleanup()
+
+do_one(); do_two(); do_three(long, argument,
+                             list, like, this)
+
+if foo == &apos;blah&apos;: one(); two(); three()
+</code></pre><h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><pre><code>注释内容必须要和代码同步！
+注释应该是完整的语句，首字母一般大写，一般要有句号。
+注释很短时句号可以省略。
+块注释一般由多个段落组成。
+You should use two spaces after a sentence-ending period??
+用英文写注释
+</code></pre><h2 id="块注释"><a href="#块注释" class="headerlink" title="块注释"></a>块注释</h2><pre><code>每行用 # 及一个空格开始，如 #
+段落用一个只有 # 的行分隔
+</code></pre><h2 id="行内注释"><a href="#行内注释" class="headerlink" title="行内注释"></a>行内注释</h2><pre><code>注释与语句内容至少用两个空格分开，注释用 # 加一个空格开始
+# 不要像下面这样，注释内容没有必要
+x = x + 1                 # Increment x
+# 但是有时，如下面的注释会很有用
+x = x + 1                 # Compensate for border
+</code></pre><h2 id="文档字符串"><a href="#文档字符串" class="headerlink" title="文档字符串"></a>文档字符串</h2><p>公开的模块、函数、类及方法都应该有文档字符串，而非公开的方法可以用注释来代替，且注释放置在 def 行之后。<br>多行的文档字符串，结束符要自成一行，如：<br>“””Return a foobang</p>
+<p>Optional plotz says to frobnicate the bizbaz first.<br>“””<br>单行的文档字符串，结束符和内容放在同一行</p>
+<h2 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h2><p>没有推荐的风格，但是别人要能从你的代码中看出你用的是什么风格，常用的风格如下：<br>b 单个小写字母<br>B 单个大写字母</p>
+<pre><code>lowercase
+lower_case_with_underscores
+UPPERCASE
+UPPER_CASE_WITH_UNDERSCORES
+CapitalizedWords, 这种风格中，对于缩写词应全部用大写，如 HTTTPServerError 比 HttpServerError 好
+mixedCase
+Capitalized_Words_With_Underscores，这个太丑，不要用这种！
+st_mode、st_mtime 等前缀，一般是系统接口返回，如果自己写的代码不推荐用这种
+_single_leading_underscore : 弱 “内部使用” 指示器，这种对象用 from M import * 不会被导入
+single_trailing_underscore_ : 可以用来和 Python 关键词进行区分，如 Tkinter.Toplevel(master, class_=&apos;ClassName&apos;)
+__double_leading_underscore : 命名一个类属性时，可以进行命名矫正，例如 class FooBar 内的 __boo 会变成 _FooBar__boo
+double_leading_and_trailing_underscore : “magic” 对象，不要自己发明这种对象
+</code></pre><h2 id="命名传统"><a href="#命名传统" class="headerlink" title="命名传统"></a>命名传统</h2><p>不用单个 l, O, I 等这样的单个字符来命名，它们与数字不好区分<br>包名和模块名：全部用小写，必要时可用 <em>，但不推荐，C/C++ 的扩展模块，如果其对应有 Python 版本，那么 C/C++ 扩展模块名前加 </em><br>类名：用 CapWords 风格<br>异常名：用 CapWords 风格，一般应该有 Error 后缀<br>全局变量名：能用 from M import * 导入的变量全部放在 <strong>all</strong> 中，或者全局变量用 <em> 做前缀<br>函数名：应该用全部用小写，单词间可以用 </em> 分隔，如 my<em>func，不推荐用 mixedCase 风格<br>函数和方法的参数：实例方法的第一个参数用 self, 类方法的第一个参数用 cls，如果参数与关键字冲突，在参数名后加 </em> 后缀，如 class<em><br>实例变量和方法： 用小写字符和 </em>, 非公开的实例变量和方法用一个 <em> 做前缀; 避免与子类中的名字冲突，类的变量可用两个 </em> 作前缀，例如 class FooBar 内的 <strong>boo 会变成只能通过 FooBar._FooBar</strong>boo 访问<br>常数：全部大写，可用 _ 分隔，如 MAX_OVERFLOW、TOTAL</p>
+<h2 id="推荐的编程方式"><a href="#推荐的编程方式" class="headerlink" title="推荐的编程方式"></a>推荐的编程方式</h2><pre><code>字符串连接不要用 a += b 或者 a = a + b, 用 &apos;&apos;.join(), 后者性能更好。
+和单子如 None 的比较用 is 和 is not，不要用 ==，如果你想判断 if x is not None, 不要缩写成 if x
+使用 if foo is not None，而不是 if not foo is None，前者更加易读
+如果要实现序列比较操作的话，应将 6 个操作（__eq__ , __ne__ , __lt__ , __le__ , __gt__ , __ge__）全部实现，可以借助 functools.total_ordering() 修饰器来减少工作量
+将函数保存在一个变量中应该用 def f(x): return 2*x， 而非 f = lambda x: 2*x，后者不利于调试
+自定义的异常类应该继承至 Exception 类，而非 BaseException 类。
+Python 2 中抛出异常用 raise ValueError(&apos;message&apos;)，而非 raise ValueRoor, &apos;message&apos;
+尽可以的指明异常名，如：
+try:
+    import platform_specific_module
+except ImportError:
+    platform_specific_module = None
+避免使用无异常名的 except: 语句，它会捕获全部的异常（如 Ctrl C）。
+将异常绑定到名字的方法：
+try:
+    process_data()
+except Exception as exc:
+    raise DataProcessingFailedError(str(exc))
+try: 中的语句要尽量减少，如：
+# 正确的写法：
+try:
+    value = collection[key]
+except KeyError:
+    return key_not_found(key)
+else:
+    return handle_value(value)
+# 错误的写法
+try:
+    # Too broad!
+    return handle_value(collection[key])
+except KeyError:
+    # Will also catch KeyError raised by handle_value()
+    return key_not_found(key)
+如果资源只适用于某个代码段内，使用 with 或 try/finally 来确保能进行清理工作
+上下文管理器应用通过一个单独的函数或方法来激活，如：
+# 正确的做法：
+with conn.begin_transaction():
+    do_stuff_in_transaction(conn)
+# 错误的做法：
+with conn:
+    do_stuff_in_transaction(conn)
+return 语句应该一致，如：
+# 正确的做法：
+
+def foo(x):
+    if x &gt;= 0:
+        return math.sqrt(x)
+    else:
+        return None
+
+def bar(x):
+    if x &lt; 0:
+        return None
+    return math.sqrt(x)
+# 错误的做法：
+
+def foo(x):
+    if x &gt;= 0:
+        return math.sqrt(x)
+
+def bar(x):
+    if x &lt; 0:
+        return
+    return math.sqrt(x)
+使用字符串的方法，而不是用 string 模块中的方法
+使用 &apos;&apos;.startswith() 和 &apos;&apos;.endswidth() 而不用 slicing 来检查前缀和后缀：
+# 正确：
+if foo.startswith(&apos;bar&apos;):
+# 错误：
+if foo[:3] == &apos;bar&apos;:
+判断对象的类型用 isinstance 而不直接 type 比较，如：
+# 正确：
+if isinstance(obj, int):
+# 错误:
+if type(obj) is type(1):
+对序列是否空的判断不用 len，如：
+# 正确：
+if not seq:
+if seq:
+# 错误：
+if len(seq):
+if not len(seq):
+布尔值的比较：
+# 正确：
+if greeting:
+# 不要这样:
+if greeting == True:
+# 这样更不行：
+if greeting is True:
+</code></pre><h2 id="检测工具"><a href="#检测工具" class="headerlink" title="检测工具"></a>检测工具</h2><p>使用 Flake8 来检查代码质量。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/28/multiprocessing源码分析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -607,589 +1186,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/28/gevent-note/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/28/gevent-note/" itemprop="url">gevent-note</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-28T20:17:21+08:00">
-                2018-03-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Coroutine 也就是 corporate routine，直译为「协同的例程」，中文一般叫做「协程」, 实际上这个概念和进程与线程有相似之处, 因为linux线程就是所谓的「轻量级进程」。</p>
-<p>在gevent源码分析中找到一段表述的比较好的描述进程和协程异同的内容:</p>
-<p>相同点:</p>
-<p>二者都是可以看做是一种执行流, 该执行流可以挂起,并且在将来又可以在 你挂起的地方恢复执行, 这实际上都可以看做是continuation, 我们来看看当我们挂 起一个执行流时我们要保存的东西：<br>栈, 因为如果你不保存栈,那么局部变量你就无法恢复,同时函数的调用链你也无 法恢复,<br>寄存器的状态: 这好理解, 比如说EIP,如果你不保存,那么你恢复执行流就不知道 到底执行哪一条指令, 在比如说ESP,EBP, 如果你不保存,那么你即便有完整的栈 你也不知道怎么用.<br>这二者实际就是所谓的上下文,也可以说是continuation. 在执行流切换时必须保存 这两个东西, 内核调度进程时也是一回事.</p>
-<p>不同点:</p>
-<p>执行流的调度者不同, 进程是内核调度, 而协程是在用户态调度, 也就是说进程 的上下文是在内核态保存恢复的,而协程是在用户态保存恢复的. 很显然用户态的 代价更低<br>进程会被抢占,而协程不会,也就是说协程如果不主动让出CPU,那么其他的协程是不 可能得到执行机会,这实际和早期的操作系统类似,比如DOS, 它有一个yield原语, 一个进程调用yield,那么它就会让出CPU, 其他的进程也就有机会执行了, 如果一 个进程进入了死循环,那么整个系统也就挂起了,永远无法运行其他的进程了, 但 对协程而言,这不是问题<br>对内存的占用不同,实际上协程可以只需要4K的栈就够了, 而进程占用的内存要大 的多.<br>从操作系统的角度讲, 多协程的程序是单线程,单进程的<br>那用一句话描述协程的优势就是由开发者决定协程的切换，操作系统无法干预切换，且占用内存小的多。</p>
-<p>Gevent是一种基于协程的Python网络库，它用到Greenlet提供的，封装了libevent事件循环的高层同步API。它让开发者在不改变编程习惯的同时，用同步的方式写异步I/O的代码。</p>
-<p>Gvanrossum从来不喜欢Gevent，而是更愿意另辟蹊径的实现asyncio(基于生成器的协程)。</p>
-<p><strong>1.Monkey-patching</strong>。中文「猴子补丁」，常用于对测试环境做一些hack。我个人不太喜欢这种「黑魔法」，因为如果其他人不了解细节，极为容易产生困惑。Gvanrossum说用它就是”patch-and-pray”，太形象了。由于Gevent直接修改标准库里面大部分的阻塞式系统调用，包括socket、ssl、threading和 select等模块，而变为协作式运行。但是我们无法保证你在复杂的生产环境中有哪些地方使用这些标准库会由于打了补丁而出现奇怪的问题，那么你只能祈祷（pray）了。其次，在Python之禅中明确说过：「Explicit is better than implicit.」，猴子补丁明显的背离了这个原则。最后，Gvanrossum说Stackless之父Christian Tismer也赞同他。 我喜欢显式的「yield from」</p>
-<p><strong>2.第三方库支持</strong>。得确保项目中用到其他用到的网络库也必须使用纯Python或者明确说明支持Gevent，而且就算有这样的第三方库，我还会担心这个第三方库的代码质量和功能性。<br>Greenlet不支持Jython和IronPython，这样就无法把gevent设计成一个标准库了。<br>之前是没有选择，很多人选择了Gevent，而现在明确的有了更正统的、正确的选择：asyncio（下一篇会详细介绍）。所以建议大家放弃Gevent，拥抱asyncio。</p>
-<p>在Python 2的时代，高性能的网络编程主要是使用Twisted、Tornado和Gevent这三个库，但是它们的异步代码相互之间既不兼容也不能移植。如上一节说的，Gvanrossum希望在Python 3 实现一个原生的基于生成器的协程库，其中直接内置了对异步IO的支持，这就是asyncio，它在Python 3.4被引入到标准库。</p>
-<p>Python 3.5添加了async和await这两个关键字，分别用来替换asyncio.coroutine和yield from。自此，协程成为新的语法，而不再是一种生成器类型了。事件循环与协程的引入，可以极大提高高负载下程序的I/O性能。除此之外还增加了async with(异步上下文管理)、async for(异步迭代器)语法。特别说的是，在新发布的Python 3.6里面终于可以用异步生成器了！</p>
-<p>现存的一些库其实并不能原生的支持asyncio（因为会发生阻塞或者功能不可用），比如requests，如果要写爬虫，配合asyncio的应该用aiohttp，其他的如数据库驱动等各种Python对应的库也都得使用对应的aioXXX版本了。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/27/one-blockchain-src-anal/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/27/one-blockchain-src-anal/" itemprop="url">one-blockchain-src-anal</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-27T22:37:51+08:00">
-                2018-03-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>看看代码的实现：</p>
-<pre><code>import hashlib
-import json
-from time import time
-from urllib.parse import urlparse
-from uuid import uuid4
-
-import requests
-from flask import Flask, jsonify, request
-
-
-class Blockchain:
-    def __init__(self):
-        self.current_transactions = []
-        self.chain = []
-        self.nodes = set()
-
-        # Create the genesis block
-        self.new_block(previous_hash=&apos;1&apos;, proof=100)
-
-    def register_node(self, address):
-        &quot;&quot;&quot;
-        Add a new node to the list of nodes
-
-        :param address: Address of node. Eg. &apos;http://192.168.0.5:5000&apos;
-        &quot;&quot;&quot;
-
-        parsed_url = urlparse(address)
-        if parsed_url.netloc:
-            self.nodes.add(parsed_url.netloc)
-        elif parsed_url.path:
-            # Accepts an URL without scheme like &apos;192.168.0.5:5000&apos;.
-            self.nodes.add(parsed_url.path)
-        else:
-            raise ValueError(&apos;Invalid URL&apos;)
-
-
-    def valid_chain(self, chain):
-        &quot;&quot;&quot;
-        Determine if a given blockchain is valid
-
-        :param chain: A blockchain
-        :return: True if valid, False if not
-        &quot;&quot;&quot;
-
-        last_block = chain[0]
-        current_index = 1
-
-        while current_index &lt; len(chain):
-            block = chain[current_index]
-            print(f&apos;{last_block}&apos;)
-            print(f&apos;{block}&apos;)
-            print(&quot;\n-----------\n&quot;)
-            # Check that the hash of the block is correct
-            if block[&apos;previous_hash&apos;] != self.hash(last_block):
-                return False
-
-            # Check that the Proof of Work is correct
-            if not self.valid_proof(last_block[&apos;proof&apos;], block[&apos;proof&apos;], last_block[&apos;previous_hash&apos;]):
-                return False
-
-            last_block = block
-            current_index += 1
-
-        return True
-
-    def resolve_conflicts(self):
-        &quot;&quot;&quot;
-        This is our consensus algorithm, it resolves conflicts
-        by replacing our chain with the longest one in the network.
-
-        :return: True if our chain was replaced, False if not
-        &quot;&quot;&quot;
-
-        neighbours = self.nodes
-        new_chain = None
-
-        # We&apos;re only looking for chains longer than ours
-        max_length = len(self.chain)
-
-        # Grab and verify the chains from all the nodes in our network
-        for node in neighbours:
-            response = requests.get(f&apos;http://{node}/chain&apos;)
-
-            if response.status_code == 200:
-                length = response.json()[&apos;length&apos;]
-                chain = response.json()[&apos;chain&apos;]
-
-                # Check if the length is longer and the chain is valid
-                if length &gt; max_length and self.valid_chain(chain):
-                    max_length = length
-                    new_chain = chain
-
-        # Replace our chain if we discovered a new, valid chain longer than ours
-        if new_chain:
-            self.chain = new_chain
-            return True
-
-        return False
-
-    def new_block(self, proof, previous_hash):
-        &quot;&quot;&quot;
-        Create a new Block in the Blockchain
-
-        :param proof: The proof given by the Proof of Work algorithm
-        :param previous_hash: Hash of previous Block
-        :return: New Block
-        &quot;&quot;&quot;
-
-        block = {
-            &apos;index&apos;: len(self.chain) + 1,
-            &apos;timestamp&apos;: time(),
-            &apos;transactions&apos;: self.current_transactions,
-            &apos;proof&apos;: proof,
-            &apos;previous_hash&apos;: previous_hash or self.hash(self.chain[-1]),
-        }
-
-        # Reset the current list of transactions
-        self.current_transactions = []
-
-        self.chain.append(block)
-        return block
-
-    def new_transaction(self, sender, recipient, amount):
-        &quot;&quot;&quot;
-        Creates a new transaction to go into the next mined Block
-
-        :param sender: Address of the Sender
-        :param recipient: Address of the Recipient
-        :param amount: Amount
-        :return: The index of the Block that will hold this transaction
-        &quot;&quot;&quot;
-        self.current_transactions.append({
-            &apos;sender&apos;: sender,
-            &apos;recipient&apos;: recipient,
-            &apos;amount&apos;: amount,
-        })
-
-        return self.last_block[&apos;index&apos;] + 1
-
-    @property
-    def last_block(self):
-        return self.chain[-1]
-
-    @staticmethod
-    def hash(block):
-        &quot;&quot;&quot;
-        Creates a SHA-256 hash of a Block
-
-        :param block: Block
-        &quot;&quot;&quot;
-
-        # We must make sure that the Dictionary is Ordered, or we&apos;ll have inconsistent hashes
-        block_string = json.dumps(block, sort_keys=True).encode()
-        return hashlib.sha256(block_string).hexdigest()
-
-    def proof_of_work(self, last_block):
-        &quot;&quot;&quot;
-        Simple Proof of Work Algorithm:
-
-         - Find a number p&apos; such that hash(pp&apos;) contains leading 4 zeroes
-         - Where p is the previous proof, and p&apos; is the new proof
-
-        :param last_block: &lt;dict&gt; last Block
-        :return: &lt;int&gt;
-        &quot;&quot;&quot;
-
-        last_proof = last_block[&apos;proof&apos;]
-        last_hash = self.hash(last_block)
-
-        proof = 0
-        while self.valid_proof(last_proof, proof, last_hash) is False:
-            proof += 1
-
-        return proof
-
-    @staticmethod
-    def valid_proof(last_proof, proof, last_hash):
-        &quot;&quot;&quot;
-        Validates the Proof
-
-        :param last_proof: &lt;int&gt; Previous Proof
-        :param proof: &lt;int&gt; Current Proof
-        :param last_hash: &lt;str&gt; The hash of the Previous Block
-        :return: &lt;bool&gt; True if correct, False if not.
-
-        &quot;&quot;&quot;
-
-        guess = f&apos;{last_proof}{proof}{last_hash}&apos;.encode()
-        guess_hash = hashlib.sha256(guess).hexdigest()
-        return guess_hash[:4] == &quot;0000&quot;
-
-
-# Instantiate the Node
-app = Flask(__name__)
-
-# Generate a globally unique address for this node
-node_identifier = str(uuid4()).replace(&apos;-&apos;, &apos;&apos;)
-
-# Instantiate the Blockchain
-blockchain = Blockchain()
-
-
-@app.route(&apos;/mine&apos;, methods=[&apos;GET&apos;])
-def mine():
-    # We run the proof of work algorithm to get the next proof...
-    last_block = blockchain.last_block
-    proof = blockchain.proof_of_work(last_block)
-
-    # We must receive a reward for finding the proof.
-    # The sender is &quot;0&quot; to signify that this node has mined a new coin.
-    blockchain.new_transaction(
-        sender=&quot;0&quot;,
-        recipient=node_identifier,
-        amount=1,
-    )
-
-    # Forge the new Block by adding it to the chain
-    previous_hash = blockchain.hash(last_block)
-    block = blockchain.new_block(proof, previous_hash)
-
-    response = {
-        &apos;message&apos;: &quot;New Block Forged&quot;,
-        &apos;index&apos;: block[&apos;index&apos;],
-        &apos;transactions&apos;: block[&apos;transactions&apos;],
-        &apos;proof&apos;: block[&apos;proof&apos;],
-        &apos;previous_hash&apos;: block[&apos;previous_hash&apos;],
-    }
-    return jsonify(response), 200
-
-
-@app.route(&apos;/transactions/new&apos;, methods=[&apos;POST&apos;])
-def new_transaction():
-    values = request.get_json()
-
-    # Check that the required fields are in the POST&apos;ed data
-    required = [&apos;sender&apos;, &apos;recipient&apos;, &apos;amount&apos;]
-    if not all(k in values for k in required):
-        return &apos;Missing values&apos;, 400
-
-    # Create a new Transaction
-    index = blockchain.new_transaction(values[&apos;sender&apos;], values[&apos;recipient&apos;], values[&apos;amount&apos;])
-
-    response = {&apos;message&apos;: f&apos;Transaction will be added to Block {index}&apos;}
-    return jsonify(response), 201
-
-
-@app.route(&apos;/chain&apos;, methods=[&apos;GET&apos;])
-def full_chain():
-    response = {
-        &apos;chain&apos;: blockchain.chain,
-        &apos;length&apos;: len(blockchain.chain),
-    }
-    return jsonify(response), 200
-
-
-@app.route(&apos;/nodes/register&apos;, methods=[&apos;POST&apos;])
-def register_nodes():
-    values = request.get_json()
-
-    nodes = values.get(&apos;nodes&apos;)
-    if nodes is None:
-        return &quot;Error: Please supply a valid list of nodes&quot;, 400
-
-    for node in nodes:
-        blockchain.register_node(node)
-
-    response = {
-        &apos;message&apos;: &apos;New nodes have been added&apos;,
-        &apos;total_nodes&apos;: list(blockchain.nodes),
-    }
-    return jsonify(response), 201
-
-
-@app.route(&apos;/nodes/resolve&apos;, methods=[&apos;GET&apos;])
-def consensus():
-    replaced = blockchain.resolve_conflicts()
-
-    if replaced:
-        response = {
-            &apos;message&apos;: &apos;Our chain was replaced&apos;,
-            &apos;new_chain&apos;: blockchain.chain
-        }
-    else:
-        response = {
-            &apos;message&apos;: &apos;Our chain is authoritative&apos;,
-            &apos;chain&apos;: blockchain.chain
-        }
-
-    return jsonify(response), 200
-
-
-if __name__ == &apos;__main__&apos;:
-    from argparse import ArgumentParser
-
-    parser = ArgumentParser()
-    parser.add_argument(&apos;-p&apos;, &apos;--port&apos;, default=5000, type=int, help=&apos;port to listen on&apos;)
-    args = parser.parse_args()
-    port = args.port
-
-    app.run(host=&apos;0.0.0.0&apos;, port=port)
-</code></pre><p> 提供了几个url:</p>
-<pre><code>mine GET
-
-transactions/new POST
-
-chain GET
-
-nodes/register POST
-
-nodes/resolve GET
-
-/transactions/new to create a new transaction to a block
-/mine to tell our server to mine a new block.
-/chain to return the full Blockchain.
-/nodes/register to accept a list of new nodes in the form of URLs.
-/nodes/resolve to implement our Consensus Algorithm, which resolves any 
-        conflicts—to ensure a node has the correct chain.
-</code></pre><p>单个区块：</p>
-<pre><code>block = {
-    &apos;index&apos;: 1,
-    &apos;timestamp&apos;: 1506057125.900785,
-    &apos;transactions&apos;: [
-        {
-            &apos;sender&apos;: &quot;8527147fe1f5426f9dd545de4b27ee00&quot;,
-            &apos;recipient&apos;: &quot;a77f5cdfa2934df3954a5c7c7da5df1f&quot;,
-            &apos;amount&apos;: 5,
-        }
-    ],
-    &apos;proof&apos;: 324984774000,
-    &apos;previous_hash&apos;: &quot;2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824&quot;
-}    
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1244,7 +1240,7 @@ nodes/resolve GET
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">144</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

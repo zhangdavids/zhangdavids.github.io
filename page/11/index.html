@@ -263,6 +263,360 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/18/elk-redis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/18/elk-redis/" itemprop="url">elk+redis</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-18T22:09:32+08:00">
+                2018-03-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>对常见的elk工具进行总结</p>
+<pre><code>cat /etc/issue # 检查系统版本
+java -version #
+
+
+wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+echo &quot;deb https://packages.elastic.co/elasticsearch/2.x/debian stable main&quot; | sudo tee -a /etc/apt/sources.list.d/elasticsearch-2.x.list
+sudo apt-get update
+sudo apt-get install elasticsearch -y
+sudo service elasticsearch start
+echo &quot;deb https://packages.elastic.co/logstash/2.3/debian stable main&quot; | sudo tee -a /etc/apt/sources.list
+sudo apt-get install logstash -y
+sudo service logstash start
+echo &quot;deb http://packages.elastic.co/kibana/4.5/debian stable main&quot; | sudo tee -a /etc/apt/sources.list
+sudo apt-get install kibana -y 
+sudo service kibana start
+
+sudo service nginx start
+
+# nginx 的配置文件位于 /etc/nginx/sites-available/default
+
+# 添加 access_log /home/shiyanlou/Code/elk/access.log;
+</code></pre><p>接下来是具体的配置文件</p>
+<pre><code># /etc/logstash/conf.d/logstash-shipper.conf
+
+input {
+  stdin {}  
+  file {
+    path =&gt; &quot;~/access.log&quot;
+    start_position =&gt; beginning
+    codec =&gt;  multiline {
+      &apos;negate&apos; =&gt; true
+      &apos;pattern&apos; =&gt; &apos;^\d&apos;
+      &apos;what&apos; =&gt; &apos;previous&apos;
+    }
+  }
+}
+output {
+    stdout {
+        codec =&gt; rubydebug
+    }
+    elasticsearch {
+        hosts=&gt;[&quot;localhost:9200&quot;]
+        index=&gt;&quot;logstash-%{+YYYY.MM.dd}&quot;
+    }
+}    
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/17/top-questions-python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/17/top-questions-python/" itemprop="url">top-questions-python</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-17T23:09:30+08:00">
+                2018-03-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1.python2 编码问题</p>
+<ul>
+<li>python代码内部请全部使用unicode编码，在获取外部内容时，先decode为unicode，向外输出时再encode为Str</li>
+<li>在定义变量或者正则时，也定义unicode字符，如a=u”中文”；res=r””+u”正则”。</li>
+</ul>
+<pre><code>a=&quot;\\u8fdd\\u6cd5\\u8fdd\u89c4&quot; #变量a的内容为unicode编码，变量a为string编码（&quot;&quot;前不要加u）
+b=a.decode(&apos;unicode-escape&apos;)
+print b
+
+a=&quot;\\xe5\\x85\\xb3\\xe4\\xba\\x8e\\xe4&quot; #变量a的内容为string编码，变量a为string编码（&quot;&quot;前不要加u）
+b=a.decode(&apos;string-escape&apos;)
+print b
+</code></pre><p>2.多线程问题</p>
+<p><em>python带有GIL解释器锁的概念，同一时刻只能有一个线程在运行，遇到IO操作才会释放切换。</em></p>
+<p>协程不同于线程的地方在于协程不是操作系统进行切换，而是由程序员编码进行切换的，也就是说切换是由程序员控制的，这样就没有了线程所谓的安全问题。</p>
+<p>这也就是常选的gevent 方案</p>
+<p>cpu 密集  多进程<br>io密集 多线程 或者协程</p>
+<p>3.协程</p>
+<p>4.闭包</p>
+<p>全局变量降低了函数或模块之间的通用性，不同的函数或模块都要依赖于全局变量。同样，全局变量降低了代码的可读性，阅读者可能并不知道调用的某个变量是全局变量。</p>
+<pre><code># 原始情况
+time = 0
+
+def insert_time(min):
+    time = time + min
+    return  time
+
+print(insert_time(2))
+print(insert_time(10))
+
+
+# 闭包
+time = 0
+
+
+def study_time(time):
+    def insert_time(min):
+        nonlocal  time
+        time = time + min
+        return time
+
+    return insert_time
+
+
+f = study_time(time)
+print(f(2))
+print(time)
+print(f(10))
+print(time)
+</code></pre><p>这里最直接的表现就是全局变量 time 至此至终都没有修改过,这里还是用了 nonlocal 关键字,表示在函数或其他作用域中使用外层(非全局)变量。</p>
+<p>这种内部函数的局部作用域中可以访问外部函数局部作用域中变量的行为，我们称为： 闭包。更加直接的表达方式就是，当某个函数被当成对象返回时，夹带了外部变量，就形成了一个闭包。k</p>
+<p>闭包避免了使用全局变量，此外，闭包允许将函数与其所操作的某些数据（环境）关连起来。而且使用闭包，可以使代码变得更加的优雅。装饰器，是基于闭包实现的。</p>
+<p>所有函数都有一个 __closure__ 属性，如果函数是闭包的话，那么它返回的是一个由 cell 组成的元组对象。cell 对象的 cell_contents 属性就是存储在闭包中的变量。    </p>
+<p>5.装饰器问题</p>
+<p>6.爬虫问题</p>
+<p>7.魔法方法</p>
+<p>一个类创建的过程是怎样的，先是调用了 __new<strong>方法来创建一个对象，把参数传给 \</strong>init__ 方法进行实例化。</p>
+<p>其实在实际开发中，很少会用到 __new<strong> 方法，除非你希望能够控制类的创建。通常讲到 \</strong>new__ ，都是牵扯到 metaclass(元类)的。</p>
+<p>当然当一个对象的生命周期结束的时候，析构函数 __del__ 方法会被调用。但是这个方法是 Python 自己对对象进行垃圾回收的。</p>
+<p>Python 没有真正意义上的私有属性。然后这就导致了对 Python 类的封装性比较差。我们有时候会希望 Python 能够定义私有属性，然后提供公共可访问的 get 方法和 set 方法。Python 其实可以通过魔术方法来实现封装。</p>
+<p>方法说明</p>
+<p>__getattr__(self, name)该方法定义了你试图访问一个不存在的属性时的行为。因此，重载该方法可以实现捕获错误拼写然后进行重定向, 或者对一些废弃的属性进行警告。</p>
+<p>__setattr<strong>(self, name, value)定义了对属性进行赋值和修改操作时的行为。不管对象的某个属性是否存在,都允许为该属性进行赋值.有一点需要注意，实现 \</strong>setattr__ 时要避免”无限递归”的错误，</p>
+<p>__delattr<strong>(self, name) \</strong>delattr<strong> 与 \</strong>setattr<strong> 很像，只是它定义的是你删除属性时的行为， 实现 \</strong>delattr__ 是同时要避免”无限递归”的错误</p>
+<p>__getattribute<strong>(self, name) \</strong>getattribute<strong> 定义了你的属性被访问时的行为，相比较，\</strong>getattr__ 只有该属性不存在时才会起作用。</p>
+<p>因此，在支持 __getattribute<strong>的 Python 版本,调用\</strong>getattr<strong> 前必定会调用 \</strong>getattribute__   </p>
+<p>__getattribute__ 同样要避免”无限递归”的错误。</p>
+<p>8.差异</p>
+<p>Python3.x 中 input() 函数接受一个标准输入数据，返回为 string 类型。</p>
+<p>Python2.x 中 input() 相等于 eval(raw_input(prompt)) ，用来获取控制台的输入。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/17/python-big-web-project/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -713,508 +1067,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/14/django项目配置小结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/14/django项目配置小结/" itemprop="url">django项目配置小结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-14T19:10:55+08:00">
-                2018-03-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="dockerfile-的配置"><a href="#dockerfile-的配置" class="headerlink" title="dockerfile 的配置"></a>dockerfile 的配置</h3><pre><code>FROM python:3.5
-
-COPY ./requirements.txt /src
-WORKDIR /src
-RUN pip install -r requirements.txt
-
-COPY . /src
-EXPOSE &lt;PORT&gt;
-CMD uwsgi --http :&lt;PORT&gt; --wsgi-file &lt;path/to/wsgi.py&gt;
-</code></pre><p>python 3.3开始     标准库已经支持创建虚拟环境</p>
-<pre><code>pyvenv ENV
-# 使用k神的pipenv 管理项目依赖
-# 使用ensurepip 模块来引导启动pip python 3.4开始
-python -m ensurepip 
-</code></pre><p>使用 <a href="https://www.gitignore.io" target="_blank" rel="external">gitignore.io</a>这个网站提供的 .gitignore 文件管理代码库文件</p>
-<p>日志管理的话（以下是直接写到标准输出）</p>
-<pre><code># settings.py 
-
-# ...
-
-LOGGING = {
-    &apos;version&apos;: 1,
-    &apos;disable_existing_loggers&apos;: False,
-    &apos;formatters&apos;: {
-        &apos;verbose&apos;: {
-            &apos;format&apos;: &apos;[application] %(levelname)s %(asctime)s %(module)s %(message)s&apos;
-        }
-    },
-    &apos;handlers&apos;: {
-        &apos;console&apos;: {
-            &apos;level&apos;: &apos;DEBUG&apos;,
-            &apos;class&apos;: &apos;logging.StreamHandler&apos;,
-            &apos;stream&apos;: sys.stdout,
-            &apos;formatter&apos;: &apos;verbose&apos;
-        },
-    },
-    &apos;loggers&apos;: {
-        &apos;app&apos;: {
-            &apos;handlers&apos;: [&apos;console&apos;],
-            &apos;level&apos;: &apos;DEBUG&apos;,
-            &apos;propagate&apos;: True,
-        },
-    },
-}
-</code></pre><h3 id="自动化测试"><a href="#自动化测试" class="headerlink" title="自动化测试"></a>自动化测试</h3><p>既然是纯后端项目，工程师完全可以通过自动化测试来检测自己的代码。Django 本身对测试提供了很好的支持，可以通过 sqlite 来搭建测试数据库，还有基于内存的缓存，做测试不会增加对其他系统的依赖。开发起来事半功倍。</p>
-<p>除了要写自动化测试代码，还要能统计测试覆盖率。目前我们用的是 coverage.py 这个工具，说实话没有 node.js 的 istanbul 好用，输出的报告没有 Istanbul 详细和易读。不过用来检查 “死代码” 还是够用的。</p>
-<h3 id="针对-http-代码的测试"><a href="#针对-http-代码的测试" class="headerlink" title="针对 http 代码的测试"></a>针对 http 代码的测试</h3><p>有些项目需要对接的第三方系统比较多，比如微信认证、支付、短信等常见的，可能还有其他一些垂直业务领域的系统。这部分接口对接的代码，也应该纳入到测试当中，毕竟 Python 作为脚本语言，代码很容易出现错误。</p>
-<p>这块一般是用 responses 这个模块来 mock http 请求。</p>
-<h3 id="定时任务"><a href="#定时任务" class="headerlink" title="定时任务"></a>定时任务</h3><p>封装到command</p>
-<pre><code>import schedule
-from django.core.management.base import BaseCommand
-
-class Command(BaseCommand):
-
-    def handle(self, *args, **kwargs):
-
-        schedule.every(45).minutes.do(do_this)
-        schedule.every().day.at(&apos;04:00&apos;).do(do_that)
-
-        while True:
-            schedule.run_pending()
-            time.sleep(1)    
-</code></pre><h3 id="Django如何处理并发"><a href="#Django如何处理并发" class="headerlink" title="Django如何处理并发"></a>Django如何处理并发</h3><ul>
-<li><p>django本身提供了一个wsgi的接口，可以通过gevent，uwsgi，fastcgi等实现高并发，这里的高并发采用协程，线程，和进程都可能，或者同时采用几种。</p>
-</li>
-<li><p>对于操作数据库来说，线程安全其实不用太考虑，因为数据库的链接已经由数据库的连接池处理了，反而是数据库的竞争性的访问需要考虑多进程安全的问题，比如同时写某一个统计信息，那么就需要对这样的请求加锁，或这cas这样的机制来保证这种写操作不会冲突。</p>
-</li>
-</ul>
-<h2 id="配置举例："><a href="#配置举例：" class="headerlink" title="配置举例："></a>配置举例：</h2><pre><code># /usr/local/nginx/conf/nginx.conf
-server {  
-    listen       8088;  
-    server_name  localhost;  
-
-    #charset koi8-r;  
-
-    #access_log  logs/host.access.log  main;  
-
-    location / {  
-        root   html;  
-        index  index.html index.htm;  
-    }  
-
-
-
-## 修改配置文件
-server {
-        listen       8088;
-        server_name  localhost;
-        #charset koi8-r;
-        #access_log  logs/host.access.log  main;
-       #注释以下四行
-        #location / {
-            #root   html;
-            #index  index.html index.htm;
-        #}
-       #添加以下内容
-        location / {
-            try_files @uri @pp;
-        }
-        location @pp {
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header Host $http_host;
-            proxy_pass http://127.0.0.1:5000;
-            #反向代理的这个IP和端口
-        }
-
-
-## gun 配置文件 config.py
-
-import gevent.monkey
-import multiprocessing
-
-gevent.monkey.patch_all()
-
-#监听本机的5000端口
-bind=&apos;0.0.0.0:5000&apos;
-
-preload_app = True
-
-#开启进程
-#workers=4
-workers = multiprocessing.cpu_count() * 2 + 1
-
-#每个进程的开启线程
-threads = multiprocessing.cpu_count() * 2
-
-backlog=2048
-
-#工作模式为gevent
-worker_class=&quot;gevent&quot;
-
-# debug=True
-
-#如果不使用supervisord之类的进程管理工具可以是进程成为守护进程，否则会出问题
-daemon = True
-
-#进程名称
-proc_name=&apos;gunicorn.pid&apos;
-
-#进程pid记录文件
-pidfile=&apos;app_pid.log&apos;
-
-loglevel=&apos;debug&apos;
-logfile = &apos;debug.log&apos;
-accesslog = &apos;access.log&apos;
-access_log_format = &apos;%(h)s %(t)s %(U)s %(q)s&apos;
-errorlog = &apos;error.log’
-</code></pre><p>启动：</p>
-<pre><code>gunicorn -c config.py(gunicorn配置文件)  flask_nginx(flask启动文件):app
-</code></pre><p>启动nginx: </p>
-<pre><code>sudo /usr/local/nginx/sbin/nginx    
-</code></pre><p>Siege命令常用参数</p>
-<pre><code>-c 500 指定并发数500
--r 5 指定测试的次数5
--f urls.txt 制定url的文件
--i internet系统，随机发送url
--b 请求无需等待 delay=0
--t 5 持续测试5分钟，默认是分，5s为5秒
-# -t和-r不能同时使用
-</code></pre><p>模拟1000个并发向URL发送5次<br>测试：</p>
-<pre><code>siege -c 1000 -r 5 http://127.0.0.1:8088(gunicorn+gevent+nginx+flask)
-</code></pre><hr>
-<h2 id="从-Tornado-说起"><a href="#从-Tornado-说起" class="headerlink" title="从 Tornado 说起"></a>从 Tornado 说起</h2><p>刚开始，对 Tornado 的感觉最为新鲜，在官网介绍里其是一个无阻塞的Web服务器以及相关工具的集合，但 个人更为倾向其为一个颇为完备的微型 web 框架。Tornado 性能好的关键是其无阻塞异步的特性，但这魔术 似的效果是如何达成的呢？迷思与困惑。我那小脑袋里的思维还停留于多进程（多线程）那样的并发模型中， 实在有点难以理解 Tornado 的异步机制。</p>
-<p>通过查阅各式文章以及源代码，整体的框架脉络开始逐渐在脑海中显现出来。其实，Tornado 的异步模型 是由事件驱动以及特定的回调函数（callback）所组成的！一直没有弄明白，Tornado 具体是如何实现 无阻塞异步，当清楚了事件驱动和回调函数的概念后，事情似乎又变得简单起来了。</p>
-<p>对于一般的程序，在执行阶段若遇到 I/O 事件，整个进程将被阻塞住，直到 I/O 事件结束，程序又继续执行。 接设我们对一些 I/O 事件进行了定制，使其可以立即返回（即无阻塞），那么程序将能立即继续执行。但 问题又来了，那当 I/O 事件完成后又该怎么办呢？此时，回调函数的威力就出来了，我只需要将进行特定 处理的回调函数与该 I/O 事件绑定起来，当该 I/O 事件完成后就调用绑定的回调函数，就可以处理具体的 I/O 事件啦。啊，似乎还有一个问题，回调函数要如何与 I/O 事件绑定起来？最简单的想法是，直接通过 一个 while True 循环不断的轮询，当检测到 I/O 事件完成了即触发回调函数。但是，这样的效率当然不会 高，利用系统中高效的 I/O 事件轮询机制（epoll on Linux, kqueue on most BSD）就是最明智的 解决方案。于是，无阻塞 I/O +事件驱动+高效轮询方式便组成了 Tornado 的异步模型。</p>
-<p>Tornado 的核心是 ioloop 和 iostream 这两个模块，前者提供了一个高效的 I/O 事件循环，后者则封装了 一个无阻塞的 socket 。通过向 ioloop 中添加网络 I/O 事件，利用无阻塞的 socket ，再搭配相应的回调 函数，便可达到梦寐以求的高效异步执行啦。多说无益，来看一下具体的示例：</p>
-<pre><code>from tornado import ioloop
-from tornado.httpclient import AsyncHTTPClient
-
-urls = [&apos;http://www.google.com&apos;, &apos;http://www.yandex.ru&apos;, &apos;http://www.python.org&apos;]
-
-def print_head(response):
-    print (&apos;%s: %s bytes: %r&apos; % (response.request.url,
-                                 len(response.body),
-                                 response.body[:50]))
-
-http_client = AsyncHTTPClient()
-for url in urls:
-    print (&apos;Starting %s&apos; % url)
-    http_client.fetch(url, print_head)
-ioloop.IOLoop.instance().start()    
-</code></pre><p>因为使用了 AsyncHTTPClient 来处理请求操作，整个示例是异步执行的，即三个url请求无等待的依次发出。 我们可以看到 fetch 方法使用了 print_head 函数来作为回调函数，这意味着，当 fetch 完成了请求操作， 相应的 print_head 函数便会被触发调用。恩，… 额，…，乍看起来，使用 Tornado 进行异步编程似乎 并不难，让人跃跃欲试。但实际上，在现实生活中，事件驱动的编程还是会很费脑力，需要一定的创造性思维。 不过，这也许是 Tornado 受欢迎的原因之一呢。</p>
-<hr>
-<h2 id="看下-Gevent"><a href="#看下-Gevent" class="headerlink" title="看下 Gevent"></a>看下 Gevent</h2><p>Gevent 是基于协程（coroutine）实现的 Python 网络库，使用了轻量级的 greenlet 作为执行单元，并 基于 libevent 事件循环构建了直观的调用接口。</p>
-<p>当时看到这样的描述，脑袋的第一反应是，协程？？稍稍了解后，发现协程其实也不是什么高深的概念，协程 也被称为微线程，一看这别名就知道跟线程应该很类似。作为类比倒也可以这么认为，两者关键的区别在于， 线程是由系统进行调度的，而协程是由用户自己进行调度的。当知道这一事实后，立刻想到，这自行调度灵活 肯定是会很灵活，但要调度的话可是很有难度的吧？调度的方法暂时不谈，除了更为灵活外，自行调度的直接 结果当然就是省去了系统调度（什么用户态转内核态，以及什么 context switch），因此协程间切换的资源 消耗很小，再配合协程生成成本很低的另一特点，这可真是相当的美妙。事实上，Python 语言本身就支持基础 的协程的概念，generator 是其中的产物（这里）。</p>
-<p>对于 Gevent，其使用的协程实际上就是 greenlet 。当你使用 greenlet 生成了一些协程，就可以在这些 协程里不断跳转执行，两个 greenlet 之间的跳转被称为切换（switch）。通过切换，我们就可以实现对协程 的调度。还应该知道的是，每个 greenlet 都拥有一个父 greenlet ，这是在 greenlet 初始化时就确定的。 当一个 greenlet 执行完毕后，执行权会切换到其父 greenlet 中。实际上，所有的 greenlet 会被组织成 一颗树，树根便是最“老资格”的 greenlet ，这个老 greenlet 确定了各 greenlet 间的逻辑关系。</p>
-<p>上面说到协程必须自行调度，不会是要自己构造一个调度器吧？这当然可以做到，但不是必须，因为 Gevent 已经基于 greenlet 和 libevent 封装了许多基础常用的库，例如 socket 、event 和 queue 等，只要使用 这些库进行开发，或者对使用的标准库或第三方库打一下补丁（monket patch），就能保证生成的各协程在 I/O 等待时正确地进行切换，从而实现无阻塞的异步执行。</p>
-<p>刚接触 Gevent 时，感觉跟传统的并发编程很类似，但了解渐深后，才发现这货实际上跟 Tornado 更为类似。 因为， Gevent 本质上也是事件驱动。实现的策略可以是，在将要执行 I/O 阻塞事件时，先在事件循环中对该事件 进行注册，关联的回调函数便是对当前协程的切换操作（current_greenlet.switch()），注册成功后即 切换回当前协程的父协程中进行执行（current_greenlet.parent.switch()）。当注册的 I/O 事件被 触发后，事件循环在恰当时机便会执行该回调函数，也就是切换到原先的协程继续执行程序。从而，就实现 无阻塞的 I/O 事件处理。怎样，是否感觉相当的有趣？ :)</p>
-<p>Gevent 了不得的地方还在于，我们能像编写一般程序那样来编写异步程序，这可是弥足珍贵。为了更直观的 显示，让我们来看一下具体的运行示例:    </p>
-<pre><code>import gevent
-from gevent import monkey
-# patches stdlib (including socket and ssl modules) to cooperate with other greenlets
-monkey.patch_all()
-
-import urllib2
-
-urls = [&apos;http://www.google.com&apos;, &apos;http://www.yandex.ru&apos;, &apos;http://www.python.org&apos;]
-
-def print_head(url):
-    print (&apos;Starting %s&apos; % url)
-    data = urllib2.urlopen(url).read()
-    print (&apos;%s: %s bytes: %r&apos; % (url, len(data), data[:50]))
-
-jobs = [gevent.spawn(print_head, url) for url in urls]
-
-gevent.joinall(jobs)
-</code></pre><p>上面示例做的事情实际上跟前面 Tornado 的示例是一样，同样是异步的对url进行请求。在我看来，使用 Gevent 进行编程，无论是可读性还是可操作性都能让人满意。但也要清楚，在实际操作中，为了达到较理想 效果，经常还是需要根据不同的情况对代码进行一些相应的“雕琢”。还有一点很常被人忽略， Gevent 是 基于协程实现的 Python 网络库，其适用面更多的是在于网络 I/O 频繁的需求里，很多情况下 Gevent 可能 并不是很好的选择。总的来说，Gevent 确实很讨人喜爱，性能好，开销小，代码易维护，是广大 pythoner 手中的一大利器。    </p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/14/flask-gevent使用实例/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/14/flask-gevent使用实例/" itemprop="url">flask+gevent使用实例</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-14T18:59:51+08:00">
-                2018-03-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <pre><code>&quot;&quot;&quot;Asynchronous requests in Flask with gevent&quot;&quot;&quot;
-
-from time import time
-
-from flask import Flask, Response
-
-from gevent.pywsgi import WSGIServer
-from gevent import monkey
-
-import requests
-
-# need to patch sockets to make requests async
-monkey.patch_all()
-
-CHUNK_SIZE = 1024*1024  # bytes
-
-app = Flask(__name__)  # pylint: disable=invalid-name
-app.debug = True
-
-
-@app.route(&apos;/Seattle.jpg&apos;)
-def seattle(requests_counter=[0]):  # pylint: disable=dangerous-default-value
-    &quot;&quot;&quot;Asynchronous non-blocking streaming of relatively large (14.5MB) JPG
-    of Seattle from wikimedia commons.
-    &quot;&quot;&quot;
-    requests_counter[0] += 1
-    request_num = requests_counter[0]
-    url = &apos;http://upload.wikimedia.org/wikipedia/commons/3/39/Seattle_3.jpg&apos;
-
-    app.logger.debug(&apos;started %d&apos;, request_num)
-
-    rsp = requests.get(url, stream=True)
-
-    def generator():
-        &quot;streaming generator logging the end of request processing&quot;
-        yield &apos;&apos;  # to make greenlet switch
-        for data in rsp.iter_content(CHUNK_SIZE):
-            yield data
-        app.logger.debug(&apos;finished %d&apos;, request_num)
-
-    return Response(generator(), mimetype=&apos;image/jpeg&apos;)
-
-
-def main():
-    &quot;Start gevent WSGI server&quot;
-    # use gevent WSGI server instead of the Flask
-    http = WSGIServer((&apos;&apos;, 5000), app.wsgi_app)
-    # TODO gracefully handle shutdown
-    http.serve_forever()
-
-
-if __name__ == &apos;__main__&apos;:
-    main()
-</code></pre><p>使用测试：</p>
-<pre><code>pip install flask gevent requests
-
-python async_flask.py &amp; siege -c 1000 -t 5s http://127.0.0.1:5000/Seattle.jpg    
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1269,7 +1121,7 @@ python async_flask.py &amp; siege -c 1000 -t 5s http://127.0.0.1:5000/Seattle.jp
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">142</span>
+                  <span class="site-state-item-count">144</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
