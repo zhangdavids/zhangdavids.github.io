@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/17/how-ansible-works/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/23/multiprocessing/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Cheung John">
@@ -282,7 +282,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/17/how-ansible-works/" itemprop="url">how ansible works</a></h1>
+                <a class="post-title-link" href="/2017/11/23/multiprocessing/" itemprop="url">multiprocessing</a></h1>
         
 
         <div class="post-meta">
@@ -294,8 +294,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-17T22:13:14+08:00">
-                2017-09-17
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-23T07:48:28+08:00">
+                2017-11-23
               </time>
             
 
@@ -334,189 +334,63 @@
       
         
           
-            <p>ansible 是什么？    </p>
-<p>ansible 是如何工作的：  </p>
-<p>使用者认证通过之后在管理节点通过 ansible 工具调用各应用模块将指令推送到被管理端。  </p>
-<p>并且在执行完毕后自动删除产生的临时文件。</p>
-<p>主要由六个部分组成：</p>
-<ol>
-<li>playbooks 通常是 json 格式的 yml 文件</li>
-<li>inventory 管理主机的清单</li>
-<li>modules 执行命令的功能模块</li>
-<li>plugins 模块功能的补充，如循环插件等，功能不常用</li>
-<li>api  供第三方程序调用的应用程序编程接口</li>
-<li>ansible  ansible 命令工具</li>
-</ol>
-<p>遵循预先编排的规则将 playbook 逐条拆解为 play，将 play 组织成 ansible 可识别的任务 task，随后调用任务涉及的所有模块和插件，根据 inventory 中定义的主机列表通过 ssh 将任务集以临时文件或命令的形式传输到远程客户端执行并返回执行结果，如果是临时文件则执行完毕后自动删除。  </p>
-<p>下面会详细介绍一个企业级的应用，elk 日志系统基于 ansible 的自动化实现。  </p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/17/tensorflow-foundation/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/17/tensorflow-foundation/" itemprop="url">tensorflow foundation</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-17T12:24:30+08:00">
-                2017-09-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="1-基础架构"><a href="#1-基础架构" class="headerlink" title="1. 基础架构"></a>1. 基础架构</h2><p>自底向上分为：  </p>
+            <h2 id="进程-线程-协程"><a href="#进程-线程-协程" class="headerlink" title="进程 线程 协程"></a>进程 线程 协程</h2><p>python网络编程的两大必学模块socket和socketserver，其中的socketserver是一个支持IO多路复用和多线程、多进程的模块。<br>一般我们在socketserver服务端代码中都会写这么一句：</p>
+<pre><code>server = socketserver.ThreadingTCPServer(settings.IP_PORT, MyServer)
+</code></pre><p>ThreadingTCPServer这个类是一个支持多线程和TCP协议的socketserver，它的继承关系是这样的：</p>
+<pre><code>class ThreadingTCPServer(ThreadingMixIn, TCPServer): 
+    pass
+</code></pre><p>右边的TCPServer实际上是它主要的功能父类，而左边的ThreadingMixIn则是实现了多线程的类，它自己本身则没有任何代码。<br>MixIn在python的类命名中，很常见，一般被称为“混入”，戏称“乱入”，通常为了某种重要功能被子类继承。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ThreadingMixIn</span>:</span></span><br><span class="line">     </span><br><span class="line">    daemon_threads = <span class="keyword">False</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_request_thread</span><span class="params">(self, request, client_address)</span>:</span>      </span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            self.finish_request(request, client_address)</span><br><span class="line">            self.shutdown_request(request)</span><br><span class="line">        <span class="keyword">except</span>:</span><br><span class="line">            self.handle_error(request, client_address)</span><br><span class="line">            self.shutdown_request(request)</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_request</span><span class="params">(self, request, client_address)</span>:</span></span><br><span class="line">         </span><br><span class="line">        t = threading.Thread(target = self.process_request_thread,</span><br><span class="line">                             args = (request, client_address))</span><br><span class="line">        t.daemon = self.daemon_threads</span><br><span class="line">        t.start()</span><br></pre></td></tr></table></figure>
+<p>在ThreadingMixIn类中，其实就定义了一个属性，两个方法。在process_request方法中实际调用的正是python内置的多线程模块threading。这个模块是python中所有多线程的基础，socketserver本质上也是利用了这个模块。</p>
+<h3 id="1-thread"><a href="#1-thread" class="headerlink" title="1. thread"></a>1. thread</h3><p>线程，有时被称为轻量级进程(Lightweight Process，LWP），是程序执行流的最小单元。一个标准的线程由线程ID，当前指令指针(PC），寄存器集合和堆栈组成。另外，线程是进程中的一个实体，是被系统独立调度和分派的基本单位，线程自己不独立拥有系统资源，但它可与同属一个进程的其它线程共享该进程所拥有的全部资源。一个线程可以创建和撤消另一个线程，同一进程中的多个线程之间可以并发执行。由于线程之间的相互制约，致使线程在运行中呈现出间断性。线程也有就绪、阻塞和运行三种基本状态。就绪状态是指线程具备运行的所有条件，逻辑上可以运行，在等待处理机；运行状态是指线程占有处理机正在运行；阻塞状态是指线程在等待一个事件（如某个信号量），逻辑上不可执行。每一个应用程序都至少有一个进程和一个线程。线程是程序中一个单一的顺序控制流程。在单个程序中同时运行多个线程完成不同的被划分成一块一块的工作，称为多线程。  </p>
+<p>以上那一段，可以不用看！举个例子，厂家要生产某个产品，在它的生产基地建设了很多厂房，每个厂房内又有多条流水生产线。所有厂房配合将整个产品生产出来，某个厂房内的所有流水线将这个厂房负责的产品部分生产出来。每个厂房拥有自己的材料库，厂房内的生产线共享这些材料。而每一个厂家要实现生产必须拥有至少一个厂房一条生产线。那么这个厂家就是某个应用程序；每个厂房就是一个进程；每条生产线都是一个线程。</p>
+<p>python 主要是 threading 库</p>
+<p>普通的多线程</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line">   </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show</span><span class="params">(arg)</span>:</span></span><br><span class="line">    time.sleep(<span class="number">1</span>)</span><br><span class="line">    print(<span class="string">'thread'</span>+str(arg))</span><br><span class="line">   </span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">    t = threading.Thread(target=show, args=(i,))</span><br><span class="line">    t.start()</span><br><span class="line">   </span><br><span class="line">print(<span class="string">'main thread stop'</span>)</span><br></pre></td></tr></table></figure>
+<p>上述代码创建了10个“前台”线程，然后控制器就交给了CPU，CPU根据指定算法进行调度，分片执行指令。<br>下面是Thread类的主要方法：</p>
 <ul>
-<li>网络层和设备层</li>
-<li>数据操作层</li>
-<li>图计算层</li>
-<li>API 层</li>
-<li>应用层</li>
+<li>start 线程准备就绪，等待CPU调度  </li>
+<li>setName 为线程设置名称  </li>
+<li>getName 获取线程名称  </li>
+<li>setDaemon 设置为后台线程或前台线程（默认是False，前台线程）<br>如果是后台线程，主线程执行过程中，后台线程也在进行，主线程执行完毕后，后台线程不论成功与否，均停止。如果是前台线程，主线程执行过程中，前台线程也在进行，主线程执行完毕后，等待前台线程也执行完成后，程序停止。  </li>
+<li>join 该方法非常重要。它的存在是告诉主线程，必须在这个位置等待子线程执行完毕后，才继续进行主线程的后面的代码。但是当setDaemon为True时，join方法是无效的。  </li>
+<li>run 线程被cpu调度后自动执行线程对象的run方法</li>
 </ul>
-<p>1.1 网络通信层和设备管理层</p>
-<p>网络通信层包括 gRPC 和 RDMA ，都是分布式计算时需要用到的。<br>设备管理层包括 tf 分别在 CPU GPU FPGA 等设备上的实现，也就是对上层提供了一个统一的接口，使得上层只需要处理卷积等逻辑，而不需要关心在硬件上的卷积的实现过程。  </p>
-<p>1.2  数据操作层</p>
-<p>包括卷积函数、激活函数等操作。  </p>
-<p>1.3 图计算层  </p>
-<p>本地计算图和分布式计算图的实现  </p>
-<p>1.4 API 层</p>
-<p>python实现和其他语言的实现  </p>
-<p>1.5 应用层  </p>
-<p>主要是训练相关类库和预测相关类库   </p>
-<h2 id="2-设计理念"><a href="#2-设计理念" class="headerlink" title="2. 设计理念"></a>2. 设计理念</h2><p>2.1 图的定义和图的实现完全分开  </p>
-<p>符号式编程涉及很多的嵌入和优化，不容易理解和调试，但是运行速度有所提升。  </p>
-<p>2.2 涉及的运算全部放在图中，图的运行只是发生在会话 session 中。  </p>
-<p>下面是举例：  </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">a = tf.constant([<span class="number">1.0</span>, <span class="number">2.0</span>])</span><br><span class="line">b = tf.constant([<span class="number">3.0</span>, <span class="number">4.0</span>])</span><br><span class="line">c = a * b</span><br><span class="line"></span><br><span class="line">sess = tf.Session()</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> sess.run(c)</span><br><span class="line">sess.close()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 当然 一般写法是这样</span></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">	<span class="keyword">print</span> sess.run(c)</span><br></pre></td></tr></table></figure>
-<ol>
-<li>编程模型</li>
-</ol>
-<p>运行原理：</p>
+<p>python的GIL，也就是全局解释器锁。在编程语言的世界，python因为GIL的问题广受诟病，因为它在解释器的层面限制了程序在同一时间只有一个线程被CPU实际执行，而不管你的程序里实际开了多少条线程。所以我们经常能发现，python中的多线程编程有时候效率还不如单线程，就是因为这个原因。那么，对于这个GIL，一些普遍的问题如下：</p>
 <ul>
-<li>输入input</li>
-<li>塑形reshape</li>
-<li>Relu层</li>
-<li>Logit层</li>
-<li>Softmax</li>
-<li>交叉熵cross entropy</li>
-<li>梯度gradient</li>
-<li>SGD 训练</li>
+<li>为什么有 GIL</li>
 </ul>
-<p>从输入开始，经过塑形后，一层一层进行前向传播运算。Relu层里会有两个参数，在输出前使用Relu激活函数来做非线性处理。然后进入Logit层，学习两个参数。用softmax来计算输出结果中各个类别的概率分布。用交叉熵来度量两个概率分布之间的相似性。然后开始计算梯度，以及交叉墒后的结果。随后进入SGD训练，也就是反向传播的过程，从上往下计算每一层的参数，依次进行更新。  </p>
-<p>tensorflow 顾名思义就是指“张量的流动”，数据流图是由节点node和边edge组成的有向无环图。</p>
-<p>3.1 边</p>
-<p>张量具有数据属性 如tf.float32等。</p>
-<p>3.2 节点</p>
-<p>节点的运算操作有数学、数组等。详细代码在源码tensorflow/python/ops/目录下。</p>
-<p>3.3 设备</p>
-<p>设备device是指一块可以用来运算且拥有自己地址空间的硬件。</p>
-<p>3.4 变量</p>
-<p>变量variable是一种特殊的数据，在图中有固定的位置，不像张量那样可以流动。  </p>
-<p>3.5 内核  </p>
-<p>操作是对抽象操作的一个统称，而内核kernel则是能够运行在特定设备上的一种对操作的实现。</p>
+<p>作为解释型语言，Python的解释器必须做到既安全又高效。我们都知道多线程编程会遇到的问题。解释器要留意的是避免在不同的线程操作内部共享的数据。同时它还要保证在管理用户线程时总是有最大化的计算资源。那么，不同线程同时访问时，数据的保护机制是怎样的呢？答案是解释器全局锁GIL。GIL对诸如当前线程状态和为垃圾回收而用的堆分配对象这样的东西的访问提供着保护。</p>
+<ul>
+<li>为什么不能去掉</li>
+</ul>
+<p>首先，在早期的python解释器依赖较多的全局状态，传承下来，使得想要移除当今的GIL变得更加困难。其次，对于程序员而言，仅仅是想要理解它的实现就需要对操作系统设计、多线程编程、C语言、解释器设计和CPython解释器的实现有着非常彻底的理解。<br>在1999年，针对Python1.5，一个“freethreading”补丁已经尝试移除GIL，用细粒度的锁来代替。然而，GIL的移除给单线程程序的执行速度带来了一定的负面影响。当用单线程执行时，速度大约降低了40%。虽然使用两个线程时在速度上得到了提高，但这个提高并没有随着核数的增加而线性增长。因此这个补丁没有被采纳。<br>另外，在python的不同解释器实现中，如PyPy就移除了GIL，其执行速度更快（不单单是去除GIL的原因）。然而，我们通常使用的CPython占有着统治地位的使用量，所以，你懂的。<br>在Python 3.2中实现了一个新的GIL，并且带着一些积极的结果。这是自1992年以来，GIL的一次最主要改变。旧的GIL通过对Python指令进行计数来确定何时放弃GIL。在新的GIL实现中，用一个固定的超时时间来指示当前的线程以放弃这个锁。在当前线程保持这个锁，且当第二个线程请求这个锁的时候，当前线程就会在5ms后被强制释放掉这个锁（这就是说，当前线程每5ms就要检查其是否需要释放这个锁）。当任务是可行的时候，这会使得线程间的切换更加可预测。  </p>
+<ul>
+<li>实际建议</li>
+</ul>
+<p>建议在IO密集型任务中使用多线程，</p>
+<p>在CPU密集型任务中使用多进程。</p>
+<p>深入研究python的协程机制，你会有惊喜的。</p>
+<p>通常而言，队列是一种先进先出的数据结构，与之对应的是堆栈这种后进先出的结构。但是在python中，它内置了一个queue模块，它不但提供普通的队列，还提供一些特殊的队列。具体如下：</p>
+<ul>
+<li>queue.Queue ：先进先出队列  </li>
+<li>queue.LifoQueue ：后进先出队列  </li>
+<li>queue.PriorityQueue ：优先级队列  </li>
+<li>queue.deque ：双向队列  </li>
+</ul>
+<h4 id="生产者-消费者"><a href="#生产者-消费者" class="headerlink" title="生产者  消费者"></a>生产者  消费者</h4><p>生产者消费者模式是通过一个容器来解决生产者和消费者的强耦合问题。生产者和消费者彼此之间不直接通讯，而通过阻塞队列来进行通讯，所以生产者生产完数据之后不用等待消费者处理，直接扔给阻塞队列，消费者不找生产者要数据，而是直接从阻塞队列里取，阻塞队列就相当于一个缓冲区，平衡了生产者和消费者的处理能力。<br>这个阻塞队列就是用来给生产者和消费者解耦的。纵观大多数设计模式，都会找一个第三者出来进行解耦，如工厂模式的第三者是工厂类，模板模式的第三者是模板类。在学习一些设计模式的过程中，如果先找到这个模式的第三者，能帮助我们快速熟悉一个设计模式。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"><span class="comment"># Author:Liu Jiang</span></span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> queue</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"> </span><br><span class="line">q = queue.Queue(<span class="number">10</span>)</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">productor</span><span class="params">(i)</span>:</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">        q.put(<span class="string">"厨师 %s 做的包子！"</span>%i)</span><br><span class="line">        time.sleep(<span class="number">2</span>)</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">consumer</span><span class="params">(k)</span>:</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">        print(<span class="string">"顾客 %s 吃了一个 %s"</span>%(k,q.get()))</span><br><span class="line">        time.sleep(<span class="number">1</span>)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">3</span>):</span><br><span class="line">    t = threading.Thread(target=productor,args=(i,))</span><br><span class="line">    t.start()</span><br><span class="line"> </span><br><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">    v = threading.Thread(target=consumer,args=(k,))</span><br><span class="line">    v.start()</span><br></pre></td></tr></table></figure>
+<h4 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h4><p>在使用多线程处理任务时也不是线程越多越好，由于在切换线程的时候，需要切换上下文环境，依然会造成cpu的大量开销。为解决这个问题，线程池的概念被提出来了。预先创建好一个较为优化的数量的线程，让过来的任务立刻能够使用，就形成了线程池。在python中，没有内置的较好的线程池模块，需要自己实现或使用第三方模块。下面是一个简单的线程池：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"><span class="comment"># Author:Liu Jiang</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">import</span> queue</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThreadPool</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, maxsize=<span class="number">5</span>)</span>:</span></span><br><span class="line">        self.maxsize = maxsize</span><br><span class="line">        self._q = queue.Queue(maxsize)</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(maxsize):</span><br><span class="line">            self._q.put(threading.Thread)</span><br><span class="line">            </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_thread</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self._q.get()</span><br><span class="line">        </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">add_thread</span><span class="params">(self)</span>:</span></span><br><span class="line">        self._q.put(threading.Thread)</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">task</span><span class="params">(i, pool)</span>:</span></span><br><span class="line">    print(i)</span><br><span class="line">    time.sleep(<span class="number">1</span>)</span><br><span class="line">    pool.add_thread()</span><br><span class="line"> </span><br><span class="line">pool = MyThreadPool(<span class="number">5</span>)</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100</span>):</span><br><span class="line">    t = pool.get_thread()</span><br><span class="line">    obj = t(target=task, args=(i,pool))</span><br><span class="line">    obj.start()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"> </span><br><span class="line"><span class="string">"""</span><br><span class="line">一个基于thread和queue的线程池，以任务为队列元素，动态创建线程，重复利用线程，</span><br><span class="line">通过close和terminate方法关闭线程池。</span><br><span class="line">"""</span></span><br><span class="line"><span class="keyword">import</span> queue</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">import</span> contextlib</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 创建空对象,用于停止线程</span></span><br><span class="line">StopEvent = object()</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">callback</span><span class="params">(status, result)</span>:</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">    根据需要进行的回调函数，默认不执行。</span><br><span class="line">    :param status: action函数的执行状态</span><br><span class="line">    :param result: action函数的返回值</span><br><span class="line">    :return:</span><br><span class="line">    """</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">action</span><span class="params">(thread_name,arg)</span>:</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">    真实的任务定义在这个函数里</span><br><span class="line">    :param thread_name: 执行该方法的线程名</span><br><span class="line">    :param arg: 该函数需要的参数</span><br><span class="line">    :return:</span><br><span class="line">    """</span></span><br><span class="line">    <span class="comment"># 模拟该函数执行了0.1秒</span></span><br><span class="line">    time.sleep(<span class="number">0.1</span>)</span><br><span class="line">    print(<span class="string">"第%s个任务调用了线程 %s，并打印了这条信息！"</span> % (arg+<span class="number">1</span>, thread_name))</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ThreadPool</span>:</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, max_num, max_task_num=None)</span>:</span></span><br><span class="line">        <span class="string">"""</span><br><span class="line">        初始化线程池</span><br><span class="line">        :param max_num: 线程池最大线程数量</span><br><span class="line">        :param max_task_num: 任务队列长度</span><br><span class="line">        """</span></span><br><span class="line">        <span class="comment"># 如果提供了最大任务数的参数，则将队列的最大元素个数设置为这个值。</span></span><br><span class="line">        <span class="keyword">if</span> max_task_num:</span><br><span class="line">            self.q = queue.Queue(max_task_num)</span><br><span class="line">        <span class="comment"># 默认队列可接受无限多个的任务</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.q = queue.Queue()</span><br><span class="line">        <span class="comment"># 设置线程池最多可实例化的线程数</span></span><br><span class="line">        self.max_num = max_num</span><br><span class="line">        <span class="comment"># 任务取消标识</span></span><br><span class="line">        self.cancel = <span class="keyword">False</span></span><br><span class="line">        <span class="comment"># 任务中断标识</span></span><br><span class="line">        self.terminal = <span class="keyword">False</span></span><br><span class="line">        <span class="comment"># 已实例化的线程列表</span></span><br><span class="line">        self.generate_list = []</span><br><span class="line">        <span class="comment"># 处于空闲状态的线程列表</span></span><br><span class="line">        self.free_list = []</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">put</span><span class="params">(self, func, args, callback=None)</span>:</span></span><br><span class="line">        <span class="string">"""</span><br><span class="line">        往任务队列里放入一个任务</span><br><span class="line">        :param func: 任务函数</span><br><span class="line">        :param args: 任务函数所需参数</span><br><span class="line">        :param callback: 任务执行失败或成功后执行的回调函数，回调函数有两个参数</span><br><span class="line">        1、任务函数执行状态；2、任务函数返回值（默认为None，即：不执行回调函数）</span><br><span class="line">        :return: 如果线程池已经终止，则返回True否则None</span><br><span class="line">        """</span></span><br><span class="line">        <span class="comment"># 先判断标识，看看任务是否取消了</span></span><br><span class="line">        <span class="keyword">if</span> self.cancel:</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        <span class="comment"># 如果没有空闲的线程，并且已创建的线程的数量小于预定义的最大线程数，则创建新线程。</span></span><br><span class="line">        <span class="keyword">if</span> len(self.free_list) == <span class="number">0</span> <span class="keyword">and</span> len(self.generate_list)  self.max_num:</span><br><span class="line">            self.generate_thread()</span><br><span class="line">        <span class="comment"># 构造任务参数元组，分别是调用的函数，该函数的参数，回调函数。</span></span><br><span class="line">        w = (func, args, callback,)</span><br><span class="line">        <span class="comment"># 将任务放入队列</span></span><br><span class="line">        self.q.put(w)</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">generate_thread</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span><br><span class="line">        创建一个线程</span><br><span class="line">        """</span></span><br><span class="line">        <span class="comment"># 每个线程都执行call方法</span></span><br><span class="line">        t = threading.Thread(target=self.call)</span><br><span class="line">        t.start()</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">call</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span><br><span class="line">        循环去获取任务函数并执行任务函数。在正常情况下，每个线程都保存生存状态，</span><br><span class="line">        直到获取线程终止的flag。</span><br><span class="line">        """</span></span><br><span class="line">        <span class="comment"># 获取当前线程的名字</span></span><br><span class="line">        current_thread = threading.currentThread().getName()</span><br><span class="line">        <span class="comment"># 将当前线程的名字加入已实例化的线程列表中</span></span><br><span class="line">        self.generate_list.append(current_thread)</span><br><span class="line">        <span class="comment"># 从任务队列中获取一个任务</span></span><br><span class="line">        event = self.q.get()</span><br><span class="line">        <span class="comment"># 让获取的任务不是终止线程的标识对象时</span></span><br><span class="line">        <span class="keyword">while</span> event != StopEvent:</span><br><span class="line">            <span class="comment"># 解析任务中封装的三个参数</span></span><br><span class="line">            func, arguments, callback = event</span><br><span class="line">            <span class="comment"># 抓取异常，防止线程因为异常退出</span></span><br><span class="line">            <span class="keyword">try</span>:</span><br><span class="line">                <span class="comment"># 正常执行任务函数</span></span><br><span class="line">                result = func(current_thread, *arguments)</span><br><span class="line">                success = <span class="keyword">True</span></span><br><span class="line">            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                <span class="comment"># 当任务执行过程中弹出异常</span></span><br><span class="line">                result = <span class="keyword">None</span></span><br><span class="line">                success = <span class="keyword">False</span></span><br><span class="line">            <span class="comment"># 如果有指定的回调函数</span></span><br><span class="line">            <span class="keyword">if</span> callback <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">                <span class="comment"># 执行回调函数，并抓取异常</span></span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    callback(success, result)</span><br><span class="line">                <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">                    <span class="keyword">pass</span></span><br><span class="line">            <span class="comment"># 当某个线程正常执行完一个任务时，先执行worker_state方法</span></span><br><span class="line">            <span class="keyword">with</span> self.worker_state(self.free_list, current_thread):</span><br><span class="line">                <span class="comment"># 如果强制关闭线程的flag开启，则传入一个StopEvent元素</span></span><br><span class="line">                <span class="keyword">if</span> self.terminal:</span><br><span class="line">                    event = StopEvent</span><br><span class="line">                <span class="comment"># 否则获取一个正常的任务，并回调worker_state方法的yield语句</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="comment"># 从这里开始又是一个正常的任务循环</span></span><br><span class="line">                    event = self.q.get()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># 一旦发现任务是个终止线程的标识元素，将线程从已创建线程列表中删除</span></span><br><span class="line">            self.generate_list.remove(current_thread)</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">close</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span><br><span class="line">        执行完所有的任务后，让所有线程都停止的方法</span><br><span class="line">        """</span></span><br><span class="line">        <span class="comment"># 设置flag</span></span><br><span class="line">        self.cancel = <span class="keyword">True</span></span><br><span class="line">        <span class="comment"># 计算已创建线程列表中线程的个数，然后往任务队列里推送相同数量的终止线程的标识元素</span></span><br><span class="line">        full_size = len(self.generate_list)</span><br><span class="line">        <span class="keyword">while</span> full_size:</span><br><span class="line">            self.q.put(StopEvent)</span><br><span class="line">            full_size -= <span class="number">1</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">terminate</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span><br><span class="line">        在任务执行过程中，终止线程，提前退出。</span><br><span class="line">        """</span></span><br><span class="line">        self.terminal = <span class="keyword">True</span></span><br><span class="line">        <span class="comment"># 强制性的停止线程</span></span><br><span class="line">        <span class="keyword">while</span> self.generate_list:</span><br><span class="line">            self.q.put(StopEvent)</span><br><span class="line"> </span><br><span class="line">    <span class="comment"># 该装饰器用于上下文管理</span></span><br><span class="line"><span class="meta">    @contextlib.contextmanager</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">worker_state</span><span class="params">(self, state_list, worker_thread)</span>:</span></span><br><span class="line">        <span class="string">"""</span><br><span class="line">        用于记录空闲的线程，或从空闲列表中取出线程处理任务</span><br><span class="line">        """</span></span><br><span class="line">        <span class="comment"># 将当前线程，添加到空闲线程列表中</span></span><br><span class="line">        state_list.append(worker_thread)</span><br><span class="line">        <span class="comment"># 捕获异常</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="comment"># 在此等待</span></span><br><span class="line">            <span class="keyword">yield</span></span><br><span class="line">        <span class="keyword">finally</span>:</span><br><span class="line">            <span class="comment"># 将线程从空闲列表中移除</span></span><br><span class="line">            state_list.remove(worker_thread)</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 调用方式</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="comment"># 创建一个最多包含5个线程的线程池</span></span><br><span class="line">    pool = ThreadPool(<span class="number">5</span>)</span><br><span class="line">    <span class="comment"># 创建100个任务，让线程池进行处理</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100</span>):</span><br><span class="line">        pool.put(action, (i,), callback)</span><br><span class="line">    <span class="comment"># 等待一定时间，让线程执行任务</span></span><br><span class="line">    time.sleep(<span class="number">3</span>)</span><br><span class="line">    print(<span class="string">"-"</span> * <span class="number">50</span>)</span><br><span class="line">    print(<span class="string">"任务停止之前线程池中有%s个线程，空闲的线程有%s个 "</span></span><br><span class="line">          % (len(pool.generate_list), len(pool.free_list)))</span><br><span class="line">    <span class="comment"># 正常关闭线程池</span></span><br><span class="line">    pool.close()</span><br><span class="line">    print(<span class="string">"任务执行完毕，正常退出！"</span>)</span><br><span class="line">    <span class="comment"># 强制关闭线程池</span></span><br><span class="line">    <span class="comment"># pool.terminate()</span></span><br><span class="line">    <span class="comment"># print("强制停止任务！")</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-process"><a href="#2-process" class="headerlink" title="2. process"></a>2. process</h3><p>在python中multiprocess模块提供了Process类，实现进程相关的功能。但是，由于它是基于fork机制的，因此不被windows平台支持。想要在windows中运行，必须使用if __name<strong> == ‘\</strong>main__:的方式，显然这只能用于调试和学习，不能用于实际环境。<br>（PS：在这里我必须吐槽一下python的包、模块和类的组织结构。在multiprocess中你既可以import大写的Process，也可以import小写的process，这两者是完全不同的东西。这种情况在python中很多，新手容易傻傻分不清。）  </p>
+<p>想要进程之间进行资源共享可以使用queues/Array/Manager这三个multiprocess模块提供的类。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process</span><br><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Array</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Foo</span><span class="params">(i,temp)</span>:</span></span><br><span class="line">    temp[<span class="number">0</span>] += <span class="number">100</span></span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> temp:</span><br><span class="line">        print(i,<span class="string">'-----&gt;'</span>,item)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    temp = Array(<span class="string">'i'</span>, [<span class="number">11</span>, <span class="number">22</span>, <span class="number">33</span>, <span class="number">44</span>])</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>):</span><br><span class="line">        p = Process(target=Foo, args=(i,temp))</span><br><span class="line">        p.start()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process,Manager</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">Foo</span><span class="params">(i,dic)</span>:</span></span><br><span class="line">    dic[i] = <span class="number">100</span>+i</span><br><span class="line">    print(dic.values())</span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    manage = Manager()</span><br><span class="line">    dic = manage.dict()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">        p = Process(target=Foo, args=(i,dic))</span><br><span class="line">        p.start()</span><br><span class="line">        p.join()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> multiprocessing</span><br><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Process</span><br><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> queues</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">(i,arg)</span>:</span></span><br><span class="line">    arg.put(i)</span><br><span class="line">    print(<span class="string">'The Process is '</span>, i, <span class="string">"and the queue's size is "</span>, arg.qsize())</span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    li = queues.Queue(<span class="number">20</span>, ctx=multiprocessing)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">        p = Process(target=foo, args=(i,li,))</span><br><span class="line">        p.start()</span><br></pre></td></tr></table></figure>
+<p>这里就有点类似上面的队列了。从运行结果里，你还能发现数据共享中存在的脏数据问题。另外，比较悲催的是multiprocessing里还有一个Queue，一样能实现这个功能。</p>
+<h3 id="3-coroutine"><a href="#3-coroutine" class="headerlink" title="3. coroutine"></a>3. coroutine</h3><p>线程和进程的操作是由程序触发系统接口，最后的执行者是系统，它本质上是操作系统提供的功能。而协程的操作则是程序员指定的，在python中通过yield，人为的实现并发处理。<br>协程存在的意义：对于多线程应用，CPU通过切片的方式来切换线程间的执行，线程切换时需要耗时。协程，则只使用一个线程，分解一个线程成为多个“微线程”，在一个线程中规定某个代码块的执行顺序。<br>协程的适用场景：当程序中存在大量不需要CPU的操作时（IO）。<br>在不需要自己“造轮子”的年代，同样有第三方模块为我们提供了高效的协程，这里介绍一下greenlet和gevent。本质上，gevent是对greenlet的高级封装，因此一般用它就行，这是一个相当高效的模块。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> gevent <span class="keyword">import</span> monkey; monkey.patch_all()</span><br><span class="line"><span class="keyword">import</span> gevent</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(url)</span>:</span></span><br><span class="line">    print(<span class="string">'GET: %s'</span> % url)</span><br><span class="line">    resp = requests.get(url)</span><br><span class="line">    data = resp.text</span><br><span class="line">    print(<span class="string">'%d bytes received from %s.'</span> % (len(data), url))</span><br><span class="line"> </span><br><span class="line">gevent.joinall([</span><br><span class="line">        gevent.spawn(f, <span class="string">'https://www.python.org/'</span>),</span><br><span class="line">        gevent.spawn(f, <span class="string">'https://www.yahoo.com/'</span>),</span><br><span class="line">        gevent.spawn(f, <span class="string">'https://github.com/'</span>),</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
 
           
         
@@ -565,7 +439,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/02/texas-poker/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/16/how-to-deploy-django/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Cheung John">
@@ -584,7 +458,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/09/02/texas-poker/" itemprop="url">texas poker</a></h1>
+                <a class="post-title-link" href="/2017/11/16/how-to-deploy-django/" itemprop="url">how-to-deploy-django</a></h1>
         
 
         <div class="post-meta">
@@ -596,8 +470,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-02T23:53:35+08:00">
-                2017-09-02
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-16T22:23:48+08:00">
+                2017-11-16
               </time>
             
 
@@ -636,8 +510,23 @@
       
         
           
-            <p>德州扑克比较大小的设计，设计全面还是有一些繁琐的。  </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/env python</span></span><br><span class="line"><span class="comment"># _*_ coding:utf8 _*_</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">poker</span><span class="params">(hands)</span>:</span></span><br><span class="line">    <span class="string">"Return a list of winning hands: poker([hand,...]) =&gt; [hand,...]"</span></span><br><span class="line">    <span class="keyword">return</span> allmax(hands, key=hand_rank)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">allmax</span><span class="params">(iterable, key=None)</span>:</span></span><br><span class="line">    <span class="string">"Return a list of all items equal to the max of the iterable."</span></span><br><span class="line">    iterable.sort(key=key,reverse=<span class="keyword">True</span>)</span><br><span class="line">    result = [iterable[<span class="number">0</span>]]</span><br><span class="line">    maxValue = key(iterable[<span class="number">0</span>]) <span class="keyword">if</span> key <span class="keyword">else</span> iterable[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">for</span> value <span class="keyword">in</span> iterable[<span class="number">1</span>:]:</span><br><span class="line">        v = key(value) <span class="keyword">if</span> key <span class="keyword">else</span> value</span><br><span class="line">        <span class="keyword">if</span> v == maxValue: result.append(value)</span><br><span class="line">        <span class="keyword">else</span>: <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">card_ranks</span><span class="params">(hand)</span>:</span></span><br><span class="line">    <span class="string">"Return a list of the ranks, sorted with higher first."</span></span><br><span class="line">    ranks = [<span class="string">'--23456789TJQKA'</span>.index(r) <span class="keyword">for</span> r, s <span class="keyword">in</span> hand]</span><br><span class="line">    ranks.sort(reverse = <span class="keyword">True</span>)</span><br><span class="line">    <span class="keyword">return</span> [<span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>] <span class="keyword">if</span> (ranks == [<span class="number">14</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>]) <span class="keyword">else</span> ranks</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 同花色</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">flush</span><span class="params">(hand)</span>:</span></span><br><span class="line">    <span class="string">"Return True if all the cards have the same suit."</span></span><br><span class="line">    suits = [s <span class="keyword">for</span> r,s <span class="keyword">in</span> hand]</span><br><span class="line">    <span class="keyword">return</span> len(set(suits)) == <span class="number">1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 顺子</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">straight</span><span class="params">(ranks)</span>:</span></span><br><span class="line">    <span class="string">"Return True if the ordered ranks form a 5-card straight."</span></span><br><span class="line">    <span class="keyword">return</span> (max(ranks)-min(ranks) == <span class="number">4</span>) <span class="keyword">and</span> len(set(ranks)) == <span class="number">5</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 条子</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">kind</span><span class="params">(n, ranks)</span>:</span></span><br><span class="line">    <span class="string">"""Return the first rank that this hand has exactly n-of-a-kind of.</span><br><span class="line">    Return None if there is no n-of-a-kind in the hand."""</span></span><br><span class="line">    <span class="keyword">for</span> r <span class="keyword">in</span> ranks:</span><br><span class="line">        <span class="keyword">if</span> ranks.count(r) == n: <span class="keyword">return</span> r</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 两对</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">two_pair</span><span class="params">(ranks)</span>:</span></span><br><span class="line">    <span class="string">"If there are two pair here, return the two ranks of the two pairs, else None."</span></span><br><span class="line">    pair = kind(<span class="number">2</span>, ranks)</span><br><span class="line">    lowpair = kind(<span class="number">2</span>, list(reversed(ranks)))</span><br><span class="line">    <span class="keyword">if</span> pair <span class="keyword">and</span> lowpair != pair:</span><br><span class="line">        <span class="keyword">return</span> (pair, lowpair)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hand_rank</span><span class="params">(hand)</span>:</span></span><br><span class="line">    <span class="string">"Return a value indicating the ranking of a hand."</span></span><br><span class="line">    ranks = card_ranks(hand)</span><br><span class="line">    <span class="keyword">if</span> straight(ranks) <span class="keyword">and</span> flush(hand):</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">8</span>, max(ranks))</span><br><span class="line">    <span class="keyword">elif</span> kind(<span class="number">4</span>, ranks):</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">7</span>, kind(<span class="number">4</span>, ranks), kind(<span class="number">1</span>, ranks))</span><br><span class="line">    <span class="keyword">elif</span> kind(<span class="number">3</span>, ranks) <span class="keyword">and</span> kind(<span class="number">2</span>, ranks):</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">6</span>, kind(<span class="number">3</span>, ranks), kind(<span class="number">2</span>, ranks))</span><br><span class="line">    <span class="keyword">elif</span> flush(hand):</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">5</span>, ranks)</span><br><span class="line">    <span class="keyword">elif</span> straight(ranks):</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">4</span>, max(ranks))</span><br><span class="line">    <span class="keyword">elif</span> kind(<span class="number">3</span>, ranks):</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">3</span>, kind(<span class="number">3</span>, ranks), ranks)</span><br><span class="line">    <span class="keyword">elif</span> two_pair(ranks):</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">2</span>, two_pair(ranks), ranks)</span><br><span class="line">    <span class="keyword">elif</span> kind(<span class="number">2</span>, ranks):</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">1</span>, kind(<span class="number">2</span>, ranks), ranks)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">0</span>, ranks)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hand_rank_alt</span><span class="params">(hand)</span>:</span></span><br><span class="line">    <span class="string">"Return a value indicating how high the hand ranks."</span></span><br><span class="line">    <span class="comment"># count is the count of each rank; ranks lists corresponding ranks</span></span><br><span class="line">    <span class="comment"># E.g. '7 T 7 9 7' =&gt; counts = (3, 1, 1) ranks = (7, 10, 9)</span></span><br><span class="line">    groups = group([<span class="string">'--23456789TJQKA'</span>.index(r) <span class="keyword">for</span> r,s <span class="keyword">in</span> hand])</span><br><span class="line">    counts, ranks = unzip(groups)</span><br><span class="line">    <span class="keyword">if</span> ranks == (<span class="number">14</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>):   <span class="comment"># Ace low straight</span></span><br><span class="line">        ranks = (<span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>)</span><br><span class="line">    straight = len(ranks) == <span class="number">5</span> <span class="keyword">and</span> max(ranks) - min(ranks) == <span class="number">4</span></span><br><span class="line">    flush = len(set([s <span class="keyword">for</span> r,s <span class="keyword">in</span> hand])) == <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> (<span class="number">9</span> <span class="keyword">if</span> (<span class="number">5</span>,) == counts <span class="keyword">else</span></span><br><span class="line">            <span class="number">8</span> <span class="keyword">if</span> straight <span class="keyword">and</span> flush <span class="keyword">else</span></span><br><span class="line">            <span class="number">7</span> <span class="keyword">if</span> (<span class="number">4</span>, <span class="number">1</span>) == counts <span class="keyword">else</span></span><br><span class="line">            <span class="number">6</span> <span class="keyword">if</span> (<span class="number">3</span>, <span class="number">2</span>) == counts <span class="keyword">else</span></span><br><span class="line">            <span class="number">5</span> <span class="keyword">if</span> flush <span class="keyword">else</span></span><br><span class="line">            <span class="number">4</span> <span class="keyword">if</span> straight <span class="keyword">else</span></span><br><span class="line">            <span class="number">3</span> <span class="keyword">if</span> (<span class="number">3</span>, <span class="number">1</span>, <span class="number">1</span>) == counts <span class="keyword">else</span></span><br><span class="line">            <span class="number">2</span> <span class="keyword">if</span> (<span class="number">2</span>, <span class="number">2</span>, <span class="number">1</span>) == counts <span class="keyword">else</span></span><br><span class="line">            <span class="number">1</span> <span class="keyword">if</span> (<span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>) == counts <span class="keyword">else</span></span><br><span class="line">            <span class="number">0</span>), ranks</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">count_rankings = &#123;(<span class="number">5</span>,): <span class="number">10</span>, (<span class="number">4</span>, <span class="number">1</span>): <span class="number">7</span>, (<span class="number">3</span>, <span class="number">2</span>): <span class="number">6</span>, (<span class="number">3</span>, <span class="number">1</span>, <span class="number">1</span>): <span class="number">3</span>, (<span class="number">2</span>, <span class="number">2</span>, <span class="number">1</span>): <span class="number">2</span>,</span><br><span class="line">                  (<span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>): <span class="number">1</span>, (<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>): <span class="number">0</span>&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hand_rank_table</span><span class="params">(hand)</span>:</span></span><br><span class="line">    <span class="string">"Return a value indicating how high the hand ranks."</span></span><br><span class="line">    <span class="comment"># count is the count of each rank; ranks lists corresponding ranks</span></span><br><span class="line">    <span class="comment"># E.g. '7 T 7 9 7' =&gt; counts = (3, 1, 1) ranks = (7, 10, 9)</span></span><br><span class="line">    groups = group([<span class="string">'--23456789TJQKA'</span>.index(r) <span class="keyword">for</span> r,s <span class="keyword">in</span> hand])</span><br><span class="line">    counts, ranks = unzip(groups)</span><br><span class="line">    <span class="keyword">if</span> ranks == (<span class="number">14</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>):   <span class="comment"># Ace low straight</span></span><br><span class="line">        ranks = (<span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>)</span><br><span class="line">    straight = len(ranks) == <span class="number">5</span> <span class="keyword">and</span> max(ranks) - min(ranks) == <span class="number">4</span></span><br><span class="line">    flush = len(set([s <span class="keyword">for</span> r,s <span class="keyword">in</span> hand])) == <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> max(count_rankings[counts], <span class="number">4</span>*straight + <span class="number">5</span>*flush), ranks</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">group</span><span class="params">(items)</span>:</span></span><br><span class="line">    <span class="string">"Return a list of [(count, x), ...], highest count first, then highest x first"</span></span><br><span class="line">    groups = [(items.count(x), x) <span class="keyword">for</span> x <span class="keyword">in</span> set(items)]</span><br><span class="line">    <span class="keyword">return</span> sorted(groups, reverse = <span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">unzip</span><span class="params">(iterable)</span>:</span></span><br><span class="line">    <span class="string">"Return a list of tuples from a list of tuples : e.g. [(2, 9), (2, 7)] =&gt; [(2, 2), (9, 7)]"</span></span><br><span class="line">    <span class="keyword">return</span> zip(*iterable)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mydeck = [r+s <span class="keyword">for</span> r <span class="keyword">in</span> <span class="string">'23456789TJQKA'</span> <span class="keyword">for</span> s <span class="keyword">in</span> <span class="string">'SHDC'</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">deal</span><span class="params">(numhands, n=<span class="number">5</span>, deck=mydeck)</span>:</span></span><br><span class="line">    random.shuffle(mydeck)</span><br><span class="line">    <span class="keyword">return</span> [mydeck[n*i:n*(i+<span class="number">1</span>)] <span class="keyword">for</span> i <span class="keyword">in</span> range(numhands)]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">hand_names = [<span class="string">"Straight flush"</span>, </span><br><span class="line">              <span class="string">"Four of a kind"</span>, </span><br><span class="line">              <span class="string">"Full house"</span>, </span><br><span class="line">              <span class="string">"Flush"</span>, </span><br><span class="line">              <span class="string">"Straight"</span>,</span><br><span class="line">              <span class="string">"Three of a kind"</span>,</span><br><span class="line">               <span class="string">"Two pair"</span>, </span><br><span class="line">               <span class="string">"One pair"</span>, </span><br><span class="line">               <span class="string">"High card"</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hand_percentages</span><span class="params">(n=<span class="number">700</span>*<span class="number">1000</span>)</span>:</span></span><br><span class="line">    counts = [<span class="number">0</span>] * <span class="number">9</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n/<span class="number">10</span>):</span><br><span class="line">        <span class="keyword">for</span> hand <span class="keyword">in</span> deal(<span class="number">10</span>):</span><br><span class="line">            ranking = hand_rank(hand)[<span class="number">0</span>]</span><br><span class="line">            counts[ranking] += <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> reversed(range(<span class="number">9</span>)):</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"%15s: %6.3f %%"</span> % (hand_names[i], <span class="number">100.</span>*counts[i]/n)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"Test cases for the functions in poker program."</span></span><br><span class="line">    sf1 = <span class="string">"6C 7C 8C 9C TC"</span>.split() <span class="comment"># Straight Flush</span></span><br><span class="line">    sf2 = <span class="string">"6D 7D 8D 9D TD"</span>.split() <span class="comment"># Straight Flush</span></span><br><span class="line">    fk = <span class="string">"9D 9H 9S 9C 7D"</span>.split() <span class="comment"># Four of a Kind</span></span><br><span class="line">    fh = <span class="string">"TD TC TH 7C 7D"</span>.split() <span class="comment"># Full House</span></span><br><span class="line">    tp = <span class="string">"5D 2C 2H 9H 5C"</span>.split() <span class="comment"># Two Pair</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Testing allmax</span></span><br><span class="line">    <span class="keyword">assert</span> allmax([<span class="number">2</span>,<span class="number">4</span>,<span class="number">7</span>,<span class="number">5</span>,<span class="number">1</span>]) == [<span class="number">7</span>]</span><br><span class="line">    <span class="keyword">assert</span> allmax([<span class="number">2</span>,<span class="number">4</span>,<span class="number">7</span>,<span class="number">5</span>,<span class="number">7</span>]) == [<span class="number">7</span>,<span class="number">7</span>]</span><br><span class="line">    <span class="keyword">assert</span> allmax([<span class="number">2</span>]) == [<span class="number">2</span>]</span><br><span class="line">    <span class="keyword">assert</span> allmax([<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>]) == [<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Testing card_ranks</span></span><br><span class="line">    <span class="keyword">assert</span> card_ranks(sf1) == [<span class="number">10</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">7</span>, <span class="number">6</span>]</span><br><span class="line">    <span class="keyword">assert</span> card_ranks(fk) == [<span class="number">9</span>, <span class="number">9</span>, <span class="number">9</span>, <span class="number">9</span>, <span class="number">7</span>]</span><br><span class="line">    <span class="keyword">assert</span> card_ranks(fh) == [<span class="number">10</span>, <span class="number">10</span>, <span class="number">10</span>, <span class="number">7</span>, <span class="number">7</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Testing flush</span></span><br><span class="line">    <span class="keyword">assert</span> flush([]) == <span class="keyword">False</span></span><br><span class="line">    <span class="keyword">assert</span> flush(sf1) == <span class="keyword">True</span></span><br><span class="line">    <span class="keyword">assert</span> flush(fh) == <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Testing straight</span></span><br><span class="line">    <span class="keyword">assert</span> straight(card_ranks(sf1)) == <span class="keyword">True</span></span><br><span class="line">    <span class="keyword">assert</span> straight(card_ranks(fk)) == <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Testing kind</span></span><br><span class="line">    <span class="keyword">assert</span> kind(<span class="number">3</span>, card_ranks(sf1)) == <span class="keyword">None</span></span><br><span class="line">    <span class="keyword">assert</span> kind(<span class="number">4</span>, card_ranks(fk)) == <span class="number">9</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Tesing two pair</span></span><br><span class="line">    <span class="keyword">assert</span> two_pair(card_ranks(sf1)) == <span class="keyword">None</span></span><br><span class="line">    <span class="keyword">assert</span> two_pair(card_ranks(tp)) == (<span class="number">5</span>,<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Testing group</span></span><br><span class="line">    <span class="keyword">assert</span> group([<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">9</span>]) == [(<span class="number">2</span>,<span class="number">2</span>),(<span class="number">1</span>,<span class="number">9</span>),(<span class="number">1</span>,<span class="number">6</span>),(<span class="number">1</span>,<span class="number">4</span>),(<span class="number">1</span>,<span class="number">3</span>),(<span class="number">1</span>,<span class="number">1</span>)]</span><br><span class="line">    <span class="keyword">assert</span> group([<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>]) == [(<span class="number">4</span>,<span class="number">8</span>)]</span><br><span class="line">    <span class="keyword">assert</span> group([<span class="number">2</span>,<span class="number">6</span>,<span class="number">1</span>]) == [(<span class="number">1</span>,<span class="number">6</span>),(<span class="number">1</span>,<span class="number">2</span>),(<span class="number">1</span>,<span class="number">1</span>)]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Testing unzip</span></span><br><span class="line">    <span class="keyword">assert</span> unzip([(<span class="number">2</span>,<span class="number">2</span>),(<span class="number">1</span>,<span class="number">9</span>),(<span class="number">1</span>,<span class="number">6</span>),(<span class="number">1</span>,<span class="number">4</span>),(<span class="number">1</span>,<span class="number">3</span>),(<span class="number">1</span>,<span class="number">1</span>)]) == [(<span class="number">2</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>),(<span class="number">2</span>,<span class="number">9</span>,<span class="number">6</span>,<span class="number">4</span>,<span class="number">3</span>,<span class="number">1</span>)]</span><br><span class="line">    <span class="keyword">assert</span> unzip([(<span class="number">1</span>,<span class="number">6</span>),(<span class="number">1</span>,<span class="number">2</span>),(<span class="number">1</span>,<span class="number">1</span>)]) == [(<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>),(<span class="number">6</span>,<span class="number">2</span>,<span class="number">1</span>)]</span><br><span class="line">    <span class="keyword">assert</span> unzip([(<span class="number">2</span>, <span class="number">9</span>), (<span class="number">2</span>, <span class="number">7</span>)]) == [(<span class="number">2</span>, <span class="number">2</span>), (<span class="number">9</span>, <span class="number">7</span>)]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Testing hand rank</span></span><br><span class="line">    <span class="keyword">assert</span> hand_rank(sf1) == (<span class="number">8</span>,<span class="number">10</span>)</span><br><span class="line">    <span class="keyword">assert</span> hand_rank(fk) == (<span class="number">7</span>,<span class="number">9</span>,<span class="number">7</span>)</span><br><span class="line">    <span class="keyword">assert</span> hand_rank(fh) == (<span class="number">6</span>,<span class="number">10</span>,<span class="number">7</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Testing hand rank alt</span></span><br><span class="line">    <span class="keyword">assert</span> hand_rank_alt(sf1) == (<span class="number">8</span>, (<span class="number">10</span>,<span class="number">9</span>,<span class="number">8</span>,<span class="number">7</span>,<span class="number">6</span>))</span><br><span class="line">    <span class="keyword">assert</span> hand_rank_alt(fk) == (<span class="number">7</span>,(<span class="number">9</span>,<span class="number">7</span>))</span><br><span class="line">    <span class="keyword">assert</span> hand_rank_alt(fh) == (<span class="number">6</span>,(<span class="number">10</span>,<span class="number">7</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Testing hand rank table</span></span><br><span class="line">    <span class="keyword">assert</span> hand_rank_table(sf1) == (<span class="number">9</span>, (<span class="number">10</span>,<span class="number">9</span>,<span class="number">8</span>,<span class="number">7</span>,<span class="number">6</span>))</span><br><span class="line">    <span class="keyword">assert</span> hand_rank_table(fk) == (<span class="number">7</span>,(<span class="number">9</span>,<span class="number">7</span>))</span><br><span class="line">    <span class="keyword">assert</span> hand_rank_table(fh) == (<span class="number">6</span>,(<span class="number">10</span>,<span class="number">7</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Testing poker</span></span><br><span class="line">    <span class="keyword">assert</span> poker([sf1, fk, fh]) == [sf1]</span><br><span class="line">    <span class="keyword">assert</span> poker([fk, fh]) == [fk]</span><br><span class="line">    <span class="keyword">assert</span> poker([fh, fh]) == [fh, fh]</span><br><span class="line">    <span class="keyword">assert</span> poker([fh]) == [fh]</span><br><span class="line">    <span class="keyword">assert</span> poker([sf2] + <span class="number">99</span>*[fh]) == [sf2]</span><br><span class="line">    <span class="keyword">assert</span> poker([sf1, sf2, fk, fh]) == [sf1, sf2]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'tests pass'</span></span><br></pre></td></tr></table></figure>
+            <p>django 部署的关键点</p>
+<ul>
+<li>安全秘匙 secret key 从环境变量中加载或者是从文件中进行读取</li>
+<li>生产环境不能启动debug模式</li>
+<li>allow_hosts</li>
+<li>缓存</li>
+<li>数据库</li>
+<li>email设置</li>
+<li>伺服静态文件</li>
+<li>媒体文件是用户上传的，是不能信任的</li>
+<li>HTTPS</li>
+<li>csrf</li>
+<li>session</li>
+<li>性能优化等</li>
+<li>日志的配置</li>
+<li></li>
+</ul>
 
           
         
@@ -686,7 +575,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/27/vim-table-cheatsheet/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/16/how-to-understand-unittest/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Cheung John">
@@ -705,7 +594,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/08/27/vim-table-cheatsheet/" itemprop="url">vim table cheatsheet</a></h1>
+                <a class="post-title-link" href="/2017/11/16/how-to-understand-unittest/" itemprop="url">how-to-understand-unittest</a></h1>
         
 
         <div class="post-meta">
@@ -717,8 +606,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-27T11:24:08+08:00">
-                2017-08-27
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-16T18:46:05+08:00">
+                2017-11-16
               </time>
             
 
@@ -757,604 +646,47 @@
       
         
           
-            <table>
-<thead>
-<tr>
-<th style="text-align:left">命令</th>
-<th style="text-align:left">描述</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">进入 vim</td>
-<td style="text-align:left">-</td>
-</tr>
-<tr>
-<td style="text-align:left">vim filename</td>
-<td style="text-align:left">打开或者新建文件，光标置于第一行行首</td>
-</tr>
-<tr>
-<td style="text-align:left">vim +n filename</td>
-<td style="text-align:left">n行行首</td>
-</tr>
-<tr>
-<td style="text-align:left">vim + filename</td>
-<td style="text-align:left">最后一行行首</td>
-</tr>
-<tr>
-<td style="text-align:left">vim +/pattern filename</td>
-<td style="text-align:left">第一个与pattern匹配的串处</td>
-</tr>
-<tr>
-<td style="text-align:left">vim -r filename</td>
-<td style="text-align:left">恢复</td>
-</tr>
-<tr>
-<td style="text-align:left">vim filename … filename</td>
-<td style="text-align:left">打开多个</td>
-</tr>
-<tr>
-<td style="text-align:left">vim 配置</td>
-<td style="text-align:left">-</td>
-</tr>
-<tr>
-<td style="text-align:left">all</td>
-<td style="text-align:left">列出所有选项设置情况</td>
-</tr>
-<tr>
-<td style="text-align:left">term</td>
-<td style="text-align:left">设置终端类型</td>
-</tr>
-<tr>
-<td style="text-align:left">ignorance</td>
-<td style="text-align:left">忽略大小写</td>
-</tr>
-<tr>
-<td style="text-align:left">list</td>
-<td style="text-align:left">显示制表位和行尾标志</td>
-</tr>
-<tr>
-<td style="text-align:left">number</td>
-<td style="text-align:left">显示行号</td>
-</tr>
-<tr>
-<td style="text-align:left">report</td>
-<td style="text-align:left">显示由面向行的命令修改过的数目</td>
-</tr>
-<tr>
-<td style="text-align:left">terse</td>
-<td style="text-align:left">显示简短的警告信息</td>
-</tr>
-<tr>
-<td style="text-align:left">warn</td>
-<td style="text-align:left">显示no write信息</td>
-</tr>
-<tr>
-<td style="text-align:left">nomagic</td>
-<td style="text-align:left">搜索模式使用前面不带\的特殊字符</td>
-</tr>
-<tr>
-<td style="text-align:left">nowrapscan</td>
-<td style="text-align:left">禁止vi在搜索到达文件两端时，又从另一端开始</td>
-</tr>
-<tr>
-<td style="text-align:left">mesg</td>
-<td style="text-align:left">允许vi显示其他用户用write写到自己终端上的信息</td>
-</tr>
-<tr>
-<td style="text-align:left">:set number</td>
-<td style="text-align:left">显示行号 加no不显示</td>
-</tr>
-<tr>
-<td style="text-align:left">:set ruler</td>
-<td style="text-align:left">标尺 有no</td>
-</tr>
-<tr>
-<td style="text-align:left">:set hisearch</td>
-<td style="text-align:left">高亮显示查找到的单词</td>
-</tr>
-<tr>
-<td style="text-align:left">:syntax on</td>
-<td style="text-align:left">语法高亮</td>
-</tr>
-<tr>
-<td style="text-align:left">:set tabstop=8</td>
-<td style="text-align:left">tab大小为8</td>
-</tr>
-<tr>
-<td style="text-align:left">:set softtabstop=8</td>
-<td style="text-align:left">4: 4个空格，8:正常制表符，16:两个制表符</td>
-</tr>
-<tr>
-<td style="text-align:left">:set autoindent</td>
-<td style="text-align:left">自动缩进</td>
-</tr>
-<tr>
-<td style="text-align:left">:set cindent</td>
-<td style="text-align:left">c语言格式自动缩进</td>
-</tr>
-<tr>
-<td style="text-align:left">移动光标</td>
-<td style="text-align:left">-</td>
-</tr>
-<tr>
-<td style="text-align:left">k nk</td>
-<td style="text-align:left">上</td>
-</tr>
-<tr>
-<td style="text-align:left">j nj</td>
-<td style="text-align:left">下</td>
-</tr>
-<tr>
-<td style="text-align:left">h nh</td>
-<td style="text-align:left">左</td>
-</tr>
-<tr>
-<td style="text-align:left">l nl</td>
-<td style="text-align:left">右</td>
-</tr>
-<tr>
-<td style="text-align:left">Space</td>
-<td style="text-align:left">光标右移一个字符</td>
-</tr>
-<tr>
-<td style="text-align:left">BackSpace</td>
-<td style="text-align:left">左移</td>
-</tr>
-<tr>
-<td style="text-align:left">Enter</td>
-<td style="text-align:left">下移动一行</td>
-</tr>
-<tr>
-<td style="text-align:left">w/W</td>
-<td style="text-align:left">右移动一个字至字首</td>
-</tr>
-<tr>
-<td style="text-align:left">b/B</td>
-<td style="text-align:left">左移</td>
-</tr>
-<tr>
-<td style="text-align:left">e/E</td>
-<td style="text-align:left">右移到字尾</td>
-</tr>
-<tr>
-<td style="text-align:left">)</td>
-<td style="text-align:left">句尾</td>
-</tr>
-<tr>
-<td style="text-align:left">(</td>
-<td style="text-align:left">句首</td>
-</tr>
-<tr>
-<td style="text-align:left">}</td>
-<td style="text-align:left">段落结尾</td>
-</tr>
-<tr>
-<td style="text-align:left">{</td>
-<td style="text-align:left">开头</td>
-</tr>
-<tr>
-<td style="text-align:left">n$</td>
-<td style="text-align:left">n行尾</td>
-</tr>
-<tr>
-<td style="text-align:left">H</td>
-<td style="text-align:left">屏幕顶行</td>
-</tr>
-<tr>
-<td style="text-align:left">M</td>
-<td style="text-align:left">中间行</td>
-</tr>
-<tr>
-<td style="text-align:left">L</td>
-<td style="text-align:left">最后行</td>
-</tr>
-<tr>
-<td style="text-align:left">0</td>
-<td style="text-align:left">当前行首</td>
-</tr>
-<tr>
-<td style="text-align:left">^</td>
-<td style="text-align:left">第一个非空字符上</td>
-</tr>
-<tr>
-<td style="text-align:left">$</td>
-<td style="text-align:left">当前行尾</td>
-</tr>
-<tr>
-<td style="text-align:left">gg</td>
-<td style="text-align:left">第一行</td>
-</tr>
-<tr>
-<td style="text-align:left">G</td>
-<td style="text-align:left">最后一行</td>
-</tr>
-<tr>
-<td style="text-align:left">f</td>
-<td style="text-align:left">当前行的字符a上</td>
-</tr>
-<tr>
-<td style="text-align:left">F</td>
-<td style="text-align:left">相反</td>
-</tr>
-<tr>
-<td style="text-align:left">%</td>
-<td style="text-align:left">匹配的符号如（）、[]、{}、&lt;&gt;等</td>
-</tr>
-<tr>
-<td style="text-align:left">nG</td>
-<td style="text-align:left">n行上</td>
-</tr>
-<tr>
-<td style="text-align:left">G</td>
-<td style="text-align:left">最后一行</td>
-</tr>
-<tr>
-<td style="text-align:left">屏幕滚动</td>
-<td style="text-align:left">-</td>
-</tr>
-<tr>
-<td style="text-align:left">ctrl + u</td>
-<td style="text-align:left">向文件首翻半屏</td>
-</tr>
-<tr>
-<td style="text-align:left">ctrl + d</td>
-<td style="text-align:left">尾</td>
-</tr>
-<tr>
-<td style="text-align:left">ctrl + f</td>
-<td style="text-align:left">文件尾一屏</td>
-</tr>
-<tr>
-<td style="text-align:left">ctrl + b</td>
-<td style="text-align:left">首一屏</td>
-</tr>
-<tr>
-<td style="text-align:left">nz</td>
-<td style="text-align:left">将第n行滚动至屏幕顶部，不指定n行时将当前行滚动到屏幕顶部</td>
-</tr>
-<tr>
-<td style="text-align:left">插入文本</td>
-<td style="text-align:left">-</td>
-</tr>
-<tr>
-<td style="text-align:left">i</td>
-<td style="text-align:left">光标前</td>
-</tr>
-<tr>
-<td style="text-align:left">I</td>
-<td style="text-align:left">行首</td>
-</tr>
-<tr>
-<td style="text-align:left">a</td>
-<td style="text-align:left">光标后</td>
-</tr>
-<tr>
-<td style="text-align:left">A</td>
-<td style="text-align:left">行尾</td>
-</tr>
-<tr>
-<td style="text-align:left">o</td>
-<td style="text-align:left">当前行之下新开一行</td>
-</tr>
-<tr>
-<td style="text-align:left">O</td>
-<td style="text-align:left">之上</td>
-</tr>
-<tr>
-<td style="text-align:left">r</td>
-<td style="text-align:left">替换当前字符</td>
-</tr>
-<tr>
-<td style="text-align:left">R</td>
-<td style="text-align:left">替换当前字符以及以后的字符，直到按esc键</td>
-</tr>
-<tr>
-<td style="text-align:left">s</td>
-<td style="text-align:left">从当前光标位置处开始，以输入的文本替代指定数目的字符</td>
-</tr>
-<tr>
-<td style="text-align:left">S</td>
-<td style="text-align:left">删除指定数目的行，并以所输入的文本代替之</td>
-</tr>
-<tr>
-<td style="text-align:left">ncw/W</td>
-<td style="text-align:left">修改指定数目的字</td>
-</tr>
-<tr>
-<td style="text-align:left">nCC</td>
-<td style="text-align:left">修改指定数目的行</td>
-</tr>
-<tr>
-<td style="text-align:left">删除命令</td>
-<td style="text-align:left">-</td>
-</tr>
-<tr>
-<td style="text-align:left">x/X</td>
-<td style="text-align:left">删除一个字符，一个后一个前</td>
-</tr>
-<tr>
-<td style="text-align:left">dw</td>
-<td style="text-align:left">删除一个单词</td>
-</tr>
-<tr>
-<td style="text-align:left">dnw</td>
-<td style="text-align:left">n个</td>
-</tr>
-<tr>
-<td style="text-align:left">dne</td>
-<td style="text-align:left">删除到单词尾</td>
-</tr>
-<tr>
-<td style="text-align:left">do</td>
-<td style="text-align:left">删除到行首</td>
-</tr>
-<tr>
-<td style="text-align:left">d$</td>
-<td style="text-align:left">行尾</td>
-</tr>
-<tr>
-<td style="text-align:left">dd</td>
-<td style="text-align:left">删除当前行</td>
-</tr>
-<tr>
-<td style="text-align:left">ndd</td>
-<td style="text-align:left">当前行和后面n-1行</td>
-</tr>
-<tr>
-<td style="text-align:left">dnl</td>
-<td style="text-align:left">向右删除n个字母</td>
-</tr>
-<tr>
-<td style="text-align:left">dnh</td>
-<td style="text-align:left">左</td>
-</tr>
-<tr>
-<td style="text-align:left">dnj</td>
-<td style="text-align:left">下n行（n不含当前行）</td>
-</tr>
-<tr>
-<td style="text-align:left">dnk</td>
-<td style="text-align:left">上n行</td>
-</tr>
-<tr>
-<td style="text-align:left">cnw[word]</td>
-<td style="text-align:left">将n个word改变为word</td>
-</tr>
-<tr>
-<td style="text-align:left">C$</td>
-<td style="text-align:left">改变到行尾</td>
-</tr>
-<tr>
-<td style="text-align:left">cc</td>
-<td style="text-align:left">改变整行</td>
-</tr>
-<tr>
-<td style="text-align:left">shift+j</td>
-<td style="text-align:left">删除行尾的换行符，下一行接上来了</td>
-</tr>
-<tr>
-<td style="text-align:left">复制粘贴</td>
-<td style="text-align:left">-</td>
-</tr>
-<tr>
-<td style="text-align:left">p</td>
-<td style="text-align:left">粘贴用x或者d删除的文本</td>
-</tr>
-<tr>
-<td style="text-align:left">ynw</td>
-<td style="text-align:left">复制n个单词</td>
-</tr>
-<tr>
-<td style="text-align:left">yy</td>
-<td style="text-align:left">复制一行</td>
-</tr>
-<tr>
-<td style="text-align:left">ynl</td>
-<td style="text-align:left">n个字符</td>
-</tr>
-<tr>
-<td style="text-align:left">y$</td>
-<td style="text-align:left">复制当前光标至行尾处</td>
-</tr>
-<tr>
-<td style="text-align:left">nyy</td>
-<td style="text-align:left">拷贝n行</td>
-</tr>
-<tr>
-<td style="text-align:left">撤销</td>
-<td style="text-align:left">-</td>
-</tr>
-<tr>
-<td style="text-align:left">u</td>
-<td style="text-align:left">撤销前一次的操作</td>
-</tr>
-<tr>
-<td style="text-align:left">shift+u</td>
-<td style="text-align:left">撤销对该行的所有操作</td>
-</tr>
-<tr>
-<td style="text-align:left">搜索以及替换</td>
-<td style="text-align:left">-</td>
-</tr>
-<tr>
-<td style="text-align:left">/pattern</td>
-<td style="text-align:left">光标开始处向文件尾搜索</td>
-</tr>
-<tr>
-<td style="text-align:left">?pattern</td>
-<td style="text-align:left">文件首</td>
-</tr>
-<tr>
-<td style="text-align:left">n</td>
-<td style="text-align:left">在同一个方向重复上一次搜索命令</td>
-</tr>
-<tr>
-<td style="text-align:left">N</td>
-<td style="text-align:left">反方向</td>
-</tr>
-<tr>
-<td style="text-align:left">cw newword</td>
-<td style="text-align:left">替换为newword</td>
-</tr>
-<tr>
-<td style="text-align:left">n</td>
-<td style="text-align:left">继续查找</td>
-</tr>
-<tr>
-<td style="text-align:left">.</td>
-<td style="text-align:left">执行替换</td>
-</tr>
-<tr>
-<td style="text-align:left">:s/p1/p2/g</td>
-<td style="text-align:left">将当前行中所有p1均用p2替代</td>
-</tr>
-<tr>
-<td style="text-align:left">:n1,n2 s/p1/p2/g</td>
-<td style="text-align:left">n1到n2行</td>
-</tr>
-<tr>
-<td style="text-align:left">:g/p1/s/p2/g</td>
-<td style="text-align:left">文件中所有</td>
-</tr>
-<tr>
-<td style="text-align:left">:1,$ s/string1/string2/g</td>
-<td style="text-align:left">全文中替换</td>
-</tr>
-<tr>
-<td style="text-align:left">书签</td>
-<td style="text-align:left">-</td>
-</tr>
-<tr>
-<td style="text-align:left">m[a-z]</td>
-<td style="text-align:left">标记</td>
-</tr>
-<tr>
-<td style="text-align:left">`a</td>
-<td style="text-align:left">移动到标记a处</td>
-</tr>
-<tr>
-<td style="text-align:left">visual模式</td>
-<td style="text-align:left">-</td>
-</tr>
-<tr>
-<td style="text-align:left">v</td>
-<td style="text-align:left">进入模式</td>
-</tr>
-<tr>
-<td style="text-align:left">V</td>
-<td style="text-align:left">行的</td>
-</tr>
-<tr>
-<td style="text-align:left">ctrl+v</td>
-<td style="text-align:left">进入块操作</td>
-</tr>
-<tr>
-<td style="text-align:left">行方式命令</td>
-<td style="text-align:left">-</td>
-</tr>
-<tr>
-<td style="text-align:left">:n1,n2 co n3</td>
-<td style="text-align:left">n1到n2行拷贝到第n3行下</td>
-</tr>
-<tr>
-<td style="text-align:left">:n1,n2 m n3</td>
-<td style="text-align:left">移动</td>
-</tr>
-<tr>
-<td style="text-align:left">:n1,n2 d</td>
-<td style="text-align:left">删除</td>
-</tr>
-<tr>
-<td style="text-align:left">:n1,n2 wlcommand</td>
-<td style="text-align:left">作为command的输入并执行之</td>
-</tr>
-<tr>
-<td style="text-align:left">宏</td>
-<td style="text-align:left">-</td>
-</tr>
-<tr>
-<td style="text-align:left">q[a-z]</td>
-<td style="text-align:left">q终止录宏</td>
-</tr>
-<tr>
-<td style="text-align:left">reg</td>
-<td style="text-align:left">显示当前所定义的所有宏</td>
-</tr>
-<tr>
-<td style="text-align:left">窗口操作</td>
-<td style="text-align:left">-</td>
-</tr>
-<tr>
-<td style="text-align:left">:split</td>
-<td style="text-align:left">分割一个</td>
-</tr>
-<tr>
-<td style="text-align:left">:split file.c</td>
-<td style="text-align:left">为另一个file.c分隔窗口</td>
-</tr>
-<tr>
-<td style="text-align:left">:nsplit file.c</td>
-<td style="text-align:left">并且指定行数</td>
-</tr>
-<tr>
-<td style="text-align:left">ctrl+w</td>
-<td style="text-align:left">在窗口中切换</td>
-</tr>
-<tr>
-<td style="text-align:left">:close</td>
-<td style="text-align:left">关闭当前窗口</td>
-</tr>
-<tr>
-<td style="text-align:left">文件及其他</td>
-<td style="text-align:left">-</td>
-</tr>
-<tr>
-<td style="text-align:left">:q</td>
-<td style="text-align:left">退出</td>
-</tr>
-<tr>
-<td style="text-align:left">:q!</td>
-<td style="text-align:left">强制</td>
-</tr>
-<tr>
-<td style="text-align:left">:e filename</td>
-<td style="text-align:left">打开文件并且进行编辑</td>
-</tr>
-<tr>
-<td style="text-align:left">:e!</td>
-<td style="text-align:left">放弃修改，并重载</td>
-</tr>
-<tr>
-<td style="text-align:left">:w</td>
-<td style="text-align:left">保存</td>
-</tr>
-<tr>
-<td style="text-align:left">:wq</td>
-<td style="text-align:left">存盘退出</td>
-</tr>
-<tr>
-<td style="text-align:left">:ZZ</td>
-<td style="text-align:left">保存退出</td>
-</tr>
-<tr>
-<td style="text-align:left">:!command</td>
-<td style="text-align:left">执行shell命令command</td>
-</tr>
-<tr>
-<td style="text-align:left">:r!command</td>
-<td style="text-align:left">输出结果放到当前行</td>
-</tr>
-<tr>
-<td style="text-align:left">:n1,n2 write temp.c</td>
-<td style="text-align:left"></td>
-</tr>
-<tr>
-<td style="text-align:left">:read file.c</td>
-<td style="text-align:left">将文件file.c的内容放到当前光标所在的下面</td>
-</tr>
-</tbody>
-</table>
+            <h1 id="关于测试"><a href="#关于测试" class="headerlink" title="关于测试"></a>关于测试</h1><p>有段时间被领导叫过去写单元测试。</p>
+<p>这段时间决定对此段经历做一些总结。</p>
+<p>单元测试是一种软件测试过程，测试的是软件应用程序的独立单元，确保能做预期中的事情。</p>
+<p>分为不同的层级，可以测试单个方法，看它能否返回正确的值以及能否处理正确的数据，</p>
+<p>也可以测试整个方法组件，确保一系列用户输入能得到所需的结果。</p>
+<p>单元测试背后，有四个基本的概念：</p>
+<ul>
+<li><p>测试固件 fixture 执行测试所需要的设置。包含数据库、示例数据集合服务器搭建。可能还包括测试完毕之后执行的清理操作。</p>
+</li>
+<li><p>用例 case 测试的基本单元。检查指定的输入能否得到预期的结果。</p>
+</li>
+<li>组件 suit 一系列测试用例或者其他测试组件，作为一个整体执行</li>
+<li>运行程序 runner 负责执行测试并把结果反馈給用户的软件程序。</li>
+</ul>
+<h2 id="自动化测试"><a href="#自动化测试" class="headerlink" title="自动化测试"></a>自动化测试</h2><h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ul>
+<li><p>节省时间</p>
+</li>
+<li><p>避免出问题</p>
+</li>
+<li><p>看起来专业</p>
+</li>
+<li><p>增进团队协作</p>
+</li>
+</ul>
+<p>将测试代码封装到一个类中，并且增加断言。</p>
+<p>django的单元测试</p>
+<p>会在app应用中查找测试</p>
+<p>找到 testcase 的一个子类</p>
+<p>为测试创建一个特殊的数据库</p>
+<p>查找以test开头的测试方法</p>
+<p>报告失败的测试</p>
+<p>Django 为 编写测试提供了一些便利的工具</p>
+<p>测试客户端</p>
+<p>伪装成一个web浏览器</p>
+<p>模拟对URL 的 GET POST 请求</p>
+<p>跟踪重定向</p>
+<p>测试指定的请求由指定的django 模板渲染，而且模板上下文包含特定的值</p>
+<p>客户端的目的不是取代 selenium 或者是其他操作浏览器的框架</p>
+<p>用于确认是否渲染了正确的模板，而且为模板传入了正确的上下文数据</p>
+<p>TestCase 有一些扩展</p>
+<p>Simple的<br>Transaction的<br>等等…</p>
 
           
         
@@ -1403,7 +735,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/24/make-a-forum-with-django/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/06/tf-note-2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Cheung John">
@@ -1422,7 +754,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/08/24/make-a-forum-with-django/" itemprop="url">make a forum with django</a></h1>
+                <a class="post-title-link" href="/2017/11/06/tf-note-2/" itemprop="url">tf-note-2</a></h1>
         
 
         <div class="post-meta">
@@ -1434,8 +766,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-24T01:12:25+08:00">
-                2017-08-24
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-06T23:55:48+08:00">
+                2017-11-06
               </time>
             
 
@@ -1474,10 +806,143 @@
       
         
           
-            <p>每次想写点东西的时候，总是自己骗自己说，哎呀，哪有时间去搞这些东西。  </p>
-<p>决定还是一点点尝试写一个论坛系统出来。  </p>
-<p>Django这个框架非常庞大，可能在实际的开发过程中，我们用到的只是一小部分，比如创建model，view，然后根据这些写一些html的文件等。</p>
-<p>再在页面调试的过程当中发现一些问题，对代码进行不断地修正。</p>
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/06/tf-note-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/06/tf-note-1/" itemprop="url">tf-note-1</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-06T23:29:30+08:00">
+                2017-11-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>andrew ng </p>
+<p>深度学习 是 什么？</p>
+<p>简单点来说 是训练神经网络。 神经网络有时候规模会很大。 非常传统的例子， 是房价的预测。</p>
+<p>假设有一个六间房的数据集，已知房屋的面积 房屋价格 想要找到一个函数来预测房价。</p>
+<p>很显然，懂线性回归的同学会知道直接拟合一条直线就好。</p>
+<p>这就是最简单的神经网络。</p>
+<p>输入x， 经过一个神经元，得到预测价格y</p>
+<p>这个函数被称为 ReLU 函数，全称是修正线性单元，修正指的是取不小于0的值。</p>
+<p>大点的神经网络是把这些单个神经元堆叠起来形成的，你可以想象成搭乐高积木。</p>
+<p>预测房屋价格，现在可能还有一些其他的特征，如卧室的数量，邮编也可以作为一个特性，因为说明了步行化程度。还有其他等等特性。。。</p>
+<p>对于神经网络，只有你喂给它足够多的x和y的数据，得到足够多的x y 训练样本，就非常擅于计算从x到y的精准映射函数。这就是一个基本的神经网络，自己的神经网络在监督学习的环境下是如此有效和强大。</p>
+<p>常见的应用有<br>预测房价<br>在线广告<br>还有图像 文本等的处理<br>语言翻译<br>自动驾驶  </p>
+<p>图像领域，经常使用卷积神经网络，也就是CNN  </p>
+<p>对于序列数据，例如音频中含有时间成分，则使用 RNN </p>
+<p>英语翻译 也 属于序列数据， RNN</p>
+<p>无人驾驶，基于图片， </p>
+<p>另外  就是 GAN  无监督学习了。</p>
+<p>待续 。。。</p>
 
           
         
@@ -1517,7 +982,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/23/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><span class="page-number current">24</span><a class="page-number" href="/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/page/30/">30</a><a class="extend next" rel="next" href="/page/25/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/23/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><span class="page-number current">24</span><a class="page-number" href="/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/page/32/">32</a><a class="extend next" rel="next" href="/page/25/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1567,7 +1032,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">149</span>
+                  <span class="site-state-item-count">156</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
