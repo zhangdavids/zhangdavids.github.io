@@ -263,6 +263,251 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/19/mac-use-tips/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/19/mac-use-tips/" itemprop="url">mac-use-tips</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-19T22:52:03+08:00">
+                2018-03-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>快捷键与触摸板</p>
+<pre><code>cmd 为 command 按键，通常情况下为所有桌面程序通用性的快捷键。
+ctrl ，通常情况下是针对程序的功能进行加强，并且此功能往往是非 cmd 类（窗口操作，选择，复制粘贴等等）操作。
+shift 按键通常用于加强操作。一般会让操作更进一步 or 相反操作。
+cmd+tab =~ alt+tab 程序之间的切换
+cmd+` 应用内窗口切换
+cmd+h 窗口 hide
+cmd+m 窗口 minimize
+cmd+n 新建窗口
+cmd+o 打开
+cmd+s 保存
+cmd+shift+s 另存为
+cmd+p 打印 print
+cmd+w 关闭
+cmd+q quit
+cmd+a select all
+cmd+i show info
+cmd+n create a new folder
+cmd+f search
+cmd+c copy
+cmd+v paste
+cmd+delete 删除选中文件
+cmd+shift+delete 清空回收站
+cmd+= 放大
+cmd+- 缩小
+cmd+t 新建选项卡
+cmd+r 刷新
+cmd+shift+3 截取整个屏幕
+cmd+shift+4 截取选择区域
+cmd+shift+4+SPACE 截取选择窗口
+cmd+ 鼠标点击 -&gt; 选中不连续文件
+control+ 鼠标点击 -&gt; 相当于 win 中右键点击
+fn+left home
+fn+right end
+fn+up pageup
+fn+down pagedown
+触摸板手势：
+
+点击
+单指点击 - 单击
+单指滑动 - 滑动鼠标光标
+双指点击 - 相当于 Windows 的鼠标右键
+三指点击 - 划词查找
+
+
+滑动与缩放
+双指上下滑动 - 滚动
+双指缩放 - 与 Android 上图片缩放一致
+双指双击 - 只能缩放
+双指旋转 - 旋转
+双指左右滑动 - 应用内切换网页
+双指头从右往左
+三指头左右滑动 - 全屏幕 App 切换
+三指拖动 - 扔掉鼠标必备 （谢评论区提醒）
+大拇指和食中无名缩放 - launchpad
+</code></pre><h3 id="open"><a href="#open" class="headerlink" title="open"></a>open</h3><p>open 命令用于打开文件、目录或执行程序。就等同于在命令行模式下，重复图形界面“双击”的动作。例如这个命令与在 Finder 中双击 Safari 是一样的：</p>
+<pre><code>open /Applications/Safari.app/
+</code></pre><p>如果 open 一个文件，则会使用关联的程序打开之。例如 open screenshot.png 会在 Preview 中查看图片。</p>
+<p>可以使用 -a 选项要求自行选择打开的程序，或使用 -e 强制在 TextEdit 中编辑此文件。</p>
+<p>open 一个目录会在 Finder 窗口中打开此目录。一个很有用的技巧是 open . 打开当前目录。</p>
+<p>Finder 和终端的交互是双向的——把文件从 Finder 中拖入终端，就等同于把文件的完整路径粘贴到命令行中。</p>
+<h3 id="pbcopy-和-pbpaste"><a href="#pbcopy-和-pbpaste" class="headerlink" title="pbcopy 和 pbpaste"></a>pbcopy 和 pbpaste</h3><p>这两个工具可以打通命令行和剪贴板。当然用鼠标操作复制粘贴也可以——但这两个工具的真正威力，发挥在将其用作Unix工具的时候。意思就是说：可以将这两个工具用作管道、IO重定向以及和其他命令的整合。例如：</p>
+<p>ls ~ | pbcopy<br>可以将主目录的文件列表复制到剪贴板。</p>
+<p>也可以把任意文件的内容读入剪贴板：</p>
+<p>pbcopy &lt; blogpost.txt<br>做点更疯狂的尝试：获取最新 Google 纪念徽标（doodle）的 URL 并复制到剪贴板：</p>
+<pre><code>curl http://www.google.com/doodles#oodles/archive | grep -A5 &apos;latest-doodle on&apos; | grep &apos;img src&apos; | sed s/.*&apos;&lt;img src=&quot;\/\/&apos;/&apos;&apos;/ | sed s/&apos;&quot; alt=&quot;.*&apos;/&apos;&apos;/ | pbcopy
+</code></pre><p>使用管道语法配合 pbcopy 工具可以简单的抓取命令的输出，而不必向上滚动翻阅终端窗口。可以用于和他人分享命令行的标准和错误输出。 pbcopy 和 pbpaste 也可以用于自动化或加速执行一些事情。例如把一些邮件的主题存为任务列表，就可以先从 Mail.app 中复制主题，再运行：</p>
+<p>pbpaste &gt;&gt; tasklist.txt</p>
+<h3 id="mdfind"><a href="#mdfind" class="headerlink" title="mdfind"></a>mdfind</h3><p>许多 Linux 用户都发现 Linux 下查找文件的方法在 OS X 上不好用。当然经典的 Unix find 命令总是可以，但既然 OS X 有杀手级搜索工具 Spotlight ，为什么不在命令行上也使用一下呢？</p>
+<p>这就是mdfind命令了。 Spotlight 能做的查找， mdfind 也能做。包括搜索文件的内容和元数据（metadata）。</p>
+<p>mdfind还提供更多的搜索选项。例如-onlyin选项可以约束搜索范围为一个目录：</p>
+<p>mdfind -onlyin ~/Documents essay<br>mdfind 的索引数据库在后台自动更新，不过你也可以使用 mdutil 工具诊断数据库的问题，诊断 mdfind 的问题也等同于诊断 Spotlight 。如果 Spotlight 的工作不正确，mdutil -E命令可以强制重建索引数据库。也可以用 mdutil -i 彻底关闭文件索引。</p>
+<h3 id="screencapture"><a href="#screencapture" class="headerlink" title="screencapture"></a>screencapture</h3><p>screencapture 命令可以截图。和 Grab.app 与 cmd + shift + 3 或 cmd + shift + 4 热键相似，但更加的灵活。</p>
+<p>抓取包含鼠标光标的全屏幕，并以 image.png 插入到新邮件的附件中：</p>
+<p>screencapture -C -M image.png<br>用鼠标选择抓取窗口（及阴影）并复制到剪贴板：</p>
+<p>screencapture -c -W<br>延时10秒后抓屏，并在Preview中打开之：</p>
+<p>screencapture -T 10 -P image.png<br>用鼠标截取一个矩形区域，抓取后存为pdf文件：</p>
+<p>screencapture -s -t pdf image.pdf<br>更多用法请参阅 screencapture –help 。</p>
+<h3 id="launchctl"><a href="#launchctl" class="headerlink" title="launchctl"></a>launchctl</h3><p>launchctl 管理 OS X 的启动脚本，控制启动计算机时需要开启的服务。也可以设置定时执行特定任务的脚本，就像 Linux cron 一样。</p>
+<p>例如，开机时自动启动 Apache 服务器：</p>
+<pre><code>sudo launchctl load -w /System/Library/LaunchDaemons/org.apache.httpd.plist
+</code></pre><p>运行 launchctl list 显示当前的启动脚本。 sudo launchctl unload [path/to/script] 停止正在运行的启动脚本，再加上 -w 选项即可去除开机启动。用这个方法可以一次去除 Adobe 或 Microsoft Office 所附带的所有“自动更新”后台程序。</p>
+<p>Launchd 脚本存储在以下位置：</p>
+<pre><code>~/Library/LaunchAgents
+/Library/LaunchAgents
+/Library/LaunchDaemons
+/System/Library/LaunchAgents
+/System/Library/LaunchDaemons
+</code></pre><h3 id="say"><a href="#say" class="headerlink" title="say"></a>say</h3><p>say 是一个文本转语音（TTS）的有趣的工具，引擎和 OS X 使用的一样也是 VoiceOver 。如果不加其他选项，则会简单的语音朗读你给定的字符串：</p>
+<p>say “Never trust a computer you can’t lift.”<br>用-f选项朗读特定文本文件，-o选项将朗读结果存为音频文件而不是播放：<br>say -f mynovel.txt -o myaudiobook.aiff<br>say 命令可以用于在脚本中播放警告或提示。例如你可以设置 Automator 或 Hazel 脚本处理文件，并在任务完成时用 say 命令语音提示。</p>
+<p>最好玩（不过也负罪感十足）的用法是：通过 SSH 连接到朋友或同事的计算机，然后用 say 命令给他们一个大大大惊喜……</p>
+<p>可以在系统设置 （System Preferences） 的字典和语音 （Dictation &amp; Speech） 选项中调整系统的语音选项甚至是语音的语言。</p>
+<h3 id="diskutil"><a href="#diskutil" class="headerlink" title="diskutil"></a>diskutil</h3><p>diskutil 是 OS X 磁盘工具应用的命令行版。既可以完成图形界面应用的所有任务，也可以做一些全盘填0、全盘填随机数等额外的任务。先使用 diskutil list 查看所有磁盘的列表和所在路径，然后对特定的磁盘执行命令。</p>
+<p>警告：不正确使用 diskutil 可能意外的破坏磁盘数据。请小心。</p>
+<h3 id="brew"><a href="#brew" class="headerlink" title="brew"></a>brew</h3><p>Homebrew 程序提供的 brew ，严格来讲不是一个 OS X 的原生命令，但任何一个 OS X 的专业用户都不会错过它。“ OS X 缺少的包管理器”这个评价是恰如其分的。如果你曾经在 Linux 上使用过 apt-get （或其他包管理器——译者注），你就会发现 Homebrew 基本上是一样的。</p>
+<p>使用 brew 可以简单的获取数千种开源工具和函数库。例如 brew install imagemagick 就可以安装 ImageMagick （几乎可以处理任何图像问题，转换任何格式的图像工具）， brew install node 可以安装 Node.js （当前大热的服务器端 JavaScript 编程工具）。</p>
+<p>也可以通过 Homebrew 做有趣的事情： brew install archey 会安装 Archey （在启动命令行时显示苹果 LOGO 和计算机硬件参数的小工具）。</p>
+<p>Homebrew 能安装的工具数量庞大，并且一直保持更新。Homebrew 最棒的一点是：所有的文件都被约束在 /usr/local/ 一个位置之下。也就是说可以通过 Homebrew 安装新版软件的同时，保持系统内置的依赖库或其他软件不变。同时如果想彻底删除 Homebrew ，也变得非常简单。</p>
+<p>（注：删除 Homebrew 最好还是不要直接删除 /usr/local/ 。应当用这个卸载脚本点击预览。）</p>
+<pre><code>#!/bin/sh
+# Just copy and paste the lines below (all at once, it won&apos;t work line by line!)
+# MAKE SURE YOU ARE HAPPY WITH WHAT IT DOES FIRST! THERE IS NO WARRANTY!
+
+function abort {
+  echo &quot;$1&quot;
+  exit 1
+}
+
+set -e
+
+/usr/bin/which -s git || abort &quot;brew install git first!&quot;
+test -d /usr/local/.git || abort &quot;brew update first!&quot;
+
+cd `brew --prefix`
+git checkout master
+git ls-files -z | pbcopy
+rm -rf Cellar
+bin/brew prune
+pbpaste | xargs -0 rm
+rm -r Library/Homebrew Library/Aliases Library/Formula Library/Contributions
+test -d Library/LinkedKegs &amp;&amp; rm -r Library/LinkedKegs
+rmdir -p bin Library share/man/man1 2&gt; /dev/null
+rm -rf .git
+rm -rf ~/Library/Caches/Homebrew
+rm -rf ~/Library/Logs/Homebrew
+rm -rf /Library/Caches/Homebrew    
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/18/elk-redis/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -916,157 +1161,6 @@ print(time)
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/15/简单看看汤不热的网站/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/15/简单看看汤不热的网站/" itemprop="url">简单看看汤不热的网站</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-15T21:31:12+08:00">
-                2018-03-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>这里就不截图进行介绍了</p>
-<p>每个tumblr的个人空间都是一个二级域名，你甚至可以绑定你自己的域名。</p>
-<p>在个人主页上， 是一个微博式的消息列表，有文字，图片，视频等形式。消息的展现，是页面上的JavaScript脚本 通过请求Tumblr的Api来获取返回信息，然后添加到页面上的。通过API，可以省掉很多麻烦，至少不必分析整个页面的html来提取需要的信息了。</p>
-<p>基础的url 是这样的：</p>
-<pre><code>http://{0}.tumblr.com/api/read?type{1}&amp;num={2}&amp;start={3}
-</code></pre><p>第一个参数是要访问的用户空间的用户名；</p>
-<p>第二个参数是媒体类型， 图片为“photo”，视频为“video”；</p>
-<p>第三个参数为请求的资源数；</p>
-<p>第四个参数为从第几个资源开始    </p>
-<p>返回的数据是XML格式的数据，基本的层级为Tumblr&gt;posts&gt;post。图片的URL在post的photo-url字段中，视频与此类似，就不再演示了。 获取到媒体资源的url之后，就可以进行下载了。</p>
-<p>video类型的资源的url，需要从player属性中进行进一步匹配才能得出最后的结果。</p>
-<p>技术的分析：</p>
-<ul>
-<li>发送http请求  使用requests模块</li>
-<li>返回的数据是xml  xmltodic模块，将xml文档处理成类似Json对象，方便我们对数据进行访问。</li>
-<li><p>队列实现</p>
-<p>  python中自带Queue模块，可以满足我们目前的队列需求，由于python2.7和python3.0中 </p>
-<p>  对queue模块的命名进行的变更，编程的时候需要注意。如果考虑兼容两个版本的话，可以 考虑引入</p>
-<p>  six模块（<a href="https://pypi.python.org/pypi/six）。" target="_blank" rel="external">https://pypi.python.org/pypi/six）。</a></p>
-<p>  six模块是一个专门用于解决 从python2.x到python3.x的兼容性问题的模块，</p>
-<p>  它对python版本变更导致到部分模块不能应用的问题 进行了内部处理，</p>
-<p>  需要处理类似兼容问题的时候，可以考虑或者参考该模块的实现方式。</p>
-</li>
-<li><p>多线程进行下载</p>
-</li>
-<li>处理json </li>
-</ul>
-<p>考虑到Tumblr需要FQ访问，如果本机不使用VPN的话，可能需要配置代理，代理采用json配置方式。 处理.使用python内置的json模块（<a href="https://docs.python.org/2/library/json.html）就可以了。" target="_blank" rel="external">https://docs.python.org/2/library/json.html）就可以了。</a>    </p>
-<ul>
-<li>使用正则</li>
-</ul>
-<p>为了精确匹配url信息，我们需要使用正则表达式对xml数据的中字段值进行进一步处理，使用 内置的re模块（<a href="https://docs.python.org/2/library/re.html）就可以了。" target="_blank" rel="external">https://docs.python.org/2/library/re.html）就可以了。</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1121,7 +1215,7 @@ print(time)
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">159</span>
+                  <span class="site-state-item-count">160</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
