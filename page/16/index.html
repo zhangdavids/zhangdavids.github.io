@@ -275,6 +275,180 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/28/gevent-note/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/28/gevent-note/" itemprop="url">gevent-note</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-28T20:17:21+08:00">
+                2018-03-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/03/28/gevent-note/" class="leancloud_visitors" data-flag-title="gevent-note">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.4k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Coroutine 也就是 corporate routine，直译为「协同的例程」，中文一般叫做「协程」, 实际上这个概念和进程与线程有相似之处, 因为linux线程就是所谓的「轻量级进程」。</p>
+<p>在gevent源码分析中找到一段表述的比较好的描述进程和协程异同的内容:</p>
+<p>相同点:</p>
+<p>二者都是可以看做是一种执行流, 该执行流可以挂起,并且在将来又可以在 你挂起的地方恢复执行, 这实际上都可以看做是continuation, 我们来看看当我们挂 起一个执行流时我们要保存的东西：<br>栈, 因为如果你不保存栈,那么局部变量你就无法恢复,同时函数的调用链你也无 法恢复,<br>寄存器的状态: 这好理解, 比如说EIP,如果你不保存,那么你恢复执行流就不知道 到底执行哪一条指令, 在比如说ESP,EBP, 如果你不保存,那么你即便有完整的栈 你也不知道怎么用.<br>这二者实际就是所谓的上下文,也可以说是continuation. 在执行流切换时必须保存 这两个东西, 内核调度进程时也是一回事.</p>
+<p>不同点:</p>
+<p>执行流的调度者不同, 进程是内核调度, 而协程是在用户态调度, 也就是说进程 的上下文是在内核态保存恢复的,而协程是在用户态保存恢复的. 很显然用户态的 代价更低<br>进程会被抢占,而协程不会,也就是说协程如果不主动让出CPU,那么其他的协程是不 可能得到执行机会,这实际和早期的操作系统类似,比如DOS, 它有一个yield原语, 一个进程调用yield,那么它就会让出CPU, 其他的进程也就有机会执行了, 如果一 个进程进入了死循环,那么整个系统也就挂起了,永远无法运行其他的进程了, 但 对协程而言,这不是问题<br>对内存的占用不同,实际上协程可以只需要4K的栈就够了, 而进程占用的内存要大 的多.<br>从操作系统的角度讲, 多协程的程序是单线程,单进程的<br>那用一句话描述协程的优势就是由开发者决定协程的切换，操作系统无法干预切换，且占用内存小的多。</p>
+<p>Gevent是一种基于协程的Python网络库，它用到Greenlet提供的，封装了libevent事件循环的高层同步API。它让开发者在不改变编程习惯的同时，用同步的方式写异步I/O的代码。</p>
+<p>Gvanrossum从来不喜欢Gevent，而是更愿意另辟蹊径的实现asyncio(基于生成器的协程)。</p>
+<p><strong>1.Monkey-patching</strong>。中文「猴子补丁」，常用于对测试环境做一些hack。我个人不太喜欢这种「黑魔法」，因为如果其他人不了解细节，极为容易产生困惑。Gvanrossum说用它就是”patch-and-pray”，太形象了。由于Gevent直接修改标准库里面大部分的阻塞式系统调用，包括socket、ssl、threading和 select等模块，而变为协作式运行。但是我们无法保证你在复杂的生产环境中有哪些地方使用这些标准库会由于打了补丁而出现奇怪的问题，那么你只能祈祷（pray）了。其次，在Python之禅中明确说过：「Explicit is better than implicit.」，猴子补丁明显的背离了这个原则。最后，Gvanrossum说Stackless之父Christian Tismer也赞同他。 我喜欢显式的「yield from」</p>
+<p><strong>2.第三方库支持</strong>。得确保项目中用到其他用到的网络库也必须使用纯Python或者明确说明支持Gevent，而且就算有这样的第三方库，我还会担心这个第三方库的代码质量和功能性。<br>Greenlet不支持Jython和IronPython，这样就无法把gevent设计成一个标准库了。<br>之前是没有选择，很多人选择了Gevent，而现在明确的有了更正统的、正确的选择：asyncio（下一篇会详细介绍）。所以建议大家放弃Gevent，拥抱asyncio。</p>
+<p>在Python 2的时代，高性能的网络编程主要是使用Twisted、Tornado和Gevent这三个库，但是它们的异步代码相互之间既不兼容也不能移植。如上一节说的，Gvanrossum希望在Python 3 实现一个原生的基于生成器的协程库，其中直接内置了对异步IO的支持，这就是asyncio，它在Python 3.4被引入到标准库。</p>
+<p>Python 3.5添加了async和await这两个关键字，分别用来替换asyncio.coroutine和yield from。自此，协程成为新的语法，而不再是一种生成器类型了。事件循环与协程的引入，可以极大提高高负载下程序的I/O性能。除此之外还增加了async with(异步上下文管理)、async for(异步迭代器)语法。特别说的是，在新发布的Python 3.6里面终于可以用异步生成器了！</p>
+<p>现存的一些库其实并不能原生的支持asyncio（因为会发生阻塞或者功能不可用），比如requests，如果要写爬虫，配合asyncio的应该用aiohttp，其他的如数据库驱动等各种Python对应的库也都得使用对应的aioXXX版本了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/27/one-blockchain-src-anal/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1499,213 +1673,6 @@ rm -rf /Library/Caches/Homebrew
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/18/elk-redis/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/18/elk-redis/" itemprop="url">elk+redis</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-18T22:09:32+08:00">
-                2018-03-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/03/18/elk-redis/" class="leancloud_visitors" data-flag-title="elk+redis">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  235
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>对常见的elk工具进行总结</p>
-<pre><code>cat /etc/issue # 检查系统版本
-java -version #
-
-
-wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
-echo &quot;deb https://packages.elastic.co/elasticsearch/2.x/debian stable main&quot; | sudo tee -a /etc/apt/sources.list.d/elasticsearch-2.x.list
-sudo apt-get update
-sudo apt-get install elasticsearch -y
-sudo service elasticsearch start
-echo &quot;deb https://packages.elastic.co/logstash/2.3/debian stable main&quot; | sudo tee -a /etc/apt/sources.list
-sudo apt-get install logstash -y
-sudo service logstash start
-echo &quot;deb http://packages.elastic.co/kibana/4.5/debian stable main&quot; | sudo tee -a /etc/apt/sources.list
-sudo apt-get install kibana -y 
-sudo service kibana start
-
-sudo service nginx start
-
-# nginx 的配置文件位于 /etc/nginx/sites-available/default
-
-# 添加 access_log /home/shiyanlou/Code/elk/access.log;
-</code></pre><p>接下来是具体的配置文件</p>
-<pre><code># /etc/logstash/conf.d/logstash-shipper.conf
-
-input {
-  stdin {}  
-  file {
-    path =&gt; &quot;~/access.log&quot;
-    start_position =&gt; beginning
-    codec =&gt;  multiline {
-      &apos;negate&apos; =&gt; true
-      &apos;pattern&apos; =&gt; &apos;^\d&apos;
-      &apos;what&apos; =&gt; &apos;previous&apos;
-    }
-  }
-}
-output {
-    stdout {
-        codec =&gt; rubydebug
-    }
-    elasticsearch {
-        hosts=&gt;[&quot;localhost:9200&quot;]
-        index=&gt;&quot;logstash-%{+YYYY.MM.dd}&quot;
-    }
-}    
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1760,7 +1727,7 @@ output {
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">173</span>
+                  <span class="site-state-item-count">174</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
