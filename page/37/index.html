@@ -275,6 +275,374 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/15/爬虫实践教程3-多进程/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/05/15/爬虫实践教程3-多进程/" itemprop="url">爬虫实践教程3-多进程</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-15T11:40:05+08:00">
+                2016-05-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/05/15/爬虫实践教程3-多进程/" class="leancloud_visitors" data-flag-title="爬虫实践教程3-多进程">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  402
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>python爬虫多数都是运行在linux内核的服务器上的，多进程比多线程更合适，调度开销差不多，但是进程性能更好。<br>爬虫不是服务器交互，一般情况下提升几倍效率即可。  </p>
+<p>直接来看看代码  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding:utf-8</span></span><br><span class="line"><span class="keyword">import</span> multiprocessing</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"><span class="comment">#url详情页</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pageUrls</span><span class="params">(url)</span>:</span></span><br><span class="line">    web_data = requests.get(url)</span><br><span class="line">    soup = BeautifulSoup(web_data.text, <span class="string">'lxml'</span>)</span><br><span class="line">    sum = int(soup.select(<span class="string">'span.total &gt; em:nth-of-type(1)'</span>)[<span class="number">0</span>].get_text())</span><br><span class="line">    pageNum = sum/<span class="number">50</span></span><br><span class="line">    <span class="keyword">return</span> [url+<span class="string">'/loupan/s?p=&#123;&#125;'</span>.format(str(i)) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, pageNum+<span class="number">2</span>, <span class="number">1</span>)]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">detailPage</span><span class="params">(myurl)</span>:</span></span><br><span class="line">    urls = pageUrls(myurl)</span><br><span class="line">    <span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">        web_data = requests.get(url)</span><br><span class="line">        soup = BeautifulSoup(web_data.text, <span class="string">'lxml'</span>)</span><br><span class="line">        titles = soup.select(<span class="string">'div.list-results &gt; div.key-list &gt; div &gt; div.infos &gt; div &gt; h3 &gt; a'</span>)</span><br><span class="line">        <span class="keyword">for</span> title <span class="keyword">in</span> titles:</span><br><span class="line">            <span class="keyword">print</span> url</span><br><span class="line">            <span class="keyword">print</span> title.get_text()</span><br><span class="line">            <span class="keyword">print</span> title.get(<span class="string">'href'</span>)</span><br><span class="line">            <span class="keyword">print</span> <span class="string">"**********"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(urls)</span>:</span></span><br><span class="line">    pool = multiprocessing.Pool(multiprocessing.cpu_count())</span><br><span class="line">    <span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">        pool.apply_async(detailPage, (url, ))</span><br><span class="line">    <span class="comment"># pool.map(detailPage, urls)</span></span><br><span class="line">    pool.close()</span><br><span class="line">    pool.join()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    startUrl = <span class="string">'http://gz.fang.anjuke.com/?from=navigation'</span></span><br><span class="line">    web_data = requests.get(startUrl)</span><br><span class="line">    soup = BeautifulSoup(web_data.text, <span class="string">'lxml'</span>)</span><br><span class="line">    urls = [url.get(<span class="string">'href'</span>) <span class="keyword">for</span> url <span class="keyword">in</span> soup.select(<span class="string">'.city-mod &gt; dl &gt; dd &gt; a'</span>)]</span><br><span class="line">    main(urls)</span><br></pre></td></tr></table></figure>
+<p>这次我们准备爬取的是安居客的网站。<br>先从主代码开始，startUrl，使用requests和beautifulsoup进行解析。获取地址之后，进入main函数。<br>multiprocessing 创建一个进程池，进程个数为cpu内核数，一般写4或6个即可。<br>apply_async函数从进程池中取出一个进程执行func，args为func的参数，我们这段代码不断地从进程池中取出进程去执行我们的detailPage方法。当然，也可以采用下面这种方式：  </p>
+<pre><code>pool.map(detailPage, urls)
+</code></pre><p>接着就是关闭进程池还有wait进程池中的全部进程。  </p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/15/爬虫实践教程2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/05/15/爬虫实践教程2/" itemprop="url">爬虫实践教程2</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-15T09:55:40+08:00">
+                2016-05-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/05/15/爬虫实践教程2/" class="leancloud_visitors" data-flag-title="爬虫实践教程2">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  781
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>这里先介绍一下，我们使用工具selenium和Phantomjs来配合抓取。<br>安装的话， 直接   </p>
+<pre><code>pip install -U selenium
+</code></pre><p>而Phantomjs则通过brew来安装，不细说。  </p>
+<pre><code>brew install phantomjs
+</code></pre><p>选择原因：<br>Phantomjs是基于webkit的没有界面的浏览器，可以像浏览器一样解析网页，个人感觉的效果比firefox和chrome稍微快些。<br>selenium是web的自动测试工具，可以模拟人的操作。几乎支持市面上所有的主流浏览器。  </p>
+<p>来看看代码  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding:utf-8</span></span><br><span class="line"><span class="keyword">import</span> unittest</span><br><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">seleniumTest</span><span class="params">(unittest.TestCase)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">setUp</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.driver = webdriver.PhantomJS()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">testEle</span><span class="params">(self)</span>:</span></span><br><span class="line">        driver = self.driver</span><br><span class="line">        driver.get(<span class="string">'http://www.douyu.com/directory/all'</span>)</span><br><span class="line">        soup = BeautifulSoup(driver.page_source, <span class="string">'xml'</span>)</span><br><span class="line">        <span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">            titles = soup.find_all(<span class="string">'h3'</span>, &#123;<span class="string">'class'</span>: <span class="string">'ellipsis'</span>&#125;)</span><br><span class="line">            nums = soup.find_all(<span class="string">'span'</span>, &#123;<span class="string">'class'</span>: <span class="string">'dy-num fr'</span>&#125;)</span><br><span class="line">            <span class="keyword">for</span> title, num <span class="keyword">in</span> zip(titles, nums):</span><br><span class="line">                <span class="keyword">print</span> title.get_text(), num.get_text()</span><br><span class="line">            <span class="keyword">if</span> driver.page_source.find(<span class="string">'shark-pager-disable-next'</span>) != <span class="number">-1</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            elem = driver.find_element_by_class_name(<span class="string">'shark-pager-next'</span>)</span><br><span class="line">            elem.click()</span><br><span class="line">            soup = BeautifulSoup(driver.page_source, <span class="string">'xml'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">tearDown</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">'down'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    unittest.main()</span><br></pre></td></tr></table></figure>
+<p>这里一些概念说明：<br>1.unittest  单元测试，简单的测试用例。以setup开头，中间测试的方法以test开头，测试完成之后会有一个teardown。<br>2.斗鱼tv是看直播时较常去的，直接用浏览器打开 <a href="http://www.douyu.com/directory/all" target="_blank" rel="external">斗鱼</a><br>网页源码中可以直接看到房间的信息，返回的不是json格式而是html，直接使用phantomjs模拟浏览器的访问过程，通过driver.get方法获取浏览器加载完成后的代码，无论是否是异步，取到的source都是和在浏览器中看到的完全一样！  </p>
+<p>这里lxml方式有数据丢失，原因未知。。后来尝试了xml无误，暂时不知原因。。   </p>
+<p>还有对比之前的瓜子和果壳，我们只从中抓取了部分页面。这里抓取全部我们需要加上条件判断，最后一页时斗鱼下一页的标签会变灰，这个时候我们就加上这个跳出循环。  </p>
+<pre><code>if driver.page_source.find(&apos;shark-pager-disable-next&apos;) != -1: 
+    break  
+</code></pre><p>还有这里  </p>
+<pre><code>elem = driver.find_element_by_class_name(&apos;shark-pager-next&apos;) 
+elem.click() 
+soup = BeautifulSoup(driver.page_source, &apos;xml&apos;)
+</code></pre><p>第一行代码是webdriver里面带有的定位标签的方法，直接使用class来定位，取到这个控件，<br>然后执行element的click（）方法模拟鼠标的点击，<br>页面会自动跳到下一页，接着解析网页的源码。  </p>
+<p><strong>tips</strong><br>这里加上一点selenium的小操作<br>编码学习的一个小突破感觉就是不断滴回顾学习吧，有些看完文档之后，觉得是这样没错，可是不久就好像啥也不剩了，在基础阶段模范性学习当中，要不断深化下已经学到的东西，适当做些归纳总结会很好。  </p>
+<p>填入表单数据  </p>
+<pre><code>#coding:utf-8
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+
+driver = webdriver.Firefox()
+driver.get(&apos;https://www.baidu.com/&apos;)
+elem = driver.find_element_by_id(&apos;kw&apos;)
+elem.send_keys(u&apos;爬虫&apos;)
+elem.send_keys(Keys.RETURN)
+print(driver.page_source)
+</code></pre><p>滚动页面至最下方  </p>
+<pre><code>#coding:utf-8
+from selenium import webdriver
+import time
+
+driver = webdriver.Firefox()
+driver.get(&apos;http://www.jianshu.com/collections&apos;)
+time.sleep(1)
+for i in range(10):
+    dirver.execute_script(&apos;window.scrollTo(0,document.body.scrollHeight)&apos;)
+    time.sleep(1)
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/15/爬虫实践教程1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -817,306 +1185,11 @@ if __name__ == &apos;__main__&apos;:
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/12/mongo小试/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/05/12/mongo小试/" itemprop="url">未命名</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-12T18:07:52+08:00">
-                2016-05-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2016/05/12/mongo小试/" class="leancloud_visitors" data-flag-title="">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.6k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  6
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>#MongoDB的一些小结</p>
-<p>##强大 灵活 可扩展<br>1.扩展了关系型数据库的辅助索引 范围查询（range query）和排序。<br>内置的对MapReduce式聚合的支持，以及对地理空间索引的支持。</p>
-<p>2.面向文档的数据库，思路首先就是将原来的“行”（row）的概念换成更加灵活的“文档”（documents）。面向文档的方式可以将文档或者数组内嵌进来，所以用一条记录就可以表示非常复杂的层次关系。这对于面向对象语言的开发者来说，是非常自然的事情。  </p>
-<p>我们先来看看一些常见的操作命令<br>首先进入命令行之后默认的是test数据库，一般而言我们首先需要切换到我们需要的数据库，比如这里举例一下 guazigz<br><code>use guazigz</code><br>再来详细学习    </p>
-<p>一.数据库常用命令    </p>
-<p>1.help查看命令提示  </p>
-<pre><code>help
-db.help();
-db.yourColl.help();
-db.youColl.find().help();
-rs.help();
-</code></pre><p>这里的youColl换成你数据库里对应的集合（Collection）即可  </p>
-<p>2.查询数据库  </p>
-<pre><code>show dbs;
-</code></pre><p>3.删除当前使用数据库  </p>
-<pre><code>db.dropDatabase();
-</code></pre><p>4.从指定的主机上克隆数据库  </p>
-<pre><code>db.cloneDatabase(&quot;127.0.0.1&quot;);
-</code></pre><p>5.从指定的机器上复制指定数据库数据到某个数据库  </p>
-<pre><code>db.copyDatabase(&quot;mydb&quot;,&quot;temp&quot;,&quot;127.0.0.1&quot;)
-</code></pre><p>6.修复当前数据库  </p>
-<pre><code>db.repairDatabase();
-</code></pre><p>7.查看当前使用的数据库  </p>
-<pre><code>db.getName();
-db;
-</code></pre><p>8.显示当前db状态  </p>
-<pre><code>db.stats();
-</code></pre><p>9.查看当前db的链接机器地址  </p>
-<pre><code>db.getMongo();
-</code></pre><p>二.Collection聚集集合<br>1.创建一个聚集集合（table）  </p>
-<pre><code>db.createCollection(“collName”, {size: 20, capped: 5, max: 100});//创建成功会显示{“ok”:1}
-//判断集合是否为定容量db.collName.isCapped();
-</code></pre><p>2.得到指定名称  </p>
-<pre><code>db.getCollection(&quot;account&quot;);
-</code></pre><p>3.得到当前db的所有集合  </p>
-<pre><code>db.getCollectionNames();
-</code></pre><p>4.显示当前db所有聚集索引的状态  </p>
-<pre><code>db.printCollectionStats();
-</code></pre><p>三.用户相关<br>1.添加一个用户  </p>
-<pre><code>db.addUser(&quot;name&quot;);
-db.addUser(&quot;userName&quot;, &quot;pwd123&quot;, true); //添加用户、设置密码、是否只读  
-</code></pre><p>2.数据库认证 安全模式  </p>
-<pre><code>db.auth(&quot;userName&quot;, &quot;123123&quot;);
-</code></pre><p>3.显示当前所有用户  </p>
-<pre><code>show users；
-</code></pre><p>4.删除用户  </p>
-<pre><code>db.removeUser(&quot;userName&quot;);
-</code></pre><p>四.聚合集合查询  </p>
-<p>1.查询所有记录  </p>
-<pre><code>db.userInfo.find();
-//相当于： select* from userInfo;
-</code></pre><p>默认每页显示20条记录，当显示不下的情况下，可以用it迭代命令查询下一页数据。注意：键入it命令不能带“；”<br>但是你可以设置每页显示数据的大小，用DBQuery.shellBatchSize= 50;这样每页就显示50条记录了。</p>
-<p>2.查询去掉后的当前聚集集合中的某列的重复数据  </p>
-<pre><code>db.userInfo.distinct(&quot;name&quot;);
-//会过滤掉name中的相同数据
-//相当于：select distict name from userInfo;
-</code></pre><p>3.查询数值范围内数据  </p>
-<pre><code>db.userInfo.find({age: {$gte: 23, $lte: 26}});
-//大于等于23，小于等于26
-</code></pre><p>4.查询name中包含mongo的数据  </p>
-<pre><code>db.userInfo.find({name: /mongo/});
-//相当于%%
-[code]select * from userInfo where name like ‘%mongo%&apos;;
-</code></pre><p>5.查询name中以mongo开头的  </p>
-<pre><code>db.userInfo.find({name: /^mongo/});
-//select * from userInfo where name like ‘mongo%&apos;;
-</code></pre><p>6.查询指定列name age数据  </p>
-<pre><code>db.userInfo.find({}, {name: 1, age: 1});
-//相当于：select name, age from userInfo;
-</code></pre><p>7.查询前5条数据</p>
-<pre><code>db.userInfo.find().limit(5);
-//相当于：selecttop 5 * from userInfo;
-</code></pre><p>8.查询10条以后的数据  </p>
-<pre><code>db.userInfo.find().skip(10);
-//相当于：select * from userInfo where id not in (
-selecttop 10 * from userInfo
-);
-</code></pre><p>9.查询某个结果集的记录条数  </p>
-<pre><code>db.userInfo.find({age: {$gte: 20}}).count();
-//相当于：select count(*) from userInfo where age &gt;= 20;
-</code></pre><p>10.按照某列进行排序  </p>
-<pre><code>db.userInfo.find({sex: {$exists: true}}).count();
-//相当于：select count(sex) from userInfo;
-</code></pre><p><strong>这一段里是比较重要的索引部分</strong><br>五.索引 (index)<br>1.创建  </p>
-<pre><code>db.userInfo.ensureIndex({name: 1});
-db.userInfo.ensureIndex({name: 1, ts: -1});
-</code></pre><p>2.查询当前聚集集合所有索引  </p>
-<pre><code>db.userInfo.getIndexes();
-</code></pre><p>3.查看总索引记录大小  </p>
-<pre><code>db.userInfo.totalIndexSize();
-</code></pre><p>4.读取当前集合的所有index信息  </p>
-<pre><code>db.users.reIndex();
-</code></pre><p>5.删除指定索引  </p>
-<pre><code>db.users.dropIndex(&quot;name_1&quot;);
-</code></pre><p>6.删除所有索引  </p>
-<pre><code>db.users.dropIndexes();
-</code></pre><p><em>索引这块可能详细说，有很所需要注意的地方，要不断翻阅琢磨！</em></p>
-<p><strong>这一段里是比较重要的索引部分</strong> </p>
-<p>六. 修改 添加 删除集合数据  </p>
-<p>1.添加（save）  </p>
-<pre><code>db.users.save({name: ‘zhangsan&apos;, age: 25, sex: true});
-//添加的数据的数据列，没有固定，根据添加的数据为准
-</code></pre><p>2.修改（update）</p>
-<pre><code>db.users.update({age: 25}, {$set: {name: &apos;changeName&apos;}}, false, true);
-//相当于：update users set name = ‘changeName&apos; where age = 25;
-db.users.update({name: &apos;Lisi&apos;}, {$inc: {age: 50}}, false, true);
-//相当于：update users set age = age + 50 where name = ‘Lisi&apos;;
-db.users.update({name: &apos;Lisi&apos;}, {$inc: {age: 50}, $set: {name: &apos;hoho&apos;}}, false, true);
-//相当于：update users set age = age + 50, name = ‘hoho&apos; where name = ‘Lisi&apos;;
-</code></pre><p>3.删除（remove）  </p>
-<pre><code>db.users.remove({age: 132});
-</code></pre><p>4.查询修改删除  </p>
-<pre><code>db.users.findAndModify({
-    query: {age: {$gte: 25}}, 
-    sort: {age: -1}, 
-    update: {$set: {name: &apos;a2&apos;}, $inc: {age: 2}},
-    remove: true
-});
-db.runCommand({ findandmodify : &quot;users&quot;, 
-    query: {age: {$gte: 25}}, 
-    sort: {age: -1}, 
-    update: {$set: {name: &apos;a2&apos;}, $inc: {age: 2}},
-    remove: true
-});
-</code></pre><p>七.查看基本信息  </p>
-<p>查看聚集集合基本信息<br>1、查看帮助  db.yourColl.help();<br>2、查询当前集合的数据条数  db.yourColl.count();<br>3、查看数据空间大小 db.userInfo.dataSize();<br>4、得到当前聚集集合所在的db db.userInfo.getDB();<br>5、得到当前聚集的状态 db.userInfo.stats();<br>6、得到聚集集合总大小 db.userInfo.totalSize();<br>7、聚集集合储存空间大小 db.userInfo.storageSize();<br>8、Shard版本信息  db.userInfo.getShardVersion();<br>9、聚集集合重命名 db.userInfo.renameCollection(“users”); //将userInfo重命名为users<br>10、删除当前聚集集合 db.userInfo.drop();</p>
-<pre><code>show dbs:显示数据库列表 
-show collections：显示当前数据库中的集合（类似关系数据库中的表） 
-show users：显示用户 
-use &lt;db name&gt;：切换当前数据库，这和MS-SQL里面的意思一样 
-db.help()：显示数据库操作命令，里面有很多的命令 
-db.foo.help()：显示集合操作命令，同样有很多的命令，foo指的是当前数据库下，一个叫foo的集合，并非真正意义上的命令 
-db.foo.find()：对于当前数据库中的foo集合进行数据查找（由于没有条件，会列出所有数据） 
-db.foo.find( { a : 1 } )：对于当前数据库中的foo集合进行查找，条件是数据中有一个属性叫a，且a的值为1
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/36/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><span class="page-number current">37</span>
+    <a class="extend prev" rel="prev" href="/page/36/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><span class="page-number current">37</span><a class="page-number" href="/page/38/">38</a><a class="extend next" rel="next" href="/page/38/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1166,7 +1239,7 @@ db.foo.find( { a : 1 } )：对于当前数据库中的foo集合进行查找，�
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">184</span>
+                  <span class="site-state-item-count">186</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1272,7 +1345,7 @@ db.foo.find( { a : 1 } )：对于当前数据库中的foo集合进行查找，�
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共105.3k字</span>
+  <span class="post-count">博客全站共105.6k字</span>
 </div>
 
         
