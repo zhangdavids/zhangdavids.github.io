@@ -275,7 +275,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/15/爬虫实践教程0/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/17/python实战之六抓取58同城数据/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Cheung John">
@@ -294,7 +294,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/05/15/爬虫实践教程0/" itemprop="url">爬虫实践教程0</a></h1>
+                <a class="post-title-link" href="/2016/05/17/python实战之六抓取58同城数据/" itemprop="url">python实战之六抓取58同城数据</a></h1>
         
 
         <div class="post-meta">
@@ -306,8 +306,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-15T02:04:34+08:00">
-                2016-05-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-17T17:24:34+08:00">
+                2016-05-17
               </time>
             
 
@@ -324,7 +324,7 @@
 
           
           
-             <span id="/2016/05/15/爬虫实践教程0/" class="leancloud_visitors" data-flag-title="爬虫实践教程0">
+             <span id="/2016/05/17/python实战之六抓取58同城数据/" class="leancloud_visitors" data-flag-title="python实战之六抓取58同城数据">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -349,7 +349,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  273
+                  0
                 </span>
               
 
@@ -388,40 +388,168 @@
       
         
           
-            <p>爬虫的基本就是从网页上获取我们需要的信息。  </p>
-<pre><code># coding=utf-8
-from bs4 import BeautifulSoup
-import requests
-from pymongo import MongoClient
+            
+          
+        
+      
+    </div>
+    
+    
+    
 
-client = MongoClient(&apos;localhost&apos;,27017)
-db = client[&apos;guazigz&apos;]
-item_info = db[&apos;item_info&apos;]
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
 
 
-def detailOper(url):
-    web_data = requests.get(url)
-    web_data.encoding=&apos;utf-8&apos;
-    soup = BeautifulSoup(web_data.text, &apos;lxml&apos;)
-    titles = soup.select(&apos;div.list &gt; ul &gt; li &gt; div &gt; p.infoBox &gt; a&apos;)
-    prices = soup.select(&apos;div.list &gt; ul &gt; li &gt; div &gt; p.priType-s &gt; span &gt; i.fc-org.priType&apos;)
-    for title, price in zip(titles, prices):
-        data = {
-            &apos;title&apos;: title.get_text(),
-            &apos;detailHerf&apos;: title.get(&apos;href&apos;),
-            &apos;price&apos;:price.get_text().replace(u&apos;万&apos;, &apos;&apos;).replace(&apos; &apos;,&apos;&apos;).replace(&apos;\n&apos;,&apos;&apos;)
-    }
-        item_info.insert_one(data)
-        print(data)
+    
+      
 
-def start():
-    urls = [&apos;http://www.guazi.com/gz/buy/o{}/&apos;.format(str(i)) for i in range(1, 30, 1)]
-    for url in urls:
-        detailOper(url)
+  
 
-if __name__ == &apos;__main__&apos;:
-    start()
-</code></pre><p>  如上的程序相对来说很好阅读，<br>  从瓜子二手车网站抓取了29页数据，每页40条，共1160条数据存入到名为guazigz的mongo数据库中。集合名为item_info,注意一下，print（data）是为了能清晰显示数据，实际是可以删除注释掉的。</p>
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/17/python实战之五推特数据流分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/05/17/python实战之五推特数据流分析/" itemprop="url">python实战之五推特数据流分析</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-17T17:23:45+08:00">
+                2016-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/05/17/python实战之五推特数据流分析/" class="leancloud_visitors" data-flag-title="python实战之五推特数据流分析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  19
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>一直想着能够从twitter获取一些数据来做些分析。  </p>
 
           
         
@@ -470,7 +598,7 @@ if __name__ == &apos;__main__&apos;:
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/15/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/17/python实战之四使用tushare包/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Cheung John">
@@ -489,7 +617,7 @@ if __name__ == &apos;__main__&apos;:
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/05/15/hello-world/" itemprop="url">Hello World</a></h1>
+                <a class="post-title-link" href="/2016/05/17/python实战之四使用tushare包/" itemprop="url">python实战之四使用tushare包</a></h1>
         
 
         <div class="post-meta">
@@ -501,8 +629,8 @@ if __name__ == &apos;__main__&apos;:
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-15T00:51:47+08:00">
-                2016-05-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-17T17:23:00+08:00">
+                2016-05-17
               </time>
             
 
@@ -519,7 +647,7 @@ if __name__ == &apos;__main__&apos;:
 
           
           
-             <span id="/2016/05/15/hello-world/" class="leancloud_visitors" data-flag-title="Hello World">
+             <span id="/2016/05/17/python实战之四使用tushare包/" class="leancloud_visitors" data-flag-title="python实战之四使用tushare包">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -544,7 +672,7 @@ if __name__ == &apos;__main__&apos;:
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  73
+                  69
                 </span>
               
 
@@ -583,15 +711,11 @@ if __name__ == &apos;__main__&apos;:
       
         
           
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+            <p>tushare是比较著名的金融财经的包。<br>通过pip安装tushare包之后，<br>直接就可以调用  </p>
+<pre><code>import tushare as ts
+df = ts.get_sina_dd(&apos;600848&apos;, date=&apos;2015-12-24&apos;, vol=500)
+#指定大于等于500手的数据
+</code></pre><p>数据是直接dataframe，比较方便存储。</p>
 
           
         
@@ -640,7 +764,7 @@ if __name__ == &apos;__main__&apos;:
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/12/mongo小试/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/17/python实战之三读取大文件/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Cheung John">
@@ -659,7 +783,7 @@ if __name__ == &apos;__main__&apos;:
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/05/12/mongo小试/" itemprop="url">未命名</a></h1>
+                <a class="post-title-link" href="/2016/05/17/python实战之三读取大文件/" itemprop="url">python实战之三读取大文件</a></h1>
         
 
         <div class="post-meta">
@@ -671,8 +795,8 @@ if __name__ == &apos;__main__&apos;:
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-12T18:07:52+08:00">
-                2016-05-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-17T17:20:36+08:00">
+                2016-05-17
               </time>
             
 
@@ -689,7 +813,7 @@ if __name__ == &apos;__main__&apos;:
 
           
           
-             <span id="/2016/05/12/mongo小试/" class="leancloud_visitors" data-flag-title="">
+             <span id="/2016/05/17/python实战之三读取大文件/" class="leancloud_visitors" data-flag-title="python实战之三读取大文件">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -714,7 +838,7 @@ if __name__ == &apos;__main__&apos;:
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.6k
+                  40
                 </span>
               
 
@@ -730,7 +854,7 @@ if __name__ == &apos;__main__&apos;:
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  6
+                  1
                 </span>
               
             </div>
@@ -753,141 +877,199 @@ if __name__ == &apos;__main__&apos;:
       
         
           
-            <p>#MongoDB的一些小结</p>
-<p>##强大 灵活 可扩展<br>1.扩展了关系型数据库的辅助索引 范围查询（range query）和排序。<br>内置的对MapReduce式聚合的支持，以及对地理空间索引的支持。</p>
-<p>2.面向文档的数据库，思路首先就是将原来的“行”（row）的概念换成更加灵活的“文档”（documents）。面向文档的方式可以将文档或者数组内嵌进来，所以用一条记录就可以表示非常复杂的层次关系。这对于面向对象语言的开发者来说，是非常自然的事情。  </p>
-<p>我们先来看看一些常见的操作命令<br>首先进入命令行之后默认的是test数据库，一般而言我们首先需要切换到我们需要的数据库，比如这里举例一下 guazigz<br><code>use guazigz</code><br>再来详细学习    </p>
-<p>一.数据库常用命令    </p>
-<p>1.help查看命令提示  </p>
-<pre><code>help
-db.help();
-db.yourColl.help();
-db.youColl.find().help();
-rs.help();
-</code></pre><p>这里的youColl换成你数据库里对应的集合（Collection）即可  </p>
-<p>2.查询数据库  </p>
-<pre><code>show dbs;
-</code></pre><p>3.删除当前使用数据库  </p>
-<pre><code>db.dropDatabase();
-</code></pre><p>4.从指定的主机上克隆数据库  </p>
-<pre><code>db.cloneDatabase(&quot;127.0.0.1&quot;);
-</code></pre><p>5.从指定的机器上复制指定数据库数据到某个数据库  </p>
-<pre><code>db.copyDatabase(&quot;mydb&quot;,&quot;temp&quot;,&quot;127.0.0.1&quot;)
-</code></pre><p>6.修复当前数据库  </p>
-<pre><code>db.repairDatabase();
-</code></pre><p>7.查看当前使用的数据库  </p>
-<pre><code>db.getName();
-db;
-</code></pre><p>8.显示当前db状态  </p>
-<pre><code>db.stats();
-</code></pre><p>9.查看当前db的链接机器地址  </p>
-<pre><code>db.getMongo();
-</code></pre><p>二.Collection聚集集合<br>1.创建一个聚集集合（table）  </p>
-<pre><code>db.createCollection(“collName”, {size: 20, capped: 5, max: 100});//创建成功会显示{“ok”:1}
-//判断集合是否为定容量db.collName.isCapped();
-</code></pre><p>2.得到指定名称  </p>
-<pre><code>db.getCollection(&quot;account&quot;);
-</code></pre><p>3.得到当前db的所有集合  </p>
-<pre><code>db.getCollectionNames();
-</code></pre><p>4.显示当前db所有聚集索引的状态  </p>
-<pre><code>db.printCollectionStats();
-</code></pre><p>三.用户相关<br>1.添加一个用户  </p>
-<pre><code>db.addUser(&quot;name&quot;);
-db.addUser(&quot;userName&quot;, &quot;pwd123&quot;, true); //添加用户、设置密码、是否只读  
-</code></pre><p>2.数据库认证 安全模式  </p>
-<pre><code>db.auth(&quot;userName&quot;, &quot;123123&quot;);
-</code></pre><p>3.显示当前所有用户  </p>
-<pre><code>show users；
-</code></pre><p>4.删除用户  </p>
-<pre><code>db.removeUser(&quot;userName&quot;);
-</code></pre><p>四.聚合集合查询  </p>
-<p>1.查询所有记录  </p>
-<pre><code>db.userInfo.find();
-//相当于： select* from userInfo;
-</code></pre><p>默认每页显示20条记录，当显示不下的情况下，可以用it迭代命令查询下一页数据。注意：键入it命令不能带“；”<br>但是你可以设置每页显示数据的大小，用DBQuery.shellBatchSize= 50;这样每页就显示50条记录了。</p>
-<p>2.查询去掉后的当前聚集集合中的某列的重复数据  </p>
-<pre><code>db.userInfo.distinct(&quot;name&quot;);
-//会过滤掉name中的相同数据
-//相当于：select distict name from userInfo;
-</code></pre><p>3.查询数值范围内数据  </p>
-<pre><code>db.userInfo.find({age: {$gte: 23, $lte: 26}});
-//大于等于23，小于等于26
-</code></pre><p>4.查询name中包含mongo的数据  </p>
-<pre><code>db.userInfo.find({name: /mongo/});
-//相当于%%
-[code]select * from userInfo where name like ‘%mongo%&apos;;
-</code></pre><p>5.查询name中以mongo开头的  </p>
-<pre><code>db.userInfo.find({name: /^mongo/});
-//select * from userInfo where name like ‘mongo%&apos;;
-</code></pre><p>6.查询指定列name age数据  </p>
-<pre><code>db.userInfo.find({}, {name: 1, age: 1});
-//相当于：select name, age from userInfo;
-</code></pre><p>7.查询前5条数据</p>
-<pre><code>db.userInfo.find().limit(5);
-//相当于：selecttop 5 * from userInfo;
-</code></pre><p>8.查询10条以后的数据  </p>
-<pre><code>db.userInfo.find().skip(10);
-//相当于：select * from userInfo where id not in (
-selecttop 10 * from userInfo
-);
-</code></pre><p>9.查询某个结果集的记录条数  </p>
-<pre><code>db.userInfo.find({age: {$gte: 20}}).count();
-//相当于：select count(*) from userInfo where age &gt;= 20;
-</code></pre><p>10.按照某列进行排序  </p>
-<pre><code>db.userInfo.find({sex: {$exists: true}}).count();
-//相当于：select count(sex) from userInfo;
-</code></pre><p><strong>这一段里是比较重要的索引部分</strong><br>五.索引 (index)<br>1.创建  </p>
-<pre><code>db.userInfo.ensureIndex({name: 1});
-db.userInfo.ensureIndex({name: 1, ts: -1});
-</code></pre><p>2.查询当前聚集集合所有索引  </p>
-<pre><code>db.userInfo.getIndexes();
-</code></pre><p>3.查看总索引记录大小  </p>
-<pre><code>db.userInfo.totalIndexSize();
-</code></pre><p>4.读取当前集合的所有index信息  </p>
-<pre><code>db.users.reIndex();
-</code></pre><p>5.删除指定索引  </p>
-<pre><code>db.users.dropIndex(&quot;name_1&quot;);
-</code></pre><p>6.删除所有索引  </p>
-<pre><code>db.users.dropIndexes();
-</code></pre><p><em>索引这块可能详细说，有很所需要注意的地方，要不断翻阅琢磨！</em></p>
-<p><strong>这一段里是比较重要的索引部分</strong> </p>
-<p>六. 修改 添加 删除集合数据  </p>
-<p>1.添加（save）  </p>
-<pre><code>db.users.save({name: ‘zhangsan&apos;, age: 25, sex: true});
-//添加的数据的数据列，没有固定，根据添加的数据为准
-</code></pre><p>2.修改（update）</p>
-<pre><code>db.users.update({age: 25}, {$set: {name: &apos;changeName&apos;}}, false, true);
-//相当于：update users set name = ‘changeName&apos; where age = 25;
-db.users.update({name: &apos;Lisi&apos;}, {$inc: {age: 50}}, false, true);
-//相当于：update users set age = age + 50 where name = ‘Lisi&apos;;
-db.users.update({name: &apos;Lisi&apos;}, {$inc: {age: 50}, $set: {name: &apos;hoho&apos;}}, false, true);
-//相当于：update users set age = age + 50, name = ‘hoho&apos; where name = ‘Lisi&apos;;
-</code></pre><p>3.删除（remove）  </p>
-<pre><code>db.users.remove({age: 132});
-</code></pre><p>4.查询修改删除  </p>
-<pre><code>db.users.findAndModify({
-    query: {age: {$gte: 25}}, 
-    sort: {age: -1}, 
-    update: {$set: {name: &apos;a2&apos;}, $inc: {age: 2}},
-    remove: true
-});
-db.runCommand({ findandmodify : &quot;users&quot;, 
-    query: {age: {$gte: 25}}, 
-    sort: {age: -1}, 
-    update: {$set: {name: &apos;a2&apos;}, $inc: {age: 2}},
-    remove: true
-});
-</code></pre><p>七.查看基本信息  </p>
-<p>查看聚集集合基本信息<br>1、查看帮助  db.yourColl.help();<br>2、查询当前集合的数据条数  db.yourColl.count();<br>3、查看数据空间大小 db.userInfo.dataSize();<br>4、得到当前聚集集合所在的db db.userInfo.getDB();<br>5、得到当前聚集的状态 db.userInfo.stats();<br>6、得到聚集集合总大小 db.userInfo.totalSize();<br>7、聚集集合储存空间大小 db.userInfo.storageSize();<br>8、Shard版本信息  db.userInfo.getShardVersion();<br>9、聚集集合重命名 db.userInfo.renameCollection(“users”); //将userInfo重命名为users<br>10、删除当前聚集集合 db.userInfo.drop();</p>
-<pre><code>show dbs:显示数据库列表 
-show collections：显示当前数据库中的集合（类似关系数据库中的表） 
-show users：显示用户 
-use &lt;db name&gt;：切换当前数据库，这和MS-SQL里面的意思一样 
-db.help()：显示数据库操作命令，里面有很多的命令 
-db.foo.help()：显示集合操作命令，同样有很多的命令，foo指的是当前数据库下，一个叫foo的集合，并非真正意义上的命令 
-db.foo.find()：对于当前数据库中的foo集合进行数据查找（由于没有条件，会列出所有数据） 
-db.foo.find( { a : 1 } )：对于当前数据库中的foo集合进行查找，条件是数据中有一个属性叫a，且a的值为1
+            <p>这篇呢，就是如何来读取一个大型的excel表格，考虑文件大小在500M以上的这种如何进行读取和分析。  </p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/17/python实战之二发送微博/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/05/17/python实战之二发送微博/" itemprop="url">python实战之二发送微博</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-17T17:18:21+08:00">
+                2016-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/05/17/python实战之二发送微博/" class="leancloud_visitors" data-flag-title="python实战之二发送微博">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  278
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>python能不能发微博呢？  </p>
+<p>我们知道很多应用都有开发者平台，只要成为开发者，就可以调用其中的数据。当然初级的开发者调用的次数等都有限制。  </p>
+<p>廖雪峰老师开发了weibo的python  sdk<br>直接安装一下就好  </p>
+<p>##代码预览    </p>
+<pre><code class="python"><span class="comment">#!/usr/bin/env python</span>
+<span class="comment"># _*_ coding: utf-8 _*_</span>
+
+<span class="keyword">from</span> weibo <span class="keyword">import</span> APIClient
+
+APP_KEY = <span class="string">'2234125265'</span> <span class="comment"># app key</span>
+APP_SECRET = <span class="string">'******'</span> <span class="comment"># app secret</span>
+CALLBACK_URL = <span class="string">'https://api.weibo.com/oauth2/default.html'</span> <span class="comment"># callback url 授权回调页,与OAuth2.0 授权设置的一致</span>
+
+<span class="function"><span class="keyword">def</span> <span class="title">press_sina_weibo</span><span class="params">()</span>:</span>
+
+    client = APIClient(app_key=APP_KEY, app_secret=APP_SECRET, redirect_uri=CALLBACK_URL)
+    <span class="keyword">print</span> client.get_authorize_url()
+
+    r = client.request_access_token(raw_input(<span class="string">"input code:"</span>).strip())
+    client.set_access_token(r.access_token, r.expires_in)
+
+    <span class="keyword">print</span> client.post.statuses__update(status=<span class="string">u'这是来自ipad pro客户端的微博信息'</span>)
+
+<span class="comment">#print client.statuses.user_timeline.get()</span>
+
+<span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:
+    press_sina_weibo()
 </code></pre>
+<p>这里不太方便的是需要手动输入下参数进去。<br>看过一些sina的官方开发者文档，感觉限制很多的，也试过尝试一些开发者开源项目爬取微博，导致微博被盗。。  </p>
+<p>文档很重要，还可能思维方面与国外人差异有点大 ，跟不上，看全英文的又吃力。。。</p>
+
           
         
       
@@ -926,7 +1108,7 @@ db.foo.find( { a : 1 } )：对于当前数据库中的foo集合进行查找，�
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/37/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/37/">37</a><span class="page-number current">38</span>
+    <a class="extend prev" rel="prev" href="/page/37/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/37/">37</a><span class="page-number current">38</span><a class="page-number" href="/page/39/">39</a><a class="page-number" href="/page/40/">40</a><a class="extend next" rel="next" href="/page/39/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -976,7 +1158,7 @@ db.foo.find( { a : 1 } )：对于当前数据库中的foo集合进行查找，�
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">188</span>
+                  <span class="site-state-item-count">200</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1082,7 +1264,7 @@ db.foo.find( { a : 1 } )：对于当前数据库中的foo集合进行查找，�
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共107.7k字</span>
+  <span class="post-count">博客全站共108.2k字</span>
 </div>
 
         
