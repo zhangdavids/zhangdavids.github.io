@@ -275,6 +275,186 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/13/flask-and-gevent/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/13/flask-and-gevent/" itemprop="url">flask and gevent</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-13T18:29:27+08:00">
+                2018-03-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/03/13/flask-and-gevent/" class="leancloud_visitors" data-flag-title="flask and gevent">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  359
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="异步-WEB-架构的特点："><a href="#异步-WEB-架构的特点：" class="headerlink" title="异步 WEB 架构的特点："></a>异步 WEB 架构的特点：</h3><p>gevent 为 Python 提供了比较完善的协程支持，其基于 greenlet 实现协程。</p>
+<p>当 greenlet 遇到如网络访问、磁盘 IO 等操作时，就将自动切换至其他的 greenlet，待操作完成后，在适合的时间点回切 greenlet 继续执行。由于网络访问、磁盘 IO 等操作耗时较长，且实际 CPU 使用率较低（大部分工作由 DMA 等设备完成）。所以倘若非异步，涉及以上操作并发将以顺序执行， CPU 长期处于空闲状态。而异步模式将能实现并发程序间的切换，从而保证 CPU 有较高的利用率，而不是等待如网络访问、磁盘 IO 等操作。 </p>
+<p><em>注意：gevent 的使用并不能减少实际 CPU 的使用量，所以若程序的执行过程消耗的全为 CPU 资源，则其异步也是毫无意义的。</em></p>
+<h3 id="Flask-gevent-的最小程序实例："><a href="#Flask-gevent-的最小程序实例：" class="headerlink" title="Flask+gevent 的最小程序实例："></a>Flask+gevent 的最小程序实例：</h3><p>最小程序实例如下。</p>
+<pre><code>from gevent import monkey
+monkey.patch_all()
+from flask import Flask
+from gevent import pywsgi
+
+app = Flask(__name__)
+
+@app.route(&apos;/&apos;)
+def index():
+    return &apos;Hello World&apos;
+
+server = pywsgi.WSGIServer((&apos;127.0.0.1&apos;, 5000), app)
+server.serve_forever()
+</code></pre><p>注意：为实现 Flask 与 gevent 的结合，需在程序开头引入 monkey patch。monkey patch 将以闭包的形式修改可以实现异步的标准库，从而实现异步。</p>
+<p>注意：需使用支持 gevent 的 WSGI，例如：gevent.pywsgi、gunicorn 等。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/10/python基础20题/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1299,223 +1479,11 @@ task2()
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/03/分享python面试题/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/03/分享python面试题/" itemprop="url">分享python面试题</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-03T14:01:01+08:00">
-                2018-03-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/03/03/分享python面试题/" class="leancloud_visitors" data-flag-title="分享python面试题">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  509
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  2
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.is和==有什么区别？</p>
-<p>python当中对象包含三要素，分别是id（身份标识）、type（数据类型）、value（值）</p>
-<p>==是python的比较运算符，用于比较value值是否相等</p>
-<p>is是同一性运算符，比较的是id是否相同</p>
-<p>a、b值相同</p>
-<p>只有数值型和字符串型时， a is b 为true<br>是tuple list dict 或者 set时，a is b 为false</p>
-<p>2.解释装饰器</p>
-<p>写代码要遵循开发封闭原则，虽然在这个原则是用的面向对象开发，但是也适用于函数式编程，简单来说，它规定已经实现的功能代码不允许被修改，但可以被扩展，</p>
-<pre><code>def w1(func):
-    def inner():
-        # 验证1
-        # 验证2
-        # 验证3
-        return func()
-    return inner
-
-@w1
-def f1():
-    print &apos;f1&apos;
-@w1
-def f2():
-    print &apos;f2&apos;
-@w1
-def f3():
-    print &apos;f3&apos;
-@w1
-def f4():
-    print &apos;f4&apos;
-</code></pre><p>如上例@w1内部会执行以下操作：</p>
-<ul>
-<li>执行w1函数，并将 @w1 下面的 函数 作为w1函数的参数，即：@w1 等价于 w1(f1)</li>
-</ul>
-<p>所以，内部就会去执行：</p>
-<pre><code>def inner:
-    #验证
-    return f1()   # func是参数，此时 func 等于 f1
-return inner     # 返回的 inner，inner代表的是函数，非执行函数
-</code></pre><p>其实就是将原来的 f1 函数塞进另外一个函数中</p>
-<ul>
-<li>将执行完的 w1 函数返回值赋值给@w1下面的函数的函数名</li>
-</ul>
-<p>w1函数的返回值是：</p>
-<pre><code>def inner:
-    #验证
-    return 原来f1()  # 此处的 f1 表示原来的f1函数
-</code></pre><p>然后，将此返回值再重新赋值给 f1，即：</p>
-<pre><code>新f1 = def inner:
-        #验证
-        return 原来f1() 
-</code></pre><p>所以，以后业务部门想要执行 f1 函数时，就会执行 新f1 函数，在 新f1 函数内部先执行验证，再执行原来的f1函数，然后将 原来f1 函数的返回值 返回给了业务调用者。</p>
-<p>如此一来， 即执行了验证的功能，又执行了原来f1函数的内容，并将原f1函数返回值 返回给业务调用者  </p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/23/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><span class="page-number current">24</span><a class="page-number" href="/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/page/40/">40</a><a class="extend next" rel="next" href="/page/25/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/23/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/23/">23</a><span class="page-number current">24</span><a class="page-number" href="/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/page/41/">41</a><a class="extend next" rel="next" href="/page/25/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1565,7 +1533,7 @@ return inner     # 返回的 inner，inner代表的是函数，非执行函数
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">200</span>
+                  <span class="site-state-item-count">201</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1671,7 +1639,7 @@ return inner     # 返回的 inner，inner代表的是函数，非执行函数
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共108.2k字</span>
+  <span class="post-count">博客全站共108.4k字</span>
 </div>
 
         
