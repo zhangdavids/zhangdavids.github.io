@@ -275,6 +275,181 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/08/why-not-gevent/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/08/why-not-gevent/" itemprop="url">why-not-gevent</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-08T12:48:14+08:00">
+                2018-12-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/12/08/why-not-gevent/" class="leancloud_visitors" data-flag-title="why-not-gevent">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.1k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在python 的并发编程领域 以前有tornado 后来有gevent</p>
+<p>python 在发展的过程当中 有过一些失败的修复CPython 的缺陷和提高性能的尝试，比如消除GIL（这么多年 这么多的大牛 没有一个解决的方案？？？） 也有成功的案例 比如 Pypy</p>
+<p>协程</p>
+<p>每个人都在谈论协程的好处 优点 为了KPI 强行上协程 并不可取。</p>
+<p>Coroutine 也就是 corporate routine，直译为「协同的例程」，中文一般叫做「协程」, 实际上这个概念和进程与线程有相似之处, 因为linux线程就是所谓的「轻量级进程」。</p>
+<p>gevent源码分析的描述当中</p>
+<p>相同点:<br>二者都是可以看做是一种执行流, 该执行流可以挂起,并且在将来又可以在 你挂起的地方恢复执行, 这实际上都可以看做是continuation, 我们来看看当我们挂 起一个执行流时我们要保存的东西：<br>栈, 因为如果你不保存栈,那么局部变量你就无法恢复,同时函数的调用链你也无 法恢复,<br>寄存器的状态: 这好理解, 比如说EIP,如果你不保存,那么你恢复执行流就不知道 到底执行哪一条指令, 在比如说ESP,EBP, 如果你不保存,那么你即便有完整的栈 你也不知道怎么用.<br>这二者实际就是所谓的上下文,也可以说是continuation. 在执行流切换时必须保存 这两个东西, 内核调度进程时也是一回事.</p>
+<p>不同点:<br>执行流的调度者不同, 进程是内核调度, 而协程是在用户态调度, 也就是说进程 的上下文是在内核态保存恢复的,而协程是在用户态保存恢复的. 很显然用户态的 代价更低<br>进程会被抢占,而协程不会,也就是说协程如果不主动让出CPU,那么其他的协程是不 可能得到执行机会,这实际和早期的操作系统类似,比如DOS, 它有一个yield原语, 一个进程调用yield,那么它就会让出CPU, 其他的进程也就有机会执行了, 如果一 个进程进入了死循环,那么整个系统也就挂起了,永远无法运行其他的进程了, 但 对协程而言,这不是问题<br>对内存的占用不同,实际上协程可以只需要4K的栈就够了, 而进程占用的内存要大 的多.<br>从操作系统的角度讲, 多协程的程序是单线程,单进程的</p>
+<p>协程的优势在于</p>
+<p>由开发者决定协程的切换，操作系统无法干预切换，且占用内存小的多。</p>
+<p>Gevent是一种基于协程的Python网络库，它用到Greenlet提供的，封装了libevent事件循环的高层同步API。它让开发者在不改变编程习惯的同时，用同步的方式写异步I/O的代码。</p>
+<p>gevent 缺点</p>
+<p>Monkey-patching。中文「猴子补丁」，常用于对测试环境做一些hack。我个人不太喜欢这种「黑魔法」，因为如果其他人不了解细节，极为容易产生困惑。Gvanrossum说用它就是”patch-and-pray”，太形象了。由于Gevent直接修改标准库里面大部分的阻塞式系统调用，包括socket、ssl、threading和 select等模块，而变为协作式运行。但是我们无法保证你在复杂的生产环境中有哪些地方使用这些标准库会由于打了补丁而出现奇怪的问题，那么你只能祈祷（pray）了。其次，在Python之禅中明确说过：「Explicit is better than implicit.」，猴子补丁明显的背离了这个原则。最后，Gvanrossum说Stackless之父Christian Tismer也赞同他。 我喜欢显式的「yield from」<br>第三方库支持。得确保项目中用到其他用到的网络库也必须使用纯Python或者明确说明支持Gevent，而且就算有这样的第三方库，我还会担心这个第三方库的代码质量和功能性。<br>Greenlet不支持Jython和IronPython，这样就无法把gevent设计成一个标准库了。</p>
+<p>建议py 3.6 之后 选择标准库 asyncio</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/05/协程篇/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -601,7 +776,7 @@
         
           
             <p>多线程并不能充分利用多核处理器，如果是一个CPU计算型的任务，应该使用多进程模块 multiprocessing 。它的工作方式与线程库完全不同，但是两种库的语法却非常相似。multiprocessing给每个进程赋予单独的Python解释器，这样就规避了全局解释锁所带来的问题。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Pool</span><br><span class="line"><span class="keyword">from</span> multiprocessing.dummy <span class="keyword">import</span> Pool</span><br></pre></td></tr></table></figure>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">from</span> <span class="keyword">multiprocessing </span><span class="meta">import</span> Pool</span><br><span class="line"><span class="symbol">from</span> <span class="keyword">multiprocessing.dummy </span><span class="meta">import</span> Pool</span><br></pre></td></tr></table></figure>
 <p>分不清楚的情况下 进行测试  一般可以先直接上多进程</p>
 <p>进程之间的通信</p>
 <p>进程间的通信（IPC）常用的是rpc、socket、pipe（管道）和消息队列（queue）。多进程模块中涉及到了后面3种。</p>
@@ -623,8 +798,8 @@
 <p>Namespace。创建一个可分享的命名空间。<br>Value/Array。和上面共享ctypes对象的方式一样。<br>dict/list。创建一个可分享的dict/list，支持对应数据结构的方法。<br>Condition/Event/Lock/Queue/Semaphore。创建一个可分享的对应同步原语的对象。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Manager, Process</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">modify</span><span class="params">(ns, lproxy, dproxy)</span>:</span></span><br><span class="line">    ns.a **= <span class="number">2</span></span><br><span class="line">    lproxy.extend([<span class="string">'b'</span>, <span class="string">'c'</span>])</span><br><span class="line">    dproxy[<span class="string">'b'</span>] = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">manager = Manager()</span><br><span class="line">ns = manager.Namespace()</span><br><span class="line">ns.a = <span class="number">1</span></span><br><span class="line">lproxy = manager.list()</span><br><span class="line">lproxy.append(<span class="string">'a'</span>)</span><br><span class="line">dproxy = manager.dict()</span><br><span class="line">dproxy[<span class="string">'b'</span>] = <span class="number">2</span></span><br><span class="line"></span><br><span class="line">p = Process(target=modify, args=(ns, lproxy, dproxy))</span><br><span class="line">p.start()</span><br><span class="line"><span class="keyword">print</span> <span class="string">'PID:'</span>, p.pid</span><br><span class="line">p.join()</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> ns.a</span><br><span class="line"><span class="keyword">print</span> lproxy</span><br><span class="line"><span class="keyword">print</span> dproxy</span><br></pre></td></tr></table></figure>
 <p>分布式进程通信</p>
-<p>服务器端<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> multiprocessing.managers <span class="keyword">import</span> BaseManager</span><br><span class="line"></span><br><span class="line">host = <span class="string">'127.0.0.1'</span></span><br><span class="line">port = <span class="number">9030</span></span><br><span class="line">authkey = <span class="string">'secret'</span></span><br><span class="line"></span><br><span class="line">shared_list = []</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RemoteManager</span><span class="params">(BaseManager)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">RemoteManager.register(<span class="string">'get_list'</span>, callable=<span class="keyword">lambda</span>: shared_list)</span><br><span class="line">mgr = RemoteManager(address=(host, port), authkey=authkey)</span><br><span class="line">server = mgr.get_server()</span><br><span class="line">server.serve_forever()</span><br></pre></td></tr></table></figure></p>
-<p>客户端<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> multiprocessing.managers <span class="keyword">import</span> BaseManager</span><br><span class="line"></span><br><span class="line">host = <span class="string">'127.0.0.1'</span></span><br><span class="line">port = <span class="number">9030</span></span><br><span class="line">authkey = <span class="string">'secret'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RemoteManager</span><span class="params">(BaseManager)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">RemoteManager.register(<span class="string">'get_list'</span>)</span><br><span class="line">mgr = RemoteManager(address=(host, port), authkey=authkey)</span><br><span class="line">mgr.connect()</span><br><span class="line"></span><br><span class="line">l = mgr.get_list()</span><br><span class="line"><span class="keyword">print</span> l</span><br><span class="line">l.append(<span class="number">1</span>)</span><br><span class="line"><span class="keyword">print</span> mgr.get_list()</span><br></pre></td></tr></table></figure></p>
+<p>服务器端<br><figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">from multiprocessing.managers <span class="built_in">import</span> BaseManager</span><br><span class="line"></span><br><span class="line"><span class="attr">host</span> = '<span class="number">127.0</span>.<span class="number">0.1</span>'</span><br><span class="line"><span class="attr">port</span> = <span class="number">9030</span></span><br><span class="line"><span class="attr">authkey</span> = 'secret'</span><br><span class="line"></span><br><span class="line"><span class="attr">shared_list</span> = []</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class RemoteManager(BaseManager):</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">RemoteManager.register('get_list', <span class="attr">callable=lambda:</span> shared_list)</span><br><span class="line"><span class="attr">mgr</span> = RemoteManager(<span class="attr">address=(host,</span> port), <span class="attr">authkey=authkey)</span></span><br><span class="line"><span class="attr">server</span> = mgr.get_server()</span><br><span class="line">server.serve_forever()</span><br></pre></td></tr></table></figure></p>
+<p>客户端<br><figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="title">from</span> multiprocessing.managers <span class="keyword">import</span> BaseManager</span><br><span class="line"></span><br><span class="line"><span class="title">host</span> = '<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>'</span><br><span class="line"><span class="title">port</span> = <span class="number">9030</span></span><br><span class="line"><span class="title">authkey</span> = 'secret'</span><br><span class="line"><span class="class"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="type">RemoteManager</span>(<span class="type">BaseManager</span>):</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">RemoteManager</span>.register('<span class="title">get_list'</span>)</span><br><span class="line">mgr = <span class="type">RemoteManager</span>(<span class="title">address</span>=(<span class="title">host</span>, <span class="title">port</span>), authkey=authkey)</span><br><span class="line">mgr.connect()</span><br><span class="line"></span><br><span class="line">l = mgr.get_list()</span><br><span class="line">print l</span><br><span class="line">l.append(1)</span><br><span class="line">print mgr.get_list()</span></span><br></pre></td></tr></table></figure></p>
 
           
         
@@ -1097,172 +1272,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/11/29/linux-optimize000/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/11/29/linux-optimize000/" itemprop="url">linux-optimize000</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-29T22:43:10+08:00">
-                2018-11-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/11/29/linux-optimize000/" class="leancloud_visitors" data-flag-title="linux-optimize000">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  0
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/42/">42</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/43/">43</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1312,7 +1326,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">210</span>
+                  <span class="site-state-item-count">211</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1427,7 +1441,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共113k字</span>
+  <span class="post-count">博客全站共114.1k字</span>
 </div>
 
         
