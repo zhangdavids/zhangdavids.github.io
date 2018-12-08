@@ -95,7 +95,7 @@ python 在发展的过程当中 有过一些失败的修复CPython 的缺陷和�
 协程
 每个人都在谈论协程的好处 优点 为了KPI 强行上协程 并不可取。
 Coroutine 也就是 corporate routine">
-<meta property="og:updated_time" content="2018-12-08T05:23:47.886Z">
+<meta property="og:updated_time" content="2018-12-08T05:28:13.137Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="why-not-gevent">
 <meta name="twitter:description" content="在python 的并发编程领域 以前有tornado 后来有gevent
@@ -408,7 +408,11 @@ Coroutine 也就是 corporate routine">
 <p>由开发者决定协程的切换，操作系统无法干预切换，且占用内存小的多。</p>
 <p>Gevent是一种基于协程的Python网络库，它用到Greenlet提供的，封装了libevent事件循环的高层同步API。它让开发者在不改变编程习惯的同时，用同步的方式写异步I/O的代码。</p>
 <p>gevent 缺点</p>
-<p>Monkey-patching。中文「猴子补丁」，常用于对测试环境做一些hack。我个人不太喜欢这种「黑魔法」，因为如果其他人不了解细节，极为容易产生困惑。Gvanrossum说用它就是”patch-and-pray”，太形象了。由于Gevent直接修改标准库里面大部分的阻塞式系统调用，包括socket、ssl、threading和 select等模块，而变为协作式运行。但是我们无法保证你在复杂的生产环境中有哪些地方使用这些标准库会由于打了补丁而出现奇怪的问题，那么你只能祈祷（pray）了。其次，在Python之禅中明确说过：「Explicit is better than implicit.」，猴子补丁明显的背离了这个原则。最后，Gvanrossum说Stackless之父Christian Tismer也赞同他。 我喜欢显式的「yield from」<br>第三方库支持。得确保项目中用到其他用到的网络库也必须使用纯Python或者明确说明支持Gevent，而且就算有这样的第三方库，我还会担心这个第三方库的代码质量和功能性。<br>Greenlet不支持Jython和IronPython，这样就无法把gevent设计成一个标准库了。</p>
+<ul>
+<li>Monkey-patching。中文「猴子补丁」，常用于对测试环境做一些hack。我个人不太喜欢这种「黑魔法」，因为如果其他人不了解细节，极为容易产生困惑。Gvanrossum说用它就是”patch-and-pray”，太形象了。由于Gevent直接修改标准库里面大部分的阻塞式系统调用，包括socket、ssl、threading和 select等模块，而变为协作式运行。但是我们无法保证你在复杂的生产环境中有哪些地方使用这些标准库会由于打了补丁而出现奇怪的问题，那么你只能祈祷（pray）了。其次，在Python之禅中明确说过：「Explicit is better than implicit.」，猴子补丁明显的背离了这个原则。最后，Gvanrossum说Stackless之父Christian Tismer也赞同他。 我喜欢显式的「yield from」</li>
+<li>第三方库支持。得确保项目中用到其他用到的网络库也必须使用纯Python或者明确说明支持Gevent，而且就算有这样的第三方库，我还会担心这个第三方库的代码质量和功能性。</li>
+<li>Greenlet不支持Jython和IronPython，这样就无法把gevent设计成一个标准库了。</li>
+</ul>
 <p>建议py 3.6 之后 选择标准库 asyncio</p>
 
       
@@ -443,6 +447,10 @@ Coroutine 也就是 corporate routine">
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/08/asyncio篇/" rel="prev" title="asyncio篇">
+                asyncio篇 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -514,7 +522,7 @@ Coroutine 也就是 corporate routine">
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">211</span>
+                  <span class="site-state-item-count">212</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -629,7 +637,7 @@ Coroutine 也就是 corporate routine">
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共114.1k字</span>
+  <span class="post-count">博客全站共114.9k字</span>
 </div>
 
         
