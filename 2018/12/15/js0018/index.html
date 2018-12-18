@@ -81,16 +81,19 @@
 
 
 
-<meta name="description" content="莫道前路无知己 天下谁人不识君">
+<meta name="description" content="通过函数访问私有变量 而不是通过对象访问
+12345678910111213141516171819202122232425262728293031&amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html&amp;gt;&amp;lt;head&amp;gt;  &amp;lt;title&amp;gt;Private variables are accessed through functions and not through o">
 <meta property="og:type" content="article">
 <meta property="og:title" content="js0018">
 <meta property="og:url" content="http://yoursite.com/2018/12/15/js0018/index.html">
 <meta property="og:site_name" content="上药三品，神与气精">
-<meta property="og:description" content="莫道前路无知己 天下谁人不识君">
-<meta property="og:updated_time" content="2018-12-15T08:33:21.355Z">
+<meta property="og:description" content="通过函数访问私有变量 而不是通过对象访问
+12345678910111213141516171819202122232425262728293031&amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html&amp;gt;&amp;lt;head&amp;gt;  &amp;lt;title&amp;gt;Private variables are accessed through functions and not through o">
+<meta property="og:updated_time" content="2018-12-15T08:51:36.664Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="js0018">
-<meta name="twitter:description" content="莫道前路无知己 天下谁人不识君">
+<meta name="twitter:description" content="通过函数访问私有变量 而不是通过对象访问
+12345678910111213141516171819202122232425262728293031&amp;lt;!DOCTYPE html&amp;gt;&amp;lt;html&amp;gt;&amp;lt;head&amp;gt;  &amp;lt;title&amp;gt;Private variables are accessed through functions and not through o">
 
 
 
@@ -347,7 +350,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  136
                 </span>
               
 
@@ -384,7 +387,8 @@
       
 
       
-        
+        <p>通过函数访问私有变量 而不是通过对象访问</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Private variables are accessed through functions and not through objects<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../assert.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">type</span>=<span class="string">"text/css"</span> <span class="attr">href</span>=<span class="string">"../assert.css"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="actionscript"></span><br><span class="line">	  <span class="function"><span class="keyword">function</span> <span class="title">Ninja</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> feints = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">this</span>.getFeints = <span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> feints;</span><br><span class="line">      &#125;;</span><br><span class="line">      <span class="keyword">this</span>.feint = <span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</span><br><span class="line">        feints++;</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> ninja1 = <span class="keyword">new</span> Ninja();</span><br><span class="line">    ninja1.feint();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> imposter = &#123;&#125;;</span><br><span class="line">    imposter.getFeints = ninja1.getFeints;</span><br><span class="line"></span><br><span class="line">    assert(imposter.getFeints () === <span class="number">1</span>,</span><br><span class="line">          <span class="string">"The imposter has access to the feints variable!"</span>);</span><br><span class="line">	</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -417,6 +421,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/15/js0019/" rel="prev" title="js0019">
+                js0019 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -488,7 +496,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">235</span>
+                  <span class="site-state-item-count">239</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -603,7 +611,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共122k字</span>
+  <span class="post-count">博客全站共122.6k字</span>
 </div>
 
         
