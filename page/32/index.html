@@ -275,6 +275,302 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/10/python基础20题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/10/python基础20题/" itemprop="url">python基础20题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-10T10:20:36+08:00">
+                2018-03-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/03/10/python基础20题/" class="leancloud_visitors" data-flag-title="python基础20题">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.1k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1.简述函数式编程</p>
+<p>在函数式编程中，函数是基本单位，变量只是一个名称，而不是一个存储单元。除了匿名函数外，Python还使用fliter(),map(),reduce(),apply()函数来支持函数式编程。</p>
+<p>2.什么是匿名函数，匿名函数有什么局限性</p>
+<p>匿名函数，也就是lambda函数，通常用在函数体比较简单的函数上。匿名函数顾名思义就是函数没有名字，因此不用担心函数名冲突。不过Python对匿名函数的支持有限，只有一些简单的情况下可以使用匿名函数。</p>
+<p>3.如何捕获异常，常用的异常机制有哪些？</p>
+<p>如果我们没有对异常进行任何预防，那么在程序执行的过程中发生异常，就会中断程序，调用python默认的异常处理器，并在终端输出异常信息。</p>
+<p>try…except…finally语句:当try语句执行时发生异常，回到try语句层，寻找后面是否有except语句。找到except语句后，会调用这个自定义的异常处理器。except将异常处理完毕后，程序继续往下执行。finally语句表示，无论异常发生与否，finally中的语句都要执行。</p>
+<p>assert语句：判断assert后面紧跟的语句是True还是False，如果是True则继续执行print，如果是False则中断程序，调用默认的异常处理器，同时输出assert语句逗号后面的提示信息。</p>
+<p>with语句：如果with语句或语句块中发生异常，会调用默认的异常处理器处理，但文件还是会正常关闭。</p>
+<p>4.copy()与deepcopy()的区别</p>
+<p>copy是浅拷贝，只拷贝可变对象的父级元素。 deepcopy是深拷贝，递归拷贝可变对象的所有元素。</p>
+<p>5.函数装饰器有什么作用（常考）</p>
+<p>装饰器本质上是一个Python函数，它可以让其他函数在不需要做任何代码变动的前提下增加额外功能，装饰器的返回值也是一个函数对象。它经常用于有切面需求的场景，比如：插入日志、性能测试、事务处理、缓存、权限校验等场景。有了装饰器，就可以抽离出大量与函数功能本身无关的雷同代码并继续重用。</p>
+<p>6.简述Python的作用域以及Python搜索变量的顺序</p>
+<p>Python作用域简单说就是一个变量的命名空间。代码中变量被赋值的位置，就决定了哪些范围的对象可以访问这个变量，这个范围就是变量的作用域。在Python中，只有模块（module），类（class）以及函数（def、lambda）才会引入新的作用域。Python的变量名解析机制也称为 LEGB 法则：本地作用域（Local）→当前作用域被嵌入的本地作用域（Enclosing locals）→全局/模块作用域（Global）→内置作用域（Built-in）</p>
+<p>7.新式类和旧式类的区别,如何确保使用的类是新式类</p>
+<p>为了统一类(class)和类型(type)，python在2.2版本引进来新式类。在2.1版本中，类和类型是不同的。</p>
+<p>为了确保使用的是新式类，有以下方法：</p>
+<p>放在类模块代码的最前面 <strong>metaclass</strong> = type<br>从内建类object直接或者间接地继承<br>在python3版本中，默认所有的类都是新式类。</p>
+<p>8.简述<strong>new</strong>和<strong>init</strong>的区别</p>
+<p>创建一个新实例时调用<strong>new</strong>,初始化一个实例时用<strong>init</strong>,这是它们最本质的区别。</p>
+<p>new方法会返回所构造的对象，init则不会.</p>
+<p>new函数必须以cls作为第一个参数，而init则以self作为其第一个参数.</p>
+<p>9.Python垃圾回收机制(常考)</p>
+<p>Python GC主要使用引用计数（reference counting）来跟踪和回收垃圾。在引用计数的基础上，通过“标记-清除”（mark and sweep）解决容器对象可能产生的循环引用问题，通过“分代回收”（generation collection）以空间换时间的方法提高垃圾回收效率。</p>
+<p>1 引用计数</p>
+<p>PyObject是每个对象必有的内容，其中ob_refcnt就是做为引用计数。当一个对象有新的引用时，它的ob_refcnt就会增加，当引用它的对象被删除，它的ob_refcnt就会减少.引用计数为0时，该对象生命就结束了。</p>
+<p>优点:</p>
+<p>简单 实时性 缺点:</p>
+<p>维护引用计数消耗资源 循环引用</p>
+<p>2 标记-清除机制</p>
+<p>基本思路是先按需分配，等到没有空闲内存的时候从寄存器和程序栈上的引用出发，遍历以对象为节点、以引用为边构成的图，把所有可以访问到的对象打上标记，然后清扫一遍内存空间，把所有没标记的对象释放。</p>
+<p>3 分代技术</p>
+<p>分代回收的整体思想是：将系统中的所有内存块根据其存活时间划分为不同的集合，每个集合就成为一个“代”，垃圾收集频率随着“代”的存活时间的增大而减小，存活时间通常利用经过几次垃圾回收来度量。</p>
+<p>Python默认定义了三代对象集合，索引数越大，对象存活时间越长。</p>
+<p>10.Python中的@property有什么作用?如何实现成员变量的只读属性？</p>
+<p>@property装饰器就是负责把一个方法变成属性调用，通常用在属性的get方法和set方法，通过设置@property可以实现实例成员变量的直接访问，又保留了参数的检查。另外通过设置get方法而不定义set方法可以实现成员变量的只读属性。</p>
+<p>11.*args and **kwargs</p>
+<pre><code>*args代表位置参数，它会接收任意多个参数并把这些参数作为元组传递给函数。**kwargs代表的关    
+键字参数，允许你使用没有事先定义的参数名，另外，位置参数一定要放在关键字参数的前面。
+</code></pre><p>12.有用过with statement吗？它的好处是什么？具体如何实现？</p>
+<p>with语句适用于对资源进行访问的场合，确保不管使用过程中是否发生异常都会执行必要的“清理”操作，释放资源，比如文件使用后自动关闭、线程中锁的自动获取和释放等。</p>
+<p>13.写出代码输出 并解释</p>
+<pre><code>def extend_list(val, list=[]):
+list.append(val)
+return list
+
+list1 = extend_list(10)
+list2 = extend_list(123, [])
+list3 = extend_list(&apos;a&apos;)
+
+print(list1) # list1 = [10, &apos;a&apos;]
+print(list2) # list2 = [123, []]
+print(list3) # list3 = [10, &apos;a&apos;]
+
+class Parent(object):
+    x = 1
+
+class Child1(Parent):
+    pass
+
+class Child2(Parent):
+    pass
+
+print(Parent.x, Child1.x, Child2.x)  # [1,1,1]
+Child1.x = 2
+print(Parent.x, Child1.x, Child2.x)  # [1,2,1]
+Partent.x = 3
+print(Parent.x, Child1.x, Child2.x)  # [3,2,3]
+</code></pre><p>14.在一个二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。</p>
+<pre><code>arr = [[1,4,7,10,15], [2,5,8,12,19], [3,6,9,16,22], [10,13,14,17,24], [18,21,23,26,30]]
+
+def getNum(num, data=None):
+    while data:
+        if num &gt; data[0][-1]:
+            del data[0]
+            print(data)
+            getNum(num, data=None)
+        elif num &lt; data[0][-1]:
+            data = list(zip(*data))
+            del data[-1]
+            data = list(zip(*data))
+            print(data)
+            getNum(num, data=None)
+        else:
+            return True
+            data.clear()
+    return False
+
+
+if __name__ == &apos;__main__&apos;:
+    print(getNum(18, arr))    
+</code></pre><p>15.获取最大公约数、最小公倍数</p>
+<pre><code>a = 36
+b = 21
+
+def maxCommon(a, b):
+    while b: a,b = b, a%b
+    return a
+
+def minCommon(a, b):
+    c = a*b
+    while b: a,b = b, a%b
+    return c//a
+
+if __name__ == &apos;__main__&apos;:
+    print(maxCommon(a,b))
+    print(minCommon(a,b))
+</code></pre><p>16.获取中位数</p>
+<pre><code>def median(data):
+    data.sort()
+    half = len(data) // 2
+    return (data[half] + data[~half])/2
+
+l = [1,3,4,53,2,46,8,42,82]
+
+if __name__ == &apos;__main__&apos;:
+    print(median(l))    
+</code></pre><p>17.输入一个整数，输出该数二进制表示中1的个数。其中负数用补码表示。</p>
+<pre><code>def getOneCount(num):
+    if num &gt; 0:
+        count = b_num.count(&apos;1&apos;)
+        print(b_num)
+        return count
+    elif num &lt; 0:
+        b_num = bin(~num)
+        count = 8 - b_num.count(&apos;1&apos;)
+        return count
+    else:
+        return 8
+
+if __name__ == &apos;__main__&apos;:
+    print(getOneCount(5))
+    print(getOneCount(-5))
+    print(getOneCount(0))    
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/10/python基础小结25/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1259,232 +1555,6 @@ return inner     # 返回的 inner，inner代表的是函数，非执行函数
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/03/normal-library/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/03/normal-library/" itemprop="url">normal-library</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-03T08:14:00+08:00">
-                2018-03-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/03/03/normal-library/" class="leancloud_visitors" data-flag-title="normal-library">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.4k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  5
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ol>
-<li><p>我做运维的时候，使用Python完成了一些打包和备份的脚本，也就是把某个目录压缩成各种格式（tar.gz、tar.bz2、zip）。 这个脚本其实打包压缩的部分还是比较复杂的。直到我看到了这个：</p>
-<p> In : from shutil import make_archive<br> In : make_archive(‘archive_xxx’, ‘bztar’)<br> Out: ‘archive_xxx.tar.bz2’  </p>
-</li>
-</ol>
-<p>有兴趣的可以翻一下源码。你想要的说不定标准库里面已经实现。当然，有标准库不满足的额外需求，也可以参照它实现。</p>
-<ol>
-<li><p>你可能接触过定时任务（crontab），它管理的任务很规矩，到点执行（当然精确度不那么高）。现在设想你有更复杂的任务需求：这个任务是动态的，也就是不一定啥时候就来排上队约定一个事件等着执行。这时候你可以想，这可以使用队列（Queue模块）啊，嗯也不错。难度再提高：加上优先级策略并能取消某个指定的已经放入队列的任务。现在思考下，这个怎么实现？其实很多工程实践的最好范例都在标准库中。sched模块中的scheduler类就是一个这样的通用的事件调度类。你可以学习它的实现。你问我它的实现多复杂？整个模块加上大幅的注释才134行。</p>
-</li>
-<li><p>学习Python的过程中，一开始我对于装饰器contextmanager+yield怎么都不懂。直到我看了contextmanager的源代码, 其实非常简单就懂了。它的docstring清楚地不能再清楚了：</p>
-</li>
-</ol>
-<pre><code class="python">
-Typical usage:                                                                               
-
-<span class="meta">@contextmanager                                                                          </span>
-<span class="function"><span class="keyword">def</span> <span class="title">some_generator</span><span class="params">(&lt;arguments&gt;)</span>:</span>                                                         
-    &lt;setup&gt;                                                                              
-    <span class="keyword">try</span>:                                                                                 
-        <span class="keyword">yield</span> &lt;value&gt;                                                                    
-    <span class="keyword">finally</span>:                                                                             
-        &lt;cleanup&gt;                                                                        
-
-This makes this:                                                                             
-
-<span class="keyword">with</span> some_generator(&lt;arguments&gt;) <span class="keyword">as</span> &lt;variable&gt;:                                          
-    &lt;body&gt;                                                                               
-
-equivalent to this:                                                                          
-
-&lt;setup&gt;                                                                                  
-<span class="keyword">try</span>:                                                                                     
-    &lt;variable&gt; = &lt;value&gt;                                                                 
-    &lt;body&gt;                                                                               
-<span class="keyword">finally</span>:                                                                                 
-&lt;cleanup&gt;
-</code></pre>
-<ol>
-<li>我之前使用多线程编程都这样用，在好长一段时间里面对于多进程和多线程之前怎么选择都搞得不清楚。看多了开源项目代码，我发现了好多人在用multiprocessing.dummy这个子模块，「dummy」这个词本身好奇怪，我决定去看多进程（multiprocessing）库的代码。「咦！怎么和多线程的接口一样呢」。后知后觉的我看到文档中这样说：</li>
-</ol>
-<p>multiprocessing.dummy replicates the API of multiprocessing but is no more than a wrapper around the threading module.<br>恍然大悟！！！如果分不清任务是CPU密集型还是IO密集型，我就用如下2个方法分别试：</p>
-<p>from multiprocessing import Pool<br>from multiprocessing.dummy import Pool<br>哪个速度快就用那个。从此以后我都尽量在写兼容的方式，这样在多线程/多进程之间切换非常方便。</p>
-<ol>
-<li>13-14年间，Flask还没怎么火，那时候装饰器风格的Web框架还有一个Bottle。我当时就直接想去看Bottle代码，发现一上来import了一堆模块，你先感受下bottle/bottle.py at master · bottlepy/bottle · GitHub ，第一感觉就是懵啊，这都是干什么的啊，为什么要用啊？这就是促使我去看标准库实现最重要的原因：学会了我才能更好的看懂别人写的代码。</li>
-</ol>
-<p>但是不是所有的标准库都要一视同仁的看呢？你可以设置优先级，先看那些不可不知道的模块。我在这里列一下，并对它的用途和其中重要的类、函数的作用加以说明等。要是每个都写例子实在太多太密集，怕大家看不下去，我都用外部链接了。</p>
-<ol>
-<li>argparse。 用来替代optparse的命令行解析库。如果你考虑用更直观的，推荐docopt，它使用docstring所见即所得实现命令行解析。</li>
-<li>collections。 包含了一些额外的数据类型。其中的OrderedDict（有序列的字典）、defaultdict（带有默认值的字典）、namedtuple（通过创建带有字段属性的元组子类）和deque（高效实现插入和删除操作的双向列表）非常常用。</li>
-<li>functools。 这个模块有一些非常有用的工具，其中的partial（偏函数）、wraps（将被包装函数的信息拷贝过来）、total_ordering（只需要定义2个<strong>XX</strong>方法就可实现对象对比的类装饰器）、cmp_to_key（将老式的比较函数转化为关键字函数）非常常用。</li>
-<li>glob。 文件名的shell模式匹配，你不用遍历整个目录判断每个文件是不是符合，使用glob一句话就解决。</li>
-<li>multiprocessing。多进程模块，这重要性就不说了。</li>
-<li><p>os。应该是日常工作最常用的模块了，你是否了解它里面所有的函数和实现呢？举个例子，获取环境变量，我之前这样用：<br>In : os.environ.get(‘PYTHONPATH’)<br>读完源码之后我学了一招：<br>os.getenv(‘PYTHONPATH’)<br>好吧，省了5个字符。</p>
-</li>
-<li><p>Queue。这个模块用于多线程编程，它是一个线程安全的FIFO（先进先出）的队列实现。如果是多进程编程，选用multiprocessing.queues中的Queue、SimpleQueue、JoinableQueue这三个队列实现。 </p>
-</li>
-<li><p>SimpleHTTPServer。最简单地HTTP Server实现。不使用Web框架，一句：</p>
-<pre><code>python -m SimpleHTTPServer PORT
-</code></pre><p> 就可以运行起来静态服务。平时用它预览和下载文件太方便了。</p>
-</li>
-<li><p>subprocess。 如果你还被某些书籍引导使用os.system或者os.popen等模块，现在是放弃它们的时候了，这个模块会满足你绝大多数的系统命令执行、执行结果获取和解析等需求。其中最有用的是call（执行系统命令）、check_call（执行结果不为0则抛出异常）、check_output（最方便的获取执行的输出的函数）、Popen+PIPE（支持管道的多命令执行）。</p>
-</li>
-<li><p>threading。多线程模块，重要性也不必说。</p>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1539,7 +1609,7 @@ equivalent to this:
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">239</span>
+                  <span class="site-state-item-count">240</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
