@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="上药三品，神与气精" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010110210">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vim-server-python简版">
+<meta property="og:url" content="http://yoursite.com/2018/12/20/vim-server-python简版/index.html">
+<meta property="og:site_name" content="上药三品，神与气精">
+<meta property="og:description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010110210">
+<meta property="og:updated_time" content="2018-12-20T15:51:02.228Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vim-server-python简版">
+<meta name="twitter:description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010110210">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/12/20/vim-server-python简版/"/>
+
+
+
+
+
+  <title>vim-server-python简版 | 上药三品，神与气精</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?82b18565053cc3659ff9ca9d050f5f8e";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <a href="https://github.com/zhangdavids" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">上药三品，神与气精</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">寿本乎仁 乐生于智　勤能补拙 俭可养廉</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/20/vim-server-python简版/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">vim-server-python简版</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-20T23:48:56+08:00">
+                2018-12-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/12/20/vim-server-python简版/" class="leancloud_visitors" data-flag-title="vim-server-python简版">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  911
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br></pre></td><td class="code"><pre><span class="line">" leader</span><br><span class="line">let mapleader = ','</span><br><span class="line">let <span class="keyword">g</span>:mapleader = ','</span><br><span class="line"></span><br><span class="line">" <span class="keyword">syntax</span></span><br><span class="line"><span class="keyword">syntax</span> <span class="keyword">on</span></span><br><span class="line"></span><br><span class="line">" history : how many lines of history VIM has to remember</span><br><span class="line"><span class="keyword">set</span> history=2000</span><br><span class="line"></span><br><span class="line">" filetype</span><br><span class="line">filetype <span class="keyword">on</span></span><br><span class="line">" Enable filetype plugins</span><br><span class="line">filetype <span class="keyword">plugin</span> <span class="keyword">on</span></span><br><span class="line">filetype indent <span class="keyword">on</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">" base</span><br><span class="line"><span class="keyword">set</span> nocompatible                " don't bother with vi compatibility</span><br><span class="line"><span class="keyword">set</span> autoread                    " reload files when changed <span class="keyword">on</span> disk, i.<span class="keyword">e</span>. via `git checkout`</span><br><span class="line"><span class="keyword">set</span> shortmess=atI</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span> magic                       " <span class="keyword">For</span> regular expressions turn magic <span class="keyword">on</span></span><br><span class="line"><span class="keyword">set</span> title                       " change the terminal's title</span><br><span class="line"><span class="keyword">set</span> nobackup                    " <span class="keyword">do</span> not <span class="keyword">keep</span> a backup <span class="keyword">file</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span> novisualbell                " turn off visual bell</span><br><span class="line"><span class="keyword">set</span> noerrorbells                " don't beep</span><br><span class="line"><span class="keyword">set</span> visualbell t_vb=            " turn off <span class="keyword">error</span> beep/flash</span><br><span class="line"><span class="keyword">set</span> t_vb=</span><br><span class="line"><span class="keyword">set</span> tm=500</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">" show location</span><br><span class="line"><span class="keyword">set</span> cursorcolumn</span><br><span class="line"><span class="keyword">set</span> cursorline</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">" movement</span><br><span class="line"><span class="keyword">set</span> scrolloff=7                 " <span class="keyword">keep</span> 3 lines when scrolling</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">" show</span><br><span class="line"><span class="keyword">set</span> ruler                       " show the current row and column</span><br><span class="line"><span class="keyword">set</span> number                      " show <span class="keyword">line</span> numbers</span><br><span class="line"><span class="keyword">set</span> nowrap</span><br><span class="line"><span class="keyword">set</span> showcmd                     " <span class="keyword">display</span> incomplete commands</span><br><span class="line"><span class="keyword">set</span> showmode                    " <span class="keyword">display</span> current modes</span><br><span class="line"><span class="keyword">set</span> showmatch                   " jump to matches when entering parentheses</span><br><span class="line"><span class="keyword">set</span> matchtime=2                 " tenths of a second to show the matching parenthesis</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">" <span class="keyword">search</span></span><br><span class="line"><span class="keyword">set</span> hlsearch                    " highlight searches</span><br><span class="line"><span class="keyword">set</span> incsearch                   " <span class="keyword">do</span> incremental searching, <span class="keyword">search</span> <span class="keyword">as</span> you <span class="keyword">type</span></span><br><span class="line"><span class="keyword">set</span> ignorecase                  " ignore case when searching</span><br><span class="line"><span class="keyword">set</span> smartcase                   " <span class="keyword">no</span> ignorecase <span class="keyword">if</span> Uppercase <span class="keyword">char</span> present</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">" <span class="keyword">tab</span></span><br><span class="line"><span class="keyword">set</span> expandtab                   " <span class="keyword">expand</span> tabs to spaces</span><br><span class="line"><span class="keyword">set</span> smarttab</span><br><span class="line"><span class="keyword">set</span> shiftround</span><br><span class="line"></span><br><span class="line">" indent</span><br><span class="line"><span class="keyword">set</span> autoindent smartindent shiftround</span><br><span class="line"><span class="keyword">set</span> shiftwidth=4</span><br><span class="line"><span class="keyword">set</span> tabstop=4</span><br><span class="line"><span class="keyword">set</span> softtabstop=4                " insert mode <span class="keyword">tab</span> and backspace <span class="keyword">use</span> 4 spaces</span><br><span class="line"></span><br><span class="line">" NOT SUPPORT</span><br><span class="line">" fold</span><br><span class="line"><span class="keyword">set</span> foldenable</span><br><span class="line"><span class="keyword">set</span> foldmethod=indent</span><br><span class="line"><span class="keyword">set</span> foldlevel=99</span><br><span class="line">let <span class="keyword">g</span>:FoldMethod = 0</span><br><span class="line">map &lt;leader&gt;zz :call ToggleFold()&lt;cr&gt;</span><br><span class="line">fun! ToggleFold()</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">g</span>:FoldMethod == 0</span><br><span class="line">        exe <span class="string">"normal! zM"</span></span><br><span class="line">        let <span class="keyword">g</span>:FoldMethod = 1</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        exe <span class="string">"normal! zR"</span></span><br><span class="line">        let <span class="keyword">g</span>:FoldMethod = 0</span><br><span class="line">    endif</span><br><span class="line">endfun</span><br><span class="line"></span><br><span class="line">" encoding</span><br><span class="line"><span class="keyword">set</span> encoding=utf-8</span><br><span class="line"><span class="keyword">set</span> fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1</span><br><span class="line"><span class="keyword">set</span> termencoding=utf-8</span><br><span class="line"><span class="keyword">set</span> ffs=unix,dos,<span class="keyword">mac</span></span><br><span class="line"><span class="keyword">set</span> formatoptions+=<span class="built_in">m</span></span><br><span class="line"><span class="keyword">set</span> formatoptions+=B</span><br><span class="line"></span><br><span class="line">" select &amp; complete</span><br><span class="line"><span class="keyword">set</span> selection=inclusive</span><br><span class="line"><span class="keyword">set</span> selectmode=mouse,key</span><br><span class="line"></span><br><span class="line"><span class="keyword">set</span> completeopt=longest,menu</span><br><span class="line"><span class="keyword">set</span> wildmenu                           <span class="string">" show a navigable menu for tab completion"</span></span><br><span class="line"><span class="keyword">set</span> wildmode=longest,<span class="keyword">list</span>,full</span><br><span class="line"><span class="keyword">set</span> wildignore=*.o,*~,*.pyc,*.<span class="keyword">class</span></span><br><span class="line"></span><br><span class="line">" others</span><br><span class="line"><span class="keyword">set</span> backspace=indent,eol,start  " make that backspace key work the way it should</span><br><span class="line"><span class="keyword">set</span> whichwrap+=&lt;,&gt;,<span class="keyword">h</span>,<span class="keyword">l</span></span><br><span class="line"></span><br><span class="line">" <span class="keyword">if</span> this not work ,make sure .viminfo is writable <span class="keyword">for</span> you</span><br><span class="line"><span class="keyword">if</span> has(<span class="string">"autocmd"</span>)</span><br><span class="line">  au BufReadPost * <span class="keyword">if</span> <span class="keyword">line</span>(<span class="string">"'\"</span><span class="string">") &gt; 1 &amp;&amp; line("</span>'\<span class="string">""</span>) &lt;= <span class="keyword">line</span>(<span class="string">"$"</span>) | exe <span class="string">"normal! g'\"</span>" | endif</span><br><span class="line">endif</span><br><span class="line"></span><br><span class="line">" NOT SUPPORT</span><br><span class="line">" Enable basic mouse behavior such <span class="keyword">as</span> resizing buffers.</span><br><span class="line">" <span class="keyword">set</span> mouse=a</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">" ============================ theme and status <span class="keyword">line</span> ============================</span><br><span class="line"></span><br><span class="line">" theme</span><br><span class="line"><span class="keyword">set</span> background=dark</span><br><span class="line">colorscheme desert</span><br><span class="line"></span><br><span class="line">" <span class="keyword">set</span> <span class="keyword">mark</span> column color</span><br><span class="line">hi! link SignColumn   LineNr</span><br><span class="line">hi! link ShowMarksHLl DiffAdd</span><br><span class="line">hi! link ShowMarksHLu DiffChange</span><br><span class="line"></span><br><span class="line">" status <span class="keyword">line</span></span><br><span class="line"><span class="keyword">set</span> statusline=%&lt;%f\ %<span class="keyword">h</span>%<span class="keyword">m</span>%r%=%k[%&#123;(&amp;fenc==\<span class="string">"\"</span>)?&amp;<span class="keyword">enc</span>:&amp;fenc&#125;%&#123;(&amp;bomb?\<span class="string">",BOM\"</span>:\<span class="string">"\"</span>)&#125;]\ %-14.(%<span class="keyword">l</span>,%c%V%)\ %P</span><br><span class="line"><span class="keyword">set</span> laststatus=2   " Always show the status <span class="keyword">line</span> - <span class="keyword">use</span> 2 lines <span class="keyword">for</span> the status bar</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">" ============================ specific <span class="keyword">file</span> <span class="keyword">type</span> ===========================</span><br><span class="line"></span><br><span class="line">autocmd FileType python <span class="keyword">set</span> tabstop=4 shiftwidth=4 expandtab ai</span><br><span class="line">autocmd FileType ruby <span class="keyword">set</span> tabstop=2 shiftwidth=2 softtabstop=2 expandtab ai</span><br><span class="line">autocmd BufRead,BufNew *.md,*.mkd,*.markdown  <span class="keyword">set</span> filetype=markdown.mkd</span><br><span class="line"></span><br><span class="line">autocmd BufNewFile *.<span class="keyword">sh</span>,*.py exec <span class="string">":call AutoSetFileHead()"</span></span><br><span class="line">function! AutoSetFileHead()</span><br><span class="line">    " .<span class="keyword">sh</span></span><br><span class="line">    <span class="keyword">if</span> &amp;filetype == '<span class="keyword">sh</span>'</span><br><span class="line">        call setline(1, <span class="string">"\#!/bin/bash"</span>)</span><br><span class="line">    endif</span><br><span class="line"></span><br><span class="line">    " python</span><br><span class="line">    <span class="keyword">if</span> &amp;filetype == 'python'</span><br><span class="line">        call setline(1, <span class="string">"\#!/usr/bin/env python"</span>)</span><br><span class="line">        call <span class="keyword">append</span>(1, <span class="string">"\# encoding: utf-8"</span>)</span><br><span class="line">    endif</span><br><span class="line"></span><br><span class="line">    normal <span class="keyword">G</span></span><br><span class="line">    normal o</span><br><span class="line">    normal o</span><br><span class="line">endfunc</span><br><span class="line"></span><br><span class="line">autocmd FileType c,cpp,java,go,php,javascript,puppet,python,rust,twig,xml,yml,perl autocmd BufWritePre &lt;buffer&gt; :call &lt;SID&gt;StripTrailingWhitespaces()</span><br><span class="line">fun! &lt;SID&gt;StripTrailingWhitespaces()</span><br><span class="line">    let <span class="keyword">l</span> = <span class="keyword">line</span>(<span class="string">"."</span>)</span><br><span class="line">    let c = col(<span class="string">"."</span>)</span><br><span class="line">    %s/\s\+$<span class="comment">//e</span></span><br><span class="line">    call cursor(<span class="keyword">l</span>, c)</span><br><span class="line">endfun</span><br><span class="line"></span><br><span class="line">" ============================ key map ============================</span><br><span class="line"></span><br><span class="line">nnoremap k gk</span><br><span class="line">nnoremap gk k</span><br><span class="line">nnoremap j gj</span><br><span class="line">nnoremap gj <span class="built_in">j</span></span><br><span class="line"></span><br><span class="line">map &lt;C-j&gt; &lt;C-W&gt;<span class="built_in">j</span></span><br><span class="line">map &lt;C-k&gt; &lt;C-W&gt;k</span><br><span class="line">map &lt;C-<span class="keyword">h</span>&gt; &lt;C-W&gt;<span class="built_in">h</span></span><br><span class="line">map &lt;C-<span class="keyword">l</span>&gt; &lt;C-W&gt;<span class="keyword">l</span></span><br><span class="line"></span><br><span class="line">nnoremap &lt;F2&gt; :<span class="keyword">set</span> nu! nu?&lt;CR&gt;</span><br><span class="line">nnoremap &lt;F3&gt; :<span class="keyword">set</span> <span class="keyword">list</span>! <span class="keyword">list</span>?&lt;CR&gt;</span><br><span class="line">nnoremap &lt;F4&gt; :<span class="keyword">set</span> wrap! wrap?&lt;CR&gt;</span><br><span class="line"><span class="keyword">set</span> pastetoggle=&lt;F5&gt;            "    when <span class="keyword">in</span> insert mode, press &lt;F5&gt; to go to</span><br><span class="line">                                "    paste mode, where you can paste mass data</span><br><span class="line">                                "    that won't be autoindented</span><br><span class="line">au InsertLeave * <span class="keyword">set</span> nopaste</span><br><span class="line">nnoremap &lt;F6&gt; :exec exists('syntax_on') ? 'syn off' : 'syn <span class="keyword">on</span>'&lt;CR&gt;</span><br><span class="line"></span><br><span class="line">" kj 替换 Esc</span><br><span class="line">inoremap kj &lt;Esc&gt;</span><br><span class="line"></span><br><span class="line">" Quickly <span class="keyword">close</span> the current <span class="keyword">window</span></span><br><span class="line">nnoremap &lt;leader&gt;q :q&lt;CR&gt;</span><br><span class="line">" Quickly <span class="keyword">save</span> the current <span class="keyword">file</span></span><br><span class="line">nnoremap &lt;leader&gt;w :w&lt;CR&gt;</span><br><span class="line"></span><br><span class="line">" select all</span><br><span class="line">map &lt;Leader&gt;<span class="keyword">sa</span> ggVG"</span><br><span class="line"></span><br><span class="line">" <span class="keyword">remap</span> <span class="keyword">U</span> to &lt;C-r&gt; <span class="keyword">for</span> easier redo</span><br><span class="line">nnoremap <span class="keyword">U</span> &lt;C-r&gt;</span><br><span class="line"></span><br><span class="line">" Swap implementations of ` and ' jump to markers</span><br><span class="line">" <span class="keyword">By</span> default, ' jumps to the marked <span class="keyword">line</span>, ` jumps to the marked <span class="keyword">line</span> and</span><br><span class="line">" column, <span class="keyword">so</span> swap them</span><br><span class="line">nnoremap ' `</span><br><span class="line">nnoremap ` '</span><br><span class="line"></span><br><span class="line">" switch # *</span><br><span class="line">" nnoremap # *</span><br><span class="line">" nnoremap * #</span><br><span class="line"></span><br><span class="line"><span class="string">"Keep search pattern at the center of the screen."</span></span><br><span class="line">nnoremap &lt;silent&gt; <span class="keyword">n</span> nzz</span><br><span class="line">nnoremap &lt;silent&gt; <span class="keyword">N</span> Nzz</span><br><span class="line">nnoremap &lt;silent&gt; * *zz</span><br><span class="line">nnoremap &lt;silent&gt; # #zz</span><br><span class="line">nnoremap &lt;silent&gt; <span class="keyword">g</span>* <span class="keyword">g</span>*zz</span><br><span class="line"></span><br><span class="line">" remove highlight</span><br><span class="line">noremap &lt;silent&gt;&lt;leader&gt;/ :nohls&lt;CR&gt;</span><br><span class="line"></span><br><span class="line">"Reselect visual block after indent/outdent.调整缩进后自动选中，方便再次操作</span><br><span class="line">vnoremap &lt; &lt;gv</span><br><span class="line">vnoremap &gt; &gt;gv</span><br><span class="line"></span><br><span class="line">" y$ -&gt; Y Make Y behave like other capitals</span><br><span class="line">map Y y$</span><br><span class="line"></span><br><span class="line">"Map ; to : and <span class="keyword">save</span> a million keystrokes</span><br><span class="line">" <span class="keyword">ex</span> mode commands made easy 用于快速进入命令行</span><br><span class="line">nnoremap ; :</span><br><span class="line"></span><br><span class="line">" Shift+<span class="keyword">H</span> goto head of the <span class="keyword">line</span>, Shift+<span class="keyword">L</span> goto end of the <span class="keyword">line</span></span><br><span class="line">nnoremap <span class="keyword">H</span> ^</span><br><span class="line">nnoremap <span class="keyword">L</span> $</span><br><span class="line"></span><br><span class="line">" <span class="keyword">save</span></span><br><span class="line">cmap w!! w !sudo tee &gt;/dev/null %</span><br><span class="line"></span><br><span class="line">" command mode, ctrl-a to head， ctrl-<span class="keyword">e</span> to tail</span><br><span class="line">cnoremap &lt;C-j&gt; &lt;t_kd&gt;</span><br><span class="line">cnoremap &lt;C-k&gt; &lt;t_ku&gt;</span><br><span class="line">cnoremap &lt;C-a&gt; &lt;Home&gt;</span><br><span class="line">cnoremap &lt;C-<span class="keyword">e</span>&gt; &lt;End&gt;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/19/how-to-make-django-auth-with-both-email-and-username/" rel="next" title="how-to-make-django-auth-with-both-email-and-username">
+                <i class="fa fa-chevron-left"></i> how-to-make-django-auth-with-both-email-and-username
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/pingan.jpeg"
+                alt="Cheung John" />
+            
+              <p class="site-author-name" itemprop="name">Cheung John</p>
+              <p class="site-description motion-element" itemprop="description">莫道前路无知己 天下谁人不识君</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/zhangdavids" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:zhangjohn202@gmail.com" target="_blank" title="Email">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>Email</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Cheung John</span>
+
+  
+</div>
+
+
+  <div class="powered-by">
+  <i class="fa fa-user-md"></i><span
+  id="busuanzi_container_site_pv">
+    本站访客数: <span id="busuanzi_value_site_pv"></span>
+  </span>
+  </div>
+
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共123.5k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("coX6d7Jcn8PsbkTIFYmPKB2d-gzGzoHsz", "sxfuujpAis6UAI3WdwMBd9eQ");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
