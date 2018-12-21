@@ -81,15 +81,15 @@
 
 
 
-<meta name="description" content="莫道前路无知己 天下谁人不识君">
+<meta name="description" content="曾因酒醉鞭名马 生怕情多累美人">
 <meta property="og:type" content="website">
 <meta property="og:title" content="上药三品，神与气精">
 <meta property="og:url" content="http://yoursite.com/page/45/index.html">
 <meta property="og:site_name" content="上药三品，神与气精">
-<meta property="og:description" content="莫道前路无知己 天下谁人不识君">
+<meta property="og:description" content="曾因酒醉鞭名马 生怕情多累美人">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="上药三品，神与气精">
-<meta name="twitter:description" content="莫道前路无知己 天下谁人不识君">
+<meta name="twitter:description" content="曾因酒醉鞭名马 生怕情多累美人">
 
 
 
@@ -275,7 +275,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/08/how-to-use-sed-in-linux/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/24/make-a-forum-with-django/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Cheung John">
@@ -294,7 +294,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/08/08/how-to-use-sed-in-linux/" itemprop="url">how-to-use-sed-in-linux</a></h1>
+                <a class="post-title-link" href="/2017/08/24/make-a-forum-with-django/" itemprop="url">make a forum with django</a></h1>
         
 
         <div class="post-meta">
@@ -306,8 +306,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-08T20:08:19+08:00">
-                2016-08-08
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-24T01:12:25+08:00">
+                2017-08-24
               </time>
             
 
@@ -324,7 +324,7 @@
 
           
           
-             <span id="/2016/08/08/how-to-use-sed-in-linux/" class="leancloud_visitors" data-flag-title="how-to-use-sed-in-linux">
+             <span id="/2017/08/24/make-a-forum-with-django/" class="leancloud_visitors" data-flag-title="make a forum with django">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -349,803 +349,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  4
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>sed是一个很好的文件处理工具，本身是一个管道命令，主要是以行为单位进行处理，可以将数据行进行替换、删除、新增、选取等特定工作，下面先了解一下sed的用法<br>sed命令行格式为：  </p>
-<pre><code>sed [-nefri] ‘command’ 输入文本        
-</code></pre><p>常用选项：</p>
-<pre><code>-n∶使用安静(silent)模式。在一般 sed 的用法中，所有来自 STDIN的资料一般都会被列出到萤幕上。但如果加上 -n 参数后，则只有经过sed 特殊处理的那一行(或者动作)才会被列出来。  
--e∶直接在指令列模式上进行 sed 的动作编辑；  
--f∶直接将 sed 的动作写在一个档案内， -f filename 则可以执行 filename 内的sed 动作；  
--r∶sed 的动作支援的是延伸型正规表示法的语法。(预设是基础正规表示法语法)  
--i∶直接修改读取的档案内容，而不是由萤幕输出。         
-</code></pre><p>常用命令：</p>
-<pre><code>a  ∶新增， a 的后面可以接字串，而这些字串会在新的一行出现(目前的下一行)～
-c  ∶取代， c 的后面可以接字串，这些字串可以取代 n1,n2 之间的行！
-d  ∶删除，因为是删除啊，所以 d 后面通常不接任何咚咚；
-i  ∶插入， i 的后面可以接字串，而这些字串会在新的一行出现(目前的上一行)；
-p  ∶列印，亦即将某个选择的资料印出。通常 p 会与参数 sed -n 一起运作～
-s  ∶取代，可以直接进行取代的工作哩！通常这个 s 的动作可以搭配正规表示法！例如 1,20s/old/new/g 就是啦！
-</code></pre><p>举例：（假设我们有一文件名为ab）  </p>
-<p>   删除某行</p>
-<pre><code>[root@localhost ruby] # sed &apos;1d&apos; ab              #删除第一行 
-[root@localhost ruby] # sed &apos;$d&apos; ab              #删除最后一行
-[root@localhost ruby] # sed &apos;1,2d&apos; ab           #删除第一行到第二行
-[root@localhost ruby] # sed &apos;2,$d&apos; ab           #删除第二行到最后一行
-</code></pre><p>　显示某行  
-　</p>
-<pre><code>[root@localhost ruby] # sed -n &apos;1p&apos; ab           #显示第一行
-
-[root@localhost ruby] # sed -n &apos;$p&apos; ab           #显示最后一行  
-
-[root@localhost ruby] # sed -n &apos;1,2p&apos; ab        #显示第一行到第二行 
-
-[root@localhost ruby] # sed -n &apos;2,$p&apos; ab        #显示第二行到最后一行  
-</code></pre><p>　使用模式进行查询</p>
-<pre><code>[root@localhost ruby] # sed -n &apos;/ruby/p&apos; ab    #查询包括关键字ruby所在所有行   
-[root@localhost ruby] # sed -n &apos;/\$/p&apos; ab        #查询包括关键字$所在所有行，使用反斜线\屏蔽特殊含义
-</code></pre><p>　增加一行或多行字符串<br>　<br>　<br>　        [root@localhost ruby]# cat ab<br>    Hello!<br>    ruby is me,welcome to my blog.<br>    end    </p>
-<p>   [root@localhost ruby] # sed ‘1a drink tea’ ab  #第一行后增加字符串”drink tea”<br>     Hello!<br>     drink tea<br>     ruby is me,welcome to my blog.<br>     end<br>     [root@localhost ruby] # sed ‘1,3a drink tea’ ab #第一行到第三行后增加字符串”drink tea”<br>     Hello!<br>     drink tea<br>     ruby is me,welcome to my blog.<br>     drink tea<br>     end<br>     drink tea<br>     [root@localhost ruby] # sed ‘1a drink tea\nor coffee’ ab   #第一行后增加多行，使用换行符\n<br>     Hello!<br>     drink tea<br>     or coffee<br>     ruby is me,welcome to my blog.<br>     end</p>
-<p>　　代替一行或多行<br>     [root@localhost ruby] # sed ‘1c Hi’ ab                #第一行代替为Hi<br>     Hi<br>     ruby is me,welcome to my blog.<br>     end<br>     [root@localhost ruby] # sed ‘1,2c Hi’ ab             #第一行到第二行代替为Hi<br>     Hi<br>     end</p>
-<p>　　替换一行中的某部分<br>　　格式：sed ‘s/要替换的字符串/新的字符串/g’   （要替换的字符串可以用正则表达式）<br>     [root@localhost ruby] # sed -n ‘/ruby/p’ ab | sed ‘s/ruby/bird/g’    #替换ruby为bird<br>　  [root@localhost ruby] # sed -n ‘/ruby/p’ ab | sed ‘s/ruby//g’        #删除ruby</p>
-<pre><code>插入
-[root@localhost ruby] # sed -i &apos;$a bye&apos; ab         #在文件ab中最后一行直接输入&quot;bye&quot;
-[root@localhost ruby]# cat ab
-Hello!
-ruby is me,welcome to my blog.
-end
-bye
-
-删除匹配行
-
- sed -i &apos;/匹配字符串/d&apos;  filename  （注：若匹配字符串是变量，则需要“”，而不是‘’。记得好像是）
-
- 替换匹配行中的某个字符串
-
- sed -i &apos;/匹配字符串/s/替换源字符串/替换目标字符串/g&apos; filename
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/24/为何你学不好高等数学/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/05/24/为何你学不好高等数学/" itemprop="url">为何你学不好高等数学</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-24T14:58:08+08:00">
-                2016-05-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/data/" itemprop="url" rel="index">
-                    <span itemprop="name">data</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2016/05/24/为何你学不好高等数学/" class="leancloud_visitors" data-flag-title="为何你学不好高等数学">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  623
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  2
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>今天看到一篇文章，很有感悟，顺笔就写点东西。  </p>
-<p>Google的I/O大会之后，“AI将无处不在，智能将无处不在”。  </p>
-<p>数据分析， 人工智能， 图像识别等趋势， 不彻底学习线性代数 信号处理 算法导论（特别重要，以前看的时候感觉有些算法就是没事找事），是无法应付的。  </p>
-<p>为什么学得不好，我前段时间看《射雕英雄传》的时候， 刚好看到郭靖在江南七怪的教导下，武功没长进，全真道长说了十个字“教而不得法，学而不得道”。<br>这里并不是指责说大学的老师没有良好的教授方法，主要还是自己学不知其所以然。。  </p>
-<p>这里的高等数学当然是包括 微积分 线性代数 概率统计。  </p>
-<p>《程序员的数学－－线性代数》这本书，综述里有一句话。</p>
-<p><strong>m＊n的矩阵A， 表示了从n维空间到m维空间的“映射”。具体来说就是，把n维空间中的点x（n维列向量）变换到m维空间的点（m维列向量）Ax的映射。</strong></p>
-<p>为什么要引入矩阵，矩阵是用来做空间变换的，矩阵是一种映射，所以要学习好矩阵的乘积。  </p>
-<p>行列式＝对角线元素的乘积，但是行列式有什么意义呢？<br>为什么对角矩阵如何特殊，要拿出来单独讲呢？  </p>
-<p>书中以“空间变换”的角度进行了解释。一个n维向量乘以一个n＊n的对角矩阵，<br>实际上就是把对角矩阵中的各个值直接乘到了n维向量的对应的值上，<br>也就是对n维空间的各个维度进行了系度拉伸。<br>那么这些对角元素的乘积，实际上是这个矩阵变换給n维空间带来的体积变化的倍数。<br>（n维空间体积＝第一维长度＊第二维长度……＊第n维长度）<br><strong>行列式的值是空间体积变化的倍数！！</strong>  </p>
-<p>接着有网友表示，他的线性代数，是看了mit的公开课才明白的，:),你感觉学的那些貌似没啥意义，自然也没有足够的兴趣，自然也学不好，线性代数教給我们的是一种方法，我们需要从更高级的学科中重新思考过它，才能看明白数学现象的本质。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/24/R实战0-数据处理难题的一套解决方案/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/05/24/R实战0-数据处理难题的一套解决方案/" itemprop="url">R实战0-数据处理难题的一套解决方案</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-24T14:03:53+08:00">
-                2016-05-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2016/05/24/R实战0-数据处理难题的一套解决方案/" class="leancloud_visitors" data-flag-title="R实战0-数据处理难题的一套解决方案">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  935
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  4
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>对数据的处理现在普遍就是两种方案，python 或者 R。  </p>
-<p>一组学生参加了数学 科学和英语的考试。考试完成之后，需要給学生确定一个成绩衡量指标。会把综合成绩的前20%评定为A，接着是B C D F。<br><img src="" alt="数据原始集"><br>可以看到数据处理的一个障碍，三科成绩无法比较，或者说比较没有意义。。<br>:)  当然有人认为可以这么处理，比如知道数学的总分是700，将成绩全部换为以100分为计量单位的。。<br>当然英语也是，，计总分为50分，换成对应100的来处理。。。  </p>
-<p>也许吧，可以试试 :)  </p>
-<p>在这我们使用R来进行处理。</p>
-<ul>
-<li>根据原始的学生花名册将数据采集进去，自然是选择数据框的格式。</li>
-</ul>
-<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">options(digits = <span class="number">2</span>)</span><br><span class="line">stduent &lt;- c(<span class="string">"John Davis"</span>, <span class="string">"Angela Willams"</span>, <span class="string">"Bully Moose"</span>, <span class="string">"David Jones"</span>, <span class="string">"Janice Markhammer"</span>, <span class="string">"Cherry Cushing"</span>, <span class="string">"Reuven Ytzrhak"</span>,  <span class="string">"Greg Knox"</span>, <span class="string">"Joel England"</span>, <span class="string">"Mary Rayburn"</span>)</span><br><span class="line">Math &lt;- c(<span class="number">502</span>, <span class="number">600</span>, <span class="number">412</span>, <span class="number">358</span>, <span class="number">495</span>, <span class="number">512</span>, <span class="number">410</span>, <span class="number">625</span>, <span class="number">573</span>, <span class="number">522</span>)</span><br><span class="line">Science &lt;- c(<span class="number">95</span>, <span class="number">99</span>, <span class="number">80</span>, <span class="number">82</span>, <span class="number">75</span>, <span class="number">85</span>, <span class="number">80</span>, <span class="number">95</span>, <span class="number">89</span>, <span class="number">86</span>)</span><br><span class="line">English &lt;- c(<span class="number">25</span>, <span class="number">22</span>, <span class="number">18</span>, <span class="number">15</span>, <span class="number">20</span>, <span class="number">28</span>, <span class="number">15</span>, <span class="number">30</span>, <span class="number">27</span>, <span class="number">18</span>)</span><br><span class="line">roster &lt;- data.frame(stduent, Math, Science, English, stringsAsFactors = <span class="literal">FALSE</span>)</span><br><span class="line">roster</span><br></pre></td></tr></table></figure>
-<p>we get  </p>
-<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&gt; roster</span><br><span class="line">             stduent Math Science English</span><br><span class="line"><span class="number">1</span>         John Davis  <span class="number">502</span>      <span class="number">95</span>      <span class="number">25</span></span><br><span class="line"><span class="number">2</span>     Angela Willams  <span class="number">600</span>      <span class="number">99</span>      <span class="number">22</span></span><br><span class="line"><span class="number">3</span>        Bully Moose  <span class="number">412</span>      <span class="number">80</span>      <span class="number">18</span></span><br><span class="line"><span class="number">4</span>        David Jones  <span class="number">358</span>      <span class="number">82</span>      <span class="number">15</span></span><br><span class="line"><span class="number">5</span>  Janice Markhammer  <span class="number">495</span>      <span class="number">75</span>      <span class="number">20</span></span><br><span class="line"><span class="number">6</span>     Cherry Cushing  <span class="number">512</span>      <span class="number">85</span>      <span class="number">28</span></span><br><span class="line"><span class="number">7</span>     Reuven Ytzrhak  <span class="number">410</span>      <span class="number">80</span>      <span class="number">15</span></span><br><span class="line"><span class="number">8</span>          Greg Knox  <span class="number">625</span>      <span class="number">95</span>      <span class="number">30</span></span><br><span class="line"><span class="number">9</span>       Joel England  <span class="number">573</span>      <span class="number">89</span>      <span class="number">27</span></span><br><span class="line"><span class="number">10</span>      Mary Rayburn  <span class="number">522</span>      <span class="number">86</span>      <span class="number">18</span></span><br></pre></td></tr></table></figure>
-<p>这里有两个细节没有注意。。<br>一个是刚好十个学生；另外一个是貌似student单词貌似拼写错了。。  </p>
-<ul>
-<li>由于三科考试的分值不同，如何让它们变得可以进行比较。一种方式是将数据进行标准化，使用单位标准差来表示，这个过程使用scale（）函数来实现。  </li>
-</ul>
-<figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">z &lt;- scale(roster[,<span class="number">2</span>:<span class="number">4</span>])    </span><br><span class="line">``` </span><br><span class="line">we get     </span><br><span class="line"></span><br><span class="line">```R</span><br><span class="line">z</span><br><span class="line">        Math Science English</span><br><span class="line"> [<span class="number">1</span>,]  <span class="number">0.013</span>   <span class="number">1.078</span>   <span class="number">0.587</span></span><br><span class="line"> [<span class="number">2</span>,]  <span class="number">1.143</span>   <span class="number">1.591</span>   <span class="number">0.037</span></span><br><span class="line"> [<span class="number">3</span>,] -<span class="number">1.026</span>  -<span class="number">0.847</span>  -<span class="number">0.697</span></span><br><span class="line"> [<span class="number">4</span>,] -<span class="number">1.649</span>  -<span class="number">0.590</span>  -<span class="number">1.247</span></span><br><span class="line"> [<span class="number">5</span>,] -<span class="number">0.068</span>  -<span class="number">1.489</span>  -<span class="number">0.330</span></span><br><span class="line"> [<span class="number">6</span>,]  <span class="number">0.128</span>  -<span class="number">0.205</span>   <span class="number">1.137</span></span><br><span class="line"> [<span class="number">7</span>,] -<span class="number">1.049</span>  -<span class="number">0.847</span>  -<span class="number">1.247</span></span><br><span class="line"> [<span class="number">8</span>,]  <span class="number">1.432</span>   <span class="number">1.078</span>   <span class="number">1.504</span></span><br><span class="line"> [<span class="number">9</span>,]  <span class="number">0.832</span>   <span class="number">0.308</span>   <span class="number">0.954</span></span><br><span class="line">[<span class="number">10</span>,]  <span class="number">0.243</span>  -<span class="number">0.077</span>  -<span class="number">0.697</span></span><br><span class="line">attr(,<span class="string">"scaled:center"</span>)</span><br><span class="line">   Math Science English </span><br><span class="line">    <span class="number">501</span>      <span class="number">87</span>      <span class="number">22</span> </span><br><span class="line">attr(,<span class="string">"scaled:scale"</span>)</span><br><span class="line">   Math Science English </span><br><span class="line">   <span class="number">86.7</span>     <span class="number">7.8</span>     <span class="number">5.5</span> </span><br><span class="line">   </span><br><span class="line">   </span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">- 使用mean（）函数计算各行的均值来获得综合得分，并且使用函数cbind（）函数将其添加到花名册当中。</span><br><span class="line"></span><br><span class="line">```R</span><br><span class="line"></span><br><span class="line">score &lt;- apply(z, <span class="number">1</span>, mean)</span><br><span class="line">roster &lt;- cbind(roster, score)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">计算均值之后，并把score分数加进去。  </span><br><span class="line"> </span><br><span class="line">- 函数quantile（）给出学生综合得分的百分位数。   </span><br><span class="line">这个函数可以综合得分的百分位数  </span><br><span class="line"></span><br><span class="line">```R</span><br><span class="line"></span><br><span class="line">y &lt;- quantile(score, c(<span class="number">.8</span>, <span class="number">.6</span>, <span class="number">.4</span>, <span class="number">.2</span>))</span><br><span class="line"></span><br><span class="line">``` </span><br><span class="line">- 使用逻辑运算符，重编码为A B C D F。  </span><br><span class="line"></span><br><span class="line">```R</span><br><span class="line"></span><br><span class="line">roster$grade[score &gt;= y[<span class="number">1</span>]] &lt;- <span class="string">"A"</span></span><br><span class="line">roster$grade[score &lt;= y[<span class="number">1</span>] &amp; score &gt;=y[<span class="number">2</span>]] &lt;- <span class="string">"B"</span></span><br><span class="line">roster$grade[score &lt;= y[<span class="number">2</span>] &amp; score &gt;=y[<span class="number">3</span>]] &lt;- <span class="string">"C"</span></span><br><span class="line">roster$grade[score &lt;= y[<span class="number">3</span>] &amp; score &gt;=y[<span class="number">4</span>]] &lt;- <span class="string">"D"</span></span><br><span class="line">roster$grade[score &lt;= y[<span class="number">4</span>]] &lt;- <span class="string">"F"</span></span><br><span class="line"></span><br><span class="line">```  </span><br><span class="line">- 使用函数strsplit（）以空格为界，将学生姓名拆分为姓和名。</span><br></pre></td></tr></table></figure>
-<p>name &lt;- strsplit((roster$stduent), “ “)</p>
-<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">注意返回的是什么值，这里是列表！！</span><br><span class="line"></span><br><span class="line"><span class="code"> </span></span><br><span class="line"><span class="bullet">- </span>使用函数sapply（）提取列表元素。</span><br></pre></td></tr></table></figure>
-<p>lastname &lt;- sapply(name, “[“, 2)<br>firstname &lt;- sapply(name, “[“, 1)<br>roster &lt;- cbind(firstname, lastname, roster[, -1])</p>
-<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">将原来的student化成两列，一列是姓，一列是名，同时也将student列舍弃掉。</span><br><span class="line"><span class="code">  </span></span><br><span class="line"><span class="bullet">- </span>使用order（）函数依据姓氏和名字对数据集进行排序</span><br></pre></td></tr></table></figure>
-<p>roster &lt;- roster[order(lastname, firstname),]<br>roster</p>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">finally</span> we <span class="keyword">get</span></span><br></pre></td></tr></table></figure>
-<p>roster<br>   firstname   lastname Math Science English score grade<br>6     Cherry    Cushing  512      85      28  0.35     C<br>1       John      Davis  502      95      25  0.56     B<br>9       Joel    England  573      89      27  0.70     B<br>4      David      Jones  358      82      15 -1.16     F<br>8       Greg       Knox  625      95      30  1.34     A<br>5     Janice Markhammer  495      75      20 -0.63     D<br>3      Bully      Moose  412      80      18 -0.86     D<br>10      Mary    Rayburn  522      86      18 -0.18     C<br>2     Angela    Willams  600      99      22  0.92     A<br>7     Reuven    Ytzrhak  410      80      15 -1.05     F</p>
-<p>```</p>
-<p>Done!!!!!!</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/19/scrapy爬虫实践详解/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/05/19/scrapy爬虫实践详解/" itemprop="url">scrapy爬虫实践详解</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-19T20:40:16+08:00">
-                2016-05-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2016/05/19/scrapy爬虫实践详解/" class="leancloud_visitors" data-flag-title="scrapy爬虫实践详解">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  2k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  8
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>爬虫框架里最出色的的的确确还是Scrapy。  </p>
-<p>Scrapy是Python开发的一个快速,高层次的屏幕抓取和Web抓取框架，用于抓取Web站点并从页面中提取结构化的数据。</p>
-<p>下图展示了Scrapy的大致架构，其中包含了主要组件和系统的数据处理流程（绿色箭头表示）。下面会对组件和流程进行了一个简单的解释。  </p>
-<p><img src="http://o7b8j5zne.bkt.clouddn.com/scrapy%E7%88%AC%E8%99%AB%E6%A1%86%E6%9E%B6%E5%9B%BE.png" alt="框架图">    </p>
-<p>##来看看图中的组件  </p>
-<p>1.Scrapy Engine（Scrapy引擎）</p>
-<p>Scrapy引擎是用来控制整个系统的数据处理流程，并进行事务处理的触发。更多的详细内容可以看下面的数据处理流程。</p>
-<p>2.Scheduler（调度程序）</p>
-<p>调度程序从Scrapy引擎接受请求并排序列入队列，并在Scrapy引擎发出请求后返还给它们。</p>
-<p>3.Downloader（下载器）</p>
-<p>下载器的主要职责是抓取网页并将网页内容返还给蜘蛛（Spiders）。</p>
-<p>4.Spiders（蜘蛛）</p>
-<p>蜘蛛是有Scrapy用户自己定义用来解析网页并抓取制定URL返回的内容的类，每个蜘蛛都能处理一个域名或一组域名。换句话说就是用来定义特定网站的抓取和解析规则。</p>
-<p>5.Item Pipeline（项目管道）</p>
-<p>项目管道的主要责任是负责处理有蜘蛛从网页中抽取的项目，它的主要任务是清晰、验证和存储数据。当页面被蜘蛛解析后，将被发送到项目管道，并经过几个特定的次序处理数据。每个项目管道的组件都是有一个简单的方法组成的Python类。它们获取了项目并执行它们的方法，同时还需要确定的是是否需要在项目管道中继续执行下一步或是直接丢弃掉不处理。</p>
-<p>项目管道通常执行的过程有：</p>
-<p>清洗HTML数据 验证解析到的数据（检查项目是否包含必要的字段） 检查是否是重复数据（如果重复就删除） 将解析到的数据存储到数据库中</p>
-<p>6.Middlewares（中间件）</p>
-<p>中间件是介于Scrapy引擎和其他组件之间的一个钩子框架，主要是为了提供一个自定义的代码来拓展Scrapy的功能。  </p>
-<p>##数据的处理流程  </p>
-<p>Scrapy的整个数据处理流程有Scrapy引擎进行控制，其主要的运行方式为：</p>
-<ol>
-<li>引擎打开一个域名，时蜘蛛处理这个域名，并让蜘蛛获取第一个爬取的URL。  </li>
-<li>引擎从蜘蛛那获取第一个需要爬取的URL，然后作为请求在调度中进行调度。  </li>
-<li>引擎从调度那获取接下来进行爬取的页面。  </li>
-<li>调度将下一个爬取的URL返回给引擎，引擎将它们通过下载中间件发送到下载器。  </li>
-<li>当网页被下载器下载完成以后，响应内容通过下载中间件被发送到引擎。  </li>
-<li>引擎收到下载器的响应并将它通过蜘蛛中间件发送到蜘蛛进行处理。  </li>
-<li>蜘蛛处理响应并返回爬取到的项目，然后给引擎发送新的请求。  </li>
-<li>引擎将抓取到的项目项目管道，并向调度发送请求。  </li>
-<li>系统重复第二步后面的操作，直到调度中没有请求，然后断开引擎与域之间的联系。   </li>
-</ol>
-<p>##新建工程   </p>
-<pre><code>scrapy startproject doubanmovie  
-</code></pre><p>目录就不详细再说了。  </p>
-<p>##定义项目（Item）</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># _*_ coding=utf-8 _*_</span></span><br><span class="line">  </span><br><span class="line"><span class="keyword">from</span> scrapy.item <span class="keyword">import</span> Item, Field</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DoubanmovieItem</span><span class="params">(Item)</span>:</span></span><br><span class="line">    name = Field()<span class="comment">#电影名</span></span><br><span class="line">    year = Field()<span class="comment">#上映年份</span></span><br><span class="line">    score = Field()<span class="comment">#豆瓣分数</span></span><br><span class="line">    director = Field()<span class="comment">#导演</span></span><br><span class="line">    classification = Field()<span class="comment">#分类</span></span><br><span class="line">    actor = Field()<span class="comment">#演员</span></span><br></pre></td></tr></table></figure>
-<p>这个地方只是需要相应添加需要的字段。  </p>
-<p>##编写爬虫 （spiders） </p>
-<p>Spider是整个项目中最核心的类，在这个类中我们需要定义抓取对象（url 域名）以及抓取规则。  scrapy官方文档中的教程是基于BaseSpider的，但是这个只能爬取给定的url，无法根据一个初始的url向外扩展。<br>还有scrapy.contrib.spiders.CrawlSpider可以使用。  </p>
-<p>在doubanmovie/spiders目录下新建movie_spider.py文件，并填写代码。  </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">from</span> scrapy.selector <span class="keyword">import</span> Selector</span><br><span class="line"><span class="keyword">from</span> scrapy.contrib.spiders <span class="keyword">import</span> CrawlSpider,Rule</span><br><span class="line"><span class="keyword">from</span> scrapy.contrib.linkextractors.sgml <span class="keyword">import</span> SgmlLinkExtractor</span><br><span class="line"><span class="keyword">from</span> doubanmovie.items <span class="keyword">import</span> DoubanmovieItem</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">movieSpider</span><span class="params">(CrawlSpider)</span>:</span></span><br><span class="line">    name=<span class="string">"doubanmovie"</span></span><br><span class="line">    allowed_domains=[<span class="string">"movie.douban.com"</span>]</span><br><span class="line">    start_urls=[<span class="string">"https://movie.douban.com/top250"</span>]</span><br><span class="line">    rules=[</span><br><span class="line">        Rule(SgmlLinkExtractor(allow=(<span class="string">r'https://movie.douban.com/top250\?start=\d+.*'</span>))),</span><br><span class="line">        Rule(SgmlLinkExtractor(allow=(<span class="string">r'https://movie.douban.com/subject/\d+'</span>)),callback=<span class="string">"parse_item"</span>),</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_item</span><span class="params">(self,response)</span>:</span></span><br><span class="line">        sel=Selector(response)</span><br><span class="line">        item=DoubanmovieItem()</span><br><span class="line">        item[<span class="string">'name'</span>]=sel.xpath(<span class="string">'//*[@id="content"]/h1/span[1]/text()'</span>).extract()</span><br><span class="line">        item[<span class="string">'year'</span>]=sel.xpath(<span class="string">'//*[@id="content"]/h1/span[2]/text()'</span>).re(<span class="string">r'\((\d+)\)'</span>)</span><br><span class="line">        item[<span class="string">'score'</span>]=sel.xpath(<span class="string">'//*[@id="interest_sectl"]/div[1]/div[2]/strong/text()'</span>).extract()</span><br><span class="line">        item[<span class="string">'director'</span>]=sel.xpath(<span class="string">'//*[@id="info"]/span[1]/span[2]/a/text()'</span>).extract()</span><br><span class="line">        item[<span class="string">'classification'</span>]= sel.xpath(<span class="string">'//span[@property="v:genre"]/text()'</span>).extract()</span><br><span class="line">        item[<span class="string">'actor'</span>]= sel.xpath(<span class="string">'//*[@id="info"]/span[3]/a[1]/text()'</span>).extract()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> item</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">首先是`name` 这个是定义spider名字的字符串，必须的。  </span><br><span class="line">接着是`allowed_domains` 包含了spider允许爬取的域名（domain）列表（list），可选。  </span><br><span class="line">`start_urls`  URL列表。当没有制定特定的URL时，spider将从该列表中开始进行爬取。 因此，第一个被获取到的页面的URL将是该列表之一。 后续的URL将会从获取到的数据中提取。  </span><br><span class="line">`rules` 一个包含一个(或多个) Rule 对象的集合(list)。 每个 Rule 对爬取网站的动作定义了特定表现。 Rule对象在下边会介绍。 如果多个rule匹配了相同的链接，则根据他们在本属性中被定义的顺序，第一个会被使用。  </span><br><span class="line"></span><br><span class="line">然后就是使用xpath从网页从抽取出来item，这里是较为重要的部分，一定要搞清楚抓取的item是什么类型的，要做哪些处理放入字典当中去。  </span><br><span class="line">这个需要不断尝试，耐心调试下  </span><br><span class="line">![shell 调试](http://o7b8j5zne.bkt.clouddn.com/shell%E8%B0%<span class="number">83</span>%E8%AF%<span class="number">95.</span>png)  </span><br><span class="line"></span><br><span class="line">	scrapy shell （domains）  </span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">Scrapy 使用一种叫做 XPath selectors的机制，它基于 XPath表达式。如果你想了解更多selectors和其他机制可以查阅资料[官网](http://doc.scrapy.org/topics/selectors.html<span class="comment">#topics-selectors )  </span></span><br><span class="line">这是一些XPath表达式的例子和他们的含义  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">为了方便使用XPaths，Scrapy提供XPathSelector 类， 有两种口味可以选择， HtmlXPathSelector (HTML数据解析) 和XmlXPathSelector (XML数据解析)。 为了使用他们你必须通过一个 Response 对象对他们进行实例化操作。你会发现Selector对象展示了文档的节点结构。因此，第一个实例化的selector必与根节点或者是整个目录有关 。 </span><br><span class="line">Selectors 有三种方法</span><br><span class="line"></span><br><span class="line">path()：返回selectors列表, 每一个select表示一个xpath参数表达式选择的节点.  </span><br><span class="line">extract()：返回一个unicode字符串，该字符串为XPath选择器返回的数据  </span><br><span class="line">re()： 返回unicode字符串列表，字符串作为参数由正则表达式提取出来    </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">##管道文件 （pipeline） </span></span><br><span class="line"></span><br><span class="line">```python  </span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> pymongo</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> scrapy.exceptions <span class="keyword">import</span> DropItem</span><br><span class="line"><span class="keyword">from</span> scrapy.conf <span class="keyword">import</span> settings</span><br><span class="line"><span class="keyword">from</span> scrapy <span class="keyword">import</span> log</span><br><span class="line"></span><br><span class="line"><span class="comment">#Connect to the MongoDB database</span></span><br><span class="line">client = pymongo.MongoClient()</span><br><span class="line">db = client[<span class="string">'pythontest'</span>]</span><br><span class="line">item_info = db[<span class="string">'mydouban'</span>]</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MongoDBPipeline</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_item</span><span class="params">(self, item, spider)</span>:</span></span><br><span class="line">        <span class="comment">#Remove invalid data</span></span><br><span class="line">        valid = <span class="keyword">True</span></span><br><span class="line">        <span class="keyword">for</span> data <span class="keyword">in</span> item:</span><br><span class="line">          <span class="keyword">if</span> <span class="keyword">not</span> data:</span><br><span class="line">            valid = <span class="keyword">False</span></span><br><span class="line">            <span class="keyword">raise</span> DropItem(<span class="string">"Missing %s of blogpost from %s"</span> %(data, item[<span class="string">'url'</span>]))</span><br><span class="line">        <span class="keyword">if</span> valid:</span><br><span class="line">        <span class="comment">#Insert data into database</span></span><br><span class="line">            new_movie = &#123;</span><br><span class="line">                <span class="string">"name"</span>:item[<span class="string">'name'</span>][<span class="number">0</span>],</span><br><span class="line">                <span class="string">"year"</span>:item[<span class="string">'year'</span>][<span class="number">0</span>],</span><br><span class="line">                <span class="string">"score"</span>:item[<span class="string">'score'</span>][<span class="number">0</span>],</span><br><span class="line">                <span class="string">"director"</span>:item[<span class="string">'director'</span>],</span><br><span class="line">                <span class="string">"classification"</span>:item[<span class="string">'classification'</span>],</span><br><span class="line">                <span class="string">"actor"</span>:item[<span class="string">'actor'</span>]</span><br><span class="line">            &#125;</span><br><span class="line">            item_info.insert_one(new_movie)</span><br><span class="line">            log.msg(<span class="string">"Item wrote to MongoDB database %s/%s"</span> %</span><br><span class="line">            (<span class="string">'pythontest'</span>, <span class="string">'mydouban'</span>),</span><br><span class="line">            level=log.DEBUG, spider=spider)</span><br><span class="line">        <span class="keyword">return</span> item</span><br><span class="line">        </span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">爬虫获取到数据以后我们需要将其存储到数据库中，之前我们提到该操作需要靠项目管道（pipeline）来处理，其通常执行的操作为：</span><br><span class="line"></span><br><span class="line">清洗HTML数据    </span><br><span class="line">验证解析到的数据（检查项目是否包含必要的字段）  </span><br><span class="line">检查是否是重复数据（如果重复就删除）  </span><br><span class="line">将解析到的数据存储到数据库中   </span><br><span class="line"></span><br><span class="line">这里考虑数据的复杂性，使用mongodb数据库来存储。</span><br><span class="line"></span><br><span class="line"><span class="comment">##配置文件（settings）  </span></span><br><span class="line"></span><br><span class="line">```python</span><br><span class="line">BOT_NAME = <span class="string">'doubanmovie'</span></span><br><span class="line">SPIDER_MODULES = [<span class="string">'doubanmovie.spiders'</span>]</span><br><span class="line">NEWSPIDER_MODULE = <span class="string">'doubanmovie.spiders'</span></span><br><span class="line">ITEM_PIPELINES=&#123;</span><br><span class="line">    <span class="string">'doubanmovie.pipelines.MongoDBPipeline'</span>:<span class="number">300</span>,</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">LOG_LEVEL=<span class="string">'DEBUG'</span></span><br><span class="line"></span><br><span class="line">DOWNLOAD_DELAY = <span class="number">2</span></span><br><span class="line">RANDOMIZE_DOWNLOAD_DELAY = <span class="keyword">True</span></span><br><span class="line">USER_AGENT = <span class="string">'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.54 Safari/536.5'</span></span><br><span class="line">COOKIES_ENABLED = <span class="keyword">True</span></span><br></pre></td></tr></table></figure>
-<p>在settings.py里设置一些信息。  </p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/17/python实战之django小试/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/05/17/python实战之django小试/" itemprop="url">python实战之django小试</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-17T17:26:04+08:00">
-                2016-05-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2016/05/17/python实战之django小试/" class="leancloud_visitors" data-flag-title="python实战之django小试">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  0
+                  126
                 </span>
               
 
@@ -1184,7 +388,709 @@ bye
       
         
           
+            <p>每次想写点东西的时候，总是自己骗自己说，哎呀，哪有时间去搞这些东西。  </p>
+<p>决定还是一点点尝试写一个论坛系统出来。  </p>
+<p>Django这个框架非常庞大，可能在实际的开发过程中，我们用到的只是一小部分，比如创建model，view，然后根据这些写一些html的文件等。</p>
+<p>再在页面调试的过程当中发现一些问题，对代码进行不断地修正。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/03/wechat-delete-friends/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/03/wechat-delete-friends/" itemprop="url">wechat-delete-friends</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
             
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-03T21:42:14+08:00">
+                2017-08-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/08/03/wechat-delete-friends/" class="leancloud_visitors" data-flag-title="wechat-delete-friends">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  66
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在终端中执行:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git  <span class="built_in">clone</span>  https://github.com/0x5e/wechat-deleted-friends.git</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span>  wechat-deleted-friends</span><br><span class="line"></span><br><span class="line">python  wdf.py</span><br></pre></td></tr></table></figure>
+<p>然后按照提示操作就可以了.</p>
+<p>完成之后手动删除生成的一个群聊, 不要在里面说话, 不说话好友们是不知情的. </p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/03/ftp-download/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/03/ftp-download/" itemprop="url">ftp-download</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-03T20:45:52+08:00">
+                2017-08-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/08/03/ftp-download/" class="leancloud_visitors" data-flag-title="ftp-download">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  648
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># encoding: utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> ftplib</span><br><span class="line"><span class="keyword">import</span> traceback</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FtpDownloader</span><span class="params">(object)</span>:</span></span><br><span class="line">    PATH_TYPE_UNKNOWN = <span class="number">-1</span></span><br><span class="line">    PATH_TYPE_FILE = <span class="number">0</span></span><br><span class="line">    PATH_TYPE_DIR = <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, host, user=None, passwd=None, port=<span class="number">21</span>, timeout=<span class="number">10</span>)</span>:</span></span><br><span class="line">        self.conn = ftplib.FTP(</span><br><span class="line">            host=host,</span><br><span class="line">            user=user,</span><br><span class="line">            passwd=passwd,</span><br><span class="line">            timeout=timeout</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">dir</span><span class="params">(self, *args)</span>:</span></span><br><span class="line">        <span class="string">'''</span><br><span class="line">        by defualt, ftplib.FTP.dir() does not return any value.</span><br><span class="line">        Instead, it prints the dir info to the stdout.</span><br><span class="line">        So we re-implement it in FtpDownloader, which is able to return the dir info.</span><br><span class="line">        '''</span></span><br><span class="line">        info = []</span><br><span class="line">        cmd = <span class="string">'LIST'</span></span><br><span class="line">        <span class="keyword">for</span> arg <span class="keyword">in</span> args:</span><br><span class="line">            <span class="keyword">if</span> arg:</span><br><span class="line">                cmd = cmd + (<span class="string">' '</span> + arg)</span><br><span class="line">        self.conn.retrlines(cmd, <span class="keyword">lambda</span> x: info.append(x.strip().split()))</span><br><span class="line">        <span class="keyword">return</span> info</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">tree</span><span class="params">(self, rdir=None, init=True)</span>:</span></span><br><span class="line">        <span class="string">'''</span><br><span class="line">        recursively get the tree structure of a directory on FTP Server.</span><br><span class="line">        args:</span><br><span class="line">            rdir - remote direcotry path of the FTP Server.</span><br><span class="line">            init - flag showing whether in a recursion.</span><br><span class="line">        '''</span></span><br><span class="line">        <span class="keyword">if</span> init <span class="keyword">and</span> rdir <span class="keyword">in</span> (<span class="string">'.'</span>, <span class="keyword">None</span>):</span><br><span class="line">            rdir = self.conn.pwd()</span><br><span class="line">        tree = []</span><br><span class="line">        tree.append((rdir, self.PATH_TYPE_DIR))</span><br><span class="line"></span><br><span class="line">        dir_info = self.dir(rdir)</span><br><span class="line">        <span class="keyword">for</span> info <span class="keyword">in</span> dir_info:</span><br><span class="line">            attr = info[<span class="number">0</span>]  <span class="comment"># attribute</span></span><br><span class="line">            name = info[<span class="number">-1</span>]</span><br><span class="line">            path = os.path.join(rdir, name)</span><br><span class="line">            <span class="keyword">if</span> attr.startswith(<span class="string">'-'</span>):</span><br><span class="line">                tree.append((path, self.PATH_TYPE_FILE))</span><br><span class="line">            <span class="keyword">elif</span> attr.startswith(<span class="string">'d'</span>):</span><br><span class="line">                <span class="keyword">if</span> (name == <span class="string">'.'</span> <span class="keyword">or</span> name == <span class="string">'..'</span>):  <span class="comment"># skip . and ..</span></span><br><span class="line">                    <span class="keyword">continue</span></span><br><span class="line">                tree.extend(self.tree(rdir=path,init=<span class="keyword">False</span>))  <span class="comment"># recurse</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                tree.append(path, self.PATH_TYPE_UNKNOWN)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> tree</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">downloadFile</span><span class="params">(self, rfile, lfile)</span>:</span></span><br><span class="line">        <span class="string">'''</span><br><span class="line">        download a file with path %rfile on a FTP Server and save it to locate</span><br><span class="line">        path %lfile.</span><br><span class="line">        '''</span></span><br><span class="line">        ldir = os.path.dirname(lfile)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(ldir):</span><br><span class="line">            os.makedirs(ldir)</span><br><span class="line">        f = open(lfile, <span class="string">'wb'</span>)</span><br><span class="line">        self.conn.retrbinary(<span class="string">'RETR %s'</span> % rfile, f.write)</span><br><span class="line">        f.close()</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">treeStat</span><span class="params">(self, tree)</span>:</span></span><br><span class="line">        numDir = <span class="number">0</span></span><br><span class="line">        numFile = <span class="number">0</span></span><br><span class="line">        numUnknown = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> path, pathType <span class="keyword">in</span> tree:</span><br><span class="line">            <span class="keyword">if</span> pathType == self.PATH_TYPE_DIR:</span><br><span class="line">                numDir += <span class="number">1</span></span><br><span class="line">            <span class="keyword">elif</span> pathType == self.PATH_TYPE_FILE:</span><br><span class="line">                numFile += <span class="number">1</span></span><br><span class="line">            <span class="keyword">elif</span> pathType == self.PATH_TYPE_UNKNOWN:</span><br><span class="line">                numUnknown += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> numDir, numFile, numUnknown</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">downloadDir</span><span class="params">(self, rdir=<span class="string">'.'</span>, ldir=<span class="string">'.'</span>, tree=None,</span><br><span class="line">                    errHandleFunc=None, verbose=True)</span>:</span></span><br><span class="line">        <span class="string">'''</span><br><span class="line">        download a direcotry with path %rdir on a FTP Server and save it to</span><br><span class="line">        locate path %ldir.</span><br><span class="line">        args:</span><br><span class="line">            tree - the tree structure return by function FtpDownloader.tree()</span><br><span class="line">            errHandleFunc - error handling function when error happens in</span><br><span class="line">                downloading one file, such as a function that writes a log.</span><br><span class="line">                By default, the error is print to the stdout.</span><br><span class="line">        '''</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> tree:</span><br><span class="line">            tree = self.tree(rdir=rdir, init=<span class="keyword">True</span>)</span><br><span class="line">        numDir, numFile, numUnknown = self.treeStat(tree)</span><br><span class="line">        <span class="keyword">if</span> verbose:</span><br><span class="line">            <span class="keyword">print</span> <span class="string">'Host %s tree statistic:'</span> % self.conn.host</span><br><span class="line">            <span class="keyword">print</span> <span class="string">'%d directories, %d files, %d unknown type'</span> % (</span><br><span class="line">                numDir,</span><br><span class="line">                numFile,</span><br><span class="line">                numUnknown</span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(ldir):</span><br><span class="line">            os.makedirs(ldir)</span><br><span class="line">        ldir = os.path.abspath(ldir)</span><br><span class="line"></span><br><span class="line">        numDownOk = <span class="number">0</span></span><br><span class="line">        numDownErr = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> rpath, pathType <span class="keyword">in</span> tree:</span><br><span class="line">            lpath = os.path.join(ldir, rpath.strip(<span class="string">'/'</span>).strip(<span class="string">'\\'</span>))</span><br><span class="line">            <span class="keyword">if</span> pathType == self.PATH_TYPE_DIR:</span><br><span class="line">                <span class="keyword">if</span> <span class="keyword">not</span> os.path.exists(lpath):</span><br><span class="line">                    os.makedirs(lpath)</span><br><span class="line">            <span class="keyword">elif</span> pathType == self.PATH_TYPE_FILE:</span><br><span class="line">                <span class="keyword">try</span>:</span><br><span class="line">                    self.downloadFile(rpath, lpath)</span><br><span class="line">                    numDownOk += <span class="number">1</span></span><br><span class="line">                <span class="keyword">except</span> Exception <span class="keyword">as</span> err:</span><br><span class="line">                    numDownErr += <span class="number">1</span></span><br><span class="line">                    <span class="keyword">if</span> errHandleFunc:</span><br><span class="line">                        errHandleFunc(err, rpath, lpath)</span><br><span class="line">                    <span class="keyword">elif</span> verbose:</span><br><span class="line">                        <span class="keyword">print</span> <span class="string">'An Error occurred when downloading '</span>\</span><br><span class="line">                              <span class="string">'remote file %s'</span> % rpath</span><br><span class="line">                        traceback.print_exc()</span><br><span class="line">                        <span class="keyword">print</span></span><br><span class="line">                <span class="keyword">if</span> verbose:</span><br><span class="line">                    <span class="keyword">print</span> <span class="string">'Host %s: %d/%d/%d(ok/err/total) files downloaded'</span> % (</span><br><span class="line">                        self.conn.host,</span><br><span class="line">                        numDownOk,</span><br><span class="line">                        numDownErr,</span><br><span class="line">                        numFile</span><br><span class="line">                    )</span><br><span class="line">            <span class="keyword">elif</span> pathType == self.PATH_TYPE_UNKNOWN:</span><br><span class="line">                <span class="keyword">if</span> verbose:</span><br><span class="line">                    <span class="keyword">print</span> <span class="string">'Unknown type romote path got: %s'</span> % rpath</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> verbose:</span><br><span class="line">            <span class="keyword">print</span> <span class="string">'Host %s directory %s download finished:'</span> % (</span><br><span class="line">                self.conn.host, rdir</span><br><span class="line">            )</span><br><span class="line">            <span class="keyword">print</span> <span class="string">'%d directories, %d(%d failed) files, %d unknown type.'</span> % (</span><br><span class="line">                numDir,</span><br><span class="line">                numFile,</span><br><span class="line">                numDownErr,</span><br><span class="line">                numUnknown</span><br><span class="line">            )</span><br><span class="line">        <span class="keyword">return</span> numDir, numFile, numUnknown, numDownErr</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="keyword">import</span> sys</span><br><span class="line">    <span class="keyword">import</span> traceback</span><br><span class="line">    <span class="keyword">from</span> pprint <span class="keyword">import</span> pprint <span class="keyword">as</span> pr</span><br><span class="line"></span><br><span class="line">    flog = open(<span class="string">'err.log'</span>, <span class="string">'wb'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(host)</span>:</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            fd = FtpDownloader(</span><br><span class="line">                host=host,</span><br><span class="line">                user=<span class="string">'test'</span>,</span><br><span class="line">                passwd=<span class="string">'test'</span>,</span><br><span class="line">                port=<span class="number">21</span>,</span><br><span class="line">                timeout=<span class="number">10</span></span><br><span class="line">            )</span><br><span class="line">            numDir, numFile, numUnknown, numDownErr = fd.downloadDir(</span><br><span class="line">                rdir=<span class="string">'.'</span>,</span><br><span class="line">                ldir=<span class="string">'download'</span>,</span><br><span class="line">                tree=<span class="keyword">None</span>,</span><br><span class="line">                errHandleFunc=<span class="keyword">None</span>,</span><br><span class="line">                verbose=<span class="keyword">True</span></span><br><span class="line">            )</span><br><span class="line">            flog.write(</span><br><span class="line">                <span class="string">'%s\nok\n'</span></span><br><span class="line">                <span class="string">'%d directories, %d(%d failed) files, %d unknown type\n\n\n'</span> % (</span><br><span class="line">                    host,</span><br><span class="line">                    numDir,</span><br><span class="line">                    numFile,</span><br><span class="line">                    numDownErr,</span><br><span class="line">                    numUnknown</span><br><span class="line">                )</span><br><span class="line">            )</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> err:</span><br><span class="line">            traceback.print_exc()</span><br><span class="line">            flog.write(</span><br><span class="line">                <span class="string">'%s\nerror\n%s\n\n\n'</span> % (</span><br><span class="line">                    host,</span><br><span class="line">                    traceback.format_exc()</span><br><span class="line">                )</span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line">    pr(run(sys.argv[<span class="number">1</span>]))</span><br><span class="line">    flog.close()</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/01/adaptor/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/08/01/adaptor/" itemprop="url">adaptor</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-01T23:57:30+08:00">
+                2017-08-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/pattern/" itemprop="url" rel="index">
+                    <span itemprop="name">pattern</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/08/01/adaptor/" class="leancloud_visitors" data-flag-title="adaptor">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  240
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>直接看代码吧</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OldCourse</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">    老的课程类</span><br><span class="line">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">show</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span><br><span class="line">        显示关于本课程的所有信息</span><br><span class="line">        """</span></span><br><span class="line">        print(<span class="string">"show description"</span>)</span><br><span class="line">        print(<span class="string">"show teacher of course"</span>)</span><br><span class="line">        print(<span class="string">"show labs"</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Page</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">    使用课程对象的客户端</span><br><span class="line">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, course)</span>:</span></span><br><span class="line">        self.course = course</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">render</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.course.show()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NewCourse</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">    新的课程类, 为了模块化显示课程信息，实现了新的课程类</span><br><span class="line">    """</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">show_desc</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span><br><span class="line">        显示描述信息</span><br><span class="line">        """</span></span><br><span class="line">        print(<span class="string">"show description"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">show_teacher</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span><br><span class="line">        显示老师信息</span><br><span class="line">        """</span></span><br><span class="line">        print(<span class="string">"show teacher of course"</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">show_labs</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span><br><span class="line">        显示实验</span><br><span class="line">        """</span></span><br><span class="line">        print(<span class="string">"show labs"</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Adapter</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">    适配器, 尽管实现了新的课程类，但是在很多代码中还是需要使用 OldCourse.show() 方法</span><br><span class="line">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, course)</span>:</span></span><br><span class="line">        self.course = course</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">show</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span><br><span class="line">        适配方法，调用真正的操作</span><br><span class="line">        """</span></span><br><span class="line">        self.course.show_desc()</span><br><span class="line">        self.course.show_teacher()</span><br><span class="line">        self.course.show_labs()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    old_course = OldCourse()</span><br><span class="line">    page = Page(old_course)</span><br><span class="line">    page.render()</span><br><span class="line">    print(<span class="string">""</span>)</span><br><span class="line">    new_course = NewCourse()</span><br><span class="line">    <span class="comment"># 新课程类没有 show 方法，我们需要使用适配器进行适配</span></span><br><span class="line">    adapter = Adapter(new_course)</span><br><span class="line">    page = Page(adapter)</span><br><span class="line">    page.render()</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/16/merge-sort/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/16/merge-sort/" itemprop="url">merge-sort</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-16T02:28:04+08:00">
+                2017-07-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/07/16/merge-sort/" class="leancloud_visitors" data-flag-title="merge-sort">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  84
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>理解不深入的缘故，每次写算法都要对着例子抄。。  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">mergesort</span><span class="params">(seq)</span>:</span></span><br><span class="line">    mid =  len(seq)  </span><br><span class="line">    lft, rgt = seq[:mid], seq[mid:]</span><br><span class="line">    <span class="keyword">if</span> len(lft) &gt; <span class="number">1</span>:</span><br><span class="line">        lft = mergesort(lft)</span><br><span class="line">    <span class="keyword">if</span> len(rgt) &gt; <span class="number">1</span>:</span><br><span class="line">        rgt = mergesort(rgt)</span><br><span class="line"></span><br><span class="line">    res = []</span><br><span class="line">    <span class="keyword">while</span> lft <span class="keyword">and</span> rgt:</span><br><span class="line">        <span class="keyword">if</span> lft[<span class="number">-1</span>] &gt;= rgt[<span class="number">-1</span>]:</span><br><span class="line">            res.append(lft.pop())</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            res.append(rgt.pop())</span><br><span class="line">    res.reverse()</span><br><span class="line">    <span class="keyword">return</span> (lft <span class="keyword">or</span> rgt) + res</span><br></pre></td></tr></table></figure>
+<p> 这些都是吃饭的家伙。。</p>
+
           
         
       
@@ -1223,7 +1129,7 @@ bye
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/44/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><span class="page-number current">45</span><a class="page-number" href="/page/46/">46</a><span class="space">&hellip;</span><a class="page-number" href="/page/49/">49</a><a class="extend next" rel="next" href="/page/46/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/44/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/44/">44</a><span class="page-number current">45</span><a class="page-number" href="/page/46/">46</a><span class="space">&hellip;</span><a class="page-number" href="/page/50/">50</a><a class="extend next" rel="next" href="/page/46/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1263,7 +1169,7 @@ bye
                 alt="Cheung John" />
             
               <p class="site-author-name" itemprop="name">Cheung John</p>
-              <p class="site-description motion-element" itemprop="description">莫道前路无知己 天下谁人不识君</p>
+              <p class="site-description motion-element" itemprop="description">曾因酒醉鞭名马 生怕情多累美人</p>
           </div>
 
           <nav class="site-state motion-element">
@@ -1273,7 +1179,7 @@ bye
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">250</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1388,7 +1294,7 @@ bye
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共123.5k字</span>
+  <span class="post-count">博客全站共123.6k字</span>
 </div>
 
         

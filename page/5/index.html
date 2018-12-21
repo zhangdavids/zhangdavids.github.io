@@ -81,15 +81,15 @@
 
 
 
-<meta name="description" content="莫道前路无知己 天下谁人不识君">
+<meta name="description" content="曾因酒醉鞭名马 生怕情多累美人">
 <meta property="og:type" content="website">
 <meta property="og:title" content="上药三品，神与气精">
 <meta property="og:url" content="http://yoursite.com/page/5/index.html">
 <meta property="og:site_name" content="上药三品，神与气精">
-<meta property="og:description" content="莫道前路无知己 天下谁人不识君">
+<meta property="og:description" content="曾因酒醉鞭名马 生怕情多累美人">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="上药三品，神与气精">
-<meta name="twitter:description" content="莫道前路无知己 天下谁人不识君">
+<meta name="twitter:description" content="曾因酒醉鞭名马 生怕情多累美人">
 
 
 
@@ -275,7 +275,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/10/js0007/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/15/js0013/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Cheung John">
@@ -294,7 +294,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/12/10/js0007/" itemprop="url">js0007</a></h1>
+                <a class="post-title-link" href="/2018/12/15/js0013/" itemprop="url">js0013</a></h1>
         
 
         <div class="post-meta">
@@ -306,8 +306,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-10T16:24:01+08:00">
-                2018-12-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-15T15:51:01+08:00">
+                2018-12-15
               </time>
             
 
@@ -324,7 +324,7 @@
 
           
           
-             <span id="/2018/12/10/js0007/" class="leancloud_visitors" data-flag-title="js0007">
+             <span id="/2018/12/15/js0013/" class="leancloud_visitors" data-flag-title="js0013">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -349,7 +349,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  318
+                  142
                 </span>
               
 
@@ -388,30 +388,341 @@
       
         
           
-            <p>javascript 是函数式编程语言 也就是fp</p>
+            <h2 id="封装私有变量"><a href="#封装私有变量" class="headerlink" title="封装私有变量"></a>封装私有变量</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Using closures to approximate private variable<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../assert.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">type</span>=<span class="string">"text/css"</span> <span class="attr">href</span>=<span class="string">"../assert.css"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="actionscript"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">Ninja</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> feints = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">this</span>.getFeints = <span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> feints;</span><br><span class="line">      &#125;;</span><br><span class="line">      <span class="keyword">this</span>.feint = <span class="function"><span class="keyword">function</span><span class="params">()</span></span>&#123;</span><br><span class="line">        feints++;</span><br><span class="line">      &#125;;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">var</span> ninja1 = <span class="keyword">new</span> Ninja();</span><br><span class="line">     ninja1.feint();</span><br><span class="line"></span><br><span class="line">     assert(ninja1.feints === <span class="literal">undefined</span>,</span><br><span class="line">            <span class="string">"And the private data is inaccessible to us."</span>);</span><br><span class="line">     assert(ninja1.getFeints() === <span class="number">1</span>,</span><br><span class="line">           <span class="string">"We're able to access the internal feint count."</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">     <span class="keyword">var</span> ninja2 = <span class="keyword">new</span> Ninja();</span><br><span class="line">     assert(ninja2.getFeints() === <span class="number">0</span>,</span><br><span class="line">            <span class="string">"The second ninja object gets it’s own feints variable."</span>);</span><br><span class="line">	</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/15/js0012/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/15/js0012/" itemprop="url">js0012</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-15T15:32:44+08:00">
+                2018-12-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/12/15/js0012/" class="leancloud_visitors" data-flag-title="js0012">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  102
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>A not so simple closure<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../assert.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">type</span>=<span class="string">"text/css"</span> <span class="attr">href</span>=<span class="string">"../assert.css"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="actionscript"></span><br><span class="line">	  <span class="keyword">var</span> outerValue = <span class="string">"samurai"</span>;</span><br><span class="line">     <span class="keyword">var</span> later;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">outerFunction</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> innerValue = <span class="string">"ninja"</span>;</span><br><span class="line"></span><br><span class="line">      <span class="function"><span class="keyword">function</span> <span class="title">innerFunction</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        assert(outerValue === <span class="string">"samurai"</span>, <span class="string">"I can see the samurai."</span>);</span><br><span class="line">        assert(innerValue === <span class="string">"ninja"</span>, <span class="string">"I can see the ninja."</span>);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      later = innerFunction;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    outerFunction();</span><br><span class="line">    later();</span><br><span class="line">	</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/15/js0011/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/12/15/js0011/" itemprop="url">js0011</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-15T15:18:48+08:00">
+                2018-12-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/12/15/js0011/" class="leancloud_visitors" data-flag-title="js0011">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  326
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h2><p>js必会到闭包的问题</p>
+<p>通过闭包可以访问创建闭包时所处环境中的全部变量。闭包为函数提供所处环境的作用域的函数和变量。创建“安全气泡”。通过这种方式，即使创建函数时所处的作用域已经消失，但是函数仍然能够获得执行时所需要的全部内容。</p>
 <ul>
-<li>函数是第一类对象</li>
+<li>通过构造函数内的变量以及构造方法来模拟对象的私有属性</li>
+<li>处理回调函数 简化代码</li>
 </ul>
-<p>通过字面量创建<br>赋值給变量或者属性<br>作为函数参数传递<br>作为函数的结果进行返回<br>赋值給属性和方法</p>
+<p>引擎是通过执行上下文（调用栈）跟踪函数的执行。每次调用函数时，都会创建新的函数执行上下文，并推入调用栈顶端。当函数执行完成后，对应的执行上下文将从调用栈中推出。</p>
+<p>引擎通过词法环境跟踪标识符（俗称作用域）</p>
+<p>定义全局级别、函数级别甚至块级别的变量</p>
 <ul>
-<li>回调函数是被代码随后”回来调用“的函数，特别是在事件处理场景之下</li>
-<li><p>函数具有属性，而且可以存储任何信息，</p>
-</li>
-<li><p>存储另一个函数用于之后的引用和调用</p>
-</li>
-<li><p>用函数属性来创建一个缓存（记忆），用于减少不必要的计算</p>
-</li>
-<li><p>函数声明和函数表达式是最主要的函数类型 另外还有箭头函数和函数生成器 还有很不常见的函数构造函数</p>
-</li>
-<li><p>形参是函数定义时列出的变量 实参是函数调用时传递給函数的值</p>
-</li>
-<li><p>形参和实参列表长度可以不同</p>
-</li>
-</ul>
-<p>未赋值的形参求值得到undefined<br>传入的额外实参不会被赋值給任何一个命令形参</p>
-<ul>
-<li>剩余参数 不与任何形参名相匹配的额外实参可以通过剩余参数来引用</li>
-<li>默认参数 没有传入参数的时候 提供的缺省值</li>
+<li>var 定义距离最近的函数级别变量或者全局变量</li>
+<li>let const 定义距离最近级别的变量 包括块级别变量</li>
+<li>闭包是js作用域规则的副作用。当函数创建时所在的作用域消失之后，仍然能够调用函数</li>
 </ul>
 
           
@@ -461,7 +772,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/10/js0006/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/14/see-python版本的排序算法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Cheung John">
@@ -480,7 +791,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/12/10/js0006/" itemprop="url">js0006</a></h1>
+                <a class="post-title-link" href="/2018/12/14/see-python版本的排序算法/" itemprop="url">see_python版本的排序算法</a></h1>
         
 
         <div class="post-meta">
@@ -492,8 +803,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-10T16:13:50+08:00">
-                2018-12-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-14T19:19:45+08:00">
+                2018-12-14
               </time>
             
 
@@ -510,7 +821,7 @@
 
           
           
-             <span id="/2018/12/10/js0006/" class="leancloud_visitors" data-flag-title="js0006">
+             <span id="/2018/12/14/see-python版本的排序算法/" class="leancloud_visitors" data-flag-title="see_python版本的排序算法">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -535,7 +846,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  113
+                  0
                 </span>
               
 
@@ -574,9 +885,7 @@
       
         
           
-            <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Using the rest parameters<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">type</span>=<span class="string">"text/css"</span> <span class="attr">href</span>=<span class="string">"../assert.css"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../assert.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span>&gt;</span><span class="actionscript"></span><br><span class="line">    <span class="string">"use strict"</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">multiMax</span><span class="params">(first, <span class="rest_arg">...remainingNumbers</span>)</span></span>&#123;</span><br><span class="line">      <span class="keyword">var</span> sorted = remainingNumbers.sort(<span class="function"><span class="keyword">function</span><span class="params">(a, b)</span></span>&#123;</span><br><span class="line">         <span class="keyword">return</span> b - a;</span><br><span class="line">      &#125;);</span><br><span class="line">      <span class="keyword">return</span> first * sorted[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    assert(multiMax(<span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>) == <span class="number">9</span>,</span><br><span class="line">          <span class="string">"3*3=9 (First arg, by largest.)"</span>);</span><br><span class="line">  </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>剩余参数 省略号 …</p>
-
+            
           
         
       
@@ -624,7 +933,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/10/js0005/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/14/see-python的基础数据结构/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Cheung John">
@@ -643,7 +952,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/12/10/js0005/" itemprop="url">js0005</a></h1>
+                <a class="post-title-link" href="/2018/12/14/see-python的基础数据结构/" itemprop="url">see_python的基础数据结构</a></h1>
         
 
         <div class="post-meta">
@@ -655,8 +964,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-10T15:57:11+08:00">
-                2018-12-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-14T19:03:14+08:00">
+                2018-12-14
               </time>
             
 
@@ -673,7 +982,7 @@
 
           
           
-             <span id="/2018/12/10/js0005/" class="leancloud_visitors" data-flag-title="js0005">
+             <span id="/2018/12/14/see-python的基础数据结构/" class="leancloud_visitors" data-flag-title="see_python的基础数据结构">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -698,7 +1007,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  119
+                  622
                 </span>
               
 
@@ -714,7 +1023,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -737,332 +1046,246 @@
       
         
           
-            <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Storing a collection of unique functions<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">type</span>=<span class="string">"text/css"</span> <span class="attr">href</span>=<span class="string">"../assert.css"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../assert.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="actionscript"></span><br><span class="line">    <span class="keyword">var</span> store = &#123;</span><br><span class="line">      nextId: <span class="number">1</span>,</span><br><span class="line">      cache: &#123;&#125;,</span><br><span class="line">      add: <span class="function"><span class="keyword">function</span><span class="params">(fn)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!fn.id) &#123;</span><br><span class="line">          fn.id = <span class="keyword">this</span>.nextId++;</span><br><span class="line">          <span class="keyword">this</span>.cache[fn.id] = fn;</span><br><span class="line">          <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">ninja</span><span class="params">()</span></span>&#123;&#125;</span><br><span class="line"></span><br><span class="line">    assert(store.add(ninja),</span><br><span class="line">           <span class="string">"Function was safely added."</span>);</span><br><span class="line">    assert(!store.add(ninja),</span><br><span class="line">           <span class="string">"But it was only added once."</span>);</span><br><span class="line">  </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/10/js0004/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/12/10/js0004/" itemprop="url">js0004</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-10T15:25:47+08:00">
-                2018-12-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/12/10/js0004/" class="leancloud_visitors" data-flag-title="js0004">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  158
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Registering event handlers<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span><br><span class="line">      <span class="selector-id">#first</span> &#123; <span class="attribute">color</span>: green;&#125;</span><br><span class="line">      <span class="selector-id">#second</span> &#123; <span class="attribute">color</span>: red;&#125;</span><br><span class="line">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">"first"</span>&gt;</span><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span><br><span class="line">      <span class="function"><span class="keyword">function</span> <span class="title">addMessage</span>(<span class="params">element, message</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> messageElement = <span class="built_in">document</span>.createElement(<span class="string">"li"</span>);</span><br><span class="line">        messageElement.textContent = message;</span><br><span class="line">        element.appendChild(messageElement);</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">var</span> first = <span class="built_in">document</span>.getElementById(<span class="string">"first"</span>);</span><br><span class="line">      addMessage(first, <span class="string">"Page loading"</span>);</span><br><span class="line">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">"second"</span>&gt;</span><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span><br><span class="line">      <span class="built_in">document</span>.body.addEventListener(<span class="string">"mousemove"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;	<span class="comment">//#A</span></span><br><span class="line">        <span class="keyword">var</span> second = <span class="built_in">document</span>.getElementById(<span class="string">"second"</span>);</span><br><span class="line">        addMessage(second, <span class="string">"Event: mousemove"</span>);</span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">      <span class="built_in">document</span>.body.addEventListener(<span class="string">"click"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;		   <span class="comment">//#B</span></span><br><span class="line">        <span class="keyword">var</span> second = <span class="built_in">document</span>.getElementById(<span class="string">"second"</span>);</span><br><span class="line">        addMessage(second, <span class="string">"Event: click"</span>);</span><br><span class="line">      &#125;);</span><br><span class="line">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>以上三个是页面构建的过程中 展示的部分测试代码</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/10/js0003/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/12/10/js0003/" itemprop="url">js0003</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-10T15:19:15+08:00">
-                2018-12-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/12/10/js0003/" class="leancloud_visitors" data-flag-title="js0003">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  107
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Different types of JavaScript code – global and function code<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"></span><br><span class="line">      <span class="selector-id">#first</span> &#123; <span class="attribute">color</span>: green;&#125;</span><br><span class="line">      <span class="selector-id">#second</span> &#123; <span class="attribute">color</span>: red;&#125;</span><br><span class="line">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">"first"</span>&gt;</span><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span><br><span class="line">      <span class="function"><span class="keyword">function</span> <span class="title">addMessage</span>(<span class="params">element, message</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> messageElement = <span class="built_in">document</span>.createElement(<span class="string">"li"</span>);	<span class="comment">//#A</span></span><br><span class="line">        messageElement.textContent = message;			          <span class="comment">//#A</span></span><br><span class="line">        element.appendChild(messageElement);			          <span class="comment">//#A</span></span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">var</span> first = <span class="built_in">document</span>.getElementById(<span class="string">"first"</span>);		      <span class="comment">//#B</span></span><br><span class="line">      addMessage(first, <span class="string">"Page loading"</span>);				            <span class="comment">//#B</span></span><br><span class="line">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span> <span class="attr">id</span>=<span class="string">"second"</span>&gt;</span><span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+            <h3 id="列表list"><a href="#列表list" class="headerlink" title="列表list"></a>列表list</h3><ul>
+<li>以完全随机的列表考虑平均情况。</li>
+</ul>
+<p>列表是以数组（Array）实现的。最大的开销发生在超过当前分配大小的增长，这种情况下所有元素都需要移动；或者是在起始位置附近插入或者删除元素，这种情况下所有在该位置后面的元素都需要移动。如果你需要在一个队列的两端进行增删的操作，应当使用collections.deque（双向队列）</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">操作</th>
+<th style="text-align:left">平均情况</th>
+<th style="text-align:left">最坏情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">复制</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left">O(n)</td>
+</tr>
+<tr>
+<td style="text-align:left">append</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(1)</td>
+</tr>
+<tr>
+<td style="text-align:left">插入</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left">O(n)</td>
+</tr>
+<tr>
+<td style="text-align:left">取元素</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(1)</td>
+</tr>
+<tr>
+<td style="text-align:left">更改元素</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(1)</td>
+</tr>
+<tr>
+<td style="text-align:left">删除元素</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left">O(n)</td>
+</tr>
+<tr>
+<td style="text-align:left">遍历</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left">O(n)</td>
+</tr>
+<tr>
+<td style="text-align:left">取切片</td>
+<td style="text-align:left">O(k)</td>
+<td style="text-align:left">O(k)</td>
+</tr>
+<tr>
+<td style="text-align:left">删除切片</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left">O(n)</td>
+</tr>
+<tr>
+<td style="text-align:left">更改切片</td>
+<td style="text-align:left">O(k+n)</td>
+<td style="text-align:left">O(k+n)</td>
+</tr>
+<tr>
+<td style="text-align:left">extend</td>
+<td style="text-align:left">O(k)</td>
+<td style="text-align:left">O(k)</td>
+</tr>
+<tr>
+<td style="text-align:left">排序</td>
+<td style="text-align:left">O(n logn)</td>
+<td style="text-align:left">O(n logn)</td>
+</tr>
+<tr>
+<td style="text-align:left">列表乘法</td>
+<td style="text-align:left">O(nk)</td>
+<td style="text-align:left">O(nk)</td>
+</tr>
+<tr>
+<td style="text-align:left">x in s</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">min(s), max(s)</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">计算长度</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(1)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="双端队列queue"><a href="#双端队列queue" class="headerlink" title="双端队列queue"></a>双端队列queue</h3><p>deque （double-ended queue，双向队列）是以双向链表的形式实现的 (Well, a list of arrays rather than objects, for greater efficiency)。双向队列的两端都是可达的，但从查找队列中间的元素较为缓慢，增删元素就更慢了。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">操作</th>
+<th style="text-align:left">平均情况</th>
+<th style="text-align:left">最坏情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">复制</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left">O(n)</td>
+</tr>
+<tr>
+<td style="text-align:left">append</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(1)</td>
+</tr>
+<tr>
+<td style="text-align:left">appendleft</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(1)</td>
+</tr>
+<tr>
+<td style="text-align:left">pop</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(1)</td>
+</tr>
+<tr>
+<td style="text-align:left">popleft</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(1)</td>
+</tr>
+<tr>
+<td style="text-align:left">extend</td>
+<td style="text-align:left">O(k)</td>
+<td style="text-align:left">O(k)</td>
+</tr>
+<tr>
+<td style="text-align:left">extendleft</td>
+<td style="text-align:left">O(k)</td>
+<td style="text-align:left">O(k)</td>
+</tr>
+<tr>
+<td style="text-align:left">rotate</td>
+<td style="text-align:left">O(k)</td>
+<td style="text-align:left">O(k)</td>
+</tr>
+<tr>
+<td style="text-align:left">remove</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left">O(n)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="集合set"><a href="#集合set" class="headerlink" title="集合set"></a>集合set</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">操作</th>
+<th style="text-align:left">平均情况</th>
+<th style="text-align:left">最坏情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">x in s</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(n)</td>
+</tr>
+<tr>
+<td style="text-align:left">并集 s\</td>
+<td style="text-align:left">t</td>
+<td style="text-align:left">O(len(s)+len(t))</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">交集 s&amp;t</td>
+<td style="text-align:left">O(min(len(s), len(t))</td>
+<td style="text-align:left">O(len(s) * len(t))</td>
+</tr>
+<tr>
+<td style="text-align:left">差集 s-t</td>
+<td style="text-align:left">O(len(s))</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">s.difference_update(t)</td>
+<td style="text-align:left">O(len(t))</td>
+</tr>
+<tr>
+<td style="text-align:left">对称差集 s^t</td>
+<td style="text-align:left">O(len(s))</td>
+<td style="text-align:left">O(len(s) * len(t))</td>
+</tr>
+<tr>
+<td style="text-align:left">s.symmetric_difference_update(t)</td>
+<td style="text-align:left">O(len(t))</td>
+<td style="text-align:left">O(len(t) * len(s))</td>
+</tr>
+</tbody>
+</table>
+<h3 id="字典dict"><a href="#字典dict" class="headerlink" title="字典dict"></a>字典dict</h3><p>下列字典的平均情况基于以下假设：</p>
+<ol>
+<li>对象的散列函数足够鲁棒性（robust），不会发生冲突。</li>
+<li>字典的键是从所有可能的键的集合中随机选择的。</li>
+</ol>
+<p>小窍门：只使用字符串作为字典的键。这么做虽然不会影响算法的时间复杂度，但会对常数项产生显著的影响，这决定了你的一段程序能多快跑完。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">操作</th>
+<th style="text-align:left">平均情况</th>
+<th style="text-align:left">最坏情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">复制</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left">O(n)</td>
+</tr>
+<tr>
+<td style="text-align:left">取元素</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(n)</td>
+</tr>
+<tr>
+<td style="text-align:left">更改元素</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(n)</td>
+</tr>
+<tr>
+<td style="text-align:left">删除元素</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(n)</td>
+</tr>
+<tr>
+<td style="text-align:left">遍历</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left">O(n)</td>
+</tr>
+</tbody>
+</table>
 
           
         
@@ -1102,7 +1325,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/49/">49</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/50/">50</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1142,7 +1365,7 @@
                 alt="Cheung John" />
             
               <p class="site-author-name" itemprop="name">Cheung John</p>
-              <p class="site-description motion-element" itemprop="description">莫道前路无知己 天下谁人不识君</p>
+              <p class="site-description motion-element" itemprop="description">曾因酒醉鞭名马 生怕情多累美人</p>
           </div>
 
           <nav class="site-state motion-element">
@@ -1152,7 +1375,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">241</span>
+                  <span class="site-state-item-count">250</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1267,7 +1490,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共123.5k字</span>
+  <span class="post-count">博客全站共123.6k字</span>
 </div>
 
         
