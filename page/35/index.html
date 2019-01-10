@@ -275,7 +275,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/18/elk-redis/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/28/pep8规范/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Cheung John">
@@ -294,7 +294,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/18/elk-redis/" itemprop="url">elk+redis</a></h1>
+                <a class="post-title-link" href="/2018/03/28/pep8规范/" itemprop="url">pep8规范</a></h1>
         
 
         <div class="post-meta">
@@ -306,8 +306,984 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-18T22:09:32+08:00">
-                2018-03-18
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-28T23:01:05+08:00">
+                2018-03-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/03/28/pep8规范/" class="leancloud_visitors" data-flag-title="pep8规范">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  13
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="缩进"><a href="#缩进" class="headerlink" title="缩进"></a>缩进</h2><p>每层缩进使用 4 个空格</p>
+<h2 id="断行风格"><a href="#断行风格" class="headerlink" title="断行风格"></a>断行风格</h2><p>断行首字母与括号开启符垂直对齐</p>
+<pre><code># 这是正确的例子：
+foo = long_function_name(var_one, var_two,
+                         var_three, var_four)
+
+悬挂缩进，首行不能有参数; 后面还有其它代码部分时，断行要添加一层缩进，使其与其它代码部分能区别开来
+# 这是正确的例子，额外添加了一层缩进：
+def long_function_name(
+        var_one, var_two, var_three,
+        var_four):
+    print(var_one)
+# 这是错误的例子，悬挂缩进，后面还有其它代码时，需要添加一层额外的缩进加以区别：
+def long_function_name(
+    var_one, var_two, var_three,
+    var_four):
+    print(var_one)
+# 这是正确的例子，悬挂缩进方式应该有一层缩进
+foo = long_function_name(
+    var_one, var_two,
+    var_three, var_four)
+# 这是错误的例子，悬挂方式首行不能有参数：
+foo = long_function_name(var_one, var_two,
+    var_three, var_four)
+</code></pre><h2 id="if-条件断行"><a href="#if-条件断行" class="headerlink" title="if 条件断行"></a>if 条件断行</h2><p>if ( 刚好有 4 个字条，相当于一层缩进。<br>对于 if 条件断行，以下几种风格都可以：</p>
+<pre><code>没有额外的缩进
+if (this_is_one_thing and
+    that_is_another_thing):
+    do_something()
+添加注释加以区分
+# Add a comment, which will provide some distinction in editors
+# supporting syntax highlighting.
+if (this_is_one_thing and
+    that_is_another_thing):
+    # Since both conditions are true, we can frobnicate.
+    do_something()
+添加额外的缩进加以区分
+# Add some extra indentation on the conditional continuation line.
+if (this_is_one_thing
+        and that_is_another_thing):
+    do_something()
+</code></pre><h2 id="多行的括号"><a href="#多行的括号" class="headerlink" title="多行的括号"></a>多行的括号</h2><pre><code>括号结束符与最后行的首字符对齐，如：
+my_list = [
+    1, 2, 3,
+    4, 5, 6,
+    ]
+
+result = some_function_that_takes_arguments(
+    &apos;a&apos;, &apos;b&apos;, &apos;c&apos;,
+    &apos;d&apos;, &apos;e&apos;, &apos;f&apos;,
+    )
+括号结束符与首行的首字符对齐, 如：
+my_list = [
+    1, 2, 3,
+    4, 5, 6,
+]
+result = some_function_that_takes_arguments(
+    &apos;a&apos;, &apos;b&apos;, &apos;c&apos;,
+    &apos;d&apos;, &apos;e&apos;, &apos;f&apos;,
+)
+</code></pre><h2 id="Tab-符还是空格"><a href="#Tab-符还是空格" class="headerlink" title="Tab 符还是空格"></a>Tab 符还是空格</h2><p>用空格</p>
+<h2 id="每行最长长度"><a href="#每行最长长度" class="headerlink" title="每行最长长度"></a>每行最长长度</h2><p>所有行都不超过 80 个字符：<br>限制编辑器窗口的宽度，使能并排同时打开多个文件。<br>设置编辑器宽度（ set width to 80），来避免 wrapping<br>对于较少结构限制的长文本（如 docstring 或注释），行长应限制为 72 个字符。<br>如果团队成员都同意使用长行，则可以将行长增加到不超过 100 个字符，但是 docstring 和注释还必须为 72 个字符。<br>有括号的长行可以用 implicit continuation 来断行，其它的可以用 \ 来断行，如：</p>
+<pre><code>with open(&apos;/path/to/some/file/you/want/to/read&apos;) as file_1, \
+     open(&apos;/path/to/some/file/being/written&apos;, &apos;w&apos;) as file_2:
+    file_2.write(file_1.read())
+</code></pre><h2 id="操作符要和操作数在一起"><a href="#操作符要和操作数在一起" class="headerlink" title="操作符要和操作数在一起"></a>操作符要和操作数在一起</h2><pre><code># 推荐的正确的风格，这样很容易将操作符与操作数匹配：
+income = (gross_wages
+          + taxable_interest
+          + (dividends - qualified_dividends)
+          - ira_deduction
+          - student_loan_interest)
+# 这种风格现成已不推荐使用了：
+income = (gross_wages +
+          taxable_interest +
+          (dividends - qualified_dividends) -
+          ira_deduction -
+          student_loan_interest)
+</code></pre><h2 id="空行分隔"><a href="#空行分隔" class="headerlink" title="空行分隔"></a>空行分隔</h2><p>模块中最顶层的函数和类定义都要用两行空行分隔<br>类中的方法定义用单行分隔<br>要把一组相关的函数分组，可以用一些额外的空行<br>函数中的逻辑区块可以加空行来分隔</p>
+<h2 id="源文件的编码"><a href="#源文件的编码" class="headerlink" title="源文件的编码"></a>源文件的编码</h2><p>Python 核心库文件的编码都必须用 UTF-8（Python 2 是 ASCII)。<br>使用默认的编码时（Python 3: UTF-8，Python 2: ASCII)，不能使用编码声明<br>标准库中，只有测试、作者名才能使用非默认的编码，其它情况下的非 ASCII 字符用 \x, \u, \u, \N 表示法表示。</p>
+<h2 id="Import"><a href="#Import" class="headerlink" title="Import"></a>Import</h2><p>每行 import 只导入一个包：</p>
+<pre><code># 正确:
+import os
+import sys
+# 错误：
+import sys, os
+# 正确：同一包中的内容可以在同一行导入
+from subprocess import Popen, PIPE
+import 语句要在文件的前面，在模块注释及 docstring 之后，在模块全局变量和常数定义之前。
+import 分组及导入顺序，每个分组之间用一行空行分隔 1). 标准库 2). 相关第三方库 3). 本地应用/库的特殊导入
+推荐使用绝对导入，如：
+import mypkg.sibling
+from mypkg import sibling
+from mypkg.sibling import example
+在复杂的包布局中，也可以用显式的相对导入，如：
+from . import sibling
+from .sibling import example
+从一个模块中导入一个类时，要显示拼写出类名，如：
+from myclass import MyClass
+from foo.bar.yourclass import YourClass
+如果与本地名称冲突，可以先导入模块：
+import myclass
+import foo.bar.yourclass
+然后使用：&quot;myclass.MyClass&quot; 和 &quot;foo.bar.yourclass.YourClass&quot;。
+应该避免使用 from &lt;module&gt; import *
+</code></pre><h2 id="模块级的特殊名称（如all-的位置："><a href="#模块级的特殊名称（如all-的位置：" class="headerlink" title="模块级的特殊名称（如all)的位置："></a>模块级的特殊名称（如<strong>all</strong>)的位置：</h2><p>必须在模块的 docstring 或注释之后，但在任何的 import 语句之前。from <strong>future</strong> 比较特殊，Python 强制该语句必须在 docstring 或注释之后，因此风格如下：</p>
+<pre><code>&quot;&quot;&quot;This is the example module.
+
+This module does stuff.
+&quot;&quot;&quot;
+
+from __future__ import barry_as_FLUFL
+
+__all__ = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;]
+__version__ = &apos;0.1&apos;
+__author__ = &apos;Cardinal Biggles&apos;
+
+import os
+import sys
+</code></pre><h2 id="字符引号"><a href="#字符引号" class="headerlink" title="字符引号"></a>字符引号</h2><p>单引号和双引号的功能是等同的。<br>对于多行字符串，应该用双引号字符形式的三引号””“，以便与 PEP257 中的 docstring 规范兼容</p>
+<h2 id="表达式和语句中的空格"><a href="#表达式和语句中的空格" class="headerlink" title="表达式和语句中的空格"></a>表达式和语句中的空格</h2><p>()、[]、{} 等括号内不要有多余的空格，如：</p>
+<pre><code># 正确：
+spam(ham[1], {eggs: 2})
+# 错误：
+spam( ham[ 1 ], { eggs: 2 } )
+,、;、: 之前不要有空格，如：
+# 正确：
+if x == 4: print x, y; x, y = y, x
+# 错误：
+if x == 4 : print x , y ; x , y = y , x
+在 slice 语句中的 :实际上是一个二元操作符，因此其两侧的空格数必须相同; 但当无 slice 参数时，两侧的空格可以都省略，如：
+# 以下是正确的风格：
+ham[1:9], ham[1:9:3], ham[:9:3], ham[1::3], ham[1:9:]
+ham[lower:upper], ham[lower:upper:], ham[lower::step]
+ham[lower+offset : upper+offset]
+ham[: upper_fn(x) : step_fn(x)], ham[:: step_fn(x)]
+ham[lower + offset : upper + offset]
+# 以下是错误的风格：
+ham[lower + offset:upper + offset]
+ham[1: 9], ham[1 :9], ham[1:9 :3]
+ham[lower : : upper]
+ham[ : upper]
+函数调用的 () 及索引的 [] 前不要加空格，如：
+# 正确风格：
+spam(1)
+dct[&apos;key&apos;] = lst[index]
+# 错误风格：
+spam (1)
+dct [&apos;key&apos;] = lst [index]
+不要在赋值语句中加入额外的空格来对齐，如：
+# 正确的风格：
+x = 1
+y = 2
+long_variable = 3
+# 错误的风格:
+x             = 1
+y             = 2
+long_variable = 3
+</code></pre><h2 id="其它推荐风格"><a href="#其它推荐风格" class="headerlink" title="其它推荐风格"></a>其它推荐风格</h2><p>任何行的行尾都不要有空白符。<br>在二元操作符两侧一般都要加一个空格，一般的二元操作符如：<br>赋值: =, +=, -=<br>比较：==, &lt;, &gt;, !=, &lt;&gt;, &lt;=, &gt;=, in, not in, is, is not<br>布尔操作： and, or, not<br>在分优先级的表达式中，在最低优先级的操作符两侧加一个空格，但至多只能加一个空格，如：</p>
+<pre><code># 正确的风格：
+x = x*2 - 1
+hypot2 = x*x + y*y
+c = (a+b) * (a-b)
+# 错误的风格：
+x = x * 2 - 1
+hypot2 = x * x + y * y
+c = (a + b) * (a - b)
+在关键字参数和默认参数值中的 = 两侧不要加空格，如：
+# 正确的风格：
+def complex(real, imag=0.0):
+    return magic(r=real, i=imag)
+错误的风格：
+def complex(real, imag = 0.0):
+    return magic(r = real, i = imag)
+函数注解中的 : 前不要加空格，这符合 : 的常规风格，但是 -&gt; 两侧要加空格，如：
+# 正确的风格：
+def munge(input: AnyStr): ...
+def munge() -&gt; AnyStr: ...
+# 错误的风格：
+def munge(input:AnyStr): ...
+def munge()-&gt;PosInt: ...
+参数注解中，如果注解的参数有默认值，指定默认值的 = 两侧要加空格，如：
+# 正确的风格：
+def munge(sep: AnyStr = None): ...
+def munge(input: AnyStr, sep: AnyStr = None, limit=1000): ...
+# 错误的风格：
+def munge(input: AnyStr=None): ...
+def munge(input: AnyStr, limit = 1000): ...
+不要将多条语句组合在一行中，如：
+# 正确的风格：
+if foo == &apos;blah&apos;:
+    do_blah_thing()
+do_one()
+do_two()
+do_three()
+# 错误风格：
+if foo == &apos;blah&apos;: do_blah_thing()
+do_one(); do_two(); do_three()
+# 如果 if/for/while 体很小，组合在一行有时还是可以接受的，
+# 但是不推荐，如：
+if foo == &apos;blah&apos;: do_blah_thing()
+for x in lst: total += x
+while t &lt; 10: t = delay()
+# 但是在有多段语句时，绝对不能这样，如：
+if foo == &apos;blah&apos;: do_blah_thing()
+else: do_non_blah_thing()
+
+try: something()
+finally: cleanup()
+
+do_one(); do_two(); do_three(long, argument,
+                             list, like, this)
+
+if foo == &apos;blah&apos;: one(); two(); three()
+</code></pre><h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><pre><code>注释内容必须要和代码同步！
+注释应该是完整的语句，首字母一般大写，一般要有句号。
+注释很短时句号可以省略。
+块注释一般由多个段落组成。
+You should use two spaces after a sentence-ending period??
+用英文写注释
+</code></pre><h2 id="块注释"><a href="#块注释" class="headerlink" title="块注释"></a>块注释</h2><pre><code>每行用 # 及一个空格开始，如 #
+段落用一个只有 # 的行分隔
+</code></pre><h2 id="行内注释"><a href="#行内注释" class="headerlink" title="行内注释"></a>行内注释</h2><pre><code>注释与语句内容至少用两个空格分开，注释用 # 加一个空格开始
+# 不要像下面这样，注释内容没有必要
+x = x + 1                 # Increment x
+# 但是有时，如下面的注释会很有用
+x = x + 1                 # Compensate for border
+</code></pre><h2 id="文档字符串"><a href="#文档字符串" class="headerlink" title="文档字符串"></a>文档字符串</h2><p>公开的模块、函数、类及方法都应该有文档字符串，而非公开的方法可以用注释来代替，且注释放置在 def 行之后。<br>多行的文档字符串，结束符要自成一行，如：<br>“””Return a foobang</p>
+<p>Optional plotz says to frobnicate the bizbaz first.<br>“””<br>单行的文档字符串，结束符和内容放在同一行</p>
+<h2 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h2><p>没有推荐的风格，但是别人要能从你的代码中看出你用的是什么风格，常用的风格如下：<br>b 单个小写字母<br>B 单个大写字母</p>
+<pre><code>lowercase
+lower_case_with_underscores
+UPPERCASE
+UPPER_CASE_WITH_UNDERSCORES
+CapitalizedWords, 这种风格中，对于缩写词应全部用大写，如 HTTTPServerError 比 HttpServerError 好
+mixedCase
+Capitalized_Words_With_Underscores，这个太丑，不要用这种！
+st_mode、st_mtime 等前缀，一般是系统接口返回，如果自己写的代码不推荐用这种
+_single_leading_underscore : 弱 “内部使用” 指示器，这种对象用 from M import * 不会被导入
+single_trailing_underscore_ : 可以用来和 Python 关键词进行区分，如 Tkinter.Toplevel(master, class_=&apos;ClassName&apos;)
+__double_leading_underscore : 命名一个类属性时，可以进行命名矫正，例如 class FooBar 内的 __boo 会变成 _FooBar__boo
+double_leading_and_trailing_underscore : “magic” 对象，不要自己发明这种对象
+</code></pre><h2 id="命名传统"><a href="#命名传统" class="headerlink" title="命名传统"></a>命名传统</h2><p>不用单个 l, O, I 等这样的单个字符来命名，它们与数字不好区分<br>包名和模块名：全部用小写，必要时可用 <em>，但不推荐，C/C++ 的扩展模块，如果其对应有 Python 版本，那么 C/C++ 扩展模块名前加 </em><br>类名：用 CapWords 风格<br>异常名：用 CapWords 风格，一般应该有 Error 后缀<br>全局变量名：能用 from M import * 导入的变量全部放在 <strong>all</strong> 中，或者全局变量用 <em> 做前缀<br>函数名：应该用全部用小写，单词间可以用 </em> 分隔，如 my<em>func，不推荐用 mixedCase 风格<br>函数和方法的参数：实例方法的第一个参数用 self, 类方法的第一个参数用 cls，如果参数与关键字冲突，在参数名后加 </em> 后缀，如 class<em><br>实例变量和方法： 用小写字符和 </em>, 非公开的实例变量和方法用一个 <em> 做前缀; 避免与子类中的名字冲突，类的变量可用两个 </em> 作前缀，例如 class FooBar 内的 <strong>boo 会变成只能通过 FooBar._FooBar</strong>boo 访问<br>常数：全部大写，可用 _ 分隔，如 MAX_OVERFLOW、TOTAL</p>
+<h2 id="推荐的编程方式"><a href="#推荐的编程方式" class="headerlink" title="推荐的编程方式"></a>推荐的编程方式</h2><pre><code>字符串连接不要用 a += b 或者 a = a + b, 用 &apos;&apos;.join(), 后者性能更好。
+和单子如 None 的比较用 is 和 is not，不要用 ==，如果你想判断 if x is not None, 不要缩写成 if x
+使用 if foo is not None，而不是 if not foo is None，前者更加易读
+如果要实现序列比较操作的话，应将 6 个操作（__eq__ , __ne__ , __lt__ , __le__ , __gt__ , __ge__）全部实现，可以借助 functools.total_ordering() 修饰器来减少工作量
+将函数保存在一个变量中应该用 def f(x): return 2*x， 而非 f = lambda x: 2*x，后者不利于调试
+自定义的异常类应该继承至 Exception 类，而非 BaseException 类。
+Python 2 中抛出异常用 raise ValueError(&apos;message&apos;)，而非 raise ValueRoor, &apos;message&apos;
+尽可以的指明异常名，如：
+try:
+    import platform_specific_module
+except ImportError:
+    platform_specific_module = None
+避免使用无异常名的 except: 语句，它会捕获全部的异常（如 Ctrl C）。
+将异常绑定到名字的方法：
+try:
+    process_data()
+except Exception as exc:
+    raise DataProcessingFailedError(str(exc))
+try: 中的语句要尽量减少，如：
+# 正确的写法：
+try:
+    value = collection[key]
+except KeyError:
+    return key_not_found(key)
+else:
+    return handle_value(value)
+# 错误的写法
+try:
+    # Too broad!
+    return handle_value(collection[key])
+except KeyError:
+    # Will also catch KeyError raised by handle_value()
+    return key_not_found(key)
+如果资源只适用于某个代码段内，使用 with 或 try/finally 来确保能进行清理工作
+上下文管理器应用通过一个单独的函数或方法来激活，如：
+# 正确的做法：
+with conn.begin_transaction():
+    do_stuff_in_transaction(conn)
+# 错误的做法：
+with conn:
+    do_stuff_in_transaction(conn)
+return 语句应该一致，如：
+# 正确的做法：
+
+def foo(x):
+    if x &gt;= 0:
+        return math.sqrt(x)
+    else:
+        return None
+
+def bar(x):
+    if x &lt; 0:
+        return None
+    return math.sqrt(x)
+# 错误的做法：
+
+def foo(x):
+    if x &gt;= 0:
+        return math.sqrt(x)
+
+def bar(x):
+    if x &lt; 0:
+        return
+    return math.sqrt(x)
+使用字符串的方法，而不是用 string 模块中的方法
+使用 &apos;&apos;.startswith() 和 &apos;&apos;.endswidth() 而不用 slicing 来检查前缀和后缀：
+# 正确：
+if foo.startswith(&apos;bar&apos;):
+# 错误：
+if foo[:3] == &apos;bar&apos;:
+判断对象的类型用 isinstance 而不直接 type 比较，如：
+# 正确：
+if isinstance(obj, int):
+# 错误:
+if type(obj) is type(1):
+对序列是否空的判断不用 len，如：
+# 正确：
+if not seq:
+if seq:
+# 错误：
+if len(seq):
+if not len(seq):
+布尔值的比较：
+# 正确：
+if greeting:
+# 不要这样:
+if greeting == True:
+# 这样更不行：
+if greeting is True:
+</code></pre><h2 id="检测工具"><a href="#检测工具" class="headerlink" title="检测工具"></a>检测工具</h2><p>使用 Flake8 来检查代码质量。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/28/multiprocessing源码分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/28/multiprocessing源码分析/" itemprop="url">multiprocessing源码分析</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-28T22:38:30+08:00">
+                2018-03-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/03/28/multiprocessing源码分析/" class="leancloud_visitors" data-flag-title="multiprocessing源码分析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  0
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/28/threading源码分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/28/threading源码分析/" itemprop="url">threading源码分析</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-28T22:38:15+08:00">
+                2018-03-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/03/28/threading源码分析/" class="leancloud_visitors" data-flag-title="threading源码分析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  0
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/28/inspect源码分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/28/inspect源码分析/" itemprop="url">inspect源码分析</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-28T22:37:56+08:00">
+                2018-03-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/03/28/inspect源码分析/" class="leancloud_visitors" data-flag-title="inspect源码分析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  0
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/28/gevent-note/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/28/gevent-note/" itemprop="url">gevent-note</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-28T20:17:21+08:00">
+                2018-03-28
               </time>
             
 
@@ -346,7 +1322,7 @@
 
           
           
-             <span id="/2018/03/18/elk-redis/" class="leancloud_visitors" data-flag-title="elk+redis">
+             <span id="/2018/03/28/gevent-note/" class="leancloud_visitors" data-flag-title="gevent-note">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -371,214 +1347,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  235
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>对常见的elk工具进行总结</p>
-<pre><code>cat /etc/issue # 检查系统版本
-java -version #
-
-
-wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
-echo &quot;deb https://packages.elastic.co/elasticsearch/2.x/debian stable main&quot; | sudo tee -a /etc/apt/sources.list.d/elasticsearch-2.x.list
-sudo apt-get update
-sudo apt-get install elasticsearch -y
-sudo service elasticsearch start
-echo &quot;deb https://packages.elastic.co/logstash/2.3/debian stable main&quot; | sudo tee -a /etc/apt/sources.list
-sudo apt-get install logstash -y
-sudo service logstash start
-echo &quot;deb http://packages.elastic.co/kibana/4.5/debian stable main&quot; | sudo tee -a /etc/apt/sources.list
-sudo apt-get install kibana -y 
-sudo service kibana start
-
-sudo service nginx start
-
-# nginx 的配置文件位于 /etc/nginx/sites-available/default
-
-# 添加 access_log /home/shiyanlou/Code/elk/access.log;
-</code></pre><p>接下来是具体的配置文件</p>
-<pre><code># /etc/logstash/conf.d/logstash-shipper.conf
-
-input {
-  stdin {}  
-  file {
-    path =&gt; &quot;~/access.log&quot;
-    start_position =&gt; beginning
-    codec =&gt;  multiline {
-      &apos;negate&apos; =&gt; true
-      &apos;pattern&apos; =&gt; &apos;^\d&apos;
-      &apos;what&apos; =&gt; &apos;previous&apos;
-    }
-  }
-}
-output {
-    stdout {
-        codec =&gt; rubydebug
-    }
-    elasticsearch {
-        hosts=&gt;[&quot;localhost:9200&quot;]
-        index=&gt;&quot;logstash-%{+YYYY.MM.dd}&quot;
-    }
-}    
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/17/top-questions-python/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/17/top-questions-python/" itemprop="url">top-questions-python</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-17T23:09:30+08:00">
-                2018-03-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/03/17/top-questions-python/" class="leancloud_visitors" data-flag-title="top-questions-python">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.2k
+                  1.4k
                 </span>
               
 
@@ -617,687 +1386,19 @@ output {
       
         
           
-            <p>1.python2 编码问题</p>
-<ul>
-<li>python代码内部请全部使用unicode编码，在获取外部内容时，先decode为unicode，向外输出时再encode为Str</li>
-<li>在定义变量或者正则时，也定义unicode字符，如a=u”中文”；res=r””+u”正则”。</li>
-</ul>
-<pre><code>a=&quot;\\u8fdd\\u6cd5\\u8fdd\u89c4&quot; #变量a的内容为unicode编码，变量a为string编码（&quot;&quot;前不要加u）
-b=a.decode(&apos;unicode-escape&apos;)
-print b
-
-a=&quot;\\xe5\\x85\\xb3\\xe4\\xba\\x8e\\xe4&quot; #变量a的内容为string编码，变量a为string编码（&quot;&quot;前不要加u）
-b=a.decode(&apos;string-escape&apos;)
-print b
-</code></pre><p>2.多线程问题</p>
-<p><em>python带有GIL解释器锁的概念，同一时刻只能有一个线程在运行，遇到IO操作才会释放切换。</em></p>
-<p>协程不同于线程的地方在于协程不是操作系统进行切换，而是由程序员编码进行切换的，也就是说切换是由程序员控制的，这样就没有了线程所谓的安全问题。</p>
-<p>这也就是常选的gevent 方案</p>
-<p>cpu 密集  多进程<br>io密集 多线程 或者协程</p>
-<p>3.协程</p>
-<p>4.闭包</p>
-<p>全局变量降低了函数或模块之间的通用性，不同的函数或模块都要依赖于全局变量。同样，全局变量降低了代码的可读性，阅读者可能并不知道调用的某个变量是全局变量。</p>
-<pre><code># 原始情况
-time = 0
-
-def insert_time(min):
-    time = time + min
-    return  time
-
-print(insert_time(2))
-print(insert_time(10))
-
-
-# 闭包
-time = 0
-
-
-def study_time(time):
-    def insert_time(min):
-        nonlocal  time
-        time = time + min
-        return time
-
-    return insert_time
-
-
-f = study_time(time)
-print(f(2))
-print(time)
-print(f(10))
-print(time)
-</code></pre><p>这里最直接的表现就是全局变量 time 至此至终都没有修改过,这里还是用了 nonlocal 关键字,表示在函数或其他作用域中使用外层(非全局)变量。</p>
-<p>这种内部函数的局部作用域中可以访问外部函数局部作用域中变量的行为，我们称为： 闭包。更加直接的表达方式就是，当某个函数被当成对象返回时，夹带了外部变量，就形成了一个闭包。k</p>
-<p>闭包避免了使用全局变量，此外，闭包允许将函数与其所操作的某些数据（环境）关连起来。而且使用闭包，可以使代码变得更加的优雅。装饰器，是基于闭包实现的。</p>
-<p>所有函数都有一个 __closure__ 属性，如果函数是闭包的话，那么它返回的是一个由 cell 组成的元组对象。cell 对象的 cell_contents 属性就是存储在闭包中的变量。    </p>
-<p>5.装饰器问题</p>
-<p>6.爬虫问题</p>
-<p>7.魔法方法</p>
-<p>一个类创建的过程是怎样的，先是调用了 __new<strong>方法来创建一个对象，把参数传给 \</strong>init__ 方法进行实例化。</p>
-<p>其实在实际开发中，很少会用到 __new<strong> 方法，除非你希望能够控制类的创建。通常讲到 \</strong>new__ ，都是牵扯到 metaclass(元类)的。</p>
-<p>当然当一个对象的生命周期结束的时候，析构函数 __del__ 方法会被调用。但是这个方法是 Python 自己对对象进行垃圾回收的。</p>
-<p>Python 没有真正意义上的私有属性。然后这就导致了对 Python 类的封装性比较差。我们有时候会希望 Python 能够定义私有属性，然后提供公共可访问的 get 方法和 set 方法。Python 其实可以通过魔术方法来实现封装。</p>
-<p>方法说明</p>
-<p>__getattr__(self, name)该方法定义了你试图访问一个不存在的属性时的行为。因此，重载该方法可以实现捕获错误拼写然后进行重定向, 或者对一些废弃的属性进行警告。</p>
-<p>__setattr<strong>(self, name, value)定义了对属性进行赋值和修改操作时的行为。不管对象的某个属性是否存在,都允许为该属性进行赋值.有一点需要注意，实现 \</strong>setattr__ 时要避免”无限递归”的错误，</p>
-<p>__delattr<strong>(self, name) \</strong>delattr<strong> 与 \</strong>setattr<strong> 很像，只是它定义的是你删除属性时的行为， 实现 \</strong>delattr__ 是同时要避免”无限递归”的错误</p>
-<p>__getattribute<strong>(self, name) \</strong>getattribute<strong> 定义了你的属性被访问时的行为，相比较，\</strong>getattr__ 只有该属性不存在时才会起作用。</p>
-<p>因此，在支持 __getattribute<strong>的 Python 版本,调用\</strong>getattr<strong> 前必定会调用 \</strong>getattribute__   </p>
-<p>__getattribute__ 同样要避免”无限递归”的错误。</p>
-<p>8.差异</p>
-<p>Python3.x 中 input() 函数接受一个标准输入数据，返回为 string 类型。</p>
-<p>Python2.x 中 input() 相等于 eval(raw_input(prompt)) ，用来获取控制台的输入。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/17/python-big-web-project/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/17/python-big-web-project/" itemprop="url">python-big-web-project</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-17T21:30:04+08:00">
-                2018-03-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/03/17/python-big-web-project/" class="leancloud_visitors" data-flag-title="python-big-web-project">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  2.3k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  7
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>严格来说，MVC是一个古老的概念，从早期的Smalltalk开始已经不再适合于web应用开发。Django的开发人员已经正确意识到在Python中我们实际使用的是MTV（model，template，view）：</p>
-<ul>
-<li><p>模板包含了HTML的内容以及页面显示逻辑。它是使用模板语言如Kajiki来编写，从视图（view）中获取数据，然后展示在页面中。</p>
-</li>
-<li><p>视图（有时也称为“控制器”），仅仅是使用Python语言编写的中间代码。它借助于web框架将所有的内容放在一起。它可以看到其他的所有层，并且定义了URLs，将它们映射到web框架中用于接收数据的函数，然后利用其他层以最终发送响应给web框架。它应该尽可能得小，因为它的代码是不能重复利用的，即使你尽量地缩减它，web表单也会促使其逐渐地变得复杂。</p>
-</li>
-<li><p>模型层本质上是一个持久层：它最重要的依赖就是SQLAlchemy。模型知道如何去保存数据，构成整个项目中最可重用的代码。当然它并不清楚HTTP相关的内容和你所使用的框架。它代表了排除用户界面细节的系统本质内容。</p>
-</li>
-</ul>
-<p>但是稍等下，哪里？在视图还是模型中？你应该在哪里放置程序的灵魂：业务规则？模板层已经自动被排除掉，因为它并不是Python编写的。所以剩下3个可能的答案：</p>
-<ul>
-<li><p>视图层，这是最糟糕的选择。视图层应该仅仅包含中间代码，将代码数量保持尽可能得小，并且同系统中的其他部分隔离开，所以系统应该能在web框架中、使用中以及单元测试中独立访问。另外，业务逻辑应该存在于更加可重用的地方。视图层被视为展示逻辑的一部分，所以业务逻辑被排除在外。实际上，除了Web UI之外，在创建desktop UI时，开发者应该忽略视图和HTTP相关的内容，需要业务逻辑尽可能地被重用，因此，我们应该排除掉视图层。</p>
-</li>
-<li><p>模型层，这个是可能的选择，因为模型层至少是可重用的。但是模型层主要关注于持久化，它应该更少地依赖于SQLAlchemy（它已经是一个非常复杂的东西）。</p>
-</li>
-</ul>
-<p>新的层，这才是正确的答案。下面将举例来更好地理解这部分内容。</p>
-<p>如果你要创建一个博客，那么MTV正好满足你的需求。但是对于更加复杂的项目来说，其实还是至少缺了一层。你应该将业务逻辑旋转到一个新的、可重用的层次中，大多数人称之为“Service”层，但是我更喜欢称之为”Action“层。</p>
-<p>为什么你需要这层？</p>
-<p>在大型应用中，单个用户的操作引起多项活动是非常常见的。比如，用户成功地注册了你的服务，那么你的业务逻辑中可能会触发非常多的后台处理：</p>
-<p>在关系数据库多张表中新增数据，使用了模型层。</p>
-<p>将发送邮件给用户的任务放置到队列中。</p>
-<p>将发送短信给用户的任务放置到队列中。</p>
-<p>将创建实际使用服务时必需的空间和其他准备性资源的任务放置到队列中。</p>
-<p>将更新用户数据的任务放置到队列中。</p>
-<p>….</p>
-<p>这是一个理解“业务逻辑“的好例子：给定一个用户操作（比如注册），系统就要做一些必需的操作。这种业务逻辑被单个函数捕获会更好；这个函数应该在哪一层呢？</p>
-<p>如果所有的这些都实现在模型层，你能想象到它将变得多复杂吗？模型层在只面对持久化时已经很艰难了。现在想象一下模型层处理所有这些事务，它要使用多少外部服务？文件头部应该包括多少imports？反过来看，有多少模块愿意引入这个模型，可能在系统启动前就因为创建的循环依赖而导致系统崩溃。</p>
-<p>循环依赖其实就是你没有正确认清系统架构的明显的标识。</p>
-<p>对于依赖于Celery的模型来说，了解如何去发送邮件、短信以及使用外部服务等是不应该的做法。持久化对于模型层来说已经是非常复杂的主题了。你应该在模型层之外去处理这些业务逻辑——在模型层和视图层之间的一层。所以称之为”Action“层。</p>
-<p>另外，模型层在关系型数据库中经常被映射到一张单独的表。如果你在用户表和订阅表中插入一条记录，哪一个模型应该包含上述逻辑呢？这几乎是不能确定的。因为实际执行的操作远超过了用户表和订阅表的范围。因此，业务逻辑应该被定义在任何模型之外。</p>
-<p>当开发人员执行维护时，有时她想按步骤地执行每一步，而有时她想一次性执行完所有操作。分别地实现这些操作并在单个Action层函数中调用是有帮助的。</p>
-<p>你可能会怀疑我提出的方法难道不是反面模式域模型的一种吗？没有动作的模型恰恰与面向对象设计相反！我并没有说“将所有的方法从模型中移除”。我的意思是指“将需要外部调用的方法移除”。模型中的方法仅仅用来使用它所需要的数据，并且属于模型中的那些数据。一个面向世界的，调用外部服务的并且很少使用自身数据的方法不应该被放置在模型中。</p>
-<p>另一个使得这种架构成功的原因就是测试。TDD教会了程序员去让程序变得解耦，这样做通常会使得软件更加健壮。如果你想要创建一个Celery的应用，并且在你测试之前已经知道了其他的外部服务，那么你将经常陷入头痛中。</p>
-<p>还有将业务逻辑放置在视图层之外的最后一个原因。在未来，当你最终决定从Flask过渡到Pyramid时，你很乐意将视图层保持简洁。如果所有的视图都是在与web框架间交互，并且动作层会执行所有的函数，那么你的代码就做到了非常好的隔离。Web框架通常都很贪婪，不要让你的系统跟随他们的脚步。</p>
-<p>所以下面就是我所提议的在Python中构建大型应用的层次结构：</p>
-<p>模型层是最底层的，最可重用并且可见的层。它仅专注于持久化，模型层是可以包含动作的，只不过这个动作仅仅属于这个模型。模型可以被其他层所返回，以各种方式在请求的结尾返回给模板。</p>
-<p>外部服务。对每个服务都创建一个比如说发送邮件。</p>
-<p>动作层。这是系统中的核心层，它包含了业务逻辑以及工作流。它使用外部服务去实现特定的目标并且借助模型层来持久化数据。通过以上这些层，它支撑起了整个系统，包括配置，除了用户界面。</p>
-<p>模板层仅包括了页面展示逻辑比如说从列表中循环输出构成一个HTML表格。</p>
-<p>视图层，这是最高层的，最不可重用的层。它依赖于（与系统中其他层隔离）web框架。并且依赖于表单验证库。它可以看到模板层以及动作层，但是不能直接调用模型层——它必须通过动作层。但是当一个动作层返回了模型数据，那么它可以被传递给模板中（一个Celery任务可以类比于一个web视图）。</p>
-<p>这种体系结构有助于避免了在会话层中进行调试因为它清楚地定义了各自的职责。同时它也是明显经得起检测的，因为它做到了很好的解耦，因此可以减少测试的并且减少了模拟的次数。</p>
-<p>好的架构总是解耦性非常好的。如果你曾经陷入到一个循环依赖中，你可以想一下是否真的定义好了每一层的职责。当你放弃了并且从一个函数中引入内容，那么你的架构已经失败了。</p>
-<p>这并不是说你的web应用必须与Celery应用隔离开。在他们之间可以重用代码——特别是模型——但是对于Celery应用来说，不应该引入web框架！获取配置也不例外，因为在Python中读取配置是非常简单的。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/17/python-top-30/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/17/python-top-30/" itemprop="url">python-top-30</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-17T14:42:17+08:00">
-                2018-03-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/03/17/python-top-30/" class="leancloud_visitors" data-flag-title="python-top-30">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  368
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.家庭助理</p>
-<p>2.PyTorch</p>
-<p>3.Grumpy</p>
-<p>4.sanic</p>
-<p>5.Python-fire</p>
-<p>6.spaCy</p>
-<p>7.pipenv</p>
-<p>8.micropython</p>
-<p>9.prophet</p>
-<p>10.SerpentAI</p>
-<p>11.dash</p>
-<p>12.instaPy</p>
-<p>13.apistar</p>
-<p>14.faiss</p>
-<p>15.MechanicalSoup：一个与网站自动化交互的Python库</p>
-<p>16.Better-exceptions：用Python编写的自动地漂亮的和有用的异常处理</p>
-<p>17.Flashtext：从句子中提取关键词或替换句子中的关键词</p>
-<p>18.Maya：用Python实现人类的日期时间</p>
-<p>19.Mimesis (v1.0)：Python库，有助于为不同的目的以不同的语言生成模拟数据。这些数据在软件开发和测试的不同阶段特别有用</p>
-<p>20.开放式无纸化：扫描、索引和归档所有的纸质文档。一个文档管理系统</p>
-<p>21.Fsociety：黑客工具包。渗透测试框架</p>
-<p>22.LivePython：实时可视化跟踪Python代码</p>
-<p>23.Hatch：用于Python的现代项目、包和虚拟环境管理器</p>
-<p>24.Tangent:用纯Python实现源到源的可调试导数</p>
-<p>25.Clairvoyant：识别和监控短期股票走势的历史线索的Python程序</p>
-<p>26.MonkeyType：Python通过收集运行时类型生成静态类型注释的系统</p>
-<p>27.Eel：一个小的Python库，用于制作简单的电子类HTML / js GUI应用程序</p>
-<p>28.Surprise v1.0：建立和分析推荐系统的Python scikit**</p>
-<p>29.Gain：获取每个人的Web爬行框架</p>
-<p>30.PDFTabExtract: 一组从PDF文件中提取表的工具，有助于对扫描文档进行数据挖掘</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/15/简单看看汤不热的网站/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/15/简单看看汤不热的网站/" itemprop="url">简单看看汤不热的网站</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-15T21:31:12+08:00">
-                2018-03-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/pachong/" itemprop="url" rel="index">
-                    <span itemprop="name">pachong</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/03/15/简单看看汤不热的网站/" class="leancloud_visitors" data-flag-title="简单看看汤不热的网站">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  647
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  2
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>这里就不截图进行介绍了</p>
-<p>每个tumblr的个人空间都是一个二级域名，你甚至可以绑定你自己的域名。</p>
-<p>在个人主页上， 是一个微博式的消息列表，有文字，图片，视频等形式。消息的展现，是页面上的JavaScript脚本 通过请求Tumblr的Api来获取返回信息，然后添加到页面上的。通过API，可以省掉很多麻烦，至少不必分析整个页面的html来提取需要的信息了。</p>
-<p>基础的url 是这样的：</p>
-<pre><code>http://{0}.tumblr.com/api/read?type{1}&amp;num={2}&amp;start={3}
-</code></pre><p>第一个参数是要访问的用户空间的用户名；</p>
-<p>第二个参数是媒体类型， 图片为“photo”，视频为“video”；</p>
-<p>第三个参数为请求的资源数；</p>
-<p>第四个参数为从第几个资源开始    </p>
-<p>返回的数据是XML格式的数据，基本的层级为Tumblr&gt;posts&gt;post。图片的URL在post的photo-url字段中，视频与此类似，就不再演示了。 获取到媒体资源的url之后，就可以进行下载了。</p>
-<p>video类型的资源的url，需要从player属性中进行进一步匹配才能得出最后的结果。</p>
-<p>技术的分析：</p>
-<ul>
-<li>发送http请求  使用requests模块</li>
-<li>返回的数据是xml  xmltodic模块，将xml文档处理成类似Json对象，方便我们对数据进行访问。</li>
-<li><p>队列实现</p>
-<p>  python中自带Queue模块，可以满足我们目前的队列需求，由于python2.7和python3.0中 </p>
-<p>  对queue模块的命名进行的变更，编程的时候需要注意。如果考虑兼容两个版本的话，可以 考虑引入</p>
-<p>  six模块（<a href="https://pypi.python.org/pypi/six）。" target="_blank" rel="external">https://pypi.python.org/pypi/six）。</a></p>
-<p>  six模块是一个专门用于解决 从python2.x到python3.x的兼容性问题的模块，</p>
-<p>  它对python版本变更导致到部分模块不能应用的问题 进行了内部处理，</p>
-<p>  需要处理类似兼容问题的时候，可以考虑或者参考该模块的实现方式。</p>
-</li>
-<li><p>多线程进行下载</p>
-</li>
-<li>处理json </li>
-</ul>
-<p>考虑到Tumblr需要FQ访问，如果本机不使用VPN的话，可能需要配置代理，代理采用json配置方式。 处理.使用python内置的json模块（<a href="https://docs.python.org/2/library/json.html）就可以了。" target="_blank" rel="external">https://docs.python.org/2/library/json.html）就可以了。</a>    </p>
-<ul>
-<li>使用正则</li>
-</ul>
-<p>为了精确匹配url信息，我们需要使用正则表达式对xml数据的中字段值进行进一步处理，使用 内置的re模块（<a href="https://docs.python.org/2/library/re.html）就可以了。" target="_blank" rel="external">https://docs.python.org/2/library/re.html）就可以了。</a></p>
+            <p>Coroutine 也就是 corporate routine，直译为「协同的例程」，中文一般叫做「协程」, 实际上这个概念和进程与线程有相似之处, 因为linux线程就是所谓的「轻量级进程」。</p>
+<p>在gevent源码分析中找到一段表述的比较好的描述进程和协程异同的内容:</p>
+<p>相同点:</p>
+<p>二者都是可以看做是一种执行流, 该执行流可以挂起,并且在将来又可以在 你挂起的地方恢复执行, 这实际上都可以看做是continuation, 我们来看看当我们挂 起一个执行流时我们要保存的东西：<br>栈, 因为如果你不保存栈,那么局部变量你就无法恢复,同时函数的调用链你也无 法恢复,<br>寄存器的状态: 这好理解, 比如说EIP,如果你不保存,那么你恢复执行流就不知道 到底执行哪一条指令, 在比如说ESP,EBP, 如果你不保存,那么你即便有完整的栈 你也不知道怎么用.<br>这二者实际就是所谓的上下文,也可以说是continuation. 在执行流切换时必须保存 这两个东西, 内核调度进程时也是一回事.</p>
+<p>不同点:</p>
+<p>执行流的调度者不同, 进程是内核调度, 而协程是在用户态调度, 也就是说进程 的上下文是在内核态保存恢复的,而协程是在用户态保存恢复的. 很显然用户态的 代价更低<br>进程会被抢占,而协程不会,也就是说协程如果不主动让出CPU,那么其他的协程是不 可能得到执行机会,这实际和早期的操作系统类似,比如DOS, 它有一个yield原语, 一个进程调用yield,那么它就会让出CPU, 其他的进程也就有机会执行了, 如果一 个进程进入了死循环,那么整个系统也就挂起了,永远无法运行其他的进程了, 但 对协程而言,这不是问题<br>对内存的占用不同,实际上协程可以只需要4K的栈就够了, 而进程占用的内存要大 的多.<br>从操作系统的角度讲, 多协程的程序是单线程,单进程的<br>那用一句话描述协程的优势就是由开发者决定协程的切换，操作系统无法干预切换，且占用内存小的多。</p>
+<p>Gevent是一种基于协程的Python网络库，它用到Greenlet提供的，封装了libevent事件循环的高层同步API。它让开发者在不改变编程习惯的同时，用同步的方式写异步I/O的代码。</p>
+<p>Gvanrossum从来不喜欢Gevent，而是更愿意另辟蹊径的实现asyncio(基于生成器的协程)。</p>
+<p><strong>1.Monkey-patching</strong>。中文「猴子补丁」，常用于对测试环境做一些hack。我个人不太喜欢这种「黑魔法」，因为如果其他人不了解细节，极为容易产生困惑。Gvanrossum说用它就是”patch-and-pray”，太形象了。由于Gevent直接修改标准库里面大部分的阻塞式系统调用，包括socket、ssl、threading和 select等模块，而变为协作式运行。但是我们无法保证你在复杂的生产环境中有哪些地方使用这些标准库会由于打了补丁而出现奇怪的问题，那么你只能祈祷（pray）了。其次，在Python之禅中明确说过：「Explicit is better than implicit.」，猴子补丁明显的背离了这个原则。最后，Gvanrossum说Stackless之父Christian Tismer也赞同他。 我喜欢显式的「yield from」</p>
+<p><strong>2.第三方库支持</strong>。得确保项目中用到其他用到的网络库也必须使用纯Python或者明确说明支持Gevent，而且就算有这样的第三方库，我还会担心这个第三方库的代码质量和功能性。<br>Greenlet不支持Jython和IronPython，这样就无法把gevent设计成一个标准库了。<br>之前是没有选择，很多人选择了Gevent，而现在明确的有了更正统的、正确的选择：asyncio（下一篇会详细介绍）。所以建议大家放弃Gevent，拥抱asyncio。</p>
+<p>在Python 2的时代，高性能的网络编程主要是使用Twisted、Tornado和Gevent这三个库，但是它们的异步代码相互之间既不兼容也不能移植。如上一节说的，Gvanrossum希望在Python 3 实现一个原生的基于生成器的协程库，其中直接内置了对异步IO的支持，这就是asyncio，它在Python 3.4被引入到标准库。</p>
+<p>Python 3.5添加了async和await这两个关键字，分别用来替换asyncio.coroutine和yield from。自此，协程成为新的语法，而不再是一种生成器类型了。事件循环与协程的引入，可以极大提高高负载下程序的I/O性能。除此之外还增加了async with(异步上下文管理)、async for(异步迭代器)语法。特别说的是，在新发布的Python 3.6里面终于可以用异步生成器了！</p>
+<p>现存的一些库其实并不能原生的支持asyncio（因为会发生阻塞或者功能不可用），比如requests，如果要写爬虫，配合asyncio的应该用aiohttp，其他的如数据库驱动等各种Python对应的库也都得使用对应的aioXXX版本了。</p>
 
           
         
@@ -1337,7 +1438,7 @@ print(time)
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/34/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><span class="page-number current">35</span><a class="page-number" href="/page/36/">36</a><span class="space">&hellip;</span><a class="page-number" href="/page/53/">53</a><a class="extend next" rel="next" href="/page/36/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/34/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/34/">34</a><span class="page-number current">35</span><a class="page-number" href="/page/36/">36</a><span class="space">&hellip;</span><a class="page-number" href="/page/55/">55</a><a class="extend next" rel="next" href="/page/36/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1387,7 +1488,7 @@ print(time)
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">264</span>
+                  <span class="site-state-item-count">273</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1409,7 +1510,7 @@ print(time)
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1502,7 +1603,7 @@ print(time)
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共127.4k字</span>
+  <span class="post-count">博客全站共128.6k字</span>
 </div>
 
         
