@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="data structure," />
 
 
 
@@ -81,16 +81,46 @@
 
 
 
-<meta name="description" content="曾因酒醉鞭名马 生怕情多累美人">
+<meta name="description" content="堆 
+为什么堆排序没有快速排序快？
+堆排序是一种原地的、时间复杂度为O(nlogn)的排序算法
+
+堆是一棵完全二叉树
+堆中每一个节点的值都必须大于等于（或者小于等于）其子树中每个节点的值
+
+如何实现一个堆？以大顶堆为例子
+完全二叉树比较适合用数组来存储。用数组存储非常节省存储空间，单纯通过数组下标就可以找到一个节点的左右子节点和父节点。
+堆的插入数据
+12345678910111213141516">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ds之堆">
 <meta property="og:url" content="http://yoursite.com/2019/01/10/ds之堆/index.html">
 <meta property="og:site_name" content="上药三品，神与气精">
-<meta property="og:description" content="曾因酒醉鞭名马 生怕情多累美人">
-<meta property="og:updated_time" content="2019-01-10T05:50:02.968Z">
+<meta property="og:description" content="堆 
+为什么堆排序没有快速排序快？
+堆排序是一种原地的、时间复杂度为O(nlogn)的排序算法
+
+堆是一棵完全二叉树
+堆中每一个节点的值都必须大于等于（或者小于等于）其子树中每个节点的值
+
+如何实现一个堆？以大顶堆为例子
+完全二叉树比较适合用数组来存储。用数组存储非常节省存储空间，单纯通过数组下标就可以找到一个节点的左右子节点和父节点。
+堆的插入数据
+12345678910111213141516">
+<meta property="og:updated_time" content="2019-01-20T08:10:26.903Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ds之堆">
-<meta name="twitter:description" content="曾因酒醉鞭名马 生怕情多累美人">
+<meta name="twitter:description" content="堆 
+为什么堆排序没有快速排序快？
+堆排序是一种原地的、时间复杂度为O(nlogn)的排序算法
+
+堆是一棵完全二叉树
+堆中每一个节点的值都必须大于等于（或者小于等于）其子树中每个节点的值
+
+如何实现一个堆？以大顶堆为例子
+完全二叉树比较适合用数组来存储。用数组存储非常节省存储空间，单纯通过数组下标就可以找到一个节点的左右子节点和父节点。
+堆的插入数据
+12345678910111213141516">
 
 
 
@@ -315,6 +345,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/data-structure/" itemprop="url" rel="index">
+                    <span itemprop="name">data structure</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -347,7 +399,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  610
                 </span>
               
 
@@ -363,7 +415,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -384,7 +436,31 @@
       
 
       
-        
+        <p>堆 </p>
+<p>为什么堆排序没有快速排序快？</p>
+<p>堆排序是一种原地的、时间复杂度为O(nlogn)的排序算法</p>
+<ul>
+<li>堆是一棵完全二叉树</li>
+<li>堆中每一个节点的值都必须大于等于（或者小于等于）其子树中每个节点的值</li>
+</ul>
+<p>如何实现一个堆？以大顶堆为例子</p>
+<p>完全二叉树比较适合用数组来存储。用数组存储非常节省存储空间，单纯通过数组下标就可以找到一个节点的左右子节点和父节点。</p>
+<p><em>堆的插入数据</em></p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Heap</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">int</span>[] a; <span class="comment">// 数组，从下标 1 开始存储数据</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">int</span> n;  <span class="comment">// 堆可以存储的最大数据个数</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">int</span> <span class="keyword">count</span>; <span class="comment">// 堆中已经存储的数据个数</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> Heap(<span class="keyword">int</span> capacity) &#123;</span><br><span class="line">    a = <span class="keyword">new</span> <span class="keyword">int</span>[capacity + <span class="number">1</span>];</span><br><span class="line">    n = capacity;</span><br><span class="line">    <span class="keyword">count</span> = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> insert(<span class="keyword">int</span> data) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">count</span> &gt;= n) <span class="keyword">return</span>; <span class="comment">// 堆满了</span></span><br><span class="line">    ++<span class="keyword">count</span>;</span><br><span class="line">    a[<span class="keyword">count</span>] = data;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="keyword">count</span>;</span><br><span class="line">    <span class="keyword">while</span> (i/<span class="number">2</span> &gt; <span class="number">0</span> &amp;&amp; a[i] &gt; a[i/<span class="number">2</span>]) &#123; <span class="comment">// 自下往上堆化</span></span><br><span class="line">      swap(a, i, i/<span class="number">2</span>); <span class="comment">// swap() 函数作用：交换下标为 i 和 i/2 的两个元素</span></span><br><span class="line">      i = i/<span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p><em>删除堆顶元素</em></p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> removeMax() &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">count</span> == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">-1</span>; <span class="comment">// 堆中没有数据</span></span><br><span class="line">  a[<span class="number">1</span>] = a[<span class="keyword">count</span>];</span><br><span class="line">  --<span class="keyword">count</span>;</span><br><span class="line">  heapify(a, <span class="keyword">count</span>, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> heapify(<span class="keyword">int</span>[] a, <span class="keyword">int</span> n, <span class="keyword">int</span> i) &#123; <span class="comment">// 自上往下堆化</span></span><br><span class="line">  <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">    <span class="keyword">int</span> maxPos = i;</span><br><span class="line">    <span class="keyword">if</span> (i*<span class="number">2</span> &lt;= n &amp;&amp; a[i] &lt; a[i*<span class="number">2</span>]) maxPos = i*<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span> (i*<span class="number">2</span>+<span class="number">1</span> &lt;= n &amp;&amp; a[maxPos] &lt; a[i*<span class="number">2</span>+<span class="number">1</span>]) maxPos = i*<span class="number">2</span>+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (maxPos == i) <span class="keyword">break</span>;</span><br><span class="line">    swap(a, i, maxPos);</span><br><span class="line">    i = maxPos;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><em>建堆</em></p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="function"><span class="keyword">void</span> <span class="title">buildHeap</span><span class="params">(<span class="keyword">int</span>[] a, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = n/<span class="number">2</span>; i &gt;= <span class="number">1</span>; --i) &#123;</span><br><span class="line">    heapify(a, n, i);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="function"><span class="keyword">void</span> <span class="title">heapify</span><span class="params">(<span class="keyword">int</span>[] a, <span class="keyword">int</span> n, <span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">    <span class="keyword">int</span> maxPos = i;</span><br><span class="line">    <span class="keyword">if</span> (i*<span class="number">2</span> &lt;= n &amp;&amp; a[i] &lt; a[i*<span class="number">2</span>]) maxPos = i*<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span> (i*<span class="number">2</span>+<span class="number">1</span> &lt;= n &amp;&amp; a[maxPos] &lt; a[i*<span class="number">2</span>+<span class="number">1</span>]) maxPos = i*<span class="number">2</span>+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (maxPos == i) <span class="keyword">break</span>;</span><br><span class="line">    swap(a, i, maxPos);</span><br><span class="line">    i = maxPos;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><em>堆排序</em></p>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// n 表示数据的个数，数组 a 中的数据从下标 1 到 n 的位置。</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">void</span> <span class="title">sort</span><span class="params">(<span class="keyword">int</span>[] a, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">  buildHeap(a, n);</span><br><span class="line">  <span class="keyword">int</span> k = n;</span><br><span class="line">  <span class="keyword">while</span> (k &gt; <span class="number">1</span>) &#123;</span><br><span class="line">    swap(a, <span class="number">1</span>, k);</span><br><span class="line">    --k;</span><br><span class="line">    heapify(a, k, <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>堆排序数据访问的方式没有快速排序友好。</li>
+</ul>
+<p>快速排序 数据是顺序访问的 对于堆来说 数据是跳着访问的</p>
+<ul>
+<li>对于同样的数据 排序过程中 堆排序算法的数据交换次数要多于快速排序。</li>
+</ul>
+
       
     </div>
     
@@ -398,6 +474,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/data-structure/" rel="tag"># data structure</a>
+          
+        </div>
       
 
       
@@ -607,7 +689,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共128.9k字</span>
+  <span class="post-count">博客全站共129.6k字</span>
 </div>
 
         
