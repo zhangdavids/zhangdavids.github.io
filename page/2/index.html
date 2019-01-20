@@ -371,7 +371,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  227
                 </span>
               
 
@@ -410,7 +410,31 @@
       
         
           
-            
+            <p>python当中的队列</p>
+<p>源码在 Lib/queue.py</p>
+<p>提供三种队列</p>
+<ul>
+<li>Queue（普通先进先出队列）</li>
+<li>LifoQueue（后进先出队列）</li>
+<li>PriorityQueue（优先级队列）</li>
+</ul>
+<p>提供封装的方法为</p>
+<ul>
+<li>qsize</li>
+<li>empty</li>
+<li>full</li>
+<li>put</li>
+<li>put_nowait</li>
+<li>get</li>
+<li>get_nowait</li>
+<li>task_done</li>
+<li>join</li>
+</ul>
+<p>这里着重说一下join()</p>
+<p>阻塞调用线程，直到队列中的所有任务被处理掉。</p>
+<p>只要有数据被加入队列，未完成的任务数就会增加。当消费者线程调用task_done()以指示该项目已检索并且其上的所有工作都已完成时，计数将减少。当未完成的任务数降到0，join()解除阻塞。</p>
+<p>示例如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">worker</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">        item = q.get()</span><br><span class="line">        <span class="keyword">if</span> item <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        do_work(item)</span><br><span class="line">        q.task_done()</span><br><span class="line"></span><br><span class="line">q = queue.Queue()</span><br><span class="line">threads = []</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(num_worker_threads):</span><br><span class="line">    t = threading.Thread(target=worker)</span><br><span class="line">    t.start()</span><br><span class="line">    threads.append(t)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> source():</span><br><span class="line">    q.put(item)</span><br><span class="line"></span><br><span class="line"><span class="comment"># block until all tasks are done</span></span><br><span class="line">q.join()</span><br><span class="line"></span><br><span class="line"><span class="comment"># stop workers</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(num_worker_threads):</span><br><span class="line">    q.put(<span class="keyword">None</span>)</span><br><span class="line"><span class="keyword">for</span> t <span class="keyword">in</span> threads:</span><br><span class="line">    t.join()</span><br></pre></td></tr></table></figure>
           
         
       
@@ -1349,7 +1373,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共129.7k字</span>
+  <span class="post-count">博客全站共130k字</span>
 </div>
 
         
