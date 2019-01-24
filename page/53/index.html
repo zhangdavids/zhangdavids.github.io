@@ -275,6 +275,455 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/25/how-to-use-awk/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/09/25/how-to-use-awk/" itemprop="url">how-to-use-awk</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-25T19:37:38+08:00">
+                2016-09-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/09/25/how-to-use-awk/" class="leancloud_visitors" data-flag-title="how-to-use-awk">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  755
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>说起linux下的几个用的人不多的上古神器，基本会想到sed awk，这里先总结下awk的用法。  </p>
+<p>直接上实例吧  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$ cat netstat.txt</span><br><span class="line">Proto Recv-Q Send-Q Local-Address          Foreign-Address             State</span><br><span class="line">tcp        0      0 0.0.0.0:3306           0.0.0.0:*                   LISTEN</span><br><span class="line">tcp        0      0 0.0.0.0:80             0.0.0.0:*                   LISTEN</span><br><span class="line">tcp        0      0 127.0.0.1:9000         0.0.0.0:*                   LISTEN</span><br><span class="line">tcp        0      0 coolshell.cn:80        124.205.5.146:18245         TIME_WAIT</span><br><span class="line">tcp        0      0 coolshell.cn:80        61.140.101.185:37538        FIN_WAIT2</span><br><span class="line">tcp        0      0 coolshell.cn:80        110.194.134.189:1032        ESTABLISHED</span><br><span class="line">tcp        0      0 coolshell.cn:80        123.169.124.111:49809       ESTABLISHED</span><br><span class="line">tcp        0      0 coolshell.cn:80        116.234.127.77:11502        FIN_WAIT2</span><br><span class="line">tcp        0      0 coolshell.cn:80        123.169.124.111:49829       ESTABLISHED</span><br><span class="line">tcp        0      0 coolshell.cn:80        183.60.215.36:36970         TIME_WAIT</span><br><span class="line">tcp        0   4166 coolshell.cn:80        61.148.242.38:30901         ESTABLISHED</span><br><span class="line">tcp        0      1 coolshell.cn:80        124.152.181.209:26825       FIN_WAIT1</span><br><span class="line">tcp        0      0 coolshell.cn:80        110.194.134.189:4796        ESTABLISHED</span><br><span class="line">tcp        0      0 coolshell.cn:80        183.60.212.163:51082        TIME_WAIT</span><br><span class="line">tcp        0      1 coolshell.cn:80        208.115.113.92:50601        LAST_ACK</span><br><span class="line">tcp        0      0 coolshell.cn:80        123.169.124.111:49840       ESTABLISHED</span><br><span class="line">tcp        0      0 coolshell.cn:80        117.136.20.85:50025         FIN_WAIT2</span><br><span class="line">tcp        0      0 :::22                  :::*                        LISTEN</span><br></pre></td></tr></table></figure>
+<p>从netstat命令中提取了如上信息作为用例  </p>
+<p>输出第1列和第4例  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">'&#123;print $1, $4&#125;'</span> netstat.txt</span><br></pre></td></tr></table></figure>
+<ul>
+<li>其中单引号中的被大括号括着的就是awk的语句，注意，其只能被单引号包含。</li>
+<li>其中的$1..$n表示第几例。注：$0表示整个行。</li>
+</ul>
+<p>再来看看awk的格式化输出，和C语言的printf没什么两样：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">'&#123;printf "%-8s %-8s %-8s %-18s %-22s %-15s\n",$1,$2,$3,$4,$5,$6&#125;'</span> netstat.txt</span><br></pre></td></tr></table></figure>
+<p>再来看看如何过滤记录（下面过滤条件为：第三列的值为0 &amp;&amp; 第6列的值为LISTEN）  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">'$3==0 &amp;&amp; $6=="LISTEN" '</span> netstat.txt</span><br></pre></td></tr></table></figure>
+<p>其中的“==”为比较运算符。其他比较运算符：!=, &gt;, &lt;, &gt;=, &lt;=</p>
+<p>我们来看看各种过滤记录的方式：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">' $3&gt;0 &#123;print $0&#125;'</span> netstat.txt</span><br></pre></td></tr></table></figure>
+<p>需要表头的话，我们可以引入内建变量NR：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">'$3==0 &amp;&amp; $6=="LISTEN" || NR==1 '</span> netstat.txt</span><br></pre></td></tr></table></figure>
+<p>加上格式化输出：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">'$3==0 &amp;&amp; $6=="LISTEN" || NR==1 &#123;printf "%-20s %-20s %s\n",$4,$5,$6&#125;'</span> netstat.txt</span><br></pre></td></tr></table></figure>
+<p>说到了内建变量，我们可以来看看awk的一些内建变量：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">变量</th>
+<th style="text-align:left">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$0</td>
+<td style="text-align:left">当前记录（这个变量中存放着整个行的内容）</td>
+</tr>
+<tr>
+<td style="text-align:center">$1~$n</td>
+<td style="text-align:left">当前记录的第n个字段，字段间由FS分隔</td>
+</tr>
+<tr>
+<td style="text-align:center">FS</td>
+<td style="text-align:left">输入字段分隔符 默认是空格或Tab</td>
+</tr>
+<tr>
+<td style="text-align:center">NF</td>
+<td style="text-align:left">当前记录中的字段个数，就是有多少列</td>
+</tr>
+<tr>
+<td style="text-align:center">NR</td>
+<td style="text-align:left">已经读出的记录数，就是行号，从1开始，如果有多个文件话，这个值也是不断累加中。</td>
+</tr>
+<tr>
+<td style="text-align:center">FNR</td>
+<td style="text-align:left">当前记录数，与NR不同的是，这个值会是各个文件自己的行号</td>
+</tr>
+<tr>
+<td style="text-align:center">RS</td>
+<td style="text-align:left">输入的记录分隔符， 默认为换行符</td>
+</tr>
+<tr>
+<td style="text-align:center">OFS</td>
+<td style="text-align:left">输出字段分隔符， 默认也是空格</td>
+</tr>
+<tr>
+<td style="text-align:center">ORS</td>
+<td style="text-align:left">输出的记录分隔符，默认为换行符</td>
+</tr>
+<tr>
+<td style="text-align:center">FILENAME</td>
+<td style="text-align:left">当前输入文件的名字</td>
+</tr>
+</tbody>
+</table>
+<p>如果要输出行号：  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">'$3==0 &amp;&amp; $6=="ESTABLISHED" || NR==1 &#123;printf "%02s %s %-20s %-20s %s\n",NR, FNR, $4,$5,$6&#125;'</span> netstat.txt</span><br></pre></td></tr></table></figure>
+<p>未完待续  </p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/08/how-to-use-sed-in-linux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/08/08/how-to-use-sed-in-linux/" itemprop="url">how-to-use-sed-in-linux</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-08T20:08:19+08:00">
+                2016-08-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/08/08/how-to-use-sed-in-linux/" class="leancloud_visitors" data-flag-title="how-to-use-sed-in-linux">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>sed是一个很好的文件处理工具，本身是一个管道命令，主要是以行为单位进行处理，可以将数据行进行替换、删除、新增、选取等特定工作，下面先了解一下sed的用法<br>sed命令行格式为：  </p>
+<pre><code>sed [-nefri] ‘command’ 输入文本        
+</code></pre><p>常用选项：</p>
+<pre><code>-n∶使用安静(silent)模式。在一般 sed 的用法中，所有来自 STDIN的资料一般都会被列出到萤幕上。但如果加上 -n 参数后，则只有经过sed 特殊处理的那一行(或者动作)才会被列出来。  
+-e∶直接在指令列模式上进行 sed 的动作编辑；  
+-f∶直接将 sed 的动作写在一个档案内， -f filename 则可以执行 filename 内的sed 动作；  
+-r∶sed 的动作支援的是延伸型正规表示法的语法。(预设是基础正规表示法语法)  
+-i∶直接修改读取的档案内容，而不是由萤幕输出。         
+</code></pre><p>常用命令：</p>
+<pre><code>a  ∶新增， a 的后面可以接字串，而这些字串会在新的一行出现(目前的下一行)～
+c  ∶取代， c 的后面可以接字串，这些字串可以取代 n1,n2 之间的行！
+d  ∶删除，因为是删除啊，所以 d 后面通常不接任何咚咚；
+i  ∶插入， i 的后面可以接字串，而这些字串会在新的一行出现(目前的上一行)；
+p  ∶列印，亦即将某个选择的资料印出。通常 p 会与参数 sed -n 一起运作～
+s  ∶取代，可以直接进行取代的工作哩！通常这个 s 的动作可以搭配正规表示法！例如 1,20s/old/new/g 就是啦！
+</code></pre><p>举例：（假设我们有一文件名为ab）  </p>
+<p>   删除某行</p>
+<pre><code>[root@localhost ruby] # sed &apos;1d&apos; ab              #删除第一行 
+[root@localhost ruby] # sed &apos;$d&apos; ab              #删除最后一行
+[root@localhost ruby] # sed &apos;1,2d&apos; ab           #删除第一行到第二行
+[root@localhost ruby] # sed &apos;2,$d&apos; ab           #删除第二行到最后一行
+</code></pre><p>　显示某行  
+　</p>
+<pre><code>[root@localhost ruby] # sed -n &apos;1p&apos; ab           #显示第一行
+
+[root@localhost ruby] # sed -n &apos;$p&apos; ab           #显示最后一行  
+
+[root@localhost ruby] # sed -n &apos;1,2p&apos; ab        #显示第一行到第二行 
+
+[root@localhost ruby] # sed -n &apos;2,$p&apos; ab        #显示第二行到最后一行  
+</code></pre><p>　使用模式进行查询</p>
+<pre><code>[root@localhost ruby] # sed -n &apos;/ruby/p&apos; ab    #查询包括关键字ruby所在所有行   
+[root@localhost ruby] # sed -n &apos;/\$/p&apos; ab        #查询包括关键字$所在所有行，使用反斜线\屏蔽特殊含义
+</code></pre><p>　增加一行或多行字符串<br>　<br>　<br>　        [root@localhost ruby]# cat ab<br>    Hello!<br>    ruby is me,welcome to my blog.<br>    end    </p>
+<p>   [root@localhost ruby] # sed ‘1a drink tea’ ab  #第一行后增加字符串”drink tea”<br>     Hello!<br>     drink tea<br>     ruby is me,welcome to my blog.<br>     end<br>     [root@localhost ruby] # sed ‘1,3a drink tea’ ab #第一行到第三行后增加字符串”drink tea”<br>     Hello!<br>     drink tea<br>     ruby is me,welcome to my blog.<br>     drink tea<br>     end<br>     drink tea<br>     [root@localhost ruby] # sed ‘1a drink tea\nor coffee’ ab   #第一行后增加多行，使用换行符\n<br>     Hello!<br>     drink tea<br>     or coffee<br>     ruby is me,welcome to my blog.<br>     end</p>
+<p>　　代替一行或多行<br>     [root@localhost ruby] # sed ‘1c Hi’ ab                #第一行代替为Hi<br>     Hi<br>     ruby is me,welcome to my blog.<br>     end<br>     [root@localhost ruby] # sed ‘1,2c Hi’ ab             #第一行到第二行代替为Hi<br>     Hi<br>     end</p>
+<p>　　替换一行中的某部分<br>　　格式：sed ‘s/要替换的字符串/新的字符串/g’   （要替换的字符串可以用正则表达式）<br>     [root@localhost ruby] # sed -n ‘/ruby/p’ ab | sed ‘s/ruby/bird/g’    #替换ruby为bird<br>　  [root@localhost ruby] # sed -n ‘/ruby/p’ ab | sed ‘s/ruby//g’        #删除ruby</p>
+<pre><code>插入
+[root@localhost ruby] # sed -i &apos;$a bye&apos; ab         #在文件ab中最后一行直接输入&quot;bye&quot;
+[root@localhost ruby]# cat ab
+Hello!
+ruby is me,welcome to my blog.
+end
+bye
+
+删除匹配行
+
+ sed -i &apos;/匹配字符串/d&apos;  filename  （注：若匹配字符串是变量，则需要“”，而不是‘’。记得好像是）
+
+ 替换匹配行中的某个字符串
+
+ sed -i &apos;/匹配字符串/s/替换源字符串/替换目标字符串/g&apos; filename
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/24/为何你学不好高等数学/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -845,333 +1294,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/17/python实战之django小试/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/05/17/python实战之django小试/" itemprop="url">python实战之django小试</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-17T17:26:04+08:00">
-                2016-05-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2016/05/17/python实战之django小试/" class="leancloud_visitors" data-flag-title="python实战之django小试">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  0
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/05/17/python实战之使用webpy构建小型电影网站/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/05/17/python实战之使用webpy构建小型电影网站/" itemprop="url">python实战之使用webpy构建小型电影网站</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-17T17:25:17+08:00">
-                2016-05-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2016/05/17/python实战之使用webpy构建小型电影网站/" class="leancloud_visitors" data-flag-title="python实战之使用webpy构建小型电影网站">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  0
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/52/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/52/">52</a><span class="page-number current">53</span><a class="page-number" href="/page/54/">54</a><span class="space">&hellip;</span><a class="page-number" href="/page/56/">56</a><a class="extend next" rel="next" href="/page/54/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/52/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/52/">52</a><span class="page-number current">53</span><a class="page-number" href="/page/54/">54</a><span class="space">&hellip;</span><a class="page-number" href="/page/57/">57</a><a class="extend next" rel="next" href="/page/54/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1221,7 +1348,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">280</span>
+                  <span class="site-state-item-count">282</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

@@ -275,6 +275,393 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/20/jwt认证和python实践/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/20/jwt认证和python实践/" itemprop="url">jwt认证和python实践</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-20T14:38:44+08:00">
+                2018-08-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/08/20/jwt认证和python实践/" class="leancloud_visitors" data-flag-title="jwt认证和python实践">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  584
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>授权认证</p>
+<p>几种常用的认证机制</p>
+<hr>
+<p>HTTP Basic Auth 在HTTP中，基本认证是一种用来允许Web浏览器或其他客户端程序在请求时提供用户名和口令形式的身份凭证的一种登录验证方式，通常用户名和明码会通过HTTP头传递。</p>
+<p>在发送之前是以用户名追加一个冒号然后串接上口令，并将得出的结果字符串再用Base64算法编码。例如，提供的用户名是Aladdin、口令是open sesame，则拼接后的结果就是Aladdin:open sesame，然后再将其用Base64编码，得到QWxhZGRpbjpvcGVuIHNlc2FtZQ==。最终将Base64编码的字符串发送出去，由接收者解码得到一个由冒号分隔的用户名和口令的字符串。</p>
+<p>OAuth 是一个关于授权（authorization）的开放网络标准。允许用户提供一个令牌，而不是用户名和密码来访问他们存放在特定服务提供者的数据。现在的版本是2.0版。</p>
+<p>严格来说，OAuth2不是一个标准协议，而是一个安全的授权框架。它详细描述了系统中不同角色、用户、服务前端应用（比如API），以及客户端（比如网站或移动App）之间怎么实现相互认证。</p>
+<pre><code> (A)用户打开客户端以后，客户端要求用户给予授权。
+（B）用户同意给予客户端授权。
+（C）客户端使用上一步获得的授权，向认证服务器申请令牌。
+（D）认证服务器对客户端进行认证以后，确认无误，同意发放令牌。
+（E）客户端使用令牌，向资源服务器申请获取资源。
+（F）资源服务器确认令牌无误，同意向客户端开放资源。
+</code></pre><p>jwt 认证</p>
+<p>1.头部 包括类别和加密算法<br>2.载荷 payload<br>3.签名 signature</p>
+<p>JWT的主要优势在于使用无状态、可扩展的方式处理应用中的用户会话。服务端可以通过内嵌的声明信息，很容易地获取用户的会话信息，而不需要去访问用户或会话的数据库。在一个分布式的面向服务的框架中，这一点非常有用。</p>
+<p>python 后端使用 pyjwt</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/20/python-17-tips/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/20/python-17-tips/" itemprop="url">python-17-tips</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-20T12:30:31+08:00">
+                2018-08-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/08/20/python-17-tips/" class="leancloud_visitors" data-flag-title="python-17-tips">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  232
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1.交换变量值</p>
+<pre><code>a, b = b, a
+</code></pre><p>2.列表元素转字符串</p>
+<pre><code>&quot;&quot;.join(a)
+</code></pre><p>3.查找列表中频率最高的值</p>
+<pre><code>from collections import Counter
+
+
+cnt = Counter(a)
+cnt.most_common(3)
+</code></pre><p>4.检查两个字符串是不是由相同字母不同顺序组成的</p>
+<pre><code>from collections import Counter
+
+
+Counter(str1) == Counter(str2)
+</code></pre><p>5.反转字符串</p>
+<pre><code>a[::-1]
+
+reversed(a)
+
+a.reverse()
+</code></pre><p>6.反转列表</p>
+<p>7.转置二维数组</p>
+<pre><code>list(zip(*original))
+</code></pre><p>8.链式比较</p>
+<p>9.链式函数调用</p>
+<p>10.复制列表</p>
+<pre><code>deepcopy() 不影响原来的
+
+copy（） 浅拷贝实际上是引用 会改变
+</code></pre><p>11.字典get方法</p>
+<p>12.通过键排序字典元素</p>
+<pre><code>from operator import itemgetter
+
+
+sorted(d.items(), key=itemgetter(1)
+</code></pre><p>13.for else</p>
+<p>14.转换列表为逗号分割符格式</p>
+<p>15.合并字典</p>
+<pre><code>{**a, **b}
+</code></pre><p>16.列表中最小和最大值的索引</p>
+<pre><code>def minIndex(lst):
+    return min(range(len(lst)), key=lst.__getitem__)
+</code></pre><p>17.移除列表中重复的元素</p>
+<pre><code>from collections import OrderedDict
+
+
+OrderedDict.fromkeys(items).keys()
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/17/django-cache/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -871,351 +1258,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/16/how-to-be-a-data-scientist-12/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/16/how-to-be-a-data-scientist-12/" itemprop="url">how to be a data scientist 12</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-16T11:31:09+08:00">
-                2018-08-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/08/16/how-to-be-a-data-scientist-12/" class="leancloud_visitors" data-flag-title="how to be a data scientist 12">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  474
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>花一两年时间去向一些有经验和资历的人（以及他的队伍）学习，</p>
-<p>在此之后，再尝试一个人走下去。</p>
-<ol>
-<li>Hadoop是一项非常重要的工具，并且对于数据科学有非常非同一般的影响力。</li>
-<li>干这一行工作最重要的技能就是拥有扎实的技术知识（尤其是一些相关的工具），这包括了能够熟练使用合适的工具来解决手边遇到的各种问题。</li>
-<li>数据科学家每天的生活包括优化现有的运行流程，以及创造能够提高用户体验的产品。</li>
-<li>在实战中，“数据科学家”和“机器学习专家”基本上是同义词。</li>
-<li>零售业之所以需要数据科学是因为他们有大量亟待分析的数据，并且有很多数据相关的问题亟待解决。但是大部分的数据分析师仅仅是通过把现有的模型套进这些数据中去做出结果，而不是去思考开发新的模型。</li>
-<li>数据科学中最有挑战性的问题也可能是未来几年这个领域将会不得不面对的难题，那就是如何从大数据中归纳出合适的问题，找对正确的研究方向以及最终使用合适的方法做出可靠的结果。</li>
-<li>如果你想要成为一名出色的数据科学家，一定要记住，在你转向一个新的技术之前，一定要确保自己已经非常熟练于当前的技术了。</li>
-<li>你的工作环境以及行业对于你的职业发展是有很大影响的，尤其是在事业的起步阶段。</li>
-<li>数据科学的未来很光明的，这个领域在未来一定会越来越多元化。</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/16/how-to-be-a-data-scientist-11/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/16/how-to-be-a-data-scientist-11/" itemprop="url">how to be a data scientist 11</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-16T11:31:00+08:00">
-                2018-08-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/08/16/how-to-be-a-data-scientist-11/" class="leancloud_visitors" data-flag-title="how to be a data scientist 11">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  585
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Raj Bondugula博士预计在未来数据提取、转换和加载工具（ETL）都将不再具有任何市场前景了，因为他们都将被Hadoop替代。Hadoop在博士眼里是当今世界最有前景的数据科学工具，当然还有它的一些“家庭成员”——Mahout、HDFS等。正是这些工具的存在让越来越多具有挑战性的工作（例如并行计算）相对容易起来，虽然也算不上简单。说到Hadoop前景，他同样预言可能会有MapReduce以外的很多其他大数据分析理念出现，而它们都将被广泛地运用到大数据分析中。</p>
-<p>对于Raj Bondugula博士来说，在数据科学领域最有挑战性的事情，其实这可能也是整个数据分析领域需要面对的巨大挑战，就是如何从海量的数据中找到合适的问题去入手分析，以及获得有价值有意义的结果。诸如“这批数据有什么价值？”之类的开放式问题可能在未来不再流行了，因为你并不能以此获得具有洞见的结论（即使结果是正确的）。他相信任何假设的来源一定要基于商业知识。而这就需要更高的创新能力，在这方面人类的直觉和能力是计算机完全无法替代的。</p>
-<p>从他个人来说，Bondugula博士却是一个非常自信的人，虽然他知道很多技术或者领域知识都需要从皮毛开始一层一层地学下去，但是他觉得数据科学这个领域是很好的。正如大家所期待的那样，他计划在未来的很多年都从事这一行业。</p>
-<p> 給出的建议：</p>
-<p> “在某个方面成为该领域的专家，可以是统计，也可以是机器学习或者Java编程，然后再一件接一件地慢慢尝试更多的事情”。你也需要接受别人的帮助，因为你不可能一个人解决所有的问题。此外，交际圈和沟通技巧同样也是非常重要的，所以你也需要着力于培养自己的一些包括“软实力”在内的一些技能。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/28/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><span class="page-number current">29</span><a class="page-number" href="/page/30/">30</a><span class="space">&hellip;</span><a class="page-number" href="/page/56/">56</a><a class="extend next" rel="next" href="/page/30/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/28/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><span class="page-number current">29</span><a class="page-number" href="/page/30/">30</a><span class="space">&hellip;</span><a class="page-number" href="/page/57/">57</a><a class="extend next" rel="next" href="/page/30/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1265,7 +1312,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">280</span>
+                  <span class="site-state-item-count">282</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
