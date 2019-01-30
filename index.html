@@ -275,6 +275,415 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/30/kaggle总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/01/30/kaggle总结/" itemprop="url">kaggle总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-30T08:25:21+08:00">
+                2019-01-30
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/kaggle/" itemprop="url" rel="index">
+                    <span itemprop="name">kaggle</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/01/30/kaggle总结/" class="leancloud_visitors" data-flag-title="kaggle总结">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.7k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  11
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>主要是机器学习的过程</p>
+<p>采用scikit-learn 结合pandas numpy matplotlib seaborn</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">import</span> pandas as pd</span><br><span class="line"></span><br><span class="line"><span class="attr">input_df</span> = pd.read_csv('data/raw/train.csv', <span class="attr">header=0)</span></span><br><span class="line"><span class="attr">submit_df</span>  = pd.read_csv('data/raw/test.csv',  <span class="attr">header=0)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 合并他们</span></span><br><span class="line"><span class="attr">df</span> = pd.concat([input_df, submit_df])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重建index</span></span><br><span class="line">df.reset_index(<span class="attr">inplace=True)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除reset_index()产生的index column</span></span><br><span class="line">df.drop('index', <span class="attr">axis=1,</span> <span class="attr">inplace=True)</span></span><br><span class="line"></span><br><span class="line">print df.shape[<span class="number">1</span>], <span class="string">"columns:"</span>, df.columns.values</span><br><span class="line">print <span class="string">"Row count:"</span>, df.shape[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+<p>输出如下</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="number">12</span> <span class="string">columns:</span> [<span class="string">'PassengerId'</span> <span class="string">'Survived'</span> <span class="string">'Pclass'</span> <span class="string">'Name'</span> <span class="string">'Sex'</span> <span class="string">'Age'</span> <span class="string">'SibSp'</span> <span class="string">'Parch'</span></span><br><span class="line"> <span class="string">'Ticket'</span> <span class="string">'Fare'</span> <span class="string">'Cabin'</span> <span class="string">'Embarked'</span>]</span><br><span class="line">Row <span class="string">count:</span> <span class="number">1309</span></span><br></pre></td></tr></table></figure>
+<p>可以看到有12个特征</p>
+<p>查看数据的完整性情况</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">observe</span><span class="params">(df)</span>:</span></span><br><span class="line">	<span class="keyword">print</span> <span class="string">"column: "</span>, df.shape[<span class="number">1</span>]</span><br><span class="line">	columns = df.columns</span><br><span class="line">	<span class="keyword">for</span> i <span class="keyword">in</span> columns:</span><br><span class="line">		<span class="keyword">print</span> i, <span class="string">"missing "</span>,pd.isnull(df[i]).sum(), <span class="string">" type:"</span>, df[i].dtypes</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Cabin 缺失很严重，我想可以忽略这一个特征了。</li>
+<li>Age 缺失的并不多，而且Age是一个重要的特征，应该保留。</li>
+</ul>
+<h3 id="如何处理缺失的数据"><a href="#如何处理缺失的数据" class="headerlink" title="如何处理缺失的数据"></a>如何处理缺失的数据</h3><ol>
+<li>直接扔掉出现缺失Value的数据：只有少量的数据出现缺失Value的情况，这样做比较简单快捷。</li>
+<li>给缺失的Value赋特殊值来表明它是缺失的：比较适用于分类变量，因为缺失Value就是不存在的数据，如果给他分配平均值之类的数值并没有什么意义。除非是某些潜在原因使某些缺失值会影响其与另外一个值的关联(correlation)。并且这种方法不适用于连续变量。不过对于二元变量(binary variables)，我们可以把他的缺失值赋为0，正常情况下True为1，False为-1。</li>
+<li>给缺失的Value赋平均值：这种简单的做法很普遍，对于不重要的特征来说用这种方法足矣。还可以结合其他变量来算平均值。对于分类变量，使用最常见的值或许比平均值更好。</li>
+<li>使用机器学习算法/模型来预测缺失数据：感觉只有数据量很大的情况下这样做才有效。</li>
+</ol>
+<h3 id="定量转换"><a href="#定量转换" class="headerlink" title="定量转换"></a>定量转换</h3><p>变量转换的目的是将数据转换为模型适用的格式，不同方法实现的随机森林(Random Forest)接受不同类型的数据，Scikit-learn要求数据都是数字型numeric，所以我们要将原始数据转换为数字型numeric。</p>
+<p>所有的数据可以分为两类：1.定性(Quantitative)变量可以以某种方式排序，Age就是一个很好的列子。2.定量(Qualitative)变量描述了物体的某一（不能被数学表示的）方面，Embarked就是一个例子。</p>
+<p>Dummy Variables<br>就是类别变量或者二元变量，当qualitative variable是一些频繁出现的几个独立变量时，Dummy Variables比较适合使用。我们以Embarked为例，Embarked只包含三个值’S’,’C’,’Q’，我们可以使用下面的代码将其转换为dummies:</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">embark_dummies  = pd.get_dummies(df[<span class="string">'Embarked'</span>])</span><br><span class="line">df = df.<span class="keyword">join</span>(embark_dummies)</span><br><span class="line">df.drop([<span class="string">'Embarked'</span>], axis=<span class="number">1</span>,inplace=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<p>Factorizing<br>dummy不好处理Cabin（船舱号）这种标称属性，因为他出现的变量比较多。所以Pandas有一个方法叫做factorize()，它可以创建一些数字，来表示类别变量，对每一个类别映射一个ID，这种映射最后只生成一个特征，不像dummy那样生成多个特征。</p>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br><span class="line"></span><br><span class="line"># <span class="symbol">Replace</span> missing values with <span class="string">"U0"</span></span><br><span class="line">df[<span class="string">'Cabin'</span>][df.<span class="symbol">Cabin</span>.isnull()] = <span class="string">'U0'</span></span><br><span class="line"></span><br><span class="line"># create feature for the alphabetical part of the cabin number</span><br><span class="line">df[<span class="string">'CabinLetter'</span>] = df[<span class="string">'Cabin'</span>].map( lambda x : re.compile(<span class="string">"([a-zA-Z]+)"</span>).search(x).group())</span><br><span class="line"></span><br><span class="line"># convert the distinct cabin letters with incremental integer values</span><br><span class="line">df[<span class="string">'CabinLetter'</span>] = pd.factorize(df[<span class="string">'CabinLetter'</span>])[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+<p>Scaling<br>Scaling可以将一个很大范围的数值映射到一个很小的范围(通常是-1 - 1，或则是0 - 1)，很多情况下我们需要将数值做Scaling使其范围大小一样，否则大范围数值特征将会由更高的权重。比如：Age的范围可能只是0-100，而income的范围可能是0-10000000，在某些对数组大小敏感的模型中会影响其结果。</p>
+<p>下面的代码是对Age进行Scaling：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># StandardScaler will subtract the mean from each value then scale to the unit variance</span></span><br><span class="line"><span class="attribute">scaler</span> = preprocessing.StandardScaler()</span><br><span class="line">df[<span class="string">'Age_scaled'</span>] = scaler.fit_transform(df[<span class="string">'Age'</span>])</span><br></pre></td></tr></table></figure>
+<p>Binning<br>Binning通过观察“邻居”(即周围的值)来连续数据离散化。存储的值被分布到一些“桶”或箱中，就像直方图的bin将数据划分成几块一样。下面的代码对Fare进行Binning。</p>
+<figure class="highlight tcl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Divide all fares into quartiles</span></span><br><span class="line">df[<span class="string">'Fare_bin'</span>] = pd.qcut(df[<span class="string">'Fare'</span>], <span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># qcut() creates a new variable that identifies the quartile range, but we can't use the string so either</span></span><br><span class="line"><span class="comment"># factorize or create dummies from the result</span></span><br><span class="line">df[<span class="string">'Fare_bin_id'</span>] = pd.factorize(df[<span class="string">'Fare_bin'</span>])</span><br><span class="line">df = pd.<span class="keyword">concat</span>([df, pd.get_dummies(df[<span class="string">'Fare_bin'</span>]).<span class="keyword">rename</span>(columns=lambda x: <span class="string">'Fare_'</span> + str(x))], axis=<span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<p>特征提取很重要的一个方面是深入理解数据，并且能提取出新的特征来做预测。机器学习的核心就是模型选取和参数选择，特征提取可以说是重中之重。</p>
+<p>一个特征提取的例子是，从电话号码中提取中国家、地区、城市的信息，或者是从GPS中提取中国家、地区、城市的信息。只要能描述一个事物的qualitative变量，都有可能从中挖掘出有用的特征，另外，时序等信息也是非常有用的。</p>
+<p>泰坦尼克号的这些数据非常简单，我们并不需要对数据做太多的处理，我们下面只对name，cabin和ticket提取一些变量。</p>
+<ul>
+<li>name 提取称呼</li>
+<li>Cabin<br>客舱信息包含了甲板和房间号，不同甲板位置不同，逃生船数量不同，人群年龄分布不同等等。不同房间号离甲板距离不同，离逃生船距离不同，等等。所以从客舱中提取中甲板和房间号这两个特征很重要。</li>
+</ul>
+<p>机器学习的模型很多，用于分类有：</p>
+<ol>
+<li>回归算法：Logistic Regression、 Ordinary Least Square等等。</li>
+<li>决策树: CART、ID3、Random Forest等等。</li>
+<li>贝叶斯：Navie Bayesian、BBN等等。</li>
+<li>基于实例的算法：KNN、LVQ等等。</li>
+<li>组合模型、关联规则、神经网络、深度学习等等。<br>模型太多都看晕了，这种场景下选什么模型合适？</li>
+</ol>
+<p>随机森林</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">from sklearn<span class="selector-class">.ensemble</span> import RandomForestClassifier</span><br><span class="line">X = df[:input_df<span class="selector-class">.shape</span>[<span class="number">0</span>]]<span class="selector-class">.values</span>[:, <span class="number">1</span>::]</span><br><span class="line">y = df[:input_df<span class="selector-class">.shape</span>[<span class="number">0</span>]]<span class="selector-class">.values</span>[:, <span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">X_test = df[input_df<span class="selector-class">.shape</span>[<span class="number">0</span>]:]<span class="selector-class">.values</span>[:, <span class="number">1</span>::]</span><br><span class="line">random_forest = RandomForestClassifier(oob_score=True, n_estimators=<span class="number">1000</span>)</span><br><span class="line">random_forest.fit(X, y)</span><br><span class="line"></span><br><span class="line">Y_pred = random_forest.predict(X_test)</span><br><span class="line">print random_forest.score(X, y)</span><br><span class="line">submission = pd.DataFrame(&#123;</span><br><span class="line">	    <span class="string">"PassengerId"</span>: X_origin[<span class="string">"PassengerId"</span>],</span><br><span class="line">	    <span class="string">"Survived"</span>: Y_pred.astype(int)</span><br><span class="line">	&#125;)</span><br><span class="line">submission.to_csv(<span class="string">'result.csv'</span>, index=False)</span><br></pre></td></tr></table></figure>
+<p>GBDT</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from sklearn<span class="selector-class">.ensemble</span> import GradientBoostingClassifier</span><br><span class="line">X = df[:input_df<span class="selector-class">.shape</span>[<span class="number">0</span>]]<span class="selector-class">.values</span>[:, <span class="number">1</span>::]</span><br><span class="line">y = df[:input_df<span class="selector-class">.shape</span>[<span class="number">0</span>]]<span class="selector-class">.values</span>[:, <span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">X_test = df[input_df<span class="selector-class">.shape</span>[<span class="number">0</span>]:]<span class="selector-class">.values</span>[:, <span class="number">1</span>::]</span><br><span class="line">GBDT = GradientBoostingClassifier(n_estimators=<span class="number">1000</span>)</span><br><span class="line">GBDT.fit(X, y)</span><br><span class="line"></span><br><span class="line">Y_pred = GBDT.predict(X_test)</span><br><span class="line">print GBDT.score(X, y)</span><br><span class="line">submission = pd.DataFrame(&#123;</span><br><span class="line">	    <span class="string">"PassengerId"</span>: X_origin[<span class="string">"PassengerId"</span>],</span><br><span class="line">	    <span class="string">"Survived"</span>: Y_pred.astype(int)</span><br><span class="line">	&#125;)</span><br><span class="line">submission.to_csv(<span class="string">'result2.csv'</span>, index=False)</span><br></pre></td></tr></table></figure>
+<h3 id="调优-优化"><a href="#调优-优化" class="headerlink" title="调优 优化"></a>调优 优化</h3><p>再观察一下数据，看看还有那些特征可以用到，又去Google了一番，整理出三个新特征：称谓、家庭大小、姓。</p>
+<p>称谓：不同的称谓意味着不同的社会地位、不同的社会地位的人对人生、事物的理解不同。并且不同的社会地位乘坐逃生舱的概率也不同？可能某一类人的生存概率更高？</p>
+<p>家庭大小：一家七个人的逃生概率大还是一家两个人的逃生概率大呢？人多的家庭会不会更难逃生呢？</p>
+<p>姓：其实姓这个特征是为了辅助家庭这个特征的，同一个姓是一个家庭的概率更大？</p>
+<p>参数调优，Sklean提供了两种方法，GridSearch和RandomizedSearch。在这两种情况下，都可以指定每个参数的取值范围，创建一个字典。将参数字典提供给search方法，它就会执行模型所指定的值的组合。GridSearch会测试参数每一个可能的组合。 而RandomizedSearch需要指定有多少不同的组合要测试，然后随机选择并组合他们。</p>
+<p>使用Random Forest, 加上参数max_depth=5 防止模型过拟合，并将n_estimators放到了30000</p>
+<p>首先 Error = Bias + Variance，Error反映的是整个模型的准确度，Bias反映的是模型在样本上的输出与真实值之间的误差，即模型本身的精准度，Variance反映的是模型每一次输出结果与模型输出期望之间的误差，即模型的稳定性。<br>举一个例子，一次打靶实验，目标是为了打到10环，但是实际上只打到了7环，那么这里面的Error就是3。具体分析打到7环的原因，可能有两方面：一是瞄准出了问题，比如实际上射击瞄准的是9环而不是10环；二是枪本身的稳定性有问题，虽然瞄准的是9环，但是只打到了7环。那么在上面一次射击实验中，Bias就是1,反应的是模型期望与真实目标的差距，而在这次试验中，由于Variance所带来的误差就是2，即虽然瞄准的是9环，但由于本身模型缺乏稳定性，造成了实际结果与模型期望之间的差距。</p>
+<p>High variance，low bias意味着”overfitting”，模型过拟合导致不能很好的用于新数据。而High bias，low variance意味着”underfitting”，模型欠拟合导致不能很好从样本中学习，很难去预测新数据。Bias与Variance往往是不能兼得的。如果要降低模型的Bias，就一定程度上会提高模型的Variance，反之亦然。</p>
+<p>例如，如果模型存在high variance，一个常见的解决方法是给他增加更多的特征。但是这样也会增加bias，这中间的平衡需要仔细考虑。</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.learning_curve import learning_curve</span><br><span class="line">def plot_learning_curve(estimator, title, X, y, ylim=None, cv=None,</span><br><span class="line">                        n_jobs=1, train_sizes=np.linspace(.1, 1.0, 5)):</span><br><span class="line">    <span class="string">""</span>"</span><br><span class="line">    <span class="keyword">Generate</span> a simple <span class="keyword">plot</span> of the <span class="keyword">test</span> and traning learning curve.</span><br><span class="line"></span><br><span class="line">    Parameters</span><br><span class="line">    ----------</span><br><span class="line">    estimator : object <span class="keyword">type</span> that implements the <span class="string">"fit"</span> and <span class="string">"predict"</span> methods</span><br><span class="line">        <span class="keyword">An</span> object of that <span class="keyword">type</span> <span class="keyword">which</span> is cloned <span class="keyword">for</span> each validation.</span><br><span class="line"></span><br><span class="line">    title : <span class="built_in">string</span></span><br><span class="line">        Title <span class="keyword">for</span> the chart.</span><br><span class="line"></span><br><span class="line">    X : array-like, shape (n_samples, n_features)</span><br><span class="line">        Training vector, where n_samples is the number of samples and</span><br><span class="line">        n_features is the number of features.</span><br><span class="line"></span><br><span class="line">    y : array-like, shape (n_samples) or (n_samples, n_features), optional</span><br><span class="line">        Target relative to X <span class="keyword">for</span> classification or regression;</span><br><span class="line">        None <span class="keyword">for</span> unsupervised learning.</span><br><span class="line"></span><br><span class="line">    ylim : tuple, shape (ymin, ymax), optional</span><br><span class="line">        Defines minimum and maximum yvalues plotted.</span><br><span class="line"></span><br><span class="line">    cv : integer, <span class="keyword">cross</span>-validation generator, optional</span><br><span class="line">        <span class="keyword">If</span> <span class="keyword">an</span> integer is passed, it is the number of folds (defaults to 3).</span><br><span class="line">        Specific <span class="keyword">cross</span>-validation objects can be passed, see</span><br><span class="line">        sklearn.cross_validation module <span class="keyword">for</span> the <span class="keyword">list</span> of possible objects</span><br><span class="line"></span><br><span class="line">    n_jobs : integer, optional</span><br><span class="line">        Number of jobs to <span class="keyword">run</span> <span class="keyword">in</span> parallel (default 1).</span><br><span class="line">    <span class="string">""</span>"</span><br><span class="line">    plt.figure()</span><br><span class="line">    plt.title(title)</span><br><span class="line">    <span class="keyword">if</span> ylim is not None:</span><br><span class="line">        plt.ylim(*ylim)</span><br><span class="line">    plt.xlabel(<span class="string">"Training examples"</span>)</span><br><span class="line">    plt.ylabel(<span class="string">"Score"</span>)</span><br><span class="line">    train_sizes, train_scores, test_scores = learning_curve(</span><br><span class="line">        estimator, X, y, cv=cv, n_jobs=n_jobs, train_sizes=train_sizes)</span><br><span class="line">    train_scores_mean = np.<span class="keyword">mean</span>(train_scores, axis=1)</span><br><span class="line">    train_scores_std = np.std(train_scores, axis=1)</span><br><span class="line">    test_scores_mean = np.<span class="keyword">mean</span>(test_scores, axis=1)</span><br><span class="line">    test_scores_std = np.std(test_scores, axis=1)</span><br><span class="line">    plt.grid()</span><br><span class="line"></span><br><span class="line">    plt.fill_between(train_sizes, train_scores_mean - train_scores_std,</span><br><span class="line">                     train_scores_mean + train_scores_std, <span class="keyword">alpha</span>=0.1,</span><br><span class="line">                     color=<span class="string">"r"</span>)</span><br><span class="line">    plt.fill_between(train_sizes, test_scores_mean - test_scores_std,</span><br><span class="line">                     test_scores_mean + test_scores_std, <span class="keyword">alpha</span>=0.1, color=<span class="string">"g"</span>)</span><br><span class="line">    plt.<span class="keyword">plot</span>(train_sizes, train_scores_mean, 'o-', color=<span class="string">"r"</span>,</span><br><span class="line">             <span class="keyword">label</span>=<span class="string">"Training score"</span>)</span><br><span class="line">    plt.<span class="keyword">plot</span>(train_sizes, test_scores_mean, 'o-', color=<span class="string">"g"</span>,</span><br><span class="line">             <span class="keyword">label</span>=<span class="string">"Cross-validation score"</span>)</span><br><span class="line"></span><br><span class="line">    plt.legend(<span class="keyword">loc</span>=<span class="string">"best"</span>)</span><br><span class="line">    <span class="keyword">return</span> plt</span><br><span class="line">title = <span class="string">"Learning Curves"</span></span><br><span class="line">plot_learning_curve(RandomForestClassifier(oob_score=True, n_estimators=30000, max_depth=5), title, X, y, ylim=(0.5, 1.01), cv=None, n_jobs=4, train_sizes=[50, 100, 150, 200, 250, 350, 400])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/29/分享notebook/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/01/29/分享notebook/" itemprop="url">分享notebook</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-29T14:50:25+08:00">
+                2019-01-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/01/29/分享notebook/" class="leancloud_visitors" data-flag-title="分享notebook">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  267
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>通过File &gt; Download as &gt; HTML  菜单转换到html文件。</p>
+<p>用gists（<a href="https://www.dataquest.io/blog/jupyter-notebook-tips-tricks-shortcuts/gist.github.com）或者github分享你的notebook文件。这两个都可以呈现notebook，示例见链接（https://github.com/dataquestio/solutions/blob/master/Mission202Solution.ipynb）" target="_blank" rel="external">https://www.dataquest.io/blog/jupyter-notebook-tips-tricks-shortcuts/gist.github.com）或者github分享你的notebook文件。这两个都可以呈现notebook，示例见链接（https://github.com/dataquestio/solutions/blob/master/Mission202Solution.ipynb）</a></p>
+<p>如果你把自己的notebook文件上传到github的仓库，可以使用很便利的Mybinder（<a href="http://mybinder.org/）服务，允许另一个人进行半个小时的Jupyter交互连接到你的仓库。" target="_blank" rel="external">http://mybinder.org/）服务，允许另一个人进行半个小时的Jupyter交互连接到你的仓库。</a></p>
+<p>用jupyterhub（<a href="https://github.com/jupyterhub/jupyterhub）建立你自己的系统，这样你在组织微型课堂或者工作坊，无暇顾及学生们的机器时就非常便捷了。" target="_blank" rel="external">https://github.com/jupyterhub/jupyterhub）建立你自己的系统，这样你在组织微型课堂或者工作坊，无暇顾及学生们的机器时就非常便捷了。</a></p>
+<p>将你的notebook存储在像dropbox这样的网站上，然后把链接放在nbviewer（<a href="http://nbviewer.jupyter.org/），nbviewer可以呈现任意来源的notebook。" target="_blank" rel="external">http://nbviewer.jupyter.org/），nbviewer可以呈现任意来源的notebook。</a></p>
+<p>用菜单File &gt; Download as &gt; PDF 保存notebook为PDF文件。如果你选择本方法，我强烈建议你读一读Julius Schulz的文章（<a href="http://blog.juliusschulz.de/blog/ultimate-ipython-notebook）" target="_blank" rel="external">http://blog.juliusschulz.de/blog/ultimate-ipython-notebook）</a></p>
+<p>用Pelican从你的notebook创建一篇博客（<a href="https://www.dataquest.io/blog/how-to-setup-a-data-science-blog/）。" target="_blank" rel="external">https://www.dataquest.io/blog/how-to-setup-a-data-science-blog/）。</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/26/al之排序/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -769,330 +1178,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/25/leetcode-799/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/01/25/leetcode-799/" itemprop="url">leetcode-799</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-25T09:54:16+08:00">
-                2019-01-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/01/25/leetcode-799/" class="leancloud_visitors" data-flag-title="leetcode-799">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  84
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    double champagneTower(int poured, int query_row, int query_glass) &#123;</span><br><span class="line">        double result<span class="string">[101]</span><span class="string">[101]</span> = &#123;<span class="number">0</span>.<span class="number">0</span>&#125;;</span><br><span class="line">        result<span class="string">[0]</span><span class="string">[0]</span> = poured;</span><br><span class="line">        for (int i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</span><br><span class="line">            for (int j = <span class="number">0</span>; j &lt;= i; j++) &#123;</span><br><span class="line">                if (result<span class="string">[i]</span><span class="string">[j]</span> &gt;= <span class="number">1</span>) &#123;</span><br><span class="line">                    result<span class="string">[i + 1]</span><span class="string">[j]</span> += (result<span class="string">[i]</span><span class="string">[j]</span> - <span class="number">1</span>) / <span class="number">2</span>.<span class="number">0</span>;</span><br><span class="line">                    result<span class="string">[i + 1]</span><span class="string">[j + 1]</span> += (result<span class="string">[i]</span><span class="string">[j]</span> - <span class="number">1</span>) / <span class="number">2</span>.<span class="number">0</span>;</span><br><span class="line">                    result<span class="string">[i]</span><span class="string">[j]</span> = <span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return result<span class="string">[query_row]</span><span class="string">[query_glass]</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/25/leetcode-798/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/01/25/leetcode-798/" itemprop="url">leetcode-798</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-25T09:48:37+08:00">
-                2019-01-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/01/25/leetcode-798/" class="leancloud_visitors" data-flag-title="leetcode-798">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  47
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">bestRotation</span><span class="params">(self, A)</span>:</span></span><br><span class="line">        <span class="string">"""</span><br><span class="line">        :type A: List[int]</span><br><span class="line">        :rtype: int</span><br><span class="line">        """</span></span><br><span class="line">        N = len(A)</span><br><span class="line">        change = [<span class="number">1</span>] * N</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> xrange(N): </span><br><span class="line">            change[(i - A[i] + <span class="number">1</span>) % N] -= <span class="number">1</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">1</span>, N): </span><br><span class="line">            change[i] += change[i - <span class="number">1</span>]</span><br><span class="line">        <span class="keyword">return</span> change.index(max(change))</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1147,7 +1232,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">288</span>
+                  <span class="site-state-item-count">290</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1158,7 +1243,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1169,7 +1254,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1262,7 +1347,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共132.8k字</span>
+  <span class="post-count">博客全站共135.7k字</span>
 </div>
 
         
