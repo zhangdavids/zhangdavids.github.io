@@ -275,6 +275,203 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/21/ds之并查集/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/01/21/ds之并查集/" itemprop="url">ds之并查集</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-21T13:13:13+08:00">
+                2019-01-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/data-structure/" itemprop="url" rel="index">
+                    <span itemprop="name">data structure</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/01/21/ds之并查集/" class="leancloud_visitors" data-flag-title="ds之并查集">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>六个关系网就能达到全世界</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// quick_find.java</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.<span class="keyword">File</span>;</span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> UF &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> <span class="keyword">count</span>;   <span class="comment">//连通分量数</span></span><br><span class="line">    <span class="keyword">int</span>[] id;    <span class="comment">//每个数所属的连通分量</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> UF(<span class="keyword">int</span> N) &#123;   <span class="comment">//初始化时，N个点有N个分量</span></span><br><span class="line">        <span class="keyword">count</span> = N;</span><br><span class="line">        id = <span class="keyword">new</span> <span class="keyword">int</span>[N];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++)</span><br><span class="line">            id[i] = i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//返回连通分量数</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> getCount()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">count</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//查找x所属的连通分量</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> <span class="keyword">find</span>(<span class="keyword">int</span> x)&#123;</span><br><span class="line">        <span class="keyword">return</span> id[x];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//连接p,q(将q的分量改为p所在的分量)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> union(<span class="keyword">int</span> p,<span class="keyword">int</span> q)&#123;</span><br><span class="line">        <span class="keyword">int</span> pID=<span class="keyword">find</span>(p);</span><br><span class="line">        <span class="keyword">int</span> qID=<span class="keyword">find</span>(q);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;id.length;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">find</span>(i)==pID)&#123;</span><br><span class="line">                id[i]=qID;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">count</span>--;    <span class="comment">//记得每进行一次连接，分量数减“1”</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//判断p,q是否连接，即是否属于同一个分量</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">boolean</span> connected(<span class="keyword">int</span> p,<span class="keyword">int</span> q)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">find</span>(p)==<span class="keyword">find</span>(q);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) <span class="keyword">throws</span> Exception &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//数据从外部文件读入，“data.txt”放在项目的根目录下</span></span><br><span class="line">        Scanner input = <span class="keyword">new</span> Scanner(<span class="keyword">new</span> <span class="keyword">File</span>(<span class="string">"data.txt"</span>));  </span><br><span class="line">        <span class="keyword">int</span> N=input.nextInt();</span><br><span class="line">        UF uf = <span class="keyword">new</span> UF(N);</span><br><span class="line">        <span class="keyword">while</span>(input.hasNext())&#123;</span><br><span class="line">            <span class="keyword">int</span> p=input.nextInt();</span><br><span class="line">            <span class="keyword">int</span> q=input.nextInt();</span><br><span class="line">            <span class="keyword">if</span>(uf.connected(p, q)) <span class="keyword">continue</span>;        <span class="comment">//若p,q已属于同一连通分量不再连接，则故直接跳过</span></span><br><span class="line">            uf.union(p, q);</span><br><span class="line">            System.out.<span class="keyword">println</span>(p+<span class="string">"-"</span>+q);</span><br><span class="line">        </span><br><span class="line">        &#125;</span><br><span class="line">        System.out.<span class="keyword">println</span>(<span class="string">"总连通分量数："</span>+uf.getCount());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// quick_union.java</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.<span class="keyword">File</span>;</span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> UF &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> <span class="keyword">count</span>;   <span class="comment">//连通分量数</span></span><br><span class="line">    <span class="keyword">int</span>[] id;    <span class="comment">//每个数所属的连通分量</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> UF(<span class="keyword">int</span> N) &#123;   <span class="comment">//初始化时，N个点有N个分量</span></span><br><span class="line">        <span class="keyword">count</span> = N;</span><br><span class="line">        id = <span class="keyword">new</span> <span class="keyword">int</span>[N];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++)</span><br><span class="line">            id[i] = i;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//返回连通分量数</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> getCount()&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">count</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//查找x所属的连通分量</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> <span class="keyword">find</span>(<span class="keyword">int</span> x)&#123;</span><br><span class="line">        <span class="keyword">while</span>(x!=id[x]) x = id[x];  <span class="comment">//若找不到，则一直往根root回溯</span></span><br><span class="line">        <span class="keyword">return</span> x;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//连接p,q(将q的分量改为p所在的分量)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> union(<span class="keyword">int</span> p,<span class="keyword">int</span> q)&#123;</span><br><span class="line">        <span class="keyword">int</span> pID=<span class="keyword">find</span>(p);</span><br><span class="line">        <span class="keyword">int</span> qID=<span class="keyword">find</span>(q);</span><br><span class="line">        <span class="keyword">if</span>(pID==qID) <span class="keyword">return</span> ;</span><br><span class="line">        id[qID]=pID;</span><br><span class="line">        <span class="keyword">count</span>--;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/*</span><br><span class="line">    //查找x所属的连通分量</span><br><span class="line">    public int find(int x)&#123;</span><br><span class="line">        return id[x];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //连接p,q(将q的分量改为p所在的分量)</span><br><span class="line">    public void union(int p,int q)&#123;</span><br><span class="line">        int pID=find(p);</span><br><span class="line">        int qID=find(q);</span><br><span class="line">        if(pID==qID) return ;</span><br><span class="line">        for(int i=0;i&lt;id.length;i++)&#123;</span><br><span class="line">            if(find(i)==pID)&#123;</span><br><span class="line">                id[i]=qID;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        count--;    //记得每进行一次连接，分量数减“1”</span><br><span class="line">    &#125;</span><br><span class="line">    */</span></span><br><span class="line">    <span class="comment">//判断p,q是否连接，即是否属于同一个分量</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">boolean</span> connected(<span class="keyword">int</span> p,<span class="keyword">int</span> q)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">find</span>(p)==<span class="keyword">find</span>(q);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) <span class="keyword">throws</span> Exception &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//数据从外部文件读入，“data.txt”放在项目的根目录下</span></span><br><span class="line">        Scanner input = <span class="keyword">new</span> Scanner(<span class="keyword">new</span> <span class="keyword">File</span>(<span class="string">"data.txt"</span>));  </span><br><span class="line">        <span class="keyword">int</span> N=input.nextInt();</span><br><span class="line">        UF uf = <span class="keyword">new</span> UF(N);</span><br><span class="line">        <span class="keyword">while</span>(input.hasNext())&#123;</span><br><span class="line">            <span class="keyword">int</span> p=input.nextInt();</span><br><span class="line">            <span class="keyword">int</span> q=input.nextInt();</span><br><span class="line">            <span class="keyword">if</span>(uf.connected(p, q)) <span class="keyword">continue</span>;        <span class="comment">//若p,q已属于同一连通分量不再连接，则故直接跳过</span></span><br><span class="line">            uf.union(p, q);</span><br><span class="line">            System.out.<span class="keyword">println</span>(p+<span class="string">"-"</span>+q);</span><br><span class="line">        </span><br><span class="line">        &#125;</span><br><span class="line">        System.out.<span class="keyword">println</span>(<span class="string">"总连通分量数："</span>+uf.getCount());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// weighted_uf.java</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.<span class="keyword">File</span>;</span><br><span class="line"><span class="keyword">import</span> java.util.Scanner;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> UF &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> <span class="keyword">count</span>; <span class="comment">// 连通分量数</span></span><br><span class="line">    <span class="keyword">int</span>[] id; <span class="comment">// 每个数所属的连通分量</span></span><br><span class="line">    <span class="keyword">int</span>[] sz;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> UF(<span class="keyword">int</span> N) &#123; <span class="comment">// 初始化时，N个点有N个分量</span></span><br><span class="line">        <span class="keyword">count</span> = N;</span><br><span class="line">        sz = <span class="keyword">new</span> <span class="keyword">int</span>[N];</span><br><span class="line">        id = <span class="keyword">new</span> <span class="keyword">int</span>[N];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++)</span><br><span class="line">            id[i] = i;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++)</span><br><span class="line">            sz[i] = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 返回连通分量数</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> getCount() &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">count</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 查找x所属的连通分量</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> <span class="keyword">find</span>(<span class="keyword">int</span> x) &#123;</span><br><span class="line">        <span class="keyword">while</span> (x != id[x])</span><br><span class="line">            x = id[x]; <span class="comment">// 若找不到，则一直往根root回溯</span></span><br><span class="line">        <span class="keyword">return</span> x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 连接p,q(将q的分量改为p所在的分量)</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> union(<span class="keyword">int</span> p, <span class="keyword">int</span> q) &#123;</span><br><span class="line">        <span class="keyword">int</span> pID = <span class="keyword">find</span>(p);</span><br><span class="line">        <span class="keyword">int</span> qID = <span class="keyword">find</span>(q);</span><br><span class="line">        <span class="keyword">if</span> (pID == qID)</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (sz[p] &lt; sz[q]) &#123;    <span class="comment">//通过结点数量，判断树的大小并将小树并到大树下</span></span><br><span class="line">            id[p] = qID;</span><br><span class="line">            sz[q] += sz[p];</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            id[q] = pID;</span><br><span class="line">            sz[p] += sz[q];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">count</span>--;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span><br><span class="line">     * //查找x所属的连通分量 public int find(int x)&#123; return id[x]; &#125;</span><br><span class="line">     * </span><br><span class="line">     * //连接p,q(将q的分量改为p所在的分量) public void union(int p,int q)&#123; int pID=find(p);</span><br><span class="line">     * int qID=find(q); if(pID==qID) return ; for(int i=0;i&lt;id.length;i++)&#123;</span><br><span class="line">     * if(find(i)==pID)&#123; id[i]=qID; &#125; &#125; count--; //记得每进行一次连接，分量数减“1” &#125;</span><br><span class="line">     */</span></span><br><span class="line">    <span class="comment">// 判断p,q是否连接，即是否属于同一个分量</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">boolean</span> connected(<span class="keyword">int</span> p, <span class="keyword">int</span> q) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">find</span>(p) == <span class="keyword">find</span>(q);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) <span class="keyword">throws</span> Exception &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 数据从外部文件读入，“data.txt”放在项目的根目录下</span></span><br><span class="line">        Scanner input = <span class="keyword">new</span> Scanner(<span class="keyword">new</span> <span class="keyword">File</span>(<span class="string">"data.txt"</span>));</span><br><span class="line">        <span class="keyword">int</span> N = input.nextInt();</span><br><span class="line">        UF uf = <span class="keyword">new</span> UF(N);</span><br><span class="line">        <span class="keyword">while</span> (input.hasNext()) &#123;</span><br><span class="line">            <span class="keyword">int</span> p = input.nextInt();</span><br><span class="line">            <span class="keyword">int</span> q = input.nextInt();</span><br><span class="line">            <span class="keyword">if</span> (uf.connected(p, q))</span><br><span class="line">                <span class="keyword">continue</span>; <span class="comment">// 若p,q已属于同一连通分量不再连接，则故直接跳过</span></span><br><span class="line">            uf.union(p, q);</span><br><span class="line">            System.out.<span class="keyword">println</span>(p + <span class="string">"-"</span> + q);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        System.out.<span class="keyword">println</span>(<span class="string">"总连通分量数："</span> + uf.getCount());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>网络通信（比如：是否需要在通信点p,q建立通信连接）</p>
+</li>
+<li><p>媒体社交（比如：向通一个社交圈的朋友推荐商品）</p>
+</li>
+<li><p>数学集合（比如：判断元素p,q之后选择是否进行集合合并）</p>
+</li>
+</ul>
+<p>六度分隔理论，该理论认为世界上任何互不相识的两人，只需要很少的中间人就能够建立起联系。</p>
+<p>哈佛大学心理学教授斯坦利·米尔格拉姆于1967年根据这个概念做过一次连锁信实验，尝试证明平均只需要6步就可以联系任何两个互不相识的美国人。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/19/leetcode-714/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -997,218 +1194,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/10/ds之堆/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/01/10/ds之堆/" itemprop="url">ds之堆</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-10T13:50:02+08:00">
-                2019-01-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/data-structure/" itemprop="url" rel="index">
-                    <span itemprop="name">data structure</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/01/10/ds之堆/" class="leancloud_visitors" data-flag-title="ds之堆">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  610
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  2
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>堆 </p>
-<p>为什么堆排序没有快速排序快？</p>
-<p>堆排序是一种原地的、时间复杂度为O(nlogn)的排序算法</p>
-<ul>
-<li>堆是一棵完全二叉树</li>
-<li>堆中每一个节点的值都必须大于等于（或者小于等于）其子树中每个节点的值</li>
-</ul>
-<p>如何实现一个堆？以大顶堆为例子</p>
-<p>完全二叉树比较适合用数组来存储。用数组存储非常节省存储空间，单纯通过数组下标就可以找到一个节点的左右子节点和父节点。</p>
-<p><em>堆的插入数据</em></p>
-<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Heap</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">int</span>[] a; <span class="comment">// 数组，从下标 1 开始存储数据</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">int</span> n;  <span class="comment">// 堆可以存储的最大数据个数</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">int</span> <span class="keyword">count</span>; <span class="comment">// 堆中已经存储的数据个数</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> Heap(<span class="keyword">int</span> capacity) &#123;</span><br><span class="line">    a = <span class="keyword">new</span> <span class="keyword">int</span>[capacity + <span class="number">1</span>];</span><br><span class="line">    n = capacity;</span><br><span class="line">    <span class="keyword">count</span> = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> insert(<span class="keyword">int</span> data) &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">count</span> &gt;= n) <span class="keyword">return</span>; <span class="comment">// 堆满了</span></span><br><span class="line">    ++<span class="keyword">count</span>;</span><br><span class="line">    a[<span class="keyword">count</span>] = data;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="keyword">count</span>;</span><br><span class="line">    <span class="keyword">while</span> (i/<span class="number">2</span> &gt; <span class="number">0</span> &amp;&amp; a[i] &gt; a[i/<span class="number">2</span>]) &#123; <span class="comment">// 自下往上堆化</span></span><br><span class="line">      swap(a, i, i/<span class="number">2</span>); <span class="comment">// swap() 函数作用：交换下标为 i 和 i/2 的两个元素</span></span><br><span class="line">      i = i/<span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-<p><em>删除堆顶元素</em></p>
-<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> removeMax() &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">count</span> == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">-1</span>; <span class="comment">// 堆中没有数据</span></span><br><span class="line">  a[<span class="number">1</span>] = a[<span class="keyword">count</span>];</span><br><span class="line">  --<span class="keyword">count</span>;</span><br><span class="line">  heapify(a, <span class="keyword">count</span>, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> heapify(<span class="keyword">int</span>[] a, <span class="keyword">int</span> n, <span class="keyword">int</span> i) &#123; <span class="comment">// 自上往下堆化</span></span><br><span class="line">  <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">    <span class="keyword">int</span> maxPos = i;</span><br><span class="line">    <span class="keyword">if</span> (i*<span class="number">2</span> &lt;= n &amp;&amp; a[i] &lt; a[i*<span class="number">2</span>]) maxPos = i*<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span> (i*<span class="number">2</span>+<span class="number">1</span> &lt;= n &amp;&amp; a[maxPos] &lt; a[i*<span class="number">2</span>+<span class="number">1</span>]) maxPos = i*<span class="number">2</span>+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (maxPos == i) <span class="keyword">break</span>;</span><br><span class="line">    swap(a, i, maxPos);</span><br><span class="line">    i = maxPos;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><em>建堆</em></p>
-<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="function"><span class="keyword">void</span> <span class="title">buildHeap</span><span class="params">(<span class="keyword">int</span>[] a, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = n/<span class="number">2</span>; i &gt;= <span class="number">1</span>; --i) &#123;</span><br><span class="line">    heapify(a, n, i);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="function"><span class="keyword">void</span> <span class="title">heapify</span><span class="params">(<span class="keyword">int</span>[] a, <span class="keyword">int</span> n, <span class="keyword">int</span> i)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">    <span class="keyword">int</span> maxPos = i;</span><br><span class="line">    <span class="keyword">if</span> (i*<span class="number">2</span> &lt;= n &amp;&amp; a[i] &lt; a[i*<span class="number">2</span>]) maxPos = i*<span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span> (i*<span class="number">2</span>+<span class="number">1</span> &lt;= n &amp;&amp; a[maxPos] &lt; a[i*<span class="number">2</span>+<span class="number">1</span>]) maxPos = i*<span class="number">2</span>+<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> (maxPos == i) <span class="keyword">break</span>;</span><br><span class="line">    swap(a, i, maxPos);</span><br><span class="line">    i = maxPos;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><em>堆排序</em></p>
-<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// n 表示数据的个数，数组 a 中的数据从下标 1 到 n 的位置。</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="function"><span class="keyword">void</span> <span class="title">sort</span><span class="params">(<span class="keyword">int</span>[] a, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">  buildHeap(a, n);</span><br><span class="line">  <span class="keyword">int</span> k = n;</span><br><span class="line">  <span class="keyword">while</span> (k &gt; <span class="number">1</span>) &#123;</span><br><span class="line">    swap(a, <span class="number">1</span>, k);</span><br><span class="line">    --k;</span><br><span class="line">    heapify(a, k, <span class="number">1</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>堆排序数据访问的方式没有快速排序友好。</li>
-</ul>
-<p>快速排序 数据是顺序访问的 对于堆来说 数据是跳着访问的</p>
-<ul>
-<li>对于同样的数据 排序过程中 堆排序算法的数据交换次数要多于快速排序。</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/58/">58</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/59/">59</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1258,7 +1248,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">290</span>
+                  <span class="site-state-item-count">291</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1269,7 +1259,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1280,7 +1270,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1373,7 +1363,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共135.7k字</span>
+  <span class="post-count">博客全站共136.1k字</span>
 </div>
 
         
