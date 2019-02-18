@@ -275,7 +275,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/21/drl-does-not-work-yet/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/14/your-first-nn/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Cheung John">
@@ -294,7 +294,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/05/21/drl-does-not-work-yet/" itemprop="url">drl does not work yet</a></h1>
+                <a class="post-title-link" href="/2018/08/14/your-first-nn/" itemprop="url">your_first_nn</a></h1>
         
 
         <div class="post-meta">
@@ -306,8 +306,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-21T19:08:32+08:00">
-                2018-05-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-14T09:59:18+08:00">
+                2018-08-14
               </time>
             
 
@@ -317,28 +317,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index">
-                    <span itemprop="name">AI</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -346,7 +324,7 @@
 
           
           
-             <span id="/2018/05/21/drl-does-not-work-yet/" class="leancloud_visitors" data-flag-title="drl does not work yet">
+             <span id="/2018/08/14/your-first-nn/" class="leancloud_visitors" data-flag-title="your_first_nn">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -371,226 +349,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.4k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  8
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="劝退文"><a href="#劝退文" class="headerlink" title="劝退文"></a>劝退文</h2><p>先看一下作者的背景。作者叫 Alex Irpan，现为谷歌大脑机器人团队的软件工程师。他从伯克利拿到的计算机科学本科学位，本科的时候曾经在伯克利人工智能实验室（Berkeley AI Research (BAIR) Lab）进行本科科研，导师是 DRL 大牛 Pieter Abbeel，他还和 John Schulman 工作过。</p>
-<p>这篇文章一上来就指出深度强化学习是个大坑。它的成功案例其实很少，但每个都太有名了，例如用 Deep Q Network（DQN）在 Atari games 上用原始像素图片作为状态达到甚至超越人类专家的表现、通过左右互搏（self-play）等方式在围棋上碾压人类、大大降低了谷歌能源中心的能耗等等。造成的结果就是没有从事过深度强化学习的研究人员对它产生了很大的错觉，高估了它的能力，低估了它的难度。</p>
-<p>强化学习本身是一个非常通用的人工智能范式，在直觉上让人觉得非常适合用来模拟各种时序决策任务，如语音、文本类任务。当它和深度神经网络这种只要给我足够层和足够多的神经元，可以逼近任何函数的非线性函数近似模型结合在一起感觉要上天啊，无怪乎 DeepMind 经常号称人工智能=深度学习+强化学习。</p>
-<p>然而 Alex 告诉我们别急，让我们先来审视一些问题：</p>
-<p>1.它的样本利用率非常低。换言之为了让模型的表现达到一定高度需要极为大量的训练样本。</p>
-<p>2.最终表现很多时候不够好。在很多任务上用非强化学习甚至非学习的其它方法，如基于模型的控制（model based control），线性二次型调节器（Linear Quadratic Regulator）等等可以获得好得多的表现。最气人的是这些模型很多时候样本利用率还高。当然这些模型有的时候会有一些假设比如有训练好的模型可以模仿，比如可以进行蒙特卡洛树搜索等等。</p>
-<p>3.DRL 成功的关键离不开一个好的奖励函数（reward function），然而这种奖励函数往往很难设计。在 Deep Reinforcement Learning That Matters 作者提到有时候把奖励乘以一个常数模型表现就会有天和地的区别。但奖励函数的坑爹之处还不止如此。奖励函数的设计需要保证：</p>
-<p>加入了合适的先验，良好的定义了问题和在一切可能状态下的对应动作。坑爹的是模型很多时候会找到作弊的手段。Alex 举的一个例子是有一个任务需要把红色的乐高积木放到蓝色的乐高积木上面，奖励函数的值基于红色乐高积木底部的高度而定。结果一个模型直接把红色乐高积木翻了一个底朝天。仔啊，你咋学坏了，阿爸对你很失望啊。</p>
-<p>奖励函数的值太过稀疏。换言之大部分情况下奖励函数在一个状态返回的值都是 0。这就和我们人学习也需要鼓励，学太久都没什么回报就容易气馁。都说 21 世纪是生物的世纪，怎么我还没感觉到呢？21 世纪才刚开始呢。我等不到了啊啊啊啊啊。</p>
-<p>有的时候在奖励函数上下太多功夫会引入新的偏见（bias）。</p>
-<p>要找到一个大家都使用而又具有好的性质的奖励函数。这里Alex没很深入地讨论，但链接了一篇陶神（Terence Tao）的博客，大家有兴趣可以去看下。</p>
-<p>4.局部最优/探索和剥削（exploration vs. exploitation）的不当应用。Alex举的一个例子是有一个连续控制的环境里，一个类似马的四足机器人在跑步，结果模型不小心多看到了马四脚朝天一顿乱踹后结果较好的情况，于是你只能看到四脚朝天的马了。</p>
-<p>5.对环境的过拟合。DRL 少有在多个环境上玩得转的。你训练好的 DQN 在一个 Atari game上work 了，换一个可能就完全不 work。即便你想要做迁移学习，也没有任何保障你能成功。</p>
-<p>6.不稳定性。</p>
-<p>读 DRL 论文的时候会发现有时候作者们会给出一个模型表现随着尝试 random seed 数量下降的图，几乎所有图里模型表现最终都会降到 0。相比之下在监督学习里不同的超参数或多或少都会表现出训练带来的变化，而 DRL 里运气不好可能很长时间你模型表现的曲线都没有任何变化，因为完全不 work。</p>
-<p>即便知道了超参数和随机种子，你的实现只要稍有差别，模型的表现就可以千差万别。这可能就是 Deep Reinforcement Learning That Matters 一文里 John Schulman 两篇不同文章里同一个算法在同一个任务上表现截然不同的原因。</p>
-<p>即便一切都很顺利，从我个人的经验和之前同某 DRL 研究人员的交流来看只要时间一长你的模型表现就可能突然从很好变成完全不 work。原因我不是完全确定，可能和过拟合和 variance 过大有关。</p>
-<p>特别是上述第六点，几乎是灾难性的。作者提到自己实习的时候一开始实现  Normalized Advantage Function (NAF)，为了找出 Theano 本身的 bugs 花了六周，这还是在 NAF 作者就在他旁边可以供他骚扰的情况下的结果。原因就是DRL的算法很多时候在没找好超参数的情况下就是不 work 的，所以你很难判断自己的代码到底有没有 bug 还是运气不好。</p>
-<p>作者也回顾了 DRL 成功的案例，他认为 DRL 成功的案例其实非常少，大体包括：</p>
-<p>各类游戏：Atari Games, Alpha Go/Alpha Zero/Dota2 1v1/超级马里奥/日本将棋，其实还应该有 DRL 最早的成功案例，93年的西洋双陆棋（backgammon）。</p>
-<p>DeepMind 的跑酷机器人。</p>
-<p>为 Google 的能源中心节能。</p>
-<p>Google 的 AutoML。</p>
-<p>作者认为从这些案例里获得的经验教训是 DRL 可能在有以下条件的情况下更可能有好的表现，条件越多越好：</p>
-<ul>
-<li><p>数据获取非常容易，非常 cheap。</p>
-</li>
-<li><p>不要急着一上来就攻坚克难，可以从简化的问题入手。</p>
-</li>
-<li><p>可以进行左右互搏。</p>
-</li>
-<li><p>奖励函数容易定义。</p>
-</li>
-<li><p>奖励信号非常多，反馈及时。</p>
-</li>
-</ul>
-<p>他也指出了一些未来潜在的发展方向和可能性：</p>
-<ul>
-<li><p>局部最优或许已经足够好。未来某些研究可能会指出我们不必过于担心大部分情况下的局部最优。因为他们比起全局最优并没有差很多。</p>
-</li>
-<li><p>硬件为王。在硬件足够强的情况下我们或许就不用那么在乎样本利用率了，凡事硬刚就可以有足够好的表现。各种遗传算法玩起来。</p>
-</li>
-<li><p>人为添加一些监督信号。在环境奖励出现频次太低的情况下可以引入自我激励（intrinsic reward）或者添加一些辅助任务，比如DeepMind就很喜欢这套，之前还写了一篇 Reinforcement Learning with Unsupervised Auxiliary Tasks（<a href="https://arxiv.org/abs/1611.05397）" target="_blank" rel="external">https://arxiv.org/abs/1611.05397）</a> 。LeCun 不是嫌蛋糕上的樱桃太少吗，让我们多给他点樱桃吧！</p>
-</li>
-<li><p>更多融合基于模型的学习从而提高样本使用率。这方面的尝试其实已经有很多了，具体可以去看 Alex 提到的那些工作。但还远不够成熟。</p>
-</li>
-<li><p>仅仅把 DRL 用于 fine-tuning。比如最初 Alpha Go 就是以监督学习为主，以强化学习为辅。</p>
-</li>
-<li><p>自动学习奖励函数。这涉及到 inverse reinforcement learning 和 imitation learning。</p>
-</li>
-<li><p>迁移学习和强化学习的进一步结合。</p>
-</li>
-<li><p>好的先验。</p>
-</li>
-<li><p>有的时候复杂的任务反而更容易学习。Alex 提到的例子是 DeepMind 经常喜欢让模型学习很多同一环境的变种来减小对环境的过拟合。我觉得这也涉及 curriculum learning，即从简单的任务开始逐步加深难度。可以说是层层递进的迁移学习。另外一个可能的解释是很多时候人觉得困难的任务和机器觉得困难的任务是相反的。比如人觉得倒水很简单，你让机器人用学习的路子去学倒水就可以很难。但反过来人觉得下围棋很简单而机器学习模型却在下围棋上把人击败了。</p>
-</li>
-</ul>
-<p>最后 Alex 总体还是非常乐观的。他说尽管现在有很多困难，使得 DRL 或许还不是一个强壮（robust）到所有人都可以轻易加入的研究领域并且很多时候一些问题用DRL远没有监督学习简单和表现好，但或许过几年你再回来 DRL 就 work 了也未知啊。这还是很振奋人心的。田渊栋老师也表达过类似的想法，觉得正因为这个领域还不够成熟所以还有很多机会。他们都是了不起的研究人员。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/20/linux高级命令/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/20/linux高级命令/" itemprop="url">linux高级命令</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-20T22:06:17+08:00">
-                2018-05-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/05/20/linux高级命令/" class="leancloud_visitors" data-flag-title="linux高级命令">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  72
+                  123
                 </span>
               
 
@@ -629,10 +388,7 @@
       
         
           
-            <p>1.找出以 .conf结尾的文件 并且分类</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">	find / -name *.conf -type f -print | xargs file</span><br><span class="line">```	</span><br><span class="line">	</span><br><span class="line">		</span><br><span class="line">2.找出系统内存使用量较高的进程</span><br><span class="line"></span><br><span class="line">```bash</span><br><span class="line">	ps -aux | sort -rnk 4 | head 20</span><br><span class="line">```	</span><br><span class="line"></span><br><span class="line">3.cpu(上条sort 处改为3)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">4.持续ping将结果记录到日志</span><br></pre></td></tr></table></figure>
-<p>ping api.jpush.cn | awk<br>```</p>
-
+            <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NeuralNetwork</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, x, y)</span>:</span></span><br><span class="line">        self.input = x</span><br><span class="line">        self.weight1 = np.random.rand(self.input.shape[<span class="number">1</span>],<span class="number">4</span>)</span><br><span class="line">        self.weight2 = np.random.rand(<span class="number">4</span>,<span class="number">1</span>)</span><br><span class="line">        self.y = y</span><br><span class="line">        self.output = np.zeros(self.y.shape)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">feedforward</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.layer1 = sigmoid(np.dot(self.input, self.weight1))</span><br><span class="line">        self.layer2 = sigmoid(np.dot(self.layer1, self.weight2))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">backprop</span><span class="params">(self)</span>:</span></span><br><span class="line">        d_weight2 = np.dot(self.layer1.T, (<span class="number">2</span>*(self.y - self.output)))</span><br><span class="line">        d_weight1 = np.dot(self.input.T, </span><br><span class="line">                          (np.dot(<span class="number">2</span>*(self.y - self.output)*sigmoid_derivative(self.output), self.weight2.T)*sigmoid_derivative(self.layer1)))</span><br><span class="line">        self.weight1 += d_weight1</span><br><span class="line">        self.weight2 += d_weight2</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">sigmoid_derivative</span><span class="params">(x)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> x*(<span class="number">1</span>-x)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">sigmoid</span><span class="params">(z)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> <span class="number">1.0</span>/(<span class="number">1.0</span>+math.exp(-z))</span><br></pre></td></tr></table></figure>
           
         
       
@@ -680,7 +436,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/15/hadoop-intro/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/13/cha-duoshao/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Cheung John">
@@ -699,7 +455,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/05/15/hadoop-intro/" itemprop="url">hadoop-intro</a></h1>
+                <a class="post-title-link" href="/2018/08/13/cha-duoshao/" itemprop="url">cha-duoshao</a></h1>
         
 
         <div class="post-meta">
@@ -711,8 +467,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-15T23:12:57+08:00">
-                2018-05-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-13T17:13:00+08:00">
+                2018-08-13
               </time>
             
 
@@ -734,8 +490,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index">
-                    <span itemprop="name">java</span>
+                  <a href="/categories/growth/" itemprop="url" rel="index">
+                    <span itemprop="name">growth</span>
                   </a>
                 </span>
 
@@ -751,7 +507,7 @@
 
           
           
-             <span id="/2018/05/15/hadoop-intro/" class="leancloud_visitors" data-flag-title="hadoop-intro">
+             <span id="/2018/08/13/cha-duoshao/" class="leancloud_visitors" data-flag-title="cha-duoshao">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -776,7 +532,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  46
                 </span>
               
 
@@ -815,7 +571,12 @@
       
         
           
-            
+            <p>1.用于去研究不懂的代码</p>
+<p>2.精通代码调试</p>
+<p>3.优化迭代速度</p>
+<p>4.系统性的思考方式</p>
+<p>5.重视能够节省时间的工具</p>
+
           
         
       
@@ -863,7 +624,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/15/how-dl/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/13/oj-test-5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Cheung John">
@@ -882,7 +643,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/05/15/how-dl/" itemprop="url">how-dl</a></h1>
+                <a class="post-title-link" href="/2018/08/13/oj-test-5/" itemprop="url">oj_test_5</a></h1>
         
 
         <div class="post-meta">
@@ -894,8 +655,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-15T22:30:37+08:00">
-                2018-05-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-13T16:46:10+08:00">
+                2018-08-13
               </time>
             
 
@@ -905,28 +666,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index">
-                    <span itemprop="name">AI</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -934,7 +673,7 @@
 
           
           
-             <span id="/2018/05/15/how-dl/" class="leancloud_visitors" data-flag-title="how-dl">
+             <span id="/2018/08/13/oj-test-5/" class="leancloud_visitors" data-flag-title="oj_test_5">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -959,7 +698,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  357
                 </span>
               
 
@@ -998,7 +737,7 @@
       
         
           
-            
+            <h2 id="辗转相乘相除"><a href="#辗转相乘相除" class="headerlink" title="辗转相乘相除"></a>辗转相乘相除</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">"""</span><br><span class="line">    你需要实现一个转换器，将一个正整数在不同的进制(通用的/自定义的)之间转换。</span><br><span class="line">    后面有一些预定义的进制及其字符集。</span><br><span class="line">    </span><br><span class="line">    示例：</span><br><span class="line">    func("15", dec_chr, bin_chr)       --&gt;  "1111"</span><br><span class="line">    func("15", dec_chr, oct_chr)       --&gt;  "17"</span><br><span class="line">    func("1010", bin_chr, dec_chr)     --&gt;  "10"</span><br><span class="line">    func("1010", bin_chr, hex_chr)     --&gt;  "a"</span><br><span class="line">    func("0", dec_chr, alpha_chr)      --&gt; "a"</span><br><span class="line">    func("27", dec_chr, allow_chr)     --&gt; "bb"</span><br><span class="line">    func("hello", allow_chr, hex_chr)  --&gt; "320048"</span><br><span class="line">"""</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> unittest</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">bin_chr      = <span class="string">'01'</span></span><br><span class="line">oct_chr      = <span class="string">'01234567'</span></span><br><span class="line">dec_chr      = <span class="string">'0123456789'</span></span><br><span class="line">hex_chr      = <span class="string">'0123456789abcdef'</span></span><br><span class="line">allow_chr    = <span class="string">'abcdefghijklmnopqrstuvwxyz'</span></span><br><span class="line">allup_chr    = <span class="string">'ABCDEFGHIJKLMNOPQRSTUVWXYZ'</span></span><br><span class="line">alpha_chr    = <span class="string">'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'</span></span><br><span class="line">alphanum_chr = <span class="string">'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(input, source, target)</span>:</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">    二进制 八进制 十进制 十六进制</span><br><span class="line">    小写（26） 大写（26） 字母（52） 字母和数字（62）</span><br><span class="line">    辗转相除</span><br><span class="line">    """</span></span><br><span class="line">    <span class="comment"># your code</span></span><br><span class="line">    <span class="comment">#    oct()</span></span><br><span class="line">    <span class="comment">#    hex()</span></span><br><span class="line">    <span class="comment">#    bin()</span></span><br><span class="line">    <span class="keyword">if</span> len(target) != len(source):</span><br><span class="line">        transfer = input2dec(input, source)</span><br><span class="line">    <span class="comment">#    print(transfer)</span></span><br><span class="line">        get_re = dec2target(transfer, target)</span><br><span class="line">        print(get_re)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">if</span> target.startswith(<span class="string">"A"</span>):</span><br><span class="line">            get_re = input.upper()</span><br><span class="line">        <span class="keyword">if</span> target.startswith(<span class="string">"a"</span>):</span><br><span class="line">            get_re = input.lower()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> get_re</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">input2dec</span><span class="params">(input, source)</span>:</span></span><br><span class="line">    get_power = len(source)</span><br><span class="line">    get_sum = <span class="number">0</span></span><br><span class="line">    s = [i <span class="keyword">for</span> i <span class="keyword">in</span> input]</span><br><span class="line">    s.reverse()</span><br><span class="line">    <span class="keyword">for</span> index, i <span class="keyword">in</span> enumerate(s):</span><br><span class="line">        num = source.find(i)</span><br><span class="line">        get_value = num * (get_power**index)</span><br><span class="line">        get_sum += get_value</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> get_sum</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dec2target</span><span class="params">(n, target)</span>:</span></span><br><span class="line">    b=[]</span><br><span class="line">    x = len(target)</span><br><span class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">        s=n//x    <span class="comment">#商</span></span><br><span class="line">        y=n%x     <span class="comment">#余数</span></span><br><span class="line">        b=b+[y]</span><br><span class="line">        <span class="keyword">if</span> s==<span class="number">0</span>:</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        n=s</span><br><span class="line">    b.reverse()</span><br><span class="line">    s = <span class="string">''</span></span><br><span class="line">    a = [i <span class="keyword">for</span> i <span class="keyword">in</span> target]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> b:</span><br><span class="line"><span class="comment">#        print(a[i], end='')</span></span><br><span class="line">        s += a[i]</span><br><span class="line">    <span class="keyword">return</span> s</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DefaultTestCase</span><span class="params">(unittest.TestCase)</span>:</span></span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_func</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.assertEqual(func(<span class="string">"15"</span>, dec_chr, bin_chr), <span class="string">"1111"</span>)</span><br><span class="line">        self.assertEqual(func(<span class="string">"15"</span>, dec_chr, oct_chr), <span class="string">"17"</span>)</span><br><span class="line">        self.assertEqual(func(<span class="string">"1010"</span>, bin_chr, dec_chr), <span class="string">"10"</span>)</span><br><span class="line">        self.assertEqual(func(<span class="string">"1010"</span>, bin_chr, hex_chr), <span class="string">"a"</span>)</span><br><span class="line">        self.assertEqual(func(<span class="string">"0"</span>, dec_chr, alpha_chr), <span class="string">"a"</span>)</span><br><span class="line">        self.assertEqual(func(<span class="string">"27"</span>, dec_chr, allow_chr), <span class="string">"bb"</span>)</span><br><span class="line">        self.assertEqual(func(<span class="string">"hello"</span>, allow_chr, hex_chr), <span class="string">"320048"</span>)</span><br><span class="line">        self.assertEqual(func(<span class="string">"SAME"</span>, allup_chr, allup_chr), <span class="string">"SAME"</span>)</span><br><span class="line">        self.assertEqual(func(<span class="string">"WORLD"</span>, allup_chr, alphanum_chr), <span class="string">'Hgrz'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    unittest.main()</span><br></pre></td></tr></table></figure>
           
         
       
@@ -1046,7 +785,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/12/how-identify-tech-man/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/13/oj-test-04/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Cheung John">
@@ -1065,7 +804,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/05/12/how-identify-tech-man/" itemprop="url">how-identify-tech-man</a></h1>
+                <a class="post-title-link" href="/2018/08/13/oj-test-04/" itemprop="url">oj-test-04</a></h1>
         
 
         <div class="post-meta">
@@ -1077,8 +816,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-12T22:07:06+08:00">
-                2018-05-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-13T13:53:08+08:00">
+                2018-08-13
               </time>
             
 
@@ -1088,28 +827,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/web/" itemprop="url" rel="index">
-                    <span itemprop="name">web</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -1117,7 +834,7 @@
 
           
           
-             <span id="/2018/05/12/how-identify-tech-man/" class="leancloud_visitors" data-flag-title="how-identify-tech-man">
+             <span id="/2018/08/13/oj-test-04/" class="leancloud_visitors" data-flag-title="oj-test-04">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1142,7 +859,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.5k
+                  374
                 </span>
               
 
@@ -1158,7 +875,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  8
+                  1
                 </span>
               
             </div>
@@ -1181,23 +898,175 @@
       
         
           
-            <p>技术招聘除了考察人的协作精神和工作态度，一大目标便是判断人的技术能力和实际水平。在这件事情上多做观察、思考是很有意义的。</p>
-<p>对于考察人的技术等级，学界是有认真的研究的。参见：德雷福斯模型解说。<br>德雷福斯模型把人的技能水平，分成5级：新手、高级新手、胜任者、精通者、专家。<br>对不同技能等级的认定是这样的：     </p>
-<ul>
-<li><p>新手：依靠指令清单，必须按部就班。就是必须给出详细而具体的操作规则，才能工作。比如你做一道从未做过的菜，需要看菜谱的说明，第一步做什么，第二步做什么等等，直到最后烹饪结束。</p>
-</li>
-<li><p>高级新手：有限的情景洞察力，同等对待工作的各个方面。对全局性、体系性的东西没兴趣。这是小工的水平。比如他能跟着师傅干点活，打打下手。可以靠着反复检索搜索引擎、StackOverflow解决具体的小问题。</p>
-</li>
-<li><p>胜任者：能够独立解决各种各样的领域内问题。这是一般的企业招聘，比较希望招到的等级，招进来稍作适应就能干活了，省心省力。</p>
-</li>
-<li><p>精通者：经验丰富，可以自我纠正、自我改进。这类等级的人，思考可以指向内在，通过反省、反馈改善技能。这种在企业可以算上高手、大拿了，培养不易。</p>
-</li>
-<li><p>专家：依靠直觉工作，不需要解释和理由。实际你让他解释，他可能也说不出个所以然，就是直觉给出答案，然后还是对的。专家人数稀少，需要很长时间训练、实践。通常的说法是10年出专家，10000小时定律。</p>
-</li>
-</ul>
-<p>　　这个是理论上的研究，实践中比较缺乏操作性，难以迅速的判定应聘者的实际情况。不信你打开收进来的大把简历，刚毕业的学生，每个技能名词上面都是一堆堆的“精通” – 你相信么？但它可以当成一个职业技能等级判定的参照标准。<br>　　于是乎，各家企业开启了各种“笔试”、“机试”，多轮面试，并且严格要求学历以及出身院校，试图以此过滤掉不合意的应征者，留下合格的人选。它当然是可行的，但是效果一般，而且容易出错，错失有思想有水平的人。不然也不会催生出各类“推荐式”的招聘。看重学历、学校当然也有其优点：它是快速过滤的手段，毕竟能考上好学校的人智商不会太差吧。但在大数字公司的一朋友说，公司里面还有初中毕业，一直精研安全领域的人，技术能力也是十分出色。如果严苛对待背景，这些人就会错过了。因为人的生活多种多样，有各种历史的背景因素影响经历。而部分人的经历，就是跟一些人不同的，可是不妨碍他们同样可以变得优秀。招聘，实际上是建立信任关系。如果有充足的信息证明，应聘者足够优秀，这就够了。条条框框只是辅助手段，并不是目的。<br>　　<br>　　<br>推荐式的招聘实际要靠谱的多，因为人很容易了解熟悉的人的水平。这是靠推荐者的信用背书。人平时沟通时说什么话，日常看什么书，关注哪些领域，琢磨过啥问题，哪些东西很熟，这个经常聊的熟人往往都知道。可是，这类招聘局限性也很大：面窄、靠机缘。靠推荐能招几个好手啊？好手往往是各家争抢的对象，窗口期有限，基本不会缺工作的。  </p>
-<p>说了一圈，还是要在技能水准判定上有更高效率的办法，招进合适的人来。</p>
-<p>回到开头的德雷福斯模型，既然人的技能是分级的，那么对待不同的职位要求，也应该侧重不同的考察角度。如果千篇一律的走招聘流程，就容易出问题了。比如你明明要找的是“精通者”，可上来就让人一堆笔试、机试，这是不合适的。对方会十分的厌烦。体现高水平技术能力的并不在默写什么“字符串算法”那里。这反倒是刚毕业的人占便宜，因为才学过不久，印象深。不信你让工作10年的人跟计算机专业应届生比比写排序算法，真未必能赢。但是这并不重要 – 你干活不看手册不查文档吗？聪明人从不死记硬背。重要的地方在于对问题域的准确、深刻的理解，对各类技术优劣点、各种条件平衡的评判和把握。<br>　　对待初阶新人，应着重考察的是基本功是否扎实，专业成绩是否优秀。更重要的，是他对职业的热情，学习能力和研究精神。某类人要说起技术来，滔滔不绝，两眼放光，充满热情，对未知的、新生的各类概念、技术非常好奇，这种人想差都难。因为他会自我驱动，不用督促，自己就钻研前进。反之，觉得这个职业待遇高，只是想混饭吃的人，很少走得长远。这类初阶新人以毕业生、工作年限少者为多。测试考核，可以笔试查看其对基础概念的理解是否准确，知识领域的大致范围。甚至，布置一个有点挑战性的小任务，让他尝试解决，说明思路。<br>　　考察胜任、精通者的策略不一样。笔试做题没啥用，原因前面说了。这类招聘是重头戏，企业都喜欢找这样的，能干活。所以考核评估的地方也较多。我觉得可以分成几个方面去看。意识是否先进，是否会反省思考；是否善于解决问题，富有创造性；是否有比较深的积累和广阔的知识面。<br>　　业界的开发思想也是在不断变化，工具链一直在革新。聪明的人不用蛮力，而爱用工具提升效率，喜欢自动化操作解放人力。要查看人用什么开发工具链，用什么开发环境，解释下为什么？好的开发者会及时注意新出现的工具，挖掘它能解决什么问题，并尝试吸收，解决自己的需求。如果没有这个思想意识，工作效率就会打折扣了。因为你会落后行业发展水平。人善于自我反省，则会催动自我纠正，这正是精通者的特征。参考：优秀的开发者为什么要学习研究新的编程语言？<br>　　解决问题的能力是重头戏，也是企业招聘人的主因。人要善于解决实际问题，而且，要学会聪明的解决问题。解决问题要看思路，看手段，看是否有创造性，这是真正考验人能力的地方。好的开发者，会考虑很多可能选项，预估各种优劣，给出一个较优的方案。 遇到难题，会用各种方法尝试。经验丰富的人，常常会使用技术的组合手段来处理难题，而不是一个语言一个工具到处用。所以，要查看下过往的项目经历遇到的问题、困难，是如何解决的，思路如何。一些公司据说不招聘不会用谷歌的工程师。谷歌打不开？嘿嘿，这就是你要克服的困难啊。这你都解决不了，还做什么研发。谷歌是人类最全、最新知识的总索引，充分利用事半功倍。<br>　　考察知识的深度、广度，对重要领域的概念是否有深刻的理解和掌握，以及从各类工作经验中得到的认知。问问他看过什么书，研究过什么东西。说白了，知道的东西是否多。一些公司很喜欢用CheckList模式来考核，列一堆领域的知识点、概念，问人懂不懂，知道就是水平好，不懂就是水平差。实际情况并非如此。人的工作过程是独立的，一些事情如果没有工作机会去接触并解决，那么一些冷僻的问题就永远都碰不上。当然也就不知道。但你能说没做过就一定做不好么？<br>　　另外，人的技能树，其实也是“犬牙交错、参差不齐”的。什么意思？技术领域非常的广阔，你真的没办法每个领域都很精通，实际上是这个做的多，懂的多，那个用的少，知道的少。这个时候，应看具体知识领域，是哪一类。它是否需要复杂的、难度较高的背景。门槛高的技术，需要的配套技能多得多，比如AI、机器学习。而一般产品应用领域则不然，了解核心概念、设计意图，看着手册、最佳实践，也就能上手了。这个暂时不会，实际无关紧要的，工作一段学的认真点就会了。但是门槛高的领域，就需要很长时间的学习了。这是本质的差别。<br>　　<br>学习了。</p>
+            <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="string">"""</span><br><span class="line">给定一个仅包含整数，且按照大小顺序排好序的列表，列表内不存在重复的整数。</span><br><span class="line">实现一个函数，将列表格式化为由`,`(逗号)分隔的字符串；如果相邻的整数(至少3个)是</span><br><span class="line">连续的(值相差1为连续)，则将这几个相邻的整数格式化为由`-`(减号)分隔、左右分别为</span><br><span class="line">起始和终止位整数的字符串。</span><br><span class="line"></span><br><span class="line">示例：</span><br><span class="line">func([-6,-3,-2,-1,0,1,3,4,5,7,8,9,10,11,14,15,17,18,19,20])  --&gt;  '-6,-3-1,3-5,7-11,14,15,17-20'</span><br><span class="line">func([-3,-2,-1,2,10,15,16,18,19,20])  --&gt;  '-3--1,2,10,15,16,18-20'</span><br><span class="line"></span><br><span class="line">特殊情况示例：</span><br><span class="line">func([])  --&gt;  ''</span><br><span class="line">"""</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> unittest</span><br><span class="line"><span class="keyword">from</span> itertools <span class="keyword">import</span> groupby</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(lst)</span>:</span></span><br><span class="line">    <span class="comment"># your code</span></span><br><span class="line">    sum = sub_arr(lst)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">','</span>.join(sum)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">sub_arr</span><span class="params">(lst)</span>:</span></span><br><span class="line">    fun = <span class="keyword">lambda</span> x: x[<span class="number">1</span>] - x[<span class="number">0</span>]</span><br><span class="line">    sum = []</span><br><span class="line">    <span class="keyword">for</span> k, g <span class="keyword">in</span> groupby(enumerate(lst), fun):</span><br><span class="line">        s = [v <span class="keyword">for</span> i, v <span class="keyword">in</span> g]</span><br><span class="line"><span class="comment">#        print(s)</span></span><br><span class="line">        <span class="keyword">if</span> len(s) &lt;= <span class="number">1</span>:</span><br><span class="line">            sum.append(str(s[<span class="number">0</span>]))</span><br><span class="line">        <span class="keyword">elif</span> len(s) == <span class="number">2</span>:</span><br><span class="line">            sum.append(str(s[<span class="number">0</span>]))</span><br><span class="line">            sum.append(str(s[<span class="number">1</span>]))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            target = [str(s[<span class="number">0</span>]), str(s[<span class="number">-1</span>])]</span><br><span class="line">            n = <span class="string">'-'</span>.join(target)</span><br><span class="line">            sum.append(n)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> sum</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DefaultTestCase</span><span class="params">(unittest.TestCase)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">test_func</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.assertEqual(func([<span class="number">-6</span>,<span class="number">-3</span>,<span class="number">-2</span>,<span class="number">-1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">11</span>,<span class="number">14</span>,<span class="number">15</span>,<span class="number">17</span>,<span class="number">18</span>,<span class="number">19</span>,<span class="number">20</span>]), <span class="string">'-6,-3-1,3-5,7-11,14,15,17-20'</span>)</span><br><span class="line">        self.assertEqual(func([<span class="number">-3</span>,<span class="number">-2</span>,<span class="number">-1</span>,<span class="number">2</span>,<span class="number">10</span>,<span class="number">15</span>,<span class="number">16</span>,<span class="number">18</span>,<span class="number">19</span>,<span class="number">20</span>]), <span class="string">'-3--1,2,10,15,16,18-20'</span>)</span><br><span class="line">        self.assertEqual(func([]), <span class="string">''</span>)</span><br><span class="line">        self.assertEqual(func([<span class="number">-6</span>,<span class="number">-4</span>,<span class="number">-2</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">6</span>]), <span class="string">'-6,-4,-2,0,2,4,6'</span>)</span><br><span class="line">        self.assertEqual(func([<span class="number">-6</span>,<span class="number">-5</span>,<span class="number">-3</span>,<span class="number">-2</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">6</span>]), <span class="string">'-6,-5,-3,-2,0,1,3,4,6'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    unittest.main()</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/13/why-python3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/13/why-python3/" itemprop="url">why-python3</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-13T10:10:31+08:00">
+                2018-08-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/08/13/why-python3/" class="leancloud_visitors" data-flag-title="why-python3">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Python的一个重要设计目标是让程序简单、清晰和优雅，坚持一套整齐划一的设计风格。Python程序具有易写、易读、易维护的特点，受到广大程序员欢迎。这些特质也是导致Python的使用越来越广泛的原因。21世纪以来，Python已发展为世界上最受欢迎的编程语言之一，其使用非常广泛。国际上一些公司做过（或一直在做）各种编程语言使用情况的调查，统计结果中Python都位于前四五名之内。它还被TIOBE编程语言排行榜（最有影响力的语言排行榜之一）评为2010年的年度语言。</p>
+<p>Python被广泛认为是一种容易入门的语言。实际上，Python语言机制的跨度比较大，从完成最简单计算的表达式开始，一直延伸到许多当前最先进的编程概念，如面向对象的程序设计、数据抽象、迭代器、异步编程等。这些情况有利于学习者在一个语言里逐步深入地学习许多编程概念和技术。Python用正文缩进形式表现程序的结构，具有较好的可读性。</p>
+<p>Python是一种比较高级的编程语言。除了最基本的编程机制外，它还提供了使用方便的数据功能，可以很方便地组织和管理大批数据。Python的所有编程机制和结构都围绕着<strong>对象</strong>的概念，程序里定义和操作的各种实体都是对象，不仅所有数据都是对象，函数和类等也是对象。它也能很好支持<strong>面向对象编程</strong>的理念和相关技术。</p>
+<p>由于其基本设计的一些特点，Python代码和部件比较容易重用，已开发的程序容易修改和扩充，有利于软件的升级改造，可以减轻软件开发者的工作负担，提高程序开发的效率。此外，Python语言的设计也为开发大规模软件系统提供了很好支持。这些是许多IT公司乐于选择和使用Python作为其主要开发语言的重要原因。</p>
+<p>在用Python开发程序时，可以采用交互式的执行方式，随时把代码发送给系统，立刻看到执行效果。这种方式使人更容易在编程中做各种试验，可以提高工作效率。一个Python程序文件（称为模块）的内容就是一系列简单或复杂的命令的序列。人们也把这样的语言称为<strong>脚本语言</strong>（script language），其程序就像一个工作脚本。</p>
+<p>实际上，Python并不是简单的脚本语言，而是一个能支持大规模软件开发的通用编程语言，其实现具有较高的执行效率。PSF的Python系统带有一个很大的标准库，提供了很多在实际开发中非常有用的功能。此外，全世界的开发者已经为Python开发了面向各种应用领域的大量专用程序包，例如面向图形用户界面的设计和编程，面向网络应用、数值计算、数据统计和处理、图形图像处理、可视化等。针对所有重要应用领域，都可以找到相关的程序包，大大方便了人们用Python开发领域应用软件和综合性软件的工作。</p>
+<p>Python语言和标准库的设计特别考虑了可扩充性，提供了丰富的接口和工具，使有经验的程序员比较容易使用其他语言，例如C、C++、CPython（一种专门用于扩充Python的C语言工具）等编写Python模块，然后能像Python标准库包一样方便地使用。这种情况也使一些大公司把Python用作高级的<strong>粘接语言</strong>（glue language），用一些较低级的语言实现一批性能要求较高的完成具体工作任务的模块，而后用Python实现整个系统的高层控制和调度。这样做，既能获得很好的开发效率，也有利于修改和扩充。</p>
+<p>Python基金会提供最新版本的Python语言系统和基本开发环境，任何人都可以免费获取。该系统可以在各种主流计算机和软件平台上运行，包含了丰富的标准程序库和完整文档。此外，也存在另外一些商业的或非商业的Python系统可供选择。经过多年使用，全世界的Python开发者和使用者已经形成了一个活跃的专业社群，活跃在世界各地（包括中国），探讨、交流学习和使用Python的经验。互联网有很多与Python有关的信息，有许多Python讨论组。这些都促进了Python语言的学习和传播。</p>
 
           
         
@@ -1237,7 +1106,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/36/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><span class="page-number current">37</span><a class="page-number" href="/page/38/">38</a><span class="space">&hellip;</span><a class="page-number" href="/page/59/">59</a><a class="extend next" rel="next" href="/page/38/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/36/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/36/">36</a><span class="page-number current">37</span><a class="page-number" href="/page/38/">38</a><span class="space">&hellip;</span><a class="page-number" href="/page/61/">61</a><a class="extend next" rel="next" href="/page/38/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1287,7 +1156,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">294</span>
+                  <span class="site-state-item-count">303</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1402,7 +1271,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共136.5k字</span>
+  <span class="post-count">博客全站共136.9k字</span>
 </div>
 
         
