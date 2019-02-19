@@ -800,6 +800,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/go/" itemprop="url" rel="index">
+                    <span itemprop="name">go</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -832,7 +854,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  623
                 </span>
               
 
@@ -848,7 +870,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -871,7 +893,50 @@
       
         
           
-            
+            <h2 id="session-amp-cookie"><a href="#session-amp-cookie" class="headerlink" title="session &amp; cookie"></a>session &amp; cookie</h2><p>1.Http是无状态的协议，服务器不能记录浏览器的访问状态，也就是服务器不能区分两次请求是否是来自同一个客户端。</p>
+<p>2.Cookie实际上是服务器保存在浏览器上的一段信息，浏览器有了Cookie之后，每次向服务器发送请求都会带着该信息进行访问，服务器在收到请求之后，就可以通过该信息进行处理。</p>
+<p>3.Cookie由服务器创建，并发给浏览器，最终由浏览器保存。</p>
+<p>Cookie的用途</p>
+<ul>
+<li>电商网站的购物车</li>
+<li>保持用户登陆状态</li>
+</ul>
+<p>使用beego.Router()注册路由</p>
+<pre><code>beego.Router(&quot;/cookie&quot;,&amp;controllers.CookieController{})
+</code></pre><pre><code>
+package controllers
+
+import &quot;github.com/astaxie/beego&quot;
+
+type CookieController struct {
+    beego.Controller
+}
+
+func (this *CookieController)Get()  {
+    if this.Ctx.GetCookie(&quot;user&quot;) ==&quot;&quot;{  
+        this.Ctx.SetCookie(&quot;user&quot;,&quot;admin&quot;)
+        this.Ctx.WriteString(&quot;Cookie设置成功&quot;)
+    }else{
+        user:= this.Ctx.GetCookie(&quot;user&quot;)
+        this.Ctx.WriteString(&quot;user=&quot;+user)
+    }
+}
+</code></pre><p>我们先通过this.Ctx.GetCookie(“key”)判断浏览器是否有Cookie ，如果没有就使用this.Ctx.SetCookie(“key”,”value”)设置，如果有就获取并输出。</p>
+<p>注意Cookie的键和值不能为中文</p>
+<pre><code>this.Ctx.SetCookie(&quot;user&quot;,&quot;admin&quot;，10)
+</code></pre><p>SetCookie的第三个参数是时间，单位是秒 ，如果不设置时间，Cookie只在本次会话有效，默认存活时间为3600秒      </p>
+<pre><code>this.Ctx.SetCookie(&quot;user&quot;,&quot;admin&quot;,&quot;100&quot;,&quot;/cookie&quot;)
+</code></pre><p>Session的使用</p>
+<p>Beego默认关闭Session，如果想要使用Session，需要在配置文件或程序中设置，分别为</p>
+<pre><code>beego.BConfig.WebConfig.Session.SessionOn = true和sessionon=true
+</code></pre><p>设置Session    </p>
+<pre><code>this.SetSession(“usesrname”, “admin”)
+</code></pre><p>删除Session</p>
+<pre><code>This.GetSession(“username”),如果没有获取到session，会返回nil，和cookie不一样，getCookie返回空字符串。
+</code></pre><p>Session是一段保存在服务器上的一段信息，当客户端第一次访问服务器时创建。同时也创建一个名为beegosessionID,值为创建Session的id的Cookie<br>这个beegosessionID对应服务器中的一个Session对象，通过它就可以获取到保存用户信息的Session</p>
+<p>通过this.DelSession(“password”)和this.DestroySession()均可以删除Session，其区别在于DelSession删除指定的Session, DestroySession删除所有session。</p>
+<p>可以通过beego.BConfig.WebConfig.Session.SessionName = “admin”和sessionname设置Cookie名称，如果在配置文件和主函数都设置了，主函数优先，因为beego先加载配置文件后执行主函数，所以主函数中设置的内容回对配置文件中设置的内容进行覆盖。</p>
+
           
         
       
@@ -1145,7 +1210,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1156,7 +1221,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">28</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1249,7 +1314,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共136.9k字</span>
+  <span class="post-count">博客全站共137.6k字</span>
 </div>
 
         
