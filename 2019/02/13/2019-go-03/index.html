@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="go," />
 
 
 
@@ -81,16 +81,22 @@
 
 
 
-<meta name="description" content="曾因酒醉鞭名马 生怕情多累美人">
+<meta name="description" content="基本使用1234567//创建Orm对象o := orm.NewOrm()// 获取 QuerySeter 对象，user 为表名qs := o.QueryTable(&amp;quot;user&amp;quot;)// 也可以直接使用对象作为表名user := new(User)qs = o.QueryTable(user) // 返回 QuerySeter
+复杂一些的
+12345678910qs.Filte">
 <meta property="og:type" content="article">
 <meta property="og:title" content="2019-go-03">
 <meta property="og:url" content="http://yoursite.com/2019/02/13/2019-go-03/index.html">
 <meta property="og:site_name" content="上药三品，神与气精">
-<meta property="og:description" content="曾因酒醉鞭名马 生怕情多累美人">
-<meta property="og:updated_time" content="2019-02-13T13:10:07.395Z">
+<meta property="og:description" content="基本使用1234567//创建Orm对象o := orm.NewOrm()// 获取 QuerySeter 对象，user 为表名qs := o.QueryTable(&amp;quot;user&amp;quot;)// 也可以直接使用对象作为表名user := new(User)qs = o.QueryTable(user) // 返回 QuerySeter
+复杂一些的
+12345678910qs.Filte">
+<meta property="og:updated_time" content="2019-02-19T09:53:58.576Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2019-go-03">
-<meta name="twitter:description" content="曾因酒醉鞭名马 生怕情多累美人">
+<meta name="twitter:description" content="基本使用1234567//创建Orm对象o := orm.NewOrm()// 获取 QuerySeter 对象，user 为表名qs := o.QueryTable(&amp;quot;user&amp;quot;)// 也可以直接使用对象作为表名user := new(User)qs = o.QueryTable(user) // 返回 QuerySeter
+复杂一些的
+12345678910qs.Filte">
 
 
 
@@ -315,6 +321,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/golang/" itemprop="url" rel="index">
+                    <span itemprop="name">golang</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -347,7 +375,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  480
                 </span>
               
 
@@ -363,7 +391,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -384,7 +412,17 @@
       
 
       
-        
+        <h3 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//创建Orm对象</span><br><span class="line">o := orm.NewOrm()</span><br><span class="line">// 获取 QuerySeter 对象，user 为表名</span><br><span class="line">qs := o.QueryTable(&quot;user&quot;)</span><br><span class="line">// 也可以直接使用对象作为表名</span><br><span class="line">user := new(User)</span><br><span class="line">qs = o.QueryTable(user) // 返回 QuerySeter</span><br></pre></td></tr></table></figure>
+<p>复杂一些的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">qs.Filter(&quot;id&quot;, 1) // WHERE id = 1</span><br><span class="line">qs.Filter(&quot;user__id&quot;,1) //where user.id =1</span><br><span class="line">qs.Filter(&quot;id_in&quot;,10，20) //where age in(10,20)</span><br><span class="line">qs.Filter(&quot;id__gte&quot;,18) //where id&gt;=18</span><br><span class="line">qs.Filter(&quot;id__gt&quot;,18) //where id&gt;18</span><br><span class="line">qs.Filter(&quot;id__,5) //where id&lt;5</span><br><span class="line">//gt 是greater缩写即大于  </span><br><span class="line">//get是 Greater or equal的缩写即大于等于 </span><br><span class="line">//lt 是less than 即小于</span><br></pre></td></tr></table></figure>
+<p>具体的例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">exact  -&gt;  =</span><br><span class="line">iexact -&gt; like&apos;</span><br><span class="line">in -&gt; in </span><br><span class="line">gt  -&gt;  &gt; </span><br><span class="line">gte-&gt; &gt;=</span><br><span class="line">lt -&gt;  &lt;</span><br><span class="line">lte -&gt;  &lt;=</span><br><span class="line">contains -&gt;  like BINARY &apos;%xxx%&apos; （区分大小写）</span><br><span class="line">icontains -&gt; like &apos;%xxx%&apos; (不区分大小写)</span><br><span class="line">startswith -&gt; LIKE BINARY &apos;xxx%&apos; （区分大小写）</span><br><span class="line">istartswith -&gt; LIKE  &apos;xxx%&apos;</span><br><span class="line">endswith -&gt; LIKE BINARY &apos;%xxx&apos; （区分大小写）</span><br><span class="line">iendswith -&gt; LIKE  &apos;%xxx&apos;</span><br><span class="line">isnull -&gt; is not null</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">qs.Filter(&quot;id&quot;, 1) // WHERE id = 1</span><br><span class="line">qs.Filter(&quot;user__id&quot;,1) //where user.id =1</span><br><span class="line">qs.Filter(&quot;_id_in&quot;,10，20) //where age in(10,20)</span><br><span class="line">qs.Filter(&quot;__id__gte&quot;,18) //where id&gt;=18</span><br><span class="line">qs.Filter(&quot;__id__gt&quot;,18) //where id&gt;18</span><br><span class="line">qs.Filter(&quot;__id__,5) //where id&lt;5</span><br><span class="line">//gt 是greater缩写即大于  </span><br><span class="line">//get是 Greater or equal的缩写即大于等于 </span><br><span class="line">//lt 是less than 即小于</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var DefaultRelsDepth = 5 // 默认情况下直接调用 RelatedSel 将进行最大 5 层的关系查询</span><br><span class="line"> </span><br><span class="line">qs := o.QueryTable(&quot;post&quot;)</span><br><span class="line"> </span><br><span class="line">qs.RelatedSel()</span><br><span class="line">// INNER JOIN user ... LEFT OUTER JOIN profile ...</span><br><span class="line"> </span><br><span class="line">qs.RelatedSel(&quot;user&quot;)</span><br><span class="line">// INNER JOIN user ...</span><br><span class="line">// 设置 expr 只对设置的字段进行关系查询</span><br><span class="line"> </span><br><span class="line">// 对设置 null 属性的 Field 将使用 LEFT OUTER JOIN</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">num, err := o.QueryTable(&quot;user&quot;).Filter(&quot;name&quot;, &quot;slene&quot;).Update(orm.Params&#123;</span><br><span class="line">    &quot;name&quot;: &quot;astaxie&quot;,</span><br><span class="line">&#125;)</span><br><span class="line">fmt.Printf(&quot;Affected Num: %s, %s&quot;, num, err)</span><br><span class="line">// SET name = &quot;astaixe&quot; WHERE name = &quot;slene&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var users []*User</span><br><span class="line">num, err := o.QueryTable(&quot;user&quot;).Filter(&quot;name&quot;, &quot;slene&quot;).All(&amp;users)</span><br><span class="line">fmt.Printf(&quot;Returned Rows Num: %s, %s&quot;, num, err)</span><br></pre></td></tr></table></figure>
+<p>受到limit限制 默认最大行数为1000</p>
+
       
     </div>
     
@@ -398,6 +436,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/go/" rel="tag"># go</a>
+          
+        </div>
       
 
       
@@ -472,8 +516,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -503,7 +556,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -561,6 +614,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本使用"><span class="nav-number">1.</span> <span class="nav-text">基本使用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -607,7 +676,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共137.6k字</span>
+  <span class="post-count">博客全站共139.2k字</span>
 </div>
 
         
