@@ -81,16 +81,16 @@
 
 
 
-<meta name="description" content="12345678910111213141516171819class MyTokenAuthentication(TokenAuthentication):    def authenticate_credentials(self, key):        # get cache        token_cache = &quot;token&quot; + key        token_all = cach">
+<meta name="description" content="12345678910111213141516171819class MyTokenAuthentication(TokenAuthentication):    def authenticate_credentials(self, key):        # get cache        token_cache = &amp;quot;token&amp;quot; + key        token_">
 <meta property="og:type" content="article">
 <meta property="og:title" content="drf custom auth">
 <meta property="og:url" content="http://yoursite.com/2018/08/16/drf-custom-auth/index.html">
 <meta property="og:site_name" content="上药三品，神与气精">
-<meta property="og:description" content="12345678910111213141516171819class MyTokenAuthentication(TokenAuthentication):    def authenticate_credentials(self, key):        # get cache        token_cache = &quot;token&quot; + key        token_all = cach">
+<meta property="og:description" content="12345678910111213141516171819class MyTokenAuthentication(TokenAuthentication):    def authenticate_credentials(self, key):        # get cache        token_cache = &amp;quot;token&amp;quot; + key        token_">
 <meta property="og:updated_time" content="2018-12-01T10:21:08.902Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="drf custom auth">
-<meta name="twitter:description" content="12345678910111213141516171819class MyTokenAuthentication(TokenAuthentication):    def authenticate_credentials(self, key):        # get cache        token_cache = &quot;token&quot; + key        token_all = cach">
+<meta name="twitter:description" content="12345678910111213141516171819class MyTokenAuthentication(TokenAuthentication):    def authenticate_credentials(self, key):        # get cache        token_cache = &amp;quot;token&amp;quot; + key        token_">
 
 
 
@@ -369,7 +369,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  123
+                  133
                 </span>
               
 
@@ -406,7 +406,7 @@
       
 
       
-        <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyTokenAuthentication</span><span class="params">(TokenAuthentication)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">authenticate_credentials</span><span class="params">(self, key)</span>:</span></span><br><span class="line">        <span class="comment"># get cache</span></span><br><span class="line">        token_cache = <span class="string">"token"</span> + key</span><br><span class="line">        token_all = cache.get(token_cache)</span><br><span class="line">        <span class="keyword">if</span> token_all:</span><br><span class="line">            <span class="keyword">return</span> (token_all.user, token_all)       </span><br><span class="line">        model = self.get_model()</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            token = model.objects.select_related(<span class="string">'user'</span>).get(key=key)</span><br><span class="line">        <span class="keyword">except</span> model.DoesNotExist:</span><br><span class="line">            <span class="keyword">raise</span> exceptions.AuthenticationFailed(_(<span class="string">'Invalid token.'</span>))            </span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> token.user.is_active:</span><br><span class="line">            <span class="keyword">raise</span> exceptions.AuthenticationFailed(_(<span class="string">'User inactive or deleted.'</span>))        </span><br><span class="line">        <span class="comment"># set cache</span></span><br><span class="line">        <span class="keyword">if</span> token:</span><br><span class="line">            token_cache = <span class="string">'token'</span> + key</span><br><span class="line">            cache.set(token_cache, token)</span><br><span class="line">        <span class="keyword">return</span> (token.user, token)</span><br></pre></td></tr></table></figure>
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class MyTokenAuthentication(TokenAuthentication):</span><br><span class="line">    def authenticate_credentials(self, key):</span><br><span class="line">        # get cache</span><br><span class="line">        token_cache = &quot;token&quot; + key</span><br><span class="line">        token_all = cache.get(token_cache)</span><br><span class="line">        if token_all:</span><br><span class="line">            return (token_all.user, token_all)       </span><br><span class="line">        model = self.get_model()</span><br><span class="line">        try:</span><br><span class="line">            token = model.objects.select_related(&apos;user&apos;).get(key=key)</span><br><span class="line">        except model.DoesNotExist:</span><br><span class="line">            raise exceptions.AuthenticationFailed(_(&apos;Invalid token.&apos;))            </span><br><span class="line">        if not token.user.is_active:</span><br><span class="line">            raise exceptions.AuthenticationFailed(_(&apos;User inactive or deleted.&apos;))        </span><br><span class="line">        # set cache</span><br><span class="line">        if token:</span><br><span class="line">            token_cache = &apos;token&apos; + key</span><br><span class="line">            cache.set(token_cache, token)</span><br><span class="line">        return (token.user, token)</span><br></pre></td></tr></table></figure>
 <p>第一次 查询mysql 数据库 将结果缓存至redis 数据库中 第二次的话，同样的请求过来 直接查询缓存 大大提高查询效率，增加web网站的QPS</p>
 
       
@@ -522,7 +522,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">303</span>
+                  <span class="site-state-item-count">304</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -533,7 +533,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -637,7 +637,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共139.2k字</span>
+  <span class="post-count">博客全站共142.1k字</span>
 </div>
 
         

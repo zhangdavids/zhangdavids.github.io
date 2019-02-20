@@ -396,7 +396,7 @@ uptime 命令 每一列的输出含义
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  574
+                  576
                 </span>
               
 
@@ -446,7 +446,7 @@ uptime 命令 每一列的输出含义
 </ul>
 <p>那么</p>
 <h3 id="平均负载为多少时合理？"><a href="#平均负载为多少时合理？" class="headerlink" title="平均负载为多少时合理？"></a>平均负载为多少时合理？</h3><p>一般而言 最理想的情况是等于cpu的个数 首先得知道系统有几个cpu</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">grep</span> <span class="string">'model name'</span> <span class="regexp">/proc/</span>cpuinfo | wc -l</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep &apos;model name&apos; /proc/cpuinfo | wc -l</span><br></pre></td></tr></table></figure>
 <p>有了cpu的个数 可以判断出平均负载比cpu的个数还大的时候，系统已经出现了过载。</p>
 <p>一半当平均负载高于cpu数量70%的时候，就应该分析排查负载高的问题了</p>
 <p>平均负载是单位时间内，处于可运行状态和不可中断状态的进程数，因此不止包括了正在使用cpu的进程，还包括等待cpu和等待io的进程</p>
@@ -457,16 +457,16 @@ uptime 命令 每一列的输出含义
 <li>大量等待cpu的进程调度也会导致平均负载升高，此时的cpu使用率也会比较高</li>
 </ul>
 <h3 id="善于使用工具"><a href="#善于使用工具" class="headerlink" title="善于使用工具"></a>善于使用工具</h3><p>使用iostat mpstat pidstat 等工具 找到平均负载升高的根源在哪里</p>
-<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">apt</span> install <span class="keyword">stress </span>sysstat -y</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install stress sysstat -y</span><br></pre></td></tr></table></figure>
 <p>压力测试工具 </p>
 <p>异常进程模拟平均负载升高的场景</p>
-<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">stress</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">cpu</span> <span class="comment">1</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">timeout</span> <span class="comment">600</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">watch <span class="_">-d</span> uptime</span><br></pre></td></tr></table></figure>
-<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">mpstat</span> -P <span class="literal">ALL</span> 5</span><br></pre></td></tr></table></figure>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">pidstat</span> -u <span class="number">5</span> <span class="number">1</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stress -<span class="selector-tag">i</span> <span class="number">1</span> --timeout <span class="number">600</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stress --cpu 1 --timeout 600</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">watch -d uptime</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mpstat -P ALL 5</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pidstat -u 5 1</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stress -i 1 --timeout 600</span><br></pre></td></tr></table></figure>
 <p>模拟大量进程</p>
-<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stress -c <span class="number">8</span> <span class="comment">--timeout 600</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stress -c 8 --timeout 600</span><br></pre></td></tr></table></figure>
 <p>iowait 无法升高的原因 是因为使用的是sync()系统调用 作用是刷新缓冲内存到磁盘中 可以使用下一代 stress-ng</p>
 <p>htop atop 命令 也可以使用</p>
 
@@ -592,7 +592,7 @@ uptime 命令 每一列的输出含义
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">303</span>
+                  <span class="site-state-item-count">304</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -603,7 +603,7 @@ uptime 命令 每一列的输出含义
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -723,7 +723,7 @@ uptime 命令 每一列的输出含义
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共139.2k字</span>
+  <span class="post-count">博客全站共142.1k字</span>
 </div>
 
         
