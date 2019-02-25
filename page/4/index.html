@@ -275,6 +275,199 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/13/2019-go-03/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/13/2019-go-03/" itemprop="url">2019-go-03</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-13T21:10:07+08:00">
+                2019-02-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/golang/" itemprop="url" rel="index">
+                    <span itemprop="name">golang</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/02/13/2019-go-03/" class="leancloud_visitors" data-flag-title="2019-go-03">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  480
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//创建Orm对象</span><br><span class="line">o := orm.NewOrm()</span><br><span class="line">// 获取 QuerySeter 对象，user 为表名</span><br><span class="line">qs := o.QueryTable(&quot;user&quot;)</span><br><span class="line">// 也可以直接使用对象作为表名</span><br><span class="line">user := new(User)</span><br><span class="line">qs = o.QueryTable(user) // 返回 QuerySeter</span><br></pre></td></tr></table></figure>
+<p>复杂一些的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">qs.Filter(&quot;id&quot;, 1) // WHERE id = 1</span><br><span class="line">qs.Filter(&quot;user__id&quot;,1) //where user.id =1</span><br><span class="line">qs.Filter(&quot;id_in&quot;,10，20) //where age in(10,20)</span><br><span class="line">qs.Filter(&quot;id__gte&quot;,18) //where id&gt;=18</span><br><span class="line">qs.Filter(&quot;id__gt&quot;,18) //where id&gt;18</span><br><span class="line">qs.Filter(&quot;id__,5) //where id&lt;5</span><br><span class="line">//gt 是greater缩写即大于  </span><br><span class="line">//get是 Greater or equal的缩写即大于等于 </span><br><span class="line">//lt 是less than 即小于</span><br></pre></td></tr></table></figure>
+<p>具体的例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">exact  -&gt;  =</span><br><span class="line">iexact -&gt; like&apos;</span><br><span class="line">in -&gt; in </span><br><span class="line">gt  -&gt;  &gt; </span><br><span class="line">gte-&gt; &gt;=</span><br><span class="line">lt -&gt;  &lt;</span><br><span class="line">lte -&gt;  &lt;=</span><br><span class="line">contains -&gt;  like BINARY &apos;%xxx%&apos; （区分大小写）</span><br><span class="line">icontains -&gt; like &apos;%xxx%&apos; (不区分大小写)</span><br><span class="line">startswith -&gt; LIKE BINARY &apos;xxx%&apos; （区分大小写）</span><br><span class="line">istartswith -&gt; LIKE  &apos;xxx%&apos;</span><br><span class="line">endswith -&gt; LIKE BINARY &apos;%xxx&apos; （区分大小写）</span><br><span class="line">iendswith -&gt; LIKE  &apos;%xxx&apos;</span><br><span class="line">isnull -&gt; is not null</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">qs.Filter(&quot;id&quot;, 1) // WHERE id = 1</span><br><span class="line">qs.Filter(&quot;user__id&quot;,1) //where user.id =1</span><br><span class="line">qs.Filter(&quot;_id_in&quot;,10，20) //where age in(10,20)</span><br><span class="line">qs.Filter(&quot;__id__gte&quot;,18) //where id&gt;=18</span><br><span class="line">qs.Filter(&quot;__id__gt&quot;,18) //where id&gt;18</span><br><span class="line">qs.Filter(&quot;__id__,5) //where id&lt;5</span><br><span class="line">//gt 是greater缩写即大于  </span><br><span class="line">//get是 Greater or equal的缩写即大于等于 </span><br><span class="line">//lt 是less than 即小于</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var DefaultRelsDepth = 5 // 默认情况下直接调用 RelatedSel 将进行最大 5 层的关系查询</span><br><span class="line"> </span><br><span class="line">qs := o.QueryTable(&quot;post&quot;)</span><br><span class="line"> </span><br><span class="line">qs.RelatedSel()</span><br><span class="line">// INNER JOIN user ... LEFT OUTER JOIN profile ...</span><br><span class="line"> </span><br><span class="line">qs.RelatedSel(&quot;user&quot;)</span><br><span class="line">// INNER JOIN user ...</span><br><span class="line">// 设置 expr 只对设置的字段进行关系查询</span><br><span class="line"> </span><br><span class="line">// 对设置 null 属性的 Field 将使用 LEFT OUTER JOIN</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">num, err := o.QueryTable(&quot;user&quot;).Filter(&quot;name&quot;, &quot;slene&quot;).Update(orm.Params&#123;</span><br><span class="line">    &quot;name&quot;: &quot;astaxie&quot;,</span><br><span class="line">&#125;)</span><br><span class="line">fmt.Printf(&quot;Affected Num: %s, %s&quot;, num, err)</span><br><span class="line">// SET name = &quot;astaixe&quot; WHERE name = &quot;slene&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var users []*User</span><br><span class="line">num, err := o.QueryTable(&quot;user&quot;).Filter(&quot;name&quot;, &quot;slene&quot;).All(&amp;users)</span><br><span class="line">fmt.Printf(&quot;Returned Rows Num: %s, %s&quot;, num, err)</span><br></pre></td></tr></table></figure>
+<p>受到limit限制 默认最大行数为1000</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/13/2019-go-02/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1044,185 +1237,6 @@ func (this *CookieController)Get()  {
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/11/how-to-be-a-daniu/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/11/how-to-be-a-daniu/" itemprop="url">how-to-be-a-daniu</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-11T13:41:32+08:00">
-                2019-02-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/02/11/how-to-be-a-daniu/" class="leancloud_visitors" data-flag-title="how-to-be-a-daniu">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  54
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="误区"><a href="#误区" class="headerlink" title="误区"></a>误区</h3><ul>
-<li>拜大牛为师</li>
-<li>业务代码一样很牛逼？</li>
-<li>上班太忙没时间学习</li>
-</ul>
-<h3 id="正确做法"><a href="#正确做法" class="headerlink" title="正确做法"></a>正确做法</h3><ul>
-<li>do more</li>
-</ul>
-<p>—&gt; 熟悉更多业务</p>
-<p>—&gt; 熟悉端到端</p>
-<p>—&gt; 自学</p>
-<ul>
-<li>do better</li>
-<li>do exercise</li>
-<li>learning</li>
-<li>trying</li>
-<li>teaching</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1277,7 +1291,7 @@ func (this *CookieController)Get()  {
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">312</span>
+                  <span class="site-state-item-count">313</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1392,7 +1406,7 @@ func (this *CookieController)Get()  {
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共145.7k字</span>
+  <span class="post-count">博客全站共146k字</span>
 </div>
 
         

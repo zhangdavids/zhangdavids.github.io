@@ -275,6 +275,499 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/27/one-blockchain-src-anal/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/27/one-blockchain-src-anal/" itemprop="url">one-blockchain-src-anal</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-27T22:37:51+08:00">
+                2018-03-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/03/27/one-blockchain-src-anal/" class="leancloud_visitors" data-flag-title="one-blockchain-src-anal">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>看看代码的实现：</p>
+<pre><code>import hashlib
+import json
+from time import time
+from urllib.parse import urlparse
+from uuid import uuid4
+
+import requests
+from flask import Flask, jsonify, request
+
+
+class Blockchain:
+    def __init__(self):
+        self.current_transactions = []
+        self.chain = []
+        self.nodes = set()
+
+        # Create the genesis block
+        self.new_block(previous_hash=&apos;1&apos;, proof=100)
+
+    def register_node(self, address):
+        &quot;&quot;&quot;
+        Add a new node to the list of nodes
+
+        :param address: Address of node. Eg. &apos;http://192.168.0.5:5000&apos;
+        &quot;&quot;&quot;
+
+        parsed_url = urlparse(address)
+        if parsed_url.netloc:
+            self.nodes.add(parsed_url.netloc)
+        elif parsed_url.path:
+            # Accepts an URL without scheme like &apos;192.168.0.5:5000&apos;.
+            self.nodes.add(parsed_url.path)
+        else:
+            raise ValueError(&apos;Invalid URL&apos;)
+
+
+    def valid_chain(self, chain):
+        &quot;&quot;&quot;
+        Determine if a given blockchain is valid
+
+        :param chain: A blockchain
+        :return: True if valid, False if not
+        &quot;&quot;&quot;
+
+        last_block = chain[0]
+        current_index = 1
+
+        while current_index &lt; len(chain):
+            block = chain[current_index]
+            print(f&apos;{last_block}&apos;)
+            print(f&apos;{block}&apos;)
+            print(&quot;\n-----------\n&quot;)
+            # Check that the hash of the block is correct
+            if block[&apos;previous_hash&apos;] != self.hash(last_block):
+                return False
+
+            # Check that the Proof of Work is correct
+            if not self.valid_proof(last_block[&apos;proof&apos;], block[&apos;proof&apos;], last_block[&apos;previous_hash&apos;]):
+                return False
+
+            last_block = block
+            current_index += 1
+
+        return True
+
+    def resolve_conflicts(self):
+        &quot;&quot;&quot;
+        This is our consensus algorithm, it resolves conflicts
+        by replacing our chain with the longest one in the network.
+
+        :return: True if our chain was replaced, False if not
+        &quot;&quot;&quot;
+
+        neighbours = self.nodes
+        new_chain = None
+
+        # We&apos;re only looking for chains longer than ours
+        max_length = len(self.chain)
+
+        # Grab and verify the chains from all the nodes in our network
+        for node in neighbours:
+            response = requests.get(f&apos;http://{node}/chain&apos;)
+
+            if response.status_code == 200:
+                length = response.json()[&apos;length&apos;]
+                chain = response.json()[&apos;chain&apos;]
+
+                # Check if the length is longer and the chain is valid
+                if length &gt; max_length and self.valid_chain(chain):
+                    max_length = length
+                    new_chain = chain
+
+        # Replace our chain if we discovered a new, valid chain longer than ours
+        if new_chain:
+            self.chain = new_chain
+            return True
+
+        return False
+
+    def new_block(self, proof, previous_hash):
+        &quot;&quot;&quot;
+        Create a new Block in the Blockchain
+
+        :param proof: The proof given by the Proof of Work algorithm
+        :param previous_hash: Hash of previous Block
+        :return: New Block
+        &quot;&quot;&quot;
+
+        block = {
+            &apos;index&apos;: len(self.chain) + 1,
+            &apos;timestamp&apos;: time(),
+            &apos;transactions&apos;: self.current_transactions,
+            &apos;proof&apos;: proof,
+            &apos;previous_hash&apos;: previous_hash or self.hash(self.chain[-1]),
+        }
+
+        # Reset the current list of transactions
+        self.current_transactions = []
+
+        self.chain.append(block)
+        return block
+
+    def new_transaction(self, sender, recipient, amount):
+        &quot;&quot;&quot;
+        Creates a new transaction to go into the next mined Block
+
+        :param sender: Address of the Sender
+        :param recipient: Address of the Recipient
+        :param amount: Amount
+        :return: The index of the Block that will hold this transaction
+        &quot;&quot;&quot;
+        self.current_transactions.append({
+            &apos;sender&apos;: sender,
+            &apos;recipient&apos;: recipient,
+            &apos;amount&apos;: amount,
+        })
+
+        return self.last_block[&apos;index&apos;] + 1
+
+    @property
+    def last_block(self):
+        return self.chain[-1]
+
+    @staticmethod
+    def hash(block):
+        &quot;&quot;&quot;
+        Creates a SHA-256 hash of a Block
+
+        :param block: Block
+        &quot;&quot;&quot;
+
+        # We must make sure that the Dictionary is Ordered, or we&apos;ll have inconsistent hashes
+        block_string = json.dumps(block, sort_keys=True).encode()
+        return hashlib.sha256(block_string).hexdigest()
+
+    def proof_of_work(self, last_block):
+        &quot;&quot;&quot;
+        Simple Proof of Work Algorithm:
+
+         - Find a number p&apos; such that hash(pp&apos;) contains leading 4 zeroes
+         - Where p is the previous proof, and p&apos; is the new proof
+
+        :param last_block: &lt;dict&gt; last Block
+        :return: &lt;int&gt;
+        &quot;&quot;&quot;
+
+        last_proof = last_block[&apos;proof&apos;]
+        last_hash = self.hash(last_block)
+
+        proof = 0
+        while self.valid_proof(last_proof, proof, last_hash) is False:
+            proof += 1
+
+        return proof
+
+    @staticmethod
+    def valid_proof(last_proof, proof, last_hash):
+        &quot;&quot;&quot;
+        Validates the Proof
+
+        :param last_proof: &lt;int&gt; Previous Proof
+        :param proof: &lt;int&gt; Current Proof
+        :param last_hash: &lt;str&gt; The hash of the Previous Block
+        :return: &lt;bool&gt; True if correct, False if not.
+
+        &quot;&quot;&quot;
+
+        guess = f&apos;{last_proof}{proof}{last_hash}&apos;.encode()
+        guess_hash = hashlib.sha256(guess).hexdigest()
+        return guess_hash[:4] == &quot;0000&quot;
+
+
+# Instantiate the Node
+app = Flask(__name__)
+
+# Generate a globally unique address for this node
+node_identifier = str(uuid4()).replace(&apos;-&apos;, &apos;&apos;)
+
+# Instantiate the Blockchain
+blockchain = Blockchain()
+
+
+@app.route(&apos;/mine&apos;, methods=[&apos;GET&apos;])
+def mine():
+    # We run the proof of work algorithm to get the next proof...
+    last_block = blockchain.last_block
+    proof = blockchain.proof_of_work(last_block)
+
+    # We must receive a reward for finding the proof.
+    # The sender is &quot;0&quot; to signify that this node has mined a new coin.
+    blockchain.new_transaction(
+        sender=&quot;0&quot;,
+        recipient=node_identifier,
+        amount=1,
+    )
+
+    # Forge the new Block by adding it to the chain
+    previous_hash = blockchain.hash(last_block)
+    block = blockchain.new_block(proof, previous_hash)
+
+    response = {
+        &apos;message&apos;: &quot;New Block Forged&quot;,
+        &apos;index&apos;: block[&apos;index&apos;],
+        &apos;transactions&apos;: block[&apos;transactions&apos;],
+        &apos;proof&apos;: block[&apos;proof&apos;],
+        &apos;previous_hash&apos;: block[&apos;previous_hash&apos;],
+    }
+    return jsonify(response), 200
+
+
+@app.route(&apos;/transactions/new&apos;, methods=[&apos;POST&apos;])
+def new_transaction():
+    values = request.get_json()
+
+    # Check that the required fields are in the POST&apos;ed data
+    required = [&apos;sender&apos;, &apos;recipient&apos;, &apos;amount&apos;]
+    if not all(k in values for k in required):
+        return &apos;Missing values&apos;, 400
+
+    # Create a new Transaction
+    index = blockchain.new_transaction(values[&apos;sender&apos;], values[&apos;recipient&apos;], values[&apos;amount&apos;])
+
+    response = {&apos;message&apos;: f&apos;Transaction will be added to Block {index}&apos;}
+    return jsonify(response), 201
+
+
+@app.route(&apos;/chain&apos;, methods=[&apos;GET&apos;])
+def full_chain():
+    response = {
+        &apos;chain&apos;: blockchain.chain,
+        &apos;length&apos;: len(blockchain.chain),
+    }
+    return jsonify(response), 200
+
+
+@app.route(&apos;/nodes/register&apos;, methods=[&apos;POST&apos;])
+def register_nodes():
+    values = request.get_json()
+
+    nodes = values.get(&apos;nodes&apos;)
+    if nodes is None:
+        return &quot;Error: Please supply a valid list of nodes&quot;, 400
+
+    for node in nodes:
+        blockchain.register_node(node)
+
+    response = {
+        &apos;message&apos;: &apos;New nodes have been added&apos;,
+        &apos;total_nodes&apos;: list(blockchain.nodes),
+    }
+    return jsonify(response), 201
+
+
+@app.route(&apos;/nodes/resolve&apos;, methods=[&apos;GET&apos;])
+def consensus():
+    replaced = blockchain.resolve_conflicts()
+
+    if replaced:
+        response = {
+            &apos;message&apos;: &apos;Our chain was replaced&apos;,
+            &apos;new_chain&apos;: blockchain.chain
+        }
+    else:
+        response = {
+            &apos;message&apos;: &apos;Our chain is authoritative&apos;,
+            &apos;chain&apos;: blockchain.chain
+        }
+
+    return jsonify(response), 200
+
+
+if __name__ == &apos;__main__&apos;:
+    from argparse import ArgumentParser
+
+    parser = ArgumentParser()
+    parser.add_argument(&apos;-p&apos;, &apos;--port&apos;, default=5000, type=int, help=&apos;port to listen on&apos;)
+    args = parser.parse_args()
+    port = args.port
+
+    app.run(host=&apos;0.0.0.0&apos;, port=port)
+</code></pre><p> 提供了几个url:</p>
+<pre><code>mine GET
+
+transactions/new POST
+
+chain GET
+
+nodes/register POST
+
+nodes/resolve GET
+
+/transactions/new to create a new transaction to a block
+/mine to tell our server to mine a new block.
+/chain to return the full Blockchain.
+/nodes/register to accept a list of new nodes in the form of URLs.
+/nodes/resolve to implement our Consensus Algorithm, which resolves any 
+        conflicts—to ensure a node has the correct chain.
+</code></pre><p>单个区块：</p>
+<pre><code>block = {
+    &apos;index&apos;: 1,
+    &apos;timestamp&apos;: 1506057125.900785,
+    &apos;transactions&apos;: [
+        {
+            &apos;sender&apos;: &quot;8527147fe1f5426f9dd545de4b27ee00&quot;,
+            &apos;recipient&apos;: &quot;a77f5cdfa2934df3954a5c7c7da5df1f&quot;,
+            &apos;amount&apos;: 5,
+        }
+    ],
+    &apos;proof&apos;: 324984774000,
+    &apos;previous_hash&apos;: &quot;2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824&quot;
+}    
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/27/blockchain-note/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1279,237 +1772,6 @@ output {
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/17/top-questions-python/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/17/top-questions-python/" itemprop="url">top-questions-python</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-17T23:09:30+08:00">
-                2018-03-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/03/17/top-questions-python/" class="leancloud_visitors" data-flag-title="top-questions-python">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.2k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  4
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.python2 编码问题</p>
-<ul>
-<li>python代码内部请全部使用unicode编码，在获取外部内容时，先decode为unicode，向外输出时再encode为Str</li>
-<li>在定义变量或者正则时，也定义unicode字符，如a=u”中文”；res=r””+u”正则”。</li>
-</ul>
-<pre><code>a=&quot;\\u8fdd\\u6cd5\\u8fdd\u89c4&quot; #变量a的内容为unicode编码，变量a为string编码（&quot;&quot;前不要加u）
-b=a.decode(&apos;unicode-escape&apos;)
-print b
-
-a=&quot;\\xe5\\x85\\xb3\\xe4\\xba\\x8e\\xe4&quot; #变量a的内容为string编码，变量a为string编码（&quot;&quot;前不要加u）
-b=a.decode(&apos;string-escape&apos;)
-print b
-</code></pre><p>2.多线程问题</p>
-<p><em>python带有GIL解释器锁的概念，同一时刻只能有一个线程在运行，遇到IO操作才会释放切换。</em></p>
-<p>协程不同于线程的地方在于协程不是操作系统进行切换，而是由程序员编码进行切换的，也就是说切换是由程序员控制的，这样就没有了线程所谓的安全问题。</p>
-<p>这也就是常选的gevent 方案</p>
-<p>cpu 密集  多进程<br>io密集 多线程 或者协程</p>
-<p>3.协程</p>
-<p>4.闭包</p>
-<p>全局变量降低了函数或模块之间的通用性，不同的函数或模块都要依赖于全局变量。同样，全局变量降低了代码的可读性，阅读者可能并不知道调用的某个变量是全局变量。</p>
-<pre><code># 原始情况
-time = 0
-
-def insert_time(min):
-    time = time + min
-    return  time
-
-print(insert_time(2))
-print(insert_time(10))
-
-
-# 闭包
-time = 0
-
-
-def study_time(time):
-    def insert_time(min):
-        nonlocal  time
-        time = time + min
-        return time
-
-    return insert_time
-
-
-f = study_time(time)
-print(f(2))
-print(time)
-print(f(10))
-print(time)
-</code></pre><p>这里最直接的表现就是全局变量 time 至此至终都没有修改过,这里还是用了 nonlocal 关键字,表示在函数或其他作用域中使用外层(非全局)变量。</p>
-<p>这种内部函数的局部作用域中可以访问外部函数局部作用域中变量的行为，我们称为： 闭包。更加直接的表达方式就是，当某个函数被当成对象返回时，夹带了外部变量，就形成了一个闭包。k</p>
-<p>闭包避免了使用全局变量，此外，闭包允许将函数与其所操作的某些数据（环境）关连起来。而且使用闭包，可以使代码变得更加的优雅。装饰器，是基于闭包实现的。</p>
-<p>所有函数都有一个 __closure__ 属性，如果函数是闭包的话，那么它返回的是一个由 cell 组成的元组对象。cell 对象的 cell_contents 属性就是存储在闭包中的变量。    </p>
-<p>5.装饰器问题</p>
-<p>6.爬虫问题</p>
-<p>7.魔法方法</p>
-<p>一个类创建的过程是怎样的，先是调用了 __new<strong>方法来创建一个对象，把参数传给 \</strong>init__ 方法进行实例化。</p>
-<p>其实在实际开发中，很少会用到 __new<strong> 方法，除非你希望能够控制类的创建。通常讲到 \</strong>new__ ，都是牵扯到 metaclass(元类)的。</p>
-<p>当然当一个对象的生命周期结束的时候，析构函数 __del__ 方法会被调用。但是这个方法是 Python 自己对对象进行垃圾回收的。</p>
-<p>Python 没有真正意义上的私有属性。然后这就导致了对 Python 类的封装性比较差。我们有时候会希望 Python 能够定义私有属性，然后提供公共可访问的 get 方法和 set 方法。Python 其实可以通过魔术方法来实现封装。</p>
-<p>方法说明</p>
-<p>__getattr__(self, name)该方法定义了你试图访问一个不存在的属性时的行为。因此，重载该方法可以实现捕获错误拼写然后进行重定向, 或者对一些废弃的属性进行警告。</p>
-<p>__setattr<strong>(self, name, value)定义了对属性进行赋值和修改操作时的行为。不管对象的某个属性是否存在,都允许为该属性进行赋值.有一点需要注意，实现 \</strong>setattr__ 时要避免”无限递归”的错误，</p>
-<p>__delattr<strong>(self, name) \</strong>delattr<strong> 与 \</strong>setattr<strong> 很像，只是它定义的是你删除属性时的行为， 实现 \</strong>delattr__ 是同时要避免”无限递归”的错误</p>
-<p>__getattribute<strong>(self, name) \</strong>getattribute<strong> 定义了你的属性被访问时的行为，相比较，\</strong>getattr__ 只有该属性不存在时才会起作用。</p>
-<p>因此，在支持 __getattribute<strong>的 Python 版本,调用\</strong>getattr<strong> 前必定会调用 \</strong>getattribute__   </p>
-<p>__getattribute__ 同样要避免”无限递归”的错误。</p>
-<p>8.差异</p>
-<p>Python3.x 中 input() 函数接受一个标准输入数据，返回为 string 类型。</p>
-<p>Python2.x 中 input() 相等于 eval(raw_input(prompt)) ，用来获取控制台的输入。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1564,7 +1826,7 @@ print(time)
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">312</span>
+                  <span class="site-state-item-count">313</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1679,7 +1941,7 @@ print(time)
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共145.7k字</span>
+  <span class="post-count">博客全站共146k字</span>
 </div>
 
         
