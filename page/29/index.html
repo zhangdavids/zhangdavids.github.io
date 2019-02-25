@@ -275,6 +275,374 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/11/binary-search-tree/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/11/binary-search-tree/" itemprop="url">binary_search_tree</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-11T22:58:39+08:00">
+                2018-09-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/algorithm/" itemprop="url" rel="index">
+                    <span itemprop="name">algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/09/11/binary-search-tree/" class="leancloud_visitors" data-flag-title="binary_search_tree">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  591
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>对树节点 二叉搜索树的简单抽象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class TreeNode(object):</span><br><span class="line">    def __init__(self, key, value, parent=None, left_node=None, right_node=None, balance_factor=0):</span><br><span class="line">        self.key = key</span><br><span class="line">        self.payload = value</span><br><span class="line">        self.left_child = left_node</span><br><span class="line">        self.right_child = right_node</span><br><span class="line">        self.parent = parent</span><br><span class="line">        self.balance_factor = balance_factor</span><br><span class="line"></span><br><span class="line">    def has_left_child(self):</span><br><span class="line">        return self.left_child</span><br><span class="line"></span><br><span class="line">    def has_right_child(self):</span><br><span class="line">        return self.right_child</span><br><span class="line"></span><br><span class="line">    def is_left_child(self):</span><br><span class="line">        return self.parent and self.parent.left_child == self</span><br><span class="line"></span><br><span class="line">    def is_right_child(self):</span><br><span class="line">        return self.parent and self.parent.right_child == self</span><br><span class="line"></span><br><span class="line">    def is_root(self):</span><br><span class="line">        return not self.parent</span><br><span class="line"></span><br><span class="line">    def is_leaf(self):</span><br><span class="line">        return not (self.right_child or self.left_child)</span><br><span class="line"></span><br><span class="line">    def has_any_children(self):</span><br><span class="line">        return self.right_child or self.left_child</span><br><span class="line"></span><br><span class="line">    def has_both_children(self):</span><br><span class="line">        return self.right_child or self.left_child</span><br><span class="line"></span><br><span class="line">    def replace_node_data(self, key, value, lc, rc):</span><br><span class="line">        self.key = key</span><br><span class="line">        self.payload = value</span><br><span class="line">        self.left_child = lc</span><br><span class="line">        self.right_child = rc</span><br><span class="line">        if self.has_left_child():</span><br><span class="line">            self.left_child.parent = self</span><br><span class="line">        if self.has_right_child():</span><br><span class="line">            self.right_child.parent = self</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class BinarySearchTree(object):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.root = None</span><br><span class="line">        self.size = 0</span><br><span class="line"></span><br><span class="line">    def length(self):</span><br><span class="line">        return self.size</span><br><span class="line"></span><br><span class="line">    def __len__(self):</span><br><span class="line">        return self.size</span><br><span class="line"></span><br><span class="line">    # 中序遍历</span><br><span class="line">    def in_order(self, node):</span><br><span class="line">        if node.left_child:</span><br><span class="line">            self.inorder(node.left_child)</span><br><span class="line">        self.print_node(node)</span><br><span class="line">        if node.right_child:</span><br><span class="line">            self.inorder(node.right_child)</span><br><span class="line"></span><br><span class="line">    def level_order(self, node):</span><br><span class="line">        nodes = []</span><br><span class="line">        nodes.append(node)</span><br><span class="line">        while len(nodes) &gt; 0:</span><br><span class="line">            current_node = nodes.pop(0)</span><br><span class="line">            self.print_node(current_node)</span><br><span class="line">            if current_node.left_child:</span><br><span class="line">                nodes.append(current_node.left_child)</span><br><span class="line">            if current_node.right_child:</span><br><span class="line">                nodes.append(current_node.right_child)</span><br><span class="line"></span><br><span class="line">    def print_node(self, node):</span><br><span class="line">        if node.parent:</span><br><span class="line">            print([node.key,</span><br><span class="line">                   node.payload,</span><br><span class="line">                   node.parent.key])</span><br><span class="line">        else:</span><br><span class="line">            print([node.key, node.payload])</span><br><span class="line"></span><br><span class="line">    # ---------------------  插入节点 ----------------</span><br><span class="line">    def put(self, key, value):</span><br><span class="line">        if self.root:</span><br><span class="line">            self._put(key, value, self.root)</span><br><span class="line">        else:</span><br><span class="line">            self.root = TreeNode(key, value)</span><br><span class="line">        self.size += 1</span><br><span class="line"></span><br><span class="line">    def _put(self, key, value, current_node):</span><br><span class="line">        if key &lt; current_node.key:</span><br><span class="line">            if current_node.has_left_child():</span><br><span class="line">                self._put(key, value, current_node.left_child)</span><br><span class="line">            else:</span><br><span class="line">                current_node.left_child = TreeNode(key, value, parent=current_node)</span><br><span class="line"></span><br><span class="line">        else:</span><br><span class="line">            if current_node.has_right_child():</span><br><span class="line">                self._put(key, value, current_node.right_child)</span><br><span class="line">            else:</span><br><span class="line">                current_node.right_child = TreeNode(key, value, parent=current_node)</span><br><span class="line">    # ---------------------  插入节点 ----------------</span><br><span class="line"></span><br><span class="line">    def __setitem__(self, key, value):</span><br><span class="line">        self.put(key, value)</span><br><span class="line"></span><br><span class="line">    # ---------------------  删除节点 ----------------</span><br><span class="line">    def find_min(self):  # Gets minimum node (leftmost leaf) in a subtree</span><br><span class="line">        current_node = self</span><br><span class="line">        while current_node.left_child:</span><br><span class="line">            current_node = current_node.left_child</span><br><span class="line">        return current_node</span><br><span class="line"></span><br><span class="line">    def replace_node_in_parent(self, new_value=None):</span><br><span class="line">        if self.parent:</span><br><span class="line">            if self == self.parent.left_child:</span><br><span class="line">                self.parent.left_child = new_value</span><br><span class="line">            else:</span><br><span class="line">                self.parent.right_child = new_value</span><br><span class="line">        if new_value:</span><br><span class="line">            new_value.parent = self.parent</span><br><span class="line"></span><br><span class="line">    def binary_tree_delete(self, key):</span><br><span class="line">        if key &lt; self.key:</span><br><span class="line">            self.left_child.binary_tree_delete(key)</span><br><span class="line">        elif key &gt; self.key:</span><br><span class="line">            self.right_child.binary_tree_delete(key)</span><br><span class="line">        else:  # delete the key here</span><br><span class="line">            if self.left_child and self.right_child:  # if both children are present</span><br><span class="line">                successor = self.right_child.find_min()</span><br><span class="line">                self.key = successor.key</span><br><span class="line">                successor.binary_tree_delete(successor.key)</span><br><span class="line">            elif self.left_child:  # if the node has only a *left* child</span><br><span class="line">                self.replace_node_in_parent(self.left_child)</span><br><span class="line">            elif self.right_child:  # if the node has only a *right* child</span><br><span class="line">                self.replace_node_in_parent(self.right_child)</span><br><span class="line">            else:  # this node has no children</span><br><span class="line">                self.replace_node_in_parent(None)</span><br><span class="line">    # ---------------------  删除节点 ----------------</span><br><span class="line"></span><br><span class="line">    def get(self, key):</span><br><span class="line">        if self.root:</span><br><span class="line">            res = self._get(key, self.root)</span><br><span class="line">            if res:</span><br><span class="line">                return res.payload</span><br><span class="line">            else:</span><br><span class="line">                return None</span><br><span class="line">        else:</span><br><span class="line">            return None</span><br><span class="line"></span><br><span class="line">    def _get(self, key, current_node):</span><br><span class="line">        if not current_node:</span><br><span class="line">            return None</span><br><span class="line">        elif current_node.key == key:</span><br><span class="line">            return current_node</span><br><span class="line">        elif key &lt; current_node.key:</span><br><span class="line">            return self._get(key, current_node.left_child)</span><br><span class="line">        else:</span><br><span class="line">            return self._get(key, current_node.right_child)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def run():</span><br><span class="line">    print(&apos;test bst&apos;)</span><br><span class="line">    mytree = BinarySearchTree()</span><br><span class="line">    mytree[3] = &quot;red&quot;</span><br><span class="line">    mytree[4] = &quot;blue&quot;</span><br><span class="line">    mytree[2] = &quot;rat&quot;</span><br><span class="line">    mytree[5] = &quot;cat&quot;</span><br><span class="line">    mytree[1] = &quot;dog&quot;</span><br><span class="line"></span><br><span class="line">    mytree.level_order(mytree.root)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    run()</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/11/二叉搜索树的处理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Cheung John">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/09/11/二叉搜索树的处理/" itemprop="url">二叉搜索树的处理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-11T17:30:30+08:00">
+                2018-09-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/algorithm/" itemprop="url" rel="index">
+                    <span itemprop="name">algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/09/11/二叉搜索树的处理/" class="leancloud_visitors" data-flag-title="二叉搜索树的处理">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  76
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>一种特殊的二叉树，它满足下面的性质：<strong>任何一个节点的key值都比它左子树上的节点的key值要大，但是比它右子树上的节点的key值要小</strong>。节点查找，插入，删除等操作的时间复杂度都是O(lgn)</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/11/ansible-自定义模块开发/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -781,377 +1149,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/10/深度学习0005/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/10/深度学习0005/" itemprop="url">深度学习0005</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-10T10:41:22+08:00">
-                2018-09-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index">
-                    <span itemprop="name">AI</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/09/10/深度学习0005/" class="leancloud_visitors" data-flag-title="深度学习0005">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  0
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/10/深度学习0004/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Cheung John">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/09/10/深度学习0004/" itemprop="url">深度学习0004</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-10T10:41:16+08:00">
-                2018-09-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index">
-                    <span itemprop="name">AI</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/09/10/深度学习0004/" class="leancloud_visitors" data-flag-title="深度学习0004">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  0
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/28/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><span class="page-number current">29</span><a class="page-number" href="/page/30/">30</a><span class="space">&hellip;</span><a class="page-number" href="/page/62/">62</a><a class="extend next" rel="next" href="/page/30/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/28/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/28/">28</a><span class="page-number current">29</span><a class="page-number" href="/page/30/">30</a><span class="space">&hellip;</span><a class="page-number" href="/page/63/">63</a><a class="extend next" rel="next" href="/page/30/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1201,7 +1203,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">309</span>
+                  <span class="site-state-item-count">311</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1316,7 +1318,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共145.3k字</span>
+  <span class="post-count">博客全站共145.6k字</span>
 </div>
 
         
