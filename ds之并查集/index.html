@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>
+    ds之并查集 | 上药三品，神与气精
+  </title>
+  <meta name="description" content="曾因酒醉鞭名马 生怕情多累美人">
+  
+  <meta name="keywords" content="
+  data structure
+  ">
+  
+  <meta name="author" content="John Cheung">
+
+  <meta http-equiv="Cache-Control" content="no-transform"/>
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+  <link rel="icon" type="image/x-icon" href="undefined">
+  <link rel="stylesheet" href="/tech/css/main.css">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+
+  
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vue/1.0.25-csp/vue.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+</head>
+
+<body id="replica-app">
+
+<nav class="navbar-wrapper">
+  <div class="navbar">
+    <div class="container clearfix">
+      <a href="/tech/" class="navbar-logo"><i class="fa fa-github"></i></a>
+
+      <div class="navbar-search float-left desktop-only">
+        <div class="navbar-search-form">
+          <label for="gsc-i-id1">This website</label>
+          <div id="google-search">
+            <gcse:search></gcse:search>
+          </div>
+        </div>
+      </div>
+
+      <ul class="navbar-nav float-left">
+        
+        <li><a href="/tech/archives">Archives</a></li>
+        
+        
+        <li><a href="/tech/categories">Categories</a></li>
+        
+        
+        <li><a href="/tech/tags">Tags</a></li>
+        
+        
+        <li class="desktop-only"><a href="/tech/atom.xml" target="_blank">RSS</a></li>
+        
+      </ul>
+
+      <ul class="navbar-nav user-nav float-right desktop-only">
+        <li class="user-nav-notification">
+          <a><span class="user-nav-unread"></span><i class="fa fa-bell"></i></a>
+        </li>
+        <li>
+          <a><i class="fa fa-plus"></i> <i class="fa fa-caret-down"></i></a>
+        </li>
+        <li class="user-nav-logo">
+          <a><img src="/images/pingan.jpeg"> <i class="fa fa-caret-down"></i></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="main-container">
+  <header class="header-wrapper desktop-only">
+  <div class="container header-site-detail">
+    <ul class="header-toolbar">
+      <li class="clearfix">
+        <a href="/tech/archives" class="header-toolbar-left"><i
+                  class="fa fa-file-text"></i> Posts </a>
+        <a href="/tech/archives"
+           class="header-toolbar-right"> 318 </a>
+      </li>
+      <li>
+        <a href="/tech/tags" class="header-toolbar-left"><i
+                  class="fa fa-tags"></i> Tags </a>
+        <a href="/tech/tags"
+           class="header-toolbar-right"> 28 </a>
+      </li>
+      <li>
+        <a href="/tech/categories" class="header-toolbar-left"><i
+                  class="fa fa-folder-open"></i> Categories </a>
+        <a href="/tech/categories"
+           class="header-toolbar-right"> 24 </a>
+      </li>
+    </ul>
+    <h2 class="header-title">
+      <i class="fa fa-book text-muted"></i>
+      <a href="/tech/">上药三品，神与气精</a>
+      
+      
+    </h2>
+  </div>
+
+  <div class="container">
+    <div class="header-tab-wrapper clearfix">
+      <span class="header-tab header-tab-selected"><i class="fa fa-thumbs-o-up"></i> Like</span>
+      <span class="header-tab"><i class="fa fa-share-alt"></i> Share</span>
+      <span class="header-tab"><i class="fa fa-comments-o"></i> Discussion</span>
+      <span class="header-tab"><i class="fa fa-bookmark-o"></i> Bookmark </span>
+      <span class="header-tab"><i class="fa fa-smile-o"></i> Smile <i class="fa fa-caret-down"></i></span>
+    </div>
+  </div>
+</header>
+
+
+<div class="post-container container">
+  <h3>
+    <i class="fa fa-user-o"></i>
+    John Cheung
+
+    <span class="post-date float-right" title="{{moment(1548047593000).format('MMM DD, YYYY, h:mm:ss A')}}">
+      <i class="fa fa-pencil-square-o"></i>
+      {{moment(1548047593000).fromNow()}}
+    </span>
+  </h3>
+
+  <article class="post-content">
+    <h1>ds之并查集</h1>
+    <p>六个关系网就能达到全世界</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// quick_find.java</span><br><span class="line"></span><br><span class="line">import java.io.File;</span><br><span class="line">import java.util.Scanner;</span><br><span class="line"></span><br><span class="line">public class UF &#123;</span><br><span class="line"></span><br><span class="line">    int count;   //连通分量数</span><br><span class="line">    int[] id;    //每个数所属的连通分量</span><br><span class="line"></span><br><span class="line">    public UF(int N) &#123;   //初始化时，N个点有N个分量</span><br><span class="line">        count = N;</span><br><span class="line">        id = new int[N];</span><br><span class="line">        for (int i = 0; i &lt; N; i++)</span><br><span class="line">            id[i] = i;</span><br><span class="line">    &#125;</span><br><span class="line">    //返回连通分量数</span><br><span class="line">    public int getCount()&#123;</span><br><span class="line">        return count;</span><br><span class="line">    &#125;</span><br><span class="line">    //查找x所属的连通分量</span><br><span class="line">    public int find(int x)&#123;</span><br><span class="line">        return id[x];</span><br><span class="line">    &#125;</span><br><span class="line">    //连接p,q(将q的分量改为p所在的分量)</span><br><span class="line">    public void union(int p,int q)&#123;</span><br><span class="line">        int pID=find(p);</span><br><span class="line">        int qID=find(q);</span><br><span class="line">        for(int i=0;i&lt;id.length;i++)&#123;</span><br><span class="line">            if(find(i)==pID)&#123;</span><br><span class="line">                id[i]=qID;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        count--;    //记得每进行一次连接，分量数减“1”</span><br><span class="line">    &#125;</span><br><span class="line">    //判断p,q是否连接，即是否属于同一个分量</span><br><span class="line">    public boolean connected(int p,int q)&#123;</span><br><span class="line">        return find(p)==find(q);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) throws Exception &#123;</span><br><span class="line"></span><br><span class="line">        //数据从外部文件读入，“data.txt”放在项目的根目录下</span><br><span class="line">        Scanner input = new Scanner(new File(&quot;data.txt&quot;));  </span><br><span class="line">        int N=input.nextInt();</span><br><span class="line">        UF uf = new UF(N);</span><br><span class="line">        while(input.hasNext())&#123;</span><br><span class="line">            int p=input.nextInt();</span><br><span class="line">            int q=input.nextInt();</span><br><span class="line">            if(uf.connected(p, q)) continue;        //若p,q已属于同一连通分量不再连接，则故直接跳过</span><br><span class="line">            uf.union(p, q);</span><br><span class="line">            System.out.println(p+&quot;-&quot;+q);</span><br><span class="line">        </span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;总连通分量数：&quot;+uf.getCount());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">// quick_union.java</span><br><span class="line"></span><br><span class="line">import java.io.File;</span><br><span class="line">import java.util.Scanner;</span><br><span class="line"></span><br><span class="line">public class UF &#123;</span><br><span class="line"></span><br><span class="line">    int count;   //连通分量数</span><br><span class="line">    int[] id;    //每个数所属的连通分量</span><br><span class="line"></span><br><span class="line">    public UF(int N) &#123;   //初始化时，N个点有N个分量</span><br><span class="line">        count = N;</span><br><span class="line">        id = new int[N];</span><br><span class="line">        for (int i = 0; i &lt; N; i++)</span><br><span class="line">            id[i] = i;</span><br><span class="line">    &#125;</span><br><span class="line">    //返回连通分量数</span><br><span class="line">    public int getCount()&#123;</span><br><span class="line">        return count;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //查找x所属的连通分量</span><br><span class="line">    public int find(int x)&#123;</span><br><span class="line">        while(x!=id[x]) x = id[x];  //若找不到，则一直往根root回溯</span><br><span class="line">        return x;</span><br><span class="line">    &#125;</span><br><span class="line">    //连接p,q(将q的分量改为p所在的分量)</span><br><span class="line">    public void union(int p,int q)&#123;</span><br><span class="line">        int pID=find(p);</span><br><span class="line">        int qID=find(q);</span><br><span class="line">        if(pID==qID) return ;</span><br><span class="line">        id[qID]=pID;</span><br><span class="line">        count--;</span><br><span class="line">    &#125;</span><br><span class="line">    /*</span><br><span class="line">    //查找x所属的连通分量</span><br><span class="line">    public int find(int x)&#123;</span><br><span class="line">        return id[x];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //连接p,q(将q的分量改为p所在的分量)</span><br><span class="line">    public void union(int p,int q)&#123;</span><br><span class="line">        int pID=find(p);</span><br><span class="line">        int qID=find(q);</span><br><span class="line">        if(pID==qID) return ;</span><br><span class="line">        for(int i=0;i&lt;id.length;i++)&#123;</span><br><span class="line">            if(find(i)==pID)&#123;</span><br><span class="line">                id[i]=qID;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        count--;    //记得每进行一次连接，分量数减“1”</span><br><span class="line">    &#125;</span><br><span class="line">    */</span><br><span class="line">    //判断p,q是否连接，即是否属于同一个分量</span><br><span class="line">    public boolean connected(int p,int q)&#123;</span><br><span class="line">        return find(p)==find(q);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) throws Exception &#123;</span><br><span class="line"></span><br><span class="line">        //数据从外部文件读入，“data.txt”放在项目的根目录下</span><br><span class="line">        Scanner input = new Scanner(new File(&quot;data.txt&quot;));  </span><br><span class="line">        int N=input.nextInt();</span><br><span class="line">        UF uf = new UF(N);</span><br><span class="line">        while(input.hasNext())&#123;</span><br><span class="line">            int p=input.nextInt();</span><br><span class="line">            int q=input.nextInt();</span><br><span class="line">            if(uf.connected(p, q)) continue;        //若p,q已属于同一连通分量不再连接，则故直接跳过</span><br><span class="line">            uf.union(p, q);</span><br><span class="line">            System.out.println(p+&quot;-&quot;+q);</span><br><span class="line">        </span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;总连通分量数：&quot;+uf.getCount());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line">// weighted_uf.java</span><br><span class="line"></span><br><span class="line">import java.io.File;</span><br><span class="line">import java.util.Scanner;</span><br><span class="line"></span><br><span class="line">public class UF &#123;</span><br><span class="line"></span><br><span class="line">    int count; // 连通分量数</span><br><span class="line">    int[] id; // 每个数所属的连通分量</span><br><span class="line">    int[] sz;</span><br><span class="line"></span><br><span class="line">    public UF(int N) &#123; // 初始化时，N个点有N个分量</span><br><span class="line">        count = N;</span><br><span class="line">        sz = new int[N];</span><br><span class="line">        id = new int[N];</span><br><span class="line">        for (int i = 0; i &lt; N; i++)</span><br><span class="line">            id[i] = i;</span><br><span class="line"></span><br><span class="line">        for (int i = 0; i &lt; N; i++)</span><br><span class="line">            sz[i] = 1;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 返回连通分量数</span><br><span class="line">    public int getCount() &#123;</span><br><span class="line">        return count;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 查找x所属的连通分量</span><br><span class="line">    public int find(int x) &#123;</span><br><span class="line">        while (x != id[x])</span><br><span class="line">            x = id[x]; // 若找不到，则一直往根root回溯</span><br><span class="line">        return x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 连接p,q(将q的分量改为p所在的分量)</span><br><span class="line">    public void union(int p, int q) &#123;</span><br><span class="line">        int pID = find(p);</span><br><span class="line">        int qID = find(q);</span><br><span class="line">        if (pID == qID)</span><br><span class="line">            return;</span><br><span class="line"></span><br><span class="line">        if (sz[p] &lt; sz[q]) &#123;    //通过结点数量，判断树的大小并将小树并到大树下</span><br><span class="line">            id[p] = qID;</span><br><span class="line">            sz[q] += sz[p];</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            id[q] = pID;</span><br><span class="line">            sz[p] += sz[q];</span><br><span class="line">        &#125;</span><br><span class="line">        count--;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /*</span><br><span class="line">     * //查找x所属的连通分量 public int find(int x)&#123; return id[x]; &#125;</span><br><span class="line">     * </span><br><span class="line">     * //连接p,q(将q的分量改为p所在的分量) public void union(int p,int q)&#123; int pID=find(p);</span><br><span class="line">     * int qID=find(q); if(pID==qID) return ; for(int i=0;i&lt;id.length;i++)&#123;</span><br><span class="line">     * if(find(i)==pID)&#123; id[i]=qID; &#125; &#125; count--; //记得每进行一次连接，分量数减“1” &#125;</span><br><span class="line">     */</span><br><span class="line">    // 判断p,q是否连接，即是否属于同一个分量</span><br><span class="line">    public boolean connected(int p, int q) &#123;</span><br><span class="line">        return find(p) == find(q);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) throws Exception &#123;</span><br><span class="line"></span><br><span class="line">        // 数据从外部文件读入，“data.txt”放在项目的根目录下</span><br><span class="line">        Scanner input = new Scanner(new File(&quot;data.txt&quot;));</span><br><span class="line">        int N = input.nextInt();</span><br><span class="line">        UF uf = new UF(N);</span><br><span class="line">        while (input.hasNext()) &#123;</span><br><span class="line">            int p = input.nextInt();</span><br><span class="line">            int q = input.nextInt();</span><br><span class="line">            if (uf.connected(p, q))</span><br><span class="line">                continue; // 若p,q已属于同一连通分量不再连接，则故直接跳过</span><br><span class="line">            uf.union(p, q);</span><br><span class="line">            System.out.println(p + &quot;-&quot; + q);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;总连通分量数：&quot; + uf.getCount());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>网络通信（比如：是否需要在通信点p,q建立通信连接）</p>
+</li>
+<li><p>媒体社交（比如：向通一个社交圈的朋友推荐商品）</p>
+</li>
+<li><p>数学集合（比如：判断元素p,q之后选择是否进行集合合并）</p>
+</li>
+</ul>
+<p>六度分隔理论，该理论认为世界上任何互不相识的两人，只需要很少的中间人就能够建立起联系。</p>
+<p>哈佛大学心理学教授斯坦利·米尔格拉姆于1967年根据这个概念做过一次连锁信实验，尝试证明平均只需要6步就可以联系任何两个互不相识的美国人。</p>
+
+  </article>
+</div>
+
+
+    
+
+
+
+
+</div>
+
+<div class="footer-wrapper container">
+  <footer class="footer clearfix">
+    <div class="clearfix">
+    <a href="https://zhangdavids.github.io/tech" class="footer-logo">
+      <i class="fa fa-github"></i>
+    </a>
+    <ul class="footer-social-link">
+      <li>© 2018 John Cheung</li>
+      <li><a href="https://zhangdavids.github.io/tech">Home</a></li>
+      
+    </ul>
+    <div class="footer-theme-info">
+      Theme <a href="//github.com/sabrinaluo/hexo-theme-replica">Replica</a>
+      by <a href="//github.com/sabrinaluo">Hiitea</a> ❤ Powered by Hexo
+    </div>
+    </div>
+    
+  </footer>
+</div>
+
+
+
+
+<script src="/tech/js/main.js"></script>
+
+</body>
+</html>

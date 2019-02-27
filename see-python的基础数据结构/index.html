@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>
+    see_python的基础数据结构 | 上药三品，神与气精
+  </title>
+  <meta name="description" content="曾因酒醉鞭名马 生怕情多累美人">
+  
+  <meta name="keywords" content="
+  
+  ">
+  
+  <meta name="author" content="John Cheung">
+
+  <meta http-equiv="Cache-Control" content="no-transform"/>
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+  <link rel="icon" type="image/x-icon" href="undefined">
+  <link rel="stylesheet" href="/tech/css/main.css">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+
+  
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vue/1.0.25-csp/vue.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+</head>
+
+<body id="replica-app">
+
+<nav class="navbar-wrapper">
+  <div class="navbar">
+    <div class="container clearfix">
+      <a href="/tech/" class="navbar-logo"><i class="fa fa-github"></i></a>
+
+      <div class="navbar-search float-left desktop-only">
+        <div class="navbar-search-form">
+          <label for="gsc-i-id1">This website</label>
+          <div id="google-search">
+            <gcse:search></gcse:search>
+          </div>
+        </div>
+      </div>
+
+      <ul class="navbar-nav float-left">
+        
+        <li><a href="/tech/archives">Archives</a></li>
+        
+        
+        <li><a href="/tech/categories">Categories</a></li>
+        
+        
+        <li><a href="/tech/tags">Tags</a></li>
+        
+        
+        <li class="desktop-only"><a href="/tech/atom.xml" target="_blank">RSS</a></li>
+        
+      </ul>
+
+      <ul class="navbar-nav user-nav float-right desktop-only">
+        <li class="user-nav-notification">
+          <a><span class="user-nav-unread"></span><i class="fa fa-bell"></i></a>
+        </li>
+        <li>
+          <a><i class="fa fa-plus"></i> <i class="fa fa-caret-down"></i></a>
+        </li>
+        <li class="user-nav-logo">
+          <a><img src="/images/pingan.jpeg"> <i class="fa fa-caret-down"></i></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="main-container">
+  <header class="header-wrapper desktop-only">
+  <div class="container header-site-detail">
+    <ul class="header-toolbar">
+      <li class="clearfix">
+        <a href="/tech/archives" class="header-toolbar-left"><i
+                  class="fa fa-file-text"></i> Posts </a>
+        <a href="/tech/archives"
+           class="header-toolbar-right"> 318 </a>
+      </li>
+      <li>
+        <a href="/tech/tags" class="header-toolbar-left"><i
+                  class="fa fa-tags"></i> Tags </a>
+        <a href="/tech/tags"
+           class="header-toolbar-right"> 28 </a>
+      </li>
+      <li>
+        <a href="/tech/categories" class="header-toolbar-left"><i
+                  class="fa fa-folder-open"></i> Categories </a>
+        <a href="/tech/categories"
+           class="header-toolbar-right"> 24 </a>
+      </li>
+    </ul>
+    <h2 class="header-title">
+      <i class="fa fa-book text-muted"></i>
+      <a href="/tech/">上药三品，神与气精</a>
+      
+      
+    </h2>
+  </div>
+
+  <div class="container">
+    <div class="header-tab-wrapper clearfix">
+      <span class="header-tab header-tab-selected"><i class="fa fa-thumbs-o-up"></i> Like</span>
+      <span class="header-tab"><i class="fa fa-share-alt"></i> Share</span>
+      <span class="header-tab"><i class="fa fa-comments-o"></i> Discussion</span>
+      <span class="header-tab"><i class="fa fa-bookmark-o"></i> Bookmark </span>
+      <span class="header-tab"><i class="fa fa-smile-o"></i> Smile <i class="fa fa-caret-down"></i></span>
+    </div>
+  </div>
+</header>
+
+
+<div class="post-container container">
+  <h3>
+    <i class="fa fa-user-o"></i>
+    John Cheung
+
+    <span class="post-date float-right" title="{{moment(1544785394000).format('MMM DD, YYYY, h:mm:ss A')}}">
+      <i class="fa fa-pencil-square-o"></i>
+      {{moment(1544785394000).fromNow()}}
+    </span>
+  </h3>
+
+  <article class="post-content">
+    <h1>see_python的基础数据结构</h1>
+    <h3 id="列表list"><a href="#列表list" class="headerlink" title="列表list"></a>列表list</h3><ul>
+<li>以完全随机的列表考虑平均情况。</li>
+</ul>
+<p>列表是以数组（Array）实现的。最大的开销发生在超过当前分配大小的增长，这种情况下所有元素都需要移动；或者是在起始位置附近插入或者删除元素，这种情况下所有在该位置后面的元素都需要移动。如果你需要在一个队列的两端进行增删的操作，应当使用collections.deque（双向队列）</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">操作</th>
+<th style="text-align:left">平均情况</th>
+<th style="text-align:left">最坏情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">复制</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left">O(n)</td>
+</tr>
+<tr>
+<td style="text-align:left">append</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(1)</td>
+</tr>
+<tr>
+<td style="text-align:left">插入</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left">O(n)</td>
+</tr>
+<tr>
+<td style="text-align:left">取元素</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(1)</td>
+</tr>
+<tr>
+<td style="text-align:left">更改元素</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(1)</td>
+</tr>
+<tr>
+<td style="text-align:left">删除元素</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left">O(n)</td>
+</tr>
+<tr>
+<td style="text-align:left">遍历</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left">O(n)</td>
+</tr>
+<tr>
+<td style="text-align:left">取切片</td>
+<td style="text-align:left">O(k)</td>
+<td style="text-align:left">O(k)</td>
+</tr>
+<tr>
+<td style="text-align:left">删除切片</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left">O(n)</td>
+</tr>
+<tr>
+<td style="text-align:left">更改切片</td>
+<td style="text-align:left">O(k+n)</td>
+<td style="text-align:left">O(k+n)</td>
+</tr>
+<tr>
+<td style="text-align:left">extend</td>
+<td style="text-align:left">O(k)</td>
+<td style="text-align:left">O(k)</td>
+</tr>
+<tr>
+<td style="text-align:left">排序</td>
+<td style="text-align:left">O(n logn)</td>
+<td style="text-align:left">O(n logn)</td>
+</tr>
+<tr>
+<td style="text-align:left">列表乘法</td>
+<td style="text-align:left">O(nk)</td>
+<td style="text-align:left">O(nk)</td>
+</tr>
+<tr>
+<td style="text-align:left">x in s</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">min(s), max(s)</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">计算长度</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(1)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="双端队列queue"><a href="#双端队列queue" class="headerlink" title="双端队列queue"></a>双端队列queue</h3><p>deque （double-ended queue，双向队列）是以双向链表的形式实现的 (Well, a list of arrays rather than objects, for greater efficiency)。双向队列的两端都是可达的，但从查找队列中间的元素较为缓慢，增删元素就更慢了。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">操作</th>
+<th style="text-align:left">平均情况</th>
+<th style="text-align:left">最坏情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">复制</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left">O(n)</td>
+</tr>
+<tr>
+<td style="text-align:left">append</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(1)</td>
+</tr>
+<tr>
+<td style="text-align:left">appendleft</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(1)</td>
+</tr>
+<tr>
+<td style="text-align:left">pop</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(1)</td>
+</tr>
+<tr>
+<td style="text-align:left">popleft</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(1)</td>
+</tr>
+<tr>
+<td style="text-align:left">extend</td>
+<td style="text-align:left">O(k)</td>
+<td style="text-align:left">O(k)</td>
+</tr>
+<tr>
+<td style="text-align:left">extendleft</td>
+<td style="text-align:left">O(k)</td>
+<td style="text-align:left">O(k)</td>
+</tr>
+<tr>
+<td style="text-align:left">rotate</td>
+<td style="text-align:left">O(k)</td>
+<td style="text-align:left">O(k)</td>
+</tr>
+<tr>
+<td style="text-align:left">remove</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left">O(n)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="集合set"><a href="#集合set" class="headerlink" title="集合set"></a>集合set</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">操作</th>
+<th style="text-align:left">平均情况</th>
+<th style="text-align:left">最坏情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">x in s</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(n)</td>
+</tr>
+<tr>
+<td style="text-align:left">并集 s\</td>
+<td style="text-align:left">t</td>
+<td style="text-align:left">O(len(s)+len(t))</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:left">交集 s&amp;t</td>
+<td style="text-align:left">O(min(len(s), len(t))</td>
+<td style="text-align:left">O(len(s) * len(t))</td>
+</tr>
+<tr>
+<td style="text-align:left">差集 s-t</td>
+<td style="text-align:left">O(len(s))</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">s.difference_update(t)</td>
+<td style="text-align:left">O(len(t))</td>
+</tr>
+<tr>
+<td style="text-align:left">对称差集 s^t</td>
+<td style="text-align:left">O(len(s))</td>
+<td style="text-align:left">O(len(s) * len(t))</td>
+</tr>
+<tr>
+<td style="text-align:left">s.symmetric_difference_update(t)</td>
+<td style="text-align:left">O(len(t))</td>
+<td style="text-align:left">O(len(t) * len(s))</td>
+</tr>
+</tbody>
+</table>
+<h3 id="字典dict"><a href="#字典dict" class="headerlink" title="字典dict"></a>字典dict</h3><p>下列字典的平均情况基于以下假设：</p>
+<ol>
+<li>对象的散列函数足够鲁棒性（robust），不会发生冲突。</li>
+<li>字典的键是从所有可能的键的集合中随机选择的。</li>
+</ol>
+<p>小窍门：只使用字符串作为字典的键。这么做虽然不会影响算法的时间复杂度，但会对常数项产生显著的影响，这决定了你的一段程序能多快跑完。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">操作</th>
+<th style="text-align:left">平均情况</th>
+<th style="text-align:left">最坏情况</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">复制</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left">O(n)</td>
+</tr>
+<tr>
+<td style="text-align:left">取元素</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(n)</td>
+</tr>
+<tr>
+<td style="text-align:left">更改元素</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(n)</td>
+</tr>
+<tr>
+<td style="text-align:left">删除元素</td>
+<td style="text-align:left">O(1)</td>
+<td style="text-align:left">O(n)</td>
+</tr>
+<tr>
+<td style="text-align:left">遍历</td>
+<td style="text-align:left">O(n)</td>
+<td style="text-align:left">O(n)</td>
+</tr>
+</tbody>
+</table>
+
+  </article>
+</div>
+
+
+    
+
+
+
+
+</div>
+
+<div class="footer-wrapper container">
+  <footer class="footer clearfix">
+    <div class="clearfix">
+    <a href="https://zhangdavids.github.io/tech" class="footer-logo">
+      <i class="fa fa-github"></i>
+    </a>
+    <ul class="footer-social-link">
+      <li>© 2018 John Cheung</li>
+      <li><a href="https://zhangdavids.github.io/tech">Home</a></li>
+      
+    </ul>
+    <div class="footer-theme-info">
+      Theme <a href="//github.com/sabrinaluo/hexo-theme-replica">Replica</a>
+      by <a href="//github.com/sabrinaluo">Hiitea</a> ❤ Powered by Hexo
+    </div>
+    </div>
+    
+  </footer>
+</div>
+
+
+
+
+<script src="/tech/js/main.js"></script>
+
+</body>
+</html>

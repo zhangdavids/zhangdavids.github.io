@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>
+    python当中的并发 | 上药三品，神与气精
+  </title>
+  <meta name="description" content="曾因酒醉鞭名马 生怕情多累美人">
+  
+  <meta name="keywords" content="
+  
+  ">
+  
+  <meta name="author" content="John Cheung">
+
+  <meta http-equiv="Cache-Control" content="no-transform"/>
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+  <link rel="icon" type="image/x-icon" href="undefined">
+  <link rel="stylesheet" href="/tech/css/main.css">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+
+  
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vue/1.0.25-csp/vue.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+</head>
+
+<body id="replica-app">
+
+<nav class="navbar-wrapper">
+  <div class="navbar">
+    <div class="container clearfix">
+      <a href="/tech/" class="navbar-logo"><i class="fa fa-github"></i></a>
+
+      <div class="navbar-search float-left desktop-only">
+        <div class="navbar-search-form">
+          <label for="gsc-i-id1">This website</label>
+          <div id="google-search">
+            <gcse:search></gcse:search>
+          </div>
+        </div>
+      </div>
+
+      <ul class="navbar-nav float-left">
+        
+        <li><a href="/tech/archives">Archives</a></li>
+        
+        
+        <li><a href="/tech/categories">Categories</a></li>
+        
+        
+        <li><a href="/tech/tags">Tags</a></li>
+        
+        
+        <li class="desktop-only"><a href="/tech/atom.xml" target="_blank">RSS</a></li>
+        
+      </ul>
+
+      <ul class="navbar-nav user-nav float-right desktop-only">
+        <li class="user-nav-notification">
+          <a><span class="user-nav-unread"></span><i class="fa fa-bell"></i></a>
+        </li>
+        <li>
+          <a><i class="fa fa-plus"></i> <i class="fa fa-caret-down"></i></a>
+        </li>
+        <li class="user-nav-logo">
+          <a><img src="/images/pingan.jpeg"> <i class="fa fa-caret-down"></i></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="main-container">
+  <header class="header-wrapper desktop-only">
+  <div class="container header-site-detail">
+    <ul class="header-toolbar">
+      <li class="clearfix">
+        <a href="/tech/archives" class="header-toolbar-left"><i
+                  class="fa fa-file-text"></i> Posts </a>
+        <a href="/tech/archives"
+           class="header-toolbar-right"> 318 </a>
+      </li>
+      <li>
+        <a href="/tech/tags" class="header-toolbar-left"><i
+                  class="fa fa-tags"></i> Tags </a>
+        <a href="/tech/tags"
+           class="header-toolbar-right"> 28 </a>
+      </li>
+      <li>
+        <a href="/tech/categories" class="header-toolbar-left"><i
+                  class="fa fa-folder-open"></i> Categories </a>
+        <a href="/tech/categories"
+           class="header-toolbar-right"> 24 </a>
+      </li>
+    </ul>
+    <h2 class="header-title">
+      <i class="fa fa-book text-muted"></i>
+      <a href="/tech/">上药三品，神与气精</a>
+      
+      
+    </h2>
+  </div>
+
+  <div class="container">
+    <div class="header-tab-wrapper clearfix">
+      <span class="header-tab header-tab-selected"><i class="fa fa-thumbs-o-up"></i> Like</span>
+      <span class="header-tab"><i class="fa fa-share-alt"></i> Share</span>
+      <span class="header-tab"><i class="fa fa-comments-o"></i> Discussion</span>
+      <span class="header-tab"><i class="fa fa-bookmark-o"></i> Bookmark </span>
+      <span class="header-tab"><i class="fa fa-smile-o"></i> Smile <i class="fa fa-caret-down"></i></span>
+    </div>
+  </div>
+</header>
+
+
+<div class="post-container container">
+  <h3>
+    <i class="fa fa-user-o"></i>
+    John Cheung
+
+    <span class="post-date float-right" title="{{moment(1520954355000).format('MMM DD, YYYY, h:mm:ss A')}}">
+      <i class="fa fa-pencil-square-o"></i>
+      {{moment(1520954355000).fromNow()}}
+    </span>
+  </h3>
+
+  <article class="post-content">
+    <h1>python当中的并发</h1>
+    <p>并发的表现形式，并行处理是软件工程领域最广泛的话题之一。</p>
+<p>两个事件互不影响，则两个事件是并发的。<br>CPython的线程实现中带有一些麻烦的细节，使得实用性降低了。</p>
+<p>GIL 只是强制在任何时候只有一个线程可以执行python代码</p>
+<p>多线程可以使用的场景：</p>
+<ul>
+<li>构建响应式界面</li>
+<li>委派工作</li>
+<li>构建多用户应用程序</li>
+</ul>
+<p>如何让用户控制使用哪个处理后端（进程或者线程）</p>
+<pre><code>from multiprocessing import Pool as ProcessPool
+from multiprocessing.dummpy import Pool as ThreadPool
+
+
+def main(use_threads=False):
+    if use_threads:
+        pool_cls = ThreadPool
+    else:
+        pool_cls = ProcessPool
+
+    with pool_cls(4) as p:
+        results = p.map(fetch_place, PLACES)
+
+    for result in results:
+        present_result(result)
+</code></pre><h2 id="异步编程"><a href="#异步编程" class="headerlink" title="异步编程"></a>异步编程</h2><p>异步编程的解决方案，如twisted tornado eventlet,真的值得了解</p>
+<p>协同多任务是异步编程的核心。每个进程都在空闲时自动释放控制以允许同时执行多个程序。</p>
+<p>gevent 的工作方式，gevent 的作用一条线程跑多个协程，适合多 IO 操作。</p>
+<p>需要强调的是引入 gevent 不会加快获取数据的速度，例如，原来是 30ms，引入之后不会变少，只会变多，那么引入的好处是什么？原来你能在1秒之内接待33个客户端请求，引入之后可能可以接待100个/s，也可能接待 300个/s，这才是 gevent 的好处。</p>
+
+  </article>
+</div>
+
+
+    
+
+
+
+
+</div>
+
+<div class="footer-wrapper container">
+  <footer class="footer clearfix">
+    <div class="clearfix">
+    <a href="https://zhangdavids.github.io/tech" class="footer-logo">
+      <i class="fa fa-github"></i>
+    </a>
+    <ul class="footer-social-link">
+      <li>© 2018 John Cheung</li>
+      <li><a href="https://zhangdavids.github.io/tech">Home</a></li>
+      
+    </ul>
+    <div class="footer-theme-info">
+      Theme <a href="//github.com/sabrinaluo/hexo-theme-replica">Replica</a>
+      by <a href="//github.com/sabrinaluo">Hiitea</a> ❤ Powered by Hexo
+    </div>
+    </div>
+    
+  </footer>
+</div>
+
+
+
+
+<script src="/tech/js/main.js"></script>
+
+</body>
+</html>

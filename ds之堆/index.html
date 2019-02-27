@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>
+    ds之堆 | 上药三品，神与气精
+  </title>
+  <meta name="description" content="曾因酒醉鞭名马 生怕情多累美人">
+  
+  <meta name="keywords" content="
+  data structure
+  ">
+  
+  <meta name="author" content="John Cheung">
+
+  <meta http-equiv="Cache-Control" content="no-transform"/>
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+  <link rel="icon" type="image/x-icon" href="undefined">
+  <link rel="stylesheet" href="/tech/css/main.css">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+
+  
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vue/1.0.25-csp/vue.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+</head>
+
+<body id="replica-app">
+
+<nav class="navbar-wrapper">
+  <div class="navbar">
+    <div class="container clearfix">
+      <a href="/tech/" class="navbar-logo"><i class="fa fa-github"></i></a>
+
+      <div class="navbar-search float-left desktop-only">
+        <div class="navbar-search-form">
+          <label for="gsc-i-id1">This website</label>
+          <div id="google-search">
+            <gcse:search></gcse:search>
+          </div>
+        </div>
+      </div>
+
+      <ul class="navbar-nav float-left">
+        
+        <li><a href="/tech/archives">Archives</a></li>
+        
+        
+        <li><a href="/tech/categories">Categories</a></li>
+        
+        
+        <li><a href="/tech/tags">Tags</a></li>
+        
+        
+        <li class="desktop-only"><a href="/tech/atom.xml" target="_blank">RSS</a></li>
+        
+      </ul>
+
+      <ul class="navbar-nav user-nav float-right desktop-only">
+        <li class="user-nav-notification">
+          <a><span class="user-nav-unread"></span><i class="fa fa-bell"></i></a>
+        </li>
+        <li>
+          <a><i class="fa fa-plus"></i> <i class="fa fa-caret-down"></i></a>
+        </li>
+        <li class="user-nav-logo">
+          <a><img src="/images/pingan.jpeg"> <i class="fa fa-caret-down"></i></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="main-container">
+  <header class="header-wrapper desktop-only">
+  <div class="container header-site-detail">
+    <ul class="header-toolbar">
+      <li class="clearfix">
+        <a href="/tech/archives" class="header-toolbar-left"><i
+                  class="fa fa-file-text"></i> Posts </a>
+        <a href="/tech/archives"
+           class="header-toolbar-right"> 318 </a>
+      </li>
+      <li>
+        <a href="/tech/tags" class="header-toolbar-left"><i
+                  class="fa fa-tags"></i> Tags </a>
+        <a href="/tech/tags"
+           class="header-toolbar-right"> 28 </a>
+      </li>
+      <li>
+        <a href="/tech/categories" class="header-toolbar-left"><i
+                  class="fa fa-folder-open"></i> Categories </a>
+        <a href="/tech/categories"
+           class="header-toolbar-right"> 24 </a>
+      </li>
+    </ul>
+    <h2 class="header-title">
+      <i class="fa fa-book text-muted"></i>
+      <a href="/tech/">上药三品，神与气精</a>
+      
+      
+    </h2>
+  </div>
+
+  <div class="container">
+    <div class="header-tab-wrapper clearfix">
+      <span class="header-tab header-tab-selected"><i class="fa fa-thumbs-o-up"></i> Like</span>
+      <span class="header-tab"><i class="fa fa-share-alt"></i> Share</span>
+      <span class="header-tab"><i class="fa fa-comments-o"></i> Discussion</span>
+      <span class="header-tab"><i class="fa fa-bookmark-o"></i> Bookmark </span>
+      <span class="header-tab"><i class="fa fa-smile-o"></i> Smile <i class="fa fa-caret-down"></i></span>
+    </div>
+  </div>
+</header>
+
+
+<div class="post-container container">
+  <h3>
+    <i class="fa fa-user-o"></i>
+    John Cheung
+
+    <span class="post-date float-right" title="{{moment(1547099402000).format('MMM DD, YYYY, h:mm:ss A')}}">
+      <i class="fa fa-pencil-square-o"></i>
+      {{moment(1547099402000).fromNow()}}
+    </span>
+  </h3>
+
+  <article class="post-content">
+    <h1>ds之堆</h1>
+    <p>堆 </p>
+<p>为什么堆排序没有快速排序快？</p>
+<p>堆排序是一种原地的、时间复杂度为O(nlogn)的排序算法</p>
+<ul>
+<li>堆是一棵完全二叉树</li>
+<li>堆中每一个节点的值都必须大于等于（或者小于等于）其子树中每个节点的值</li>
+</ul>
+<p>如何实现一个堆？以大顶堆为例子</p>
+<p>完全二叉树比较适合用数组来存储。用数组存储非常节省存储空间，单纯通过数组下标就可以找到一个节点的左右子节点和父节点。</p>
+<p><em>堆的插入数据</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public class Heap &#123;</span><br><span class="line">  private int[] a; // 数组，从下标 1 开始存储数据</span><br><span class="line">  private int n;  // 堆可以存储的最大数据个数</span><br><span class="line">  private int count; // 堆中已经存储的数据个数</span><br><span class="line"></span><br><span class="line">  public Heap(int capacity) &#123;</span><br><span class="line">    a = new int[capacity + 1];</span><br><span class="line">    n = capacity;</span><br><span class="line">    count = 0;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public void insert(int data) &#123;</span><br><span class="line">    if (count &gt;= n) return; // 堆满了</span><br><span class="line">    ++count;</span><br><span class="line">    a[count] = data;</span><br><span class="line">    int i = count;</span><br><span class="line">    while (i/2 &gt; 0 &amp;&amp; a[i] &gt; a[i/2]) &#123; // 自下往上堆化</span><br><span class="line">      swap(a, i, i/2); // swap() 函数作用：交换下标为 i 和 i/2 的两个元素</span><br><span class="line">      i = i/2;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p><em>删除堆顶元素</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public void removeMax() &#123;</span><br><span class="line">  if (count == 0) return -1; // 堆中没有数据</span><br><span class="line">  a[1] = a[count];</span><br><span class="line">  --count;</span><br><span class="line">  heapify(a, count, 1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private void heapify(int[] a, int n, int i) &#123; // 自上往下堆化</span><br><span class="line">  while (true) &#123;</span><br><span class="line">    int maxPos = i;</span><br><span class="line">    if (i*2 &lt;= n &amp;&amp; a[i] &lt; a[i*2]) maxPos = i*2;</span><br><span class="line">    if (i*2+1 &lt;= n &amp;&amp; a[maxPos] &lt; a[i*2+1]) maxPos = i*2+1;</span><br><span class="line">    if (maxPos == i) break;</span><br><span class="line">    swap(a, i, maxPos);</span><br><span class="line">    i = maxPos;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><em>建堆</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">private static void buildHeap(int[] a, int n) &#123;</span><br><span class="line">  for (int i = n/2; i &gt;= 1; --i) &#123;</span><br><span class="line">    heapify(a, n, i);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private static void heapify(int[] a, int n, int i) &#123;</span><br><span class="line">  while (true) &#123;</span><br><span class="line">    int maxPos = i;</span><br><span class="line">    if (i*2 &lt;= n &amp;&amp; a[i] &lt; a[i*2]) maxPos = i*2;</span><br><span class="line">    if (i*2+1 &lt;= n &amp;&amp; a[maxPos] &lt; a[i*2+1]) maxPos = i*2+1;</span><br><span class="line">    if (maxPos == i) break;</span><br><span class="line">    swap(a, i, maxPos);</span><br><span class="line">    i = maxPos;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><em>堆排序</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// n 表示数据的个数，数组 a 中的数据从下标 1 到 n 的位置。</span><br><span class="line">public static void sort(int[] a, int n) &#123;</span><br><span class="line">  buildHeap(a, n);</span><br><span class="line">  int k = n;</span><br><span class="line">  while (k &gt; 1) &#123;</span><br><span class="line">    swap(a, 1, k);</span><br><span class="line">    --k;</span><br><span class="line">    heapify(a, k, 1);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>堆排序数据访问的方式没有快速排序友好。</li>
+</ul>
+<p>快速排序 数据是顺序访问的 对于堆来说 数据是跳着访问的</p>
+<ul>
+<li>对于同样的数据 排序过程中 堆排序算法的数据交换次数要多于快速排序。</li>
+</ul>
+
+  </article>
+</div>
+
+
+    
+
+
+
+
+</div>
+
+<div class="footer-wrapper container">
+  <footer class="footer clearfix">
+    <div class="clearfix">
+    <a href="https://zhangdavids.github.io/tech" class="footer-logo">
+      <i class="fa fa-github"></i>
+    </a>
+    <ul class="footer-social-link">
+      <li>© 2018 John Cheung</li>
+      <li><a href="https://zhangdavids.github.io/tech">Home</a></li>
+      
+    </ul>
+    <div class="footer-theme-info">
+      Theme <a href="//github.com/sabrinaluo/hexo-theme-replica">Replica</a>
+      by <a href="//github.com/sabrinaluo">Hiitea</a> ❤ Powered by Hexo
+    </div>
+    </div>
+    
+  </footer>
+</div>
+
+
+
+
+<script src="/tech/js/main.js"></script>
+
+</body>
+</html>

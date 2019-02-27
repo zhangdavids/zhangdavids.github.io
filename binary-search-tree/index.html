@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>
+    binary_search_tree | 上药三品，神与气精
+  </title>
+  <meta name="description" content="曾因酒醉鞭名马 生怕情多累美人">
+  
+  <meta name="keywords" content="
+  algorithm
+  ">
+  
+  <meta name="author" content="John Cheung">
+
+  <meta http-equiv="Cache-Control" content="no-transform"/>
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+  <link rel="icon" type="image/x-icon" href="undefined">
+  <link rel="stylesheet" href="/tech/css/main.css">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+
+  
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vue/1.0.25-csp/vue.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+</head>
+
+<body id="replica-app">
+
+<nav class="navbar-wrapper">
+  <div class="navbar">
+    <div class="container clearfix">
+      <a href="/tech/" class="navbar-logo"><i class="fa fa-github"></i></a>
+
+      <div class="navbar-search float-left desktop-only">
+        <div class="navbar-search-form">
+          <label for="gsc-i-id1">This website</label>
+          <div id="google-search">
+            <gcse:search></gcse:search>
+          </div>
+        </div>
+      </div>
+
+      <ul class="navbar-nav float-left">
+        
+        <li><a href="/tech/archives">Archives</a></li>
+        
+        
+        <li><a href="/tech/categories">Categories</a></li>
+        
+        
+        <li><a href="/tech/tags">Tags</a></li>
+        
+        
+        <li class="desktop-only"><a href="/tech/atom.xml" target="_blank">RSS</a></li>
+        
+      </ul>
+
+      <ul class="navbar-nav user-nav float-right desktop-only">
+        <li class="user-nav-notification">
+          <a><span class="user-nav-unread"></span><i class="fa fa-bell"></i></a>
+        </li>
+        <li>
+          <a><i class="fa fa-plus"></i> <i class="fa fa-caret-down"></i></a>
+        </li>
+        <li class="user-nav-logo">
+          <a><img src="/images/pingan.jpeg"> <i class="fa fa-caret-down"></i></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="main-container">
+  <header class="header-wrapper desktop-only">
+  <div class="container header-site-detail">
+    <ul class="header-toolbar">
+      <li class="clearfix">
+        <a href="/tech/archives" class="header-toolbar-left"><i
+                  class="fa fa-file-text"></i> Posts </a>
+        <a href="/tech/archives"
+           class="header-toolbar-right"> 318 </a>
+      </li>
+      <li>
+        <a href="/tech/tags" class="header-toolbar-left"><i
+                  class="fa fa-tags"></i> Tags </a>
+        <a href="/tech/tags"
+           class="header-toolbar-right"> 28 </a>
+      </li>
+      <li>
+        <a href="/tech/categories" class="header-toolbar-left"><i
+                  class="fa fa-folder-open"></i> Categories </a>
+        <a href="/tech/categories"
+           class="header-toolbar-right"> 24 </a>
+      </li>
+    </ul>
+    <h2 class="header-title">
+      <i class="fa fa-book text-muted"></i>
+      <a href="/tech/">上药三品，神与气精</a>
+      
+      
+    </h2>
+  </div>
+
+  <div class="container">
+    <div class="header-tab-wrapper clearfix">
+      <span class="header-tab header-tab-selected"><i class="fa fa-thumbs-o-up"></i> Like</span>
+      <span class="header-tab"><i class="fa fa-share-alt"></i> Share</span>
+      <span class="header-tab"><i class="fa fa-comments-o"></i> Discussion</span>
+      <span class="header-tab"><i class="fa fa-bookmark-o"></i> Bookmark </span>
+      <span class="header-tab"><i class="fa fa-smile-o"></i> Smile <i class="fa fa-caret-down"></i></span>
+    </div>
+  </div>
+</header>
+
+
+<div class="post-container container">
+  <h3>
+    <i class="fa fa-user-o"></i>
+    John Cheung
+
+    <span class="post-date float-right" title="{{moment(1536677919000).format('MMM DD, YYYY, h:mm:ss A')}}">
+      <i class="fa fa-pencil-square-o"></i>
+      {{moment(1536677919000).fromNow()}}
+    </span>
+  </h3>
+
+  <article class="post-content">
+    <h1>binary_search_tree</h1>
+    <p>对树节点 二叉搜索树的简单抽象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class TreeNode(object):</span><br><span class="line">    def __init__(self, key, value, parent=None, left_node=None, right_node=None, balance_factor=0):</span><br><span class="line">        self.key = key</span><br><span class="line">        self.payload = value</span><br><span class="line">        self.left_child = left_node</span><br><span class="line">        self.right_child = right_node</span><br><span class="line">        self.parent = parent</span><br><span class="line">        self.balance_factor = balance_factor</span><br><span class="line"></span><br><span class="line">    def has_left_child(self):</span><br><span class="line">        return self.left_child</span><br><span class="line"></span><br><span class="line">    def has_right_child(self):</span><br><span class="line">        return self.right_child</span><br><span class="line"></span><br><span class="line">    def is_left_child(self):</span><br><span class="line">        return self.parent and self.parent.left_child == self</span><br><span class="line"></span><br><span class="line">    def is_right_child(self):</span><br><span class="line">        return self.parent and self.parent.right_child == self</span><br><span class="line"></span><br><span class="line">    def is_root(self):</span><br><span class="line">        return not self.parent</span><br><span class="line"></span><br><span class="line">    def is_leaf(self):</span><br><span class="line">        return not (self.right_child or self.left_child)</span><br><span class="line"></span><br><span class="line">    def has_any_children(self):</span><br><span class="line">        return self.right_child or self.left_child</span><br><span class="line"></span><br><span class="line">    def has_both_children(self):</span><br><span class="line">        return self.right_child or self.left_child</span><br><span class="line"></span><br><span class="line">    def replace_node_data(self, key, value, lc, rc):</span><br><span class="line">        self.key = key</span><br><span class="line">        self.payload = value</span><br><span class="line">        self.left_child = lc</span><br><span class="line">        self.right_child = rc</span><br><span class="line">        if self.has_left_child():</span><br><span class="line">            self.left_child.parent = self</span><br><span class="line">        if self.has_right_child():</span><br><span class="line">            self.right_child.parent = self</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class BinarySearchTree(object):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.root = None</span><br><span class="line">        self.size = 0</span><br><span class="line"></span><br><span class="line">    def length(self):</span><br><span class="line">        return self.size</span><br><span class="line"></span><br><span class="line">    def __len__(self):</span><br><span class="line">        return self.size</span><br><span class="line"></span><br><span class="line">    # 中序遍历</span><br><span class="line">    def in_order(self, node):</span><br><span class="line">        if node.left_child:</span><br><span class="line">            self.inorder(node.left_child)</span><br><span class="line">        self.print_node(node)</span><br><span class="line">        if node.right_child:</span><br><span class="line">            self.inorder(node.right_child)</span><br><span class="line"></span><br><span class="line">    def level_order(self, node):</span><br><span class="line">        nodes = []</span><br><span class="line">        nodes.append(node)</span><br><span class="line">        while len(nodes) &gt; 0:</span><br><span class="line">            current_node = nodes.pop(0)</span><br><span class="line">            self.print_node(current_node)</span><br><span class="line">            if current_node.left_child:</span><br><span class="line">                nodes.append(current_node.left_child)</span><br><span class="line">            if current_node.right_child:</span><br><span class="line">                nodes.append(current_node.right_child)</span><br><span class="line"></span><br><span class="line">    def print_node(self, node):</span><br><span class="line">        if node.parent:</span><br><span class="line">            print([node.key,</span><br><span class="line">                   node.payload,</span><br><span class="line">                   node.parent.key])</span><br><span class="line">        else:</span><br><span class="line">            print([node.key, node.payload])</span><br><span class="line"></span><br><span class="line">    # ---------------------  插入节点 ----------------</span><br><span class="line">    def put(self, key, value):</span><br><span class="line">        if self.root:</span><br><span class="line">            self._put(key, value, self.root)</span><br><span class="line">        else:</span><br><span class="line">            self.root = TreeNode(key, value)</span><br><span class="line">        self.size += 1</span><br><span class="line"></span><br><span class="line">    def _put(self, key, value, current_node):</span><br><span class="line">        if key &lt; current_node.key:</span><br><span class="line">            if current_node.has_left_child():</span><br><span class="line">                self._put(key, value, current_node.left_child)</span><br><span class="line">            else:</span><br><span class="line">                current_node.left_child = TreeNode(key, value, parent=current_node)</span><br><span class="line"></span><br><span class="line">        else:</span><br><span class="line">            if current_node.has_right_child():</span><br><span class="line">                self._put(key, value, current_node.right_child)</span><br><span class="line">            else:</span><br><span class="line">                current_node.right_child = TreeNode(key, value, parent=current_node)</span><br><span class="line">    # ---------------------  插入节点 ----------------</span><br><span class="line"></span><br><span class="line">    def __setitem__(self, key, value):</span><br><span class="line">        self.put(key, value)</span><br><span class="line"></span><br><span class="line">    # ---------------------  删除节点 ----------------</span><br><span class="line">    def find_min(self):  # Gets minimum node (leftmost leaf) in a subtree</span><br><span class="line">        current_node = self</span><br><span class="line">        while current_node.left_child:</span><br><span class="line">            current_node = current_node.left_child</span><br><span class="line">        return current_node</span><br><span class="line"></span><br><span class="line">    def replace_node_in_parent(self, new_value=None):</span><br><span class="line">        if self.parent:</span><br><span class="line">            if self == self.parent.left_child:</span><br><span class="line">                self.parent.left_child = new_value</span><br><span class="line">            else:</span><br><span class="line">                self.parent.right_child = new_value</span><br><span class="line">        if new_value:</span><br><span class="line">            new_value.parent = self.parent</span><br><span class="line"></span><br><span class="line">    def binary_tree_delete(self, key):</span><br><span class="line">        if key &lt; self.key:</span><br><span class="line">            self.left_child.binary_tree_delete(key)</span><br><span class="line">        elif key &gt; self.key:</span><br><span class="line">            self.right_child.binary_tree_delete(key)</span><br><span class="line">        else:  # delete the key here</span><br><span class="line">            if self.left_child and self.right_child:  # if both children are present</span><br><span class="line">                successor = self.right_child.find_min()</span><br><span class="line">                self.key = successor.key</span><br><span class="line">                successor.binary_tree_delete(successor.key)</span><br><span class="line">            elif self.left_child:  # if the node has only a *left* child</span><br><span class="line">                self.replace_node_in_parent(self.left_child)</span><br><span class="line">            elif self.right_child:  # if the node has only a *right* child</span><br><span class="line">                self.replace_node_in_parent(self.right_child)</span><br><span class="line">            else:  # this node has no children</span><br><span class="line">                self.replace_node_in_parent(None)</span><br><span class="line">    # ---------------------  删除节点 ----------------</span><br><span class="line"></span><br><span class="line">    def get(self, key):</span><br><span class="line">        if self.root:</span><br><span class="line">            res = self._get(key, self.root)</span><br><span class="line">            if res:</span><br><span class="line">                return res.payload</span><br><span class="line">            else:</span><br><span class="line">                return None</span><br><span class="line">        else:</span><br><span class="line">            return None</span><br><span class="line"></span><br><span class="line">    def _get(self, key, current_node):</span><br><span class="line">        if not current_node:</span><br><span class="line">            return None</span><br><span class="line">        elif current_node.key == key:</span><br><span class="line">            return current_node</span><br><span class="line">        elif key &lt; current_node.key:</span><br><span class="line">            return self._get(key, current_node.left_child)</span><br><span class="line">        else:</span><br><span class="line">            return self._get(key, current_node.right_child)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def run():</span><br><span class="line">    print(&apos;test bst&apos;)</span><br><span class="line">    mytree = BinarySearchTree()</span><br><span class="line">    mytree[3] = &quot;red&quot;</span><br><span class="line">    mytree[4] = &quot;blue&quot;</span><br><span class="line">    mytree[2] = &quot;rat&quot;</span><br><span class="line">    mytree[5] = &quot;cat&quot;</span><br><span class="line">    mytree[1] = &quot;dog&quot;</span><br><span class="line"></span><br><span class="line">    mytree.level_order(mytree.root)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    run()</span><br></pre></td></tr></table></figure>
+  </article>
+</div>
+
+
+    
+
+
+
+
+</div>
+
+<div class="footer-wrapper container">
+  <footer class="footer clearfix">
+    <div class="clearfix">
+    <a href="https://zhangdavids.github.io/tech" class="footer-logo">
+      <i class="fa fa-github"></i>
+    </a>
+    <ul class="footer-social-link">
+      <li>© 2018 John Cheung</li>
+      <li><a href="https://zhangdavids.github.io/tech">Home</a></li>
+      
+    </ul>
+    <div class="footer-theme-info">
+      Theme <a href="//github.com/sabrinaluo/hexo-theme-replica">Replica</a>
+      by <a href="//github.com/sabrinaluo">Hiitea</a> ❤ Powered by Hexo
+    </div>
+    </div>
+    
+  </footer>
+</div>
+
+
+
+
+<script src="/tech/js/main.js"></script>
+
+</body>
+</html>

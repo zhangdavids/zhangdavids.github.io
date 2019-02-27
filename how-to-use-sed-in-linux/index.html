@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>
+    how-to-use-sed-in-linux | 上药三品，神与气精
+  </title>
+  <meta name="description" content="曾因酒醉鞭名马 生怕情多累美人">
+  
+  <meta name="keywords" content="
+  
+  ">
+  
+  <meta name="author" content="John Cheung">
+
+  <meta http-equiv="Cache-Control" content="no-transform"/>
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+  <link rel="icon" type="image/x-icon" href="undefined">
+  <link rel="stylesheet" href="/tech/css/main.css">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+
+  
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vue/1.0.25-csp/vue.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+</head>
+
+<body id="replica-app">
+
+<nav class="navbar-wrapper">
+  <div class="navbar">
+    <div class="container clearfix">
+      <a href="/tech/" class="navbar-logo"><i class="fa fa-github"></i></a>
+
+      <div class="navbar-search float-left desktop-only">
+        <div class="navbar-search-form">
+          <label for="gsc-i-id1">This website</label>
+          <div id="google-search">
+            <gcse:search></gcse:search>
+          </div>
+        </div>
+      </div>
+
+      <ul class="navbar-nav float-left">
+        
+        <li><a href="/tech/archives">Archives</a></li>
+        
+        
+        <li><a href="/tech/categories">Categories</a></li>
+        
+        
+        <li><a href="/tech/tags">Tags</a></li>
+        
+        
+        <li class="desktop-only"><a href="/tech/atom.xml" target="_blank">RSS</a></li>
+        
+      </ul>
+
+      <ul class="navbar-nav user-nav float-right desktop-only">
+        <li class="user-nav-notification">
+          <a><span class="user-nav-unread"></span><i class="fa fa-bell"></i></a>
+        </li>
+        <li>
+          <a><i class="fa fa-plus"></i> <i class="fa fa-caret-down"></i></a>
+        </li>
+        <li class="user-nav-logo">
+          <a><img src="/images/pingan.jpeg"> <i class="fa fa-caret-down"></i></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="main-container">
+  <header class="header-wrapper desktop-only">
+  <div class="container header-site-detail">
+    <ul class="header-toolbar">
+      <li class="clearfix">
+        <a href="/tech/archives" class="header-toolbar-left"><i
+                  class="fa fa-file-text"></i> Posts </a>
+        <a href="/tech/archives"
+           class="header-toolbar-right"> 318 </a>
+      </li>
+      <li>
+        <a href="/tech/tags" class="header-toolbar-left"><i
+                  class="fa fa-tags"></i> Tags </a>
+        <a href="/tech/tags"
+           class="header-toolbar-right"> 28 </a>
+      </li>
+      <li>
+        <a href="/tech/categories" class="header-toolbar-left"><i
+                  class="fa fa-folder-open"></i> Categories </a>
+        <a href="/tech/categories"
+           class="header-toolbar-right"> 24 </a>
+      </li>
+    </ul>
+    <h2 class="header-title">
+      <i class="fa fa-book text-muted"></i>
+      <a href="/tech/">上药三品，神与气精</a>
+      
+      
+    </h2>
+  </div>
+
+  <div class="container">
+    <div class="header-tab-wrapper clearfix">
+      <span class="header-tab header-tab-selected"><i class="fa fa-thumbs-o-up"></i> Like</span>
+      <span class="header-tab"><i class="fa fa-share-alt"></i> Share</span>
+      <span class="header-tab"><i class="fa fa-comments-o"></i> Discussion</span>
+      <span class="header-tab"><i class="fa fa-bookmark-o"></i> Bookmark </span>
+      <span class="header-tab"><i class="fa fa-smile-o"></i> Smile <i class="fa fa-caret-down"></i></span>
+    </div>
+  </div>
+</header>
+
+
+<div class="post-container container">
+  <h3>
+    <i class="fa fa-user-o"></i>
+    John Cheung
+
+    <span class="post-date float-right" title="{{moment(1470658099000).format('MMM DD, YYYY, h:mm:ss A')}}">
+      <i class="fa fa-pencil-square-o"></i>
+      {{moment(1470658099000).fromNow()}}
+    </span>
+  </h3>
+
+  <article class="post-content">
+    <h1>how-to-use-sed-in-linux</h1>
+    <p>sed是一个很好的文件处理工具，本身是一个管道命令，主要是以行为单位进行处理，可以将数据行进行替换、删除、新增、选取等特定工作，下面先了解一下sed的用法<br>sed命令行格式为：  </p>
+<pre><code>sed [-nefri] ‘command’ 输入文本        
+</code></pre><p>常用选项：</p>
+<pre><code>-n∶使用安静(silent)模式。在一般 sed 的用法中，所有来自 STDIN的资料一般都会被列出到萤幕上。但如果加上 -n 参数后，则只有经过sed 特殊处理的那一行(或者动作)才会被列出来。  
+-e∶直接在指令列模式上进行 sed 的动作编辑；  
+-f∶直接将 sed 的动作写在一个档案内， -f filename 则可以执行 filename 内的sed 动作；  
+-r∶sed 的动作支援的是延伸型正规表示法的语法。(预设是基础正规表示法语法)  
+-i∶直接修改读取的档案内容，而不是由萤幕输出。         
+</code></pre><p>常用命令：</p>
+<pre><code>a  ∶新增， a 的后面可以接字串，而这些字串会在新的一行出现(目前的下一行)～
+c  ∶取代， c 的后面可以接字串，这些字串可以取代 n1,n2 之间的行！
+d  ∶删除，因为是删除啊，所以 d 后面通常不接任何咚咚；
+i  ∶插入， i 的后面可以接字串，而这些字串会在新的一行出现(目前的上一行)；
+p  ∶列印，亦即将某个选择的资料印出。通常 p 会与参数 sed -n 一起运作～
+s  ∶取代，可以直接进行取代的工作哩！通常这个 s 的动作可以搭配正规表示法！例如 1,20s/old/new/g 就是啦！
+</code></pre><p>举例：（假设我们有一文件名为ab）  </p>
+<p>   删除某行</p>
+<pre><code>[root@localhost ruby] # sed &apos;1d&apos; ab              #删除第一行 
+[root@localhost ruby] # sed &apos;$d&apos; ab              #删除最后一行
+[root@localhost ruby] # sed &apos;1,2d&apos; ab           #删除第一行到第二行
+[root@localhost ruby] # sed &apos;2,$d&apos; ab           #删除第二行到最后一行
+</code></pre><p>　显示某行  
+　</p>
+<pre><code>[root@localhost ruby] # sed -n &apos;1p&apos; ab           #显示第一行
+
+[root@localhost ruby] # sed -n &apos;$p&apos; ab           #显示最后一行  
+
+[root@localhost ruby] # sed -n &apos;1,2p&apos; ab        #显示第一行到第二行 
+
+[root@localhost ruby] # sed -n &apos;2,$p&apos; ab        #显示第二行到最后一行  
+</code></pre><p>　使用模式进行查询</p>
+<pre><code>[root@localhost ruby] # sed -n &apos;/ruby/p&apos; ab    #查询包括关键字ruby所在所有行   
+[root@localhost ruby] # sed -n &apos;/\$/p&apos; ab        #查询包括关键字$所在所有行，使用反斜线\屏蔽特殊含义
+</code></pre><p>　增加一行或多行字符串<br>　<br>　<br>　        [root@localhost ruby]# cat ab<br>    Hello!<br>    ruby is me,welcome to my blog.<br>    end    </p>
+<p>   [root@localhost ruby] # sed ‘1a drink tea’ ab  #第一行后增加字符串”drink tea”<br>     Hello!<br>     drink tea<br>     ruby is me,welcome to my blog.<br>     end<br>     [root@localhost ruby] # sed ‘1,3a drink tea’ ab #第一行到第三行后增加字符串”drink tea”<br>     Hello!<br>     drink tea<br>     ruby is me,welcome to my blog.<br>     drink tea<br>     end<br>     drink tea<br>     [root@localhost ruby] # sed ‘1a drink tea\nor coffee’ ab   #第一行后增加多行，使用换行符\n<br>     Hello!<br>     drink tea<br>     or coffee<br>     ruby is me,welcome to my blog.<br>     end</p>
+<p>　　代替一行或多行<br>     [root@localhost ruby] # sed ‘1c Hi’ ab                #第一行代替为Hi<br>     Hi<br>     ruby is me,welcome to my blog.<br>     end<br>     [root@localhost ruby] # sed ‘1,2c Hi’ ab             #第一行到第二行代替为Hi<br>     Hi<br>     end</p>
+<p>　　替换一行中的某部分<br>　　格式：sed ‘s/要替换的字符串/新的字符串/g’   （要替换的字符串可以用正则表达式）<br>     [root@localhost ruby] # sed -n ‘/ruby/p’ ab | sed ‘s/ruby/bird/g’    #替换ruby为bird<br>　  [root@localhost ruby] # sed -n ‘/ruby/p’ ab | sed ‘s/ruby//g’        #删除ruby</p>
+<pre><code>插入
+[root@localhost ruby] # sed -i &apos;$a bye&apos; ab         #在文件ab中最后一行直接输入&quot;bye&quot;
+[root@localhost ruby]# cat ab
+Hello!
+ruby is me,welcome to my blog.
+end
+bye
+
+删除匹配行
+
+ sed -i &apos;/匹配字符串/d&apos;  filename  （注：若匹配字符串是变量，则需要“”，而不是‘’。记得好像是）
+
+ 替换匹配行中的某个字符串
+
+ sed -i &apos;/匹配字符串/s/替换源字符串/替换目标字符串/g&apos; filename
+</code></pre>
+  </article>
+</div>
+
+
+    
+
+
+
+
+</div>
+
+<div class="footer-wrapper container">
+  <footer class="footer clearfix">
+    <div class="clearfix">
+    <a href="https://zhangdavids.github.io/tech" class="footer-logo">
+      <i class="fa fa-github"></i>
+    </a>
+    <ul class="footer-social-link">
+      <li>© 2018 John Cheung</li>
+      <li><a href="https://zhangdavids.github.io/tech">Home</a></li>
+      
+    </ul>
+    <div class="footer-theme-info">
+      Theme <a href="//github.com/sabrinaluo/hexo-theme-replica">Replica</a>
+      by <a href="//github.com/sabrinaluo">Hiitea</a> ❤ Powered by Hexo
+    </div>
+    </div>
+    
+  </footer>
+</div>
+
+
+
+
+<script src="/tech/js/main.js"></script>
+
+</body>
+</html>
