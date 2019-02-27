@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>
+    python之数据结构 | 上药三品，神与气精
+  </title>
+  <meta name="description" content="曾因酒醉鞭名马 生怕情多累美人">
+  
+  <meta name="keywords" content="
+  
+  ">
+  
+  <meta name="author" content="John Cheung">
+
+  <meta http-equiv="Cache-Control" content="no-transform"/>
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+  <link rel="icon" type="image/x-icon" href="undefined">
+  <link rel="stylesheet" href="/tech/css/main.css">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+
+  
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vue/1.0.25-csp/vue.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+</head>
+
+<body id="replica-app">
+
+<nav class="navbar-wrapper">
+  <div class="navbar">
+    <div class="container clearfix">
+      <a href="/tech/" class="navbar-logo"><i class="fa fa-github"></i></a>
+
+      <div class="navbar-search float-left desktop-only">
+        <div class="navbar-search-form">
+          <label for="gsc-i-id1">This website</label>
+          <div id="google-search">
+            <gcse:search></gcse:search>
+          </div>
+        </div>
+      </div>
+
+      <ul class="navbar-nav float-left">
+        
+        <li><a href="/tech/archives">Archives</a></li>
+        
+        
+        <li><a href="/tech/categories">Categories</a></li>
+        
+        
+        <li><a href="/tech/tags">Tags</a></li>
+        
+        
+        <li class="desktop-only"><a href="/tech/atom.xml" target="_blank">RSS</a></li>
+        
+      </ul>
+
+      <ul class="navbar-nav user-nav float-right desktop-only">
+        <li class="user-nav-notification">
+          <a><span class="user-nav-unread"></span><i class="fa fa-bell"></i></a>
+        </li>
+        <li>
+          <a><i class="fa fa-plus"></i> <i class="fa fa-caret-down"></i></a>
+        </li>
+        <li class="user-nav-logo">
+          <a><img src="/images/pingan.jpeg"> <i class="fa fa-caret-down"></i></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="main-container">
+  <header class="header-wrapper desktop-only">
+  <div class="container header-site-detail">
+    <ul class="header-toolbar">
+      <li class="clearfix">
+        <a href="/tech/archives" class="header-toolbar-left"><i
+                  class="fa fa-file-text"></i> Posts </a>
+        <a href="/tech/archives"
+           class="header-toolbar-right"> 319 </a>
+      </li>
+      <li>
+        <a href="/tech/tags" class="header-toolbar-left"><i
+                  class="fa fa-tags"></i> Tags </a>
+        <a href="/tech/tags"
+           class="header-toolbar-right"> 28 </a>
+      </li>
+      <li>
+        <a href="/tech/categories" class="header-toolbar-left"><i
+                  class="fa fa-folder-open"></i> Categories </a>
+        <a href="/tech/categories"
+           class="header-toolbar-right"> 24 </a>
+      </li>
+    </ul>
+    <h2 class="header-title">
+      <i class="fa fa-book text-muted"></i>
+      <a href="/tech/">上药三品，神与气精</a>
+      
+      
+    </h2>
+  </div>
+
+  <div class="container">
+    <div class="header-tab-wrapper clearfix">
+      <span class="header-tab header-tab-selected"><i class="fa fa-thumbs-o-up"></i> Like</span>
+      <span class="header-tab"><i class="fa fa-share-alt"></i> Share</span>
+      <span class="header-tab"><i class="fa fa-comments-o"></i> Discussion</span>
+      <span class="header-tab"><i class="fa fa-bookmark-o"></i> Bookmark </span>
+      <span class="header-tab"><i class="fa fa-smile-o"></i> Smile <i class="fa fa-caret-down"></i></span>
+    </div>
+  </div>
+</header>
+
+
+<div class="post-container container">
+  <h3>
+    <i class="fa fa-user-o"></i>
+    John Cheung
+
+    <span class="post-date float-right" title="{{moment(1463396669000).format('MMM DD, YYYY, h:mm:ss A')}}">
+      <i class="fa fa-pencil-square-o"></i>
+      {{moment(1463396669000).fromNow()}}
+    </span>
+  </h3>
+
+  <article class="post-content">
+    <h1>python之数据结构</h1>
+    <p>对于一门语言来说，数据结构是其所有精华的所在，是python开发的基础。对于很多新人来说，就是觉得挺简单的，实际上手还是较困难。    </p>
+<p>python这里介绍四种数据结构：<br><em>1.元组<br>2.列表<br>3.字典<br>4.序列</em>  </p>
+<h2 id="元组"><a href="#元组" class="headerlink" title="元组"></a>元组</h2><p>tuple是由一系列元素组成的ds，所有元素被包含在一对圆括号中。创建元组时，可以不指定元素个数，但是一旦创建之后，就不能进行任何修改。<br>这里需要注意一下，如果创建的元组只包含一个元素，通常会忽略单元素后的逗号。正确写法如下：</p>
+<pre><code>tuple = (apple,)
+print (tuple[0])
+print (type(tuple))
+</code></pre><p> 这段代码定义了一个单元素的tuple“apple”，并且类型为<class 'tuple'="">。  </class></p>
+<p> 元组，列表，字典等都是从0开始的，［0］获取的就是第一个元素。  </p>
+<p> 元组创建之后，不能进行修改，也不能进行赋值操作。  </p>
+<p> 元组可以进行负数索引，分片索引，另外元组还可以由其他元组组成，就成了二元元组。</p>
+<p> 元组的遍历<br> 这里介绍下二元元组的遍历。</p>
+<pre><code>for i in tuple:
+    for j in i:
+        print(j)
+</code></pre><p>##列表    </p>
+<p> 列表是方括号。  </p>
+<p> 列表可以实现添加 删除 查找等操作，元素的值可以被修改。  </p>
+<p> 添加使用append（）<br> 还可以考虑insert（），不过insert要指明位置。<br> 删除直接用remove（）<br> pop（）是取出最后一个元素。<br> 列表的使用和元组十分相似，支持负数索引 分片还有多元列表等特性，但是列表中的元素可以进行修改。  </p>
+<p> 列表还可以进行连接操作。一种是extend（）连接两个不同的列表，另外一种是使用运算符“＋”或“＋＝”。</p>
+<pre><code>list = [&quot;apple&quot;,&quot;banana&quot;,&quot;orange&quot;,&quot;grape&quot;]  
+print(list.index(&quot;grape&quot;))  
+print(&quot;orange&quot; in list)
+</code></pre><p> 打印索引，<br> 判断orange是否在列表中。  </p>
+<p> 列表排序和反转  </p>
+<pre><code>list.sort()
+list.reverse()  
+</code></pre><p> sort()这个函数，需要仔细说明下，sort（cmp,key=None,reverse=False）  </p>
+<p> 在这和大家分享一下机器学习里的一个案例，看看列表的操作。  </p>
+<p> 统计 Python 中的字数<br>问题<br>在 Python 中实施函数“count_words()”，该函数将字符串“s”和数字“n”用作输入，并返回“s”中“n”个出现频率最高的单词。返回值应该是一个元组列表 - 出现频率最高的“n”个单词及其相应的出现次数“[(, ), (, ), …]”，按出现次数的降序排列。<br>您可以假设所有输入都是小写形式，并且不含标点符号或其他字符（只包含字母和单个分隔空格）。如果出现次数相同，则按字母顺序排列出现次数相同的单词。<br>例如：</p>
+<pre><code>print count_words(&quot;betty bought a bit of butter but the butter was bitter&quot;,3)
+</code></pre><p>Output:</p>
+<pre><code>[(&apos;butter&apos;, 2), (&apos;a&apos;, 1), (&apos;betty&apos;, 1)]
+</code></pre><pre><code>  &quot;&quot;&quot;Count words.&quot;&quot;&quot;
+from collections import Counter
+from operator import itemgetter
+def count_words(s, n):
+    &quot;&quot;&quot;Return the n most frequently occuring words in s.&quot;&quot;&quot;
+    cnt = Counter()
+    for word in s.split(&quot; &quot;):
+        cnt[word] += 1
+    a = cnt.items()
+    b = sorted(a,key=lambda a:a[0],reverse=False)
+    c = sorted(b,key=itemgetter(1),reverse=True)
+    top_n = c[0:n]
+    # TODO: Count the number of occurences of each word in s
+
+    # TODO: Sort the occurences in descending order (alphabetically in case of ties)
+
+    # TODO: Return the top n words as a list of tuples (&lt;word&gt;, &lt;count&gt;)
+    return top_n
+
+
+def test_run():
+    &quot;&quot;&quot;Test count_words() with some inputs.&quot;&quot;&quot;
+    print count_words(&quot;cat bat mat cat bat cat&quot;, 3)
+    print count_words(&quot;betty bought a bit of butter but the butter was bitter&quot;, 3)
+
+
+if __name__ == &apos;__main__&apos;:
+    test_run()
+</code></pre><p>如何来分析这个案例呢？  </p>
+<p>首先是定义一个字符串  </p>
+<pre><code>s＝“betty bought a bit of butter but the butter was bitter”
+</code></pre><p>接着使用文档中提到的collections来处理这个统计</p>
+<pre><code>from collections import Counter
+cnt = Counter()
+for word in s.split(&quot; &quot;):
+    cnt[word] += 1
+</code></pre><p>这里处理完之后，需要停下来检查一下cnt是啥类型<br>class ‘collections.Counter’  </p>
+<pre><code>Counter({&apos;butter&apos;: 2, &apos;a&apos;: 1, &apos;bitter&apos;: 1, &apos;of&apos;: 1, &apos;but&apos;: 1, &apos;betty&apos;: 1, &apos;bit&apos;: 1, &apos;was&apos;: 1, &apos;the&apos;: 1, &apos;bought&apos;: 1})
+</code></pre><p>这个形式应该就是我们后续要介绍的dict字典类型，我们需要把它转换为列表  </p>
+<p>cnt.items()  </p>
+<p>转换了之后，我们还需要做哪些处理呢？</p>
+<pre><code>[(&apos;a&apos;, 1), (&apos;butter&apos;, 2), (&apos;bitter&apos;, 1), (&apos;of&apos;, 1), (&apos;but&apos;, 1), (&apos;betty&apos;, 1), (&apos;bit&apos;, 1), (&apos;was&apos;, 1), (&apos;the&apos;, 1), (&apos;bought&apos;, 1)]   
+</code></pre><p>看看题目的要求，统计次数多的在前，一是数值大的要靠前站；<br>另外就是数值一样，按照字典顺序，a-z这种排列一下。  </p>
+<p>这里我就考虑使用这种顺序尝试一下咯。  </p>
+<p>先根据字典顺序，排列一下</p>
+<pre><code>sorted(a,key=lambda a:a[0],reverse=False)
+</code></pre><p>这个是正常的升序排列，得到结果：</p>
+<pre><code>[(&apos;a&apos;, 1), (&apos;betty&apos;, 1), (&apos;bit&apos;, 1), (&apos;bitter&apos;, 1), (&apos;bought&apos;, 1), (&apos;but&apos;, 1), (&apos;butter&apos;, 2), (&apos;of&apos;, 1), (&apos;the&apos;, 1), (&apos;was&apos;, 1)]
+</code></pre><p>接下来就是把数值大的调到前面去，也就是比较一下第二个值，按照降序排列处理一下  </p>
+<pre><code>from operator import itemgetter
+sorted(b,key=itemgetter(1),reverse=True)
+</code></pre><p>这样就基本实现了对列表里的排序，接着分片处理下就达到了题目要求。</p>
+<p>这个方案是我的初步方案，可能不是最简便的，供大家参考下，嘻嘻。  </p>
+<p>列表还有一个操作就是实现堆栈和队列，这个在大学的数据结构课程有简单接触的，问题就是很多只知道大概了啊。。</p>
+<p>堆栈就是后进先出</p>
+<p>队列则是先进先出<br>使用列表的append（）和pop（）操作可以模拟这两个数据结构<br>append（）可以把一个元素添加到堆栈的顶部，<br>pop（）把堆栈的最后一个元素弹出来。  </p>
+<p>队列的不同之处在于弹出时参数设置不一样，<br>pop（－1）弹出第一个元素  </p>
+<p>##字典  </p>
+<p>字典也是较为常见的，也是比较的重要的数据结构。key-value这种键值对，也是数据库的一种基本模式。  </p>
+<p>字典是花括号｛｝  </p>
+<p>这里需要注意一下，键是区分大小写的。一般而言，创建字典时，可以使用数字作为索引。<br>键值对这种结构，  </p>
+<pre><code>value=dict[key]
+</code></pre><p>说下字典的遍历：</p>
+<pre><code>for (k,v) in  dict.items():
+    print (&quot;dict[%s] =&quot;% k,v)
+</code></pre><p>值也可以是字典 元组 或者是字典，这种称为混合型字典。<br>字典有这么些方法：</p>
+<p>keys（） 返回keys列表<br>value（）返回value列表<br>get（）<br>get（）访问字典中的value值减少了代码的长度，而且表达方式容易理解，避免了使用if语句带来的维护代价。<br>update（）<br>update（）函数相当于一个合并函数，把一个字典的key和value值全部复制到另外一个字典中。<br>D.update(E) -&gt; None  </p>
+<p>把字典E的内容合并到字典D中，有相同的键值，e的值会覆盖d的。<br>setdefault（）<br>可以创建新的元素并设置默认值，声明如下：</p>
+<p>D.setdefault(k,[d]) -&gt; D.get(k,[d])  </p>
+<p>还有一些常用方法：<br>items（） 返回（key，value）元组组成的列表<br>iteritems（） 返回指向字典的遍历器  </p>
+<p>字典还有排序和复制  </p>
+<p>排序的话和列表的差不多  </p>
+<pre><code>print （sorted(dict.items(), key=lambda d:d[0])）
+</code></pre><p>这是按照key排序  </p>
+<p>前面提到的update函数，比如把a字典的内容复制到b字典，并且b字典原有的顺序保持不变，从而实现字典b的扩展。但是，如果需要把a的内容复制到b，并且清除b中的原有内容的话，则需要使用copy（）。  </p>
+<p>copy（）是浅拷贝<br>还有deepcopy（）是深拷贝  </p>
+<p>深拷贝能够拷贝对象内部所有的数据和引用，很像c语言中的指针。<br>字典b浅拷贝a的数据，如何b的数据发生添加 删除或者修改，a中的数据也将发生变化。<br>如果是深拷贝，a的数据是不会受到b的变化而变化的。  </p>
+<p><strong>深拷贝和浅拷贝适用于python的任何对象，不只是局限于字典。</strong>  </p>
+<p>另外，还有全局字典 sys.modules模块，这个字典是python启动时就加载在内存当中的，这个起到缓存的作用。  </p>
+<p>##序列  </p>
+<p>序列是具有索引和切片能力的集合，元组 列表 字符串都属于序列。  </p>
+<p>这里主要是元组和列表的区别。  </p>
+<p>元组是只读的，而且元组没有提供排序和查找的方法。<br>列表可读写，而且提供丰富的操作，支持排序 查找。<br>元组的数据通常具有不同的含义，而列表的数据通常具有相同的含义。<br>相同之处则是都支持负数索引和分片的操作。  </p>
+<p>每天能适当做一些自己的总结，对于知识的掌握还是很有好处的。<br>希望自己能够好好坚持。<br>有目标的人咋个说呢？<br>今天看到一个前辈说，真正的牛人也许一辈子只投4次简历。<br>你就错过了毕业就去好公司的机会，所以需要更加努力学习。<br>对于初级的程序员来说，很想做出一点东西来，但是又不知道哪些重要哪些不重要，到底该学到什么程度，不知道导致不确定，不确定导致决策瘫痪，干脆就啥也不动，整年整年苦闷的像没头苍蝇一样到处乱撞，荒废时间。  </p>
+<p>今年不论在哪里工作，决定給自己设定一个目标，在博客上写下52篇博客，虽然前期可能借鉴他人的经验较多，但是希望自己还是能保持到平均一周一篇的水平，不断写写写去积累。  </p>
+<p>周博客这里可能局限于一些技术见闻，所见所感这块，另外希望自己能写下10篇左右的读书笔记。</p>
+<hr>
+<p>没有什么面试比持续两年的面试更具有信息量，书单加上github。  </p>
+
+  </article>
+</div>
+
+
+    
+
+
+
+
+</div>
+
+<div class="footer-wrapper container">
+  <footer class="footer clearfix">
+    <div class="clearfix">
+    <a href="https://zhangdavids.github.io/tech" class="footer-logo">
+      <i class="fa fa-github"></i>
+    </a>
+    <ul class="footer-social-link">
+      <li>© 2018 John Cheung</li>
+      <li><a href="https://zhangdavids.github.io/tech">Home</a></li>
+      
+    </ul>
+    <div class="footer-theme-info">
+      Theme <a href="//github.com/sabrinaluo/hexo-theme-replica">Replica</a>
+      by <a href="//github.com/sabrinaluo">Hiitea</a> ❤ Powered by Hexo
+    </div>
+    </div>
+    
+  </footer>
+</div>
+
+
+
+
+<script src="/tech/js/main.js"></script>
+
+</body>
+</html>
