@@ -275,7 +275,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/02/15/artificial-intelligence/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/31/以太坊区块链简介/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -294,7 +294,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/15/artificial-intelligence/" itemprop="url">artificial intelligence</a></h1>
+                <a class="post-title-link" href="/2018/03/31/以太坊区块链简介/" itemprop="url">以太坊区块链简介</a></h1>
         
 
         <div class="post-meta">
@@ -306,8 +306,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-15T21:00:03+08:00">
-                2018-02-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-31T23:09:13+08:00">
+                2018-03-31
               </time>
             
 
@@ -329,8 +329,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/web/" itemprop="url" rel="index">
-                    <span itemprop="name">web</span>
+                  <a href="/categories/AI/" itemprop="url" rel="index">
+                    <span itemprop="name">AI</span>
                   </a>
                 </span>
 
@@ -346,7 +346,7 @@
 
           
           
-             <span id="/2018/02/15/artificial-intelligence/" class="leancloud_visitors" data-flag-title="artificial intelligence">
+             <span id="/2018/03/31/以太坊区块链简介/" class="leancloud_visitors" data-flag-title="以太坊区块链简介">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -371,7 +371,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  58
+                  1k
                 </span>
               
 
@@ -387,7 +387,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  3
                 </span>
               
             </div>
@@ -410,13 +410,15 @@
       
         
           
-            <p>面向对象编程</p>
-<p>函数式编程</p>
-<p>了解CNN RCNN</p>
-<p>主流人工智能平台 熟悉一个 比如 keras</p>
-<p>会要求手写至少一个算法实现。。</p>
-<p>数据库 mysql 优化设计</p>
-<p>django 登陆 详细源码！！</p>
+            <p>以太坊区块链到底是什么？区块链有 2 个主要组件：</p>
+<p>数据库：网络中每笔交易都存储在区块链上。当你部署合约时，就是一笔交易。当你为候选者投票时，又是另一笔交易。所有的这些交易都是公开的，每个人都可以看到并进行验证。这个数据永远也无法篡改。为了确保网络中的所有节点都有着同一份数据拷贝，并且没有向数据库中写入任何的无效数据，以太坊使用一个叫做工作量证明的算法来保证网络安全。(<a href="http://ethereum.stackexchange.com/questions/14/what-proof-of-work-function-does-ethereum-use" target="_blank" rel="external">http://ethereum.stackexchange.com/questions/14/what-proof-of-work-function-does-ethereum-use</a>)</p>
+<p>代码：就数据库的层面而言，区块链就是存储交易。那么给候选者投票，检索所有投票的逻辑放在哪儿呢？在以太坊的世界里，你可以通过一个叫 Solidity 的语言编写逻辑/应用代码（也就是合约）。然后用 solidity 编译器将代码编译为以太坊字节码，并将字节码部署到区块链上（也有一些其他的语言可以写合约，不过 solidity 是到目前为止用得最多也是相对更容易的选择）。所以，以太坊不仅仅会存储交易，它还会存储和执行合约代码。</p>
+<p>基本上，区块链就是存储数据和代码，并在 EVM（Ethereum Virtual Machine，以太坊虚拟机）中执行代码。为了构建基于 web 的 Dapp，以太坊也有一个非常方便的 JavaScript 库，叫做 web3.js，它可以连接到区块链节点。所以，你可以在一些有名的 js 框架，比如 reactjs，angularjs 等等中直接引入该库构建应用。</p>
+<p>在异步的网络模型中，所有的节点由于没有时钟仅仅能根据接收到的消息作出判断，这时完全不能同时保证一致性、可用性和分区容错性，每一个系统只能在这三种特性中选择两种。<br>不过这里讨论的一致性其实都是强一致性，也就是所有节点接收到同样的操作时会按照完全相同的顺序执行，被一个节点提交的更新操作会立刻反映在其他通过异步或部分同步网络连接的节点上，如果想要同时满足一致性和分区容错性，在异步的网络中，我们只能中心化存储所有数据，通过其他节点将请求路由给中心节点达到这两个目的。</p>
+<p>最终一致性允许多个节点的状态出现冲突，但是所有能够沟通的节点都能够在有限的时间内解决冲突，从不一致的状态恢复到一致，这里列出的两个条件比较重要，一是节点直接可以正常通信，二是冲突需要在有限的时间内解决，只有在这两个条件成立时才能达到最终一致性。</p>
+<h3 id="拜占庭将军问题"><a href="#拜占庭将军问题" class="headerlink" title="拜占庭将军问题"></a>拜占庭将军问题</h3><p>FLP 不可能定理是分布式系统领域最重要的定理之一，它给出了一个非常重要的结论：在网络可靠并且存在节点失效的异步模型系统中，不存在一个可以解决一致性问题的确定性算法。</p>
+<p>这个定理其实也就是告诉我们不要浪费时间去为异步分布式系统设计在任意场景上都能够实现共识的算法，异步系统完全没有办法保证能在有限时间内达成一致。</p>
+<p>在整个共识算法运行的过程中，Proposer 负责提出提案并向 Acceptor 分别发出两次 RPC 请求，Prepare 和 Accept；Acceptor 会根据其持有的信息 minProposal、acceptedProposal 和 acceptedValue 选择接受或者拒绝当前的提案，当某一个提案被过半数的 Acceptor 接受之后，我们就认为当前提案被整个集群接受了。</p>
 
           
         
@@ -465,7 +467,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/02/12/inner-strength/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/28/pep8规范/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -484,7 +486,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/12/inner-strength/" itemprop="url">inner-strength</a></h1>
+                <a class="post-title-link" href="/2018/03/28/pep8规范/" itemprop="url">pep8规范</a></h1>
         
 
         <div class="post-meta">
@@ -496,8 +498,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-12T22:24:25+08:00">
-                2018-02-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-28T23:01:05+08:00">
+                2018-03-28
               </time>
             
 
@@ -514,7 +516,7 @@
 
           
           
-             <span id="/2018/02/12/inner-strength/" class="leancloud_visitors" data-flag-title="inner-strength">
+             <span id="/2018/03/28/pep8规范/" class="leancloud_visitors" data-flag-title="pep8规范">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -539,7 +541,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  57
+                  3.3k
                 </span>
               
 
@@ -555,7 +557,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  13
                 </span>
               
             </div>
@@ -578,10 +580,338 @@
       
         
           
-            <h2 id="从尊敬一事无成的自己开始"><a href="#从尊敬一事无成的自己开始" class="headerlink" title="从尊敬一事无成的自己开始"></a>从尊敬一事无成的自己开始</h2><p>尊敬自己 才能拥有改变的力量</p>
-<p>别在疲惫不堪时反省自己</p>
-<p>乐于付出才能得到最纯粹的喜悦</p>
-<p>喜悦永远不嫌多</p>
+            <h2 id="缩进"><a href="#缩进" class="headerlink" title="缩进"></a>缩进</h2><p>每层缩进使用 4 个空格</p>
+<h2 id="断行风格"><a href="#断行风格" class="headerlink" title="断行风格"></a>断行风格</h2><p>断行首字母与括号开启符垂直对齐</p>
+<pre><code># 这是正确的例子：
+foo = long_function_name(var_one, var_two,
+                         var_three, var_four)
+
+悬挂缩进，首行不能有参数; 后面还有其它代码部分时，断行要添加一层缩进，使其与其它代码部分能区别开来
+# 这是正确的例子，额外添加了一层缩进：
+def long_function_name(
+        var_one, var_two, var_three,
+        var_four):
+    print(var_one)
+# 这是错误的例子，悬挂缩进，后面还有其它代码时，需要添加一层额外的缩进加以区别：
+def long_function_name(
+    var_one, var_two, var_three,
+    var_four):
+    print(var_one)
+# 这是正确的例子，悬挂缩进方式应该有一层缩进
+foo = long_function_name(
+    var_one, var_two,
+    var_three, var_four)
+# 这是错误的例子，悬挂方式首行不能有参数：
+foo = long_function_name(var_one, var_two,
+    var_three, var_four)
+</code></pre><h2 id="if-条件断行"><a href="#if-条件断行" class="headerlink" title="if 条件断行"></a>if 条件断行</h2><p>if ( 刚好有 4 个字条，相当于一层缩进。<br>对于 if 条件断行，以下几种风格都可以：</p>
+<pre><code>没有额外的缩进
+if (this_is_one_thing and
+    that_is_another_thing):
+    do_something()
+添加注释加以区分
+# Add a comment, which will provide some distinction in editors
+# supporting syntax highlighting.
+if (this_is_one_thing and
+    that_is_another_thing):
+    # Since both conditions are true, we can frobnicate.
+    do_something()
+添加额外的缩进加以区分
+# Add some extra indentation on the conditional continuation line.
+if (this_is_one_thing
+        and that_is_another_thing):
+    do_something()
+</code></pre><h2 id="多行的括号"><a href="#多行的括号" class="headerlink" title="多行的括号"></a>多行的括号</h2><pre><code>括号结束符与最后行的首字符对齐，如：
+my_list = [
+    1, 2, 3,
+    4, 5, 6,
+    ]
+
+result = some_function_that_takes_arguments(
+    &apos;a&apos;, &apos;b&apos;, &apos;c&apos;,
+    &apos;d&apos;, &apos;e&apos;, &apos;f&apos;,
+    )
+括号结束符与首行的首字符对齐, 如：
+my_list = [
+    1, 2, 3,
+    4, 5, 6,
+]
+result = some_function_that_takes_arguments(
+    &apos;a&apos;, &apos;b&apos;, &apos;c&apos;,
+    &apos;d&apos;, &apos;e&apos;, &apos;f&apos;,
+)
+</code></pre><h2 id="Tab-符还是空格"><a href="#Tab-符还是空格" class="headerlink" title="Tab 符还是空格"></a>Tab 符还是空格</h2><p>用空格</p>
+<h2 id="每行最长长度"><a href="#每行最长长度" class="headerlink" title="每行最长长度"></a>每行最长长度</h2><p>所有行都不超过 80 个字符：<br>限制编辑器窗口的宽度，使能并排同时打开多个文件。<br>设置编辑器宽度（ set width to 80），来避免 wrapping<br>对于较少结构限制的长文本（如 docstring 或注释），行长应限制为 72 个字符。<br>如果团队成员都同意使用长行，则可以将行长增加到不超过 100 个字符，但是 docstring 和注释还必须为 72 个字符。<br>有括号的长行可以用 implicit continuation 来断行，其它的可以用 \ 来断行，如：</p>
+<pre><code>with open(&apos;/path/to/some/file/you/want/to/read&apos;) as file_1, \
+     open(&apos;/path/to/some/file/being/written&apos;, &apos;w&apos;) as file_2:
+    file_2.write(file_1.read())
+</code></pre><h2 id="操作符要和操作数在一起"><a href="#操作符要和操作数在一起" class="headerlink" title="操作符要和操作数在一起"></a>操作符要和操作数在一起</h2><pre><code># 推荐的正确的风格，这样很容易将操作符与操作数匹配：
+income = (gross_wages
+          + taxable_interest
+          + (dividends - qualified_dividends)
+          - ira_deduction
+          - student_loan_interest)
+# 这种风格现成已不推荐使用了：
+income = (gross_wages +
+          taxable_interest +
+          (dividends - qualified_dividends) -
+          ira_deduction -
+          student_loan_interest)
+</code></pre><h2 id="空行分隔"><a href="#空行分隔" class="headerlink" title="空行分隔"></a>空行分隔</h2><p>模块中最顶层的函数和类定义都要用两行空行分隔<br>类中的方法定义用单行分隔<br>要把一组相关的函数分组，可以用一些额外的空行<br>函数中的逻辑区块可以加空行来分隔</p>
+<h2 id="源文件的编码"><a href="#源文件的编码" class="headerlink" title="源文件的编码"></a>源文件的编码</h2><p>Python 核心库文件的编码都必须用 UTF-8（Python 2 是 ASCII)。<br>使用默认的编码时（Python 3: UTF-8，Python 2: ASCII)，不能使用编码声明<br>标准库中，只有测试、作者名才能使用非默认的编码，其它情况下的非 ASCII 字符用 \x, \u, \u, \N 表示法表示。</p>
+<h2 id="Import"><a href="#Import" class="headerlink" title="Import"></a>Import</h2><p>每行 import 只导入一个包：</p>
+<pre><code># 正确:
+import os
+import sys
+# 错误：
+import sys, os
+# 正确：同一包中的内容可以在同一行导入
+from subprocess import Popen, PIPE
+import 语句要在文件的前面，在模块注释及 docstring 之后，在模块全局变量和常数定义之前。
+import 分组及导入顺序，每个分组之间用一行空行分隔 1). 标准库 2). 相关第三方库 3). 本地应用/库的特殊导入
+推荐使用绝对导入，如：
+import mypkg.sibling
+from mypkg import sibling
+from mypkg.sibling import example
+在复杂的包布局中，也可以用显式的相对导入，如：
+from . import sibling
+from .sibling import example
+从一个模块中导入一个类时，要显示拼写出类名，如：
+from myclass import MyClass
+from foo.bar.yourclass import YourClass
+如果与本地名称冲突，可以先导入模块：
+import myclass
+import foo.bar.yourclass
+然后使用：&quot;myclass.MyClass&quot; 和 &quot;foo.bar.yourclass.YourClass&quot;。
+应该避免使用 from &lt;module&gt; import *
+</code></pre><h2 id="模块级的特殊名称（如all-的位置："><a href="#模块级的特殊名称（如all-的位置：" class="headerlink" title="模块级的特殊名称（如all)的位置："></a>模块级的特殊名称（如<strong>all</strong>)的位置：</h2><p>必须在模块的 docstring 或注释之后，但在任何的 import 语句之前。from <strong>future</strong> 比较特殊，Python 强制该语句必须在 docstring 或注释之后，因此风格如下：</p>
+<pre><code>&quot;&quot;&quot;This is the example module.
+
+This module does stuff.
+&quot;&quot;&quot;
+
+from __future__ import barry_as_FLUFL
+
+__all__ = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;]
+__version__ = &apos;0.1&apos;
+__author__ = &apos;Cardinal Biggles&apos;
+
+import os
+import sys
+</code></pre><h2 id="字符引号"><a href="#字符引号" class="headerlink" title="字符引号"></a>字符引号</h2><p>单引号和双引号的功能是等同的。<br>对于多行字符串，应该用双引号字符形式的三引号””“，以便与 PEP257 中的 docstring 规范兼容</p>
+<h2 id="表达式和语句中的空格"><a href="#表达式和语句中的空格" class="headerlink" title="表达式和语句中的空格"></a>表达式和语句中的空格</h2><p>()、[]、{} 等括号内不要有多余的空格，如：</p>
+<pre><code># 正确：
+spam(ham[1], {eggs: 2})
+# 错误：
+spam( ham[ 1 ], { eggs: 2 } )
+,、;、: 之前不要有空格，如：
+# 正确：
+if x == 4: print x, y; x, y = y, x
+# 错误：
+if x == 4 : print x , y ; x , y = y , x
+在 slice 语句中的 :实际上是一个二元操作符，因此其两侧的空格数必须相同; 但当无 slice 参数时，两侧的空格可以都省略，如：
+# 以下是正确的风格：
+ham[1:9], ham[1:9:3], ham[:9:3], ham[1::3], ham[1:9:]
+ham[lower:upper], ham[lower:upper:], ham[lower::step]
+ham[lower+offset : upper+offset]
+ham[: upper_fn(x) : step_fn(x)], ham[:: step_fn(x)]
+ham[lower + offset : upper + offset]
+# 以下是错误的风格：
+ham[lower + offset:upper + offset]
+ham[1: 9], ham[1 :9], ham[1:9 :3]
+ham[lower : : upper]
+ham[ : upper]
+函数调用的 () 及索引的 [] 前不要加空格，如：
+# 正确风格：
+spam(1)
+dct[&apos;key&apos;] = lst[index]
+# 错误风格：
+spam (1)
+dct [&apos;key&apos;] = lst [index]
+不要在赋值语句中加入额外的空格来对齐，如：
+# 正确的风格：
+x = 1
+y = 2
+long_variable = 3
+# 错误的风格:
+x             = 1
+y             = 2
+long_variable = 3
+</code></pre><h2 id="其它推荐风格"><a href="#其它推荐风格" class="headerlink" title="其它推荐风格"></a>其它推荐风格</h2><p>任何行的行尾都不要有空白符。<br>在二元操作符两侧一般都要加一个空格，一般的二元操作符如：<br>赋值: =, +=, -=<br>比较：==, &lt;, &gt;, !=, &lt;&gt;, &lt;=, &gt;=, in, not in, is, is not<br>布尔操作： and, or, not<br>在分优先级的表达式中，在最低优先级的操作符两侧加一个空格，但至多只能加一个空格，如：</p>
+<pre><code># 正确的风格：
+x = x*2 - 1
+hypot2 = x*x + y*y
+c = (a+b) * (a-b)
+# 错误的风格：
+x = x * 2 - 1
+hypot2 = x * x + y * y
+c = (a + b) * (a - b)
+在关键字参数和默认参数值中的 = 两侧不要加空格，如：
+# 正确的风格：
+def complex(real, imag=0.0):
+    return magic(r=real, i=imag)
+错误的风格：
+def complex(real, imag = 0.0):
+    return magic(r = real, i = imag)
+函数注解中的 : 前不要加空格，这符合 : 的常规风格，但是 -&gt; 两侧要加空格，如：
+# 正确的风格：
+def munge(input: AnyStr): ...
+def munge() -&gt; AnyStr: ...
+# 错误的风格：
+def munge(input:AnyStr): ...
+def munge()-&gt;PosInt: ...
+参数注解中，如果注解的参数有默认值，指定默认值的 = 两侧要加空格，如：
+# 正确的风格：
+def munge(sep: AnyStr = None): ...
+def munge(input: AnyStr, sep: AnyStr = None, limit=1000): ...
+# 错误的风格：
+def munge(input: AnyStr=None): ...
+def munge(input: AnyStr, limit = 1000): ...
+不要将多条语句组合在一行中，如：
+# 正确的风格：
+if foo == &apos;blah&apos;:
+    do_blah_thing()
+do_one()
+do_two()
+do_three()
+# 错误风格：
+if foo == &apos;blah&apos;: do_blah_thing()
+do_one(); do_two(); do_three()
+# 如果 if/for/while 体很小，组合在一行有时还是可以接受的，
+# 但是不推荐，如：
+if foo == &apos;blah&apos;: do_blah_thing()
+for x in lst: total += x
+while t &lt; 10: t = delay()
+# 但是在有多段语句时，绝对不能这样，如：
+if foo == &apos;blah&apos;: do_blah_thing()
+else: do_non_blah_thing()
+
+try: something()
+finally: cleanup()
+
+do_one(); do_two(); do_three(long, argument,
+                             list, like, this)
+
+if foo == &apos;blah&apos;: one(); two(); three()
+</code></pre><h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h2><pre><code>注释内容必须要和代码同步！
+注释应该是完整的语句，首字母一般大写，一般要有句号。
+注释很短时句号可以省略。
+块注释一般由多个段落组成。
+You should use two spaces after a sentence-ending period??
+用英文写注释
+</code></pre><h2 id="块注释"><a href="#块注释" class="headerlink" title="块注释"></a>块注释</h2><pre><code>每行用 # 及一个空格开始，如 #
+段落用一个只有 # 的行分隔
+</code></pre><h2 id="行内注释"><a href="#行内注释" class="headerlink" title="行内注释"></a>行内注释</h2><pre><code>注释与语句内容至少用两个空格分开，注释用 # 加一个空格开始
+# 不要像下面这样，注释内容没有必要
+x = x + 1                 # Increment x
+# 但是有时，如下面的注释会很有用
+x = x + 1                 # Compensate for border
+</code></pre><h2 id="文档字符串"><a href="#文档字符串" class="headerlink" title="文档字符串"></a>文档字符串</h2><p>公开的模块、函数、类及方法都应该有文档字符串，而非公开的方法可以用注释来代替，且注释放置在 def 行之后。<br>多行的文档字符串，结束符要自成一行，如：<br>“””Return a foobang</p>
+<p>Optional plotz says to frobnicate the bizbaz first.<br>“””<br>单行的文档字符串，结束符和内容放在同一行</p>
+<h2 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h2><p>没有推荐的风格，但是别人要能从你的代码中看出你用的是什么风格，常用的风格如下：<br>b 单个小写字母<br>B 单个大写字母</p>
+<pre><code>lowercase
+lower_case_with_underscores
+UPPERCASE
+UPPER_CASE_WITH_UNDERSCORES
+CapitalizedWords, 这种风格中，对于缩写词应全部用大写，如 HTTTPServerError 比 HttpServerError 好
+mixedCase
+Capitalized_Words_With_Underscores，这个太丑，不要用这种！
+st_mode、st_mtime 等前缀，一般是系统接口返回，如果自己写的代码不推荐用这种
+_single_leading_underscore : 弱 “内部使用” 指示器，这种对象用 from M import * 不会被导入
+single_trailing_underscore_ : 可以用来和 Python 关键词进行区分，如 Tkinter.Toplevel(master, class_=&apos;ClassName&apos;)
+__double_leading_underscore : 命名一个类属性时，可以进行命名矫正，例如 class FooBar 内的 __boo 会变成 _FooBar__boo
+double_leading_and_trailing_underscore : “magic” 对象，不要自己发明这种对象
+</code></pre><h2 id="命名传统"><a href="#命名传统" class="headerlink" title="命名传统"></a>命名传统</h2><p>不用单个 l, O, I 等这样的单个字符来命名，它们与数字不好区分<br>包名和模块名：全部用小写，必要时可用 <em>，但不推荐，C/C++ 的扩展模块，如果其对应有 Python 版本，那么 C/C++ 扩展模块名前加 </em><br>类名：用 CapWords 风格<br>异常名：用 CapWords 风格，一般应该有 Error 后缀<br>全局变量名：能用 from M import * 导入的变量全部放在 <strong>all</strong> 中，或者全局变量用 <em> 做前缀<br>函数名：应该用全部用小写，单词间可以用 </em> 分隔，如 my<em>func，不推荐用 mixedCase 风格<br>函数和方法的参数：实例方法的第一个参数用 self, 类方法的第一个参数用 cls，如果参数与关键字冲突，在参数名后加 </em> 后缀，如 class<em><br>实例变量和方法： 用小写字符和 </em>, 非公开的实例变量和方法用一个 <em> 做前缀; 避免与子类中的名字冲突，类的变量可用两个 </em> 作前缀，例如 class FooBar 内的 <strong>boo 会变成只能通过 FooBar._FooBar</strong>boo 访问<br>常数：全部大写，可用 _ 分隔，如 MAX_OVERFLOW、TOTAL</p>
+<h2 id="推荐的编程方式"><a href="#推荐的编程方式" class="headerlink" title="推荐的编程方式"></a>推荐的编程方式</h2><pre><code>字符串连接不要用 a += b 或者 a = a + b, 用 &apos;&apos;.join(), 后者性能更好。
+和单子如 None 的比较用 is 和 is not，不要用 ==，如果你想判断 if x is not None, 不要缩写成 if x
+使用 if foo is not None，而不是 if not foo is None，前者更加易读
+如果要实现序列比较操作的话，应将 6 个操作（__eq__ , __ne__ , __lt__ , __le__ , __gt__ , __ge__）全部实现，可以借助 functools.total_ordering() 修饰器来减少工作量
+将函数保存在一个变量中应该用 def f(x): return 2*x， 而非 f = lambda x: 2*x，后者不利于调试
+自定义的异常类应该继承至 Exception 类，而非 BaseException 类。
+Python 2 中抛出异常用 raise ValueError(&apos;message&apos;)，而非 raise ValueRoor, &apos;message&apos;
+尽可以的指明异常名，如：
+try:
+    import platform_specific_module
+except ImportError:
+    platform_specific_module = None
+避免使用无异常名的 except: 语句，它会捕获全部的异常（如 Ctrl C）。
+将异常绑定到名字的方法：
+try:
+    process_data()
+except Exception as exc:
+    raise DataProcessingFailedError(str(exc))
+try: 中的语句要尽量减少，如：
+# 正确的写法：
+try:
+    value = collection[key]
+except KeyError:
+    return key_not_found(key)
+else:
+    return handle_value(value)
+# 错误的写法
+try:
+    # Too broad!
+    return handle_value(collection[key])
+except KeyError:
+    # Will also catch KeyError raised by handle_value()
+    return key_not_found(key)
+如果资源只适用于某个代码段内，使用 with 或 try/finally 来确保能进行清理工作
+上下文管理器应用通过一个单独的函数或方法来激活，如：
+# 正确的做法：
+with conn.begin_transaction():
+    do_stuff_in_transaction(conn)
+# 错误的做法：
+with conn:
+    do_stuff_in_transaction(conn)
+return 语句应该一致，如：
+# 正确的做法：
+
+def foo(x):
+    if x &gt;= 0:
+        return math.sqrt(x)
+    else:
+        return None
+
+def bar(x):
+    if x &lt; 0:
+        return None
+    return math.sqrt(x)
+# 错误的做法：
+
+def foo(x):
+    if x &gt;= 0:
+        return math.sqrt(x)
+
+def bar(x):
+    if x &lt; 0:
+        return
+    return math.sqrt(x)
+使用字符串的方法，而不是用 string 模块中的方法
+使用 &apos;&apos;.startswith() 和 &apos;&apos;.endswidth() 而不用 slicing 来检查前缀和后缀：
+# 正确：
+if foo.startswith(&apos;bar&apos;):
+# 错误：
+if foo[:3] == &apos;bar&apos;:
+判断对象的类型用 isinstance 而不直接 type 比较，如：
+# 正确：
+if isinstance(obj, int):
+# 错误:
+if type(obj) is type(1):
+对序列是否空的判断不用 len，如：
+# 正确：
+if not seq:
+if seq:
+# 错误：
+if len(seq):
+if not len(seq):
+布尔值的比较：
+# 正确：
+if greeting:
+# 不要这样:
+if greeting == True:
+# 这样更不行：
+if greeting is True:
+</code></pre><h2 id="检测工具"><a href="#检测工具" class="headerlink" title="检测工具"></a>检测工具</h2><p>使用 Flake8 来检查代码质量。</p>
 
           
         
@@ -630,7 +960,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/02/10/diverting-python/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/28/multiprocessing源码分析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -649,7 +979,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/10/diverting-python/" itemprop="url">diverting-python</a></h1>
+                <a class="post-title-link" href="/2018/03/28/multiprocessing源码分析/" itemprop="url">multiprocessing源码分析</a></h1>
         
 
         <div class="post-meta">
@@ -661,8 +991,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-10T18:44:14+08:00">
-                2018-02-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-28T22:38:30+08:00">
+                2018-03-28
               </time>
             
 
@@ -672,28 +1002,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/web/" itemprop="url" rel="index">
-                    <span itemprop="name">web</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -701,7 +1009,7 @@
 
           
           
-             <span id="/2018/02/10/diverting-python/" class="leancloud_visitors" data-flag-title="diverting-python">
+             <span id="/2018/03/28/multiprocessing源码分析/" class="leancloud_visitors" data-flag-title="multiprocessing源码分析">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -726,7 +1034,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  194
+                  0
                 </span>
               
 
@@ -765,88 +1073,7 @@
       
         
           
-            <h2 id="有趣的python"><a href="#有趣的python" class="headerlink" title="有趣的python"></a>有趣的python</h2><ul>
-<li>廖雪峰老师的 app</li>
-</ul>
-<p><a href="https://github.com/michaelliao/awesome-python-webapp" target="_blank" rel="external">awesome-python-app</a></p>
-<ul>
-<li>社区系统</li>
-</ul>
-<p><a href="https://github.com/phith0n/Minos" target="_blank" rel="external">Minos</a></p>
-<ul>
-<li>北京公交</li>
-</ul>
-<p><a href="https://github.com/wong2/beijing_bus" target="_blank" rel="external">beijing_bus</a></p>
-<ul>
-<li>螺壳网</li>
-</ul>
-<p><a href="https://github.com/alvan/luokr.com" target="_blank" rel="external">luokr.com</a></p>
-<ul>
-<li>种子搜索网站</li>
-</ul>
-<p><a href="https://github.com/78/ssbc" target="_blank" rel="external">ssbc</a></p>
-<ul>
-<li>在线音乐网站</li>
-</ul>
-<p><a href="https://github.com/listen1" target="_blank" rel="external">listen1</a></p>
-<ul>
-<li>小代码合集</li>
-</ul>
-<p><a href="https://github.com/RealHacker/python-gems" target="_blank" rel="external">python-gems</a></p>
-<ul>
-<li>算法课程</li>
-</ul>
-<p><a href="https://github.com/qiwsir/algorithm" target="_blank" rel="external">algorithm</a></p>
-<ul>
-<li>分词器</li>
-</ul>
-<p><a href="https://github.com/grangier/python-goose" target="_blank" rel="external">python-goose</a></p>
-<ul>
-<li>过滤敏感词</li>
-</ul>
-<p><a href="https://github.com/observerss/textfilter" target="_blank" rel="external">https://github.com/observerss/textfilter</a></p>
-<ul>
-<li>社区项目 基于tornado mongodb</li>
-</ul>
-<p><a href="https://github.com/shiyanhui/Young" target="_blank" rel="external">https://github.com/shiyanhui/Young</a></p>
-<ul>
-<li>模拟登陆</li>
-</ul>
-<p><a href="https://github.com/xchaoinfo/fuck-login" target="_blank" rel="external">https://github.com/xchaoinfo/fuck-login</a></p>
-<ul>
-<li>flask 论坛</li>
-</ul>
-<p><a href="https://github.com/sh4nks/flaskbb" target="_blank" rel="external">https://github.com/sh4nks/flaskbb</a></p>
-<ul>
-<li>数据探索平台</li>
-</ul>
-<p><a href="https://github.com/apache/incubator-superset" target="_blank" rel="external">https://github.com/apache/incubator-superset</a></p>
-<ul>
-<li>python-sdk</li>
-</ul>
-<p><a href="https://github.com/qiniu/python-sdk" target="_blank" rel="external">https://github.com/qiniu/python-sdk</a></p>
-<ul>
-<li>flask-admin</li>
-</ul>
-<p><a href="https://github.com/flask-admin/flask-admin" target="_blank" rel="external">https://github.com/flask-admin/flask-admin</a></p>
-<ul>
-<li><strong>python-guide</strong></li>
-</ul>
-<p><a href="https://github.com/kennethreitz/python-guide" target="_blank" rel="external">https://github.com/kennethreitz/python-guide</a></p>
-<ul>
-<li>mincss</li>
-</ul>
-<p><a href="https://github.com/peterbe/mincss" target="_blank" rel="external">https://github.com/peterbe/mincss</a></p>
-<ul>
-<li><em>pymysql</em></li>
-</ul>
-<p>纯 Pyton 写的 MySQL 库，纯 Python 的好处就是可以运行在任何装有 Python 解释器（CPython、PyPy、IronPython）的平台上。</p>
-<p><a href="https://github.com/PyMySQL/PyMySQL" target="_blank" rel="external">https://github.com/PyMySQL/PyMySQL</a></p>
-<ul>
-<li>系统情况监测</li>
-</ul>
-<p><a href="https://github.com/nicolargo/glances" target="_blank" rel="external">https://github.com/nicolargo/glances</a></p>
-
+            
           
         
       
@@ -894,7 +1121,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/02/10/github-markdown/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/28/threading源码分析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -913,7 +1140,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/10/github-markdown/" itemprop="url">github-markdown</a></h1>
+                <a class="post-title-link" href="/2018/03/28/threading源码分析/" itemprop="url">threading源码分析</a></h1>
         
 
         <div class="post-meta">
@@ -925,8 +1152,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-10T11:59:27+08:00">
-                2018-02-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-28T22:38:15+08:00">
+                2018-03-28
               </time>
             
 
@@ -936,28 +1163,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/web/" itemprop="url" rel="index">
-                    <span itemprop="name">web</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -965,7 +1170,7 @@
 
           
           
-             <span id="/2018/02/10/github-markdown/" class="leancloud_visitors" data-flag-title="github-markdown">
+             <span id="/2018/03/28/threading源码分析/" class="leancloud_visitors" data-flag-title="threading源码分析">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -990,7 +1195,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  154
+                  0
                 </span>
               
 
@@ -1029,63 +1234,7 @@
       
         
           
-            <p>可能是不同编辑器的缘故，有时在macdown 下写的md 文件 再使用subl 编辑器之后 没法正常的显示格式。因此在此 总结一番 github md 语法。</p>
-<ul>
-<li>标题</li>
-</ul>
-<pre><code># 代表级别
-</code></pre><ul>
-<li><p>加粗 </p>
-<p>  <strong>加粗</strong></p>
-</li>
-<li><p>斜体</p>
-<p>  <em>斜体</em></p>
-</li>
-<li><p>删除线</p>
-<p>  <del>删除线</del> （？？）</p>
-</li>
-<li><p>引用</p>
-<p>  下面是一个引用：</p>
-<blockquote>
-<p>大家好！我是一个引用。</p>
-</blockquote>
-</li>
-<li><p>代码引用</p>
-</li>
-</ul>
-<p>我需要引用一段代码：  </p>
-<pre><code class="c++"><span class="keyword">int</span> a = <span class="number">1</span>;
-<span class="keyword">int</span> b = <span class="number">2</span>;
-<span class="keyword">int</span> c = a+b;
-</code></pre>
-<ul>
-<li>链接</li>
-</ul>
-<p><a href="https://www.baidu.com" title="百度" target="_blank" rel="external">链接到百度</a> </p>
-<ul>
-<li>图片</li>
-</ul>
-<p><img src="https://image.baidu.com/search/detail?ct=503316480&amp;z=undefined&amp;tn=baiduimagedetail&amp;ipn=d&amp;word=github&amp;step_word=&amp;ie=utf-8&amp;in=&amp;cl=2&amp;lm=-1&amp;st=undefined&amp;cs=3669482230,1828886645&amp;os=1737755197,4157458823&amp;simid=4156659322,640805458&amp;pn=2&amp;rn=1&amp;di=13219756880&amp;ln=1924&amp;fr=&amp;fmq=1518253278388_R&amp;fm=&amp;ic=undefined&amp;s=undefined&amp;se=&amp;sme=&amp;tab=0&amp;width=undefined&amp;height=undefined&amp;face=undefined&amp;is=0,0&amp;istype=0&amp;ist=&amp;jit=&amp;bdtype=0&amp;spn=0&amp;pi=0&amp;gsm=0&amp;objurl=http%3A%2F%2Fimg2.niushe.com%2Fupload%2F201304%2F19%2F14-22-31-71-26144.jpg&amp;rpstart=0&amp;rpnum=0&amp;adpicid=0&amp;ctd=1518253282396^3_1316X732%1" alt="图片描述"></p>
-<ul>
-<li><p>列表</p>
-<ul>
-<li>主列表1</li>
-<li>主列表2<ol>
-<li>次列表1</li>
-<li>次列表2</li>
-</ol>
-</li>
-</ul>
-<ul>
-<li>主列表3</li>
-</ul>
-</li>
-</ul>
-<ul>
-<li>忽略关键字</li>
-</ul>
-<p>**取消Markdown关键字</p>
-
+            
           
         
       
@@ -1133,7 +1282,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/02/08/about-python-0/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/28/inspect源码分析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -1152,7 +1301,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/08/about-python-0/" itemprop="url">about-python-0</a></h1>
+                <a class="post-title-link" href="/2018/03/28/inspect源码分析/" itemprop="url">inspect源码分析</a></h1>
         
 
         <div class="post-meta">
@@ -1164,8 +1313,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-08T23:46:01+08:00">
-                2018-02-08
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-28T22:37:56+08:00">
+                2018-03-28
               </time>
             
 
@@ -1175,28 +1324,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/web/" itemprop="url" rel="index">
-                    <span itemprop="name">web</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -1204,7 +1331,7 @@
 
           
           
-             <span id="/2018/02/08/about-python-0/" class="leancloud_visitors" data-flag-title="about-python-0">
+             <span id="/2018/03/28/inspect源码分析/" class="leancloud_visitors" data-flag-title="inspect源码分析">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1229,7 +1356,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  676
+                  0
                 </span>
               
 
@@ -1245,7 +1372,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2
+                  1
                 </span>
               
             </div>
@@ -1268,34 +1395,7 @@
       
         
           
-            <h1 id="python应用的方方面面-0-Django"><a href="#python应用的方方面面-0-Django" class="headerlink" title="python应用的方方面面-0-Django"></a>python应用的方方面面-0-Django</h1><h2 id="model-的继承"><a href="#model-的继承" class="headerlink" title="model 的继承"></a>model 的继承</h2><ul>
-<li>抽象继承</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span><span class="params">(models.Model)</span>:</span></span><br><span class="line">    name = models.CharField(max_length=<span class="number">50</span>)</span><br><span class="line">    age = models.PositiveIntegerField()</span><br><span class="line"> </span><br><span class="line">    <span class="comment"># 下面这句决定了Animal是一个抽象类/Model</span></span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">Meta</span>:</span></span><br><span class="line">        abstract = <span class="keyword">True</span></span><br><span class="line"> </span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Human</span><span class="params">(Animal)</span>:</span></span><br><span class="line">    kind_hearted = models.BooleanField()</span><br><span class="line">    sex = models.CharField(<span class="string">'sex'</span>, choices=((<span class="string">'m'</span>,<span class="string">'male'</span>), (<span class="string">'f'</span>, <span class="string">'female'</span>)), max_length=<span class="number">1</span>)</span><br><span class="line">    <span class="comment">#...</span></span><br><span class="line"></span><br><span class="line">```    </span><br><span class="line">****</span><br><span class="line"></span><br><span class="line">+ 正常继承</span><br><span class="line"></span><br><span class="line">和抽象继承的主要区别是父类这时也可以拥有数据库表了，并且不在身为存储公共信息的抽象类了，父类也可以进行实例化，查询等操作了。</span><br></pre></td></tr></table></figure>
-<p>class Country(models.Model):<br>    name = models.CharField(max_length=10)</p>
-<pre><code>#...
-</code></pre><p>class Province(Country):<br>    return = models.BooleanField()</p>
-<pre><code>#...
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">****</span><br><span class="line"></span><br><span class="line">+ 代理</span><br><span class="line"></span><br><span class="line">在子类中只能增加方法，而不能增加属性，在不影响父类数据存储的前提下，使子类继承父类，此时子类称为父类的“代理”。</span><br></pre></td></tr></table></figure>
-<p>from django.contrib.auth.models import User</p>
-<p>class Person(User):</p>
-<pre><code># this makes a class proxy
-proxy = True
-
-def can_dance(self):
-    return True
-</code></pre><h1 id="both-Yellow-and-Black-can-dance"><a href="#both-Yellow-and-Black-can-dance" class="headerlink" title="both Yellow and Black can_dance :)"></a>both Yellow and Black can_dance :)</h1><p>class Yellow(Person):<br>    hometown = models.CharField(max_length=30)</p>
-<p>class Black(Person)<br>    tribe_name = models.CharField(max_length=100)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">****</span><br><span class="line"></span><br><span class="line">## django Q 对象</span><br><span class="line"></span><br><span class="line">在进行相对复杂的查询时，使用django.db.models.Q对象</span><br><span class="line"></span><br><span class="line">```sql</span><br><span class="line"></span><br><span class="line">SELECT * FROM order WHERE id BETWEEN 20 ADN 100 AND(num &lt;= &apos;20&apos; or num &gt;= &apos;30&apos;);</span><br></pre></td></tr></table></figure>
-<p>可以改写为</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.db.models <span class="keyword">import</span> Q</span><br><span class="line"><span class="keyword">from</span> login.models <span class="keyword">import</span> Order</span><br><span class="line"><span class="comment">#...</span></span><br><span class="line">Order.objects.get(</span><br><span class="line">Q(id &gt;= <span class="number">20</span>) &amp; (id &lt;= <span class="number">100</span>),</span><br><span class="line">Q(num &lt;= <span class="number">20</span>) | (num &gt;= <span class="number">30</span>)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<h2 id="验证表单提交格式是否正确-使用哪个函数？"><a href="#验证表单提交格式是否正确-使用哪个函数？" class="headerlink" title="验证表单提交格式是否正确 使用哪个函数？"></a>验证表单提交格式是否正确 使用哪个函数？</h2><pre><code>is_valid()    # 函数方法，用于检查表单提交是否正确
-</code></pre><h2 id="取消级连删除"><a href="#取消级连删除" class="headerlink" title="取消级连删除"></a>取消级连删除</h2><pre><code>user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
-</code></pre><p>并且SET_NULL只有在null为True的时候，才可以使用</p>
-<h2 id="django-在-model-保存前做一定的固定操作"><a href="#django-在-model-保存前做一定的固定操作" class="headerlink" title="django 在 model 保存前做一定的固定操作"></a>django 在 model 保存前做一定的固定操作</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import logging</span><br><span class="line">from django.db import models</span><br><span class="line">from django.db.models.signals import pre_save</span><br><span class="line">from django.dispatch import receiver</span><br><span class="line"> </span><br><span class="line">class Order(models.Model):</span><br><span class="line">    # ...</span><br><span class="line"> </span><br><span class="line">logger = logging.getLogger(__name__)</span><br><span class="line"> </span><br><span class="line">@receiver(pre_save, sender=Order)</span><br><span class="line">def pre_save_handler(sender, **kwargs):</span><br><span class="line"> </span><br><span class="line">    # 我们可以在Order这个Model保存之前尽情调戏了：）</span><br><span class="line">    logger.debug(&quot;&#123;&#125;,&#123;&#125;&quot;.format(sender, **kwargs))</span><br><span class="line">    print &apos;fuck universe&apos;</span><br></pre></td></tr></table></figure>
-<h2 id="django-session"><a href="#django-session" class="headerlink" title="django session"></a>django session</h2><p>说到session的运行机制，就一定要先说一下cookie这一段信息。一般情况下cookies都是我们的浏览器生成的（显然可以人为修改），用于服务器对户进行筛选和维护，但是这个听上去很好吃的东西，能存的东西有点少而且容易被别人利用。这时候基于cookies的session的意义就比较明显了，在客户端的cookies中我们只保存session id，而将完整信息以加密信息的形式保存到服务器端，这样服务器可以根据session id相对安全的在数据库中查询用户的更细致的信息和状态。<br>在Django中session和cookies的操作方法一样，如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># 保存session</span><br><span class="line">request.session[&apos;order_id&apos;] = order_id</span><br><span class="line"># 删除session</span><br><span class="line">del request.session[&apos;order_id&apos;]</span><br><span class="line"># 读取session</span><br><span class="line">session.get(&apos;order_id&apos;, False)</span><br></pre></td></tr></table></figure>
-
+            
           
         
       
@@ -1334,7 +1434,7 @@ def can_dance(self):
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/53/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/53/">53</a><span class="page-number current">54</span><a class="page-number" href="/page/55/">55</a><span class="space">&hellip;</span><a class="page-number" href="/page/66/">66</a><a class="extend next" rel="next" href="/page/55/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/53/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/53/">53</a><span class="page-number current">54</span><a class="page-number" href="/page/55/">55</a><span class="space">&hellip;</span><a class="page-number" href="/page/74/">74</a><a class="extend next" rel="next" href="/page/55/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1384,7 +1484,7 @@ def can_dance(self):
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">330</span>
+                  <span class="site-state-item-count">369</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1499,7 +1599,7 @@ def can_dance(self):
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共148k字</span>
+  <span class="post-count">博客全站共148.6k字</span>
 </div>
 
         

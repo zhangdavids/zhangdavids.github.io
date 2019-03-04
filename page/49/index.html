@@ -275,7 +275,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/15/简单看看汤不热的网站/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/08/16/how-to-be-a-data-scientist-04/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -294,7 +294,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/15/简单看看汤不热的网站/" itemprop="url">简单看看汤不热的网站</a></h1>
+                <a class="post-title-link" href="/2018/08/16/how-to-be-a-data-scientist-04/" itemprop="url">how to be a data scientist 04</a></h1>
         
 
         <div class="post-meta">
@@ -306,8 +306,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-15T21:31:12+08:00">
-                2018-03-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-16T09:57:26+08:00">
+                2018-08-16
               </time>
             
 
@@ -329,8 +329,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/pachong/" itemprop="url" rel="index">
-                    <span itemprop="name">pachong</span>
+                  <a href="/categories/data-science/" itemprop="url" rel="index">
+                    <span itemprop="name">data science</span>
                   </a>
                 </span>
 
@@ -346,7 +346,7 @@
 
           
           
-             <span id="/2018/03/15/简单看看汤不热的网站/" class="leancloud_visitors" data-flag-title="简单看看汤不热的网站">
+             <span id="/2018/08/16/how-to-be-a-data-scientist-04/" class="leancloud_visitors" data-flag-title="how to be a data scientist 04">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -371,612 +371,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  647
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  2
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>这里就不截图进行介绍了</p>
-<p>每个tumblr的个人空间都是一个二级域名，你甚至可以绑定你自己的域名。</p>
-<p>在个人主页上， 是一个微博式的消息列表，有文字，图片，视频等形式。消息的展现，是页面上的JavaScript脚本 通过请求Tumblr的Api来获取返回信息，然后添加到页面上的。通过API，可以省掉很多麻烦，至少不必分析整个页面的html来提取需要的信息了。</p>
-<p>基础的url 是这样的：</p>
-<pre><code>http://{0}.tumblr.com/api/read?type{1}&amp;num={2}&amp;start={3}
-</code></pre><p>第一个参数是要访问的用户空间的用户名；</p>
-<p>第二个参数是媒体类型， 图片为“photo”，视频为“video”；</p>
-<p>第三个参数为请求的资源数；</p>
-<p>第四个参数为从第几个资源开始    </p>
-<p>返回的数据是XML格式的数据，基本的层级为Tumblr&gt;posts&gt;post。图片的URL在post的photo-url字段中，视频与此类似，就不再演示了。 获取到媒体资源的url之后，就可以进行下载了。</p>
-<p>video类型的资源的url，需要从player属性中进行进一步匹配才能得出最后的结果。</p>
-<p>技术的分析：</p>
-<ul>
-<li>发送http请求  使用requests模块</li>
-<li>返回的数据是xml  xmltodic模块，将xml文档处理成类似Json对象，方便我们对数据进行访问。</li>
-<li><p>队列实现</p>
-<p>  python中自带Queue模块，可以满足我们目前的队列需求，由于python2.7和python3.0中 </p>
-<p>  对queue模块的命名进行的变更，编程的时候需要注意。如果考虑兼容两个版本的话，可以 考虑引入</p>
-<p>  six模块（<a href="https://pypi.python.org/pypi/six）。" target="_blank" rel="external">https://pypi.python.org/pypi/six）。</a></p>
-<p>  six模块是一个专门用于解决 从python2.x到python3.x的兼容性问题的模块，</p>
-<p>  它对python版本变更导致到部分模块不能应用的问题 进行了内部处理，</p>
-<p>  需要处理类似兼容问题的时候，可以考虑或者参考该模块的实现方式。</p>
-</li>
-<li><p>多线程进行下载</p>
-</li>
-<li>处理json </li>
-</ul>
-<p>考虑到Tumblr需要FQ访问，如果本机不使用VPN的话，可能需要配置代理，代理采用json配置方式。 处理.使用python内置的json模块（<a href="https://docs.python.org/2/library/json.html）就可以了。" target="_blank" rel="external">https://docs.python.org/2/library/json.html）就可以了。</a>    </p>
-<ul>
-<li>使用正则</li>
-</ul>
-<p>为了精确匹配url信息，我们需要使用正则表达式对xml数据的中字段值进行进一步处理，使用 内置的re模块（<a href="https://docs.python.org/2/library/re.html）就可以了。" target="_blank" rel="external">https://docs.python.org/2/library/re.html）就可以了。</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/14/django项目配置小结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/14/django项目配置小结/" itemprop="url">django项目配置小结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-14T19:10:55+08:00">
-                2018-03-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/web/" itemprop="url" rel="index">
-                    <span itemprop="name">web</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/03/14/django项目配置小结/" class="leancloud_visitors" data-flag-title="django项目配置小结">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  3.1k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  12
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="dockerfile-的配置"><a href="#dockerfile-的配置" class="headerlink" title="dockerfile 的配置"></a>dockerfile 的配置</h3><pre><code>FROM python:3.5
-
-COPY ./requirements.txt /src
-WORKDIR /src
-RUN pip install -r requirements.txt
-
-COPY . /src
-EXPOSE &lt;PORT&gt;
-CMD uwsgi --http :&lt;PORT&gt; --wsgi-file &lt;path/to/wsgi.py&gt;
-</code></pre><p>python 3.3开始     标准库已经支持创建虚拟环境</p>
-<pre><code>pyvenv ENV
-# 使用k神的pipenv 管理项目依赖
-# 使用ensurepip 模块来引导启动pip python 3.4开始
-python -m ensurepip 
-</code></pre><p>使用 <a href="https://www.gitignore.io" target="_blank" rel="external">gitignore.io</a>这个网站提供的 .gitignore 文件管理代码库文件</p>
-<p>日志管理的话（以下是直接写到标准输出）</p>
-<pre><code># settings.py 
-
-# ...
-
-LOGGING = {
-    &apos;version&apos;: 1,
-    &apos;disable_existing_loggers&apos;: False,
-    &apos;formatters&apos;: {
-        &apos;verbose&apos;: {
-            &apos;format&apos;: &apos;[application] %(levelname)s %(asctime)s %(module)s %(message)s&apos;
-        }
-    },
-    &apos;handlers&apos;: {
-        &apos;console&apos;: {
-            &apos;level&apos;: &apos;DEBUG&apos;,
-            &apos;class&apos;: &apos;logging.StreamHandler&apos;,
-            &apos;stream&apos;: sys.stdout,
-            &apos;formatter&apos;: &apos;verbose&apos;
-        },
-    },
-    &apos;loggers&apos;: {
-        &apos;app&apos;: {
-            &apos;handlers&apos;: [&apos;console&apos;],
-            &apos;level&apos;: &apos;DEBUG&apos;,
-            &apos;propagate&apos;: True,
-        },
-    },
-}
-</code></pre><h3 id="自动化测试"><a href="#自动化测试" class="headerlink" title="自动化测试"></a>自动化测试</h3><p>既然是纯后端项目，工程师完全可以通过自动化测试来检测自己的代码。Django 本身对测试提供了很好的支持，可以通过 sqlite 来搭建测试数据库，还有基于内存的缓存，做测试不会增加对其他系统的依赖。开发起来事半功倍。</p>
-<p>除了要写自动化测试代码，还要能统计测试覆盖率。目前我们用的是 coverage.py 这个工具，说实话没有 node.js 的 istanbul 好用，输出的报告没有 Istanbul 详细和易读。不过用来检查 “死代码” 还是够用的。</p>
-<h3 id="针对-http-代码的测试"><a href="#针对-http-代码的测试" class="headerlink" title="针对 http 代码的测试"></a>针对 http 代码的测试</h3><p>有些项目需要对接的第三方系统比较多，比如微信认证、支付、短信等常见的，可能还有其他一些垂直业务领域的系统。这部分接口对接的代码，也应该纳入到测试当中，毕竟 Python 作为脚本语言，代码很容易出现错误。</p>
-<p>这块一般是用 responses 这个模块来 mock http 请求。</p>
-<h3 id="定时任务"><a href="#定时任务" class="headerlink" title="定时任务"></a>定时任务</h3><p>封装到command</p>
-<pre><code>import schedule
-from django.core.management.base import BaseCommand
-
-class Command(BaseCommand):
-
-    def handle(self, *args, **kwargs):
-
-        schedule.every(45).minutes.do(do_this)
-        schedule.every().day.at(&apos;04:00&apos;).do(do_that)
-
-        while True:
-            schedule.run_pending()
-            time.sleep(1)    
-</code></pre><h3 id="Django如何处理并发"><a href="#Django如何处理并发" class="headerlink" title="Django如何处理并发"></a>Django如何处理并发</h3><ul>
-<li><p>django本身提供了一个wsgi的接口，可以通过gevent，uwsgi，fastcgi等实现高并发，这里的高并发采用协程，线程，和进程都可能，或者同时采用几种。</p>
-</li>
-<li><p>对于操作数据库来说，线程安全其实不用太考虑，因为数据库的链接已经由数据库的连接池处理了，反而是数据库的竞争性的访问需要考虑多进程安全的问题，比如同时写某一个统计信息，那么就需要对这样的请求加锁，或这cas这样的机制来保证这种写操作不会冲突。</p>
-</li>
-</ul>
-<h2 id="配置举例："><a href="#配置举例：" class="headerlink" title="配置举例："></a>配置举例：</h2><pre><code># /usr/local/nginx/conf/nginx.conf
-server {  
-    listen       8088;  
-    server_name  localhost;  
-
-    #charset koi8-r;  
-
-    #access_log  logs/host.access.log  main;  
-
-    location / {  
-        root   html;  
-        index  index.html index.htm;  
-    }  
-
-
-
-## 修改配置文件
-server {
-        listen       8088;
-        server_name  localhost;
-        #charset koi8-r;
-        #access_log  logs/host.access.log  main;
-       #注释以下四行
-        #location / {
-            #root   html;
-            #index  index.html index.htm;
-        #}
-       #添加以下内容
-        location / {
-            try_files @uri @pp;
-        }
-        location @pp {
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header Host $http_host;
-            proxy_pass http://127.0.0.1:5000;
-            #反向代理的这个IP和端口
-        }
-
-
-## gun 配置文件 config.py
-
-import gevent.monkey
-import multiprocessing
-
-gevent.monkey.patch_all()
-
-#监听本机的5000端口
-bind=&apos;0.0.0.0:5000&apos;
-
-preload_app = True
-
-#开启进程
-#workers=4
-workers = multiprocessing.cpu_count() * 2 + 1
-
-#每个进程的开启线程
-threads = multiprocessing.cpu_count() * 2
-
-backlog=2048
-
-#工作模式为gevent
-worker_class=&quot;gevent&quot;
-
-# debug=True
-
-#如果不使用supervisord之类的进程管理工具可以是进程成为守护进程，否则会出问题
-daemon = True
-
-#进程名称
-proc_name=&apos;gunicorn.pid&apos;
-
-#进程pid记录文件
-pidfile=&apos;app_pid.log&apos;
-
-loglevel=&apos;debug&apos;
-logfile = &apos;debug.log&apos;
-accesslog = &apos;access.log&apos;
-access_log_format = &apos;%(h)s %(t)s %(U)s %(q)s&apos;
-errorlog = &apos;error.log’
-</code></pre><p>启动：</p>
-<pre><code>gunicorn -c config.py(gunicorn配置文件)  flask_nginx(flask启动文件):app
-</code></pre><p>启动nginx: </p>
-<pre><code>sudo /usr/local/nginx/sbin/nginx    
-</code></pre><p>Siege命令常用参数</p>
-<pre><code>-c 500 指定并发数500
--r 5 指定测试的次数5
--f urls.txt 制定url的文件
--i internet系统，随机发送url
--b 请求无需等待 delay=0
--t 5 持续测试5分钟，默认是分，5s为5秒
-# -t和-r不能同时使用
-</code></pre><p>模拟1000个并发向URL发送5次<br>测试：</p>
-<pre><code>siege -c 1000 -r 5 http://127.0.0.1:8088(gunicorn+gevent+nginx+flask)
-</code></pre><hr>
-<h2 id="从-Tornado-说起"><a href="#从-Tornado-说起" class="headerlink" title="从 Tornado 说起"></a>从 Tornado 说起</h2><p>刚开始，对 Tornado 的感觉最为新鲜，在官网介绍里其是一个无阻塞的Web服务器以及相关工具的集合，但 个人更为倾向其为一个颇为完备的微型 web 框架。Tornado 性能好的关键是其无阻塞异步的特性，但这魔术 似的效果是如何达成的呢？迷思与困惑。我那小脑袋里的思维还停留于多进程（多线程）那样的并发模型中， 实在有点难以理解 Tornado 的异步机制。</p>
-<p>通过查阅各式文章以及源代码，整体的框架脉络开始逐渐在脑海中显现出来。其实，Tornado 的异步模型 是由事件驱动以及特定的回调函数（callback）所组成的！一直没有弄明白，Tornado 具体是如何实现 无阻塞异步，当清楚了事件驱动和回调函数的概念后，事情似乎又变得简单起来了。</p>
-<p>对于一般的程序，在执行阶段若遇到 I/O 事件，整个进程将被阻塞住，直到 I/O 事件结束，程序又继续执行。 接设我们对一些 I/O 事件进行了定制，使其可以立即返回（即无阻塞），那么程序将能立即继续执行。但 问题又来了，那当 I/O 事件完成后又该怎么办呢？此时，回调函数的威力就出来了，我只需要将进行特定 处理的回调函数与该 I/O 事件绑定起来，当该 I/O 事件完成后就调用绑定的回调函数，就可以处理具体的 I/O 事件啦。啊，似乎还有一个问题，回调函数要如何与 I/O 事件绑定起来？最简单的想法是，直接通过 一个 while True 循环不断的轮询，当检测到 I/O 事件完成了即触发回调函数。但是，这样的效率当然不会 高，利用系统中高效的 I/O 事件轮询机制（epoll on Linux, kqueue on most BSD）就是最明智的 解决方案。于是，无阻塞 I/O +事件驱动+高效轮询方式便组成了 Tornado 的异步模型。</p>
-<p>Tornado 的核心是 ioloop 和 iostream 这两个模块，前者提供了一个高效的 I/O 事件循环，后者则封装了 一个无阻塞的 socket 。通过向 ioloop 中添加网络 I/O 事件，利用无阻塞的 socket ，再搭配相应的回调 函数，便可达到梦寐以求的高效异步执行啦。多说无益，来看一下具体的示例：</p>
-<pre><code>from tornado import ioloop
-from tornado.httpclient import AsyncHTTPClient
-
-urls = [&apos;http://www.google.com&apos;, &apos;http://www.yandex.ru&apos;, &apos;http://www.python.org&apos;]
-
-def print_head(response):
-    print (&apos;%s: %s bytes: %r&apos; % (response.request.url,
-                                 len(response.body),
-                                 response.body[:50]))
-
-http_client = AsyncHTTPClient()
-for url in urls:
-    print (&apos;Starting %s&apos; % url)
-    http_client.fetch(url, print_head)
-ioloop.IOLoop.instance().start()    
-</code></pre><p>因为使用了 AsyncHTTPClient 来处理请求操作，整个示例是异步执行的，即三个url请求无等待的依次发出。 我们可以看到 fetch 方法使用了 print_head 函数来作为回调函数，这意味着，当 fetch 完成了请求操作， 相应的 print_head 函数便会被触发调用。恩，… 额，…，乍看起来，使用 Tornado 进行异步编程似乎 并不难，让人跃跃欲试。但实际上，在现实生活中，事件驱动的编程还是会很费脑力，需要一定的创造性思维。 不过，这也许是 Tornado 受欢迎的原因之一呢。</p>
-<hr>
-<h2 id="看下-Gevent"><a href="#看下-Gevent" class="headerlink" title="看下 Gevent"></a>看下 Gevent</h2><p>Gevent 是基于协程（coroutine）实现的 Python 网络库，使用了轻量级的 greenlet 作为执行单元，并 基于 libevent 事件循环构建了直观的调用接口。</p>
-<p>当时看到这样的描述，脑袋的第一反应是，协程？？稍稍了解后，发现协程其实也不是什么高深的概念，协程 也被称为微线程，一看这别名就知道跟线程应该很类似。作为类比倒也可以这么认为，两者关键的区别在于， 线程是由系统进行调度的，而协程是由用户自己进行调度的。当知道这一事实后，立刻想到，这自行调度灵活 肯定是会很灵活，但要调度的话可是很有难度的吧？调度的方法暂时不谈，除了更为灵活外，自行调度的直接 结果当然就是省去了系统调度（什么用户态转内核态，以及什么 context switch），因此协程间切换的资源 消耗很小，再配合协程生成成本很低的另一特点，这可真是相当的美妙。事实上，Python 语言本身就支持基础 的协程的概念，generator 是其中的产物（这里）。</p>
-<p>对于 Gevent，其使用的协程实际上就是 greenlet 。当你使用 greenlet 生成了一些协程，就可以在这些 协程里不断跳转执行，两个 greenlet 之间的跳转被称为切换（switch）。通过切换，我们就可以实现对协程 的调度。还应该知道的是，每个 greenlet 都拥有一个父 greenlet ，这是在 greenlet 初始化时就确定的。 当一个 greenlet 执行完毕后，执行权会切换到其父 greenlet 中。实际上，所有的 greenlet 会被组织成 一颗树，树根便是最“老资格”的 greenlet ，这个老 greenlet 确定了各 greenlet 间的逻辑关系。</p>
-<p>上面说到协程必须自行调度，不会是要自己构造一个调度器吧？这当然可以做到，但不是必须，因为 Gevent 已经基于 greenlet 和 libevent 封装了许多基础常用的库，例如 socket 、event 和 queue 等，只要使用 这些库进行开发，或者对使用的标准库或第三方库打一下补丁（monket patch），就能保证生成的各协程在 I/O 等待时正确地进行切换，从而实现无阻塞的异步执行。</p>
-<p>刚接触 Gevent 时，感觉跟传统的并发编程很类似，但了解渐深后，才发现这货实际上跟 Tornado 更为类似。 因为， Gevent 本质上也是事件驱动。实现的策略可以是，在将要执行 I/O 阻塞事件时，先在事件循环中对该事件 进行注册，关联的回调函数便是对当前协程的切换操作（current_greenlet.switch()），注册成功后即 切换回当前协程的父协程中进行执行（current_greenlet.parent.switch()）。当注册的 I/O 事件被 触发后，事件循环在恰当时机便会执行该回调函数，也就是切换到原先的协程继续执行程序。从而，就实现 无阻塞的 I/O 事件处理。怎样，是否感觉相当的有趣？ :)</p>
-<p>Gevent 了不得的地方还在于，我们能像编写一般程序那样来编写异步程序，这可是弥足珍贵。为了更直观的 显示，让我们来看一下具体的运行示例:    </p>
-<pre><code>import gevent
-from gevent import monkey
-# patches stdlib (including socket and ssl modules) to cooperate with other greenlets
-monkey.patch_all()
-
-import urllib2
-
-urls = [&apos;http://www.google.com&apos;, &apos;http://www.yandex.ru&apos;, &apos;http://www.python.org&apos;]
-
-def print_head(url):
-    print (&apos;Starting %s&apos; % url)
-    data = urllib2.urlopen(url).read()
-    print (&apos;%s: %s bytes: %r&apos; % (url, len(data), data[:50]))
-
-jobs = [gevent.spawn(print_head, url) for url in urls]
-
-gevent.joinall(jobs)
-</code></pre><p>上面示例做的事情实际上跟前面 Tornado 的示例是一样，同样是异步的对url进行请求。在我看来，使用 Gevent 进行编程，无论是可读性还是可操作性都能让人满意。但也要清楚，在实际操作中，为了达到较理想 效果，经常还是需要根据不同的情况对代码进行一些相应的“雕琢”。还有一点很常被人忽略， Gevent 是 基于协程实现的 Python 网络库，其适用面更多的是在于网络 I/O 频繁的需求里，很多情况下 Gevent 可能 并不是很好的选择。总的来说，Gevent 确实很讨人喜爱，性能好，开销小，代码易维护，是广大 pythoner 手中的一大利器。    </p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/14/flask-gevent使用实例/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/14/flask-gevent使用实例/" itemprop="url">flask+gevent使用实例</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-14T18:59:51+08:00">
-                2018-03-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/web/" itemprop="url" rel="index">
-                    <span itemprop="name">web</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/03/14/flask-gevent使用实例/" class="leancloud_visitors" data-flag-title="flask+gevent使用实例">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  229
+                  194
                 </span>
               
 
@@ -1015,253 +410,22 @@ gevent.joinall(jobs)
       
         
           
-            <pre><code>&quot;&quot;&quot;Asynchronous requests in Flask with gevent&quot;&quot;&quot;
-
-from time import time
-
-from flask import Flask, Response
-
-from gevent.pywsgi import WSGIServer
-from gevent import monkey
-
-import requests
-
-# need to patch sockets to make requests async
-monkey.patch_all()
-
-CHUNK_SIZE = 1024*1024  # bytes
-
-app = Flask(__name__)  # pylint: disable=invalid-name
-app.debug = True
-
-
-@app.route(&apos;/Seattle.jpg&apos;)
-def seattle(requests_counter=[0]):  # pylint: disable=dangerous-default-value
-    &quot;&quot;&quot;Asynchronous non-blocking streaming of relatively large (14.5MB) JPG
-    of Seattle from wikimedia commons.
-    &quot;&quot;&quot;
-    requests_counter[0] += 1
-    request_num = requests_counter[0]
-    url = &apos;http://upload.wikimedia.org/wikipedia/commons/3/39/Seattle_3.jpg&apos;
-
-    app.logger.debug(&apos;started %d&apos;, request_num)
-
-    rsp = requests.get(url, stream=True)
-
-    def generator():
-        &quot;streaming generator logging the end of request processing&quot;
-        yield &apos;&apos;  # to make greenlet switch
-        for data in rsp.iter_content(CHUNK_SIZE):
-            yield data
-        app.logger.debug(&apos;finished %d&apos;, request_num)
-
-    return Response(generator(), mimetype=&apos;image/jpeg&apos;)
-
-
-def main():
-    &quot;Start gevent WSGI server&quot;
-    # use gevent WSGI server instead of the Flask
-    http = WSGIServer((&apos;&apos;, 5000), app.wsgi_app)
-    # TODO gracefully handle shutdown
-    http.serve_forever()
-
-
-if __name__ == &apos;__main__&apos;:
-    main()
-</code></pre><p>使用测试：</p>
-<pre><code>pip install flask gevent requests
-
-python async_flask.py &amp; siege -c 1000 -t 5s http://127.0.0.1:5000/Seattle.jpg    
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/13/python当中的并发/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/13/python当中的并发/" itemprop="url">python当中的并发</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-13T23:19:15+08:00">
-                2018-03-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/03/13/python当中的并发/" class="leancloud_visitors" data-flag-title="python当中的并发">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  361
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>并发的表现形式，并行处理是软件工程领域最广泛的话题之一。</p>
-<p>两个事件互不影响，则两个事件是并发的。<br>CPython的线程实现中带有一些麻烦的细节，使得实用性降低了。</p>
-<p>GIL 只是强制在任何时候只有一个线程可以执行python代码</p>
-<p>多线程可以使用的场景：</p>
+            <p>普通大众对数据科学家的概念认识往往十分肤浅，特征其实在于一系列独有的特点、气质、思维方式、抱负。</p>
+<p>健康的好奇心必须伴随着自律，这样才能更脚踏实地。长期的兴趣比短暂、冲动或肤浅的好奇更加务实，会自然地被他所观察到的数据现象所吸引，并想要触及它们的全部。</p>
 <ul>
-<li>构建响应式界面</li>
-<li>委派工作</li>
-<li>构建多用户应用程序</li>
+<li>适应性（Adaptability）</li>
+<li>团队合作（teamwork）</li>
+<li>变通(Flexibility)</li>
+<li>研究(Research)</li>
+<li>关注细节（Attention to Detail）</li>
+<li>汇报（Reporting）</li>
 </ul>
-<p>如何让用户控制使用哪个处理后端（进程或者线程）</p>
-<pre><code>from multiprocessing import Pool as ProcessPool
-from multiprocessing.dummpy import Pool as ThreadPool
-
-
-def main(use_threads=False):
-    if use_threads:
-        pool_cls = ThreadPool
-    else:
-        pool_cls = ProcessPool
-
-    with pool_cls(4) as p:
-        results = p.map(fetch_place, PLACES)
-
-    for result in results:
-        present_result(result)
-</code></pre><h2 id="异步编程"><a href="#异步编程" class="headerlink" title="异步编程"></a>异步编程</h2><p>异步编程的解决方案，如twisted tornado eventlet,真的值得了解</p>
-<p>协同多任务是异步编程的核心。每个进程都在空闲时自动释放控制以允许同时执行多个程序。</p>
-<p>gevent 的工作方式，gevent 的作用一条线程跑多个协程，适合多 IO 操作。</p>
-<p>需要强调的是引入 gevent 不会加快获取数据的速度，例如，原来是 30ms，引入之后不会变少，只会变多，那么引入的好处是什么？原来你能在1秒之内接待33个客户端请求，引入之后可能可以接待100个/s，也可能接待 300个/s，这才是 gevent 的好处。</p>
+<h3 id="思维"><a href="#思维" class="headerlink" title="思维"></a>思维</h3><p>综合式和跃进式</p>
+<ul>
+<li>掌握大数据的众多层面</li>
+<li>持续学习新知</li>
+<li>让自己熟悉大数据世界中的各种开放性问题与挑战，以及存在的各种机会</li>
+</ul>
 
           
         
@@ -1310,7 +474,7 @@ def main(use_threads=False):
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/13/flask-and-gevent/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/08/16/how-to-be-a-data-scientist-03/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -1329,7 +493,7 @@ def main(use_threads=False):
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/13/flask-and-gevent/" itemprop="url">flask and gevent</a></h1>
+                <a class="post-title-link" href="/2018/08/16/how-to-be-a-data-scientist-03/" itemprop="url">how to be a data scientist 03</a></h1>
         
 
         <div class="post-meta">
@@ -1341,8 +505,8 @@ def main(use_threads=False):
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-13T18:29:27+08:00">
-                2018-03-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-16T09:29:13+08:00">
+                2018-08-16
               </time>
             
 
@@ -1364,8 +528,8 @@ def main(use_threads=False):
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/web/" itemprop="url" rel="index">
-                    <span itemprop="name">web</span>
+                  <a href="/categories/data-science/" itemprop="url" rel="index">
+                    <span itemprop="name">data science</span>
                   </a>
                 </span>
 
@@ -1381,7 +545,7 @@ def main(use_threads=False):
 
           
           
-             <span id="/2018/03/13/flask-and-gevent/" class="leancloud_visitors" data-flag-title="flask and gevent">
+             <span id="/2018/08/16/how-to-be-a-data-scientist-03/" class="leancloud_visitors" data-flag-title="how to be a data scientist 03">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1406,7 +570,7 @@ def main(use_threads=False):
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  359
+                  429
                 </span>
               
 
@@ -1445,25 +609,605 @@ def main(use_threads=False):
       
         
           
-            <h3 id="异步-WEB-架构的特点："><a href="#异步-WEB-架构的特点：" class="headerlink" title="异步 WEB 架构的特点："></a>异步 WEB 架构的特点：</h3><p>gevent 为 Python 提供了比较完善的协程支持，其基于 greenlet 实现协程。</p>
-<p>当 greenlet 遇到如网络访问、磁盘 IO 等操作时，就将自动切换至其他的 greenlet，待操作完成后，在适合的时间点回切 greenlet 继续执行。由于网络访问、磁盘 IO 等操作耗时较长，且实际 CPU 使用率较低（大部分工作由 DMA 等设备完成）。所以倘若非异步，涉及以上操作并发将以顺序执行， CPU 长期处于空闲状态。而异步模式将能实现并发程序间的切换，从而保证 CPU 有较高的利用率，而不是等待如网络访问、磁盘 IO 等操作。 </p>
-<p><em>注意：gevent 的使用并不能减少实际 CPU 的使用量，所以若程序的执行过程消耗的全为 CPU 资源，则其异步也是毫无意义的。</em></p>
-<h3 id="Flask-gevent-的最小程序实例："><a href="#Flask-gevent-的最小程序实例：" class="headerlink" title="Flask+gevent 的最小程序实例："></a>Flask+gevent 的最小程序实例：</h3><p>最小程序实例如下。</p>
-<pre><code>from gevent import monkey
-monkey.patch_all()
-from flask import Flask
-from gevent import pywsgi
+            <p>世界上没有两片相同的雪花，世界上也没有两个数据科学家拥有相同的技能和工作。大数据的工作包含许多问题，这也创造出许多天生就不一样的数据科学家分工。</p>
+<ul>
+<li>数据开发者</li>
+<li>数据研究者</li>
+<li>数据创意师</li>
+<li>数据商务人士</li>
+<li>混合/普适类型</li>
+</ul>
+<ul>
+<li>数据开发者是编程专家，但他们可能缺少数据科学家的其他几部分的技能，通常来自于IT行业。</li>
+<li>数据研究者是数据分析的专家，同时他们也能处理机器学习以及其他领域的最新技术。他们通常拥有博士学位，而且正在或曾经从事着学术研究。</li>
+<li>数据创意师相比于前两个类型的数据科学家显得更为全面，偏爱于使用开源软件，而且多才多艺。他们来自于各行各业，尽管通常来说，他们已经是数据科学家了。</li>
+<li>数据商务人士（即高级数据科学家）是数据科学家的最高等级，同时常常担任管理角色，相较于数据科学本身，他们更多地接近于商务世界。通常他们具有包括管理学学位在内的多重背景。</li>
+<li>混合/普适类型的数据科学家是最为平衡的，同时或多或少地培养了数据科学所需的各个方面。他们多面发展，具有各个类型的背景，但在经验的广度上，都亚于数据商务人士。通常，混合/普适的数据科学家会晋升为数据商务人士。</li>
+</ul>
 
-app = Flask(__name__)
+          
+        
+      
+    </div>
+    
+    
+    
 
-@app.route(&apos;/&apos;)
-def index():
-    return &apos;Hello World&apos;
+    
 
-server = pywsgi.WSGIServer((&apos;127.0.0.1&apos;, 5000), app)
-server.serve_forever()
-</code></pre><p>注意：为实现 Flask 与 gevent 的结合，需在程序开头引入 monkey patch。monkey patch 将以闭包的形式修改可以实现异步的标准库，从而实现异步。</p>
-<p>注意：需使用支持 gevent 的 WSGI，例如：gevent.pywsgi、gunicorn 等。</p>
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/08/15/how-to-be-a-data-scientist-02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/15/how-to-be-a-data-scientist-02/" itemprop="url">how to be a data scientist 02</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-15T21:16:26+08:00">
+                2018-08-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/data-science/" itemprop="url" rel="index">
+                    <span itemprop="name">data science</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/08/15/how-to-be-a-data-scientist-02/" class="leancloud_visitors" data-flag-title="how to be a data scientist 02">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  474
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>数据科学这一术语的流行要早于大数据的出现，1962年 当john W. Tukey 写了《数据分析的未来》，他遇见了数据分析的新方法的崛起相比于方法论来说更像是一门科学。</p>
+<p>2009年 朱扬勇与熊赟 两位重点实验室的研究员在数据学导论中提到 数据科学是一门新的科学，明显地不同于自然科学与社会科学。09年一月 Hal Varian（谷歌首席经济学家）提出，在接下来的十年，统计学家（当别人并不熟悉数据学时，也会被用来指数据科学家）将会是一个迷人的职业。09年六月， Nathan yau的文章《数据科学家的崛起》被刊载于 flowing data，数据科学家开始被大众所知。</p>
+<p>大规模数据程序语言 比如 r pig ecl 的开发就是为了解决大数据问题，同时它们与hadoop 环境可以很好地融合。</p>
+<p>新的替代性数据库结构包括 哈希表（jboss 数据网格、riak） B-树（mongodb、couchdb） 日志结构的合并树（Hbase cassandra）</p>
+<p>在数据库内读写数据的方式是比较灵活弹性的，每一种类型都有它们适于 不适于的范畴。</p>
+<p>举例来说，如果你有一个由上百万行列记录的大型数据库（如大型的数据仓库），要在这样的数据库中找到某一列中的最大值可能会超过很多人愿意等待的时间。同样的查询在列式数据库中（如HBase）用不了1秒。</p>
+<p>聪明的工具、方法论和运用方法，查阅现有文档，并与熟悉亟待解决问题的不同领域的人士建立联系，把问题分解成可以被处理的小问题来逐渐解决。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/08/15/how-to-be-a-data-scientist-01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/15/how-to-be-a-data-scientist-01/" itemprop="url">how to be a data scientist 01</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-15T18:17:45+08:00">
+                2018-08-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/data-science/" itemprop="url" rel="index">
+                    <span itemprop="name">data science</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/08/15/how-to-be-a-data-scientist-01/" class="leancloud_visitors" data-flag-title="how to be a data scientist 01">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  953
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="如何成为一名数据科学家"><a href="#如何成为一名数据科学家" class="headerlink" title="如何成为一名数据科学家"></a>如何成为一名数据科学家</h2><p>我们今天面临着诸多来自大数据和其他数据分析带来的困难，而数据科学正是对这些挑战的回应。</p>
+<p>大数据是当今商业的基础资产，大数据与大数据相关的技术能够得到这么广泛地利用绝对不是巧合，现今诸多行业要么正在使用大数据，要么准备去使用大数据，尽管炒作得非常厉害，但是并不是昙花一现。对这些资源善加利用会带来诸多优势，而目前这种资源的日益丰富也是值得关注的信号，不仅要用，而且要快！在某些行业里，大数据目前还不能带来价值，因为这些行业的数据目前还是非常混乱的，属于“脏”数据。如何将这些数据进行清洗，并善加利用，这就是数据治理存在的意义。</p>
+<p>大数据具有四个特性：</p>
+<ul>
+<li><p>体量</p>
+</li>
+<li><p>高速</p>
+</li>
+<li>多样</li>
+<li>准确</li>
+</ul>
+<p>数据量非常大 并伴随着更快的增长趋势，</p>
+<p>由于访问者来来去去以及不断有新的访问者加入，数据会持续流动</p>
+<p>数据肯定是多种多样的</p>
+<p>很自然，数据并不都是值得信任的</p>
+<p>很自然地，并不是所有的行业都会被大数据运动施以相同的影响。基于这些公司在多大程度上依赖他们的数据以及数据会给予他们多大程度上的回报，他们可能视大数据为一座金矿，或者一项可有可无的投资。根据最近的统计，下面一些行业已经从中受益，或资产中的大部分即将受益于大数据：</p>
+<ol>
+<li>零售业（特别是在提高生产力方面）</li>
+<li>电信业（特别是在提高收益方面）</li>
+<li>咨询业</li>
+<li>医疗护理</li>
+<li>航空运输</li>
+<li>建筑业</li>
+<li>食品加工</li>
+<li>钢铁以及广义上的制造业</li>
+<li>工业设备</li>
+<li>汽车产业</li>
+<li>客户关怀</li>
+<li>金融服务</li>
+<li>出版业</li>
+<li>物流行业</li>
+</ol>
+<p>因此需要的是把表面上看起来混乱的数据变成有效的（可操作的）数据科学家</p>
+<h3 id="数据科学家"><a href="#数据科学家" class="headerlink" title="数据科学家"></a>数据科学家</h3><p>第一次在正式会议中吸引关注是1996年在IFCS发表的《数据科学、分类以及相关方法》（Data Science，Classification and Related Methods）。直到2005年，“数据科学家”这个名称才第一次出现在文章中。特别是，在文章发表的那年，数据科学家被定义为“信息和数据科学家、数据库及软件工程师以及程序员、学科专家、博物馆馆长和专业注解者、图书馆管理员、档案管理员以及其他一些对成功管理数字化数据集的关键人物”。在2009年6月，数据科学家这一职务的重要性变得更加明显，正如Nathan Yau在FlowingData发表的文章《数据科学家的崛起》（Rise of the Data Scientist）一文中说的那样。自此，在数据科学方面的文章和引用得以快速增长。看看现在有多少会议是以这个名义组织的，这不只发生在学术界，同样也发生在工业界。不仅如此，由于许多在各自领域处于领导者的大公司（如亚马逊）都在各自的工作流程中使用了数据科学，这个趋势很可能会持续下去。同样，由于数据科学家这个职位适合于千变万化的数据世界需求，它也正变得包含许多新特征（如前沿数据分析技术的应用），而不再是一些原始需求了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/08/15/tensorflow-new/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/15/tensorflow-new/" itemprop="url">tensorflow-new</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-15T08:12:18+08:00">
+                2018-08-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/08/15/tensorflow-new/" class="leancloud_visitors" data-flag-title="tensorflow-new">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  234
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>如果你在研究深度学习或者是你的dataset非常庞大，那么tensorflow应该成为你最佳的机器模型选择。</p>
+<p>目前已经广泛被用于发现新的行星、帮助医生筛查糖尿病患者等。开源、out of the box(开箱即用)</p>
+<p>新工具 tf eager execution 可以像纯粹的python编程一样愉快地与代码进行交互，代码可以即时执行和逐行调试</p>
+<p>keras + tf 更简单的神经网络</p>
+<p>不仅仅是python 目前已经支持r swift js…</p>
+<ul>
+<li><p>在浏览器中完成一切 实时人体姿态估计 [地址] (<a href="https://storage.googleaois.com/tfjs-models/demos/posenet/camera.html" target="_blank" rel="external">https://storage.googleaois.com/tfjs-models/demos/posenet/camera.html</a>)</p>
+</li>
+<li><p>lite  for 小型设备</p>
+</li>
+<li><p>专业的硬件 cloud tpu</p>
+</li>
+<li><p>tf.data 为你提供了快速灵活易于使用的处理流水线</p>
+</li>
+<li>tf hub 调用他人的代码为自己所用 可重用的预训练机器学习模型组件的存储库</li>
+</ul>
 
           
         
@@ -1503,7 +1247,7 @@ server.serve_forever()
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/48/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/48/">48</a><span class="page-number current">49</span><a class="page-number" href="/page/50/">50</a><span class="space">&hellip;</span><a class="page-number" href="/page/66/">66</a><a class="extend next" rel="next" href="/page/50/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/48/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/48/">48</a><span class="page-number current">49</span><a class="page-number" href="/page/50/">50</a><span class="space">&hellip;</span><a class="page-number" href="/page/74/">74</a><a class="extend next" rel="next" href="/page/50/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1553,7 +1297,7 @@ server.serve_forever()
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">330</span>
+                  <span class="site-state-item-count">369</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1668,7 +1412,7 @@ server.serve_forever()
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共148k字</span>
+  <span class="post-count">博客全站共148.6k字</span>
 </div>
 
         

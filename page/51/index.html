@@ -275,7 +275,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/03/normal-library/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/08/13/why-python3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -294,7 +294,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/03/normal-library/" itemprop="url">normal-library</a></h1>
+                <a class="post-title-link" href="/2018/08/13/why-python3/" itemprop="url">why-python3</a></h1>
         
 
         <div class="post-meta">
@@ -306,8 +306,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-03T08:14:00+08:00">
-                2018-03-03
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-13T10:10:31+08:00">
+                2018-08-13
               </time>
             
 
@@ -324,656 +324,7 @@
 
           
           
-             <span id="/2018/03/03/normal-library/" class="leancloud_visitors" data-flag-title="normal-library">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.4k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  5
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ol>
-<li><p>我做运维的时候，使用Python完成了一些打包和备份的脚本，也就是把某个目录压缩成各种格式（tar.gz、tar.bz2、zip）。 这个脚本其实打包压缩的部分还是比较复杂的。直到我看到了这个：</p>
-<p> In : from shutil import make_archive<br> In : make_archive(‘archive_xxx’, ‘bztar’)<br> Out: ‘archive_xxx.tar.bz2’  </p>
-</li>
-</ol>
-<p>有兴趣的可以翻一下源码。你想要的说不定标准库里面已经实现。当然，有标准库不满足的额外需求，也可以参照它实现。</p>
-<ol>
-<li><p>你可能接触过定时任务（crontab），它管理的任务很规矩，到点执行（当然精确度不那么高）。现在设想你有更复杂的任务需求：这个任务是动态的，也就是不一定啥时候就来排上队约定一个事件等着执行。这时候你可以想，这可以使用队列（Queue模块）啊，嗯也不错。难度再提高：加上优先级策略并能取消某个指定的已经放入队列的任务。现在思考下，这个怎么实现？其实很多工程实践的最好范例都在标准库中。sched模块中的scheduler类就是一个这样的通用的事件调度类。你可以学习它的实现。你问我它的实现多复杂？整个模块加上大幅的注释才134行。</p>
-</li>
-<li><p>学习Python的过程中，一开始我对于装饰器contextmanager+yield怎么都不懂。直到我看了contextmanager的源代码, 其实非常简单就懂了。它的docstring清楚地不能再清楚了：</p>
-</li>
-</ol>
-<pre><code class="python">
-Typical usage:                                                                               
-
-<span class="meta">@contextmanager                                                                          </span>
-<span class="function"><span class="keyword">def</span> <span class="title">some_generator</span><span class="params">(&lt;arguments&gt;)</span>:</span>                                                         
-    &lt;setup&gt;                                                                              
-    <span class="keyword">try</span>:                                                                                 
-        <span class="keyword">yield</span> &lt;value&gt;                                                                    
-    <span class="keyword">finally</span>:                                                                             
-        &lt;cleanup&gt;                                                                        
-
-This makes this:                                                                             
-
-<span class="keyword">with</span> some_generator(&lt;arguments&gt;) <span class="keyword">as</span> &lt;variable&gt;:                                          
-    &lt;body&gt;                                                                               
-
-equivalent to this:                                                                          
-
-&lt;setup&gt;                                                                                  
-<span class="keyword">try</span>:                                                                                     
-    &lt;variable&gt; = &lt;value&gt;                                                                 
-    &lt;body&gt;                                                                               
-<span class="keyword">finally</span>:                                                                                 
-&lt;cleanup&gt;
-</code></pre>
-<ol>
-<li>我之前使用多线程编程都这样用，在好长一段时间里面对于多进程和多线程之前怎么选择都搞得不清楚。看多了开源项目代码，我发现了好多人在用multiprocessing.dummy这个子模块，「dummy」这个词本身好奇怪，我决定去看多进程（multiprocessing）库的代码。「咦！怎么和多线程的接口一样呢」。后知后觉的我看到文档中这样说：</li>
-</ol>
-<p>multiprocessing.dummy replicates the API of multiprocessing but is no more than a wrapper around the threading module.<br>恍然大悟！！！如果分不清任务是CPU密集型还是IO密集型，我就用如下2个方法分别试：</p>
-<p>from multiprocessing import Pool<br>from multiprocessing.dummy import Pool<br>哪个速度快就用那个。从此以后我都尽量在写兼容的方式，这样在多线程/多进程之间切换非常方便。</p>
-<ol>
-<li>13-14年间，Flask还没怎么火，那时候装饰器风格的Web框架还有一个Bottle。我当时就直接想去看Bottle代码，发现一上来import了一堆模块，你先感受下bottle/bottle.py at master · bottlepy/bottle · GitHub ，第一感觉就是懵啊，这都是干什么的啊，为什么要用啊？这就是促使我去看标准库实现最重要的原因：学会了我才能更好的看懂别人写的代码。</li>
-</ol>
-<p>但是不是所有的标准库都要一视同仁的看呢？你可以设置优先级，先看那些不可不知道的模块。我在这里列一下，并对它的用途和其中重要的类、函数的作用加以说明等。要是每个都写例子实在太多太密集，怕大家看不下去，我都用外部链接了。</p>
-<ol>
-<li>argparse。 用来替代optparse的命令行解析库。如果你考虑用更直观的，推荐docopt，它使用docstring所见即所得实现命令行解析。</li>
-<li>collections。 包含了一些额外的数据类型。其中的OrderedDict（有序列的字典）、defaultdict（带有默认值的字典）、namedtuple（通过创建带有字段属性的元组子类）和deque（高效实现插入和删除操作的双向列表）非常常用。</li>
-<li>functools。 这个模块有一些非常有用的工具，其中的partial（偏函数）、wraps（将被包装函数的信息拷贝过来）、total_ordering（只需要定义2个<strong>XX</strong>方法就可实现对象对比的类装饰器）、cmp_to_key（将老式的比较函数转化为关键字函数）非常常用。</li>
-<li>glob。 文件名的shell模式匹配，你不用遍历整个目录判断每个文件是不是符合，使用glob一句话就解决。</li>
-<li>multiprocessing。多进程模块，这重要性就不说了。</li>
-<li><p>os。应该是日常工作最常用的模块了，你是否了解它里面所有的函数和实现呢？举个例子，获取环境变量，我之前这样用：<br>In : os.environ.get(‘PYTHONPATH’)<br>读完源码之后我学了一招：<br>os.getenv(‘PYTHONPATH’)<br>好吧，省了5个字符。</p>
-</li>
-<li><p>Queue。这个模块用于多线程编程，它是一个线程安全的FIFO（先进先出）的队列实现。如果是多进程编程，选用multiprocessing.queues中的Queue、SimpleQueue、JoinableQueue这三个队列实现。 </p>
-</li>
-<li><p>SimpleHTTPServer。最简单地HTTP Server实现。不使用Web框架，一句：</p>
-<pre><code>python -m SimpleHTTPServer PORT
-</code></pre><p> 就可以运行起来静态服务。平时用它预览和下载文件太方便了。</p>
-</li>
-<li><p>subprocess。 如果你还被某些书籍引导使用os.system或者os.popen等模块，现在是放弃它们的时候了，这个模块会满足你绝大多数的系统命令执行、执行结果获取和解析等需求。其中最有用的是call（执行系统命令）、check_call（执行结果不为0则抛出异常）、check_output（最方便的获取执行的输出的函数）、Popen+PIPE（支持管道的多命令执行）。</p>
-</li>
-<li><p>threading。多线程模块，重要性也不必说。</p>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/03/python-fp/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/03/python-fp/" itemprop="url">python-fp</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-03T08:01:38+08:00">
-                2018-03-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/03/03/python-fp/" class="leancloud_visitors" data-flag-title="python-fp">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  660
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  2
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h2><p>函数式编程源自于数学理论，它似乎也更适用于数学计算相关的场景，因此本文以一个简单的数据处理问题为例，逐步介绍 Python 函数式编程从入门到走火入魔的过程。</p>
-<pre><code>问题：计算 N 位同学在某份试卷的 M 道选择题上的得分（每道题目的分值不同）。
-</code></pre><p>首先来生成一组用于计算的伪造数据：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># @file: data.py</span></span><br><span class="line"><span class="keyword">import</span> random  </span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> namedtuple</span><br><span class="line"> </span><br><span class="line">Student = namedtuple(<span class="string">'Student'</span>, [<span class="string">'id'</span>, <span class="string">'ans'</span>])</span><br><span class="line"> </span><br><span class="line">N_Questions = <span class="number">25</span>  </span><br><span class="line">N_Students = <span class="number">20</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gen_random_list</span><span class="params">(opts, n)</span>:</span>  </span><br><span class="line">    <span class="keyword">return</span> [random.choice(opts) <span class="keyword">for</span> i <span class="keyword">in</span> range(n)]</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 问题答案 'ABCD' 随机</span></span><br><span class="line">ANS   = gen_random_list(<span class="string">'ABCD'</span>, N_Questions)  </span><br><span class="line"><span class="comment"># 题目分值 1~5 分</span></span><br><span class="line">SCORE = gen_random_list(range(<span class="number">1</span>,<span class="number">6</span>), N_Questions)</span><br><span class="line"> </span><br><span class="line">QUIZE = zip(ANS, SCORE)  </span><br><span class="line">students = [  </span><br><span class="line">    <span class="comment"># 学生答案为 'ABCD*' 随机，'*' 代表未作答</span></span><br><span class="line">    Student(_id, gen_random_list(<span class="string">'ABCD*'</span>, N_Questions))</span><br><span class="line">    <span class="keyword">for</span> _id <span class="keyword">in</span> range(<span class="number">1</span>, N_Students+<span class="number">1</span>)</span><br><span class="line">]</span><br><span class="line"> </span><br><span class="line">print(QUIZE)  </span><br><span class="line"><span class="comment"># [('A', 3), ('B', 1), ('D', 1), ...</span></span><br><span class="line">print(students)  </span><br><span class="line"><span class="comment"># [Student(id=1, ans=['C', 'B', 'A', ...</span></span><br><span class="line"></span><br><span class="line">```	</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">常规的面向过程编程风格，我们需要遍历每个学生，然后遍历每个学生对每道题目的答案并与真实答案进行比较，然后将正确答案的分数累计：</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">```python</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> data  </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">normal</span><span class="params">(students, quize)</span>:</span>  </span><br><span class="line">    <span class="keyword">for</span> student <span class="keyword">in</span> students:</span><br><span class="line">        sid = student.id</span><br><span class="line">        score = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(quize)):</span><br><span class="line">            <span class="keyword">if</span> quize[i][<span class="number">0</span>] == student.ans[i]:</span><br><span class="line">                score += quize[i][<span class="number">1</span>]</span><br><span class="line">        print(sid, <span class="string">'\t'</span>, score)</span><br><span class="line"> </span><br><span class="line">print(<span class="string">'ID\tScore\n=================='</span>)  </span><br><span class="line">normal(data.students, data.quize)  </span><br><span class="line"><span class="string">"""</span><br><span class="line">ID    Score  </span><br><span class="line">==================</span><br><span class="line">1      5  </span><br><span class="line">2      12  </span><br><span class="line">...</span><br><span class="line">"""</span></span><br></pre></td></tr></table></figure>
-<p>通过创建嵌套两个 for 循环来遍历所有题目答案的判断和评分，这完全是为计算机服务的思路，虽然说 Python 中的 for 循环已经比 C 语言更进了一步，通常不需要额外的状态变量来记录当前循环的次数，但有时候也不得不使用状态变量，如上例中第二个循环中比较两个列表的元素。函数式编程的一大特点就是<strong>尽量抛弃这种明显循环遍历的做法，而是把注意集中在解决问题本身</strong>，一如在现实中我们批改试卷时，只需要将两组答案并列进行比较即可：</p>
-<pre><code>from data import students, QUIZE
-
-student = students[0]
-
-# 将学生答案与正确答案合并到一起
-# 然后过滤出答案一致的题目
-filtered = filter(lambda x: x[0] == x[1][0], zip(student.ans, QUIZE))
-
-print(list(filtered))  
-# [(&apos;A&apos;, (&apos;A&apos;, 3)), (&apos;D&apos;, (&apos;D&apos;, 1)), ...]
-</code></pre><p>正确题目的分数进行累加：    </p>
-<pre><code>from functools import reduce
-
-reduced = reduce(lambda x, y: x + y[1][1], filtered, 0)  
-print(reduced)      
-</code></pre><p>接下来进行推广：</p>
-<pre><code>def cal(quize):  
-    def inner(student):
-        filtered = filter(lambda x: x[0] == x[1][0], zip(student.ans, quize))
-        reduced = reduce(lambda x, y: x + y[1][1], filtered, 0)
-        print(student.id, &apos;\t&apos;, reduced)
-    return inner
-map(cal(QUIZE), students)      
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/01/python-interview-0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/01/python-interview-0/" itemprop="url">python-interview-0</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-01T23:01:05+08:00">
-                2018-03-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/03/01/python-interview-0/" class="leancloud_visitors" data-flag-title="python-interview-0">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.5k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  5
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ol>
-<li><p>我从来不问google可获得的答案的问题， 只是问问面试者「在过去的工作中，遇到的Ta认为最有成就感的一件事情是什么」和「如果出现了一个google不到的问题，你会怎么解决」这样的问题。</p>
-</li>
-<li><p>我从来不问操作系统等和Python无关的话题，首先是我不怎么问和工作太无关的话题，有些东西用不到很多就被会遗忘，挑起来这种问题其实挺无聊；其次我是非计算机专业毕业，问的东西说不定我自己都没有把握，那就不出来献丑了。我只关注面试者的学习能力和解决问题的方式，说白了，是不是就是看他是不是「聪明的人」。</p>
-</li>
-<li><p>不问面试者的短处。我在自己被面试的时候有过这种精力，面试者问他擅长的内容，我不一定搞的定，如果反过来面试Ta，我也会灭掉Ta。所以我会尽力寻找面试者的优势和优点，尤其是对方已经明确承认。其实很多经验和能力，只是需要一个机会和环境，所以我不想放过任何一个合适的人。</p>
-</li>
-<li><p>面试者不会Python也没有关系。面试者的主动性和学习能力觉得更重要，如果他在其他领域能证明做的不错或者能让我感觉到这个一个未来有潜质成为优秀工程师的人，不会Python没有关系。 嗯目前看来，我没有看错过。</p>
-</li>
-<li><p>我从来不问Python语法这种看书和google就能学会的问题，我只想了解Ta是否愿意去学。举个例子，我会让面试者「讲讲日常开发中都用到了那些Python内置的模块」，原因在我的专栏「Python之美 - 知乎专栏」的 Python不能不知的模块 - Python之美 - 知乎专栏中有写，基本上说完我就能评估出他的能力和风格，继而就是再问一些问题去验证我的评估是不是准确。</p>
-</li>
-<li><p>最后，我一般都会和面试者细聊一个Ta认为在过去的工作或者自己开源的项目中最熟悉的一个，从项目设计、踩过的坑儿、开发周期以及如何安排、如何确定需求、如何和其他人协作等方面，最后评估下Ta是否能很容易的融入到我们现在的团队，大家是否可以接受Ta，对工作不负责的、没有用心工作的、没有团队意识的、沟通能力有缺陷的就放弃掉，对性格上容易发生冲突的、不适合团队合作的我就得考虑下，未来也会如实反馈给HR。</p>
-</li>
-</ol>
-<hr>
-<p>推荐几本书</p>
-<p>《python参考手册》，绝对让你更上一层楼</p>
-<p>《图解密码技术》，密码入门不二之选</p>
-<p>《mysql技术内幕》（第五版），有点厚当手册读读，要有耐心，《高性能mysql》也强烈建议读读</p>
-<p>《effective tcp/ip programming》</p>
-<p>如果是搞web的对操作系统这块和密码技术会偏弱，但如果是系统工程师或是游戏服务端这块会明显偏强。吃午饭的时候我就一直在想这个问题，我觉得重点不是Python而是后端工程师，因为Python只是系统的一部分，linux基础操作要熟吧，sql要懂吧，消息队列要知道吧，git要熟悉吧……木桶理论，每一环都不能落下，精通其中一两环就更好了。基础功扎实，新东西学得快，代码写得溜，命令敲得顺，bug解的好，妈妈再也不用担心我天天加班了~~~</p>
-<h4 id="一-语言"><a href="#一-语言" class="headerlink" title="一.语言"></a>一.语言</h4><p>1.推荐一本看过最好的python书籍？ 拉开话题好扯淡</p>
-<p>2.谈谈python的装饰器，迭代器，yield？ </p>
-<p>3.标准库线程安全的队列是哪一个？不安全的是哪一个？logging是线程安全的吗？ </p>
-<p>4.python适合的场景有哪些？当遇到计算密集型任务怎么办？ </p>
-<p>5.python高并发解决方案？我希望听到twisted-&gt;tornado-&gt;gevent，能扯到golang,erlang更好</p>
-<h4 id="二-操作系统"><a href="#二-操作系统" class="headerlink" title="二.操作系统"></a>二.操作系统</h4><p>可以直接认为是linux，毕竟搞后端的多数是和linux打交道。 </p>
-<p>1.tcp/udp的区别？tcp粘包是怎么回事，如何处理？udp有粘包吗？ </p>
-<p>2.time_wait是什么情况？出现过多的close_wait可能是什么原因？ </p>
-<p>3.epoll,select的区别？边缘触发，水平触发区别？</p>
-<h4 id="三-存储"><a href="#三-存储" class="headerlink" title="三.存储"></a>三.存储</h4><p>存储可能包含rdbms，nosql以及缓存等，我以mysql,redis举例 </p>
-<p><em>mysql相关</em></p>
-<p>1.谈谈mysql字符集和排序规则？ </p>
-<p>2.varchar与char的区别是什么？大小限制？utf8字符集下varchar最多能存多少个字符 </p>
-<p>3.primary key和unique的区别？ </p>
-<p>4.外键有什么用，是否该用外键？外键一定需要索引吗？ </p>
-<p>5.myisam与innodb的区别？innodb的两阶段锁定协议是什么情况？ </p>
-<p>6.索引有什么用，大致原理是什么？设计索引有什么注意点？ </p>
-<p><em>redis相关</em></p>
-<p>1.什么场景用redis，为什么mysql不适合？ </p>
-<p>2.谈谈redis的事务？用事务模拟原子+1操作？原子操作还有其它解决方案吗？ </p>
-<p>3.redis内存满了会怎么样？</p>
-<h4 id="四-安全"><a href="#四-安全" class="headerlink" title="四.安全"></a>四.安全</h4><p>web安全相关 </p>
-<p>1.sql注入是怎么产生的，如何防止？ </p>
-<p>2.xss如何预防？htmlescape后能否避免xss? </p>
-<p>3.csrf是什么？django是如何防范的？ </p>
-<p>密码技术 </p>
-<p>1.什么是分组加密？加密模式有哪些？ecb和cbc模式有什么区别？为什么需要iv向量？ </p>
-<p>2.简单说说https的过程？ </p>
-<p>3.对称加密与非对称加密区别？ </p>
-<p>4.如何生成共享秘钥？ 如何防范中间人攻击？</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/01/about-react/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/01/about-react/" itemprop="url">about-react</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-01T20:39:31+08:00">
-                2018-03-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/frontend/" itemprop="url" rel="index">
-                    <span itemprop="name">frontend</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/03/01/about-react/" class="leancloud_visitors" data-flag-title="about-react">
+             <span id="/2018/08/13/why-python3/" class="leancloud_visitors" data-flag-title="why-python3">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1037,33 +388,14 @@ map(cal(QUIZE), students)
       
         
           
-            <h2 id="react-的概述"><a href="#react-的概述" class="headerlink" title="react 的概述"></a>react 的概述</h2><h3 id="React-的设计哲学："><a href="#React-的设计哲学：" class="headerlink" title="React 的设计哲学："></a>React 的设计哲学：</h3><p>以“简单直观”、“符合习惯”的方式去编程，让代码更容易被理解，从而易于维护和不断演化。</p>
-<h3 id="React-的最大价值？"><a href="#React-的最大价值？" class="headerlink" title="React 的最大价值？"></a>React 的最大价值？</h3><p>1.高性能虚拟 DOM 【★★】<br>2.声明式的、直观的编程方式（别样的组件化、JSX也不是核心）【★】<br>3.封装过的事件机制<br>4.服务器端 Reader（忽略，不是核心，锦上添花）<br>5.完善的错误提示信息</p>
-<h3 id="React-的适用场景："><a href="#React-的适用场景：" class="headerlink" title="React 的适用场景："></a>React 的适用场景：</h3><p>适用于数据不断变化的大型应用程序，eg.聊天、评论等<br>会面临问题：如何将服务器端 or 用户输入的数据高效地反应到复杂的用户界面上</p>
-<h3 id="React-原理"><a href="#React-原理" class="headerlink" title="React 原理"></a>React 原理</h3><p>新的前端 UI 的构建方式：两层编程模型：数据模型、UI界面。数据模型驱动UI界面（从概念角度上看是直观的，而实际开发中困难重重）</p>
-<p>React 的初衷之一就是：既然整体刷新一定能解决层叠更新的问题，那我们为什么不索性就每次都这么做呢？让框架自身去解决哪些局部 UI 需要更新的问题-React做到了，实现的途径就是通过虚拟 DOM。</p>
-<p>UI界面是一颗 DOM 树。我们再在全局定义一个唯一的数据模型。每次数据模型有任何变化，都将整个数据模型应用到 UI DOM 树上（由 React 来负责更新需要更新的界面部分）。</p>
-<h3 id="虚拟-DOM"><a href="#虚拟-DOM" class="headerlink" title="虚拟 DOM"></a>虚拟 DOM</h3><p>将变化的数据实时反应到UI上，就要对 DOM 进行操作。复杂和频繁的 DOM 操作，通常是性能瓶颈产生的原因。</p>
-<p>虚拟DOM，是在浏览器端用 JS 实现了一套 DOM API。基于 React 的所有 DOM 构造都是通过虚拟 DOM 进行的。每当数据变化时，React 会重 新构建整个 DOM 树，并将当前的树和上一次的 DOM 树进行对比，得到 DOM 结构的区别。然后仅仅将需要变化的部分进行实际的浏览器 DOM 更新。且，React 能够批处理虚拟 DOM 的刷新，在一个事件循环内的两次数据变化会被合并。</p>
-<p>虽然，每次都要构造完整的虚拟 DOM 树，但因为它是内存数据，性能极高 【那会消耗多少内存呢？】对实际 DOM 的操作，仅仅是 Diff 部分，故能提高性能。（至于 React 如何做到将原来 O(n^3) 复杂度的 Diff 算法降低到 O（n），感兴趣的你可以再深入学习下）</p>
-<p>你永远只需要关心数据整体，两次数据之间的 UI 如何变化，则完全交给框架去做。开发逻辑没那么复杂了，开发难度降低，产生的bug几率也就更少。</p>
-<h3 id="简化的组件模型"><a href="#简化的组件模型" class="headerlink" title="简化的组件模型"></a>简化的组件模型</h3><p>所谓组件，就是状态机器。对组件的管理 就是对状态的管理。这么，React 很少要暴露组件方法和外部交互，只要设置状态即可，只需要考虑在某个状态下UI是怎样的。</p>
-<p>React 将用户界面看做简单的状态机器。当组件处于某个状态时，那就输出这个状态对应的界面，以保证界面的一致性。在 React 中，你只需要简单的更新某个组件的状态即可，然后基于新状态输出整个页面。由 React 负责以最高效的方式去比较两个界面并更新 DOM 树。</p>
-<p>组件是 React 中构建用户界面的基本单位。与外界的交互除了 state（状态）之外，还有 props（属性）。事实上，state 更多由组件内部自己维护，props 则由外部初始化该组件时传递进来（一般是组件需要管理的数据）。React 认为，props 应该是只读的（一旦赋值过去就不要变化了）。</p>
-<p>虚拟化DOM，不仅简化了UI逻辑，也内含了组件化开发思想。组件，即封装起来的具有独立功能的UI部件。将UI上每一个功能相对独立的模块定义成组件，然后将小的组件通过组合 or 嵌套构成大的组件，最终完成整体UI的构建。</p>
-<p>MVC：开发者将三者定义成不同的类，实现了表现、数据、控制的分离（从技术角度拆分UI实现松耦合）<br>React：新的思路，开发者从功能的角度出发，将UI拆成不同的组件。每个组件都独立封装。即按照界面模块自然划分的方式来组织和编写你的代码。</p>
-<p>每个组件的UI和逻辑都定义在它们内部，高度自治。和外部完全通过API来交互，通过组合来实现复杂功能。</p>
-<p>React 认为，一个组件应该具备以下特征： </p>
-<ul>
-<li><p>可组合 Composeable：接口  </p>
-</li>
-<li><p>可重用 Reusable：独立</p>
-</li>
-<li><p>可维护 Maintainable：各个组件仅包含自身的逻辑，更容易被理解和维护</p>
-</li>
-<li><p>可测试 Testable</p>
-</li>
-</ul>
+            <p>Python的一个重要设计目标是让程序简单、清晰和优雅，坚持一套整齐划一的设计风格。Python程序具有易写、易读、易维护的特点，受到广大程序员欢迎。这些特质也是导致Python的使用越来越广泛的原因。21世纪以来，Python已发展为世界上最受欢迎的编程语言之一，其使用非常广泛。国际上一些公司做过（或一直在做）各种编程语言使用情况的调查，统计结果中Python都位于前四五名之内。它还被TIOBE编程语言排行榜（最有影响力的语言排行榜之一）评为2010年的年度语言。</p>
+<p>Python被广泛认为是一种容易入门的语言。实际上，Python语言机制的跨度比较大，从完成最简单计算的表达式开始，一直延伸到许多当前最先进的编程概念，如面向对象的程序设计、数据抽象、迭代器、异步编程等。这些情况有利于学习者在一个语言里逐步深入地学习许多编程概念和技术。Python用正文缩进形式表现程序的结构，具有较好的可读性。</p>
+<p>Python是一种比较高级的编程语言。除了最基本的编程机制外，它还提供了使用方便的数据功能，可以很方便地组织和管理大批数据。Python的所有编程机制和结构都围绕着<strong>对象</strong>的概念，程序里定义和操作的各种实体都是对象，不仅所有数据都是对象，函数和类等也是对象。它也能很好支持<strong>面向对象编程</strong>的理念和相关技术。</p>
+<p>由于其基本设计的一些特点，Python代码和部件比较容易重用，已开发的程序容易修改和扩充，有利于软件的升级改造，可以减轻软件开发者的工作负担，提高程序开发的效率。此外，Python语言的设计也为开发大规模软件系统提供了很好支持。这些是许多IT公司乐于选择和使用Python作为其主要开发语言的重要原因。</p>
+<p>在用Python开发程序时，可以采用交互式的执行方式，随时把代码发送给系统，立刻看到执行效果。这种方式使人更容易在编程中做各种试验，可以提高工作效率。一个Python程序文件（称为模块）的内容就是一系列简单或复杂的命令的序列。人们也把这样的语言称为<strong>脚本语言</strong>（script language），其程序就像一个工作脚本。</p>
+<p>实际上，Python并不是简单的脚本语言，而是一个能支持大规模软件开发的通用编程语言，其实现具有较高的执行效率。PSF的Python系统带有一个很大的标准库，提供了很多在实际开发中非常有用的功能。此外，全世界的开发者已经为Python开发了面向各种应用领域的大量专用程序包，例如面向图形用户界面的设计和编程，面向网络应用、数值计算、数据统计和处理、图形图像处理、可视化等。针对所有重要应用领域，都可以找到相关的程序包，大大方便了人们用Python开发领域应用软件和综合性软件的工作。</p>
+<p>Python语言和标准库的设计特别考虑了可扩充性，提供了丰富的接口和工具，使有经验的程序员比较容易使用其他语言，例如C、C++、CPython（一种专门用于扩充Python的C语言工具）等编写Python模块，然后能像Python标准库包一样方便地使用。这种情况也使一些大公司把Python用作高级的<strong>粘接语言</strong>（glue language），用一些较低级的语言实现一批性能要求较高的完成具体工作任务的模块，而后用Python实现整个系统的高层控制和调度。这样做，既能获得很好的开发效率，也有利于修改和扩充。</p>
+<p>Python基金会提供最新版本的Python语言系统和基本开发环境，任何人都可以免费获取。该系统可以在各种主流计算机和软件平台上运行，包含了丰富的标准程序库和完整文档。此外，也存在另外一些商业的或非商业的Python系统可供选择。经过多年使用，全世界的Python开发者和使用者已经形成了一个活跃的专业社群，活跃在世界各地（包括中国），探讨、交流学习和使用Python的经验。互联网有很多与Python有关的信息，有许多Python讨论组。这些都促进了Python语言的学习和传播。</p>
 
           
         
@@ -1112,7 +444,7 @@ map(cal(QUIZE), students)
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/02/28/about-flask/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/08/13/start-julia-01/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -1131,7 +463,7 @@ map(cal(QUIZE), students)
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/28/about-flask/" itemprop="url">about-flask</a></h1>
+                <a class="post-title-link" href="/2018/08/13/start-julia-01/" itemprop="url">start-julia-01</a></h1>
         
 
         <div class="post-meta">
@@ -1143,8 +475,8 @@ map(cal(QUIZE), students)
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-28T20:47:07+08:00">
-                2018-02-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-13T09:40:29+08:00">
+                2018-08-13
               </time>
             
 
@@ -1154,28 +486,6 @@ map(cal(QUIZE), students)
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/web/" itemprop="url" rel="index">
-                    <span itemprop="name">web</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -1183,7 +493,7 @@ map(cal(QUIZE), students)
 
           
           
-             <span id="/2018/02/28/about-flask/" class="leancloud_visitors" data-flag-title="about-flask">
+             <span id="/2018/08/13/start-julia-01/" class="leancloud_visitors" data-flag-title="start-julia-01">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1208,7 +518,7 @@ map(cal(QUIZE), students)
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.7k
+                  1.5k
                 </span>
               
 
@@ -1224,7 +534,7 @@ map(cal(QUIZE), students)
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  7
+                  5
                 </span>
               
             </div>
@@ -1247,153 +557,1044 @@ map(cal(QUIZE), students)
       
         
           
-            <p>谈一谈 flask</p>
-<p>从http 请求开始到响应</p>
-<p>前置技能 wsgi</p>
-<p>WSGI，全称 Web Server Gateway Interface，或者 Python Web Server Gateway Interface ，是为 Python 语言定义的 Web 服务器和 Web 应用程序或框架之间的一种简单而通用的接口。自从 WSGI 被开发出来以后，许多其它语言中也出现了类似接口。</p>
-<p>WSGI 的官方定义是，the Python Web Server Gateway Interface。从名字就可以看出来，这东西是一个Gateway，也就是网关。网关的作用就是在协议之间进行转换。</p>
-<p>WSGI 是作为 Web 服务器与 Web 应用程序或应用框架之间的一种低级别的接口，以提升可移植 Web 应用开发的共同点。WSGI 是基于现存的 CGI 标准而设计的。</p>
-<p>很多框架都自带了 WSGI server ，比如 Flask，webpy，Django、CherryPy等等。当然性能都不好，自带的 web server 更多的是测试用途，发布时则使用生产环境的 WSGI server或者是联合 nginx 做 uwsgi 。</p>
-<p>在网上搜过WSGI的人应该会看到一个图，左边是Server，右边是APP，中间有一个连接纽带是WSGI。</p>
-<p>不过，我看了源码以后的理解和这个有些不同，我个人觉得，实际上不应该单独写一个APP，因为，这个WSGI的使用方法实际上也是包含在APP里面的，最右端的app实际上应该指的是逻辑功能，包括URL和view function的对应关系。</p>
-<p>WSGI其实是作为一个接口，来接受Server传递过来的信息, 然后通过这个接口调用后台app里的view function进行响应。</p>
-<p><strong>起到一个接口的功能，前面对接服务器，后面对接app的具体功能</strong></p>
-<pre><code>def application(environ, start_response):               # 一个符合wsgi协议的应用程序写法应该接受2个参数
-    start_response(&apos;200 OK&apos;, [(&apos;Content-Type&apos;, &apos;text/html&apos;)])  # environ为http的相关信息，如请求头等 start_response则是响应信息
-    return [b&apos;&lt;h1&gt;Hello, web!&lt;/h1&gt;&apos;]        # return出来是响应内容
-</code></pre><p>但是，作为app本身，你就算启动了程序，你也没办法给application传递参数？</p>
-<p>所以，实际上，调用application和传递2个参数的动作，是服务器来进行的，比如Gunicorn.</p>
-<p>而这个叫做application的东西，在Flask框架内部的名字，叫做wsgi_app，请看下面章节的源码。</p>
-<pre><code>from flask import Flask  
+            <p>julia 入门学习</p>
+<p>1.打印 println</p>
+<p>2.字符串 $ 借鉴perl</p>
+<p>3.特点</p>
+<p>极其卓越的性能。Julia在很多数据分析任务以及其他编程实践中都表现出了令人难以置信的性能。它的表现可以和C语言媲美，C语言经常被用来作为衡量运算速度的标准。</p>
+<p>强大的基础库。Julia有一个强大的基础库，它不需要其他平台，就可以进行所有的线性代数运算，这些运算是数据分析模块的必备组件。</p>
+<p>支持多分派。Julia实现了多分派机制，这使它可以使用同一种函数实现不同的过程，使函数更容易扩展，并可以对不同类型的输入重复使用。</p>
+<p>容易上手。特别是对于那些从Python、R、Matlab或Octave迁移过来的使用者，学习Julia特别容易。</p>
+<p>用户友好的界面。不论是在本地还是云上，Julia的用户界面都非常友好，在所有的流程中，用户与Julia的交流都非常顺畅。Julia还对所有的功能和数据类型提供了方便易用的帮助文件。</p>
+<p>与其他语言无缝对接。这些语言包括（但不限于）R、Python和C。这使你不需要进行完整的迁移，就可以使用现有的代码库。</p>
+<p>开源。Julia以及它的所有文档与教程都是开源的，非常易于获取，详尽而又全面。</p>
+<p>开发者承诺。Julia的开发者承诺会一直加强这门语言的性能，并对使用者提供尽可能的帮助。他们提供了大量的讨论，组织年度会议，并提供咨询服务。</p>
+<p>自定义函数。Julia的自定义函数可以和内置在基础代码中的函数一样快速而简洁。</p>
+<p>并行能力。Julia具有强大的并行能力，这使得在多核计算机和集群上的部署非常容易。</p>
+<p>极大的灵活性。Julia在开发新程序方面极其灵活，不论是编程新手，还是专家级用户，Julia适合各种编程水平的使用者，这个特性在其他语言中是很难得的。</p>
+<ul>
+<li>变量</li>
+</ul>
+<p>变量名必须以字母（a-z 或 A-Z），下划线，或一个 Unicode 编码指针中指向比 00A0 更大的指针子集开始；特别是 Unicode 字符 Lu/Ll/Lt/Lm/Lo/Nl（字母），Sc/So （货币和其他符号），和其他一些可以看做字符的一些输入（例如 Sm 数学符号的子集）是允许的。首位之后的字符也包括 ！和数字（0-9 和其他字符 Nd/No ），以及其他 Unicode 编码指针：变音符号和其他修改标记（字母 Mn/Mc/Me/Sk），一些标点连接器（字母 PC），素数，和其他的一些字符。</p>
+<p>运算符类似 + 也是有效的标识符，但需要特别解析。在某些情况下，运算符可以像变量一样使用；例如 (+) 是指增加功能，和 (+) = f 将重新定义这个运算。大多数的 Unicode 中缀操作符（在 Sm 中），如 ⊕ ，会被解析为中缀操作符，同时可以自定义方法（例如，你可以使用 ⊗ = kron 定义 ⊕ 成为一个中缀 Kronecker 积）。</p>
+<p>尽管 Julia 对命名本身只有很少的限制, 但尽量遵循一定的命名规范吧：</p>
+<p>变量名使用小写字母</p>
+<p>单词间使用下划线 (‘_’) 分隔，但不鼓励</p>
+<p>类型名首字母大写, 单词间使用驼峰式分隔.</p>
+<p>函数名和宏名使用小写字母, 不使用下划线分隔单词.</p>
+<p>修改参数的函数结尾使用 ! . 这样的函数被称为 mutating functions 或 in-place functions</p>
+<ul>
+<li>字符串</li>
+</ul>
+<p>关于 Julia 字符串，有一些值得注意的高级特性：</p>
+<pre><code>String 是个抽象类型，不是具体类型
+Julia 的 Char 类型代表单字符，是由 32 位整数表示的 Unicode 码位
+与 Java 中一样，字符串不可更改：String 对象的值不能改变。要得到不同的字符串，需要构造新的字符串
+概念上，字符串是从索引值映射到字符的部分函数，对某些索引值，如果不是字符，会抛出异常
+Julia 支持全部 Unicode 字符: 文本字符通常都是 ASCII 或 UTF-8 的，但也支持其它编码
+</code></pre><p><strong>Julia 函数的参数遵循 “pass-by-sharing” 的惯例，即不传递值，而是传递引用。函数参数本身，有点儿像新变量绑定（引用值的新位置），但它们引用的值与传递的值完全相同。对可变值（如数组）的修改，会影响其它函数。</strong>    </p>
+<p>Julia 提供一系列控制流：</p>
+<pre><code>复合表达式 ： begin 和 (;)
+条件求值 ： if-elseif-else 和 ?: (ternary operator)
+短路求值 ： &amp;&amp;, || 和 chained comparisons
+重复求值: 循环 ： while 和 for
+异常处理 ： try-catch ， error 和 throw
+任务（也称为协程） ： yieldto
+</code></pre><h3 id="任务（也称为协程）"><a href="#任务（也称为协程）" class="headerlink" title="任务（也称为协程）"></a>任务（也称为协程）</h3><p>任务是一种允许计算灵活地挂起和恢复的控制流，有时也被称为对称协程、轻量级线程、协同多任务等。</p>
+<p>如果一个计算（比如运行一个函数）被设计为 Task，有可能因为切换到其它 Task 而被中断。原先的 Task 在以后恢复时，会从原先中断的地方继续工作。切换任务不需要任何空间，同时可以有任意数量的任务切换，而不需要考虑堆栈问题。任务切换与函数调用不同，可以按照任何顺序来进行。</p>
+<p>任务比较适合生产者-消费者模式，一个过程用来生产值，另一个用来消费值。消费者不能简单的调用生产者来得到值，因为两者的执行时间不一定协同。在任务中，两者则可以正常运行。</p>
+<p>Julia 提供了 produce 和 consume 函数来解决这个问题。生产者调用 produce 函数来生产值：    </p>
 
-app = Flask(__name__)         #生成app实例  
+          
+        
+      
+    </div>
+    
+    
+    
 
-@app.route(&apos;/&apos;)  
-def index():  
-        return &apos;Hello World&apos;  
-</code></pre><p>这样，一个flask app就生成了</p>
-<p>但是这里有一个概念必须要搞清楚，就是当你的gunicorn收到http请求，去调用app的时候，他实际上是用了Flask 的 <strong>call</strong>方法，这点非常重要！！！</p>
-<p>因为<strong>call</strong>方法怎么写，决定了你整个流程从哪里开始。</p>
-<p>flask类的<strong>call</strong>方法</p>
-<pre><code>class Flask(_PackageBoundObject):        #Flask类  
+    
 
-#中间省略一些代码  
+    
 
-    def __call__(self, environ, start_response):    #Flask实例的__call__方法  
-        &quot;&quot;&quot;Shortcut for :attr:`wsgi_app`.&quot;&quot;&quot;  
-        return self.wsgi_app(environ, start_response)  #注意他的return，他返回的时候，实际上是调用了wsgi_app这个功能      
-</code></pre><p>如此一来，我们便知道，当http请求从server发送过来的时候，他会启动<strong>call</strong>功能，最终实际是调用了wsgi_app功能并传入environ和start_response</p>
-<pre><code class="python">
-<span class="class"><span class="keyword">class</span> <span class="title">Flask</span><span class="params">(_PackageBoundObject)</span>:</span>  
+    
 
-<span class="comment">#中间省略一些代码  </span>
-                                <span class="comment">#请注意函数的说明，说得非常准确，这个wsgi_app是一个真正的WSGI应用  </span>
-    <span class="function"><span class="keyword">def</span> <span class="title">wsgi_app</span><span class="params">(self, environ, start_response)</span>:</span>    <span class="comment">#他扮演的是一个中间角色  </span>
-        <span class="string">"""The actual WSGI application.  This is not implemented in 
-        `__call__` so that middlewares can be applied without losing a 
-        reference to the class.  So instead of doing this:: 
+    <footer class="post-footer">
+      
 
-            app = MyMiddleware(app) 
+      
 
-        It's a better idea to do this instead:: 
+      
 
-            app.wsgi_app = MyMiddleware(app.wsgi_app) 
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
 
-        Then you still have the original application object around and 
-        can continue to call methods on it. 
 
-        :param environ: a WSGI environment 
-        :param start_response: a callable accepting a status code, 
-                               a list of headers and an optional 
-                               exception context to start the response 
-        """</span>  
-        ctx = self.request_context(environ)  
-        ctx.push()  
-        error = <span class="keyword">None</span>  
-        <span class="keyword">try</span>:  
-            <span class="keyword">try</span>:  
-                response = self.full_dispatch_request()    <span class="comment">#full_dispatch_request起到了预处理和错误处理以及分发请求的作用  </span>
-            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:  
-                error = e  
-                response = self.make_response(self.handle_exception(e))  <span class="comment">#如果有错误发生，则生成错误响应  </span>
-            <span class="keyword">return</span> response(environ, start_response)       <span class="comment">#如果没有错误发生，则正常响应请求，返回响应内容  </span>
-        <span class="keyword">finally</span>:  
-            <span class="keyword">if</span> self.should_ignore_error(error):  
-                error = <span class="keyword">None</span>  
-            ctx.auto_pop(error)
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/08/12/python-toolkit/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/12/python-toolkit/" itemprop="url">python-toolkit</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-12T22:31:29+08:00">
+                2018-08-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/08/12/python-toolkit/" class="leancloud_visitors" data-flag-title="python-toolkit">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  10
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>整理部分代码</p>
+<h1 id="python常见代码的归纳总结"><a href="#python常见代码的归纳总结" class="headerlink" title="python常见代码的归纳总结"></a>python常见代码的归纳总结</h1><p>判断文件或者文件夹是否存在</p>
+<pre><code>if(os.path.exists(rootdir) == False)
+</code></pre><p>创建文件夹</p>
+<pre><code>os.mkdir(rootdir)
+</code></pre><p>调用系统命令</p>
+<pre><code>os.system(cmd)
+</code></pre><p>字典循环</p>
+<pre><code>for key,value in dict.items()
+</code></pre><p>打开文件并读取内容进行处理</p>
+<pre><code>fd = open(&apos;xxxx.txt&apos;, encoding=&apos;utf-8&apos;)
+for line in fd:
+    print line
+fd.close()
+</code></pre><p>创建文件并写入内容</p>
+<pre><code>fd = open(&apos;xxxx.txt&apos;, &apos;a+&apos;, encoding=&apos;utf-8&apos;)
+fd.write(&apos;aaaaa&apos; + &apos;\n&apos;)
+fd.close()
+</code></pre><p>使用xlrd读取EXCEL</p>
+<p>导入</p>
+<pre><code>import xlrd
+</code></pre><p>打开excel</p>
+<pre><code>data = xlrd.open_workbook(&apos;demo.xls&apos;)     # 注意这里的workbook首字母是小写
+</code></pre><p>查看文件中包含sheet的名称</p>
+<pre><code>data.sheet_names()
+</code></pre><p>得到第一个工作表，或者通过索引顺序 或 工作表名称</p>
+<pre><code>table = data.sheets()[0]
+table = data.sheet_by_index(0)
+table = data.sheet_by_name(u&apos;Sheet1&apos;)
+</code></pre><p>获取行数和列数</p>
+<pre><code>nrows = table.nrows
+ncols = table.ncols
+</code></pre><p>获取整行和整列的值（数组）</p>
+<pre><code>table.row_values(i)
+table.col_values(i)
+</code></pre><p>循环行,得到索引的列表</p>
+<pre><code>for rownum in range(table.nrows):
+    print table.row_values(rownum)
+</code></pre><p>单元格</p>
+<pre><code>cell_A1 = table.cell(0,0).value
+cell_C4 = table.cell(2,3).value
+</code></pre><p>分别使用行列索引</p>
+<pre><code>cell_A1 = table.row(0)[0].value
+cell_A2 = table.col(1)[0].value
+</code></pre><p>简单的写入</p>
+<pre><code>row = 0
+col = 0
+ctype = 1 # 类型 0 empty,1 string, 2 number, 3 date, 4 boolean, 5 error
+value = &apos;lixiaoluo&apos;
+xf = 0 # 扩展的格式化 (默认是0)
+table.put_cell(row, col, ctype, value, xf)
+table.cell(0,0) # 文本:u&apos;lixiaoluo&apos;
+table.cell(0,0).value # &apos;lixiaoluo&apos;
+</code></pre><p>使用xlwt写入EXCEL</p>
+<p>导入xlwt</p>
+<pre><code>import xlwt
+</code></pre><p>新建一个excel文件</p>
+<pre><code>file = xlwt.Workbook() #注意这里的Workbook首字母是大写，无语吧
+</code></pre><p>新建一个sheet</p>
+<pre><code>table = file.add_sheet(&apos;sheet name&apos;)
+</code></pre><p>写入数据table.write(行,列,value)</p>
+<pre><code>table.write(0,0,&apos;test&apos;)
+</code></pre><p>如果对一个单元格重复操作，会引发</p>
+<pre><code>returns error:
+# Exception: Attempt to overwrite cell:
+# sheetname=u&apos;sheet 1&apos; rowx=0 colx=0
+</code></pre><p>所以在打开时加cell_overwrite_ok=True解决</p>
+<pre><code>table = file.add_sheet(&apos;sheet name&apos;,cell_overwrite_ok=True)
+</code></pre><p>保存文件</p>
+<pre><code>file.save(&apos;demo.xls&apos;)
+</code></pre><p>另外，使用style</p>
+<pre><code>style = xlwt.XFStyle() #初始化样式
+
+font = xlwt.Font() #为样式创建字体
+
+font.name = &apos;Times New Roman&apos;
+
+font.bold = True
+
+style.font = font #为样式设置字体
+
+table.write(0, 0, &apos;some bold Times text&apos;, style) # 使用样式
+</code></pre><p>命令行 getopt</p>
+<pre><code>try:
+     options,args = getopt.getopt(sys.argv[1:],&quot;hp:i:&quot;,[&quot;help&quot;,&quot;ip=&quot;,&quot;port=&quot;])
+except getopt.GetoptError:
+     sys.exit()
+for name,value in options:
+     if name in (&quot;-h&quot;,&quot;--help&quot;):
+          usage()
+     if name in (&quot;-i&quot;,&quot;--ip&quot;):
+          print(value)
+     if name in (&quot;-p&quot;,&quot;--port&quot;):
+          print(value)
+</code></pre><p>简单爬虫</p>
+<pre><code>import requests
+AGENT = &apos;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36&apos;
+HEADERS = {
+        &apos;User-Agent&apos;: AGENT,
+        &apos;Content-Type&apos;:&apos;application/x-www-form-urlencoded; charset=UTF-8&apos;,
+        &apos;X-Requested-With&apos;:&apos;XMLHttpRequest&apos;,
+        &apos;Accept&apos;:&apos;*/*&apos;
+session = requests.session()
+</code></pre><h2 id="模拟登录"><a href="#模拟登录" class="headerlink" title="模拟登录"></a>模拟登录</h2><pre><code>postdata = {
+    &apos;defaults&apos;:&apos;xxx&apos;,
+    &apos;fromLogin&apos;:&apos;xxx&apos;,
+    &apos;userName&apos;:&apos;xxx&apos;,
+    &apos;password&apos;:&apos;xxxx&apos;
+}
+url = &apos;xxxxxxxx&apos;
+login_info = session.post(url, headers = HEADERS, data = postdata,verify = False)
+if(login_info.status_code == requests.codes.ok):
+    print(&apos;login success&apos;)
+    return True
+else:
+    print(&apos;login err&apos;)
+    return False
+}
+</code></pre><h2 id="下载html页面"><a href="#下载html页面" class="headerlink" title="下载html页面"></a>下载html页面</h2><pre><code>def downloadUrl(rootdir, url, orgid, page):
+    html = session.get(url, headers=global_config.HEADERS, verify=False)
+    if(html.text[1:7] == &apos;script&apos;):
+        print(html.text)
+        return &quot;err&quot;
+    if(len(html.text) &lt; 60):
+        return &quot;err&quot;
+    sample = open(rootdir + &quot;/&quot; + str(orgid) + &apos;_&apos; + str(page) + &quot;.html&quot;, &quot;w&quot;, encoding=&apos;utf-8&apos;)
+    sample.write(html.text)
+    sample.close()
+    return &apos;ok&apos;
+</code></pre><p>解析JOSN文件内容</p>
+<pre><code>def scrapy_by_file(json_file_name):
+    #读取JSON文件的内容
+    text = open(json_file_name, encoding=&apos;utf-8&apos;).read()
+    #特殊处理,去除从WINDOWS系统带过来的BOM特殊字符
+    if text.startswith(u&apos;\ufeff&apos;):
+        text = text.encode(&apos;utf8&apos;)[3:].decode(&apos;utf8&apos;)
+    #将文本内容的JSON数据转换成自定义的JSON对象
+    try:
+        json_data = json.loads(text)
+    except:
+        print(json_file_name)
+        return
+    for row in json_data[&apos;rows&apos;]:
+
+def scrapy_by_row(row):
+    try:
+        orgid = row[&apos;organization&apos;][&apos;id&apos;]
+        familyid = row[&apos;censusRegisterFamily&apos;][&apos;id&apos;]
+    except:
+        print(&apos;errrr&apos;)
+        return
+        scrapy_by_row(row)
+</code></pre><p>遍历文件夹</p>
+<h2 id="遍历目录-rootdir-遍历到的每个文件都执行dirFunc"><a href="#遍历目录-rootdir-遍历到的每个文件都执行dirFunc" class="headerlink" title="遍历目录(rootdir) 遍历到的每个文件都执行dirFunc"></a>遍历目录(rootdir) 遍历到的每个文件都执行dirFunc</h2><pre><code>def waklThroughDir(rootdir, dirFunc):
+    for parent, dirnames, filenames in os.walk(rootdir):
+        for filename in filenames:
+            print(filename)
+            #获取后缀为txt的文件
+            if(filename.split(&apos;.&apos;)[-1] == &apos;html&apos;):
+                dirFunc(os.path.join(parent, filename))
+</code></pre><p>##采集温州房产网基本信息</p>
+<pre><code class="python"><span class="comment"># -*- coding: utf-8 -*-</span>
+<span class="keyword">import</span> re
+<span class="keyword">import</span> requests
+<span class="keyword">import</span> time
+
+<span class="comment">#-----------------------------用于解析的正则表达式常量------------------------------------------------------------------</span>
+<span class="comment">#解析页数</span>
+PAGE_NUM = <span class="string">'共找到 (.*?) 符合条件的记录'</span>
+<span class="comment">#解析小区名称</span>
+NAME = <span class="string">'texttext_title"&gt;&lt;ahref(.*?)&lt;/a&gt;&lt;/div&gt;&lt;divclass="texttext_moreinfo"&gt;'</span>
+<span class="comment">#解析小区价格</span>
+PRICE = <span class="string">'class="hot_price"&gt;(.*?)&lt;/span&gt;'</span>
+<span class="comment">#解析小区地址</span>
+ADDRESS = <span class="string">'text_moreinfo"&gt;(.*?)&lt;/div&gt;&lt;divclass="texttext_moreinfo"&gt;&lt;span&gt;'</span>
+<span class="comment">#文件生成路径</span>
+ROOTDIR = <span class="string">'F:\\test\\'</span>
+
+<span class="comment">#-----------------------------模拟请求的头部信息，否则将被识别出是程序抓包而被拦截--------------------------------------</span>
+HEADERS = {
+    <span class="string">'Accept'</span>: <span class="string">'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'</span>,
+    <span class="string">'Accept-Encoding'</span>: <span class="string">'gzip, deflate, sdch'</span>,
+    <span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.106 Safari/537.36'</span>,
+    <span class="string">'Host'</span>: <span class="string">'www.0577home.net'</span>,
+    <span class="string">'Upgrade-Insecure-Requests'</span>: <span class="string">'1'</span>
+}
+
+<span class="comment">#-----------------------------抓取某一页的房产信息，pageNo为页号--------------------------------------------------------</span>
+<span class="function"><span class="keyword">def</span> <span class="title">getHouseListByPageno</span><span class="params">(pageNo)</span>:</span>
+    <span class="comment">#建立一个连接用于后续发起请求</span>
+    session = requests.session()
+    url = <span class="string">'http://www.0577home.net/xiaoqu/list_0_0_0_0_0_0_0_'</span> + str(pageNo) + <span class="string">'.html'</span>
+    houseList = session.get(url, headers = HEADERS, verify = <span class="keyword">False</span>)
+    <span class="comment">#以写入模式打开文件</span>
+    fh = open(ROOTDIR + <span class="string">"houseList_pageNo"</span> + str(pageNo) + <span class="string">".txt"</span>,  <span class="string">'w'</span> ,encoding=<span class="string">'utf-8'</span>)
+    <span class="comment">#将movieList写入文件</span>
+    fh.write(houseList.text)
+    <span class="comment">#关闭文件</span>
+    fh.close()
+
+<span class="comment">#-------------------------------获取需要抓取的页面总数------------------------------------------------------------------</span>
+<span class="function"><span class="keyword">def</span> <span class="title">getPageNum</span><span class="params">()</span>:</span>
+    <span class="comment">#打开已经下载好的第一页房产内容</span>
+    f = open(ROOTDIR + <span class="string">'houseList_pageNo1.txt'</span>, encoding=<span class="string">'utf-8'</span>)
+    <span class="comment">#获取文件内容</span>
+    rawContent = f.read()
+    <span class="comment">#用正则表达式解析页面内容</span>
+    pageNum = re.findall(PAGE_NUM, rawContent)
+    <span class="comment">#返回页面号</span>
+    <span class="keyword">return</span> int(pageNum[<span class="number">0</span>]) / <span class="number">20</span> + <span class="number">1</span>
+
+<span class="function"><span class="keyword">def</span> <span class="title">parseHouseListToFile</span><span class="params">(srcFile, dstFile)</span>:</span>
+    <span class="comment">#打开待解析的文件</span>
+    f = open(srcFile, encoding=<span class="string">'utf-8'</span>)
+    <span class="comment">#读取文件内容以备解析</span>
+    rawContent = f.read()
+    p = re.compile(<span class="string">'\s+'</span>)
+    content = re.sub(p, <span class="string">''</span>, rawContent)
+    dnames = re.findall(NAME, content)
+    names = []
+    <span class="keyword">for</span> dname <span class="keyword">in</span> dnames:
+        idx = dname.rfind(<span class="string">'&gt;'</span>)
+        names.append(dname[idx + <span class="number">1</span>:])
+    prices = re.findall(PRICE, content)
+    daddress = re.findall(ADDRESS, content)
+    address = []
+    <span class="keyword">for</span> daddr <span class="keyword">in</span> daddress:
+        id = daddr.rfind(<span class="string">'&gt;'</span>)
+        address.append(daddr[id + <span class="number">1</span>:])
+    i = <span class="number">0</span>
+    <span class="keyword">for</span> x <span class="keyword">in</span> names:
+        <span class="comment">#写入时用'$'做分割，结尾加上回车符</span>
+        dstFile.write(names[i] + <span class="string">'$'</span> + prices[i] + <span class="string">'$'</span> + address[i] + <span class="string">'\n'</span>)
+        i = i + <span class="number">1</span>
+
+<span class="comment"># -------------------------------主函数，下载并解析房产信息--------------------------------------------------------------</span>
+<span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:
+    <span class="comment">#---------------------抓取页面-----------------------------</span>
+    <span class="comment">#抓取第一页房产信息</span>
+    getHouseListByPageno(<span class="number">1</span>)
+    <span class="comment">#通过第一页房产信息获取总共要抓取的页面数量</span>
+    pageNum = getPageNum()
+    <span class="comment">#抓取剩余的页面</span>
+    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">2</span>, int(pageNum) + <span class="number">1</span>):
+        getHouseListByPageno(str(i))
+    <span class="comment">#---------------------解析页面-----------------------------</span>
+    <span class="comment">#获取当前年月日</span>
+    localtime = time.strftime(<span class="string">'%Y%m%d'</span>, time.localtime(time.time()))
+    <span class="comment">#创建一个文件，文件名前面带上年月日</span>
+    f = open(ROOTDIR + localtime + <span class="string">'_houseList.txt'</span>, <span class="string">'a+'</span>, encoding=<span class="string">'utf-8'</span>)
+    <span class="comment">#解析所有的页面</span>
+    <span class="comment">#for k in range(1, int(pageNum) + 1):</span>
+    <span class="keyword">for</span> k <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">115</span>):
+        parseHouseListToFile(ROOTDIR + <span class="string">"houseList_pageNo"</span> + str(k) + <span class="string">".txt"</span>, f)
+    <span class="comment">#关闭文件</span>
+    f.close()
+    f = open(ROOTDIR + localtime + <span class="string">'_houseList.txt'</span>, encoding=<span class="string">'utf-8'</span>)
+    fd = open(ROOTDIR + localtime + <span class="string">'_houseInfo.txt'</span>, <span class="string">'w'</span>, encoding=<span class="string">'utf-8'</span>)
+    k = <span class="number">0</span>
+    <span class="keyword">for</span> line <span class="keyword">in</span> f:
+        data = line.strip(<span class="string">'\n'</span>)
+        data = data.split(<span class="string">'$'</span>)
+        idx = data[<span class="number">3</span>]
+        getHouseInfoByPageno(idx, k)
+        houseInfo = parseHouseInfo(ROOTDIR + <span class="string">"houseInfo_pageNo"</span> + str(idx) + <span class="string">".html"</span>)
+        print(str(k) + <span class="string">"$"</span>.join(data) + <span class="string">'$'</span> + <span class="string">"$"</span>.join(houseInfo))
+        fd.write(<span class="string">"$"</span>.join(data) + <span class="string">'$'</span> + <span class="string">"$"</span>.join(houseInfo) + <span class="string">'\n'</span>)
+        k += <span class="number">1</span>
+    f.close()
+    fd.close()
 </code></pre>
-<h3 id="WSGI-APP-的内部流程"><a href="#WSGI-APP-的内部流程" class="headerlink" title="WSGI_APP 的内部流程"></a>WSGI_APP 的内部流程</h3><ol>
-<li>生成request请求对象和请求上下文环境</li>
-<li><p>请求进入预处理，错误处理及请求转发到响应的过程</p>
-<pre><code>class Flask(_PackageBoundObject):  
+<p>调用java</p>
+<pre><code>import sys
+import jpype
 
-#此处省略一些代码  
+name = sys.argv[1]
+jarpath = &apos;/home/dsadm/why/python&apos;
+jpype.startJVM(jpype.getDefaultJVMPath(), &quot;-Djava.ext.dirs=%s&quot; % jarpath)
+DECRYPT = jpype.JClass(&apos;why.fmrt.decrypt.DECRYPT&apos;)
+upperName =DECRYPT.decrypt(name)
+print(upperName)
+jpype.shutdownJVM()
+</code></pre><p> 构建 web 页面</p>
+<pre><code>import os
 
-def full_dispatch_request(self):  
-    &quot;&quot;&quot;Dispatches the request and on top of that performs request 
-    pre and postprocessing as well as HTTP exception catching and 
-    error handling. 
+import tornado.httpserver
+import tornado.ioloop
+import tornado.options
+import tornado.web
 
-    .. versionadded:: 0.7 
-    &quot;&quot;&quot;  
-    self.try_trigger_before_first_request_functions()  #进行发生真实请求前的处理  
-    try:  
-        request_started.send(self)                     #socket部分的操作  
-        rv = self.preprocess_request()                 #进行请求的预处理  
-        if rv is None:  
-            rv = self.dispatch_request()  
-    except Exception as e:  
-        rv = self.handle_user_exception(e)  
-    response = self.make_response(rv)  
-    response = self.process_response(response)  
-    request_finished.send(self, response=response)  
-    return response  
-</code></pre></li>
-</ol>
-<ol>
-<li>请求分发</li>
-</ol>
-<pre><code class="python">
-<span class="class"><span class="keyword">class</span> <span class="title">Flask</span><span class="params">(_PackageBoundObject)</span>:</span>  
+from view import *
 
-<span class="comment">#省略一些代码  </span>
+from tornado.options import define, options
+define(&quot;port&quot;, default=8000, help=&quot;run on the given port&quot;, type=int)
 
-    <span class="function"><span class="keyword">def</span> <span class="title">dispatch_request</span><span class="params">(self)</span>:</span>   <span class="comment">#看函数定义，matches the URL and returns the value of the view or error.  </span>
-        <span class="string">"""Does the request dispatching.  Matches the URL and returns the 
-        return value of the view or error handler.  This does not have to 
-        be a response object.  In order to convert the return value to a 
-        proper response object, call :func:`make_response`. 
+class Application(tornado.web.Application):
+    def __init__(self):
+        handlers = [
+            (r&quot;/&quot;, Indexhandler),
+        ]
+        settings = dict(
+            template_path=os.path.join(os.path.dirname(__file__), &apos;templates&apos;),
+            autoescape=None,
+            debug=False,
+        )
+        tornado.web.Application.__init__(self, handlers, **settings)
 
-        .. versionchanged:: 0.7 
-           This no longer does the exception handling, this code was 
-           moved to the new :meth:`full_dispatch_request`. 
-        """</span>  
-        req = _request_ctx_stack.top.request  
-        <span class="keyword">if</span> req.routing_exception <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:  
-            self.raise_routing_exception(req)  
-        rule = req.url_rule  
-        <span class="comment"># if we provide automatic options for this URL and the  </span>
-        <span class="comment"># request came with the OPTIONS method, reply automatically  </span>
-        <span class="keyword">if</span> getattr(rule, <span class="string">'provide_automatic_options'</span>, <span class="keyword">False</span>) \  
-           <span class="keyword">and</span> req.method == <span class="string">'OPTIONS'</span>:  
-            <span class="keyword">return</span> self.make_default_options_response()  
-        <span class="comment"># otherwise dispatch to the handler for that endpoint  </span>
-        <span class="keyword">return</span> self.view_functions[rule.endpoint](**req.view_args)   <span class="comment">#最终进入view_functions，取出url对应的视图函数的返回值</span>
+if __name__ == &quot;__main__&quot;:
+    tornado.options.parse_command_line()
+    http_server = tornado.httpserver.HTTPServer(Application(), xheaders=True)
+    http_server.listen(options.port)
+    tornado.ioloop.IOLoop.instance().start()
+</code></pre><p>多进程</p>
+<pre><code>import multiprocessing
+for process_id in range(PROCESS_NUM):
+    p = multiprocessing.Process(target=worker, args=(process_id,))
+    jobs.append(p)
+    p.start()
+</code></pre><p>多线程</p>
+<pre><code># -*- coding: utf-8 -*-
+
+import threading
+
+class Threadconfig():
+    def __init__(self, thread_size):
+        self.thread_size = thread_size
+
+    def topen(self):
+        self.thread_tasks = []
+
+    def build(self, func, **kwargs):
+        self.thread_task = threading.Thread(target=func, kwargs=(kwargs))
+        self.thread_tasks.append(self.thread_task)
+
+    def run(self):
+        for thread_task in self.thread_tasks:
+            thread_task.setDaemon(True)
+            thread_task.start()
+        while 1:
+            alive = False
+            for thread_num in range(0, self.thread_size):
+                alive = alive or self.thread_tasks[thread_num].isAlive()
+            if not alive:
+                break
+
+    def __del__(self):
+        self.thread_tasks = []
+</code></pre><p>  移除中文分隔符号</p>
+<pre><code>  cmd = &quot;sed &apos;:a;N;$ s/\\r\\n//g;ba&apos; &quot; + oldfile + &quot; &gt; &quot; + newfile
+os.system(cmd)  
 </code></pre>
-<p> req = _request_ctx_stack.top.request 可以暂时理解为，将请求对象赋值给req</p>
-<p>这里先简单讲下，每个url进来以后，他都会对应一个view_function</p>
-<p>另外说下view_functions 是一个字典形式，他的key和value的关系是endpoint ——&gt; view function</p>
-<p>所以每个有效的URL进来，都能找到他对应的视图函数view function，取得返回值并赋值给  rv</p>
-<p>这时候，通过make_response函数，将刚才取得的 rv 生成响应，重新赋值response</p>
-<p>再通过process_response功能主要是处理一个after_request的功能，比如你在请求后，要把数据库连接关闭等动作，和上面提到的before_request对应和类似。</p>
-<p>之后再进行request_finished.send的处理，也是和socket处理有关，暂时不详细深入。</p>
-<p>之后返回新的response对象</p>
-<p>这里特别需要注意的是，make_response函数是一个非常重要的函数，他的作用是返回一个response_class的实例对象，也就是可以接受environ和start_reponse两个参数的对象</p>
-<ol>
-<li>返回wsgi_app 内部</li>
-</ol>
-<p>当response从刚刚的full_dispatch_request功能返回之后，函数会对这个response加上environ, start_response的参数并返回给Gunicorn</p>
-<p>至此，一个HTTP从请求到响应的流程就完毕了.  </p>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/08/10/数据科学起步01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/10/数据科学起步01/" itemprop="url">数据科学起步01</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-10T21:14:20+08:00">
+                2018-08-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/data/" itemprop="url" rel="index">
+                    <span itemprop="name">data</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/08/10/数据科学起步01/" class="leancloud_visitors" data-flag-title="数据科学起步01">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.8k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  13
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="线性回归是所有模型的基石"><a href="#线性回归是所有模型的基石" class="headerlink" title="线性回归是所有模型的基石"></a>线性回归是所有模型的基石</h2><p>手工玩偶店的小何童鞋，想分析下玩偶的数量和成本之间的关系，他得到了如下表格的数据。将这些数据放在了图像之上，似乎是一个线性的关系，但是感觉并不严格，像是在一条直线上下随机波动。其实数据是由“自然之力”按照下面的公式来产生的。 其中b是一个随机变量，服从期望为0，方差为1的正态分布。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 10,7.7</span></span><br><span class="line"><span class="comment"># 10,9.87</span></span><br><span class="line"><span class="comment"># 11,11.18</span></span><br><span class="line"><span class="comment"># 12,10.43</span></span><br><span class="line"><span class="comment"># 13,12.36</span></span><br><span class="line"><span class="comment"># 14,14.15</span></span><br><span class="line"><span class="comment"># 15,15.73</span></span><br><span class="line"><span class="comment"># 16,16.4</span></span><br><span class="line"><span class="comment"># 17,18.86</span></span><br><span class="line"><span class="comment"># 18,16.13</span></span><br><span class="line"><span class="comment"># 19,18.21</span></span><br><span class="line"><span class="comment"># 20,18.37</span></span><br><span class="line"><span class="comment"># 21,22.61</span></span><br><span class="line"><span class="comment"># 22,19.83</span></span><br><span class="line"><span class="comment"># 23,22.67</span></span><br><span class="line"><span class="comment"># 24,22.7</span></span><br><span class="line"><span class="comment"># 25,25.16</span></span><br><span class="line"><span class="comment"># 26,25.55</span></span><br><span class="line"><span class="comment"># 27,28.21</span></span><br><span class="line"><span class="comment"># 28,28.12</span></span><br><span class="line"><span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
+<p><script type="text/javascript" async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"><br></script><br>$$y<em>{i} = x</em>{i} + b_{i}$$</p>
+<h3 id="机器学习的解法"><a href="#机器学习的解法" class="headerlink" title="机器学习的解法"></a>机器学习的解法</h3><p>步骤如下：<br>1.确定场景的类型<br>2.定义损失函数，使得模型预测的成本和实际的成本相近<br>3.提取特征（可能需要除去记错或者是特别异常的数据）<br>4.确定模型并估计参数（直接上线性模型）<br>5.评估模型效果（均方差要达到最小）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.version</span><br></pre></td></tr></table></figure>
+<pre><code>&apos;3.6.4 (default, Jan 21 2018, 16:48:17) \n[GCC 4.2.1 Compatible Apple LLVM 9.0.0 (clang-900.0.39.2)]&apos;
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># _*_ coding=utf8 _*_</span></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span><br><span class="line">机器学习方法实现</span><br><span class="line">"""</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd </span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> linear_model</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">data_load</span><span class="params">(path)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># data = pd.read_csv(path)</span></span><br><span class="line">    <span class="comment"># data = pd.read_csv(path, delimiter='', header=0)</span></span><br><span class="line">    <span class="comment"># # 选择列</span></span><br><span class="line">    <span class="comment"># data['x']</span></span><br><span class="line">    <span class="comment"># data[['x', 'y']]</span></span><br><span class="line">    <span class="comment"># data.x</span></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    <span class="comment"># # 选择行</span></span><br><span class="line">    <span class="comment"># data[:10]</span></span><br><span class="line">    <span class="comment"># data[10:]</span></span><br><span class="line">    <span class="comment"># data[2:3]</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">read_data</span><span class="params">(path)</span>:</span></span><br><span class="line"><span class="comment">#     data = pd.read_csv(path, delimiter=',', header=0)</span></span><br><span class="line">    data = pd.read_csv(path)</span><br><span class="line">    <span class="keyword">return</span> data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">linearModel</span><span class="params">(data)</span>:</span></span><br><span class="line">    features = [<span class="string">"x"</span>]</span><br><span class="line">    labels = [<span class="string">"y"</span>]</span><br><span class="line"></span><br><span class="line">    train_data = data[:<span class="number">15</span>]</span><br><span class="line">    test_data = data[<span class="number">15</span>:]</span><br><span class="line">    <span class="comment"># 产生并且训练模型</span></span><br><span class="line">    model = train_model(train_data, features, labels)</span><br><span class="line">    <span class="comment"># 评价模型效果</span></span><br><span class="line">    error, score = evaluate_model(model, test_data, features, labels)</span><br><span class="line">    <span class="comment"># 图形化模型结果</span></span><br><span class="line">    visual_model(model, data, features, labels, error, score)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train_model</span><span class="params">(train_data, features, labels)</span>:</span></span><br><span class="line">    model = linear_model.LinearRegression()</span><br><span class="line">    model.fit(train_data[features], train_data[labels])</span><br><span class="line">    <span class="keyword">return</span> model</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">evaluate_model</span><span class="params">(model, test_data, features, labels)</span>:</span></span><br><span class="line">    error = np.mean(</span><br><span class="line">        (model.predict(test_data[features]) - test_data[labels])**<span class="number">2</span>)</span><br><span class="line">    score = model.score(test_data[features], test_data[labels])</span><br><span class="line">    <span class="keyword">return</span> error, score</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">visual_model</span><span class="params">(model, data, features, labels, error, score)</span>:</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">    模型可视化</span><br><span class="line">    """</span></span><br><span class="line">    <span class="comment"># 为在Matplotlib中显示中文，设置特殊字体</span></span><br><span class="line">    plt.rcParams[<span class="string">'font.family'</span>] = [<span class="string">'Heiti'</span>]</span><br><span class="line">    <span class="comment"># 创建一个图形框</span></span><br><span class="line">    fig = plt.figure(figsize=(<span class="number">6</span>, <span class="number">6</span>), dpi=<span class="number">80</span>)</span><br><span class="line">    <span class="comment"># 在图形框里只画一幅图</span></span><br><span class="line">    ax = fig.add_subplot(<span class="number">111</span>)</span><br><span class="line">    <span class="comment"># 在Matplotlib中显示中文，需要使用unicode</span></span><br><span class="line">    <span class="comment"># 在Python3中，str不需要decode</span></span><br><span class="line">    <span class="keyword">if</span> sys.version_info[<span class="number">0</span>] == <span class="number">3</span>:</span><br><span class="line">        ax.set_title(<span class="string">u'%s'</span> % <span class="string">"线性回归示例"</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        ax.set_title(<span class="string">u'%s'</span> % <span class="string">"线性回归示例"</span>.decode(<span class="string">"utf-8"</span>))</span><br><span class="line">    ax.set_xlabel(<span class="string">'$x$'</span>)</span><br><span class="line">    ax.set_ylabel(<span class="string">'$y$'</span>)</span><br><span class="line">    <span class="comment"># 画点图，用蓝色圆点表示原始数据</span></span><br><span class="line">    <span class="comment"># 在Python3中，str不需要decode</span></span><br><span class="line">    <span class="keyword">if</span> sys.version_info[<span class="number">0</span>] == <span class="number">3</span>:</span><br><span class="line">        ax.scatter(data[features], data[labels], color=<span class="string">'b'</span>,</span><br><span class="line">            label=<span class="string">u'%s: $y = x + \epsilon$'</span> % <span class="string">"真实值"</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        ax.scatter(data[features], data[labels], color=<span class="string">'b'</span>,</span><br><span class="line">            label=<span class="string">u'%s: $y = x + \epsilon$'</span> % <span class="string">"真实值"</span>.decode(<span class="string">"utf-8"</span>))</span><br><span class="line">    <span class="comment"># 根据截距的正负，打印不同的标签</span></span><br><span class="line">    <span class="keyword">if</span> model.intercept_ &gt; <span class="number">0</span>:</span><br><span class="line">        <span class="comment"># 画线图，用红色线条表示模型结果</span></span><br><span class="line">        <span class="comment"># 在Python3中，str不需要decode</span></span><br><span class="line">        <span class="keyword">if</span> sys.version_info[<span class="number">0</span>] == <span class="number">3</span>:</span><br><span class="line">            ax.plot(data[features], model.predict(data[features]), color=<span class="string">'r'</span>,</span><br><span class="line">                label=<span class="string">u'%s: $y = %.3fx$ + %.3f'</span>\</span><br><span class="line">                % (<span class="string">"预测值"</span>, model.coef_, model.intercept_))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            ax.plot(data[features], model.predict(data[features]), color=<span class="string">'r'</span>,</span><br><span class="line">                label=<span class="string">u'%s: $y = %.3fx$ + %.3f'</span>\</span><br><span class="line">                % (<span class="string">"预测值"</span>.decode(<span class="string">"utf-8"</span>), model.coef_, model.intercept_))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="comment"># 在Python3中，str不需要decode</span></span><br><span class="line">        <span class="keyword">if</span> sys.version_info[<span class="number">0</span>] == <span class="number">3</span>:</span><br><span class="line">            ax.plot(data[features], model.predict(data[features]), color=<span class="string">'r'</span>,</span><br><span class="line">                label=<span class="string">u'%s: $y = %.3fx$ - %.3f'</span>\</span><br><span class="line">                % (<span class="string">"预测值"</span>, model.coef_, abs(model.intercept_)))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            ax.plot(data[features], model.predict(data[features]), color=<span class="string">'r'</span>,</span><br><span class="line">                label=<span class="string">u'%s: $y = %.3fx$ - %.3f'</span>\</span><br><span class="line">                % (<span class="string">"预测值"</span>.decode(<span class="string">"utf-8"</span>), model.coef_, abs(model.intercept_)))</span><br><span class="line">    legend = plt.legend(shadow=<span class="keyword">True</span>)</span><br><span class="line">    legend.get_frame().set_facecolor(<span class="string">'#6F93AE'</span>)</span><br><span class="line">    <span class="comment"># 显示均方差和决定系数</span></span><br><span class="line">    <span class="comment"># 在Python3中，str不需要decode</span></span><br><span class="line">    <span class="keyword">if</span> sys.version_info[<span class="number">0</span>] == <span class="number">3</span>:</span><br><span class="line">        ax.text(<span class="number">0.99</span>, <span class="number">0.01</span>, </span><br><span class="line">            <span class="string">u'%s%.3f\n%s%.3f'</span>\</span><br><span class="line">            % (<span class="string">"均方差："</span>, error, <span class="string">"决定系数："</span>, score),</span><br><span class="line">            style=<span class="string">'italic'</span>, verticalalignment=<span class="string">'bottom'</span>, horizontalalignment=<span class="string">'right'</span>,</span><br><span class="line">            transform=ax.transAxes, color=<span class="string">'m'</span>, fontsize=<span class="number">13</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">         ax.text(<span class="number">0.99</span>, <span class="number">0.01</span>, </span><br><span class="line">            <span class="string">u'%s%.3f\n%s%.3f'</span>\</span><br><span class="line">            % (<span class="string">"均方差："</span>.decode(<span class="string">"utf-8"</span>), error, <span class="string">"决定系数："</span>.decode(<span class="string">"utf-8"</span>), score),</span><br><span class="line">            style=<span class="string">'italic'</span>, verticalalignment=<span class="string">'bottom'</span>, horizontalalignment=<span class="string">'right'</span>,</span><br><span class="line">            transform=ax.transAxes, color=<span class="string">'m'</span>, fontsize=<span class="number">13</span>)</span><br><span class="line">    <span class="comment"># 展示上面所画的图片。图片将阻断程序的运行，直至所有的图片被关闭</span></span><br><span class="line">    <span class="comment"># 在Python shell里面，可以设置参数"block=False"，使阻断失效。</span></span><br><span class="line">    plt.show()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 为什么搭建模型 有两个目的 使用模型对未知数据做预测；或者利用模型分析数据，找出数据的内在规律，为决策提供支持。</span></span><br><span class="line"><span class="comment"># 在利用模型做预测时，我们希望模型的准确度越高越好，但是在利用模型做分析时， 我们则更关心模型是否是可靠的</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line"><span class="comment">#     home_path = os.path.dirname(os.path.abspath(__file__))</span></span><br><span class="line">    <span class="keyword">if</span> os.name == <span class="string">"posix"</span>:</span><br><span class="line">        data_path = <span class="string">"./data/simple_example.csv"</span></span><br><span class="line"></span><br><span class="line">    data = read_data(data_path)</span><br><span class="line">    print(data.shape)</span><br><span class="line"><span class="comment">#     linearModel(data)</span></span><br></pre></td></tr></table></figure>
+<pre><code>(20, 2)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">linearModel(data)</span><br></pre></td></tr></table></figure>
+<pre><code>/usr/local/Cellar/python3/3.6.4_2/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/scipy/linalg/basic.py:1226: RuntimeWarning: internal gelsd driver lwork query error, required iwork dimension not returned. This is likely the result of LAPACK bug 0038, fixed in LAPACK 3.2.2 (released July 21, 2010). Falling back to &apos;gelss&apos; driver.
+  warnings.warn(mesg, RuntimeWarning)
+</code></pre><p><img src="output_10_1.png" alt="png"></p>
+<h3 id="统计学"><a href="#统计学" class="headerlink" title="统计学"></a>统计学</h3><p>1.假设条件概率<br>2.估计参数<br>3.推导参数的分布<br>4.假设检验和置信区间</p>
+<p>使用第三方库 statsmodels 来训练线性回归模型</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> statsmodels.api <span class="keyword">as</span> sm</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">linear_model2</span><span class="params">(data)</span>:</span></span><br><span class="line">    features = [<span class="string">"x"</span>]</span><br><span class="line">    labels = [<span class="string">"y"</span>]</span><br><span class="line">    Y = data[labels]</span><br><span class="line">    X = sm.add_constant(data[features])</span><br><span class="line">    result = train_model2(X, Y)</span><br><span class="line">    model_summary(result)</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train_model2</span><span class="params">(X, Y)</span>:</span></span><br><span class="line">    model = sm.OLS(Y, X)</span><br><span class="line">    result = model.fit()</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">model_summary</span><span class="params">(result)</span>:</span></span><br><span class="line">    <span class="comment"># 整体统计分析结果</span></span><br><span class="line">    print(result.summary())</span><br><span class="line">    print(result.f_test(<span class="string">"x=0"</span>))</span><br><span class="line">    print(result.f_test(<span class="string">"const=0"</span>))</span><br><span class="line">    print(result.f_test([<span class="string">"x=0"</span>, <span class="string">"const=0"</span>]))</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">datapath = <span class="string">"./data/simple_example.csv"</span></span><br><span class="line">data = read_data(datapath)</span><br><span class="line">linear_model2(data)</span><br></pre></td></tr></table></figure>
+<pre><code>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                      y   R-squared:                       0.962
+Model:                            OLS   Adj. R-squared:                  0.960
+Method:                 Least Squares   F-statistic:                     460.5
+Date:                Tue, 07 Aug 2018   Prob (F-statistic):           2.85e-14
+Time:                        11:40:29   Log-Likelihood:                -31.374
+No. Observations:                  20   AIC:                             66.75
+Df Residuals:                      18   BIC:                             68.74
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const         -0.9495      0.934     -1.017      0.323      -2.912       1.013
+x              1.0330      0.048     21.458      0.000       0.932       1.134
+==============================================================================
+Omnibus:                        0.745   Durbin-Watson:                   2.345
+Prob(Omnibus):                  0.689   Jarque-Bera (JB):                0.673
+Skew:                           0.074   Prob(JB):                        0.714
+Kurtosis:                       2.113   Cond. No.                         66.3
+==============================================================================
+
+Warnings:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+&lt;F test: F=array([[ 460.4584822]]), p=2.848465414495684e-14, df_denom=18, df_num=1&gt;
+&lt;F test: F=array([[ 1.03355794]]), p=0.32279564008314576, df_denom=18, df_num=1&gt;
+&lt;F test: F=array([[ 2442.62159921]]), p=1.2108814742372977e-22, df_denom=18, df_num=2&gt;
+</code></pre><p>得到参数b的估计值为-0.9495, 但是这个值在b=0这个假设下的P-value高达32.3%，统计学上认为这种参数是不显著的，应该舍弃此参数。同理a的估计值是1.033，P-value小于0.01，因此a是显著的，应该被纳入模型。因此，需要调整模型。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> statsmodels.api <span class="keyword">as</span> sm</span><br><span class="line"><span class="keyword">from</span> statsmodels.sandbox.regression.predstd <span class="keyword">import</span> wls_prediction_std</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">modelSummary</span><span class="params">(re)</span>:</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">    分析线性回归模型的统计性质</span><br><span class="line">    """</span></span><br><span class="line">    <span class="comment"># 整体统计分析结果</span></span><br><span class="line">    print(re.summary())</span><br><span class="line">    <span class="comment"># 在Windows下运行此脚本需确保Windows下的命令提示符(cmd)能显示中文</span></span><br><span class="line">    <span class="comment"># 用f test检测x对应的系数a是否显著</span></span><br><span class="line">    print(<span class="string">"检验假设x的系数等于0："</span>)</span><br><span class="line">    print(re.f_test(<span class="string">"x=0"</span>))</span><br><span class="line">    <span class="comment"># 用f test检测常量b是否显著</span></span><br><span class="line">    print(<span class="string">"检测假设const的系数等于0："</span>)</span><br><span class="line">    print(re.f_test(<span class="string">"const=0"</span>))</span><br><span class="line">    <span class="comment"># 用f test检测a=1, b=0同时成立的显著性</span></span><br><span class="line">    print(<span class="string">"检测假设x的系数等于1和const的系数等于0同时成立："</span>)</span><br><span class="line">    print(re.f_test([<span class="string">"x=1"</span>, <span class="string">"const=0"</span>]))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">visualizeModel</span><span class="params">(re, data, features, labels)</span>:</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">    模型可视化</span><br><span class="line">    """</span></span><br><span class="line">    <span class="comment"># 计算预测结果的标准差，预测下界，预测上界</span></span><br><span class="line">    prstd, preLow, preUp = wls_prediction_std(re, alpha=<span class="number">0.05</span>)</span><br><span class="line">    <span class="comment"># 为在Matplotlib中显示中文，设置特殊字体</span></span><br><span class="line">    plt.rcParams[<span class="string">'font.family'</span>] = [<span class="string">'Heiti'</span>]</span><br><span class="line">    <span class="comment"># 创建一个图形框</span></span><br><span class="line">    fig = plt.figure(figsize=(<span class="number">6</span>, <span class="number">6</span>), dpi=<span class="number">80</span>)</span><br><span class="line">    <span class="comment"># 在图形框里只画一幅图</span></span><br><span class="line">    ax = fig.add_subplot(<span class="number">111</span>)</span><br><span class="line">    <span class="comment"># 在Matplotlib中显示中文，需要使用unicode</span></span><br><span class="line">    <span class="comment"># 在Python3中，str不需要decode</span></span><br><span class="line">    <span class="keyword">if</span> sys.version_info[<span class="number">0</span>] == <span class="number">3</span>:</span><br><span class="line">        ax.set_title(<span class="string">u'%s'</span> % <span class="string">"线性回归统计分析示例"</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        ax.set_title(<span class="string">u'%s'</span> % <span class="string">"线性回归统计分析示例"</span>.decode(<span class="string">"utf-8"</span>))</span><br><span class="line">    ax.set_xlabel(<span class="string">'$x$'</span>)</span><br><span class="line">    ax.set_ylabel(<span class="string">'$y$'</span>)</span><br><span class="line">    <span class="comment"># 画点图，用蓝色圆点表示原始数据</span></span><br><span class="line">    <span class="comment"># 在Python3中，str不需要decode</span></span><br><span class="line">    <span class="keyword">if</span> sys.version_info[<span class="number">0</span>] == <span class="number">3</span>:</span><br><span class="line">        ax.scatter(data[features], data[labels], color=<span class="string">'b'</span>,</span><br><span class="line">            label=<span class="string">u'%s: $y = x + \epsilon$'</span> % <span class="string">"真实值"</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        ax.scatter(data[features], data[labels], color=<span class="string">'b'</span>,</span><br><span class="line">            label=<span class="string">u'%s: $y = x + \epsilon$'</span> % <span class="string">"真实值"</span>.decode(<span class="string">"utf-8"</span>))</span><br><span class="line">    <span class="comment"># 画线图，用红色虚线表示95%置信区间</span></span><br><span class="line">    <span class="comment"># 在Python3中，str不需要decode</span></span><br><span class="line">    <span class="keyword">if</span> sys.version_info[<span class="number">0</span>] == <span class="number">3</span>:</span><br><span class="line">        ax.plot(data[features], preUp, <span class="string">"r--"</span>, label=<span class="string">u'%s'</span> % <span class="string">"95%置信区间"</span>)</span><br><span class="line">        ax.plot(data[features], re.predict(data[features]), color=<span class="string">'r'</span>,</span><br><span class="line">            label=<span class="string">u'%s: $y = %.3fx$'</span>\</span><br><span class="line">            % (<span class="string">"预测值"</span>, re.params[features]))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        ax.plot(data[features], preUp, <span class="string">"r--"</span>, label=<span class="string">u'%s'</span> % <span class="string">"95%置信区间"</span>.decode(<span class="string">"utf-8"</span>))</span><br><span class="line">        ax.plot(data[features], re.predict(data[features]), color=<span class="string">'r'</span>,</span><br><span class="line">            label=<span class="string">u'%s: $y = %.3fx$'</span>\</span><br><span class="line">            % (<span class="string">"预测值"</span>.decode(<span class="string">"utf-8"</span>), re.params[features]))</span><br><span class="line">    ax.plot(data[features], preLow, <span class="string">"r--"</span>)</span><br><span class="line">    legend = plt.legend(shadow=<span class="keyword">True</span>)</span><br><span class="line">    legend.get_frame().set_facecolor(<span class="string">'#6F93AE'</span>)</span><br><span class="line">    plt.show()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">trainModel</span><span class="params">(X, Y)</span>:</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">    训练模型</span><br><span class="line">    """</span></span><br><span class="line">    model = sm.OLS(Y, X)</span><br><span class="line">    re = model.fit()</span><br><span class="line">    <span class="keyword">return</span> re</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">linearModel2</span><span class="params">(data)</span>:</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">    线性回归统计性质分析步骤展示</span><br><span class="line"></span><br><span class="line">    参数</span><br><span class="line">    ----</span><br><span class="line">    data : DataFrame，建模数据</span><br><span class="line">    """</span></span><br><span class="line">    features = [<span class="string">"x"</span>]</span><br><span class="line">    labels = [<span class="string">"y"</span>]</span><br><span class="line">    Y = data[labels]</span><br><span class="line">    <span class="comment"># 加入常量变量</span></span><br><span class="line">    X = sm.add_constant(data[features])</span><br><span class="line">    <span class="comment"># 构建模型</span></span><br><span class="line">    re = trainModel(X, Y)</span><br><span class="line">    <span class="comment"># 分析模型效果</span></span><br><span class="line">    modelSummary(re)</span><br><span class="line">    <span class="comment"># const并不显著，去掉这个常量变量</span></span><br><span class="line">    resNew = trainModel(data[features], Y)</span><br><span class="line">    <span class="comment"># 输出新模型的分析结果</span></span><br><span class="line">    print(resNew.summary())</span><br><span class="line">    <span class="comment"># 将模型结果可视化</span></span><br><span class="line">    visualizeModel(resNew, data, features, labels)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">linearModel2(data)</span><br></pre></td></tr></table></figure>
+<pre><code>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                      y   R-squared:                       0.962
+Model:                            OLS   Adj. R-squared:                  0.960
+Method:                 Least Squares   F-statistic:                     460.5
+Date:                Tue, 07 Aug 2018   Prob (F-statistic):           2.85e-14
+Time:                        11:42:08   Log-Likelihood:                -31.374
+No. Observations:                  20   AIC:                             66.75
+Df Residuals:                      18   BIC:                             68.74
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const         -0.9495      0.934     -1.017      0.323      -2.912       1.013
+x              1.0330      0.048     21.458      0.000       0.932       1.134
+==============================================================================
+Omnibus:                        0.745   Durbin-Watson:                   2.345
+Prob(Omnibus):                  0.689   Jarque-Bera (JB):                0.673
+Skew:                           0.074   Prob(JB):                        0.714
+Kurtosis:                       2.113   Cond. No.                         66.3
+==============================================================================
+
+Warnings:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+检验假设x的系数等于0：
+&lt;F test: F=array([[ 460.4584822]]), p=2.848465414495684e-14, df_denom=18, df_num=1&gt;
+检测假设const的系数等于0：
+&lt;F test: F=array([[ 1.03355794]]), p=0.32279564008314576, df_denom=18, df_num=1&gt;
+检测假设x的系数等于1和const的系数等于0同时成立：
+&lt;F test: F=array([[ 0.99654631]]), p=0.3886267976063851, df_denom=18, df_num=2&gt;
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                      y   R-squared:                       0.996
+Model:                            OLS   Adj. R-squared:                  0.996
+Method:                 Least Squares   F-statistic:                     4876.
+Date:                Tue, 07 Aug 2018   Prob (F-statistic):           2.26e-24
+Time:                        11:42:08   Log-Likelihood:                -31.933
+No. Observations:                  20   AIC:                             65.87
+Df Residuals:                      19   BIC:                             66.86
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+x              0.9862      0.014     69.825      0.000       0.957       1.016
+==============================================================================
+Omnibus:                        0.489   Durbin-Watson:                   2.218
+Prob(Omnibus):                  0.783   Jarque-Bera (JB):                0.561
+Skew:                           0.033   Prob(JB):                        0.755
+Kurtosis:                       2.182   Cond. No.                         1.00
+==============================================================================
+
+Warnings:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+</code></pre><p><img src="output_18_1.png" alt="png"></p>
+<p>来对比下两种解法，数据科学家在搭建模型时，通常会定义一些技术指标来衡量模型预测的准确度。需要模型参数的估计值是可靠的，但是事实并非如此，机器学习的模型结果显示，玩偶生产的固定成本是负数，这违背了事实。模型没有抓住数据真正的内在关系。为了提高预测的准确度，常常提取更多的特征，并以此搭建复杂的模型。大家都热衷于复杂度更高的模型。一旦发生过拟合，模型越复杂，错得越多。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/08/01/数据分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/01/数据分析/" itemprop="url">数据分析</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-01T19:26:00+08:00">
+                2018-08-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/data/" itemprop="url" rel="index">
+                    <span itemprop="name">data</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/08/01/数据分析/" class="leancloud_visitors" data-flag-title="数据分析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.5k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1.数据整合困难</p>
+<p>半导体制造涉及的工序和设备非常多，各种英文名字的系统很多到现在都还没有完全搞清楚，数据也分散在各个系统中，有结构化的，也有非结构化的（各种wafer map），很多数据存在于设备的日志中，基本没有被使用过。即使要使用这些数据，也面临一些困难，比如有些设备数据我们没有权限访问，需要跟Vendor申请，有些数据Vendor做过加密，需要解密（如PDF的FDC raw trace数据，与厂商沟通很久，才能得到你想要的），有些设备数据服务器挂掉了，都没人知道，甚至找不到服务器维护人员（如Tel公司的WIS数据，应该很有价值，但是数据服务器直接挂掉好久了）。另外，这些数据一般缺少元数据，没有数据字典这种东西，你拿到这些数据，也要花费很长时间去理解数据，更不用说将所有这些系统的数据整合打通了。还好目前已经整清楚一部分数据了，包括传统的YMS数据（WAT,CP,Metrology,WIP）和tool数据（iEMS，FDC），后续有机会把半导体行业数据一点一点理清楚，设计一套公共数据模型（类似互联网数据中台），可以满足各种数据应用</p>
+<p>2.组织架构不够完善</p>
+<p>随着大数据兴起，公司高层还是非常重视大数据的，但在组织架构上并没有提升到很高的位置，毕竟对于半导体制造，大数据仍然属于边缘的Support部门。在IT部门下面有传统的EA（Engineering Analysis）部门，很多资源在做数据接口、数据解析、报表等工作，在YE，YAE等偏业务部门也有数据分析团队，他们更接近Fab的用户，有实际的use case，能积累一定的行业经验。现在公司又冒出了大数据团队，既有IT的EA下面一个小团队（主要是搞个大数据平台hadoop，在上面做一些数据分析和应用），也有YE下面的一个小团队（面向业务需求，提供大数据应用），这几波人经常没有形成合力，事情推动起来比较困难，IT里面搞大数据的，接触用户的机会比较少，经常会搞一些研究型的项目（如做各种correlation），并没有跟实际业务问题对接起来。业务部门的大数据团队面临数据整合的困难，面临巧妇难为无米之炊的困境，在数据没有整合好之前，很难做出大的成果，IT在数据方面是有优势的，它负责各种数据库系统，对数据更清楚一些。这几个团队如果能够整合成一个大数据部门，并在组织架构上上升一层，价值会体现的更加明显。另外，团队内部角色定位和分工也不是很清晰，按照EA1,EA2这种划分有意义吗？团队内部也没有形成很好的工作流程，各个小组工作互不相干，在一个部门内部甚至很少会有接触到。智能制造不仅体现在IT自动化和信息化水平上，未来更多要体现在数据应用上，要让数据提供智能决策和生产。</p>
+<p>3、依赖外部大数据供应商</p>
+<p>IT部门比较忙的事情，就是跟各种大数据分析厂商搞POC，采购各种分析工具，大数据分析技能没有提升多少，各种厂商的工具倒接触了不少（PDF的extensio，bistel eDatalyzer，nanometrics，spotfire），主要是部门没有资源做自主分析，很多大数据人才不会选择制造业，还有部门领导也不相信自己的团队能做出来，借着POC名义让大家学习人家是怎么做的。目前大数据分析厂商大多数是国外的，主要是国外半导体行业发展好，有大量的应用机会，这其实是国内大数据的一个机会，制造业的问题相对比较通用一些，是比较容易做出解决方案和软件工具的，随着国内半导体行业的发展，是有制造业大数据创业机会的。</p>
+<p>4、传统方法使用大数据</p>
+<p>半导体制造分析使用传统统计分析方法较多（DOE，ANOVA，boxplot，假设检验），这跟行业特点是有关系的，不像互联网更关注相关关系，制造业更关注因果关系，发现了问题，要找到问题的根本原因，才能解决问题，所以DOE的思想是比较好理解的。但是这些方法的缺陷也比较明显，半导体制程太复杂，影响因素太多，每个因素都做DOE，是非常低效的，这时候机器学习、深度学习的方法是可以大大提高解决问题效率的，用户对这块的接受度还是比较低的，他们对可解释性要求较高，其实机器学习有些基于规则的模型还是比较有价值的，要让用户接受这些将会是一个漫长的过程，要逐渐改变用户的观念。另外，在与用户沟通时，要主动引导用户，不要问用户需要什么（用户想要的就是各种correlation，boxplot，regression），要搞清楚用户面临的痛点，我们提供更好的解决方案帮他们解决就好了，而不是为用户提供他们所要的那些功能。</p>
 
           
         
@@ -1433,7 +1634,7 @@ def full_dispatch_request(self):
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/50/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/50/">50</a><span class="page-number current">51</span><a class="page-number" href="/page/52/">52</a><span class="space">&hellip;</span><a class="page-number" href="/page/66/">66</a><a class="extend next" rel="next" href="/page/52/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/50/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/50/">50</a><span class="page-number current">51</span><a class="page-number" href="/page/52/">52</a><span class="space">&hellip;</span><a class="page-number" href="/page/74/">74</a><a class="extend next" rel="next" href="/page/52/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1483,7 +1684,7 @@ def full_dispatch_request(self):
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">330</span>
+                  <span class="site-state-item-count">369</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1598,7 +1799,7 @@ def full_dispatch_request(self):
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共148k字</span>
+  <span class="post-count">博客全站共148.6k字</span>
 </div>
 
         
