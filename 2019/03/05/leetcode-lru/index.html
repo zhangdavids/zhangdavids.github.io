@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="leetcode," />
 
 
 
@@ -81,16 +81,28 @@
 
 
 
-<meta name="description" content="曾因酒醉鞭名马 生怕情多累美人">
+<meta name="description" content="设计一个LRU cache，实现两个功能：
+(cache中存放着（key,value）键值对)
+get(key):获取key对应的value，如果key不在cache中那么返回-1（value 总是为正数）；
+set(key, value):如果key在cache中则更新它的value；如果不在则插入，如果cache已满则先删除最近最少使用的一项后在插入。
+对于get，如果key在cache中，那">
 <meta property="og:type" content="article">
 <meta property="og:title" content="leetcode-lru">
 <meta property="og:url" content="https://zhangdavids.github.io/2019/03/05/leetcode-lru/index.html">
 <meta property="og:site_name" content="上药三品，神与气精">
-<meta property="og:description" content="曾因酒醉鞭名马 生怕情多累美人">
-<meta property="og:updated_time" content="2019-03-05T03:20:11.284Z">
+<meta property="og:description" content="设计一个LRU cache，实现两个功能：
+(cache中存放着（key,value）键值对)
+get(key):获取key对应的value，如果key不在cache中那么返回-1（value 总是为正数）；
+set(key, value):如果key在cache中则更新它的value；如果不在则插入，如果cache已满则先删除最近最少使用的一项后在插入。
+对于get，如果key在cache中，那">
+<meta property="og:updated_time" content="2019-03-06T02:00:45.034Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="leetcode-lru">
-<meta name="twitter:description" content="曾因酒醉鞭名马 生怕情多累美人">
+<meta name="twitter:description" content="设计一个LRU cache，实现两个功能：
+(cache中存放着（key,value）键值对)
+get(key):获取key对应的value，如果key不在cache中那么返回-1（value 总是为正数）；
+set(key, value):如果key在cache中则更新它的value；如果不在则插入，如果cache已满则先删除最近最少使用的一项后在插入。
+对于get，如果key在cache中，那">
 
 
 
@@ -315,6 +327,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -347,7 +381,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  258
                 </span>
               
 
@@ -384,7 +418,14 @@
       
 
       
-        
+        <p>设计一个LRU cache，实现两个功能：</p>
+<p>(cache中存放着（key,value）键值对)</p>
+<p><strong>get(key):获取key对应的value，如果key不在cache中那么返回-1（value 总是为正数）；</strong></p>
+<p><strong>set(key, value):如果key在cache中则更新它的value；如果不在则插入，如果cache已满则先删除最近最少使用的一项后在插入。</strong></p>
+<p>对于get，如果key在cache中，那个get(key）表示了对key的一次访问；而set(key，value)则总是表示对key的一次访问。</p>
+<p>使用一个list来记录访问的顺序，最先访问的放在list的前面，最后访问的放在list的后面，故cache已满时，则删除list[0]，然后插入新项；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">class LRUCache(object):</span><br><span class="line">    def __init__(self, capacity):</span><br><span class="line">        self.cache = dict()</span><br><span class="line">        self.used_list = list()</span><br><span class="line">        self.capacity = capacity</span><br><span class="line"> </span><br><span class="line">    def get(self, key):</span><br><span class="line">        if key in self.cache:</span><br><span class="line">            if key != self.used_list[-1]:</span><br><span class="line">                self.used_list.remove(key)</span><br><span class="line">                self.used_list.append(key)</span><br><span class="line">            return self.cache[key]</span><br><span class="line">        else:</span><br><span class="line">            return -1</span><br><span class="line"></span><br><span class="line">    def set(self, key, value):</span><br><span class="line">        if key in self.cache:</span><br><span class="line">            self.used_list.remove(key)</span><br><span class="line">        elif len(self.cache) == self.capacity:</span><br><span class="line">            self.cache.pop(self.used_list.pop(0))</span><br><span class="line">        self.used_list.append(key)</span><br><span class="line">        self.cache[key] = value</span><br></pre></td></tr></table></figure>
+
       
     </div>
     
@@ -398,6 +439,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/leetcode/" rel="tag"># leetcode</a>
+          
+        </div>
       
 
       
@@ -417,6 +464,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/06/leetcode-六度分割/" rel="prev" title="leetcode-六度分割">
+                leetcode-六度分割 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -488,7 +539,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">370</span>
+                  <span class="site-state-item-count">371</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -603,7 +654,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共148.7k字</span>
+  <span class="post-count">博客全站共149.1k字</span>
 </div>
 
         

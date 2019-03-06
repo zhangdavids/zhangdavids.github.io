@@ -275,6 +275,174 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/02/19/flask-0-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/19/flask-0-1/" itemprop="url">flask-0.1</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-19T18:54:03+08:00">
+                2019-02-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/02/19/flask-0-1/" class="leancloud_visitors" data-flag-title="flask-0.1">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  547
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># Flask v0.1</span><br><span class="line">class _RequestContext(object):</span><br><span class="line">    &quot;&quot;&quot;The request context contains all request relevant information.  It is</span><br><span class="line">    created at the beginning of the request and pushed to the</span><br><span class="line">    `_request_ctx_stack` and removed at the end of it.  It will create the</span><br><span class="line">    URL adapter and request object for the WSGI environment provided.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line"> </span><br><span class="line">    def __init__(self, app, environ):</span><br><span class="line">        self.app = app</span><br><span class="line">        self.url_adapter = app.url_map.bind_to_environ(environ)</span><br><span class="line">        self.request = app.request_class(environ)</span><br><span class="line">        self.session = app.open_session(self.request)</span><br><span class="line">        self.g = _RequestGlobals()</span><br><span class="line">        self.flashes = None</span><br><span class="line"> </span><br><span class="line">    def __enter__(self):</span><br><span class="line">        _request_ctx_stack.push(self)</span><br><span class="line"> </span><br><span class="line">    def __exit__(self, exc_type, exc_value, tb):</span><br><span class="line">        # do not pop the request stack if we are in debug mode and an</span><br><span class="line">        # exception happened.  This will allow the debugger to still</span><br><span class="line">        # access the request object in the interactive shell.</span><br><span class="line">        if tb is None or not self.app.debug:</span><br><span class="line">            _request_ctx_stack.pop()</span><br></pre></td></tr></table></figure>
+<p>请求上下文</p>
+<p>根据_RequestContext上下文对象的定义，可以发现，在构造这个对象的时候添加了和Flask应用相关的一些属性：</p>
+<p>app ——上下文对象的app属性是当前的Flask应用；<br>url_adapter ——上下文对象的url_adapter属性是通过Flask应用中的Map实例构造成一个MapAdapter实例，主要功能是将请求中的URL和Map实例中的URL规则进行匹配；<br>request ——上下文对象的request属性是通过Request类构造的实例，反映请求的信息；<br>session ——上下文对象的session属性存储请求的会话信息；<br>g ——上下文对象的g属性可以存储全局的一些变量。<br>flashes ——消息闪现的信息。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">current_app = LocalProxy(lambda: _request_ctx_stack.top.app)</span><br><span class="line">request = LocalProxy(lambda: _request_ctx_stack.top.request)</span><br><span class="line">session = LocalProxy(lambda: _request_ctx_stack.top.session)</span><br><span class="line">g = LocalProxy(lambda: _request_ctx_stack.top.g)</span><br></pre></td></tr></table></figure>
+<p>在上下文对象中处理请求的过程分为以下几个步骤：</p>
+<p>在请求正式被处理之前的一些操作，调用preprocess_request()方法，例如打开一个数据库连接等操作；<br>正式处理请求。这个过程调用dispatch_request()方法，这个方法会根据URL匹配的情况调用相关的视图函数；<br>将从视图函数返回的值转变为一个Response对象；<br>在响应被发送到WSGI服务器之前，调用process_response(response)做一些后续处理过程；<br>调用response(environ, start_response)方法将响应发送回WSGI服务器。关于此方法的使用，可以参考：Werkzeug库——wrappers模块；<br>退出上下文环境时，LocalStack会清理当前线程/协程产生的数据（请求上下文对象）。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/02/18/leetcode-986/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -962,199 +1130,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/02/13/2019-go-04/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/13/2019-go-04/" itemprop="url">2019-go-04</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-13T21:10:11+08:00">
-                2019-02-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/golang/" itemprop="url" rel="index">
-                    <span itemprop="name">golang</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/02/13/2019-go-04/" class="leancloud_visitors" data-flag-title="2019-go-04">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  68
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li>使用 Raw SQL 查询，无需使用 ORM 表定义</li>
-<li>多数据库，都可直接使用占位符号 ?，自动转换</li>
-<li>查询时的参数，支持使用 Model Struct 和 Slice, Array</li>
-</ul>
-<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">insOrm:=orm.NewOrm()</span><br><span class="line"><span class="keyword">var</span> user models.Users</span><br><span class="line">insOrm.Raw(<span class="string">"SELECT name FROM Users WHERE id = ?"</span>, <span class="number">1</span>)..Exec()</span><br><span class="line">this.Ctx.WriteString(user.Name)</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/74/">74</a><a class="extend next" rel="next" href="/page/15/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/75/">75</a><a class="extend next" rel="next" href="/page/15/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1204,7 +1184,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">370</span>
+                  <span class="site-state-item-count">371</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1319,7 +1299,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共148.7k字</span>
+  <span class="post-count">博客全站共149.1k字</span>
 </div>
 
         
