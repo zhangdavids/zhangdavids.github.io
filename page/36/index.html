@@ -275,7 +275,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/10/12/mysql系列08/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/11/29/linux-optimize001/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -294,7 +294,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/10/12/mysql系列08/" itemprop="url">mysql系列08</a></h1>
+                <a class="post-title-link" href="/2018/11/29/linux-optimize001/" itemprop="url">linux-optimize001</a></h1>
         
 
         <div class="post-meta">
@@ -306,8 +306,227 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-12T23:24:35+08:00">
-                2018-10-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-29T22:42:19+08:00">
+                2018-11-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/11/29/linux-optimize001/" class="leancloud_visitors" data-flag-title="linux-optimize001">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  576
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="什么是平均负载？"><a href="#什么是平均负载？" class="headerlink" title="什么是平均负载？"></a>什么是平均负载？</h2><p>如何彻底理解现象背后的本质原理，用起来更加灵活，也更有底气。</p>
+<p>uptime 命令 每一列的输出含义</p>
+<p>当前时间 系统运行时间 正在登录的用户数</p>
+<p>依次是过去一分钟 五分钟 15分钟的平均负载</p>
+<p>平均负载是其实简单理解 就是平均活跃进程数</p>
+<p>平均负载为2 时 代表什么？</p>
+<ul>
+<li>在2核的cpu的系统上 代表所有的cpu都刚好被完全占用</li>
+<li>在4核的cpu的系统上 代表有50%的空闲</li>
+<li>在1核的cpu的系统上 意味着有一半的进程竞争不到cpu</li>
+</ul>
+<p>那么</p>
+<h3 id="平均负载为多少时合理？"><a href="#平均负载为多少时合理？" class="headerlink" title="平均负载为多少时合理？"></a>平均负载为多少时合理？</h3><p>一般而言 最理想的情况是等于cpu的个数 首先得知道系统有几个cpu</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep &apos;model name&apos; /proc/cpuinfo | wc -l</span><br></pre></td></tr></table></figure>
+<p>有了cpu的个数 可以判断出平均负载比cpu的个数还大的时候，系统已经出现了过载。</p>
+<p>一半当平均负载高于cpu数量70%的时候，就应该分析排查负载高的问题了</p>
+<p>平均负载是单位时间内，处于可运行状态和不可中断状态的进程数，因此不止包括了正在使用cpu的进程，还包括等待cpu和等待io的进程</p>
+<p>cpu使用率  是单位时间内cpu繁忙情况的统计 跟平均负载并不一定完全对应</p>
+<ul>
+<li>cpu密集型时 两者一致</li>
+<li>io密集时 等待io也会导致平均负载很高 但是cpu使用率不一定很高</li>
+<li>大量等待cpu的进程调度也会导致平均负载升高，此时的cpu使用率也会比较高</li>
+</ul>
+<h3 id="善于使用工具"><a href="#善于使用工具" class="headerlink" title="善于使用工具"></a>善于使用工具</h3><p>使用iostat mpstat pidstat 等工具 找到平均负载升高的根源在哪里</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt install stress sysstat -y</span><br></pre></td></tr></table></figure>
+<p>压力测试工具 </p>
+<p>异常进程模拟平均负载升高的场景</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stress --cpu 1 --timeout 600</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">watch -d uptime</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mpstat -P ALL 5</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pidstat -u 5 1</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stress -i 1 --timeout 600</span><br></pre></td></tr></table></figure>
+<p>模拟大量进程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">stress -c 8 --timeout 600</span><br></pre></td></tr></table></figure>
+<p>iowait 无法升高的原因 是因为使用的是sync()系统调用 作用是刷新缓冲内存到磁盘中 可以使用下一代 stress-ng</p>
+<p>htop atop 命令 也可以使用</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/11/27/leetcode-212/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/27/leetcode-212/" itemprop="url">leetcode-212</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-27T08:48:14+08:00">
+                2018-11-27
               </time>
             
 
@@ -324,7 +543,354 @@
 
           
           
-             <span id="/2018/10/12/mysql系列08/" class="leancloud_visitors" data-flag-title="mysql系列08">
+             <span id="/2018/11/27/leetcode-212/" class="leancloud_visitors" data-flag-title="leetcode-212">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  182
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line">from collections import defaultdict</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dx = [-1, 1, 0, 0]</span><br><span class="line">dy = [0, 0, -1, 1]</span><br><span class="line"></span><br><span class="line">END_OF_WORD = &quot;#&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Solution(object):</span><br><span class="line">    def findWords(self, board, words):</span><br><span class="line">        if not board or not board[0]:</span><br><span class="line">            return []</span><br><span class="line">        if not words:</span><br><span class="line">            return []</span><br><span class="line"></span><br><span class="line">        self.result = set()</span><br><span class="line"></span><br><span class="line">        root = defaultdict()</span><br><span class="line"></span><br><span class="line">        for word in words:</span><br><span class="line">            node = root</span><br><span class="line">            for char in word:</span><br><span class="line">                node = node.setdefault(char, defaultdict())</span><br><span class="line">            node[END_OF_WORD] = END_OF_WORD</span><br><span class="line"></span><br><span class="line">        self.m, self.n = len(board), len(board[0])</span><br><span class="line"></span><br><span class="line">        for i in xrange(self.m):</span><br><span class="line">            for j in xrange(self.n):</span><br><span class="line">                if board[i][j] in root:</span><br><span class="line">                    self._dfs(board, i, j, &quot;&quot;, root)</span><br><span class="line">        </span><br><span class="line">        return list(self.result)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    def _dfs(self, board, i, j, cur_word, cur_dict):</span><br><span class="line">        cur_word += board[i][j]</span><br><span class="line">        cur_dict = cur_dict[board[i][j]]</span><br><span class="line"></span><br><span class="line">        if END_OF_WORD in cur_dict:</span><br><span class="line">            self.result.add(cur_word)</span><br><span class="line">            </span><br><span class="line">        tmp, board[i][j] = board[i][j], &quot;@&quot;</span><br><span class="line">        for k in xrange(4):</span><br><span class="line">            x, y = i + dx[k], j + dy[k]</span><br><span class="line">            if 0 &lt;= x &lt; self.m and 0 &lt;= y &lt; self.n \</span><br><span class="line">                and board[x][y] != &quot;@&quot; and board[x][y] in cur_dict:</span><br><span class="line">                self._dfs(board, x, y, cur_word, cur_dict)</span><br><span class="line">        board[i][j] = tmp</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/11/14/oracle-django-研发记录/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/11/14/oracle-django-研发记录/" itemprop="url">oracle-django-研发记录</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-14T20:48:48+08:00">
+                2018-11-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/11/14/oracle-django-研发记录/" class="leancloud_visitors" data-flag-title="oracle-django-研发记录">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  55
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">oracle-instantclient12.1-basic-12.1.0.2.0-1.x86_64.rpm</span><br><span class="line">oracle-instantclient12.1-devel-12.1.0.2.0-1.x86_64.rpm</span><br><span class="line">oracle-instantclient12.1-sqlplus-12.1.0.2.0-1.x86_64.rpm</span><br></pre></td></tr></table></figure>
+<p>三个客户文件是否都需要安装 每个到底做了什么</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/10/16/架构设计的学习/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/16/架构设计的学习/" itemprop="url">架构设计的学习</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-16T21:48:32+08:00">
+                2018-10-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/architecture/" itemprop="url" rel="index">
+                    <span itemprop="name">architecture</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/10/16/架构设计的学习/" class="leancloud_visitors" data-flag-title="架构设计的学习">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -436,7 +1002,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/10/12/mysql系列07/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/10/16/redis在web中的应用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -455,7 +1021,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/10/12/mysql系列07/" itemprop="url">mysql系列07</a></h1>
+                <a class="post-title-link" href="/2018/10/16/redis在web中的应用/" itemprop="url">redis在web中的应用</a></h1>
         
 
         <div class="post-meta">
@@ -467,8 +1033,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-12T23:24:29+08:00">
-                2018-10-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-16T21:48:10+08:00">
+                2018-10-16
               </time>
             
 
@@ -485,490 +1051,7 @@
 
           
           
-             <span id="/2018/10/12/mysql系列07/" class="leancloud_visitors" data-flag-title="mysql系列07">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  0
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/10/12/mysql系列06/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/12/mysql系列06/" itemprop="url">mysql系列06</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-12T23:24:24+08:00">
-                2018-10-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/10/12/mysql系列06/" class="leancloud_visitors" data-flag-title="mysql系列06">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  0
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/10/12/mysql系列05/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/12/mysql系列05/" itemprop="url">mysql系列05</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-12T23:24:20+08:00">
-                2018-10-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/10/12/mysql系列05/" class="leancloud_visitors" data-flag-title="mysql系列05">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  0
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/10/12/mysql系列04/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/12/mysql系列04/" itemprop="url">mysql系列04</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-12T23:24:15+08:00">
-                2018-10-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/10/12/mysql系列04/" class="leancloud_visitors" data-flag-title="mysql系列04">
+             <span id="/2018/10/16/redis在web中的应用/" class="leancloud_visitors" data-flag-title="redis在web中的应用">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1071,7 +1154,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/35/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><span class="page-number current">36</span><a class="page-number" href="/page/37/">37</a><span class="space">&hellip;</span><a class="page-number" href="/page/75/">75</a><a class="extend next" rel="next" href="/page/37/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/35/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/35/">35</a><span class="page-number current">36</span><a class="page-number" href="/page/37/">37</a><span class="space">&hellip;</span><a class="page-number" href="/page/76/">76</a><a class="extend next" rel="next" href="/page/37/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1121,7 +1204,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">372</span>
+                  <span class="site-state-item-count">377</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1143,7 +1226,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1236,7 +1319,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共149.1k字</span>
+  <span class="post-count">博客全站共149.8k字</span>
 </div>
 
         
