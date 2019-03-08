@@ -275,7 +275,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/01/10/ds之队列/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/01/21/ds之并查集/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -294,7 +294,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/01/10/ds之队列/" itemprop="url">ds之队列</a></h1>
+                <a class="post-title-link" href="/2019/01/21/ds之并查集/" itemprop="url">ds之并查集</a></h1>
         
 
         <div class="post-meta">
@@ -306,8 +306,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-10T13:49:54+08:00">
-                2019-01-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-21T13:13:13+08:00">
+                2019-01-21
               </time>
             
 
@@ -346,7 +346,7 @@
 
           
           
-             <span id="/2019/01/10/ds之队列/" class="leancloud_visitors" data-flag-title="ds之队列">
+             <span id="/2019/01/21/ds之并查集/" class="leancloud_visitors" data-flag-title="ds之并查集">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -371,7 +371,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  227
+                  1.4k
                 </span>
               
 
@@ -387,7 +387,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  6
                 </span>
               
             </div>
@@ -410,31 +410,21 @@
       
         
           
-            <p>python当中的队列</p>
-<p>源码在 Lib/queue.py</p>
-<p>提供三种队列</p>
+            <p>六个关系网就能达到全世界</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// quick_find.java</span><br><span class="line"></span><br><span class="line">import java.io.File;</span><br><span class="line">import java.util.Scanner;</span><br><span class="line"></span><br><span class="line">public class UF &#123;</span><br><span class="line"></span><br><span class="line">    int count;   //连通分量数</span><br><span class="line">    int[] id;    //每个数所属的连通分量</span><br><span class="line"></span><br><span class="line">    public UF(int N) &#123;   //初始化时，N个点有N个分量</span><br><span class="line">        count = N;</span><br><span class="line">        id = new int[N];</span><br><span class="line">        for (int i = 0; i &lt; N; i++)</span><br><span class="line">            id[i] = i;</span><br><span class="line">    &#125;</span><br><span class="line">    //返回连通分量数</span><br><span class="line">    public int getCount()&#123;</span><br><span class="line">        return count;</span><br><span class="line">    &#125;</span><br><span class="line">    //查找x所属的连通分量</span><br><span class="line">    public int find(int x)&#123;</span><br><span class="line">        return id[x];</span><br><span class="line">    &#125;</span><br><span class="line">    //连接p,q(将q的分量改为p所在的分量)</span><br><span class="line">    public void union(int p,int q)&#123;</span><br><span class="line">        int pID=find(p);</span><br><span class="line">        int qID=find(q);</span><br><span class="line">        for(int i=0;i&lt;id.length;i++)&#123;</span><br><span class="line">            if(find(i)==pID)&#123;</span><br><span class="line">                id[i]=qID;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        count--;    //记得每进行一次连接，分量数减“1”</span><br><span class="line">    &#125;</span><br><span class="line">    //判断p,q是否连接，即是否属于同一个分量</span><br><span class="line">    public boolean connected(int p,int q)&#123;</span><br><span class="line">        return find(p)==find(q);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) throws Exception &#123;</span><br><span class="line"></span><br><span class="line">        //数据从外部文件读入，“data.txt”放在项目的根目录下</span><br><span class="line">        Scanner input = new Scanner(new File(&quot;data.txt&quot;));  </span><br><span class="line">        int N=input.nextInt();</span><br><span class="line">        UF uf = new UF(N);</span><br><span class="line">        while(input.hasNext())&#123;</span><br><span class="line">            int p=input.nextInt();</span><br><span class="line">            int q=input.nextInt();</span><br><span class="line">            if(uf.connected(p, q)) continue;        //若p,q已属于同一连通分量不再连接，则故直接跳过</span><br><span class="line">            uf.union(p, q);</span><br><span class="line">            System.out.println(p+&quot;-&quot;+q);</span><br><span class="line">        </span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;总连通分量数：&quot;+uf.getCount());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">// quick_union.java</span><br><span class="line"></span><br><span class="line">import java.io.File;</span><br><span class="line">import java.util.Scanner;</span><br><span class="line"></span><br><span class="line">public class UF &#123;</span><br><span class="line"></span><br><span class="line">    int count;   //连通分量数</span><br><span class="line">    int[] id;    //每个数所属的连通分量</span><br><span class="line"></span><br><span class="line">    public UF(int N) &#123;   //初始化时，N个点有N个分量</span><br><span class="line">        count = N;</span><br><span class="line">        id = new int[N];</span><br><span class="line">        for (int i = 0; i &lt; N; i++)</span><br><span class="line">            id[i] = i;</span><br><span class="line">    &#125;</span><br><span class="line">    //返回连通分量数</span><br><span class="line">    public int getCount()&#123;</span><br><span class="line">        return count;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //查找x所属的连通分量</span><br><span class="line">    public int find(int x)&#123;</span><br><span class="line">        while(x!=id[x]) x = id[x];  //若找不到，则一直往根root回溯</span><br><span class="line">        return x;</span><br><span class="line">    &#125;</span><br><span class="line">    //连接p,q(将q的分量改为p所在的分量)</span><br><span class="line">    public void union(int p,int q)&#123;</span><br><span class="line">        int pID=find(p);</span><br><span class="line">        int qID=find(q);</span><br><span class="line">        if(pID==qID) return ;</span><br><span class="line">        id[qID]=pID;</span><br><span class="line">        count--;</span><br><span class="line">    &#125;</span><br><span class="line">    /*</span><br><span class="line">    //查找x所属的连通分量</span><br><span class="line">    public int find(int x)&#123;</span><br><span class="line">        return id[x];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //连接p,q(将q的分量改为p所在的分量)</span><br><span class="line">    public void union(int p,int q)&#123;</span><br><span class="line">        int pID=find(p);</span><br><span class="line">        int qID=find(q);</span><br><span class="line">        if(pID==qID) return ;</span><br><span class="line">        for(int i=0;i&lt;id.length;i++)&#123;</span><br><span class="line">            if(find(i)==pID)&#123;</span><br><span class="line">                id[i]=qID;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        count--;    //记得每进行一次连接，分量数减“1”</span><br><span class="line">    &#125;</span><br><span class="line">    */</span><br><span class="line">    //判断p,q是否连接，即是否属于同一个分量</span><br><span class="line">    public boolean connected(int p,int q)&#123;</span><br><span class="line">        return find(p)==find(q);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) throws Exception &#123;</span><br><span class="line"></span><br><span class="line">        //数据从外部文件读入，“data.txt”放在项目的根目录下</span><br><span class="line">        Scanner input = new Scanner(new File(&quot;data.txt&quot;));  </span><br><span class="line">        int N=input.nextInt();</span><br><span class="line">        UF uf = new UF(N);</span><br><span class="line">        while(input.hasNext())&#123;</span><br><span class="line">            int p=input.nextInt();</span><br><span class="line">            int q=input.nextInt();</span><br><span class="line">            if(uf.connected(p, q)) continue;        //若p,q已属于同一连通分量不再连接，则故直接跳过</span><br><span class="line">            uf.union(p, q);</span><br><span class="line">            System.out.println(p+&quot;-&quot;+q);</span><br><span class="line">        </span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;总连通分量数：&quot;+uf.getCount());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line">// weighted_uf.java</span><br><span class="line"></span><br><span class="line">import java.io.File;</span><br><span class="line">import java.util.Scanner;</span><br><span class="line"></span><br><span class="line">public class UF &#123;</span><br><span class="line"></span><br><span class="line">    int count; // 连通分量数</span><br><span class="line">    int[] id; // 每个数所属的连通分量</span><br><span class="line">    int[] sz;</span><br><span class="line"></span><br><span class="line">    public UF(int N) &#123; // 初始化时，N个点有N个分量</span><br><span class="line">        count = N;</span><br><span class="line">        sz = new int[N];</span><br><span class="line">        id = new int[N];</span><br><span class="line">        for (int i = 0; i &lt; N; i++)</span><br><span class="line">            id[i] = i;</span><br><span class="line"></span><br><span class="line">        for (int i = 0; i &lt; N; i++)</span><br><span class="line">            sz[i] = 1;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 返回连通分量数</span><br><span class="line">    public int getCount() &#123;</span><br><span class="line">        return count;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 查找x所属的连通分量</span><br><span class="line">    public int find(int x) &#123;</span><br><span class="line">        while (x != id[x])</span><br><span class="line">            x = id[x]; // 若找不到，则一直往根root回溯</span><br><span class="line">        return x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 连接p,q(将q的分量改为p所在的分量)</span><br><span class="line">    public void union(int p, int q) &#123;</span><br><span class="line">        int pID = find(p);</span><br><span class="line">        int qID = find(q);</span><br><span class="line">        if (pID == qID)</span><br><span class="line">            return;</span><br><span class="line"></span><br><span class="line">        if (sz[p] &lt; sz[q]) &#123;    //通过结点数量，判断树的大小并将小树并到大树下</span><br><span class="line">            id[p] = qID;</span><br><span class="line">            sz[q] += sz[p];</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            id[q] = pID;</span><br><span class="line">            sz[p] += sz[q];</span><br><span class="line">        &#125;</span><br><span class="line">        count--;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /*</span><br><span class="line">     * //查找x所属的连通分量 public int find(int x)&#123; return id[x]; &#125;</span><br><span class="line">     * </span><br><span class="line">     * //连接p,q(将q的分量改为p所在的分量) public void union(int p,int q)&#123; int pID=find(p);</span><br><span class="line">     * int qID=find(q); if(pID==qID) return ; for(int i=0;i&lt;id.length;i++)&#123;</span><br><span class="line">     * if(find(i)==pID)&#123; id[i]=qID; &#125; &#125; count--; //记得每进行一次连接，分量数减“1” &#125;</span><br><span class="line">     */</span><br><span class="line">    // 判断p,q是否连接，即是否属于同一个分量</span><br><span class="line">    public boolean connected(int p, int q) &#123;</span><br><span class="line">        return find(p) == find(q);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) throws Exception &#123;</span><br><span class="line"></span><br><span class="line">        // 数据从外部文件读入，“data.txt”放在项目的根目录下</span><br><span class="line">        Scanner input = new Scanner(new File(&quot;data.txt&quot;));</span><br><span class="line">        int N = input.nextInt();</span><br><span class="line">        UF uf = new UF(N);</span><br><span class="line">        while (input.hasNext()) &#123;</span><br><span class="line">            int p = input.nextInt();</span><br><span class="line">            int q = input.nextInt();</span><br><span class="line">            if (uf.connected(p, q))</span><br><span class="line">                continue; // 若p,q已属于同一连通分量不再连接，则故直接跳过</span><br><span class="line">            uf.union(p, q);</span><br><span class="line">            System.out.println(p + &quot;-&quot; + q);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;总连通分量数：&quot; + uf.getCount());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
-<li>Queue（普通先进先出队列）</li>
-<li>LifoQueue（后进先出队列）</li>
-<li>PriorityQueue（优先级队列）</li>
+<li><p>网络通信（比如：是否需要在通信点p,q建立通信连接）</p>
+</li>
+<li><p>媒体社交（比如：向通一个社交圈的朋友推荐商品）</p>
+</li>
+<li><p>数学集合（比如：判断元素p,q之后选择是否进行集合合并）</p>
+</li>
 </ul>
-<p>提供封装的方法为</p>
-<ul>
-<li>qsize</li>
-<li>empty</li>
-<li>full</li>
-<li>put</li>
-<li>put_nowait</li>
-<li>get</li>
-<li>get_nowait</li>
-<li>task_done</li>
-<li>join</li>
-</ul>
-<p>这里着重说一下join()</p>
-<p>阻塞调用线程，直到队列中的所有任务被处理掉。</p>
-<p>只要有数据被加入队列，未完成的任务数就会增加。当消费者线程调用task_done()以指示该项目已检索并且其上的所有工作都已完成时，计数将减少。当未完成的任务数降到0，join()解除阻塞。</p>
-<p>示例如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">def worker():</span><br><span class="line">    while True:</span><br><span class="line">        item = q.get()</span><br><span class="line">        if item is None:</span><br><span class="line">            break</span><br><span class="line">        do_work(item)</span><br><span class="line">        q.task_done()</span><br><span class="line"></span><br><span class="line">q = queue.Queue()</span><br><span class="line">threads = []</span><br><span class="line">for i in range(num_worker_threads):</span><br><span class="line">    t = threading.Thread(target=worker)</span><br><span class="line">    t.start()</span><br><span class="line">    threads.append(t)</span><br><span class="line"></span><br><span class="line">for item in source():</span><br><span class="line">    q.put(item)</span><br><span class="line"></span><br><span class="line"># block until all tasks are done</span><br><span class="line">q.join()</span><br><span class="line"></span><br><span class="line"># stop workers</span><br><span class="line">for i in range(num_worker_threads):</span><br><span class="line">    q.put(None)</span><br><span class="line">for t in threads:</span><br><span class="line">    t.join()</span><br></pre></td></tr></table></figure>
+<p>六度分隔理论，该理论认为世界上任何互不相识的两人，只需要很少的中间人就能够建立起联系。</p>
+<p>哈佛大学心理学教授斯坦利·米尔格拉姆于1967年根据这个概念做过一次连锁信实验，尝试证明平均只需要6步就可以联系任何两个互不相识的美国人。</p>
+
           
         
       
@@ -482,7 +472,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/01/10/ds之栈/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/01/19/leetcode-714/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -501,7 +491,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/01/10/ds之栈/" itemprop="url">ds之栈</a></h1>
+                <a class="post-title-link" href="/2019/01/19/leetcode-714/" itemprop="url">leetcode-714</a></h1>
         
 
         <div class="post-meta">
@@ -513,8 +503,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-10T13:49:36+08:00">
-                2019-01-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-19T23:14:49+08:00">
+                2019-01-19
               </time>
             
 
@@ -536,8 +526,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/data-structure/" itemprop="url" rel="index">
-                    <span itemprop="name">data structure</span>
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
                   </a>
                 </span>
 
@@ -553,7 +543,7 @@
 
           
           
-             <span id="/2019/01/10/ds之栈/" class="leancloud_visitors" data-flag-title="ds之栈">
+             <span id="/2019/01/19/leetcode-714/" class="leancloud_visitors" data-flag-title="leetcode-714">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -578,7 +568,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  194
+                  75
                 </span>
               
 
@@ -617,10 +607,9 @@
       
         
           
-            <p>一般而言 很多数据结构 都可以使用数组实现（也就是顺序表）</p>
-<p>也可以使用链表实现 py里找一圈你可能没有看到栈的实现</p>
-<p>是因为可以直接使用list实现栈 简单！！！</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">class Stack(object):</span><br><span class="line">    # 初始化栈为空列表</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.items = []</span><br><span class="line"></span><br><span class="line">    # 判断栈是否为空，返回布尔值</span><br><span class="line">    def is_empty(self):</span><br><span class="line">        return self.items == []</span><br><span class="line"></span><br><span class="line">    # 返回栈顶元素</span><br><span class="line">    def peek(self):</span><br><span class="line">        return self.items[len(self.items) - 1]</span><br><span class="line"></span><br><span class="line">    # 返回栈的大小</span><br><span class="line">    def size(self):</span><br><span class="line">        return len(self.items)</span><br><span class="line"></span><br><span class="line">    # 把新的元素堆进栈里面（程序员喜欢把这个过程叫做压栈，入栈，进栈……）</span><br><span class="line">    def push(self, item):</span><br><span class="line">        self.items.append(item)</span><br><span class="line"></span><br><span class="line">    # 把栈顶元素丢出去（程序员喜欢把这个过程叫做出栈……）</span><br><span class="line">    def pop(self, item):</span><br><span class="line">        return self.items.pop()</span><br></pre></td></tr></table></figure>
+            <p>leetcode 含有手续费的买卖股票时机</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">maxProfit</span><span class="params">(self, prices, fee)</span>:</span></span><br><span class="line">        <span class="string">"""</span><br><span class="line">        :type prices: List[int]</span><br><span class="line">        :type fee: int</span><br><span class="line">        :rtype: int</span><br><span class="line">        """</span></span><br><span class="line">        n = len(prices)</span><br><span class="line">        <span class="keyword">if</span> n &lt; <span class="number">2</span>:</span><br><span class="line">             <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        ans, minimum = <span class="number">0</span>, prices[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">1</span>, n):</span><br><span class="line">            <span class="keyword">if</span> prices[i] &lt; minimum:</span><br><span class="line">                minimum = prices[i]</span><br><span class="line">            <span class="keyword">elif</span> prices[i] &gt; minimum + fee:</span><br><span class="line">                ans += prices[i] - fee - minimum</span><br><span class="line">                minimum = prices[i] - fee</span><br><span class="line">        <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure>
+
           
         
       
@@ -668,7 +657,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/01/10/taskflow详细4/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/01/19/py连接mysql的条条大路/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -687,7 +676,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/01/10/taskflow详细4/" itemprop="url">taskflow详细4</a></h1>
+                <a class="post-title-link" href="/2019/01/19/py连接mysql的条条大路/" itemprop="url">py连接mysql的条条大路</a></h1>
         
 
         <div class="post-meta">
@@ -699,7 +688,176 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-10T11:20:07+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-19T21:41:13+08:00">
+                2019-01-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/01/19/py连接mysql的条条大路/" class="leancloud_visitors" data-flag-title="py连接mysql的条条大路">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  55
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1.mysqldb<br>最古老的 c api开发</p>
+<p>2.mysqlclient<br>也不支持asyncio</p>
+<p>3.pymysql</p>
+<p>纯python开发的mysql连接库 </p>
+<p>4.aiomysql</p>
+<p>需要异步访问数据库时 就可以使用此库</p>
+<p>5.mysql-connector-python</p>
+<p>建议使用3和4</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/01/10/dl之15种回归/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/01/10/dl之15种回归/" itemprop="url">dl之15种回归</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-10T14:19:02+08:00">
                 2019-01-10
               </time>
             
@@ -710,28 +868,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/compute/" itemprop="url" rel="index">
-                    <span itemprop="name">compute</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -739,7 +875,7 @@
 
           
           
-             <span id="/2019/01/10/taskflow详细4/" class="leancloud_visitors" data-flag-title="taskflow详细4">
+             <span id="/2019/01/10/dl之15种回归/" class="leancloud_visitors" data-flag-title="dl之15种回归">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -851,7 +987,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/01/10/taskflow详细3/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/01/10/es6总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -870,7 +1006,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/01/10/taskflow详细3/" itemprop="url">taskflow详细3</a></h1>
+                <a class="post-title-link" href="/2019/01/10/es6总结/" itemprop="url">es6总结</a></h1>
         
 
         <div class="post-meta">
@@ -882,7 +1018,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-10T11:20:02+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-10T13:57:40+08:00">
                 2019-01-10
               </time>
             
@@ -905,8 +1041,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/compute/" itemprop="url" rel="index">
-                    <span itemprop="name">compute</span>
+                  <a href="/categories/frontend/" itemprop="url" rel="index">
+                    <span itemprop="name">frontend</span>
                   </a>
                 </span>
 
@@ -922,7 +1058,7 @@
 
           
           
-             <span id="/2019/01/10/taskflow详细3/" class="leancloud_visitors" data-flag-title="taskflow详细3">
+             <span id="/2019/01/10/es6总结/" class="leancloud_visitors" data-flag-title="es6总结">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -947,7 +1083,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  1.2k
                 </span>
               
 
@@ -963,7 +1099,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  4
                 </span>
               
             </div>
@@ -986,202 +1122,43 @@
       
         
           
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/01/10/taskflow详细2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/01/10/taskflow详细2/" itemprop="url">taskflow详细2</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-10T11:19:55+08:00">
-                2019-01-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/compute/" itemprop="url" rel="index">
-                    <span itemprop="name">compute</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/01/10/taskflow详细2/" class="leancloud_visitors" data-flag-title="taskflow详细2">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  814
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  3
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Engine的必要初始化参数一个是flow,一个就是backends,backends对应的是storage使用何种后端存储,我简化后的代码storage只支持sqlalchemy,所以不直接传入sqlalchemy的session即可,另外一个参数就是我们马上要说的flow</p>
-<p>Engine是通过flow来找到需要执行的task的,所以,我们的task都是add到flow的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">from simpleflow.patterns import graph_flow as gf</span><br><span class="line"></span><br><span class="line">class Adder(task.Task):</span><br><span class="line"></span><br><span class="line">    def execute(self, x, y):</span><br><span class="line">        print &apos;do!!!&apos;, x, y</span><br><span class="line">        return x + y</span><br><span class="line"></span><br><span class="line">gflow = gf.Flow(&apos;root&apos;)</span><br><span class="line">gflow.add(Adder(name=&apos;atask&apos;))</span><br><span class="line">gflow2 = gf.Flow(&apos;leaf&apos;)</span><br><span class="line">gflow.add(gflow2)</span><br></pre></td></tr></table></figure>
-<p>当然flow的add参数可以是task,还可以flow.</p>
-<p>flow的代码比较复杂,关键属性_graph就是networkx的图了,不建议现在读代码,粗读一部分,稍微看一下对应的图和关键变量是什么就好和add部分就好。</p>
-<p>flow一共有三种,使用到有向图和无向图,当flow调用add添加的task/flow的时候,就是在图中增加节点,对于有向图,添加节点后自动增加边</p>
-<p>这里我就直接用我已经砍掉backends层的代码来说明了,我们来看storage里用到的几个对象（taskflow在persistence包,也就持久化包里,我的代码都集中到storage包里了）</p>
-<p>Connection taskflow中,Connection上面还套了一层backends,backends就一个函数get_connection用于返回Connection实例, 因为原来代码可以支持文件、内存等接口,所以有这么一层Connection用于存放通用方法,具体有什么方法可以直接看代码我这里就不描述了,方法的名字很明确的描述了方法的作用</p>
-<p>models中LogBook,FlowDetail,AtomDetail 原taskflow的models我改为了middleware,这里的models对应的是tables<br>这样改是为了统一orm框架写法,orm框架中都在models里放表结构<br>所以这里的这3个对象对应了三张表<br>LogBook：一次工作流有且只有一个LogBook,其实条记录用处不大,主要用来识别一次工作流,由于外键关系,删除一条logbook将会删除对应的其他表的记录,工作流正常结束后是可以删除相关记录的<br>FlowDetail：一次工作流只能接收一个flow,虽然前面我们flow中可以添加flow,但是并不会生成FlowDetail记录,顶层flow直接会获取下层flow的具体atom<br>AtomDetail: task和retry都是继承自atom,所以AtomDetail的的每一行就对应一个task或retry(retry后面单独说),还有之前说的用于传输初始参数的_TaskFlow_INJECTORD</p>
-<p>middleware middleware里的LogBook,FlowDetail,AtomDetail就是models里表的dict版增加了一些方法,TaskDetail/RetryDetail自然也是继承了AtomDetail,它们都是存到AtomDetail里,为什么要拆两份而不统一起来呢？一个原因是原taskflow了因为要支持各种backends,所以分了一层出来。还有一个原因是在没有写入（task初始化,返回,取消,报错）的的情况下,图的相关动作都在内存中进行,直接用orm的对象太过笨重,middleware中的对应对象就轻量很多</p>
-<p>现在我们来看Storage类了</p>
-<p>我们看看engine里对Storage的初始化</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">@misc.cachedproperty</span><br><span class="line">def storage(self):</span><br><span class="line">    def _scope_fetcher(atom_name):</span><br><span class="line">        if self._compiled:</span><br><span class="line">            return self._runtime.fetch_scopes_for(atom_name)</span><br><span class="line">        else:</span><br><span class="line">            return None</span><br><span class="line">    return storage.Storage(self._flow_detail,</span><br><span class="line">                           connection=self.connection,</span><br><span class="line">                           scope_fetcher=_scope_fetcher)</span><br></pre></td></tr></table></figure>
+            <h3 id="1-变量声明let和const"><a href="#1-变量声明let和const" class="headerlink" title="1.变量声明let和const"></a>1.变量声明let和const</h3><p>我们都是知道在ES6以前，var关键字声明变量。无论声明在何处，都会被视为声明在函数的最顶部(不在函数内即在全局作用域的最顶部)。这就是函数变量提升例如:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function aa() &#123;</span><br><span class="line">    if(bool) &#123;</span><br><span class="line">        var test = &apos;hello man&apos;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        console.log(test)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>现在的情况下 则是<br>我们通常用let和const来声明，let表示变量、const表示常量。let和const都是块级作用域。怎么理解这个块级作用域？</p>
+<p>在一个函数内部<br>在一个代码块内部</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function aa() &#123;</span><br><span class="line">    if(bool) &#123;</span><br><span class="line">       let test = &apos;hello man&apos;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        //test 在此处访问不到</span><br><span class="line">        console.log(test)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>let的作用域是在它所在当前代码块，但不会被提升到当前函数的最顶部。</p>
+<p>2.模版字符串</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">const name = &apos;lux&apos;</span><br><span class="line">console.log(`hello $&#123;name&#125;`) //hello lux 基本的字符串格式化。将表达式嵌入字符串中进行拼接。用$&#123;&#125;来界定。</span><br><span class="line"></span><br><span class="line">多行字符串或者字符串一行行拼接。ES6反引号(``)直接搞定。</span><br><span class="line">// es5</span><br><span class="line">var msg = &quot;Hi \</span><br><span class="line">man!</span><br><span class="line">&quot;</span><br><span class="line">// es6</span><br><span class="line">const template = `&lt;div&gt;</span><br><span class="line">    &lt;span&gt;hello world&lt;/span&gt;</span><br><span class="line">&lt;/div&gt;`</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">// es5</span><br><span class="line">var msg = &quot;Hi \</span><br><span class="line">man!</span><br><span class="line">&quot;</span><br><span class="line">// es6</span><br><span class="line">const template = `&lt;div&gt;</span><br><span class="line">    &lt;span&gt;hello world&lt;/span&gt;</span><br><span class="line">&lt;/div&gt;`</span><br></pre></td></tr></table></figure>
+<p>3.函数</p>
+<p>为函数提供默认值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function action(num = 200) &#123;</span><br><span class="line">        console.log(num)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">action() //200</span><br><span class="line">action(300) //300</span><br></pre></td></tr></table></figure>
+<p>箭头函数</p>
+<p>箭头函数最直观的三个特点。</p>
+<p>不需要function关键字来创建函数<br>省略return关键字<br>继承当前上下文的 this 关键字</p>
+<p>4.拓展的对象功能</p>
+<ul>
+<li>键值对简写</li>
+<li>省掉function关键字</li>
+</ul>
+<p>5.更方便的数据访问 解构</p>
+<p>6.展开运算符</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">const number = [1,2,3,4,5]</span><br><span class="line">    const [first, ...rest] = number</span><br><span class="line">    console.log(rest) //2,3,4,5</span><br><span class="line">    //对象</span><br><span class="line">    const user = &#123;</span><br><span class="line">        username: &apos;lux&apos;,</span><br><span class="line">        gender: &apos;female&apos;,</span><br><span class="line">        age: 19,</span><br><span class="line">        address: &apos;peking&apos;</span><br><span class="line">    &#125;</span><br><span class="line">    const &#123; username, ...rest &#125; = user</span><br><span class="line">    console.log(rest) //&#123;&quot;address&quot;: &quot;peking&quot;, &quot;age&quot;: 19, &quot;gender&quot;: &quot;female&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>7.import export</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1.当用export default people导出时，就用 import people 导入（不带大括号）</span><br><span class="line"></span><br><span class="line">2.一个文件里，有且只能有一个export default。但可以有多个export。</span><br><span class="line"></span><br><span class="line">3.当用export name 时，就用import &#123; name &#125;导入（记得带上大括号）</span><br><span class="line"></span><br><span class="line">4.当一个文件里，既有一个export default people, 又有多个export name 或者 export age时，导入就用 import people, &#123; name, age &#125; </span><br><span class="line"></span><br><span class="line">5.当一个文件里出现n多个 export 导出很多模块，导入时除了一个一个导入，也可以用import * as example</span><br></pre></td></tr></table></figure>
+<p>8.promise</p>
+<p>在promise之前代码过多的回调或者嵌套，可读性差、耦合度高、扩展性低。通过Promise机制，扁平化的代码机构，大大提高了代码可读性；用同步编程的方式来编写异步代码，保存线性的代码逻辑，极大的降低了代码耦合性而提高了程序的可扩展性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(function() &#123;</span><br><span class="line">  console.log(1)</span><br><span class="line">&#125;, 0);</span><br><span class="line">new Promise(function executor(resolve) &#123;</span><br><span class="line">  console.log(2);</span><br><span class="line">  for( var i=0 ; i&lt;10000 ; i++ ) &#123;</span><br><span class="line">    i == 9999 &amp;&amp; resolve();</span><br><span class="line">  &#125;</span><br><span class="line">  console.log(3);</span><br><span class="line">&#125;).then(function() &#123;</span><br><span class="line">  console.log(4);</span><br><span class="line">&#125;);</span><br><span class="line">console.log(5);</span><br></pre></td></tr></table></figure>
+<p>首先先碰到一个 setTimeout，于是会先设置一个定时，在定时结束后将传递这个函数放到任务队列里面，因此开始肯定不会输出 1 。</p>
+<p>然后是一个 Promise，里面的函数是直接执行的，因此应该直接输出 2 3 。</p>
+<p>然后，Promise 的 then 应当会放到当前 tick 的最后，但是还是在当前 tick 中。</p>
+<p>因此，应当先输出 5，然后再输出 4 。</p>
+<p>最后在到下一个 tick，就是 1 。</p>
+<p>“2 3 5 4 1”</p>
+<p>9.迭代器</p>
+<p>生成器（ generator）是能返回一个迭代器的函数。生成器函数也是一种函数，最直观的表现就是比普通的function多了个星号*，在其函数体内可以使用yield关键字,有意思的是函数会在每个yield后暂停。</p>
+<p>这里生活中有一个比较形象的例子。咱们到银行办理业务时候都得向大厅的机器取一张排队号。你拿到你的排队号，机器并不会自动为你再出下一张票。也就是说取票机“暂停”住了，直到下一个人再次唤起才会继续吐票。</p>
+<p>OK。说说迭代器。当你调用一个generator时，它将返回一个迭代器对象。这个迭代器对象拥有一个叫做next的方法来帮助你重启generator函数并得到下一个值。next方法不仅返回值，它返回的对象具有两个属性：done和value。value是你获得的值，done用来表明你的generator是否已经停止提供值。继续用刚刚取票的例子，每张排队号就是这里的value，打印票的纸是否用完就这是这里的done。</p>
 
           
         
@@ -1221,7 +1198,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/21/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><span class="page-number current">22</span><a class="page-number" href="/page/23/">23</a><span class="space">&hellip;</span><a class="page-number" href="/page/76/">76</a><a class="extend next" rel="next" href="/page/23/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/21/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/21/">21</a><span class="page-number current">22</span><a class="page-number" href="/page/23/">23</a><span class="space">&hellip;</span><a class="page-number" href="/page/77/">77</a><a class="extend next" rel="next" href="/page/23/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1271,7 +1248,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">377</span>
+                  <span class="site-state-item-count">383</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1386,7 +1363,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共149.8k字</span>
+  <span class="post-count">博客全站共150.8k字</span>
 </div>
 
         
