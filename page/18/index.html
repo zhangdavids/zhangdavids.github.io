@@ -275,7 +275,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/02/13/2019-go-01/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/02/14/pg-update-tz/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -294,7 +294,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/02/13/2019-go-01/" itemprop="url">2019-go-01</a></h1>
+                <a class="post-title-link" href="/2019/02/14/pg-update-tz/" itemprop="url">pg-update-tz</a></h1>
         
 
         <div class="post-meta">
@@ -306,7 +306,169 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-13T21:09:57+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-14T10:33:42+08:00">
+                2019-02-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/02/14/pg-update-tz/" class="leancloud_visitors" data-flag-title="pg-update-tz">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  101
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">例如要将默认的PRC修改为UTC</span><br><span class="line">可以从几个方面来修改</span><br><span class="line">1. 全局参数</span><br><span class="line">postgresql.conf</span><br><span class="line">timezone=&apos;UTC&apos;</span><br><span class="line"></span><br><span class="line">2. 数据库级配置</span><br><span class="line">alter database dbname set timezone=&apos;UTC&apos;;</span><br><span class="line"></span><br><span class="line">pipeline=# select * from pg_db_role_setting ;</span><br><span class="line"> setdatabase | setrole |              setconfig               </span><br><span class="line">-------------+---------+--------------------------------------</span><br><span class="line">       14930 |       0 | &#123;TimeZone=UTC&#125;</span><br><span class="line"></span><br><span class="line">3. 用户级配置</span><br><span class="line">alter role rolname set timezone=&apos;UTC&apos;;</span><br><span class="line">或者</span><br><span class="line">alter role all set timezone=&apos;UTC&apos;;</span><br><span class="line"></span><br><span class="line">pipeline=# select * from pg_db_role_setting ;</span><br><span class="line"> setdatabase | setrole |              setconfig               </span><br><span class="line">-------------+---------+--------------------------------------</span><br><span class="line">       14930 |       0 | &#123;TimeZone=UTC&#125;</span><br><span class="line">           0 |       0 | &#123;TimeZone=UTC&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/02/13/2019-go-05/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/13/2019-go-05/" itemprop="url">2019-go-05</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-13T21:10:17+08:00">
                 2019-02-13
               </time>
             
@@ -346,7 +508,7 @@
 
           
           
-             <span id="/2019/02/13/2019-go-01/" class="leancloud_visitors" data-flag-title="2019-go-01">
+             <span id="/2019/02/13/2019-go-05/" class="leancloud_visitors" data-flag-title="2019-go-05">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -371,7 +533,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  711
+                  703
                 </span>
               
 
@@ -387,7 +549,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3
+                  2
                 </span>
               
             </div>
@@ -410,18 +572,16 @@
       
         
           
-            <h2 id="beego-orm"><a href="#beego-orm" class="headerlink" title="beego orm"></a>beego orm</h2><p>已支持数据库驱动：</p>
-<ul>
-<li>MySQL：github.com/go-sql-driver/mysql</li>
-<li>PostgreSQL：github.com/lib/pq</li>
-</ul>
-<p>导入驱动</p>
-<pre><code>import (
-    _ &quot;github.com/go-sql-driver/mysql&quot;
-)
-</code></pre><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// models/User.go</span></span><br><span class="line">	</span><br><span class="line"><span class="keyword">type</span> Users <span class="keyword">struct</span> &#123;</span><br><span class="line">	Id  <span class="keyword">int</span></span><br><span class="line">	Name <span class="keyword">string</span></span><br><span class="line">	Pwd  <span class="keyword">string</span></span><br><span class="line">	Age  <span class="keyword">int</span></span><br><span class="line">	Sex  <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span><br><span class="line">//我们也可以使用Tag对属性进行详细的设置</span><br><span class="line">type Users struct &#123;</span><br><span class="line">	Id  int   `pk:"auto;column(id)"`  //设置主键自增长 列名设为id</span><br><span class="line">	Name string `orm:"size(15);column(name)"`  //设置varchar长度为15 列名为name</span><br><span class="line">	Pwd  string  `orm:"size(15);column(pwd)"` </span><br><span class="line">	Age  int    `orm:"column(age)"`</span><br><span class="line">	Sex  string  `orm:"size(15);column(sex)"`</span><br><span class="line">&#125;</span><br><span class="line">*/</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">//初始化</span></span><br><span class="line"><span class="keyword">func</span> init() &#123;</span><br><span class="line">	<span class="comment">//注册数据驱动</span></span><br><span class="line">	<span class="comment">// orm.RegisterDriver("mysql", orm.DR_MySQL)</span></span><br><span class="line">	<span class="comment">// mysql / sqlite3 / postgres 这三种是默认已经注册过的，所以可以无需设置</span></span><br><span class="line">	<span class="comment">//注册数据库 ORM 必须注册一个别名为 default 的数据库，作为默认使用</span></span><br><span class="line">	orm.RegisterDataBase(<span class="string">"default"</span>, <span class="string">"mysql"</span>, <span class="string">"root:123456@tcp(127.0.0.1:3306)/HelloBeego"</span>)</span><br><span class="line">	<span class="comment">//注册模型</span></span><br><span class="line">	orm.RegisterModel(<span class="built_in">new</span>(Users))</span><br><span class="line">	<span class="comment">//自动创建表 参数二为是否开启创建表   参数三是否更新表</span></span><br><span class="line">	orm.RunSyncdb(<span class="string">"default"</span>, <span class="literal">true</span>, <span class="literal">true</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">orm.RegisterDataBase(<span class="string">"default"</span>, <span class="string">"mysql"</span>, <span class="string">"root:root@/orm_test?charset=utf8"</span>, maxIdle, maxConn)</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 参数1        数据库的别名，用来在 ORM 中切换数据库使用</span></span><br><span class="line"><span class="comment">// 参数2        数据库驱</span></span><br><span class="line"><span class="comment">// 参数3        对应的连接字符串</span></span><br><span class="line"><span class="comment">// 参数4(可选)  设置最大空闲连接</span></span><br><span class="line"><span class="comment">// 参数5(可选)  设置最大数据库连接 (go &gt;= 1.2)</span></span><br></pre></td></tr></table></figure>
-<h3 id="模型设置详解"><a href="#模型设置详解" class="headerlink" title="模型设置详解"></a>模型设置详解</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">忽略字段</span><br><span class="line">设置 - 即可忽略 struct 中的字段</span><br><span class="line">AnyField string `orm:&quot;-&quot;`</span><br><span class="line"> </span><br><span class="line">auto</span><br><span class="line">当 Field 类型为 int, int32, int64, uint, uint32, uint64 时，可以设置字段为自增健</span><br><span class="line">当模型定义里没有主键时，符合上述类型且名称为 Id 的 Field 将被视为自增健。</span><br><span class="line"> </span><br><span class="line">pk</span><br><span class="line">设置为主键，适用于自定义其他类型为主键</span><br><span class="line"> </span><br><span class="line">null</span><br><span class="line">数据库表默认为 NOT NULL，设置 null 代表 ALLOW NULL</span><br><span class="line">Name string `orm:&quot;null&quot;</span><br><span class="line"> </span><br><span class="line">index</span><br><span class="line">为单个字段增加索引</span><br><span class="line"> </span><br><span class="line">unique</span><br><span class="line">为单个字段增加 unique 键</span><br><span class="line">Name string `orm:&quot;unique&quot;`</span><br><span class="line"> </span><br><span class="line">column</span><br><span class="line">为字段设置 db 字段的名称</span><br><span class="line">Name string `orm:&quot;column(user_name)&quot;`</span><br><span class="line"> </span><br><span class="line">size</span><br><span class="line">string 类型字段默认为 varchar(255)</span><br><span class="line">设置 size 以后，db type 将使用 varchar(size)</span><br><span class="line">Title string `orm:&quot;size(60)&quot;`</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">digits / decimals</span><br><span class="line">设置 float32, float64 类型的浮点精度</span><br><span class="line">Money float64 `orm:&quot;digits(12);decimals(4)&quot;`</span><br><span class="line">总长度 12 小数点后 4 位 eg: 99999999.9999</span><br><span class="line"> </span><br><span class="line">auto_now / auto_now_add</span><br><span class="line">Created time.Time `orm:&quot;auto_now_add;type(datetime)&quot;`</span><br><span class="line">Updated time.Time `orm:&quot;auto_now;type(datetime)&quot;`</span><br><span class="line">auto_now 每次 model 保存时都会对时间自动更新</span><br><span class="line">auto_now_add 第一次保存时才设置时间</span><br><span class="line">对于批量的 update 此设置是不生效的</span><br><span class="line">type</span><br><span class="line">设置为 date 时，time.Time 字段的对应 db 类型使用 date</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">Created time.Time `orm:&quot;auto_now_add;type(date)&quot;`</span><br><span class="line">设置为 datetime 时，time.Time 字段的对应 db 类型使用 datetime</span><br><span class="line">Created time.Time `orm:&quot;auto_now_add;type(datetime)&quot;`</span><br><span class="line"> </span><br><span class="line">default</span><br><span class="line">为字段设置默认值，类型必须符合（目前仅用于级联删除时的默认值）</span><br><span class="line">Status int `orm:&quot;default(1)&quot;`</span><br></pre></td></tr></table></figure>
+            <p>目前而言 主力语言还是python</p>
+<p>但是可能对未来十年的预期 是Golang</p>
+<h3 id="编译成单一的二进制"><a href="#编译成单一的二进制" class="headerlink" title="编译成单一的二进制"></a>编译成单一的二进制</h3><p>　　Golang 是编译型语言并且 Googe 的开发者花了很大的功夫在上面。它使用静态链接实际上是基于操作系统类型和环境组合所有的依赖库文件和模块到一个单一的二进制文件中，这也意味着如果你想要编译你的后端应用到你的 Linux 操作系统和 X86 架构的 CPU 中，你只要下载编译好的二进制应用到服务器，然后可以后端应用可以工作了,这是不需要任何的依赖文件的。</p>
+<h3 id="静态类型系统"><a href="#静态类型系统" class="headerlink" title="静态类型系统"></a>静态类型系统</h3><p>Python 是很棒的并且有趣的语言但是有些时候你会看到一些不寻常的异常因为当你尝试将变量作为一个整型变量的时候结果它是一个字符串类型.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># Django will crash process because of this </span><br><span class="line">def some_view(request): </span><br><span class="line">　　user_id = request.POST.get(&apos;id&apos;, 0)</span><br></pre></td></tr></table></figure>
+<p>Go 在编译的时候告诉你这是一个编译器错误，这就是在愚蠢的问题上赢得时间的地方。</p>
+<h3 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h3><p>Go 语言由于自己的多线程模块和 CPU 可伸缩性获得了较好的性能。无论什么时候我们需要执行一些内部的请求，我们可以使用 Goroutine 来分别执行，这个比 Python 中的 Threads 在资源开销上要少上十多倍。由于这些内置的语言特性，我们可以节省大量的资源(内存和 CPU )。</p>
+<h3 id="不再需要web框架"><a href="#不再需要web框架" class="headerlink" title="不再需要web框架"></a>不再需要web框架</h3><p>对于编程语言这是一件十分酷的事情。Go 语言的创造者和社区内置了很多原生的被核心语言支持的工具，在大多数情况下你都不再需要任何第三方类库。比如它有内置的 http、json、html 模板，你甚至可以不用费心去 Github 上寻找第三方类库就可以构建十分复杂的 API 服务。</p>
+<p>　　当然，Go 也有很多类库和框架用来构建 web 项目，但是我会建议你不使用第三方类库来构建你的 web 项目或者 API 服务，因为在大多数情况下使用原生包会使你的生活更加轻松。</p>
+<h3 id="更好的-IDE-支持和调试？？？"><a href="#更好的-IDE-支持和调试？？？" class="headerlink" title="更好的 IDE 支持和调试？？？"></a>更好的 IDE 支持和调试？？？</h3><p>　　IDE 支持是当你尝试更改编程语言时最重要的考虑因素之一。友好的 IDE 平均可以节省你80%的编程时间。 Go Plugin For JetBrains IDEA ，同样提供了其他支持，比如 (Webstorm、PHPStorm 等等…)。这个插件提供了任何你在项目开发中需要的服务，强大的 JetBrains IDEA ，可以让你的开发如虎添翼。</p>
 
           
         
@@ -470,7 +630,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/02/13/2019-go-00/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/02/13/2019-go-04/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -489,7 +649,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/02/13/2019-go-00/" itemprop="url">2019-go-00</a></h1>
+                <a class="post-title-link" href="/2019/02/13/2019-go-04/" itemprop="url">2019-go-04</a></h1>
         
 
         <div class="post-meta">
@@ -501,7 +661,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-13T21:09:50+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-13T21:10:11+08:00">
                 2019-02-13
               </time>
             
@@ -541,7 +701,7 @@
 
           
           
-             <span id="/2019/02/13/2019-go-00/" class="leancloud_visitors" data-flag-title="2019-go-00">
+             <span id="/2019/02/13/2019-go-04/" class="leancloud_visitors" data-flag-title="2019-go-04">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -566,386 +726,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  626
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  2
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="session-amp-cookie"><a href="#session-amp-cookie" class="headerlink" title="session &amp; cookie"></a>session &amp; cookie</h2><p>1.Http是无状态的协议，服务器不能记录浏览器的访问状态，也就是服务器不能区分两次请求是否是来自同一个客户端。</p>
-<p>2.Cookie实际上是服务器保存在浏览器上的一段信息，浏览器有了Cookie之后，每次向服务器发送请求都会带着该信息进行访问，服务器在收到请求之后，就可以通过该信息进行处理。</p>
-<p>3.Cookie由服务器创建，并发给浏览器，最终由浏览器保存。</p>
-<p>Cookie的用途</p>
-<ul>
-<li>电商网站的购物车</li>
-<li>保持用户登陆状态</li>
-</ul>
-<p>使用beego.Router()注册路由</p>
-<pre><code>beego.Router(&quot;/cookie&quot;,&amp;controllers.CookieController{})
-</code></pre><p>控制器</p>
-<pre><code>
-package controllers
-
-import &quot;github.com/astaxie/beego&quot;
-
-type CookieController struct {
-    beego.Controller
-}
-
-func (this *CookieController)Get()  {
-    if this.Ctx.GetCookie(&quot;user&quot;) ==&quot;&quot;{  
-        this.Ctx.SetCookie(&quot;user&quot;,&quot;admin&quot;)
-        this.Ctx.WriteString(&quot;Cookie设置成功&quot;)
-    }else{
-        user:= this.Ctx.GetCookie(&quot;user&quot;)
-        this.Ctx.WriteString(&quot;user=&quot;+user)
-    }
-}
-</code></pre><p>我们先通过this.Ctx.GetCookie(“key”)判断浏览器是否有Cookie ，如果没有就使用this.Ctx.SetCookie(“key”,”value”)设置，如果有就获取并输出。</p>
-<p>注意Cookie的键和值不能为中文</p>
-<pre><code>this.Ctx.SetCookie(&quot;user&quot;,&quot;admin&quot;，10)
-</code></pre><p>SetCookie的第三个参数是时间，单位是秒 ，如果不设置时间，Cookie只在本次会话有效，默认存活时间为3600秒      </p>
-<pre><code>this.Ctx.SetCookie(&quot;user&quot;,&quot;admin&quot;,&quot;100&quot;,&quot;/cookie&quot;)
-</code></pre><p>Session的使用</p>
-<p>Beego默认关闭Session，如果想要使用Session，需要在配置文件或程序中设置，分别为</p>
-<pre><code>beego.BConfig.WebConfig.Session.SessionOn = true和sessionon=true
-</code></pre><p>设置Session    </p>
-<pre><code>this.SetSession(“usesrname”, “admin”)
-</code></pre><p>删除Session</p>
-<pre><code>This.GetSession(“username”),如果没有获取到session，会返回nil，和cookie不一样，getCookie返回空字符串。
-</code></pre><p>Session是一段保存在服务器上的一段信息，当客户端第一次访问服务器时创建。同时也创建一个名为beegosessionID,值为创建Session的id的Cookie<br>这个beegosessionID对应服务器中的一个Session对象，通过它就可以获取到保存用户信息的Session</p>
-<p>通过this.DelSession(“password”)和this.DestroySession()均可以删除Session，其区别在于DelSession删除指定的Session, DestroySession删除所有session。</p>
-<p>可以通过beego.BConfig.WebConfig.Session.SessionName = “admin”和sessionname设置Cookie名称，如果在配置文件和主函数都设置了，主函数优先，因为beego先加载配置文件后执行主函数，所以主函数中设置的内容回对配置文件中设置的内容进行覆盖。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/02/11/one-line-python/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/11/one-line-python/" itemprop="url">one-line-python</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-11T17:49:36+08:00">
-                2019-02-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/02/11/one-line-python/" class="leancloud_visitors" data-flag-title="one-line-python">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  411
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  2
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="一行python代码能够做什么"><a href="#一行python代码能够做什么" class="headerlink" title="一行python代码能够做什么"></a>一行python代码能够做什么</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -c &quot;import this&quot;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">python -m SimpleHTTPServer 8080    # python2</span><br><span class="line"></span><br><span class="line">python3 -m http.server 8080      # python3</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">for x in range(1, 101): print(&quot;fizz&quot;[x % 3 * 4:]+&quot;buzz&quot;[x % 5 * 4:] or x)</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(&apos;\n&apos;.join([&apos;&apos;.join([(&apos;Love&apos;[(x-y) % len(&apos;Love&apos;)] if ((x*0.05)**2+(y*0.1)**2-1)**3-(x*0.05)**2*(y*0.1)**3 &lt;= 0else&apos; &apos;) forx in range(-30, 30)]) fory in range(30, -30, -1)]))</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(&apos;\n&apos;.join([&apos;&apos;.join([&apos;*&apos;if abs((lambda a: lambda z, c, n: a(a, z, c, n))(lambda s, z, c, n: z if n == 0 else s(s, z*z+c, c, n-1))(0, 0.02*x+0.05j*y, 40)) &lt; 2 else &apos; &apos; for x in range(-80, 20)]) for y in range(-20, 20)]))</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(&apos;\n&apos;.join([&apos; &apos;.join([&apos;%s*%s=%-2s&apos; % (y, x, x*y) fory in range(1, x+1)]) forx in range(1, 10)]))</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(&apos; &apos;.join([str(item) for item in filter(lambda x: not [x % i for i in range(2, x) if x % i == 0], range(2, 101))]))</span><br><span class="line"></span><br><span class="line">print(&apos; &apos;.join([str(item) for item in filter(lambda x: all(map(lambda p: x % p != 0, range(2, x))), range(2, 101))]))</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print([x[0] for x in [(a[i][0], a.append([a[i][1], a[i][0]+a[i][1]])) for a in ([[1, 1]], ) for i in range(30)]])</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qsort = lambda arr: len(arr) &gt; 1and qsort(list(filter(lambda x: x &lt;= arr[0], arr[1:]))) + arr[0:1] + qsort(list(filter(lambda x: x &gt; arr[0], arr[1:]))) or arr</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[__import__(&apos;sys&apos;).stdout.write(&apos;\n&apos;.join(&apos;.&apos; * i + &apos;Q&apos; + &apos;.&apos; * (8-i-1) for i in vec) + &quot;\n========\n&quot;) for vec in __import__(&apos;itertools&apos;).permutations(range(8)) if 8 == len(set(vec[i]+i for i in range(8))) == len(set(vec[i]-i for i in range(8)))]</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flatten = lambda x: [y for l in x for y in flatten(l)] if isinstance(x, list) else [x]</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">array = lambda x: [x[i:i+3] for i in range(0, len(x), 3)]</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(sum(map(int, str(2**1000))))</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/02/11/how-to-be-a-daniu/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/11/how-to-be-a-daniu/" itemprop="url">how-to-be-a-daniu</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-11T13:41:32+08:00">
-                2019-02-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/02/11/how-to-be-a-daniu/" class="leancloud_visitors" data-flag-title="how-to-be-a-daniu">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  54
+                  68
                 </span>
               
 
@@ -984,24 +765,204 @@ func (this *CookieController)Get()  {
       
         
           
-            <h3 id="误区"><a href="#误区" class="headerlink" title="误区"></a>误区</h3><ul>
-<li>拜大牛为师</li>
-<li>业务代码一样很牛逼？</li>
-<li>上班太忙没时间学习</li>
+            <ul>
+<li>使用 Raw SQL 查询，无需使用 ORM 表定义</li>
+<li>多数据库，都可直接使用占位符号 ?，自动转换</li>
+<li>查询时的参数，支持使用 Model Struct 和 Slice, Array</li>
 </ul>
-<h3 id="正确做法"><a href="#正确做法" class="headerlink" title="正确做法"></a>正确做法</h3><ul>
-<li>do more</li>
-</ul>
-<p>—&gt; 熟悉更多业务</p>
-<p>—&gt; 熟悉端到端</p>
-<p>—&gt; 自学</p>
-<ul>
-<li>do better</li>
-<li>do exercise</li>
-<li>learning</li>
-<li>trying</li>
-<li>teaching</li>
-</ul>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">insOrm:=orm.NewOrm()</span><br><span class="line"><span class="keyword">var</span> user models.Users</span><br><span class="line">insOrm.Raw(<span class="string">"SELECT name FROM Users WHERE id = ?"</span>, <span class="number">1</span>)..Exec()</span><br><span class="line">this.Ctx.WriteString(user.Name)</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/02/13/2019-go-03/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/13/2019-go-03/" itemprop="url">2019-go-03</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-13T21:10:07+08:00">
+                2019-02-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/golang/" itemprop="url" rel="index">
+                    <span itemprop="name">golang</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/02/13/2019-go-03/" class="leancloud_visitors" data-flag-title="2019-go-03">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  480
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//创建Orm对象</span><br><span class="line">o := orm.NewOrm()</span><br><span class="line">// 获取 QuerySeter 对象，user 为表名</span><br><span class="line">qs := o.QueryTable(&quot;user&quot;)</span><br><span class="line">// 也可以直接使用对象作为表名</span><br><span class="line">user := new(User)</span><br><span class="line">qs = o.QueryTable(user) // 返回 QuerySeter</span><br></pre></td></tr></table></figure>
+<p>复杂一些的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">qs.Filter(&quot;id&quot;, 1) // WHERE id = 1</span><br><span class="line">qs.Filter(&quot;user__id&quot;,1) //where user.id =1</span><br><span class="line">qs.Filter(&quot;id_in&quot;,10，20) //where age in(10,20)</span><br><span class="line">qs.Filter(&quot;id__gte&quot;,18) //where id&gt;=18</span><br><span class="line">qs.Filter(&quot;id__gt&quot;,18) //where id&gt;18</span><br><span class="line">qs.Filter(&quot;id__,5) //where id&lt;5</span><br><span class="line">//gt 是greater缩写即大于  </span><br><span class="line">//get是 Greater or equal的缩写即大于等于 </span><br><span class="line">//lt 是less than 即小于</span><br></pre></td></tr></table></figure>
+<p>具体的例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">exact  -&gt;  =</span><br><span class="line">iexact -&gt; like&apos;</span><br><span class="line">in -&gt; in </span><br><span class="line">gt  -&gt;  &gt; </span><br><span class="line">gte-&gt; &gt;=</span><br><span class="line">lt -&gt;  &lt;</span><br><span class="line">lte -&gt;  &lt;=</span><br><span class="line">contains -&gt;  like BINARY &apos;%xxx%&apos; （区分大小写）</span><br><span class="line">icontains -&gt; like &apos;%xxx%&apos; (不区分大小写)</span><br><span class="line">startswith -&gt; LIKE BINARY &apos;xxx%&apos; （区分大小写）</span><br><span class="line">istartswith -&gt; LIKE  &apos;xxx%&apos;</span><br><span class="line">endswith -&gt; LIKE BINARY &apos;%xxx&apos; （区分大小写）</span><br><span class="line">iendswith -&gt; LIKE  &apos;%xxx&apos;</span><br><span class="line">isnull -&gt; is not null</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">qs.Filter(&quot;id&quot;, 1) // WHERE id = 1</span><br><span class="line">qs.Filter(&quot;user__id&quot;,1) //where user.id =1</span><br><span class="line">qs.Filter(&quot;_id_in&quot;,10，20) //where age in(10,20)</span><br><span class="line">qs.Filter(&quot;__id__gte&quot;,18) //where id&gt;=18</span><br><span class="line">qs.Filter(&quot;__id__gt&quot;,18) //where id&gt;18</span><br><span class="line">qs.Filter(&quot;__id__,5) //where id&lt;5</span><br><span class="line">//gt 是greater缩写即大于  </span><br><span class="line">//get是 Greater or equal的缩写即大于等于 </span><br><span class="line">//lt 是less than 即小于</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var DefaultRelsDepth = 5 // 默认情况下直接调用 RelatedSel 将进行最大 5 层的关系查询</span><br><span class="line"> </span><br><span class="line">qs := o.QueryTable(&quot;post&quot;)</span><br><span class="line"> </span><br><span class="line">qs.RelatedSel()</span><br><span class="line">// INNER JOIN user ... LEFT OUTER JOIN profile ...</span><br><span class="line"> </span><br><span class="line">qs.RelatedSel(&quot;user&quot;)</span><br><span class="line">// INNER JOIN user ...</span><br><span class="line">// 设置 expr 只对设置的字段进行关系查询</span><br><span class="line"> </span><br><span class="line">// 对设置 null 属性的 Field 将使用 LEFT OUTER JOIN</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">num, err := o.QueryTable(&quot;user&quot;).Filter(&quot;name&quot;, &quot;slene&quot;).Update(orm.Params&#123;</span><br><span class="line">    &quot;name&quot;: &quot;astaxie&quot;,</span><br><span class="line">&#125;)</span><br><span class="line">fmt.Printf(&quot;Affected Num: %s, %s&quot;, num, err)</span><br><span class="line">// SET name = &quot;astaixe&quot; WHERE name = &quot;slene&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var users []*User</span><br><span class="line">num, err := o.QueryTable(&quot;user&quot;).Filter(&quot;name&quot;, &quot;slene&quot;).All(&amp;users)</span><br><span class="line">fmt.Printf(&quot;Returned Rows Num: %s, %s&quot;, num, err)</span><br></pre></td></tr></table></figure>
+<p>受到limit限制 默认最大行数为1000</p>
 
           
         
@@ -1050,7 +1011,7 @@ func (this *CookieController)Get()  {
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/02/10/前端总规划总结/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/02/13/2019-go-02/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -1069,7 +1030,7 @@ func (this *CookieController)Get()  {
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/02/10/前端总规划总结/" itemprop="url">前端总规划总结</a></h1>
+                <a class="post-title-link" href="/2019/02/13/2019-go-02/" itemprop="url">2019-go-02</a></h1>
         
 
         <div class="post-meta">
@@ -1081,8 +1042,8 @@ func (this *CookieController)Get()  {
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-10T21:54:06+08:00">
-                2019-02-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-13T21:10:02+08:00">
+                2019-02-13
               </time>
             
 
@@ -1092,6 +1053,28 @@ func (this *CookieController)Get()  {
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/golang/" itemprop="url" rel="index">
+                    <span itemprop="name">golang</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -1099,7 +1082,7 @@ func (this *CookieController)Get()  {
 
           
           
-             <span id="/2019/02/10/前端总规划总结/" class="leancloud_visitors" data-flag-title="前端总规划总结">
+             <span id="/2019/02/13/2019-go-02/" class="leancloud_visitors" data-flag-title="2019-go-02">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1124,7 +1107,7 @@ func (this *CookieController)Get()  {
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  417
                 </span>
               
 
@@ -1140,7 +1123,7 @@ func (this *CookieController)Get()  {
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -1163,7 +1146,10 @@ func (this *CookieController)Get()  {
       
         
           
-            
+            <h3 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">func (this *InsertController) Post()  &#123;</span><br><span class="line">/*</span><br><span class="line">	Name :=&quot;admin&quot;</span><br><span class="line">	Pwd  :=&quot;12346&quot;</span><br><span class="line">	Sex  :=&quot;男&quot;</span><br><span class="line">	Age  :=20</span><br><span class="line">*/</span><br><span class="line">	Name :=this.GetString(&quot;Name&quot;)</span><br><span class="line">	Pwd  :=this.GetString(&quot;Pwd&quot;)</span><br><span class="line">	Sex  :=this.GetString(&quot;Sex&quot;)</span><br><span class="line">	Age,err:=this.GetInt(&quot;Age&quot;)</span><br><span class="line">	if err!=nil &#123;</span><br><span class="line">		this.Ctx.WriteString(&quot;非法年龄字段&quot;)</span><br><span class="line">		return</span><br><span class="line">	&#125;</span><br><span class="line">	user:=models.Users&#123;Name:Name,Pwd:Pwd,Sex:Sex,Age:Age&#125;</span><br><span class="line">	insOrm:=orm.NewOrm()</span><br><span class="line">	n,err:=insOrm.Insert(&amp;user)</span><br><span class="line">	if err==nil&amp;&amp;n&gt;0 &#123;</span><br><span class="line">		this.Ctx.WriteString(&quot;数据插入成功&quot;)</span><br><span class="line">	&#125;else&#123;</span><br><span class="line">		this.Ctx.WriteString(&quot;数据插入失败&quot;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="读取read"><a href="#读取read" class="headerlink" title="读取read"></a>读取read</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">func (this *QueryController)Get()  &#123;</span><br><span class="line"> </span><br><span class="line">	id,err:=this.GetInt(&quot;id&quot;)</span><br><span class="line">	if err!=nil &#123;</span><br><span class="line">		this.Ctx.WriteString(&quot;id异常&quot;)</span><br><span class="line">		return</span><br><span class="line">	&#125;</span><br><span class="line">	user:= models.Users&#123;Id:id&#125; //获取指定id的数据</span><br><span class="line">	orm:=orm.NewOrm()</span><br><span class="line">	err=orm.Read(&amp;user) //读取数据</span><br><span class="line">	if  err==nil &#123;</span><br><span class="line">		this.Ctx.WriteString(&quot;id=&quot;+strconv.Itoa(user.Id)+&quot;\nname=&quot;+user.Name+&quot;\nsex=&quot;+user.Sex)</span><br><span class="line">	&#125;else&#123;</span><br><span class="line">		this.Ctx.WriteString(&quot;查询失败&quot;)</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="更新-update"><a href="#更新-update" class="headerlink" title="更新 update"></a>更新 update</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">func (this *UpdataController)Get()  &#123;</span><br><span class="line">	Id,err:=this.GetInt(&quot;Id&quot;)</span><br><span class="line">	if err!=nil &#123;</span><br><span class="line">		this.Ctx.WriteString(&quot;id异常&quot;)</span><br><span class="line">		return</span><br><span class="line">	&#125;</span><br><span class="line">	Name :=this.GetString(&quot;Name&quot;)</span><br><span class="line">	Pwd  :=this.GetString(&quot;Pwd&quot;)</span><br><span class="line">	Sex  :=this.GetString(&quot;Sex&quot;)</span><br><span class="line">	Age,err:=this.GetInt(&quot;Age&quot;)</span><br><span class="line">	if err!=nil &#123;</span><br><span class="line">		this.Ctx.WriteString(&quot;非法年龄字段&quot;)</span><br><span class="line">		return</span><br><span class="line">	&#125;</span><br><span class="line">	user:= models.Users&#123;Id:Id,Name:Name,Pwd:Pwd,Age:Age,Sex:Sex&#125;</span><br><span class="line">	orm:=orm.NewOrm()</span><br><span class="line">	n,err:=orm.Update(&amp;user)</span><br><span class="line">	if n&gt;0&amp;&amp;err==nil&#123;</span><br><span class="line">		this.Ctx.WriteString(&quot;更新成功&quot;)</span><br><span class="line">	&#125;else&#123;</span><br><span class="line">		this.Ctx.WriteString(&quot;更新失败&quot;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="删除-delete"><a href="#删除-delete" class="headerlink" title="删除 delete"></a>删除 delete</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">func (this *DeleteController) Get()  &#123;</span><br><span class="line">	id,err:=this.GetInt(&quot;id&quot;)</span><br><span class="line">	if err!=nil &#123;</span><br><span class="line">		this.Ctx.WriteString(&quot;删除失败&quot;)</span><br><span class="line">		return</span><br><span class="line">	&#125;</span><br><span class="line">	user:= models.Users&#123;Id:id&#125;</span><br><span class="line">	orm:=orm.NewOrm()</span><br><span class="line">	n,err:=orm.Delete(&amp;user)</span><br><span class="line">	if n&gt;0&amp;&amp;err==nil &#123;</span><br><span class="line">		this.Ctx.WriteString(&quot;删除成功&quot;)</span><br><span class="line">	&#125;else&#123;</span><br><span class="line">		this.Ctx.WriteString(&quot;删除失败&quot;)</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           
         
       
@@ -1202,7 +1188,7 @@ func (this *CookieController)Get()  {
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/17/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/77/">77</a><a class="extend next" rel="next" href="/page/19/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/17/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/page/78/">78</a><a class="extend next" rel="next" href="/page/19/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1252,7 +1238,7 @@ func (this *CookieController)Get()  {
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">383</span>
+                  <span class="site-state-item-count">388</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1367,7 +1353,7 @@ func (this *CookieController)Get()  {
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共151.1k字</span>
+  <span class="post-count">博客全站共151.3k字</span>
 </div>
 
         

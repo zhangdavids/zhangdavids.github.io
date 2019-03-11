@@ -275,7 +275,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/14/flask-gevent使用实例/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/17/top-questions-python/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -294,7 +294,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/14/flask-gevent使用实例/" itemprop="url">flask+gevent使用实例</a></h1>
+                <a class="post-title-link" href="/2018/03/17/top-questions-python/" itemprop="url">top-questions-python</a></h1>
         
 
         <div class="post-meta">
@@ -306,7 +306,849 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-14T18:59:51+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-17T23:09:30+08:00">
+                2018-03-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/03/17/top-questions-python/" class="leancloud_visitors" data-flag-title="top-questions-python">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1.python2 编码问题</p>
+<ul>
+<li>python代码内部请全部使用unicode编码，在获取外部内容时，先decode为unicode，向外输出时再encode为Str</li>
+<li>在定义变量或者正则时，也定义unicode字符，如a=u”中文”；res=r””+u”正则”。</li>
+</ul>
+<pre><code>a=&quot;\\u8fdd\\u6cd5\\u8fdd\u89c4&quot; #变量a的内容为unicode编码，变量a为string编码（&quot;&quot;前不要加u）
+b=a.decode(&apos;unicode-escape&apos;)
+print b
+
+a=&quot;\\xe5\\x85\\xb3\\xe4\\xba\\x8e\\xe4&quot; #变量a的内容为string编码，变量a为string编码（&quot;&quot;前不要加u）
+b=a.decode(&apos;string-escape&apos;)
+print b
+</code></pre><p>2.多线程问题</p>
+<p><em>python带有GIL解释器锁的概念，同一时刻只能有一个线程在运行，遇到IO操作才会释放切换。</em></p>
+<p>协程不同于线程的地方在于协程不是操作系统进行切换，而是由程序员编码进行切换的，也就是说切换是由程序员控制的，这样就没有了线程所谓的安全问题。</p>
+<p>这也就是常选的gevent 方案</p>
+<p>cpu 密集  多进程<br>io密集 多线程 或者协程</p>
+<p>3.协程</p>
+<p>4.闭包</p>
+<p>全局变量降低了函数或模块之间的通用性，不同的函数或模块都要依赖于全局变量。同样，全局变量降低了代码的可读性，阅读者可能并不知道调用的某个变量是全局变量。</p>
+<pre><code># 原始情况
+time = 0
+
+def insert_time(min):
+    time = time + min
+    return  time
+
+print(insert_time(2))
+print(insert_time(10))
+
+
+# 闭包
+time = 0
+
+
+def study_time(time):
+    def insert_time(min):
+        nonlocal  time
+        time = time + min
+        return time
+
+    return insert_time
+
+
+f = study_time(time)
+print(f(2))
+print(time)
+print(f(10))
+print(time)
+</code></pre><p>这里最直接的表现就是全局变量 time 至此至终都没有修改过,这里还是用了 nonlocal 关键字,表示在函数或其他作用域中使用外层(非全局)变量。</p>
+<p>这种内部函数的局部作用域中可以访问外部函数局部作用域中变量的行为，我们称为： 闭包。更加直接的表达方式就是，当某个函数被当成对象返回时，夹带了外部变量，就形成了一个闭包。k</p>
+<p>闭包避免了使用全局变量，此外，闭包允许将函数与其所操作的某些数据（环境）关连起来。而且使用闭包，可以使代码变得更加的优雅。装饰器，是基于闭包实现的。</p>
+<p>所有函数都有一个 __closure__ 属性，如果函数是闭包的话，那么它返回的是一个由 cell 组成的元组对象。cell 对象的 cell_contents 属性就是存储在闭包中的变量。    </p>
+<p>5.装饰器问题</p>
+<p>6.爬虫问题</p>
+<p>7.魔法方法</p>
+<p>一个类创建的过程是怎样的，先是调用了 __new<strong>方法来创建一个对象，把参数传给 \</strong>init__ 方法进行实例化。</p>
+<p>其实在实际开发中，很少会用到 __new<strong> 方法，除非你希望能够控制类的创建。通常讲到 \</strong>new__ ，都是牵扯到 metaclass(元类)的。</p>
+<p>当然当一个对象的生命周期结束的时候，析构函数 __del__ 方法会被调用。但是这个方法是 Python 自己对对象进行垃圾回收的。</p>
+<p>Python 没有真正意义上的私有属性。然后这就导致了对 Python 类的封装性比较差。我们有时候会希望 Python 能够定义私有属性，然后提供公共可访问的 get 方法和 set 方法。Python 其实可以通过魔术方法来实现封装。</p>
+<p>方法说明</p>
+<p>__getattr__(self, name)该方法定义了你试图访问一个不存在的属性时的行为。因此，重载该方法可以实现捕获错误拼写然后进行重定向, 或者对一些废弃的属性进行警告。</p>
+<p>__setattr<strong>(self, name, value)定义了对属性进行赋值和修改操作时的行为。不管对象的某个属性是否存在,都允许为该属性进行赋值.有一点需要注意，实现 \</strong>setattr__ 时要避免”无限递归”的错误，</p>
+<p>__delattr<strong>(self, name) \</strong>delattr<strong> 与 \</strong>setattr<strong> 很像，只是它定义的是你删除属性时的行为， 实现 \</strong>delattr__ 是同时要避免”无限递归”的错误</p>
+<p>__getattribute<strong>(self, name) \</strong>getattribute<strong> 定义了你的属性被访问时的行为，相比较，\</strong>getattr__ 只有该属性不存在时才会起作用。</p>
+<p>因此，在支持 __getattribute<strong>的 Python 版本,调用\</strong>getattr<strong> 前必定会调用 \</strong>getattribute__   </p>
+<p>__getattribute__ 同样要避免”无限递归”的错误。</p>
+<p>8.差异</p>
+<p>Python3.x 中 input() 函数接受一个标准输入数据，返回为 string 类型。</p>
+<p>Python2.x 中 input() 相等于 eval(raw_input(prompt)) ，用来获取控制台的输入。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/17/python-big-web-project/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/17/python-big-web-project/" itemprop="url">python-big-web-project</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-17T21:30:04+08:00">
+                2018-03-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/03/17/python-big-web-project/" class="leancloud_visitors" data-flag-title="python-big-web-project">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>严格来说，MVC是一个古老的概念，从早期的Smalltalk开始已经不再适合于web应用开发。Django的开发人员已经正确意识到在Python中我们实际使用的是MTV（model，template，view）：</p>
+<ul>
+<li><p>模板包含了HTML的内容以及页面显示逻辑。它是使用模板语言如Kajiki来编写，从视图（view）中获取数据，然后展示在页面中。</p>
+</li>
+<li><p>视图（有时也称为“控制器”），仅仅是使用Python语言编写的中间代码。它借助于web框架将所有的内容放在一起。它可以看到其他的所有层，并且定义了URLs，将它们映射到web框架中用于接收数据的函数，然后利用其他层以最终发送响应给web框架。它应该尽可能得小，因为它的代码是不能重复利用的，即使你尽量地缩减它，web表单也会促使其逐渐地变得复杂。</p>
+</li>
+<li><p>模型层本质上是一个持久层：它最重要的依赖就是SQLAlchemy。模型知道如何去保存数据，构成整个项目中最可重用的代码。当然它并不清楚HTTP相关的内容和你所使用的框架。它代表了排除用户界面细节的系统本质内容。</p>
+</li>
+</ul>
+<p>但是稍等下，哪里？在视图还是模型中？你应该在哪里放置程序的灵魂：业务规则？模板层已经自动被排除掉，因为它并不是Python编写的。所以剩下3个可能的答案：</p>
+<ul>
+<li><p>视图层，这是最糟糕的选择。视图层应该仅仅包含中间代码，将代码数量保持尽可能得小，并且同系统中的其他部分隔离开，所以系统应该能在web框架中、使用中以及单元测试中独立访问。另外，业务逻辑应该存在于更加可重用的地方。视图层被视为展示逻辑的一部分，所以业务逻辑被排除在外。实际上，除了Web UI之外，在创建desktop UI时，开发者应该忽略视图和HTTP相关的内容，需要业务逻辑尽可能地被重用，因此，我们应该排除掉视图层。</p>
+</li>
+<li><p>模型层，这个是可能的选择，因为模型层至少是可重用的。但是模型层主要关注于持久化，它应该更少地依赖于SQLAlchemy（它已经是一个非常复杂的东西）。</p>
+</li>
+</ul>
+<p>新的层，这才是正确的答案。下面将举例来更好地理解这部分内容。</p>
+<p>如果你要创建一个博客，那么MTV正好满足你的需求。但是对于更加复杂的项目来说，其实还是至少缺了一层。你应该将业务逻辑旋转到一个新的、可重用的层次中，大多数人称之为“Service”层，但是我更喜欢称之为”Action“层。</p>
+<p>为什么你需要这层？</p>
+<p>在大型应用中，单个用户的操作引起多项活动是非常常见的。比如，用户成功地注册了你的服务，那么你的业务逻辑中可能会触发非常多的后台处理：</p>
+<p>在关系数据库多张表中新增数据，使用了模型层。</p>
+<p>将发送邮件给用户的任务放置到队列中。</p>
+<p>将发送短信给用户的任务放置到队列中。</p>
+<p>将创建实际使用服务时必需的空间和其他准备性资源的任务放置到队列中。</p>
+<p>将更新用户数据的任务放置到队列中。</p>
+<p>….</p>
+<p>这是一个理解“业务逻辑“的好例子：给定一个用户操作（比如注册），系统就要做一些必需的操作。这种业务逻辑被单个函数捕获会更好；这个函数应该在哪一层呢？</p>
+<p>如果所有的这些都实现在模型层，你能想象到它将变得多复杂吗？模型层在只面对持久化时已经很艰难了。现在想象一下模型层处理所有这些事务，它要使用多少外部服务？文件头部应该包括多少imports？反过来看，有多少模块愿意引入这个模型，可能在系统启动前就因为创建的循环依赖而导致系统崩溃。</p>
+<p>循环依赖其实就是你没有正确认清系统架构的明显的标识。</p>
+<p>对于依赖于Celery的模型来说，了解如何去发送邮件、短信以及使用外部服务等是不应该的做法。持久化对于模型层来说已经是非常复杂的主题了。你应该在模型层之外去处理这些业务逻辑——在模型层和视图层之间的一层。所以称之为”Action“层。</p>
+<p>另外，模型层在关系型数据库中经常被映射到一张单独的表。如果你在用户表和订阅表中插入一条记录，哪一个模型应该包含上述逻辑呢？这几乎是不能确定的。因为实际执行的操作远超过了用户表和订阅表的范围。因此，业务逻辑应该被定义在任何模型之外。</p>
+<p>当开发人员执行维护时，有时她想按步骤地执行每一步，而有时她想一次性执行完所有操作。分别地实现这些操作并在单个Action层函数中调用是有帮助的。</p>
+<p>你可能会怀疑我提出的方法难道不是反面模式域模型的一种吗？没有动作的模型恰恰与面向对象设计相反！我并没有说“将所有的方法从模型中移除”。我的意思是指“将需要外部调用的方法移除”。模型中的方法仅仅用来使用它所需要的数据，并且属于模型中的那些数据。一个面向世界的，调用外部服务的并且很少使用自身数据的方法不应该被放置在模型中。</p>
+<p>另一个使得这种架构成功的原因就是测试。TDD教会了程序员去让程序变得解耦，这样做通常会使得软件更加健壮。如果你想要创建一个Celery的应用，并且在你测试之前已经知道了其他的外部服务，那么你将经常陷入头痛中。</p>
+<p>还有将业务逻辑放置在视图层之外的最后一个原因。在未来，当你最终决定从Flask过渡到Pyramid时，你很乐意将视图层保持简洁。如果所有的视图都是在与web框架间交互，并且动作层会执行所有的函数，那么你的代码就做到了非常好的隔离。Web框架通常都很贪婪，不要让你的系统跟随他们的脚步。</p>
+<p>所以下面就是我所提议的在Python中构建大型应用的层次结构：</p>
+<p>模型层是最底层的，最可重用并且可见的层。它仅专注于持久化，模型层是可以包含动作的，只不过这个动作仅仅属于这个模型。模型可以被其他层所返回，以各种方式在请求的结尾返回给模板。</p>
+<p>外部服务。对每个服务都创建一个比如说发送邮件。</p>
+<p>动作层。这是系统中的核心层，它包含了业务逻辑以及工作流。它使用外部服务去实现特定的目标并且借助模型层来持久化数据。通过以上这些层，它支撑起了整个系统，包括配置，除了用户界面。</p>
+<p>模板层仅包括了页面展示逻辑比如说从列表中循环输出构成一个HTML表格。</p>
+<p>视图层，这是最高层的，最不可重用的层。它依赖于（与系统中其他层隔离）web框架。并且依赖于表单验证库。它可以看到模板层以及动作层，但是不能直接调用模型层——它必须通过动作层。但是当一个动作层返回了模型数据，那么它可以被传递给模板中（一个Celery任务可以类比于一个web视图）。</p>
+<p>这种体系结构有助于避免了在会话层中进行调试因为它清楚地定义了各自的职责。同时它也是明显经得起检测的，因为它做到了很好的解耦，因此可以减少测试的并且减少了模拟的次数。</p>
+<p>好的架构总是解耦性非常好的。如果你曾经陷入到一个循环依赖中，你可以想一下是否真的定义好了每一层的职责。当你放弃了并且从一个函数中引入内容，那么你的架构已经失败了。</p>
+<p>这并不是说你的web应用必须与Celery应用隔离开。在他们之间可以重用代码——特别是模型——但是对于Celery应用来说，不应该引入web框架！获取配置也不例外，因为在Python中读取配置是非常简单的。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/17/python-top-30/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/17/python-top-30/" itemprop="url">python-top-30</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-17T14:42:17+08:00">
+                2018-03-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/03/17/python-top-30/" class="leancloud_visitors" data-flag-title="python-top-30">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  368
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1.家庭助理</p>
+<p>2.PyTorch</p>
+<p>3.Grumpy</p>
+<p>4.sanic</p>
+<p>5.Python-fire</p>
+<p>6.spaCy</p>
+<p>7.pipenv</p>
+<p>8.micropython</p>
+<p>9.prophet</p>
+<p>10.SerpentAI</p>
+<p>11.dash</p>
+<p>12.instaPy</p>
+<p>13.apistar</p>
+<p>14.faiss</p>
+<p>15.MechanicalSoup：一个与网站自动化交互的Python库</p>
+<p>16.Better-exceptions：用Python编写的自动地漂亮的和有用的异常处理</p>
+<p>17.Flashtext：从句子中提取关键词或替换句子中的关键词</p>
+<p>18.Maya：用Python实现人类的日期时间</p>
+<p>19.Mimesis (v1.0)：Python库，有助于为不同的目的以不同的语言生成模拟数据。这些数据在软件开发和测试的不同阶段特别有用</p>
+<p>20.开放式无纸化：扫描、索引和归档所有的纸质文档。一个文档管理系统</p>
+<p>21.Fsociety：黑客工具包。渗透测试框架</p>
+<p>22.LivePython：实时可视化跟踪Python代码</p>
+<p>23.Hatch：用于Python的现代项目、包和虚拟环境管理器</p>
+<p>24.Tangent:用纯Python实现源到源的可调试导数</p>
+<p>25.Clairvoyant：识别和监控短期股票走势的历史线索的Python程序</p>
+<p>26.MonkeyType：Python通过收集运行时类型生成静态类型注释的系统</p>
+<p>27.Eel：一个小的Python库，用于制作简单的电子类HTML / js GUI应用程序</p>
+<p>28.Surprise v1.0：建立和分析推荐系统的Python scikit**</p>
+<p>29.Gain：获取每个人的Web爬行框架</p>
+<p>30.PDFTabExtract: 一组从PDF文件中提取表的工具，有助于对扫描文档进行数据挖掘</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/15/简单看看汤不热的网站/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/15/简单看看汤不热的网站/" itemprop="url">简单看看汤不热的网站</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-15T21:31:12+08:00">
+                2018-03-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/pachong/" itemprop="url" rel="index">
+                    <span itemprop="name">pachong</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/03/15/简单看看汤不热的网站/" class="leancloud_visitors" data-flag-title="简单看看汤不热的网站">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  647
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>这里就不截图进行介绍了</p>
+<p>每个tumblr的个人空间都是一个二级域名，你甚至可以绑定你自己的域名。</p>
+<p>在个人主页上， 是一个微博式的消息列表，有文字，图片，视频等形式。消息的展现，是页面上的JavaScript脚本 通过请求Tumblr的Api来获取返回信息，然后添加到页面上的。通过API，可以省掉很多麻烦，至少不必分析整个页面的html来提取需要的信息了。</p>
+<p>基础的url 是这样的：</p>
+<pre><code>http://{0}.tumblr.com/api/read?type{1}&amp;num={2}&amp;start={3}
+</code></pre><p>第一个参数是要访问的用户空间的用户名；</p>
+<p>第二个参数是媒体类型， 图片为“photo”，视频为“video”；</p>
+<p>第三个参数为请求的资源数；</p>
+<p>第四个参数为从第几个资源开始    </p>
+<p>返回的数据是XML格式的数据，基本的层级为Tumblr&gt;posts&gt;post。图片的URL在post的photo-url字段中，视频与此类似，就不再演示了。 获取到媒体资源的url之后，就可以进行下载了。</p>
+<p>video类型的资源的url，需要从player属性中进行进一步匹配才能得出最后的结果。</p>
+<p>技术的分析：</p>
+<ul>
+<li>发送http请求  使用requests模块</li>
+<li>返回的数据是xml  xmltodic模块，将xml文档处理成类似Json对象，方便我们对数据进行访问。</li>
+<li><p>队列实现</p>
+<p>  python中自带Queue模块，可以满足我们目前的队列需求，由于python2.7和python3.0中 </p>
+<p>  对queue模块的命名进行的变更，编程的时候需要注意。如果考虑兼容两个版本的话，可以 考虑引入</p>
+<p>  six模块（<a href="https://pypi.python.org/pypi/six）。" target="_blank" rel="external">https://pypi.python.org/pypi/six）。</a></p>
+<p>  six模块是一个专门用于解决 从python2.x到python3.x的兼容性问题的模块，</p>
+<p>  它对python版本变更导致到部分模块不能应用的问题 进行了内部处理，</p>
+<p>  需要处理类似兼容问题的时候，可以考虑或者参考该模块的实现方式。</p>
+</li>
+<li><p>多线程进行下载</p>
+</li>
+<li>处理json </li>
+</ul>
+<p>考虑到Tumblr需要FQ访问，如果本机不使用VPN的话，可能需要配置代理，代理采用json配置方式。 处理.使用python内置的json模块（<a href="https://docs.python.org/2/library/json.html）就可以了。" target="_blank" rel="external">https://docs.python.org/2/library/json.html）就可以了。</a>    </p>
+<ul>
+<li>使用正则</li>
+</ul>
+<p>为了精确匹配url信息，我们需要使用正则表达式对xml数据的中字段值进行进一步处理，使用 内置的re模块（<a href="https://docs.python.org/2/library/re.html）就可以了。" target="_blank" rel="external">https://docs.python.org/2/library/re.html）就可以了。</a></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/14/django项目配置小结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/14/django项目配置小结/" itemprop="url">django项目配置小结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-14T19:10:55+08:00">
                 2018-03-14
               </time>
             
@@ -346,7 +1188,7 @@
 
           
           
-             <span id="/2018/03/14/flask-gevent使用实例/" class="leancloud_visitors" data-flag-title="flask+gevent使用实例">
+             <span id="/2018/03/14/django项目配置小结/" class="leancloud_visitors" data-flag-title="django项目配置小结">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -371,7 +1213,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  229
+                  3.1k
                 </span>
               
 
@@ -387,7 +1229,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  12
                 </span>
               
             </div>
@@ -410,998 +1252,214 @@
       
         
           
-            <pre><code>&quot;&quot;&quot;Asynchronous requests in Flask with gevent&quot;&quot;&quot;
+            <h3 id="dockerfile-的配置"><a href="#dockerfile-的配置" class="headerlink" title="dockerfile 的配置"></a>dockerfile 的配置</h3><pre><code>FROM python:3.5
 
-from time import time
+COPY ./requirements.txt /src
+WORKDIR /src
+RUN pip install -r requirements.txt
 
-from flask import Flask, Response
+COPY . /src
+EXPOSE &lt;PORT&gt;
+CMD uwsgi --http :&lt;PORT&gt; --wsgi-file &lt;path/to/wsgi.py&gt;
+</code></pre><p>python 3.3开始     标准库已经支持创建虚拟环境</p>
+<pre><code>pyvenv ENV
+# 使用k神的pipenv 管理项目依赖
+# 使用ensurepip 模块来引导启动pip python 3.4开始
+python -m ensurepip 
+</code></pre><p>使用 <a href="https://www.gitignore.io" target="_blank" rel="external">gitignore.io</a>这个网站提供的 .gitignore 文件管理代码库文件</p>
+<p>日志管理的话（以下是直接写到标准输出）</p>
+<pre><code># settings.py 
 
-from gevent.pywsgi import WSGIServer
-from gevent import monkey
+# ...
 
-import requests
+LOGGING = {
+    &apos;version&apos;: 1,
+    &apos;disable_existing_loggers&apos;: False,
+    &apos;formatters&apos;: {
+        &apos;verbose&apos;: {
+            &apos;format&apos;: &apos;[application] %(levelname)s %(asctime)s %(module)s %(message)s&apos;
+        }
+    },
+    &apos;handlers&apos;: {
+        &apos;console&apos;: {
+            &apos;level&apos;: &apos;DEBUG&apos;,
+            &apos;class&apos;: &apos;logging.StreamHandler&apos;,
+            &apos;stream&apos;: sys.stdout,
+            &apos;formatter&apos;: &apos;verbose&apos;
+        },
+    },
+    &apos;loggers&apos;: {
+        &apos;app&apos;: {
+            &apos;handlers&apos;: [&apos;console&apos;],
+            &apos;level&apos;: &apos;DEBUG&apos;,
+            &apos;propagate&apos;: True,
+        },
+    },
+}
+</code></pre><h3 id="自动化测试"><a href="#自动化测试" class="headerlink" title="自动化测试"></a>自动化测试</h3><p>既然是纯后端项目，工程师完全可以通过自动化测试来检测自己的代码。Django 本身对测试提供了很好的支持，可以通过 sqlite 来搭建测试数据库，还有基于内存的缓存，做测试不会增加对其他系统的依赖。开发起来事半功倍。</p>
+<p>除了要写自动化测试代码，还要能统计测试覆盖率。目前我们用的是 coverage.py 这个工具，说实话没有 node.js 的 istanbul 好用，输出的报告没有 Istanbul 详细和易读。不过用来检查 “死代码” 还是够用的。</p>
+<h3 id="针对-http-代码的测试"><a href="#针对-http-代码的测试" class="headerlink" title="针对 http 代码的测试"></a>针对 http 代码的测试</h3><p>有些项目需要对接的第三方系统比较多，比如微信认证、支付、短信等常见的，可能还有其他一些垂直业务领域的系统。这部分接口对接的代码，也应该纳入到测试当中，毕竟 Python 作为脚本语言，代码很容易出现错误。</p>
+<p>这块一般是用 responses 这个模块来 mock http 请求。</p>
+<h3 id="定时任务"><a href="#定时任务" class="headerlink" title="定时任务"></a>定时任务</h3><p>封装到command</p>
+<pre><code>import schedule
+from django.core.management.base import BaseCommand
 
-# need to patch sockets to make requests async
-monkey.patch_all()
+class Command(BaseCommand):
 
-CHUNK_SIZE = 1024*1024  # bytes
+    def handle(self, *args, **kwargs):
 
-app = Flask(__name__)  # pylint: disable=invalid-name
-app.debug = True
+        schedule.every(45).minutes.do(do_this)
+        schedule.every().day.at(&apos;04:00&apos;).do(do_that)
 
-
-@app.route(&apos;/Seattle.jpg&apos;)
-def seattle(requests_counter=[0]):  # pylint: disable=dangerous-default-value
-    &quot;&quot;&quot;Asynchronous non-blocking streaming of relatively large (14.5MB) JPG
-    of Seattle from wikimedia commons.
-    &quot;&quot;&quot;
-    requests_counter[0] += 1
-    request_num = requests_counter[0]
-    url = &apos;http://upload.wikimedia.org/wikipedia/commons/3/39/Seattle_3.jpg&apos;
-
-    app.logger.debug(&apos;started %d&apos;, request_num)
-
-    rsp = requests.get(url, stream=True)
-
-    def generator():
-        &quot;streaming generator logging the end of request processing&quot;
-        yield &apos;&apos;  # to make greenlet switch
-        for data in rsp.iter_content(CHUNK_SIZE):
-            yield data
-        app.logger.debug(&apos;finished %d&apos;, request_num)
-
-    return Response(generator(), mimetype=&apos;image/jpeg&apos;)
-
-
-def main():
-    &quot;Start gevent WSGI server&quot;
-    # use gevent WSGI server instead of the Flask
-    http = WSGIServer((&apos;&apos;, 5000), app.wsgi_app)
-    # TODO gracefully handle shutdown
-    http.serve_forever()
-
-
-if __name__ == &apos;__main__&apos;:
-    main()
-</code></pre><p>使用测试：</p>
-<pre><code>pip install flask gevent requests
-
-python async_flask.py &amp; siege -c 1000 -t 5s http://127.0.0.1:5000/Seattle.jpg    
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/13/python当中的并发/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/13/python当中的并发/" itemprop="url">python当中的并发</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-13T23:19:15+08:00">
-                2018-03-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/03/13/python当中的并发/" class="leancloud_visitors" data-flag-title="python当中的并发">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  361
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>并发的表现形式，并行处理是软件工程领域最广泛的话题之一。</p>
-<p>两个事件互不影响，则两个事件是并发的。<br>CPython的线程实现中带有一些麻烦的细节，使得实用性降低了。</p>
-<p>GIL 只是强制在任何时候只有一个线程可以执行python代码</p>
-<p>多线程可以使用的场景：</p>
-<ul>
-<li>构建响应式界面</li>
-<li>委派工作</li>
-<li>构建多用户应用程序</li>
+        while True:
+            schedule.run_pending()
+            time.sleep(1)    
+</code></pre><h3 id="Django如何处理并发"><a href="#Django如何处理并发" class="headerlink" title="Django如何处理并发"></a>Django如何处理并发</h3><ul>
+<li><p>django本身提供了一个wsgi的接口，可以通过gevent，uwsgi，fastcgi等实现高并发，这里的高并发采用协程，线程，和进程都可能，或者同时采用几种。</p>
+</li>
+<li><p>对于操作数据库来说，线程安全其实不用太考虑，因为数据库的链接已经由数据库的连接池处理了，反而是数据库的竞争性的访问需要考虑多进程安全的问题，比如同时写某一个统计信息，那么就需要对这样的请求加锁，或这cas这样的机制来保证这种写操作不会冲突。</p>
+</li>
 </ul>
-<p>如何让用户控制使用哪个处理后端（进程或者线程）</p>
-<pre><code>from multiprocessing import Pool as ProcessPool
-from multiprocessing.dummpy import Pool as ThreadPool
+<h2 id="配置举例："><a href="#配置举例：" class="headerlink" title="配置举例："></a>配置举例：</h2><pre><code># /usr/local/nginx/conf/nginx.conf
+server {  
+    listen       8088;  
+    server_name  localhost;  
+
+    #charset koi8-r;  
+
+    #access_log  logs/host.access.log  main;  
+
+    location / {  
+        root   html;  
+        index  index.html index.htm;  
+    }  
 
 
-def main(use_threads=False):
-    if use_threads:
-        pool_cls = ThreadPool
-    else:
-        pool_cls = ProcessPool
 
-    with pool_cls(4) as p:
-        results = p.map(fetch_place, PLACES)
-
-    for result in results:
-        present_result(result)
-</code></pre><h2 id="异步编程"><a href="#异步编程" class="headerlink" title="异步编程"></a>异步编程</h2><p>异步编程的解决方案，如twisted tornado eventlet,真的值得了解</p>
-<p>协同多任务是异步编程的核心。每个进程都在空闲时自动释放控制以允许同时执行多个程序。</p>
-<p>gevent 的工作方式，gevent 的作用一条线程跑多个协程，适合多 IO 操作。</p>
-<p>需要强调的是引入 gevent 不会加快获取数据的速度，例如，原来是 30ms，引入之后不会变少，只会变多，那么引入的好处是什么？原来你能在1秒之内接待33个客户端请求，引入之后可能可以接待100个/s，也可能接待 300个/s，这才是 gevent 的好处。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
+## 修改配置文件
+server {
+        listen       8088;
+        server_name  localhost;
+        #charset koi8-r;
+        #access_log  logs/host.access.log  main;
+       #注释以下四行
+        #location / {
+            #root   html;
+            #index  index.html index.htm;
+        #}
+       #添加以下内容
+        location / {
+            try_files @uri @pp;
+        }
+        location @pp {
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_set_header Host $http_host;
+            proxy_pass http://127.0.0.1:5000;
+            #反向代理的这个IP和端口
+        }
 
 
-    
-      
+## gun 配置文件 config.py
 
-  
+import gevent.monkey
+import multiprocessing
 
-  
-  
-  
+gevent.monkey.patch_all()
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/13/flask-and-gevent/">
+#监听本机的5000端口
+bind=&apos;0.0.0.0:5000&apos;
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
+preload_app = True
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
+#开启进程
+#workers=4
+workers = multiprocessing.cpu_count() * 2 + 1
 
-    
-      <header class="post-header">
+#每个进程的开启线程
+threads = multiprocessing.cpu_count() * 2
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/13/flask-and-gevent/" itemprop="url">flask and gevent</a></h1>
-        
+backlog=2048
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-13T18:29:27+08:00">
-                2018-03-13
-              </time>
-            
+#工作模式为gevent
+worker_class=&quot;gevent&quot;
 
-            
+# debug=True
 
-            
-          </span>
+#如果不使用supervisord之类的进程管理工具可以是进程成为守护进程，否则会出问题
+daemon = True
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/web/" itemprop="url" rel="index">
-                    <span itemprop="name">web</span>
-                  </a>
-                </span>
+#进程名称
+proc_name=&apos;gunicorn.pid&apos;
 
-                
-                
-              
-            </span>
-          
+#进程pid记录文件
+pidfile=&apos;app_pid.log&apos;
 
-          
-            
-          
+loglevel=&apos;debug&apos;
+logfile = &apos;debug.log&apos;
+accesslog = &apos;access.log&apos;
+access_log_format = &apos;%(h)s %(t)s %(U)s %(q)s&apos;
+errorlog = &apos;error.log’
+</code></pre><p>启动：</p>
+<pre><code>gunicorn -c config.py(gunicorn配置文件)  flask_nginx(flask启动文件):app
+</code></pre><p>启动nginx: </p>
+<pre><code>sudo /usr/local/nginx/sbin/nginx    
+</code></pre><p>Siege命令常用参数</p>
+<pre><code>-c 500 指定并发数500
+-r 5 指定测试的次数5
+-f urls.txt 制定url的文件
+-i internet系统，随机发送url
+-b 请求无需等待 delay=0
+-t 5 持续测试5分钟，默认是分，5s为5秒
+# -t和-r不能同时使用
+</code></pre><p>模拟1000个并发向URL发送5次<br>测试：</p>
+<pre><code>siege -c 1000 -r 5 http://127.0.0.1:8088(gunicorn+gevent+nginx+flask)
+</code></pre><hr>
+<h2 id="从-Tornado-说起"><a href="#从-Tornado-说起" class="headerlink" title="从 Tornado 说起"></a>从 Tornado 说起</h2><p>刚开始，对 Tornado 的感觉最为新鲜，在官网介绍里其是一个无阻塞的Web服务器以及相关工具的集合，但 个人更为倾向其为一个颇为完备的微型 web 框架。Tornado 性能好的关键是其无阻塞异步的特性，但这魔术 似的效果是如何达成的呢？迷思与困惑。我那小脑袋里的思维还停留于多进程（多线程）那样的并发模型中， 实在有点难以理解 Tornado 的异步机制。</p>
+<p>通过查阅各式文章以及源代码，整体的框架脉络开始逐渐在脑海中显现出来。其实，Tornado 的异步模型 是由事件驱动以及特定的回调函数（callback）所组成的！一直没有弄明白，Tornado 具体是如何实现 无阻塞异步，当清楚了事件驱动和回调函数的概念后，事情似乎又变得简单起来了。</p>
+<p>对于一般的程序，在执行阶段若遇到 I/O 事件，整个进程将被阻塞住，直到 I/O 事件结束，程序又继续执行。 接设我们对一些 I/O 事件进行了定制，使其可以立即返回（即无阻塞），那么程序将能立即继续执行。但 问题又来了，那当 I/O 事件完成后又该怎么办呢？此时，回调函数的威力就出来了，我只需要将进行特定 处理的回调函数与该 I/O 事件绑定起来，当该 I/O 事件完成后就调用绑定的回调函数，就可以处理具体的 I/O 事件啦。啊，似乎还有一个问题，回调函数要如何与 I/O 事件绑定起来？最简单的想法是，直接通过 一个 while True 循环不断的轮询，当检测到 I/O 事件完成了即触发回调函数。但是，这样的效率当然不会 高，利用系统中高效的 I/O 事件轮询机制（epoll on Linux, kqueue on most BSD）就是最明智的 解决方案。于是，无阻塞 I/O +事件驱动+高效轮询方式便组成了 Tornado 的异步模型。</p>
+<p>Tornado 的核心是 ioloop 和 iostream 这两个模块，前者提供了一个高效的 I/O 事件循环，后者则封装了 一个无阻塞的 socket 。通过向 ioloop 中添加网络 I/O 事件，利用无阻塞的 socket ，再搭配相应的回调 函数，便可达到梦寐以求的高效异步执行啦。多说无益，来看一下具体的示例：</p>
+<pre><code>from tornado import ioloop
+from tornado.httpclient import AsyncHTTPClient
 
-          
-          
-             <span id="/2018/03/13/flask-and-gevent/" class="leancloud_visitors" data-flag-title="flask and gevent">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
+urls = [&apos;http://www.google.com&apos;, &apos;http://www.yandex.ru&apos;, &apos;http://www.python.org&apos;]
 
-          
+def print_head(response):
+    print (&apos;%s: %s bytes: %r&apos; % (response.request.url,
+                                 len(response.body),
+                                 response.body[:50]))
 
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  359
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="异步-WEB-架构的特点："><a href="#异步-WEB-架构的特点：" class="headerlink" title="异步 WEB 架构的特点："></a>异步 WEB 架构的特点：</h3><p>gevent 为 Python 提供了比较完善的协程支持，其基于 greenlet 实现协程。</p>
-<p>当 greenlet 遇到如网络访问、磁盘 IO 等操作时，就将自动切换至其他的 greenlet，待操作完成后，在适合的时间点回切 greenlet 继续执行。由于网络访问、磁盘 IO 等操作耗时较长，且实际 CPU 使用率较低（大部分工作由 DMA 等设备完成）。所以倘若非异步，涉及以上操作并发将以顺序执行， CPU 长期处于空闲状态。而异步模式将能实现并发程序间的切换，从而保证 CPU 有较高的利用率，而不是等待如网络访问、磁盘 IO 等操作。 </p>
-<p><em>注意：gevent 的使用并不能减少实际 CPU 的使用量，所以若程序的执行过程消耗的全为 CPU 资源，则其异步也是毫无意义的。</em></p>
-<h3 id="Flask-gevent-的最小程序实例："><a href="#Flask-gevent-的最小程序实例：" class="headerlink" title="Flask+gevent 的最小程序实例："></a>Flask+gevent 的最小程序实例：</h3><p>最小程序实例如下。</p>
-<pre><code>from gevent import monkey
+http_client = AsyncHTTPClient()
+for url in urls:
+    print (&apos;Starting %s&apos; % url)
+    http_client.fetch(url, print_head)
+ioloop.IOLoop.instance().start()    
+</code></pre><p>因为使用了 AsyncHTTPClient 来处理请求操作，整个示例是异步执行的，即三个url请求无等待的依次发出。 我们可以看到 fetch 方法使用了 print_head 函数来作为回调函数，这意味着，当 fetch 完成了请求操作， 相应的 print_head 函数便会被触发调用。恩，… 额，…，乍看起来，使用 Tornado 进行异步编程似乎 并不难，让人跃跃欲试。但实际上，在现实生活中，事件驱动的编程还是会很费脑力，需要一定的创造性思维。 不过，这也许是 Tornado 受欢迎的原因之一呢。</p>
+<hr>
+<h2 id="看下-Gevent"><a href="#看下-Gevent" class="headerlink" title="看下 Gevent"></a>看下 Gevent</h2><p>Gevent 是基于协程（coroutine）实现的 Python 网络库，使用了轻量级的 greenlet 作为执行单元，并 基于 libevent 事件循环构建了直观的调用接口。</p>
+<p>当时看到这样的描述，脑袋的第一反应是，协程？？稍稍了解后，发现协程其实也不是什么高深的概念，协程 也被称为微线程，一看这别名就知道跟线程应该很类似。作为类比倒也可以这么认为，两者关键的区别在于， 线程是由系统进行调度的，而协程是由用户自己进行调度的。当知道这一事实后，立刻想到，这自行调度灵活 肯定是会很灵活，但要调度的话可是很有难度的吧？调度的方法暂时不谈，除了更为灵活外，自行调度的直接 结果当然就是省去了系统调度（什么用户态转内核态，以及什么 context switch），因此协程间切换的资源 消耗很小，再配合协程生成成本很低的另一特点，这可真是相当的美妙。事实上，Python 语言本身就支持基础 的协程的概念，generator 是其中的产物（这里）。</p>
+<p>对于 Gevent，其使用的协程实际上就是 greenlet 。当你使用 greenlet 生成了一些协程，就可以在这些 协程里不断跳转执行，两个 greenlet 之间的跳转被称为切换（switch）。通过切换，我们就可以实现对协程 的调度。还应该知道的是，每个 greenlet 都拥有一个父 greenlet ，这是在 greenlet 初始化时就确定的。 当一个 greenlet 执行完毕后，执行权会切换到其父 greenlet 中。实际上，所有的 greenlet 会被组织成 一颗树，树根便是最“老资格”的 greenlet ，这个老 greenlet 确定了各 greenlet 间的逻辑关系。</p>
+<p>上面说到协程必须自行调度，不会是要自己构造一个调度器吧？这当然可以做到，但不是必须，因为 Gevent 已经基于 greenlet 和 libevent 封装了许多基础常用的库，例如 socket 、event 和 queue 等，只要使用 这些库进行开发，或者对使用的标准库或第三方库打一下补丁（monket patch），就能保证生成的各协程在 I/O 等待时正确地进行切换，从而实现无阻塞的异步执行。</p>
+<p>刚接触 Gevent 时，感觉跟传统的并发编程很类似，但了解渐深后，才发现这货实际上跟 Tornado 更为类似。 因为， Gevent 本质上也是事件驱动。实现的策略可以是，在将要执行 I/O 阻塞事件时，先在事件循环中对该事件 进行注册，关联的回调函数便是对当前协程的切换操作（current_greenlet.switch()），注册成功后即 切换回当前协程的父协程中进行执行（current_greenlet.parent.switch()）。当注册的 I/O 事件被 触发后，事件循环在恰当时机便会执行该回调函数，也就是切换到原先的协程继续执行程序。从而，就实现 无阻塞的 I/O 事件处理。怎样，是否感觉相当的有趣？ :)</p>
+<p>Gevent 了不得的地方还在于，我们能像编写一般程序那样来编写异步程序，这可是弥足珍贵。为了更直观的 显示，让我们来看一下具体的运行示例:    </p>
+<pre><code>import gevent
+from gevent import monkey
+# patches stdlib (including socket and ssl modules) to cooperate with other greenlets
 monkey.patch_all()
-from flask import Flask
-from gevent import pywsgi
 
-app = Flask(__name__)
+import urllib2
 
-@app.route(&apos;/&apos;)
-def index():
-    return &apos;Hello World&apos;
+urls = [&apos;http://www.google.com&apos;, &apos;http://www.yandex.ru&apos;, &apos;http://www.python.org&apos;]
 
-server = pywsgi.WSGIServer((&apos;127.0.0.1&apos;, 5000), app)
-server.serve_forever()
-</code></pre><p>注意：为实现 Flask 与 gevent 的结合，需在程序开头引入 monkey patch。monkey patch 将以闭包的形式修改可以实现异步的标准库，从而实现异步。</p>
-<p>注意：需使用支持 gevent 的 WSGI，例如：gevent.pywsgi、gunicorn 等。</p>
+def print_head(url):
+    print (&apos;Starting %s&apos; % url)
+    data = urllib2.urlopen(url).read()
+    print (&apos;%s: %s bytes: %r&apos; % (url, len(data), data[:50]))
 
-          
-        
-      
-    </div>
-    
-    
-    
+jobs = [gevent.spawn(print_head, url) for url in urls]
 
-    
+gevent.joinall(jobs)
+</code></pre><p>上面示例做的事情实际上跟前面 Tornado 的示例是一样，同样是异步的对url进行请求。在我看来，使用 Gevent 进行编程，无论是可读性还是可操作性都能让人满意。但也要清楚，在实际操作中，为了达到较理想 效果，经常还是需要根据不同的情况对代码进行一些相应的“雕琢”。还有一点很常被人忽略， Gevent 是 基于协程实现的 Python 网络库，其适用面更多的是在于网络 I/O 频繁的需求里，很多情况下 Gevent 可能 并不是很好的选择。总的来说，Gevent 确实很讨人喜爱，性能好，开销小，代码易维护，是广大 pythoner 手中的一大利器。    </p>
 
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/10/python基础20题/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/10/python基础20题/" itemprop="url">python基础20题</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-10T10:20:36+08:00">
-                2018-03-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/03/10/python基础20题/" class="leancloud_visitors" data-flag-title="python基础20题">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  2.1k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  8
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.简述函数式编程</p>
-<p>在函数式编程中，函数是基本单位，变量只是一个名称，而不是一个存储单元。除了匿名函数外，Python还使用fliter(),map(),reduce(),apply()函数来支持函数式编程。</p>
-<p>2.什么是匿名函数，匿名函数有什么局限性</p>
-<p>匿名函数，也就是lambda函数，通常用在函数体比较简单的函数上。匿名函数顾名思义就是函数没有名字，因此不用担心函数名冲突。不过Python对匿名函数的支持有限，只有一些简单的情况下可以使用匿名函数。</p>
-<p>3.如何捕获异常，常用的异常机制有哪些？</p>
-<p>如果我们没有对异常进行任何预防，那么在程序执行的过程中发生异常，就会中断程序，调用python默认的异常处理器，并在终端输出异常信息。</p>
-<p>try…except…finally语句:当try语句执行时发生异常，回到try语句层，寻找后面是否有except语句。找到except语句后，会调用这个自定义的异常处理器。except将异常处理完毕后，程序继续往下执行。finally语句表示，无论异常发生与否，finally中的语句都要执行。</p>
-<p>assert语句：判断assert后面紧跟的语句是True还是False，如果是True则继续执行print，如果是False则中断程序，调用默认的异常处理器，同时输出assert语句逗号后面的提示信息。</p>
-<p>with语句：如果with语句或语句块中发生异常，会调用默认的异常处理器处理，但文件还是会正常关闭。</p>
-<p>4.copy()与deepcopy()的区别</p>
-<p>copy是浅拷贝，只拷贝可变对象的父级元素。 deepcopy是深拷贝，递归拷贝可变对象的所有元素。</p>
-<p>5.函数装饰器有什么作用（常考）</p>
-<p>装饰器本质上是一个Python函数，它可以让其他函数在不需要做任何代码变动的前提下增加额外功能，装饰器的返回值也是一个函数对象。它经常用于有切面需求的场景，比如：插入日志、性能测试、事务处理、缓存、权限校验等场景。有了装饰器，就可以抽离出大量与函数功能本身无关的雷同代码并继续重用。</p>
-<p>6.简述Python的作用域以及Python搜索变量的顺序</p>
-<p>Python作用域简单说就是一个变量的命名空间。代码中变量被赋值的位置，就决定了哪些范围的对象可以访问这个变量，这个范围就是变量的作用域。在Python中，只有模块（module），类（class）以及函数（def、lambda）才会引入新的作用域。Python的变量名解析机制也称为 LEGB 法则：本地作用域（Local）→当前作用域被嵌入的本地作用域（Enclosing locals）→全局/模块作用域（Global）→内置作用域（Built-in）</p>
-<p>7.新式类和旧式类的区别,如何确保使用的类是新式类</p>
-<p>为了统一类(class)和类型(type)，python在2.2版本引进来新式类。在2.1版本中，类和类型是不同的。</p>
-<p>为了确保使用的是新式类，有以下方法：</p>
-<p>放在类模块代码的最前面 <strong>metaclass</strong> = type<br>从内建类object直接或者间接地继承<br>在python3版本中，默认所有的类都是新式类。</p>
-<p>8.简述<strong>new</strong>和<strong>init</strong>的区别</p>
-<p>创建一个新实例时调用<strong>new</strong>,初始化一个实例时用<strong>init</strong>,这是它们最本质的区别。</p>
-<p>new方法会返回所构造的对象，init则不会.</p>
-<p>new函数必须以cls作为第一个参数，而init则以self作为其第一个参数.</p>
-<p>9.Python垃圾回收机制(常考)</p>
-<p>Python GC主要使用引用计数（reference counting）来跟踪和回收垃圾。在引用计数的基础上，通过“标记-清除”（mark and sweep）解决容器对象可能产生的循环引用问题，通过“分代回收”（generation collection）以空间换时间的方法提高垃圾回收效率。</p>
-<p>1 引用计数</p>
-<p>PyObject是每个对象必有的内容，其中ob_refcnt就是做为引用计数。当一个对象有新的引用时，它的ob_refcnt就会增加，当引用它的对象被删除，它的ob_refcnt就会减少.引用计数为0时，该对象生命就结束了。</p>
-<p>优点:</p>
-<p>简单 实时性 缺点:</p>
-<p>维护引用计数消耗资源 循环引用</p>
-<p>2 标记-清除机制</p>
-<p>基本思路是先按需分配，等到没有空闲内存的时候从寄存器和程序栈上的引用出发，遍历以对象为节点、以引用为边构成的图，把所有可以访问到的对象打上标记，然后清扫一遍内存空间，把所有没标记的对象释放。</p>
-<p>3 分代技术</p>
-<p>分代回收的整体思想是：将系统中的所有内存块根据其存活时间划分为不同的集合，每个集合就成为一个“代”，垃圾收集频率随着“代”的存活时间的增大而减小，存活时间通常利用经过几次垃圾回收来度量。</p>
-<p>Python默认定义了三代对象集合，索引数越大，对象存活时间越长。</p>
-<p>10.Python中的@property有什么作用?如何实现成员变量的只读属性？</p>
-<p>@property装饰器就是负责把一个方法变成属性调用，通常用在属性的get方法和set方法，通过设置@property可以实现实例成员变量的直接访问，又保留了参数的检查。另外通过设置get方法而不定义set方法可以实现成员变量的只读属性。</p>
-<p>11.*args and **kwargs</p>
-<pre><code>*args代表位置参数，它会接收任意多个参数并把这些参数作为元组传递给函数。**kwargs代表的关    
-键字参数，允许你使用没有事先定义的参数名，另外，位置参数一定要放在关键字参数的前面。
-</code></pre><p>12.有用过with statement吗？它的好处是什么？具体如何实现？</p>
-<p>with语句适用于对资源进行访问的场合，确保不管使用过程中是否发生异常都会执行必要的“清理”操作，释放资源，比如文件使用后自动关闭、线程中锁的自动获取和释放等。</p>
-<p>13.写出代码输出 并解释</p>
-<pre><code>def extend_list(val, list=[]):
-list.append(val)
-return list
-
-list1 = extend_list(10)
-list2 = extend_list(123, [])
-list3 = extend_list(&apos;a&apos;)
-
-print(list1) # list1 = [10, &apos;a&apos;]
-print(list2) # list2 = [123, []]
-print(list3) # list3 = [10, &apos;a&apos;]
-
-class Parent(object):
-    x = 1
-
-class Child1(Parent):
-    pass
-
-class Child2(Parent):
-    pass
-
-print(Parent.x, Child1.x, Child2.x)  # [1,1,1]
-Child1.x = 2
-print(Parent.x, Child1.x, Child2.x)  # [1,2,1]
-Partent.x = 3
-print(Parent.x, Child1.x, Child2.x)  # [3,2,3]
-</code></pre><p>14.在一个二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。</p>
-<pre><code>arr = [[1,4,7,10,15], [2,5,8,12,19], [3,6,9,16,22], [10,13,14,17,24], [18,21,23,26,30]]
-
-def getNum(num, data=None):
-    while data:
-        if num &gt; data[0][-1]:
-            del data[0]
-            print(data)
-            getNum(num, data=None)
-        elif num &lt; data[0][-1]:
-            data = list(zip(*data))
-            del data[-1]
-            data = list(zip(*data))
-            print(data)
-            getNum(num, data=None)
-        else:
-            return True
-            data.clear()
-    return False
-
-
-if __name__ == &apos;__main__&apos;:
-    print(getNum(18, arr))    
-</code></pre><p>15.获取最大公约数、最小公倍数</p>
-<pre><code>a = 36
-b = 21
-
-def maxCommon(a, b):
-    while b: a,b = b, a%b
-    return a
-
-def minCommon(a, b):
-    c = a*b
-    while b: a,b = b, a%b
-    return c//a
-
-if __name__ == &apos;__main__&apos;:
-    print(maxCommon(a,b))
-    print(minCommon(a,b))
-</code></pre><p>16.获取中位数</p>
-<pre><code>def median(data):
-    data.sort()
-    half = len(data) // 2
-    return (data[half] + data[~half])/2
-
-l = [1,3,4,53,2,46,8,42,82]
-
-if __name__ == &apos;__main__&apos;:
-    print(median(l))    
-</code></pre><p>17.输入一个整数，输出该数二进制表示中1的个数。其中负数用补码表示。</p>
-<pre><code>def getOneCount(num):
-    if num &gt; 0:
-        count = b_num.count(&apos;1&apos;)
-        print(b_num)
-        return count
-    elif num &lt; 0:
-        b_num = bin(~num)
-        count = 8 - b_num.count(&apos;1&apos;)
-        return count
-    else:
-        return 8
-
-if __name__ == &apos;__main__&apos;:
-    print(getOneCount(5))
-    print(getOneCount(-5))
-    print(getOneCount(0))    
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/10/python基础小结25/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/10/python基础小结25/" itemprop="url">python基础小结25</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-10T09:37:32+08:00">
-                2018-03-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/03/10/python基础小结25/" class="leancloud_visitors" data-flag-title="python基础小结25">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.5k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  5
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.什么是Python？使用Python有什么好处？</p>
-<pre><code>Python是一种编程语言，它有对象、模块、线程、异常处理和自动内存管理。
-
-它简洁、简单、方便、容易扩展，有许多自带的数据结构，而且它开源。
-</code></pre><p>2.什么是PEP8？</p>
-<pre><code>PEP8是一个编程规范，内容是一些关于如何让你的程序更具可读性的建议。
-</code></pre><p>3.什么是pickling和unpickling？</p>
-<pre><code>Pickle模块读入任何Python对象，将它们转换成字符串，然后使用dump函数将其转储到一个文件中——
-
-这个过程叫做pickling。反之从存储的字符串文件中提取原始Python对象的过程，叫做
-
-unpickling。
-</code></pre><p>4.Python是如何被解释的？</p>
-<pre><code>Python是一种解释性语言，它的源代码可以直接运行。Python解释器会将源代码转换成中间语言，
-
-之后再翻译成机器码再执行。
-</code></pre><p>5.Python是怎样管理内存的？</p>
-<pre><code>Python的内存管理是由私有heap空间管理的。所有的Python对象和数据结构都在一个私有heap中。    
-程序员没有访问该heap的权限，只有解释器才能对它进行操作。为Python的heap空间分配内存是由    
-Python的内存管理模块进行的，其核心API会提供一些访问该模块的方法供程序员使用。Python有自    
-带的垃圾回收系统，它回收并释放没有被使用的内存，让它们能够被其他程序使用。
-</code></pre><p>6.有哪些工具可以帮助debug或做静态分析？</p>
-<pre><code>PyChecker是一个静态分析工具，它不仅能报告源代码中的错误，并且会报告错误类型和复杂度。    
-Pylint是检验模块是否达到代码标准的另一个工具。
-</code></pre><p>7.什么是Python装饰器？</p>
-<pre><code>Python装饰器是Python中的特有变动，可以使修改函数变得更容易。
-</code></pre><p>8.数组和元组之间的区别是什么？</p>
-<pre><code>数组和元组之间的区别：数组内容是可以被修改的，而元组内容是只读的。另外，元组可以被哈希，比    
-如作为字典的关键字。
-</code></pre><p>9.参数按值传递和引用传递是怎样实现的？</p>
-<pre><code>Python中的一切都是类，所有的变量都是一个对象的引用。引用的值是由函数确定的，因此无法被改    
-变。但是如果一个对象是可以被修改的，你可以改动对象。
-</code></pre><p>10.字典推导式和列表推导式是什么？</p>
-<pre><code>它们是可以轻松创建字典和列表的语法结构。
-</code></pre><p>11.Python都有哪些自带的数据结构？</p>
-<pre><code>Python自带的数据结构分为可变的和不可变的。
-
-可变的有：数组、集合、字典；
-
-不可变的有：字符串、元组、数。    
-</code></pre><p>12.什么是Python的命名空间？</p>
-<pre><code>在Python中，所有的名字都存在于一个空间中，它们在该空间中存在和被操作——这就是命名空间。它    
-就好像一个盒子，每一个变量名字都对应装着一个对象。当查询变量的时候，会从该盒子里面寻找相应    
-的对象。
-</code></pre><p>13.Python中的lambda是什么？</p>
-<pre><code>这是一个常被用于代码中的单个表达式的匿名函数。
-</code></pre><p>14.为什么lambda没有语句？</p>
-<pre><code>匿名函数lambda没有语句的原因，是它被用于在代码被执行的时候构建新的函数对象并且返回。
-</code></pre><p>15.Python中的pass是什么？</p>
-<pre><code>Pass是一个在Python中不会被执行的语句。在复杂语句中，如果一个地方需要暂时被留白，它常常被    
-用于占位符。
-</code></pre><p>16.Python中什么是遍历器？</p>
-<pre><code>遍历器用于遍历一组元素，比如列表这样的容器。
-</code></pre><p>17.Python中的unittest是什么？</p>
-<pre><code>在Python中，unittest是Python中的单元测试框架。它拥有支持共享搭建、自动测试、在测试中暂    
-停代码、将不同测试迭代成一组，等等的功能。
-</code></pre><p>18.在Python中什么是slicing（分片）？</p>
-<pre><code>Slicing是一种在有序的对象类型中（数组，元组，字符串）节选某一段的语法。
-</code></pre><p>19.在Python中什么是构造器？</p>
-<pre><code>生成器是实现迭代器的一种机制。它功能的实现依赖于yield表达式，
-
-除此之外它跟普通的函数没有两样。
-</code></pre><p>20.Python中的docstring是什么？</p>
-<pre><code>Python中文档字符串被称为docstring，
-
-它在Python中的作用是为函数、模块和类注释生成文档。
-</code></pre><p>21.如何在Python中拷贝一个对象？</p>
-<pre><code>如果要在Python中拷贝一个对象，大多时候你可以用copy.copy()或者copy.deepcopy()。但并    
-不是所有的对象都可以被拷贝。
-</code></pre><p>22.Python中的负索引是什么？</p>
-<pre><code>Python中的序列索引可以是正也可以是负。如果是正索引，0是序列中的第一个索引，1是第二个索    
-引。如果是负索引，（-1）是最后一个索引而（-2）是倒数第二个索引。
-</code></pre><p>23.如何将一个数字转换成一个字符串？</p>
-<pre><code>你可以使用自带函数str()将一个数字转换为字符串。
-
-如果你想要八进制或者十六进制数，可以用oct()或hex()。
-</code></pre><p>24.Xrange和range的区别是什么？</p>
-<pre><code>Xrange用于返回一个xrange对象，而range用于返回一个数组。不管那个范围多大，Xrange都使用    
-同样的内存。
-</code></pre><p>25.Python中的模块和包是什么？</p>
-<pre><code>在Python中，模块是搭建程序的一种方式。每一个Python代码文件都是一个模块，并可以引用其他
-
-的模块，比如对象和属性。
-
-一个包含许多Python代码的文件夹是一个包。一个包可以包含模块和子文件夹。    
-</code></pre>
           
         
       
@@ -1440,7 +1498,7 @@ Pylint是检验模块是否达到代码标准的另一个工具。
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/59/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/59/">59</a><span class="page-number current">60</span><a class="page-number" href="/page/61/">61</a><span class="space">&hellip;</span><a class="page-number" href="/page/77/">77</a><a class="extend next" rel="next" href="/page/61/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/59/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/59/">59</a><span class="page-number current">60</span><a class="page-number" href="/page/61/">61</a><span class="space">&hellip;</span><a class="page-number" href="/page/78/">78</a><a class="extend next" rel="next" href="/page/61/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1490,7 +1548,7 @@ Pylint是检验模块是否达到代码标准的另一个工具。
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">383</span>
+                  <span class="site-state-item-count">388</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1605,7 +1663,7 @@ Pylint是检验模块是否达到代码标准的另一个工具。
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共151.1k字</span>
+  <span class="post-count">博客全站共151.3k字</span>
 </div>
 
         

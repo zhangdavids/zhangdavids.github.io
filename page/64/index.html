@@ -275,7 +275,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/02/18/js-inter/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/02/23/Japronto介绍/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -294,7 +294,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/18/js-inter/" itemprop="url">js-inter</a></h1>
+                <a class="post-title-link" href="/2018/02/23/Japronto介绍/" itemprop="url">Japronto介绍</a></h1>
         
 
         <div class="post-meta">
@@ -306,8 +306,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-18T11:23:00+08:00">
-                2018-02-18
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-23T19:36:34+08:00">
+                2018-02-23
               </time>
             
 
@@ -324,7 +324,7 @@
 
           
           
-             <span id="/2018/02/18/js-inter/" class="leancloud_visitors" data-flag-title="js-inter">
+             <span id="/2018/02/23/Japronto介绍/" class="leancloud_visitors" data-flag-title="Japronto介绍">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -349,394 +349,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.3k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  4
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.使用 typeof bar === “object” 来确定 bar 是否是对象的潜在陷阱是什么？如何避免这个陷阱？</p>
-<p>null 也是对象</p>
-<pre><code>console.log((bar !== null) &amp;&amp; (typeof bar === &quot;object&quot;) &amp;&amp; (toString.call(bar) !== &quot;[object Array]&quot;));
-</code></pre><p>2.use strict??</p>
-<p>对于这个问题，既简要又最重要的答案是，use strict 是一种在JavaScript代码运行时自动实行更严格解析和错误处理的方法。那些被忽略或默默失败了的代码错误，会产生错误或抛出异常。通常而言，这是一个很好的做法。</p>
-<p>严格模式的一些主要优点包括：</p>
-<p>使调试更加容易。那些被忽略或默默失败了的代码错误，会产生错误或抛出异常，因此尽早提醒你代码中的问题，你才能更快地指引到它们的源代码。<br>防止意外的全局变量。如果没有严格模式，将值分配给一个未声明的变量会自动创建该名称的全局变量。这是JavaScript中最常见的错误之一。在严格模式下，这样做的话会抛出错误。<br>消除 this 强制。如果没有严格模式，引用null或未定义的值到 this 值会自动强制到全局变量。这可能会导致许多令人头痛的问题和让人恨不得拔自己头发的bug。在严格模式下，引用 null或未定义的 this 值会抛出错误。<br>不允许重复的属性名称或参数值。当检测到对象（例如，var object = {foo: “bar”, foo: “baz”};）中重复命名的属性，或检测到函数中（例如，function foo(val1, val2, val1){}）重复命名的参数时，严格模式会抛出错误，因此捕捉几乎可以肯定是代码中的bug可以避免浪费大量的跟踪时间。<br>使eval() 更安全。在严格模式和非严格模式下，eval() 的行为方式有所不同。最显而易见的是，在严格模式下，变量和声明在 eval() 语句内部的函数不会在包含范围内创建（它们会在非严格模式下的包含范围中被创建，这也是一个常见的问题源）。<br>在 delete使用无效时抛出错误。delete操作符（用于从对象中删除属性）不能用在对象不可配置的属性上。当试图删除一个不可配置的属性时，非严格代码将默默地失败，而严格模式将在这样的情况下抛出异常。</p>
-<p>3.NaN 是什么？它的类型是什么？你如何可靠地测试一个值是否等于 NaN ？</p>
-<p>NaN 属性代表一个“不是数字”的值。这个特殊的值是因为运算不能执行而导致的，不能执行的原因要么是因为其中的运算对象之一非数字（例如， “abc” / 4），要么是因为运算的结果非数字（例如，除数为零）。</p>
-<p>虽然这看上去很简单，但 NaN 有一些令人惊讶的特点，如果你不知道它们的话，可能会导致令人头痛的bug。</p>
-<p>首先，虽然 NaN 意味着“不是数字”，但是它的类型，不管你信不信，是 Number：</p>
-<p>console.log(typeof NaN === “number”);  // logs “true”<br>此外， NaN 和任何东西比较——甚至是它自己本身！——结果是false：</p>
-<p>console.log(NaN === NaN);  // logs “false”<br>一种半可靠的方法来测试一个数字是否等于 NaN，是使用内置函数 isNaN()，但即使使用 isNaN() 依然并非是一个完美的解决方案。</p>
-<p>一个更好的解决办法是使用 value !== value，如果值等于NaN，只会产生true。另外，ES6提供了一个新的 Number.isNaN() 函数，这是一个不同的函数，并且比老的全局 isNaN() 函数更可靠。    </p>
-<p>4.下列代码将输出什么？并解释原因。</p>
-<p>console.log(0.1 + 0.2);console.log(0.1 + 0.2 == 0.3);<br>一个稍微有点编程基础的回答是：“你不能确定。可能会输出“0.3”和“true”，也可能不会。JavaScript中的数字和浮点精度的处理相同，因此，可能不会总是产生预期的结果。“</p>
-<p>以上所提供的例子就是一个演示了这个问题的典型例子。但出人意料的是，它会输出：</p>
-<p>0.30000000000000004 false    </p>
-<p>浮点数并不准确！！！</p>
-<p>5.JavaScript中的“闭包”是什么？请举一个例子。</p>
-<p>闭包是一个可以访问外部（封闭）函数作用域链中的变量的内部函数。闭包可以访问三种范围中的变量：这三个范围具体为：（1）自己范围内的变量，（2）封闭函数范围内的变量，以及（3）全局变量。</p>
-<p>下面是一个简单的例子：</p>
-<pre><code>var globalVar = &quot;xyz&quot;;
-
-(function outerFunc(outerArg) {  var outerVar = &apos;a&apos;;
-
-  (function innerFunc(innerArg) {    var innerVar = &apos;b&apos;;    console.log(      &quot;outerArg = &quot; + outerArg + &quot;\n&quot; +      &quot;innerArg = &quot; + innerArg + &quot;\n&quot; +      &quot;outerVar = &quot; + outerVar + &quot;\n&quot; +      &quot;innerVar = &quot; + innerVar + &quot;\n&quot; +      &quot;globalVar = &quot; + globalVar);
-
-  })(456);
-})(123);
-</code></pre><p>在上面的例子中，来自于 innerFunc， outerFunc和全局命名空间的变量都在 innerFunc的范围内。因此，上面的代码将输出如下：</p>
-<pre><code>outerArg = 123innerArg = 456outerVar = ainnerVar = bglobalVar = xyz
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/02/18/python-hardest/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/18/python-hardest/" itemprop="url">python-hardest</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-18T10:33:45+08:00">
-                2018-02-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/02/18/python-hardest/" class="leancloud_visitors" data-flag-title="python-hardest">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.3k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  4
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Python社区会有如此多的人关注于这样的问题-“对于解释器全局锁能做什么-”"><a href="#Python社区会有如此多的人关注于这样的问题-“对于解释器全局锁能做什么-”" class="headerlink" title="Python社区会有如此多的人关注于这样的问题: “对于解释器全局锁能做什么?”"></a>Python社区会有如此多的人关注于这样的问题: “对于解释器全局锁能做什么?”</h2><ol>
-<li>要理解GIL的含义，我们需要从Python的基础讲起。像C++这样的语言是编译型语言，所谓编译型语言，是指程序输入到编译器，编译器再根据语言的语法进行解析，然后翻译成语言独立的中间表示，最终链接成具有高度优化的机器码的可执行程序。编译器之所以可以深层次的对代码进行优化，是因为它可以看到整个程序（或者一大块独立的部分）。这使得它可以对不同的语言指令之间的交互进行推理，从而给出更有效的优化手段。</li>
-<li>与此相反，Python是解释型语言。程序被输入到解释器来运行。解释器在程序执行之前对其并不了解；它所知道的只是Python的规则，以及在执行过程中怎样去动态的应用这些规则。它也有一些优化，但是这基本上只是另一个级别的优化。由于解释器没法很好的对程序进行推导，Python的大部分优化其实是解释器自身的优化。更快的解释器自然意味着程序的运行也能“免费”的更快。也就是说，解释器优化后，Python程序不用做修改就可以享受优化后的好处。</li>
-</ol>
-<p><em>如果其他条件不变，Python程序的执行速度直接与解释器的“速度”相关。不管你怎样优化自己的程序，你的程序的执行速度还是依赖于解释器执行你的程序的效率。这就很明显的解释了为什么我们需要对优化Python解释器做这么多的工作了。对于Python程序员来说，这恐怕是与免费午餐最接近的了。</em></p>
-<p>大部分开发者听到“并发”通常会立刻想到多线程的程序。目前来说，多线程执行还是利用多核系统最常用的方式。尽管多线程编程大大好于“顺序”编程，不过即便是仔细的程序员也没法在代码中将并发性做到最好。编程语言在这方面应该做的更好，大部分应用广泛的现代编程语言都会支持多线程编程。</p>
-<p>要想利用多核系统，Python必须支持多线程运行。作为解释型语言，Python的解释器必须做到既安全又高效。我们都知道多线程编程会遇到的问题。解释器要留意的是避免在不同的线程操作内部共享的数据。同时它还要保证在管理用户线程时保证总是有最大化的计算资源。</p>
-<p>那么，不同线程同时访问时，数据的保护机制是怎样的呢？答案是解释器全局锁。从名字上看能告诉我们很多东西，很显然，这是一个加在解释器上的全局（从解释器的角度看）锁（从互斥或者类似角度看）。这种方式当然很安全，但是它有一层隐含的意思（Python初学者需要了解这个）：对于任何Python程序，不管有多少的处理器，任何时候都总是只有一个线程在执行。</p>
-<p><strong>不要使用多线程，请使用多进程</strong></p>
-<p>基于线程的编程毫无疑问是困难的。每当某个人觉得他了解关于线程是如何工作的一切的时候，总是会悄无声息的出现一些新的问题。因为在这方面想要得到正确合理的一致性真的是太难了，因此有一些非常知名的语言设计者和研究者已经总结得出了一些线程模型。就像某个写过多线程应用的人可以告诉你的一样，不管是多线程应用的开发还是调试都会比单线程的应用难上数倍。程序员通常所具有的顺序执行的思维模恰恰就是与并行执行模式不相匹配。GIL的出现无意中帮助了开发者免于陷入困境。在使用多线程时仍然需要同步原语的情况下，GIL事实上帮助我们保持不同线程之间的数据一致性问题。</p>
-<p>那么现在看起来讨论Python最难得问题是有点问错了问题。我们有非常好的理由来说明为什么Python专家推荐我们使用多进程代替多线程，而不是去试图隐藏Python线程实现的不足。更进一步，我们鼓励开发者使用更安全更直接的方式实现并发模型，同时保留使用多线程进行开发除非你觉的真的非常必要的话。对于大多数人来说什么是最好的并行编程模型可能并不是十分清楚。但是目前我们清楚的是多线程的方式可能并不是最好的。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/02/16/ai-keyword/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/16/ai-keyword/" itemprop="url">ai-keyword</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-16T15:45:31+08:00">
-                2018-02-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/AI/" itemprop="url" rel="index">
-                    <span itemprop="name">AI</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/02/16/ai-keyword/" class="leancloud_visitors" data-flag-title="ai-keyword">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  456
+                  59
                 </span>
               
 
@@ -775,63 +388,15 @@
       
         
           
-            <p>深度学习</p>
-<p>进化策略</p>
-<p>迁移学习</p>
-<p>卷积神经网络</p>
-<p>知识图谱</p>
-<p>聚类</p>
-<p>回归</p>
-<p>PCA</p>
-<p>t-SNE</p>
-<p>贝叶斯</p>
-<p>决策树</p>
-<p>随机森林</p>
-<p>遗传算法</p>
-<p>强化学习</p>
-<p>马尔科夫</p>
-<p>概率图</p>
-<h2 id="什么是深度学习？"><a href="#什么是深度学习？" class="headerlink" title="什么是深度学习？"></a>什么是深度学习？</h2><p>深度学习是表征学习的通用框架，它有以下特征：</p>
-<ol>
-<li>给定一个目标（objective）</li>
-<li>学习能够实现目标的特征</li>
-<li>直接的原始输入</li>
-<li>使用最少的领域知识深度</li>
-</ol>
-<p>深度学习是一项实现机器学习的技术。它仅仅是一种机器学习的方法。</p>
-<p>深度神经网络通常被人们用来理解深度表征。</p>
-<p>循环神经网络 RNN</p>
-<p>卷积神经网络 CNN</p>
-<p>工作方式：</p>
-<ol>
-<li>选择数据： 训练 验证 测试</li>
-<li>模型数据</li>
-<li>验证模型</li>
-<li>测试模型</li>
-<li>使用模型</li>
-<li>调优模型</li>
-</ol>
-<p>机器学习所处在的位置：</p>
-<p>数据科学家使用训练数据集来教计算机应该怎么做，</p>
-<p>然后系统执行该任务</p>
-<p>首先存在大数据</p>
-<p>机器会学习使用训练数据集来进行分类，调节特定的算法来实现目标分类</p>
-<p>该计算机可学习识别数据中的关系、趋势和模式</p>
-<p>如何使用？</p>
-<p>快速三维地图测绘和建模</p>
-<p>增强分析以降低风险</p>
-<p>预测表现最佳的目标</p>
-<h3 id="九大算法"><a href="#九大算法" class="headerlink" title="九大算法"></a>九大算法</h3><ol>
-<li>决策树 在进行逐步应答过程中，典型的决策树分析会使用分层变量或决策节点，例如，可将一个给定用户分类成信用可靠或不可靠</li>
-<li>支持向量机</li>
-<li>回归</li>
-<li>朴素贝叶斯分类</li>
-<li>隐马尔可夫模型</li>
-<li>随机森林</li>
-<li>循环神经网络</li>
-<li>长短期记忆与门控循环单元神经网络</li>
-<li>卷积神经网络</li>
-</ol>
+            <ul>
+<li>实现 HTTP 1.x 并且支持分片上传</li>
+<li>完整支持 HTTP 流水线</li>
+<li>可配置是否让链接 Keep-alive</li>
+<li>支持同步和异步视图</li>
+<li>多任务处理</li>
+<li>代码热加载</li>
+<li>简单易用的路由规则</li>
+</ul>
 
           
         
@@ -880,7 +445,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/02/15/artificial-intelligence/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/02/23/it从业人员的核心竞争力/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -899,7 +464,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/02/15/artificial-intelligence/" itemprop="url">artificial intelligence</a></h1>
+                <a class="post-title-link" href="/2018/02/23/it从业人员的核心竞争力/" itemprop="url">it从业人员的核心竞争力</a></h1>
         
 
         <div class="post-meta">
@@ -911,8 +476,573 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-15T21:00:03+08:00">
-                2018-02-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-23T14:09:11+08:00">
+                2018-02-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/02/23/it从业人员的核心竞争力/" class="leancloud_visitors" data-flag-title="it从业人员的核心竞争力">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  252
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>以前的长辈会说， 你要小心，你会的东西千万不能交给别人。俗话说的好，教会了徒弟饿死了师傅。</p>
+<p>BUT， 在 IT 行业 ，这个是一个讲究分享的行业，业内有一句话叫做， <strong>if you can’t be replaced,you won’t get promoted</strong></p>
+<hr>
+<p>多写几条query Google 一下，从理论论文到工业实现到best practice code 瞬间一网打尽</p>
+<ul>
+<li>沟通能力</li>
+<li>学习能力</li>
+<li>全局眼光和行业洞察力</li>
+<li>创新能力</li>
+</ul>
+<p>体察对方，表达自己，将需求转化为design，将task拆解为AI 的能力</p>
+<p>从实际工作中总结提炼的能力，即将现实问题转换为经验，并举一反三推而广之的能力</p>
+<p>形成这种行业性的vision 需要时间积累。</p>
+<p>主要是 <em>顺利理解和跟进，以最快的速度将他人原创应用到自己所从事的领域和正在实践的具体业务上，这就是一种跟进式创新</em></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/02/22/2月好书推荐201802/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/22/2月好书推荐201802/" itemprop="url">2月好书推荐201802</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-22T16:52:48+08:00">
+                2018-02-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/suibi/" itemprop="url" rel="index">
+                    <span itemprop="name">suibi</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/02/22/2月好书推荐201802/" class="leancloud_visitors" data-flag-title="2月好书推荐201802">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  40
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>精益数据分析</p>
+<p>定位  视觉锤</p>
+<p>毛主席语录</p>
+<p>金字塔原理</p>
+<p>学会提问</p>
+<p>鬼谷子</p>
+<p>零秒思考</p>
+<hr>
+<p>SWOT分析法</p>
+<p>竞争分析</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/02/21/10-to-illustriousness/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/21/10-to-illustriousness/" itemprop="url">10-to-illustriousness</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-21T17:16:07+08:00">
+                2018-02-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/jottings/" itemprop="url" rel="index">
+                    <span itemprop="name">jottings</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/02/21/10-to-illustriousness/" class="leancloud_visitors" data-flag-title="10-to-illustriousness">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  172
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <hr>
+<p>1.不沟通明白，就整代码！！</p>
+<p>有时有些怕直接领导没有空，或者他说一次以为自己听懂了，不好意思问。。</p>
+<p><strong>需要详细问清楚再动手</strong></p>
+<p>2.先想清楚 再动手</p>
+<p>3.一定要写注释 一定要写注释 一定要写注释</p>
+<p>因为出了bug 后 自己都不记得当时怎么想的 为毛这么写</p>
+<p>4.写完一定要认真测试</p>
+<p>5.不要心存侥幸</p>
+<p>6.文档一定要写</p>
+<p>7.习惯于需求的改变</p>
+<p>8.遇到问题 及时提出来</p>
+<p>9.充分预估任务完成时间</p>
+<p>10.有效的与同事沟通会大大提高工作效率</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/02/21/django-api-interfaces/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/21/django-api-interfaces/" itemprop="url">django api interfaces</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-21T16:28:36+08:00">
+                2018-02-21
               </time>
             
 
@@ -951,7 +1081,7 @@
 
           
           
-             <span id="/2018/02/15/artificial-intelligence/" class="leancloud_visitors" data-flag-title="artificial intelligence">
+             <span id="/2018/02/21/django-api-interfaces/" class="leancloud_visitors" data-flag-title="django api interfaces">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -976,7 +1106,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  58
+                  304
                 </span>
               
 
@@ -1015,178 +1145,33 @@
       
         
           
-            <p>面向对象编程</p>
-<p>函数式编程</p>
-<p>了解CNN RCNN</p>
-<p>主流人工智能平台 熟悉一个 比如 keras</p>
-<p>会要求手写至少一个算法实现。。</p>
-<p>数据库 mysql 优化设计</p>
-<p>django 登陆 详细源码！！</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/02/12/inner-strength/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/12/inner-strength/" itemprop="url">inner-strength</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-12T22:24:25+08:00">
-                2018-02-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/02/12/inner-strength/" class="leancloud_visitors" data-flag-title="inner-strength">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  57
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="从尊敬一事无成的自己开始"><a href="#从尊敬一事无成的自己开始" class="headerlink" title="从尊敬一事无成的自己开始"></a>从尊敬一事无成的自己开始</h2><p>尊敬自己 才能拥有改变的力量</p>
-<p>别在疲惫不堪时反省自己</p>
-<p>乐于付出才能得到最纯粹的喜悦</p>
-<p>喜悦永远不嫌多</p>
+            <p>现在是个项目就需要API接口的时代，往往大家写API都有着自己的风格，而django却早有了解决api开发和自测的一套黑科技，我相信很多人都知道：</p>
+<p>django-rest-framework（主打接口序列化)</p>
+<p>django-rest-swagger（主打接口ui）</p>
+<p>注意此处的django 版本 选择 建议是  &lt; 1.9</p>
+<p>django-rest-swagger==0.3.5</p>
+<hr>
+<p>Django REST framework 是一个强大且灵活的工具包，用以构建Web APIs。 </p>
+<p>为什么要使用REST framework？ </p>
+<ul>
+<li><p>在线可视的API，对于赢得你的开发者们十分有用   </p>
+</li>
+<li><p>验证策略涵盖了OAuth1a和OAuth2 </p>
+</li>
+<li><p>同时支持ORM和非ORM数据源的序列化 </p>
+</li>
+<li><p>可以配置各个环节，若无需更多强大的特性，使用一般基于类（function-based）的视图（views）即可</p>
+</li>
+<li><p>大量的文档，强力的社区支持 </p>
+</li>
+<li><p>大公司如同Mozilla和Eventbrite，也是忠实的使用者</p>
+</li>
+</ul>
+<p>djangorestframework 版本使用建议为3.6.3 </p>
+<hr>
+<p>实际项目中需要注意的事项</p>
+<p>1.数据加载到内存中长久保存，这样每次用户请求数据，无须计算或者检索数据，以此来提升用户体验。</p>
+<p>2.谈一谈django 的登陆？注册？</p>
 
           
         
@@ -1226,7 +1211,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/63/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/63/">63</a><span class="page-number current">64</span><a class="page-number" href="/page/65/">65</a><span class="space">&hellip;</span><a class="page-number" href="/page/77/">77</a><a class="extend next" rel="next" href="/page/65/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/63/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/63/">63</a><span class="page-number current">64</span><a class="page-number" href="/page/65/">65</a><span class="space">&hellip;</span><a class="page-number" href="/page/78/">78</a><a class="extend next" rel="next" href="/page/65/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1276,7 +1261,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">383</span>
+                  <span class="site-state-item-count">388</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1391,7 +1376,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共151.1k字</span>
+  <span class="post-count">博客全站共151.3k字</span>
 </div>
 
         
