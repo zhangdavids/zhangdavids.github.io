@@ -101,7 +101,7 @@
 内建函数 len 取长度内建函数 cap 取容量
 数组的长度永远等于长度，切片的容量却不是
 扩容">
-<meta property="og:updated_time" content="2019-03-11T10:13:30.975Z">
+<meta property="og:updated_time" content="2019-03-12T04:49:21.862Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2019-go-14">
 <meta name="twitter:description" content="数组和切片数组类型的值的长度是固定的
@@ -390,7 +390,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  197
+                  872
                 </span>
               
 
@@ -406,7 +406,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  4
                 </span>
               
             </div>
@@ -436,6 +436,69 @@
 <p>数组的长度永远等于长度，切片的容量却不是</p>
 <p>扩容 在1024之后 调整的倍率从2下调到1.25</p>
 <p>切片的数组永远不会被替换</p>
+<p>几个例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">	// 示例 1。</span><br><span class="line">	s1 := make([]int, 5)</span><br><span class="line">	fmt.Printf(&quot;The length of s1: %d\n&quot;, len(s1))</span><br><span class="line">	fmt.Printf(&quot;The capacity of s1: %d\n&quot;, cap(s1))</span><br><span class="line">	fmt.Printf(&quot;The value of s1: %d\n&quot;, s1)</span><br><span class="line">	s2 := make([]int, 5, 8)</span><br><span class="line">	fmt.Printf(&quot;The length of s2: %d\n&quot;, len(s2))</span><br><span class="line">	fmt.Printf(&quot;The capacity of s2: %d\n&quot;, cap(s2))</span><br><span class="line">	fmt.Printf(&quot;The value of s2: %d\n&quot;, s2)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出是</p>
+<pre><code>The length of s1: 5
+The capacity of s1: 5
+The value of s1: [0 0 0 0 0]
+The length of s2: 5
+The capacity of s2: 8
+The value of s2: [0 0 0 0 0]
+</code></pre><p>切片的扩容</p>
+<p>生成新的切片 会做拷贝</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">package main</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">	// 示例1。</span><br><span class="line">	s6 := make([]int, 0)</span><br><span class="line">	fmt.Printf(&quot;The capacity of s6: %d\n&quot;, cap(s6))</span><br><span class="line">	for i := 1; i &lt;= 5; i++ &#123;</span><br><span class="line">		s6 = append(s6, i)</span><br><span class="line">		fmt.Printf(&quot;s6(%d): len: %d, cap: %d\n&quot;, i, len(s6), cap(s6))</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println()</span><br><span class="line"></span><br><span class="line">	// 示例2。</span><br><span class="line">	s7 := make([]int, 1024)</span><br><span class="line">	fmt.Printf(&quot;The capacity of s7: %d\n&quot;, cap(s7))</span><br><span class="line">	s7e1 := append(s7, make([]int, 200)...)</span><br><span class="line">	fmt.Printf(&quot;s7e1: len: %d, cap: %d\n&quot;, len(s7e1), cap(s7e1))</span><br><span class="line">	s7e2 := append(s7, make([]int, 400)...)</span><br><span class="line">	fmt.Printf(&quot;s7e2: len: %d, cap: %d\n&quot;, len(s7e2), cap(s7e2))</span><br><span class="line">	s7e3 := append(s7, make([]int, 600)...)</span><br><span class="line">	fmt.Printf(&quot;s7e3: len: %d, cap: %d\n&quot;, len(s7e3), cap(s7e3))</span><br><span class="line">	fmt.Println()</span><br><span class="line"></span><br><span class="line">	// 示例3。</span><br><span class="line">	s8 := make([]int, 10)</span><br><span class="line">	fmt.Printf(&quot;The capacity of s8: %d\n&quot;, cap(s8))</span><br><span class="line">	s8a := append(s8, make([]int, 11)...)</span><br><span class="line">	fmt.Printf(&quot;s8a: len: %d, cap: %d\n&quot;, len(s8a), cap(s8a))</span><br><span class="line">	s8b := append(s8a, make([]int, 23)...)</span><br><span class="line">	fmt.Printf(&quot;s8b: len: %d, cap: %d\n&quot;, len(s8b), cap(s8b))</span><br><span class="line">	s8c := append(s8b, make([]int, 45)...)</span><br><span class="line">	fmt.Printf(&quot;s8c: len: %d, cap: %d\n&quot;, len(s8c), cap(s8c))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<pre><code>The capacity of s6: 0
+s6(1): len: 1, cap: 1
+s6(2): len: 2, cap: 2
+s6(3): len: 3, cap: 4
+s6(4): len: 4, cap: 4
+s6(5): len: 5, cap: 8
+
+The capacity of s7: 1024
+s7e1: len: 1224, cap: 1280
+s7e2: len: 1424, cap: 1696  // 为啥不是1600
+s7e3: len: 1624, cap: 2048   //为啥不是2000
+
+The capacity of s8: 10
+s8a: len: 21, cap: 22
+s8b: len: 44, cap: 44
+s8c: len: 89, cap: 96
+</code></pre><pre><code>
+package main
+
+import &quot;fmt&quot;
+
+func main() {
+    // 示例1。
+    a1 := [7]int{1, 2, 3, 4, 5, 6, 7}
+    fmt.Printf(&quot;a1: %v (len: %d, cap: %d)\n&quot;,
+        a1, len(a1), cap(a1))
+    s9 := a1[1:4]
+    //s9[0] = 1
+    fmt.Printf(&quot;s9: %v (len: %d, cap: %d)\n&quot;,
+        s9, len(s9), cap(s9))
+    for i := 1; i &lt;= 5; i++ {
+        s9 = append(s9, i)
+        fmt.Printf(&quot;s9(%d): %v (len: %d, cap: %d)\n&quot;,
+            i, s9, len(s9), cap(s9))
+    }
+    fmt.Printf(&quot;a1: %v (len: %d, cap: %d)\n&quot;,
+        a1, len(a1), cap(a1))
+    fmt.Println()
+
+}
+</code></pre><p>输入如下所示</p>
+<pre><code>a1: [1 2 3 4 5 6 7] (len: 7, cap: 7)
+s9: [2 3 4] (len: 3, cap: 6)
+s9(1): [2 3 4 1] (len: 4, cap: 6)
+s9(2): [2 3 4 1 2] (len: 5, cap: 6)
+s9(3): [2 3 4 1 2 3] (len: 6, cap: 6)
+s9(4): [2 3 4 1 2 3 4] (len: 7, cap: 12)
+s9(5): [2 3 4 1 2 3 4 5] (len: 8, cap: 12)
+a1: [1 2 3 4 1 2 3] (len: 7, cap: 7)
+</code></pre><p>数组和切片的几个不同点？？？    </p>
 
       
     </div>
@@ -690,7 +753,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共151.3k字</span>
+  <span class="post-count">博客全站共152.2k字</span>
 </div>
 
         
