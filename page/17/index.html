@@ -275,7 +275,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/02/23/2019-go-09/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/02/25/leetcode-188/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -294,7 +294,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/02/23/2019-go-09/" itemprop="url">2019-go-09</a></h1>
+                <a class="post-title-link" href="/2019/02/25/leetcode-188/" itemprop="url">leetcode-188</a></h1>
         
 
         <div class="post-meta">
@@ -306,8 +306,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-23T00:26:38+08:00">
-                2019-02-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-25T11:14:40+08:00">
+                2019-02-25
               </time>
             
 
@@ -329,8 +329,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/golang/" itemprop="url" rel="index">
-                    <span itemprop="name">golang</span>
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
                   </a>
                 </span>
 
@@ -346,7 +346,7 @@
 
           
           
-             <span id="/2019/02/23/2019-go-09/" class="leancloud_visitors" data-flag-title="2019-go-09">
+             <span id="/2019/02/25/leetcode-188/" class="leancloud_visitors" data-flag-title="leetcode-188">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -371,7 +371,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  315
                 </span>
               
 
@@ -410,7 +410,7 @@
       
         
           
-            
+            <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">class</span> Solution &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxProfit</span><span class="params">(<span class="keyword">int</span> k, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; prices)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Step 1: Find out all profit opportunities            </span></span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; profits;</span><br><span class="line">        <span class="built_in">stack</span>&lt;pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;&gt; vps; <span class="comment">// valley-peak pairs</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> v;</span><br><span class="line">        <span class="keyword">int</span> p = <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">            <span class="comment">// find next valley-peak pair</span></span><br><span class="line">            <span class="keyword">for</span> (v = p+<span class="number">1</span>; (v+<span class="number">1</span> &lt; prices.size()) &amp;&amp; (prices[v] &gt;= prices[v+<span class="number">1</span>]); ++v);</span><br><span class="line">            <span class="keyword">for</span> (p = v  ; (p+<span class="number">1</span> &lt; prices.size()) &amp;&amp; (prices[p] &lt;= prices[p+<span class="number">1</span>]); ++p);</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> (v == p) &#123; <span class="comment">// v==p means that both v and p reach the end of the array</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// Consider two transactions (v1, p1) (back of the stack) and (v2, p2) (the new-found).</span></span><br><span class="line">            <span class="comment">// If prices[v1] &gt;= prices[v2], </span></span><br><span class="line">            <span class="comment">// it is meaningless to combine the two transactions.</span></span><br><span class="line">            <span class="comment">// Save of profit of (v1, p1), and pop it out of the record.</span></span><br><span class="line">            <span class="keyword">while</span> ((!vps.empty()) &amp;&amp; (prices[v] &lt;= prices[vps.top().first])) &#123;</span><br><span class="line">                profits.push_back(prices[vps.top().second] - prices[vps.top().first]);</span><br><span class="line">                vps.pop();</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// If prices[v1]&lt;prices[v2] and prices[p1]&lt;prices[p2], </span></span><br><span class="line">            <span class="comment">// then it is meaningful to combine the two transactions</span></span><br><span class="line">            <span class="comment">// update (v1, p1) to (v1, p2), and save the profit of (v2, p1)</span></span><br><span class="line">            <span class="keyword">while</span> ((!vps.empty()) &amp;&amp; (prices[p] &gt;= prices[vps.top().second])) &#123;</span><br><span class="line">                profits.push_back(prices[vps.top().second] - prices[v]);</span><br><span class="line">                v = vps.top().first;</span><br><span class="line">                vps.pop();</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// save the new-found valley-peak pair</span></span><br><span class="line">            vps.emplace(v, p);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// save all remaining profits</span></span><br><span class="line">        <span class="keyword">while</span> (!vps.empty()) &#123;</span><br><span class="line">            profits.push_back(prices[vps.top().second] - prices[vps.top().first]);</span><br><span class="line">            vps.pop();</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// Step 2: Calculate the k highest profits</span></span><br><span class="line">        <span class="keyword">int</span> ret;</span><br><span class="line">        <span class="keyword">if</span> (profits.size() &lt;= k) &#123;</span><br><span class="line">            ret = accumulate(profits.begin(), profits.end(), <span class="number">0</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            nth_element(profits.begin(), profits.end() - k, profits.end());</span><br><span class="line">            ret = accumulate(profits.end() - k, profits.end(), <span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        return ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
           
         
       
@@ -458,7 +458,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/02/23/2019-go-08/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/02/25/leetcode-122/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -477,7 +477,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/02/23/2019-go-08/" itemprop="url">2019-go-08</a></h1>
+                <a class="post-title-link" href="/2019/02/25/leetcode-122/" itemprop="url">leetcode-122</a></h1>
         
 
         <div class="post-meta">
@@ -489,8 +489,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-23T00:26:24+08:00">
-                2019-02-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-25T10:23:30+08:00">
+                2019-02-25
               </time>
             
 
@@ -512,8 +512,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/golang/" itemprop="url" rel="index">
-                    <span itemprop="name">golang</span>
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
                   </a>
                 </span>
 
@@ -529,7 +529,7 @@
 
           
           
-             <span id="/2019/02/23/2019-go-08/" class="leancloud_visitors" data-flag-title="2019-go-08">
+             <span id="/2019/02/25/leetcode-122/" class="leancloud_visitors" data-flag-title="leetcode-122">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -554,7 +554,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  51
                 </span>
               
 
@@ -593,7 +593,7 @@
       
         
           
-            
+            <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> total = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//遍历所有交易日</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; prices.length - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        <span class="comment">//只要是后一天比前一天贵,就卖出</span></span><br><span class="line">        <span class="keyword">if</span> (prices[i + <span class="number">1</span>] &gt; prices[i]) total += prices[i + <span class="number">1</span>] - prices[i];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> total;</span><br></pre></td></tr></table></figure>
           
         
       
@@ -641,7 +641,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/02/23/2019-go-07/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/02/25/leetcode-121/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -660,7 +660,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/02/23/2019-go-07/" itemprop="url">2019-go-07</a></h1>
+                <a class="post-title-link" href="/2019/02/25/leetcode-121/" itemprop="url">leetcode-121</a></h1>
         
 
         <div class="post-meta">
@@ -672,8 +672,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-23T00:26:17+08:00">
-                2019-02-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-25T10:23:22+08:00">
+                2019-02-25
               </time>
             
 
@@ -695,8 +695,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/golang/" itemprop="url" rel="index">
-                    <span itemprop="name">golang</span>
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
                   </a>
                 </span>
 
@@ -712,7 +712,7 @@
 
           
           
-             <span id="/2019/02/23/2019-go-07/" class="leancloud_visitors" data-flag-title="2019-go-07">
+             <span id="/2019/02/25/leetcode-121/" class="leancloud_visitors" data-flag-title="leetcode-121">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -737,7 +737,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  48
+                  125
                 </span>
               
 
@@ -776,210 +776,11 @@
       
         
           
-            <ul>
-<li>多核硬件架构</li>
-<li>超大规模分布式集群</li>
-<li>web模式导致前所未有的开发规模和更新速度</li>
-</ul>
-<p>简单高效生产力</p>
-<p>追求极致的简单</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/02/23/2019-go-06/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/23/2019-go-06/" itemprop="url">2019-go-06</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-23T00:26:01+08:00">
-                2019-02-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/golang/" itemprop="url" rel="index">
-                    <span itemprop="name">golang</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/02/23/2019-go-06/" class="leancloud_visitors" data-flag-title="2019-go-06">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  276
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>golang 的面试题目 收集</p>
-<ul>
-<li>uint不能直接相减，结果是负数会变成一个很大的uint，这点对动态语言出身的会可能坑。</li>
-<li>channel一定记得close。</li>
-<li>goroutine记得return或者中断，不然容易造成goroutine占用大量CPU。</li>
-<li>从slice创建slice的时候，注意原slice的操作可能导致底层数组变化。</li>
-<li>如果你要创建一个很长的slice，尽量创建成一个slice里存引用，这样可以分批释放，避免gc在低配机器上stop the world</li>
-</ul>
-<p>面试的时候尽量了解协程，线程，进程的区别。</p>
-<p>明白channel是通过注册相关goroutine id实现消息通知的。</p>
-<p>slice底层是数组，保存了len，capacity和对数组的引用。</p>
-<p>如果了解协程的模型，就知道所谓抢占式goroutine调用是什么意思。</p>
-<p>尽量了解互斥锁，读写锁，死锁等一些数据竞争的概念，debug的时候可能会有用。</p>
-<p>尽量了解golang的内存模型，知道多小才是小对象，为什么小对象多了会造成gc压力。</p>
+            <p>这题使用双指针法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">maxProfit</span><span class="params">(self, prices)</span>:</span></span><br><span class="line">        <span class="string">"""</span><br><span class="line">        :type prices: List[int]</span><br><span class="line">        :rtype: int</span><br><span class="line">        """</span></span><br><span class="line">        max_profit, min_price = <span class="number">0</span>, float(<span class="string">'inf'</span>)</span><br><span class="line">        <span class="keyword">for</span> price <span class="keyword">in</span> prices:</span><br><span class="line">            min_price = min(min_price, price)</span><br><span class="line">            max_profit = max(max_profit, price - min_price)</span><br><span class="line">        <span class="keyword">return</span> max_profit</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Solution &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxProfit</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; prices)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> maxPro = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> minPrice = INT_MAX;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; prices.size(); i++)&#123;</span><br><span class="line">            minPrice = min(minPrice, prices[i]);</span><br><span class="line">            maxPro = max(maxPro, prices[i] - minPrice);</span><br><span class="line">        &#125;</span><br><span class="line">        return maxPro;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Solution &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxProfit</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; prices)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res=<span class="number">0</span>,buyp=INT_MAX;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> i:prices) </span><br><span class="line">            (i&lt;buyp)?(buyp=i):(res=max(i-buyp,res));</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>更加简洁的cpp  </p>
 
           
         
@@ -1028,7 +829,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/02/19/flask-0-1/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/02/25/2darraySearch/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -1047,7 +848,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/02/19/flask-0-1/" itemprop="url">flask-0.1</a></h1>
+                <a class="post-title-link" href="/2019/02/25/2darraySearch/" itemprop="url">2darraySearch</a></h1>
         
 
         <div class="post-meta">
@@ -1059,8 +860,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-19T18:54:03+08:00">
-                2019-02-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-25T08:48:05+08:00">
+                2019-02-25
               </time>
             
 
@@ -1077,7 +878,7 @@
 
           
           
-             <span id="/2019/02/19/flask-0-1/" class="leancloud_visitors" data-flag-title="flask-0.1">
+             <span id="/2019/02/25/2darraySearch/" class="leancloud_visitors" data-flag-title="2darraySearch">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1102,7 +903,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  547
+                  274
                 </span>
               
 
@@ -1118,7 +919,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2
+                  1
                 </span>
               
             </div>
@@ -1141,13 +942,191 @@
       
         
           
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># Flask v0.1</span><br><span class="line">class _RequestContext(object):</span><br><span class="line">    &quot;&quot;&quot;The request context contains all request relevant information.  It is</span><br><span class="line">    created at the beginning of the request and pushed to the</span><br><span class="line">    `_request_ctx_stack` and removed at the end of it.  It will create the</span><br><span class="line">    URL adapter and request object for the WSGI environment provided.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line"> </span><br><span class="line">    def __init__(self, app, environ):</span><br><span class="line">        self.app = app</span><br><span class="line">        self.url_adapter = app.url_map.bind_to_environ(environ)</span><br><span class="line">        self.request = app.request_class(environ)</span><br><span class="line">        self.session = app.open_session(self.request)</span><br><span class="line">        self.g = _RequestGlobals()</span><br><span class="line">        self.flashes = None</span><br><span class="line"> </span><br><span class="line">    def __enter__(self):</span><br><span class="line">        _request_ctx_stack.push(self)</span><br><span class="line"> </span><br><span class="line">    def __exit__(self, exc_type, exc_value, tb):</span><br><span class="line">        # do not pop the request stack if we are in debug mode and an</span><br><span class="line">        # exception happened.  This will allow the debugger to still</span><br><span class="line">        # access the request object in the interactive shell.</span><br><span class="line">        if tb is None or not self.app.debug:</span><br><span class="line">            _request_ctx_stack.pop()</span><br></pre></td></tr></table></figure>
-<p>请求上下文</p>
-<p>根据_RequestContext上下文对象的定义，可以发现，在构造这个对象的时候添加了和Flask应用相关的一些属性：</p>
-<p>app ——上下文对象的app属性是当前的Flask应用；<br>url_adapter ——上下文对象的url_adapter属性是通过Flask应用中的Map实例构造成一个MapAdapter实例，主要功能是将请求中的URL和Map实例中的URL规则进行匹配；<br>request ——上下文对象的request属性是通过Request类构造的实例，反映请求的信息；<br>session ——上下文对象的session属性存储请求的会话信息；<br>g ——上下文对象的g属性可以存储全局的一些变量。<br>flashes ——消息闪现的信息。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">current_app = LocalProxy(lambda: _request_ctx_stack.top.app)</span><br><span class="line">request = LocalProxy(lambda: _request_ctx_stack.top.request)</span><br><span class="line">session = LocalProxy(lambda: _request_ctx_stack.top.session)</span><br><span class="line">g = LocalProxy(lambda: _request_ctx_stack.top.g)</span><br></pre></td></tr></table></figure>
-<p>在上下文对象中处理请求的过程分为以下几个步骤：</p>
-<p>在请求正式被处理之前的一些操作，调用preprocess_request()方法，例如打开一个数据库连接等操作；<br>正式处理请求。这个过程调用dispatch_request()方法，这个方法会根据URL匹配的情况调用相关的视图函数；<br>将从视图函数返回的值转变为一个Response对象；<br>在响应被发送到WSGI服务器之前，调用process_response(response)做一些后续处理过程；<br>调用response(environ, start_response)方法将响应发送回WSGI服务器。关于此方法的使用，可以参考：Werkzeug库——wrappers模块；<br>退出上下文环境时，LocalStack会清理当前线程/协程产生的数据（请求上下文对象）。</p>
+            <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">        </span><br><span class="line">       <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">Find</span><span class="params">(<span class="keyword">int</span> target, <span class="keyword">int</span> [][] array)</span> </span>&#123;</span><br><span class="line">       <span class="comment">// 特殊情况处理</span></span><br><span class="line">       <span class="keyword">if</span> (array == <span class="keyword">null</span> || array.length == <span class="number">0</span> || array[<span class="number">0</span>].length == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> h = array.length - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">int</span> w = array[<span class="number">0</span>].length - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 如果目标值小于最小值 或者 目标值大于最大值，那肯定不存在</span></span><br><span class="line">        <span class="keyword">if</span> (array[<span class="number">0</span>][<span class="number">0</span>] &gt; target || array[h][w] &lt; target) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> binarySearchIn2DArray(array, target, <span class="number">0</span>, h, <span class="number">0</span>, w);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">binarySearchIn2DArray</span><span class="params">(<span class="keyword">int</span>[][] array, <span class="keyword">int</span> target, <span class="keyword">int</span> startX, <span class="keyword">int</span> endX, <span class="keyword">int</span> startY, <span class="keyword">int</span> endY)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (startX &gt; endX || startY &gt; endY) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//首先，根据二分法找出中间行</span></span><br><span class="line">        <span class="keyword">int</span> x = startX + (endX - startX) / <span class="number">2</span>;</span><br><span class="line">        <span class="comment">//对该行进行二分查找</span></span><br><span class="line">        <span class="keyword">int</span> result = binarySearch(array[x], target, startY, endY);</span><br><span class="line">        <span class="comment">//找到的值位于 x 行，result 列</span></span><br><span class="line">        <span class="keyword">if</span> (array[x][result] == target) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>; <span class="comment">// 如果找到则成功</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//对剩余的两部分分别进行递归查找</span></span><br><span class="line">        <span class="keyword">return</span> binarySearchIn2DArray(array, target, startX, x - <span class="number">1</span>, result + <span class="number">1</span>, endY)</span><br><span class="line">                || binarySearchIn2DArray(array, target, x + <span class="number">1</span>, endX, startY, result);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">     <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">binarySearch</span><span class="params">(<span class="keyword">int</span>[] array, <span class="keyword">int</span> target, <span class="keyword">int</span> start, <span class="keyword">int</span> end)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> i = start + (end - start) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span> (array[i] == target || start &gt; end) &#123; </span><br><span class="line">            <span class="keyword">return</span> i;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (array[i] &gt; target) &#123;</span><br><span class="line">            <span class="keyword">return</span> binarySearch(array, target, start, i - <span class="number">1</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> binarySearch(array, target, i + <span class="number">1</span>, end);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/02/25/leetcode-994/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/25/leetcode-994/" itemprop="url">leetcode-994</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-25T08:26:11+08:00">
+                2019-02-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/02/25/leetcode-994/" class="leancloud_visitors" data-flag-title="leetcode-994">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  123
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">orangesRotting</span><span class="params">(self, A)</span>:</span></span><br><span class="line">        R, C = len(A), len(A[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">        <span class="comment"># queue - all starting cells with rotting oranges</span></span><br><span class="line">        queue = collections.deque()</span><br><span class="line">        <span class="keyword">for</span> r, row <span class="keyword">in</span> enumerate(A):</span><br><span class="line">            <span class="keyword">for</span> c, val <span class="keyword">in</span> enumerate(row):</span><br><span class="line">                <span class="keyword">if</span> val == <span class="number">2</span>:</span><br><span class="line">                    queue.append((r, c, <span class="number">0</span>))</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">neighbors</span><span class="params">(r, c)</span>:</span></span><br><span class="line">            <span class="keyword">for</span> nr, nc <span class="keyword">in</span> ((r<span class="number">-1</span>,c),(r,c<span class="number">-1</span>),(r+<span class="number">1</span>,c),(r,c+<span class="number">1</span>)):</span><br><span class="line">                <span class="keyword">if</span> <span class="number">0</span> &lt;= nr &lt; R <span class="keyword">and</span> <span class="number">0</span> &lt;= nc &lt; C:</span><br><span class="line">                    <span class="keyword">yield</span> nr, nc</span><br><span class="line"></span><br><span class="line">        d = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> queue:</span><br><span class="line">            r, c, d = queue.popleft()</span><br><span class="line">            <span class="keyword">for</span> nr, nc <span class="keyword">in</span> neighbors(r, c):</span><br><span class="line">                <span class="keyword">if</span> A[nr][nc] == <span class="number">1</span>:</span><br><span class="line">                    A[nr][nc] = <span class="number">2</span></span><br><span class="line">                    queue.append((nr, nc, d+<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> any(<span class="number">1</span> <span class="keyword">in</span> row <span class="keyword">for</span> row <span class="keyword">in</span> A):</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">        <span class="keyword">return</span> d</span><br></pre></td></tr></table></figure>
 
           
         
@@ -1187,7 +1166,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/16/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><span class="page-number current">17</span><a class="page-number" href="/page/18/">18</a><span class="space">&hellip;</span><a class="page-number" href="/page/78/">78</a><a class="extend next" rel="next" href="/page/18/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/16/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><span class="page-number current">17</span><a class="page-number" href="/page/18/">18</a><span class="space">&hellip;</span><a class="page-number" href="/page/80/">80</a><a class="extend next" rel="next" href="/page/18/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1237,7 +1216,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">390</span>
+                  <span class="site-state-item-count">396</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1352,7 +1331,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共152.8k字</span>
+  <span class="post-count">博客全站共153.4k字</span>
 </div>
 
         

@@ -275,7 +275,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/19/mac-use-tips/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/28/threading源码分析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -294,7 +294,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/19/mac-use-tips/" itemprop="url">mac-use-tips</a></h1>
+                <a class="post-title-link" href="/2018/03/28/threading源码分析/" itemprop="url">threading源码分析</a></h1>
         
 
         <div class="post-meta">
@@ -306,8 +306,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-19T22:52:03+08:00">
-                2018-03-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-28T22:38:15+08:00">
+                2018-03-28
               </time>
             
 
@@ -324,7 +324,7 @@
 
           
           
-             <span id="/2018/03/19/mac-use-tips/" class="leancloud_visitors" data-flag-title="mac-use-tips">
+             <span id="/2018/03/28/threading源码分析/" class="leancloud_visitors" data-flag-title="threading源码分析">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -349,7 +349,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.3k
+                  0
                 </span>
               
 
@@ -365,7 +365,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  9
+                  1
                 </span>
               
             </div>
@@ -388,133 +388,7 @@
       
         
           
-            <p>快捷键与触摸板</p>
-<pre><code>cmd 为 command 按键，通常情况下为所有桌面程序通用性的快捷键。
-ctrl ，通常情况下是针对程序的功能进行加强，并且此功能往往是非 cmd 类（窗口操作，选择，复制粘贴等等）操作。
-shift 按键通常用于加强操作。一般会让操作更进一步 or 相反操作。
-cmd+tab =~ alt+tab 程序之间的切换
-cmd+` 应用内窗口切换
-cmd+h 窗口 hide
-cmd+m 窗口 minimize
-cmd+n 新建窗口
-cmd+o 打开
-cmd+s 保存
-cmd+shift+s 另存为
-cmd+p 打印 print
-cmd+w 关闭
-cmd+q quit
-cmd+a select all
-cmd+i show info
-cmd+n create a new folder
-cmd+f search
-cmd+c copy
-cmd+v paste
-cmd+delete 删除选中文件
-cmd+shift+delete 清空回收站
-cmd+= 放大
-cmd+- 缩小
-cmd+t 新建选项卡
-cmd+r 刷新
-cmd+shift+3 截取整个屏幕
-cmd+shift+4 截取选择区域
-cmd+shift+4+SPACE 截取选择窗口
-cmd+ 鼠标点击 -&gt; 选中不连续文件
-control+ 鼠标点击 -&gt; 相当于 win 中右键点击
-fn+left home
-fn+right end
-fn+up pageup
-fn+down pagedown
-触摸板手势：
-
-点击
-单指点击 - 单击
-单指滑动 - 滑动鼠标光标
-双指点击 - 相当于 Windows 的鼠标右键
-三指点击 - 划词查找
-
-
-滑动与缩放
-双指上下滑动 - 滚动
-双指缩放 - 与 Android 上图片缩放一致
-双指双击 - 只能缩放
-双指旋转 - 旋转
-双指左右滑动 - 应用内切换网页
-双指头从右往左
-三指头左右滑动 - 全屏幕 App 切换
-三指拖动 - 扔掉鼠标必备 （谢评论区提醒）
-大拇指和食中无名缩放 - launchpad
-</code></pre><h3 id="open"><a href="#open" class="headerlink" title="open"></a>open</h3><p>open 命令用于打开文件、目录或执行程序。就等同于在命令行模式下，重复图形界面“双击”的动作。例如这个命令与在 Finder 中双击 Safari 是一样的：</p>
-<pre><code>open /Applications/Safari.app/
-</code></pre><p>如果 open 一个文件，则会使用关联的程序打开之。例如 open screenshot.png 会在 Preview 中查看图片。</p>
-<p>可以使用 -a 选项要求自行选择打开的程序，或使用 -e 强制在 TextEdit 中编辑此文件。</p>
-<p>open 一个目录会在 Finder 窗口中打开此目录。一个很有用的技巧是 open . 打开当前目录。</p>
-<p>Finder 和终端的交互是双向的——把文件从 Finder 中拖入终端，就等同于把文件的完整路径粘贴到命令行中。</p>
-<h3 id="pbcopy-和-pbpaste"><a href="#pbcopy-和-pbpaste" class="headerlink" title="pbcopy 和 pbpaste"></a>pbcopy 和 pbpaste</h3><p>这两个工具可以打通命令行和剪贴板。当然用鼠标操作复制粘贴也可以——但这两个工具的真正威力，发挥在将其用作Unix工具的时候。意思就是说：可以将这两个工具用作管道、IO重定向以及和其他命令的整合。例如：</p>
-<p>ls ~ | pbcopy<br>可以将主目录的文件列表复制到剪贴板。</p>
-<p>也可以把任意文件的内容读入剪贴板：</p>
-<p>pbcopy &lt; blogpost.txt<br>做点更疯狂的尝试：获取最新 Google 纪念徽标（doodle）的 URL 并复制到剪贴板：</p>
-<pre><code>curl http://www.google.com/doodles#oodles/archive | grep -A5 &apos;latest-doodle on&apos; | grep &apos;img src&apos; | sed s/.*&apos;&lt;img src=&quot;\/\/&apos;/&apos;&apos;/ | sed s/&apos;&quot; alt=&quot;.*&apos;/&apos;&apos;/ | pbcopy
-</code></pre><p>使用管道语法配合 pbcopy 工具可以简单的抓取命令的输出，而不必向上滚动翻阅终端窗口。可以用于和他人分享命令行的标准和错误输出。 pbcopy 和 pbpaste 也可以用于自动化或加速执行一些事情。例如把一些邮件的主题存为任务列表，就可以先从 Mail.app 中复制主题，再运行：</p>
-<p>pbpaste &gt;&gt; tasklist.txt</p>
-<h3 id="mdfind"><a href="#mdfind" class="headerlink" title="mdfind"></a>mdfind</h3><p>许多 Linux 用户都发现 Linux 下查找文件的方法在 OS X 上不好用。当然经典的 Unix find 命令总是可以，但既然 OS X 有杀手级搜索工具 Spotlight ，为什么不在命令行上也使用一下呢？</p>
-<p>这就是mdfind命令了。 Spotlight 能做的查找， mdfind 也能做。包括搜索文件的内容和元数据（metadata）。</p>
-<p>mdfind还提供更多的搜索选项。例如-onlyin选项可以约束搜索范围为一个目录：</p>
-<p>mdfind -onlyin ~/Documents essay<br>mdfind 的索引数据库在后台自动更新，不过你也可以使用 mdutil 工具诊断数据库的问题，诊断 mdfind 的问题也等同于诊断 Spotlight 。如果 Spotlight 的工作不正确，mdutil -E命令可以强制重建索引数据库。也可以用 mdutil -i 彻底关闭文件索引。</p>
-<h3 id="screencapture"><a href="#screencapture" class="headerlink" title="screencapture"></a>screencapture</h3><p>screencapture 命令可以截图。和 Grab.app 与 cmd + shift + 3 或 cmd + shift + 4 热键相似，但更加的灵活。</p>
-<p>抓取包含鼠标光标的全屏幕，并以 image.png 插入到新邮件的附件中：</p>
-<p>screencapture -C -M image.png<br>用鼠标选择抓取窗口（及阴影）并复制到剪贴板：</p>
-<p>screencapture -c -W<br>延时10秒后抓屏，并在Preview中打开之：</p>
-<p>screencapture -T 10 -P image.png<br>用鼠标截取一个矩形区域，抓取后存为pdf文件：</p>
-<p>screencapture -s -t pdf image.pdf<br>更多用法请参阅 screencapture –help 。</p>
-<h3 id="launchctl"><a href="#launchctl" class="headerlink" title="launchctl"></a>launchctl</h3><p>launchctl 管理 OS X 的启动脚本，控制启动计算机时需要开启的服务。也可以设置定时执行特定任务的脚本，就像 Linux cron 一样。</p>
-<p>例如，开机时自动启动 Apache 服务器：</p>
-<pre><code>sudo launchctl load -w /System/Library/LaunchDaemons/org.apache.httpd.plist
-</code></pre><p>运行 launchctl list 显示当前的启动脚本。 sudo launchctl unload [path/to/script] 停止正在运行的启动脚本，再加上 -w 选项即可去除开机启动。用这个方法可以一次去除 Adobe 或 Microsoft Office 所附带的所有“自动更新”后台程序。</p>
-<p>Launchd 脚本存储在以下位置：</p>
-<pre><code>~/Library/LaunchAgents
-/Library/LaunchAgents
-/Library/LaunchDaemons
-/System/Library/LaunchAgents
-/System/Library/LaunchDaemons
-</code></pre><h3 id="say"><a href="#say" class="headerlink" title="say"></a>say</h3><p>say 是一个文本转语音（TTS）的有趣的工具，引擎和 OS X 使用的一样也是 VoiceOver 。如果不加其他选项，则会简单的语音朗读你给定的字符串：</p>
-<p>say “Never trust a computer you can’t lift.”<br>用-f选项朗读特定文本文件，-o选项将朗读结果存为音频文件而不是播放：<br>say -f mynovel.txt -o myaudiobook.aiff<br>say 命令可以用于在脚本中播放警告或提示。例如你可以设置 Automator 或 Hazel 脚本处理文件，并在任务完成时用 say 命令语音提示。</p>
-<p>最好玩（不过也负罪感十足）的用法是：通过 SSH 连接到朋友或同事的计算机，然后用 say 命令给他们一个大大大惊喜……</p>
-<p>可以在系统设置 （System Preferences） 的字典和语音 （Dictation &amp; Speech） 选项中调整系统的语音选项甚至是语音的语言。</p>
-<h3 id="diskutil"><a href="#diskutil" class="headerlink" title="diskutil"></a>diskutil</h3><p>diskutil 是 OS X 磁盘工具应用的命令行版。既可以完成图形界面应用的所有任务，也可以做一些全盘填0、全盘填随机数等额外的任务。先使用 diskutil list 查看所有磁盘的列表和所在路径，然后对特定的磁盘执行命令。</p>
-<p>警告：不正确使用 diskutil 可能意外的破坏磁盘数据。请小心。</p>
-<h3 id="brew"><a href="#brew" class="headerlink" title="brew"></a>brew</h3><p>Homebrew 程序提供的 brew ，严格来讲不是一个 OS X 的原生命令，但任何一个 OS X 的专业用户都不会错过它。“ OS X 缺少的包管理器”这个评价是恰如其分的。如果你曾经在 Linux 上使用过 apt-get （或其他包管理器——译者注），你就会发现 Homebrew 基本上是一样的。</p>
-<p>使用 brew 可以简单的获取数千种开源工具和函数库。例如 brew install imagemagick 就可以安装 ImageMagick （几乎可以处理任何图像问题，转换任何格式的图像工具）， brew install node 可以安装 Node.js （当前大热的服务器端 JavaScript 编程工具）。</p>
-<p>也可以通过 Homebrew 做有趣的事情： brew install archey 会安装 Archey （在启动命令行时显示苹果 LOGO 和计算机硬件参数的小工具）。</p>
-<p>Homebrew 能安装的工具数量庞大，并且一直保持更新。Homebrew 最棒的一点是：所有的文件都被约束在 /usr/local/ 一个位置之下。也就是说可以通过 Homebrew 安装新版软件的同时，保持系统内置的依赖库或其他软件不变。同时如果想彻底删除 Homebrew ，也变得非常简单。</p>
-<p>（注：删除 Homebrew 最好还是不要直接删除 /usr/local/ 。应当用这个卸载脚本点击预览。）</p>
-<pre><code>#!/bin/sh
-# Just copy and paste the lines below (all at once, it won&apos;t work line by line!)
-# MAKE SURE YOU ARE HAPPY WITH WHAT IT DOES FIRST! THERE IS NO WARRANTY!
-
-function abort {
-  echo &quot;$1&quot;
-  exit 1
-}
-
-set -e
-
-/usr/bin/which -s git || abort &quot;brew install git first!&quot;
-test -d /usr/local/.git || abort &quot;brew update first!&quot;
-
-cd `brew --prefix`
-git checkout master
-git ls-files -z | pbcopy
-rm -rf Cellar
-bin/brew prune
-pbpaste | xargs -0 rm
-rm -r Library/Homebrew Library/Aliases Library/Formula Library/Contributions
-test -d Library/LinkedKegs &amp;&amp; rm -r Library/LinkedKegs
-rmdir -p bin Library share/man/man1 2&gt; /dev/null
-rm -rf .git
-rm -rf ~/Library/Caches/Homebrew
-rm -rf ~/Library/Logs/Homebrew
-rm -rf /Library/Caches/Homebrew    
-</code></pre>
+            
           
         
       
@@ -562,7 +436,7 @@ rm -rf /Library/Caches/Homebrew
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/18/elk-redis/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/28/inspect源码分析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -581,7 +455,7 @@ rm -rf /Library/Caches/Homebrew
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/18/elk-redis/" itemprop="url">elk+redis</a></h1>
+                <a class="post-title-link" href="/2018/03/28/inspect源码分析/" itemprop="url">inspect源码分析</a></h1>
         
 
         <div class="post-meta">
@@ -593,8 +467,8 @@ rm -rf /Library/Caches/Homebrew
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-18T22:09:32+08:00">
-                2018-03-18
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-28T22:37:56+08:00">
+                2018-03-28
               </time>
             
 
@@ -604,28 +478,6 @@ rm -rf /Library/Caches/Homebrew
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/web/" itemprop="url" rel="index">
-                    <span itemprop="name">web</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -633,7 +485,7 @@ rm -rf /Library/Caches/Homebrew
 
           
           
-             <span id="/2018/03/18/elk-redis/" class="leancloud_visitors" data-flag-title="elk+redis">
+             <span id="/2018/03/28/inspect源码分析/" class="leancloud_visitors" data-flag-title="inspect源码分析">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -658,7 +510,7 @@ rm -rf /Library/Caches/Homebrew
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  235
+                  0
                 </span>
               
 
@@ -697,51 +549,694 @@ rm -rf /Library/Caches/Homebrew
       
         
           
-            <p>对常见的elk工具进行总结</p>
-<pre><code>cat /etc/issue # 检查系统版本
-java -version #
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
 
 
-wget -qO - https://packages.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
-echo &quot;deb https://packages.elastic.co/elasticsearch/2.x/debian stable main&quot; | sudo tee -a /etc/apt/sources.list.d/elasticsearch-2.x.list
-sudo apt-get update
-sudo apt-get install elasticsearch -y
-sudo service elasticsearch start
-echo &quot;deb https://packages.elastic.co/logstash/2.3/debian stable main&quot; | sudo tee -a /etc/apt/sources.list
-sudo apt-get install logstash -y
-sudo service logstash start
-echo &quot;deb http://packages.elastic.co/kibana/4.5/debian stable main&quot; | sudo tee -a /etc/apt/sources.list
-sudo apt-get install kibana -y 
-sudo service kibana start
+    
+      
 
-sudo service nginx start
+  
 
-# nginx 的配置文件位于 /etc/nginx/sites-available/default
+  
+  
+  
 
-# 添加 access_log /home/shiyanlou/Code/elk/access.log;
-</code></pre><p>接下来是具体的配置文件</p>
-<pre><code># /etc/logstash/conf.d/logstash-shipper.conf
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/28/gevent-note/">
 
-input {
-  stdin {}  
-  file {
-    path =&gt; &quot;~/access.log&quot;
-    start_position =&gt; beginning
-    codec =&gt;  multiline {
-      &apos;negate&apos; =&gt; true
-      &apos;pattern&apos; =&gt; &apos;^\d&apos;
-      &apos;what&apos; =&gt; &apos;previous&apos;
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/28/gevent-note/" itemprop="url">gevent-note</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-28T20:17:21+08:00">
+                2018-03-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/03/28/gevent-note/" class="leancloud_visitors" data-flag-title="gevent-note">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.4k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Coroutine 也就是 corporate routine，直译为「协同的例程」，中文一般叫做「协程」, 实际上这个概念和进程与线程有相似之处, 因为linux线程就是所谓的「轻量级进程」。</p>
+<p>在gevent源码分析中找到一段表述的比较好的描述进程和协程异同的内容:</p>
+<p>相同点:</p>
+<p>二者都是可以看做是一种执行流, 该执行流可以挂起,并且在将来又可以在 你挂起的地方恢复执行, 这实际上都可以看做是continuation, 我们来看看当我们挂 起一个执行流时我们要保存的东西：<br>栈, 因为如果你不保存栈,那么局部变量你就无法恢复,同时函数的调用链你也无 法恢复,<br>寄存器的状态: 这好理解, 比如说EIP,如果你不保存,那么你恢复执行流就不知道 到底执行哪一条指令, 在比如说ESP,EBP, 如果你不保存,那么你即便有完整的栈 你也不知道怎么用.<br>这二者实际就是所谓的上下文,也可以说是continuation. 在执行流切换时必须保存 这两个东西, 内核调度进程时也是一回事.</p>
+<p>不同点:</p>
+<p>执行流的调度者不同, 进程是内核调度, 而协程是在用户态调度, 也就是说进程 的上下文是在内核态保存恢复的,而协程是在用户态保存恢复的. 很显然用户态的 代价更低<br>进程会被抢占,而协程不会,也就是说协程如果不主动让出CPU,那么其他的协程是不 可能得到执行机会,这实际和早期的操作系统类似,比如DOS, 它有一个yield原语, 一个进程调用yield,那么它就会让出CPU, 其他的进程也就有机会执行了, 如果一 个进程进入了死循环,那么整个系统也就挂起了,永远无法运行其他的进程了, 但 对协程而言,这不是问题<br>对内存的占用不同,实际上协程可以只需要4K的栈就够了, 而进程占用的内存要大 的多.<br>从操作系统的角度讲, 多协程的程序是单线程,单进程的<br>那用一句话描述协程的优势就是由开发者决定协程的切换，操作系统无法干预切换，且占用内存小的多。</p>
+<p>Gevent是一种基于协程的Python网络库，它用到Greenlet提供的，封装了libevent事件循环的高层同步API。它让开发者在不改变编程习惯的同时，用同步的方式写异步I/O的代码。</p>
+<p>Gvanrossum从来不喜欢Gevent，而是更愿意另辟蹊径的实现asyncio(基于生成器的协程)。</p>
+<p><strong>1.Monkey-patching</strong>。中文「猴子补丁」，常用于对测试环境做一些hack。我个人不太喜欢这种「黑魔法」，因为如果其他人不了解细节，极为容易产生困惑。Gvanrossum说用它就是”patch-and-pray”，太形象了。由于Gevent直接修改标准库里面大部分的阻塞式系统调用，包括socket、ssl、threading和 select等模块，而变为协作式运行。但是我们无法保证你在复杂的生产环境中有哪些地方使用这些标准库会由于打了补丁而出现奇怪的问题，那么你只能祈祷（pray）了。其次，在Python之禅中明确说过：「Explicit is better than implicit.」，猴子补丁明显的背离了这个原则。最后，Gvanrossum说Stackless之父Christian Tismer也赞同他。 我喜欢显式的「yield from」</p>
+<p><strong>2.第三方库支持</strong>。得确保项目中用到其他用到的网络库也必须使用纯Python或者明确说明支持Gevent，而且就算有这样的第三方库，我还会担心这个第三方库的代码质量和功能性。<br>Greenlet不支持Jython和IronPython，这样就无法把gevent设计成一个标准库了。<br>之前是没有选择，很多人选择了Gevent，而现在明确的有了更正统的、正确的选择：asyncio（下一篇会详细介绍）。所以建议大家放弃Gevent，拥抱asyncio。</p>
+<p>在Python 2的时代，高性能的网络编程主要是使用Twisted、Tornado和Gevent这三个库，但是它们的异步代码相互之间既不兼容也不能移植。如上一节说的，Gvanrossum希望在Python 3 实现一个原生的基于生成器的协程库，其中直接内置了对异步IO的支持，这就是asyncio，它在Python 3.4被引入到标准库。</p>
+<p>Python 3.5添加了async和await这两个关键字，分别用来替换asyncio.coroutine和yield from。自此，协程成为新的语法，而不再是一种生成器类型了。事件循环与协程的引入，可以极大提高高负载下程序的I/O性能。除此之外还增加了async with(异步上下文管理)、async for(异步迭代器)语法。特别说的是，在新发布的Python 3.6里面终于可以用异步生成器了！</p>
+<p>现存的一些库其实并不能原生的支持asyncio（因为会发生阻塞或者功能不可用），比如requests，如果要写爬虫，配合asyncio的应该用aiohttp，其他的如数据库驱动等各种Python对应的库也都得使用对应的aioXXX版本了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/27/one-blockchain-src-anal/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/27/one-blockchain-src-anal/" itemprop="url">one-blockchain-src-anal</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-27T22:37:51+08:00">
+                2018-03-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/03/27/one-blockchain-src-anal/" class="leancloud_visitors" data-flag-title="one-blockchain-src-anal">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>看看代码的实现：</p>
+<pre><code>import hashlib
+import json
+from time import time
+from urllib.parse import urlparse
+from uuid import uuid4
+
+import requests
+from flask import Flask, jsonify, request
+
+
+class Blockchain:
+    def __init__(self):
+        self.current_transactions = []
+        self.chain = []
+        self.nodes = set()
+
+        # Create the genesis block
+        self.new_block(previous_hash=&apos;1&apos;, proof=100)
+
+    def register_node(self, address):
+        &quot;&quot;&quot;
+        Add a new node to the list of nodes
+
+        :param address: Address of node. Eg. &apos;http://192.168.0.5:5000&apos;
+        &quot;&quot;&quot;
+
+        parsed_url = urlparse(address)
+        if parsed_url.netloc:
+            self.nodes.add(parsed_url.netloc)
+        elif parsed_url.path:
+            # Accepts an URL without scheme like &apos;192.168.0.5:5000&apos;.
+            self.nodes.add(parsed_url.path)
+        else:
+            raise ValueError(&apos;Invalid URL&apos;)
+
+
+    def valid_chain(self, chain):
+        &quot;&quot;&quot;
+        Determine if a given blockchain is valid
+
+        :param chain: A blockchain
+        :return: True if valid, False if not
+        &quot;&quot;&quot;
+
+        last_block = chain[0]
+        current_index = 1
+
+        while current_index &lt; len(chain):
+            block = chain[current_index]
+            print(f&apos;{last_block}&apos;)
+            print(f&apos;{block}&apos;)
+            print(&quot;\n-----------\n&quot;)
+            # Check that the hash of the block is correct
+            if block[&apos;previous_hash&apos;] != self.hash(last_block):
+                return False
+
+            # Check that the Proof of Work is correct
+            if not self.valid_proof(last_block[&apos;proof&apos;], block[&apos;proof&apos;], last_block[&apos;previous_hash&apos;]):
+                return False
+
+            last_block = block
+            current_index += 1
+
+        return True
+
+    def resolve_conflicts(self):
+        &quot;&quot;&quot;
+        This is our consensus algorithm, it resolves conflicts
+        by replacing our chain with the longest one in the network.
+
+        :return: True if our chain was replaced, False if not
+        &quot;&quot;&quot;
+
+        neighbours = self.nodes
+        new_chain = None
+
+        # We&apos;re only looking for chains longer than ours
+        max_length = len(self.chain)
+
+        # Grab and verify the chains from all the nodes in our network
+        for node in neighbours:
+            response = requests.get(f&apos;http://{node}/chain&apos;)
+
+            if response.status_code == 200:
+                length = response.json()[&apos;length&apos;]
+                chain = response.json()[&apos;chain&apos;]
+
+                # Check if the length is longer and the chain is valid
+                if length &gt; max_length and self.valid_chain(chain):
+                    max_length = length
+                    new_chain = chain
+
+        # Replace our chain if we discovered a new, valid chain longer than ours
+        if new_chain:
+            self.chain = new_chain
+            return True
+
+        return False
+
+    def new_block(self, proof, previous_hash):
+        &quot;&quot;&quot;
+        Create a new Block in the Blockchain
+
+        :param proof: The proof given by the Proof of Work algorithm
+        :param previous_hash: Hash of previous Block
+        :return: New Block
+        &quot;&quot;&quot;
+
+        block = {
+            &apos;index&apos;: len(self.chain) + 1,
+            &apos;timestamp&apos;: time(),
+            &apos;transactions&apos;: self.current_transactions,
+            &apos;proof&apos;: proof,
+            &apos;previous_hash&apos;: previous_hash or self.hash(self.chain[-1]),
+        }
+
+        # Reset the current list of transactions
+        self.current_transactions = []
+
+        self.chain.append(block)
+        return block
+
+    def new_transaction(self, sender, recipient, amount):
+        &quot;&quot;&quot;
+        Creates a new transaction to go into the next mined Block
+
+        :param sender: Address of the Sender
+        :param recipient: Address of the Recipient
+        :param amount: Amount
+        :return: The index of the Block that will hold this transaction
+        &quot;&quot;&quot;
+        self.current_transactions.append({
+            &apos;sender&apos;: sender,
+            &apos;recipient&apos;: recipient,
+            &apos;amount&apos;: amount,
+        })
+
+        return self.last_block[&apos;index&apos;] + 1
+
+    @property
+    def last_block(self):
+        return self.chain[-1]
+
+    @staticmethod
+    def hash(block):
+        &quot;&quot;&quot;
+        Creates a SHA-256 hash of a Block
+
+        :param block: Block
+        &quot;&quot;&quot;
+
+        # We must make sure that the Dictionary is Ordered, or we&apos;ll have inconsistent hashes
+        block_string = json.dumps(block, sort_keys=True).encode()
+        return hashlib.sha256(block_string).hexdigest()
+
+    def proof_of_work(self, last_block):
+        &quot;&quot;&quot;
+        Simple Proof of Work Algorithm:
+
+         - Find a number p&apos; such that hash(pp&apos;) contains leading 4 zeroes
+         - Where p is the previous proof, and p&apos; is the new proof
+
+        :param last_block: &lt;dict&gt; last Block
+        :return: &lt;int&gt;
+        &quot;&quot;&quot;
+
+        last_proof = last_block[&apos;proof&apos;]
+        last_hash = self.hash(last_block)
+
+        proof = 0
+        while self.valid_proof(last_proof, proof, last_hash) is False:
+            proof += 1
+
+        return proof
+
+    @staticmethod
+    def valid_proof(last_proof, proof, last_hash):
+        &quot;&quot;&quot;
+        Validates the Proof
+
+        :param last_proof: &lt;int&gt; Previous Proof
+        :param proof: &lt;int&gt; Current Proof
+        :param last_hash: &lt;str&gt; The hash of the Previous Block
+        :return: &lt;bool&gt; True if correct, False if not.
+
+        &quot;&quot;&quot;
+
+        guess = f&apos;{last_proof}{proof}{last_hash}&apos;.encode()
+        guess_hash = hashlib.sha256(guess).hexdigest()
+        return guess_hash[:4] == &quot;0000&quot;
+
+
+# Instantiate the Node
+app = Flask(__name__)
+
+# Generate a globally unique address for this node
+node_identifier = str(uuid4()).replace(&apos;-&apos;, &apos;&apos;)
+
+# Instantiate the Blockchain
+blockchain = Blockchain()
+
+
+@app.route(&apos;/mine&apos;, methods=[&apos;GET&apos;])
+def mine():
+    # We run the proof of work algorithm to get the next proof...
+    last_block = blockchain.last_block
+    proof = blockchain.proof_of_work(last_block)
+
+    # We must receive a reward for finding the proof.
+    # The sender is &quot;0&quot; to signify that this node has mined a new coin.
+    blockchain.new_transaction(
+        sender=&quot;0&quot;,
+        recipient=node_identifier,
+        amount=1,
+    )
+
+    # Forge the new Block by adding it to the chain
+    previous_hash = blockchain.hash(last_block)
+    block = blockchain.new_block(proof, previous_hash)
+
+    response = {
+        &apos;message&apos;: &quot;New Block Forged&quot;,
+        &apos;index&apos;: block[&apos;index&apos;],
+        &apos;transactions&apos;: block[&apos;transactions&apos;],
+        &apos;proof&apos;: block[&apos;proof&apos;],
+        &apos;previous_hash&apos;: block[&apos;previous_hash&apos;],
     }
-  }
-}
-output {
-    stdout {
-        codec =&gt; rubydebug
+    return jsonify(response), 200
+
+
+@app.route(&apos;/transactions/new&apos;, methods=[&apos;POST&apos;])
+def new_transaction():
+    values = request.get_json()
+
+    # Check that the required fields are in the POST&apos;ed data
+    required = [&apos;sender&apos;, &apos;recipient&apos;, &apos;amount&apos;]
+    if not all(k in values for k in required):
+        return &apos;Missing values&apos;, 400
+
+    # Create a new Transaction
+    index = blockchain.new_transaction(values[&apos;sender&apos;], values[&apos;recipient&apos;], values[&apos;amount&apos;])
+
+    response = {&apos;message&apos;: f&apos;Transaction will be added to Block {index}&apos;}
+    return jsonify(response), 201
+
+
+@app.route(&apos;/chain&apos;, methods=[&apos;GET&apos;])
+def full_chain():
+    response = {
+        &apos;chain&apos;: blockchain.chain,
+        &apos;length&apos;: len(blockchain.chain),
     }
-    elasticsearch {
-        hosts=&gt;[&quot;localhost:9200&quot;]
-        index=&gt;&quot;logstash-%{+YYYY.MM.dd}&quot;
+    return jsonify(response), 200
+
+
+@app.route(&apos;/nodes/register&apos;, methods=[&apos;POST&apos;])
+def register_nodes():
+    values = request.get_json()
+
+    nodes = values.get(&apos;nodes&apos;)
+    if nodes is None:
+        return &quot;Error: Please supply a valid list of nodes&quot;, 400
+
+    for node in nodes:
+        blockchain.register_node(node)
+
+    response = {
+        &apos;message&apos;: &apos;New nodes have been added&apos;,
+        &apos;total_nodes&apos;: list(blockchain.nodes),
     }
+    return jsonify(response), 201
+
+
+@app.route(&apos;/nodes/resolve&apos;, methods=[&apos;GET&apos;])
+def consensus():
+    replaced = blockchain.resolve_conflicts()
+
+    if replaced:
+        response = {
+            &apos;message&apos;: &apos;Our chain was replaced&apos;,
+            &apos;new_chain&apos;: blockchain.chain
+        }
+    else:
+        response = {
+            &apos;message&apos;: &apos;Our chain is authoritative&apos;,
+            &apos;chain&apos;: blockchain.chain
+        }
+
+    return jsonify(response), 200
+
+
+if __name__ == &apos;__main__&apos;:
+    from argparse import ArgumentParser
+
+    parser = ArgumentParser()
+    parser.add_argument(&apos;-p&apos;, &apos;--port&apos;, default=5000, type=int, help=&apos;port to listen on&apos;)
+    args = parser.parse_args()
+    port = args.port
+
+    app.run(host=&apos;0.0.0.0&apos;, port=port)
+</code></pre><p> 提供了几个url:</p>
+<pre><code>mine GET
+
+transactions/new POST
+
+chain GET
+
+nodes/register POST
+
+nodes/resolve GET
+
+/transactions/new to create a new transaction to a block
+/mine to tell our server to mine a new block.
+/chain to return the full Blockchain.
+/nodes/register to accept a list of new nodes in the form of URLs.
+/nodes/resolve to implement our Consensus Algorithm, which resolves any 
+        conflicts—to ensure a node has the correct chain.
+</code></pre><p>单个区块：</p>
+<pre><code>block = {
+    &apos;index&apos;: 1,
+    &apos;timestamp&apos;: 1506057125.900785,
+    &apos;transactions&apos;: [
+        {
+            &apos;sender&apos;: &quot;8527147fe1f5426f9dd545de4b27ee00&quot;,
+            &apos;recipient&apos;: &quot;a77f5cdfa2934df3954a5c7c7da5df1f&quot;,
+            &apos;amount&apos;: 5,
+        }
+    ],
+    &apos;proof&apos;: 324984774000,
+    &apos;previous_hash&apos;: &quot;2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824&quot;
 }    
 </code></pre>
           
@@ -791,7 +1286,7 @@ output {
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/17/top-questions-python/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/27/blockchain-note/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -810,7 +1305,7 @@ output {
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/17/top-questions-python/" itemprop="url">top-questions-python</a></h1>
+                <a class="post-title-link" href="/2018/03/27/blockchain-note/" itemprop="url">blockchain-note</a></h1>
         
 
         <div class="post-meta">
@@ -822,8 +1317,8 @@ output {
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-17T23:09:30+08:00">
-                2018-03-17
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-27T19:21:12+08:00">
+                2018-03-27
               </time>
             
 
@@ -833,6 +1328,28 @@ output {
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/AI/" itemprop="url" rel="index">
+                    <span itemprop="name">AI</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -840,7 +1357,7 @@ output {
 
           
           
-             <span id="/2018/03/17/top-questions-python/" class="leancloud_visitors" data-flag-title="top-questions-python">
+             <span id="/2018/03/27/blockchain-note/" class="leancloud_visitors" data-flag-title="blockchain-note">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -865,7 +1382,7 @@ output {
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.2k
+                  614
                 </span>
               
 
@@ -881,7 +1398,7 @@ output {
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4
+                  2
                 </span>
               
             </div>
@@ -904,472 +1421,81 @@ output {
       
         
           
-            <p>1.python2 编码问题</p>
+            <h2 id="区块链"><a href="#区块链" class="headerlink" title="区块链"></a>区块链</h2><p>中本聪2008年发表了《比特币：一种点对点式的电子现金系统》的论文。<br>以太坊是2013年开创的项目。</p>
+<p>区块 账户 共识 智能合约</p>
+<p>本质上是一种健壮和安全的分布式状态机，五项核心能力：</p>
+<h4 id="存储数据"><a href="#存储数据" class="headerlink" title="存储数据"></a>存储数据</h4><h4 id="共有数据"><a href="#共有数据" class="headerlink" title="共有数据"></a>共有数据</h4><h4 id="分布式"><a href="#分布式" class="headerlink" title="分布式"></a>分布式</h4><h4 id="防篡改与隐私保护"><a href="#防篡改与隐私保护" class="headerlink" title="防篡改与隐私保护"></a>防篡改与隐私保护</h4><h4 id="数字化合约"><a href="#数字化合约" class="headerlink" title="数字化合约"></a>数字化合约</h4><p>三个方面可信：</p>
+<p>数据可信</p>
+<p>合约履行</p>
+<p>历史可证明</p>
+<p>目前典型的区块链账本设计为区块的单链表结构，只有增加没有减少，全局来说只有顺序处理，无法实现并行度。</p>
+<p>目前涉及到的知识：分布式 存储 密码学 网络通讯 芯片技术 经济学 法律等。</p>
+<p>应用场景</p>
 <ul>
-<li>python代码内部请全部使用unicode编码，在获取外部内容时，先decode为unicode，向外输出时再encode为Str</li>
-<li>在定义变量或者正则时，也定义unicode字符，如a=u”中文”；res=r””+u”正则”。</li>
-</ul>
-<pre><code>a=&quot;\\u8fdd\\u6cd5\\u8fdd\u89c4&quot; #变量a的内容为unicode编码，变量a为string编码（&quot;&quot;前不要加u）
-b=a.decode(&apos;unicode-escape&apos;)
-print b
-
-a=&quot;\\xe5\\x85\\xb3\\xe4\\xba\\x8e\\xe4&quot; #变量a的内容为string编码，变量a为string编码（&quot;&quot;前不要加u）
-b=a.decode(&apos;string-escape&apos;)
-print b
-</code></pre><p>2.多线程问题</p>
-<p><em>python带有GIL解释器锁的概念，同一时刻只能有一个线程在运行，遇到IO操作才会释放切换。</em></p>
-<p>协程不同于线程的地方在于协程不是操作系统进行切换，而是由程序员编码进行切换的，也就是说切换是由程序员控制的，这样就没有了线程所谓的安全问题。</p>
-<p>这也就是常选的gevent 方案</p>
-<p>cpu 密集  多进程<br>io密集 多线程 或者协程</p>
-<p>3.协程</p>
-<p>4.闭包</p>
-<p>全局变量降低了函数或模块之间的通用性，不同的函数或模块都要依赖于全局变量。同样，全局变量降低了代码的可读性，阅读者可能并不知道调用的某个变量是全局变量。</p>
-<pre><code># 原始情况
-time = 0
-
-def insert_time(min):
-    time = time + min
-    return  time
-
-print(insert_time(2))
-print(insert_time(10))
-
-
-# 闭包
-time = 0
-
-
-def study_time(time):
-    def insert_time(min):
-        nonlocal  time
-        time = time + min
-        return time
-
-    return insert_time
-
-
-f = study_time(time)
-print(f(2))
-print(time)
-print(f(10))
-print(time)
-</code></pre><p>这里最直接的表现就是全局变量 time 至此至终都没有修改过,这里还是用了 nonlocal 关键字,表示在函数或其他作用域中使用外层(非全局)变量。</p>
-<p>这种内部函数的局部作用域中可以访问外部函数局部作用域中变量的行为，我们称为： 闭包。更加直接的表达方式就是，当某个函数被当成对象返回时，夹带了外部变量，就形成了一个闭包。k</p>
-<p>闭包避免了使用全局变量，此外，闭包允许将函数与其所操作的某些数据（环境）关连起来。而且使用闭包，可以使代码变得更加的优雅。装饰器，是基于闭包实现的。</p>
-<p>所有函数都有一个 __closure__ 属性，如果函数是闭包的话，那么它返回的是一个由 cell 组成的元组对象。cell 对象的 cell_contents 属性就是存储在闭包中的变量。    </p>
-<p>5.装饰器问题</p>
-<p>6.爬虫问题</p>
-<p>7.魔法方法</p>
-<p>一个类创建的过程是怎样的，先是调用了 __new<strong>方法来创建一个对象，把参数传给 \</strong>init__ 方法进行实例化。</p>
-<p>其实在实际开发中，很少会用到 __new<strong> 方法，除非你希望能够控制类的创建。通常讲到 \</strong>new__ ，都是牵扯到 metaclass(元类)的。</p>
-<p>当然当一个对象的生命周期结束的时候，析构函数 __del__ 方法会被调用。但是这个方法是 Python 自己对对象进行垃圾回收的。</p>
-<p>Python 没有真正意义上的私有属性。然后这就导致了对 Python 类的封装性比较差。我们有时候会希望 Python 能够定义私有属性，然后提供公共可访问的 get 方法和 set 方法。Python 其实可以通过魔术方法来实现封装。</p>
-<p>方法说明</p>
-<p>__getattr__(self, name)该方法定义了你试图访问一个不存在的属性时的行为。因此，重载该方法可以实现捕获错误拼写然后进行重定向, 或者对一些废弃的属性进行警告。</p>
-<p>__setattr<strong>(self, name, value)定义了对属性进行赋值和修改操作时的行为。不管对象的某个属性是否存在,都允许为该属性进行赋值.有一点需要注意，实现 \</strong>setattr__ 时要避免”无限递归”的错误，</p>
-<p>__delattr<strong>(self, name) \</strong>delattr<strong> 与 \</strong>setattr<strong> 很像，只是它定义的是你删除属性时的行为， 实现 \</strong>delattr__ 是同时要避免”无限递归”的错误</p>
-<p>__getattribute<strong>(self, name) \</strong>getattribute<strong> 定义了你的属性被访问时的行为，相比较，\</strong>getattr__ 只有该属性不存在时才会起作用。</p>
-<p>因此，在支持 __getattribute<strong>的 Python 版本,调用\</strong>getattr<strong> 前必定会调用 \</strong>getattribute__   </p>
-<p>__getattribute__ 同样要避免”无限递归”的错误。</p>
-<p>8.差异</p>
-<p>Python3.x 中 input() 函数接受一个标准输入数据，返回为 string 类型。</p>
-<p>Python2.x 中 input() 相等于 eval(raw_input(prompt)) ，用来获取控制台的输入。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/17/python-big-web-project/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/17/python-big-web-project/" itemprop="url">python-big-web-project</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-17T21:30:04+08:00">
-                2018-03-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/03/17/python-big-web-project/" class="leancloud_visitors" data-flag-title="python-big-web-project">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  2.3k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  7
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>严格来说，MVC是一个古老的概念，从早期的Smalltalk开始已经不再适合于web应用开发。Django的开发人员已经正确意识到在Python中我们实际使用的是MTV（model，template，view）：</p>
-<ul>
-<li><p>模板包含了HTML的内容以及页面显示逻辑。它是使用模板语言如Kajiki来编写，从视图（view）中获取数据，然后展示在页面中。</p>
+<li><p>供应链领域</p>
 </li>
-<li><p>视图（有时也称为“控制器”），仅仅是使用Python语言编写的中间代码。它借助于web框架将所有的内容放在一起。它可以看到其他的所有层，并且定义了URLs，将它们映射到web框架中用于接收数据的函数，然后利用其他层以最终发送响应给web框架。它应该尽可能得小，因为它的代码是不能重复利用的，即使你尽量地缩减它，web表单也会促使其逐渐地变得复杂。</p>
+<li><p>金融领域</p>
 </li>
-<li><p>模型层本质上是一个持久层：它最重要的依赖就是SQLAlchemy。模型知道如何去保存数据，构成整个项目中最可重用的代码。当然它并不清楚HTTP相关的内容和你所使用的框架。它代表了排除用户界面细节的系统本质内容。</p>
+<li><p>政务及公共服务领域</p>
+</li>
+<li><p>其他领域： 保险防欺诈、大数据安全</p>
 </li>
 </ul>
-<p>但是稍等下，哪里？在视图还是模型中？你应该在哪里放置程序的灵魂：业务规则？模板层已经自动被排除掉，因为它并不是Python编写的。所以剩下3个可能的答案：</p>
-<ul>
-<li><p>视图层，这是最糟糕的选择。视图层应该仅仅包含中间代码，将代码数量保持尽可能得小，并且同系统中的其他部分隔离开，所以系统应该能在web框架中、使用中以及单元测试中独立访问。另外，业务逻辑应该存在于更加可重用的地方。视图层被视为展示逻辑的一部分，所以业务逻辑被排除在外。实际上，除了Web UI之外，在创建desktop UI时，开发者应该忽略视图和HTTP相关的内容，需要业务逻辑尽可能地被重用，因此，我们应该排除掉视图层。</p>
-</li>
-<li><p>模型层，这个是可能的选择，因为模型层至少是可重用的。但是模型层主要关注于持久化，它应该更少地依赖于SQLAlchemy（它已经是一个非常复杂的东西）。</p>
-</li>
-</ul>
-<p>新的层，这才是正确的答案。下面将举例来更好地理解这部分内容。</p>
-<p>如果你要创建一个博客，那么MTV正好满足你的需求。但是对于更加复杂的项目来说，其实还是至少缺了一层。你应该将业务逻辑旋转到一个新的、可重用的层次中，大多数人称之为“Service”层，但是我更喜欢称之为”Action“层。</p>
-<p>为什么你需要这层？</p>
-<p>在大型应用中，单个用户的操作引起多项活动是非常常见的。比如，用户成功地注册了你的服务，那么你的业务逻辑中可能会触发非常多的后台处理：</p>
-<p>在关系数据库多张表中新增数据，使用了模型层。</p>
-<p>将发送邮件给用户的任务放置到队列中。</p>
-<p>将发送短信给用户的任务放置到队列中。</p>
-<p>将创建实际使用服务时必需的空间和其他准备性资源的任务放置到队列中。</p>
-<p>将更新用户数据的任务放置到队列中。</p>
-<p>….</p>
-<p>这是一个理解“业务逻辑“的好例子：给定一个用户操作（比如注册），系统就要做一些必需的操作。这种业务逻辑被单个函数捕获会更好；这个函数应该在哪一层呢？</p>
-<p>如果所有的这些都实现在模型层，你能想象到它将变得多复杂吗？模型层在只面对持久化时已经很艰难了。现在想象一下模型层处理所有这些事务，它要使用多少外部服务？文件头部应该包括多少imports？反过来看，有多少模块愿意引入这个模型，可能在系统启动前就因为创建的循环依赖而导致系统崩溃。</p>
-<p>循环依赖其实就是你没有正确认清系统架构的明显的标识。</p>
-<p>对于依赖于Celery的模型来说，了解如何去发送邮件、短信以及使用外部服务等是不应该的做法。持久化对于模型层来说已经是非常复杂的主题了。你应该在模型层之外去处理这些业务逻辑——在模型层和视图层之间的一层。所以称之为”Action“层。</p>
-<p>另外，模型层在关系型数据库中经常被映射到一张单独的表。如果你在用户表和订阅表中插入一条记录，哪一个模型应该包含上述逻辑呢？这几乎是不能确定的。因为实际执行的操作远超过了用户表和订阅表的范围。因此，业务逻辑应该被定义在任何模型之外。</p>
-<p>当开发人员执行维护时，有时她想按步骤地执行每一步，而有时她想一次性执行完所有操作。分别地实现这些操作并在单个Action层函数中调用是有帮助的。</p>
-<p>你可能会怀疑我提出的方法难道不是反面模式域模型的一种吗？没有动作的模型恰恰与面向对象设计相反！我并没有说“将所有的方法从模型中移除”。我的意思是指“将需要外部调用的方法移除”。模型中的方法仅仅用来使用它所需要的数据，并且属于模型中的那些数据。一个面向世界的，调用外部服务的并且很少使用自身数据的方法不应该被放置在模型中。</p>
-<p>另一个使得这种架构成功的原因就是测试。TDD教会了程序员去让程序变得解耦，这样做通常会使得软件更加健壮。如果你想要创建一个Celery的应用，并且在你测试之前已经知道了其他的外部服务，那么你将经常陷入头痛中。</p>
-<p>还有将业务逻辑放置在视图层之外的最后一个原因。在未来，当你最终决定从Flask过渡到Pyramid时，你很乐意将视图层保持简洁。如果所有的视图都是在与web框架间交互，并且动作层会执行所有的函数，那么你的代码就做到了非常好的隔离。Web框架通常都很贪婪，不要让你的系统跟随他们的脚步。</p>
-<p>所以下面就是我所提议的在Python中构建大型应用的层次结构：</p>
-<p>模型层是最底层的，最可重用并且可见的层。它仅专注于持久化，模型层是可以包含动作的，只不过这个动作仅仅属于这个模型。模型可以被其他层所返回，以各种方式在请求的结尾返回给模板。</p>
-<p>外部服务。对每个服务都创建一个比如说发送邮件。</p>
-<p>动作层。这是系统中的核心层，它包含了业务逻辑以及工作流。它使用外部服务去实现特定的目标并且借助模型层来持久化数据。通过以上这些层，它支撑起了整个系统，包括配置，除了用户界面。</p>
-<p>模板层仅包括了页面展示逻辑比如说从列表中循环输出构成一个HTML表格。</p>
-<p>视图层，这是最高层的，最不可重用的层。它依赖于（与系统中其他层隔离）web框架。并且依赖于表单验证库。它可以看到模板层以及动作层，但是不能直接调用模型层——它必须通过动作层。但是当一个动作层返回了模型数据，那么它可以被传递给模板中（一个Celery任务可以类比于一个web视图）。</p>
-<p>这种体系结构有助于避免了在会话层中进行调试因为它清楚地定义了各自的职责。同时它也是明显经得起检测的，因为它做到了很好的解耦，因此可以减少测试的并且减少了模拟的次数。</p>
-<p>好的架构总是解耦性非常好的。如果你曾经陷入到一个循环依赖中，你可以想一下是否真的定义好了每一层的职责。当你放弃了并且从一个函数中引入内容，那么你的架构已经失败了。</p>
-<p>这并不是说你的web应用必须与Celery应用隔离开。在他们之间可以重用代码——特别是模型——但是对于Celery应用来说，不应该引入web框架！获取配置也不例外，因为在Python中读取配置是非常简单的。</p>
+<p>原则 面向业务、标准化、松耦合与模块化、安全可审计、简洁与效率。</p>
+<h3 id="对-python的认识"><a href="#对-python的认识" class="headerlink" title="对 python的认识"></a>对 python的认识</h3><p>1.上下文管理器</p>
+<pre><code>with open(&apos;data.txt&apos;) as source, open(&apos;target.txt&apos;) as target:
+    target.write(source.read())
+</code></pre><p> 上下文管理器协议 需要实现 __enter__(), __exit__()</p>
+<p>2.装饰器</p>
+<p>装饰器本质上就是一个函数，这个函数接收其他函数作为参数，并将其以一个新的修改后的函数进行替换。</p>
+<pre><code>import functools
+import inspect
 
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
+def check_is_admin(f):
+    @functools.wraps(f)
+    def wrapper(*args, **kwargs):
+        func_args = inspect.getcallargs(f, *args, **kwargs)
+        print func_args
+        if func_args.get(&apos;username&apos;) != &apos;admin&apos;:
+            raise Exception(&quot;This user is not allowed to get food&quot;)
+        return f(*args, **kwargs)
+    return wrapper
 
 
-    
-      
+@check_is_admin
+def get_food(username, food=&apos;chocolate&apos;):
+    return &quot;{0} get food: {1}&quot;.format(username, food)
 
-  
 
-  
-  
-  
+def main():
+    print get_food(&apos;admin&apos;)
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/17/python-top-30/">
+if __name__ == &apos;__main__&apos;:
+    main()
+</code></pre><p>装饰器不必检查参数username是基于位置的参数还是基于关键字的参数，而只需在字典中查找即可。</p>
+<pre><code>def makebold(fn):
+    def wrapped():
+        return &quot;&lt;b&gt;&quot; + fn() + &quot;&lt;/b&gt;&quot;
+    return wrapped
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
+def makeitalic(fn):
+    def wrapped():
+        return &quot;&lt;i&gt;&quot; + fn() + &quot;&lt;/i&gt;&quot;
+    return wrapped
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
+@makebold
+@makeitalic
+def hello():
+    return &quot;hello world&quot;
 
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/17/python-top-30/" itemprop="url">python-top-30</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-17T14:42:17+08:00">
-                2018-03-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/03/17/python-top-30/" class="leancloud_visitors" data-flag-title="python-top-30">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  368
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.家庭助理</p>
-<p>2.PyTorch</p>
-<p>3.Grumpy</p>
-<p>4.sanic</p>
-<p>5.Python-fire</p>
-<p>6.spaCy</p>
-<p>7.pipenv</p>
-<p>8.micropython</p>
-<p>9.prophet</p>
-<p>10.SerpentAI</p>
-<p>11.dash</p>
-<p>12.instaPy</p>
-<p>13.apistar</p>
-<p>14.faiss</p>
-<p>15.MechanicalSoup：一个与网站自动化交互的Python库</p>
-<p>16.Better-exceptions：用Python编写的自动地漂亮的和有用的异常处理</p>
-<p>17.Flashtext：从句子中提取关键词或替换句子中的关键词</p>
-<p>18.Maya：用Python实现人类的日期时间</p>
-<p>19.Mimesis (v1.0)：Python库，有助于为不同的目的以不同的语言生成模拟数据。这些数据在软件开发和测试的不同阶段特别有用</p>
-<p>20.开放式无纸化：扫描、索引和归档所有的纸质文档。一个文档管理系统</p>
-<p>21.Fsociety：黑客工具包。渗透测试框架</p>
-<p>22.LivePython：实时可视化跟踪Python代码</p>
-<p>23.Hatch：用于Python的现代项目、包和虚拟环境管理器</p>
-<p>24.Tangent:用纯Python实现源到源的可调试导数</p>
-<p>25.Clairvoyant：识别和监控短期股票走势的历史线索的Python程序</p>
-<p>26.MonkeyType：Python通过收集运行时类型生成静态类型注释的系统</p>
-<p>27.Eel：一个小的Python库，用于制作简单的电子类HTML / js GUI应用程序</p>
-<p>28.Surprise v1.0：建立和分析推荐系统的Python scikit**</p>
-<p>29.Gain：获取每个人的Web爬行框架</p>
-<p>30.PDFTabExtract: 一组从PDF文件中提取表的工具，有助于对扫描文档进行数据挖掘</p>
+print hello() ## returns &lt;b&gt;&lt;i&gt;hello world&lt;/i&gt;&lt;/b&gt;
+</code></pre><p>3.全局变量</p>
+<p>4.时间复杂度</p>
+<p>list实质上是一个数组</p>
+<p>使用链表的时候，应该用collection.deque 双向链表</p>
+<p>set的实现是hash标，判断元素是否在某个集合中使用set，时间复杂度低。</p>
+<p>5.python中的else</p>
+<p>循环使用else 不建议<br>try…except 中else 建议加else</p>
 
           
         
@@ -1409,7 +1535,7 @@ print(time)
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/59/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/59/">59</a><span class="page-number current">60</span><a class="page-number" href="/page/61/">61</a><span class="space">&hellip;</span><a class="page-number" href="/page/78/">78</a><a class="extend next" rel="next" href="/page/61/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/59/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/59/">59</a><span class="page-number current">60</span><a class="page-number" href="/page/61/">61</a><span class="space">&hellip;</span><a class="page-number" href="/page/80/">80</a><a class="extend next" rel="next" href="/page/61/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1459,7 +1585,7 @@ print(time)
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">390</span>
+                  <span class="site-state-item-count">396</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1574,7 +1700,7 @@ print(time)
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共152.8k字</span>
+  <span class="post-count">博客全站共153.4k字</span>
 </div>
 
         

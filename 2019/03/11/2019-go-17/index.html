@@ -82,18 +82,36 @@
 
 
 <meta name="description" content="字典的操作和约束map 
-键值对">
+键值对
+字典类型本质上是一个哈希表的特定实现，在这个实现当中，键和元素的最大不同在于，键的类型是受限制的，元素的类型却可以是任意类型的
+哈希表中比较重要的一个过程 就是映射
+键可以理解为元素的一个索引，在哈希表中通过键查找与它成对的那个元素
+这种对应关系，在数学里就被称为映射 也是map这个词的本意
+哈希表的映射过程就存在于对键–元素的增、删、改、查的操作之中
+映射的第一">
 <meta property="og:type" content="article">
 <meta property="og:title" content="2019-go-17">
 <meta property="og:url" content="https://zhangdavids.github.io/2019/03/11/2019-go-17/index.html">
 <meta property="og:site_name" content="上药三品，神与气精">
 <meta property="og:description" content="字典的操作和约束map 
-键值对">
-<meta property="og:updated_time" content="2019-03-12T07:27:52.624Z">
+键值对
+字典类型本质上是一个哈希表的特定实现，在这个实现当中，键和元素的最大不同在于，键的类型是受限制的，元素的类型却可以是任意类型的
+哈希表中比较重要的一个过程 就是映射
+键可以理解为元素的一个索引，在哈希表中通过键查找与它成对的那个元素
+这种对应关系，在数学里就被称为映射 也是map这个词的本意
+哈希表的映射过程就存在于对键–元素的增、删、改、查的操作之中
+映射的第一">
+<meta property="og:updated_time" content="2019-03-13T07:51:10.849Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2019-go-17">
 <meta name="twitter:description" content="字典的操作和约束map 
-键值对">
+键值对
+字典类型本质上是一个哈希表的特定实现，在这个实现当中，键和元素的最大不同在于，键的类型是受限制的，元素的类型却可以是任意类型的
+哈希表中比较重要的一个过程 就是映射
+键可以理解为元素的一个索引，在哈希表中通过键查找与它成对的那个元素
+这种对应关系，在数学里就被称为映射 也是map这个词的本意
+哈希表的映射过程就存在于对键–元素的增、删、改、查的操作之中
+映射的第一">
 
 
 
@@ -372,7 +390,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  12
+                  396
                 </span>
               
 
@@ -411,6 +429,19 @@
       
         <h2 id="字典的操作和约束"><a href="#字典的操作和约束" class="headerlink" title="字典的操作和约束"></a>字典的操作和约束</h2><p>map </p>
 <p>键值对</p>
+<p>字典类型本质上是一个哈希表的特定实现，在这个实现当中，键和元素的最大不同在于，键的类型是受限制的，元素的类型却可以是任意类型的</p>
+<p>哈希表中比较重要的一个过程 就是映射</p>
+<p>键可以理解为元素的一个索引，在哈希表中通过键查找与它成对的那个元素</p>
+<p>这种对应关系，在数学里就被称为映射 也是map这个词的本意</p>
+<p>哈希表的映射过程就存在于对键–元素的增、删、改、查的操作之中</p>
+<p>映射的第一步 就是把键值转换为哈希值</p>
+<p>键值的类型 不可以是函数类型、字典类型和切片类型</p>
+<p>键的值之间支持判等的操作</p>
+<p>另外 键的类型是揭接口类型的，那么键值的实际类型也不能是上述的三种类型，否则在程序运行过程当中会引发panic</p>
+<p>键的类型 优先选用数值类型和指针类型，类型的宽度越小越好</p>
+<p>字符串类型的话 对键值的长度进行额外的约束</p>
+<p>字典是引用的类型 声明而不初始化 值是nil<br>除了添加键–元素对，在一个值为nil的字典上做任何操作都不会引起错误</p>
+<p>试图在一个值为nil的字典中添加键–元素对的时候，运行时系统会抛出一个panic</p>
 
       
     </div>
@@ -534,7 +565,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">390</span>
+                  <span class="site-state-item-count">396</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -665,7 +696,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共152.8k字</span>
+  <span class="post-count">博客全站共153.4k字</span>
 </div>
 
         
