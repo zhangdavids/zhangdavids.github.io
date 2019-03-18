@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>
+    leetcode-hash | 上药三品，神与气精
+  </title>
+  <meta name="description" content="曾因酒醉鞭名马 生怕情多累美人">
+  
+  <meta name="keywords" content="
+  leetcode
+  ">
+  
+  <meta name="author" content="John Cheung">
+
+  <meta http-equiv="Cache-Control" content="no-transform"/>
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+  <link rel="icon" type="image/x-icon" href="undefined">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+
+  
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vue/1.0.25-csp/vue.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+</head>
+
+<body id="replica-app">
+
+<nav class="navbar-wrapper">
+  <div class="navbar">
+    <div class="container clearfix">
+      <a href="/" class="navbar-logo"><i class="fa fa-github"></i></a>
+
+      <div class="navbar-search float-left desktop-only">
+        <div class="navbar-search-form">
+          <label for="gsc-i-id1">This website</label>
+          <div id="google-search">
+            <gcse:search></gcse:search>
+          </div>
+        </div>
+      </div>
+
+      <ul class="navbar-nav float-left">
+        
+        <li><a href="/archives">Archives</a></li>
+        
+        
+        <li><a href="/categories">Categories</a></li>
+        
+        
+        <li><a href="/tags">Tags</a></li>
+        
+        
+        <li class="desktop-only"><a href="/atom.xml" target="_blank">RSS</a></li>
+        
+      </ul>
+
+      <ul class="navbar-nav user-nav float-right desktop-only">
+        <li class="user-nav-notification">
+          <a><span class="user-nav-unread"></span><i class="fa fa-bell"></i></a>
+        </li>
+        <li>
+          <a><i class="fa fa-plus"></i> <i class="fa fa-caret-down"></i></a>
+        </li>
+        <li class="user-nav-logo">
+          <a><img src="/images/dog.jpg"> <i class="fa fa-caret-down"></i></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="main-container">
+  <header class="header-wrapper desktop-only">
+  <div class="container header-site-detail">
+    <ul class="header-toolbar">
+      <li class="clearfix">
+        <a href="/archives" class="header-toolbar-left"><i
+                  class="fa fa-file-text"></i> Posts </a>
+        <a href="/archives"
+           class="header-toolbar-right"> 402 </a>
+      </li>
+      <li>
+        <a href="/tags" class="header-toolbar-left"><i
+                  class="fa fa-tags"></i> Tags </a>
+        <a href="/tags"
+           class="header-toolbar-right"> 30 </a>
+      </li>
+      <li>
+        <a href="/categories" class="header-toolbar-left"><i
+                  class="fa fa-folder-open"></i> Categories </a>
+        <a href="/categories"
+           class="header-toolbar-right"> 24 </a>
+      </li>
+    </ul>
+    <h2 class="header-title">
+      <i class="fa fa-book text-muted"></i>
+      <a href="/">上药三品，神与气精</a>
+      
+      
+    </h2>
+  </div>
+
+  <div class="container">
+    <div class="header-tab-wrapper clearfix">
+      <span class="header-tab header-tab-selected"><i class="fa fa-thumbs-o-up"></i> Like</span>
+      <span class="header-tab"><i class="fa fa-share-alt"></i> Share</span>
+      <span class="header-tab"><i class="fa fa-comments-o"></i> Discussion</span>
+      <span class="header-tab"><i class="fa fa-bookmark-o"></i> Bookmark </span>
+      <span class="header-tab"><i class="fa fa-smile-o"></i> Smile <i class="fa fa-caret-down"></i></span>
+    </div>
+  </div>
+</header>
+
+
+<div class="post-container container">
+  <h3>
+    <i class="fa fa-user-o"></i>
+    John Cheung
+
+    <span class="post-date float-right" title="{{moment(1552908001000).format('MMM DD, YYYY, h:mm:ss A')}}">
+      <i class="fa fa-pencil-square-o"></i>
+      {{moment(1552908001000).fromNow()}}
+    </span>
+  </h3>
+
+  <article class="post-content">
+    <h1>leetcode-hash</h1>
+    <p>两数之和</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    vector&lt;int&gt; twoSum(vector&lt;int&gt;&amp; nums, int target) &#123;</span><br><span class="line">        unordered_map&lt;int,int&gt; record;</span><br><span class="line">        for(int i = 0 ; i &lt; nums.size() ; i ++)&#123;</span><br><span class="line">            int complement = target - nums[i];</span><br><span class="line">            if(record.find(complement) != record.end())&#123;</span><br><span class="line">                int res[] = &#123;i, record[complement]&#125;;</span><br><span class="line">                return vector&lt;int&gt;(res, res + 2);</span><br><span class="line">            &#125;</span><br><span class="line">            record[nums[i]] = i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>无重复字符的最长子串</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int lengthOfLongestSubstring(string s) &#123;</span><br><span class="line">        int freq[256] = &#123;0&#125;;</span><br><span class="line">        int l = 0, r = -1; //滑动窗口为s[l...r]</span><br><span class="line">        int res = 0;</span><br><span class="line">        // 整个循环从 l == 0; r == -1 这个空窗口开始</span><br><span class="line">        // 到l == s.size(); r == s.size()-1 这个空窗口截止</span><br><span class="line">        // 在每次循环里逐渐改变窗口, 维护freq, 并记录当前窗口中是否找到了一个新的最优值</span><br><span class="line">        while(l &lt; s.size())&#123;</span><br><span class="line">            if(r + 1 &lt; s.size() &amp;&amp; freq[s[r+1]] == 0)&#123;</span><br><span class="line">                r++;</span><br><span class="line">                freq[s[r]]++;</span><br><span class="line">            &#125;else &#123;   //r已经到头 || freq[s[r+1]] == 1</span><br><span class="line">                freq[s[l]]--;</span><br><span class="line">                l++;</span><br><span class="line">            &#125;</span><br><span class="line">            res = max(res, r-l+1);</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int lengthOfLongestSubstring(string s) &#123;</span><br><span class="line">        int res = 0, left = -1, n = s.size();</span><br><span class="line">        unordered_map&lt;int, int&gt; m;</span><br><span class="line">        for (int i = 0; i &lt; n; ++i) &#123;</span><br><span class="line">            if (m.count(s[i]) &amp;&amp; m[s[i]] &gt; left) &#123;</span><br><span class="line">                left = m[s[i]];  </span><br><span class="line">            &#125;</span><br><span class="line">            m[s[i]] = i;</span><br><span class="line">            res = max(res, i - left);            </span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>三数之和</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    vector&lt;vector&lt;int&gt;&gt; threeSum(vector&lt;int&gt;&amp; nums) &#123;</span><br><span class="line">        vector&lt;vector&lt;int&gt;&gt; res;</span><br><span class="line">        sort(nums.begin(), nums.end());</span><br><span class="line">        if (nums.empty() || nums.back() &lt; 0 || nums.front() &gt; 0) return &#123;&#125;;</span><br><span class="line">        for (int k = 0; k &lt; nums.size(); ++k) &#123;</span><br><span class="line">            if (nums[k] &gt; 0) break;</span><br><span class="line">            if (k &gt; 0 &amp;&amp; nums[k] == nums[k - 1]) continue;</span><br><span class="line">            int target = 0 - nums[k];</span><br><span class="line">            int i = k + 1, j = nums.size() - 1;</span><br><span class="line">            while (i &lt; j) &#123;</span><br><span class="line">                if (nums[i] + nums[j] == target) &#123;</span><br><span class="line">                    res.push_back(&#123;nums[k], nums[i], nums[j]&#125;);</span><br><span class="line">                    while (i &lt; j &amp;&amp; nums[i] == nums[i + 1]) ++i;</span><br><span class="line">                    while (i &lt; j &amp;&amp; nums[j] == nums[j - 1]) --j;</span><br><span class="line">                    ++i; --j;</span><br><span class="line">                &#125; else if (nums[i] + nums[j] &lt; target) ++i;</span><br><span class="line">                else --j;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>重复的dna序列</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    vector&lt;string&gt; findRepeatedDnaSequences(string s) &#123;</span><br><span class="line">        vector&lt;string&gt; res;</span><br><span class="line">        if (s.size() &lt;= 10) return res;</span><br><span class="line">        int mask = 0x7ffffff, cur = 0;</span><br><span class="line">        unordered_map&lt;int, int&gt; m;</span><br><span class="line">        for (int i = 0; i &lt; 9; ++i) &#123;</span><br><span class="line">            cur = (cur &lt;&lt; 3) | (s[i] &amp; 7);</span><br><span class="line">        &#125;</span><br><span class="line">        for (int i = 9; i &lt; s.size(); ++i) &#123;</span><br><span class="line">            cur = ((cur &amp; mask) &lt;&lt; 3) | (s[i] &amp; 7);</span><br><span class="line">            if (m.count(cur)) &#123;</span><br><span class="line">                if (m[cur] == 1) res.push_back(s.substr(i - 9, 10));</span><br><span class="line">                ++m[cur]; </span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                m[cur] = 1;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>两个数组的交集</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">// 时间复杂度: O(nlogn)</span><br><span class="line">// 空间复杂度: O(n)</span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    vector&lt;int&gt; intersection(vector&lt;int&gt;&amp; nums1, vector&lt;int&gt;&amp; nums2) &#123;</span><br><span class="line">        set&lt;int&gt; record;</span><br><span class="line">        for( int i = 0 ; i &lt; nums1.size() ; i ++ )&#123;</span><br><span class="line">            record.insert(nums1[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        set&lt;int&gt; resultSet;</span><br><span class="line">        for( int i = 0 ; i &lt; nums2.size() ; i ++ )&#123;</span><br><span class="line">            if(record.find(nums2[i]) != record.end())&#123;</span><br><span class="line">                resultSet.insert(nums2[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        vector&lt;int&gt; resultVector;</span><br><span class="line">        for(set&lt;int&gt;::iterator iter = resultSet.begin(); iter != resultSet.end(); iter ++ )&#123;</span><br><span class="line">            resultVector.push_back(*iter);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return resultVector;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>两个数组的交集 II</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">// 时间复杂度: O(nlogn)</span><br><span class="line">// 空间复杂度: O(n)</span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    vector&lt;int&gt; intersect(vector&lt;int&gt;&amp; nums1, vector&lt;int&gt;&amp; nums2) &#123;</span><br><span class="line">        map&lt;int, int&gt; record;</span><br><span class="line">        for(int i = 0 ; i &lt; nums1.size() ; i ++)&#123;</span><br><span class="line">             record[nums1[i]] += 1;</span><br><span class="line">        &#125;</span><br><span class="line">        vector&lt;int&gt; resultVector;</span><br><span class="line">        for(int i = 0 ; i &lt; nums2.size() ; i ++)&#123;</span><br><span class="line">            if(record[nums2[i]] &gt; 0)&#123;</span><br><span class="line">                resultVector.push_back(nums2[i]);</span><br><span class="line">                record[nums2[i]] --;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return resultVector;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>回旋镖的数量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">// 时间复杂度: O(n^2)</span><br><span class="line">// 空间复杂度: O(n)</span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int numberOfBoomerangs(vector&lt;pair&lt;int, int&gt;&gt;&amp; points) &#123;</span><br><span class="line">        int res = 0;</span><br><span class="line">        for( int i = 0 ; i &lt; points.size() ; i ++ )&#123;</span><br><span class="line">            // record中存储 点i 到所有其他点的距离出现的频次</span><br><span class="line">            unordered_map&lt;int, int&gt; record;</span><br><span class="line">            for(int j = 0 ; j &lt; points.size() ; j ++)&#123;</span><br><span class="line">                if(j != i)&#123;</span><br><span class="line">                    // 计算距离时不进行开根运算, 以保证精度</span><br><span class="line">                    record[dis(points[i], points[j])] += 1;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            for(unordered_map&lt;int, int&gt;::iterator iter = record.begin() ; iter != record.end() ; iter ++)&#123;</span><br><span class="line">                res += (iter-&gt;second) * (iter-&gt;second - 1);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    int dis(const pair&lt;int,int&gt; &amp;pa, const pair&lt;int,int&gt; &amp;pb)&#123;</span><br><span class="line">        return (pa.first - pb.first) * (pa.first - pb.first) +</span><br><span class="line">               (pa.second - pb.second) * (pa.second - pb.second);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>四个数相加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">// 时间复杂度: O(n^2)</span><br><span class="line">// 空间复杂度: O(n^2)</span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int fourSumCount(vector&lt;int&gt;&amp; A, vector&lt;int&gt;&amp; B, vector&lt;int&gt;&amp; C, vector&lt;int&gt;&amp; D) &#123;</span><br><span class="line">        unordered_map&lt;int,int&gt; hashtable;</span><br><span class="line">        for(int i = 0 ; i &lt; A.size() ; i ++)&#123;</span><br><span class="line">            for(int j = 0 ; j &lt; B.size() ; j ++)&#123;</span><br><span class="line">                 hashtable[A[i]+B[j]] += 1;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        int res = 0;</span><br><span class="line">        for(int i = 0 ; i &lt; C.size() ; i ++)&#123;</span><br><span class="line">            for(int j = 0 ; j &lt; D.size() ; j ++)&#123;</span><br><span class="line">                if(hashtable.find(-C[i]-D[j]) != hashtable.end())&#123;</span><br><span class="line">                    res += hashtable[-C[i]-D[j]];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+  </article>
+</div>
+
+
+    
+
+
+
+
+</div>
+
+<div class="footer-wrapper container">
+  <footer class="footer clearfix">
+    <div class="clearfix">
+    <a href="https://zhangdavids.github.io" class="footer-logo">
+      <i class="fa fa-github"></i>
+    </a>
+    <ul class="footer-social-link">
+      <li>© 2018 John Cheung</li>
+      <li><a href="https://zhangdavids.github.io">Home</a></li>
+      
+    </ul>
+    <div class="footer-theme-info">
+      Theme <a href="//github.com/sabrinaluo/hexo-theme-replica">Replica</a>
+      by <a href="//github.com/sabrinaluo">Hiitea</a> ❤ Powered by Hexo
+    </div>
+    </div>
+    
+  </footer>
+</div>
+
+
+
+
+<script src="/js/main.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>
+    leetcode-sort | 上药三品，神与气精
+  </title>
+  <meta name="description" content="曾因酒醉鞭名马 生怕情多累美人">
+  
+  <meta name="keywords" content="
+  leetcode
+  ">
+  
+  <meta name="author" content="John Cheung">
+
+  <meta http-equiv="Cache-Control" content="no-transform"/>
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+
+  <link rel="icon" type="image/x-icon" href="undefined">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+
+  
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vue/1.0.25-csp/vue.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+</head>
+
+<body id="replica-app">
+
+<nav class="navbar-wrapper">
+  <div class="navbar">
+    <div class="container clearfix">
+      <a href="/" class="navbar-logo"><i class="fa fa-github"></i></a>
+
+      <div class="navbar-search float-left desktop-only">
+        <div class="navbar-search-form">
+          <label for="gsc-i-id1">This website</label>
+          <div id="google-search">
+            <gcse:search></gcse:search>
+          </div>
+        </div>
+      </div>
+
+      <ul class="navbar-nav float-left">
+        
+        <li><a href="/archives">Archives</a></li>
+        
+        
+        <li><a href="/categories">Categories</a></li>
+        
+        
+        <li><a href="/tags">Tags</a></li>
+        
+        
+        <li class="desktop-only"><a href="/atom.xml" target="_blank">RSS</a></li>
+        
+      </ul>
+
+      <ul class="navbar-nav user-nav float-right desktop-only">
+        <li class="user-nav-notification">
+          <a><span class="user-nav-unread"></span><i class="fa fa-bell"></i></a>
+        </li>
+        <li>
+          <a><i class="fa fa-plus"></i> <i class="fa fa-caret-down"></i></a>
+        </li>
+        <li class="user-nav-logo">
+          <a><img src="/images/dog.jpg"> <i class="fa fa-caret-down"></i></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="main-container">
+  <header class="header-wrapper desktop-only">
+  <div class="container header-site-detail">
+    <ul class="header-toolbar">
+      <li class="clearfix">
+        <a href="/archives" class="header-toolbar-left"><i
+                  class="fa fa-file-text"></i> Posts </a>
+        <a href="/archives"
+           class="header-toolbar-right"> 402 </a>
+      </li>
+      <li>
+        <a href="/tags" class="header-toolbar-left"><i
+                  class="fa fa-tags"></i> Tags </a>
+        <a href="/tags"
+           class="header-toolbar-right"> 30 </a>
+      </li>
+      <li>
+        <a href="/categories" class="header-toolbar-left"><i
+                  class="fa fa-folder-open"></i> Categories </a>
+        <a href="/categories"
+           class="header-toolbar-right"> 24 </a>
+      </li>
+    </ul>
+    <h2 class="header-title">
+      <i class="fa fa-book text-muted"></i>
+      <a href="/">上药三品，神与气精</a>
+      
+      
+    </h2>
+  </div>
+
+  <div class="container">
+    <div class="header-tab-wrapper clearfix">
+      <span class="header-tab header-tab-selected"><i class="fa fa-thumbs-o-up"></i> Like</span>
+      <span class="header-tab"><i class="fa fa-share-alt"></i> Share</span>
+      <span class="header-tab"><i class="fa fa-comments-o"></i> Discussion</span>
+      <span class="header-tab"><i class="fa fa-bookmark-o"></i> Bookmark </span>
+      <span class="header-tab"><i class="fa fa-smile-o"></i> Smile <i class="fa fa-caret-down"></i></span>
+    </div>
+  </div>
+</header>
+
+
+<div class="post-container container">
+  <h3>
+    <i class="fa fa-user-o"></i>
+    John Cheung
+
+    <span class="post-date float-right" title="{{moment(1552908685000).format('MMM DD, YYYY, h:mm:ss A')}}">
+      <i class="fa fa-pencil-square-o"></i>
+      {{moment(1552908685000).fromNow()}}
+    </span>
+  </h3>
+
+  <article class="post-content">
+    <h1>leetcode-sort</h1>
+    <p>归并</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">def mergeSort(arr):</span><br><span class="line">    import math</span><br><span class="line">    if(len(arr)&lt;2):</span><br><span class="line">        return arr</span><br><span class="line">    middle = math.floor(len(arr)/2)</span><br><span class="line">    left, right = arr[0:middle], arr[middle:]</span><br><span class="line">    return merge(mergeSort(left), mergeSort(right))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def merge(left,right):</span><br><span class="line">    result = []</span><br><span class="line">    while left and right:</span><br><span class="line">        if left[0] &lt;= right[0]:</span><br><span class="line">            result.append(left.pop(0));</span><br><span class="line">        else:</span><br><span class="line">            result.append(right.pop(0));</span><br><span class="line">    while left:</span><br><span class="line">        result.append(left.pop(0));</span><br><span class="line">    while right:</span><br><span class="line">        result.append(right.pop(0));</span><br><span class="line">    return result</span><br></pre></td></tr></table></figure>
+<p>快速排序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">def quickSort(arr, left=None, right=None):</span><br><span class="line">    left = 0 if not isinstance(left,(int, float)) else left</span><br><span class="line">    right = len(arr)-1 if not isinstance(right,(int, float)) else right</span><br><span class="line">    if left &lt; right:</span><br><span class="line">        partitionIndex = partition(arr, left, right)</span><br><span class="line">        quickSort(arr, left, partitionIndex-1)</span><br><span class="line">        quickSort(arr, partitionIndex+1, right)</span><br><span class="line">    return arr</span><br><span class="line"></span><br><span class="line">def partition(arr, left, right):</span><br><span class="line">    pivot = left</span><br><span class="line">    index = pivot + 1</span><br><span class="line">    i = index</span><br><span class="line">    while  i &lt;= right:</span><br><span class="line">        if arr[i] &lt; arr[pivot]:</span><br><span class="line">            swap(arr, i, index)</span><br><span class="line">            index += 1</span><br><span class="line">        i += 1</span><br><span class="line">    swap(arr,pivot,index - 1)</span><br><span class="line">    return index - 1</span><br><span class="line"></span><br><span class="line">def swap(arr, i, j):</span><br><span class="line">    arr[i], arr[j] = arr[j], arr[i]</span><br></pre></td></tr></table></figure>
+<p>冒泡</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bubble_sort</span><span class="params">(arr)</span>:</span></span><br><span class="line">    length = len(arr):</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(length):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> range(i+<span class="number">1</span>, length):</span><br><span class="line">            <span class="keyword">if</span> arr[i] &gt; arr[j]:</span><br><span class="line">                arr[i], arr[j] = arr[j], arr[i]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> arr</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">bubble_sort</span><span class="params">(alist)</span>:</span></span><br><span class="line">    <span class="comment"># 结算列表的长度</span></span><br><span class="line">    n = len(alist)</span><br><span class="line">    <span class="comment"># 外层循环控制从头走到尾的次数</span></span><br><span class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(n - <span class="number">1</span>):</span><br><span class="line">        <span class="comment"># 用一个count记录一共交换的次数，可以排除已经是排好的序列</span></span><br><span class="line">        count = <span class="number">0</span></span><br><span class="line">        <span class="comment"># 内层循环控制走一次的过程</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, n - <span class="number">1</span> - j):</span><br><span class="line">            <span class="comment"># 如果前一个元素大于后一个元素，则交换两个元素（升序）</span></span><br><span class="line">            <span class="keyword">if</span> alist[i] &gt; alist[i + <span class="number">1</span>]:</span><br><span class="line">                <span class="comment"># 交换元素</span></span><br><span class="line">                alist[i], alist[i + <span class="number">1</span>] = alist[i + <span class="number">1</span>], alist[i]</span><br><span class="line">                <span class="comment"># 记录交换的次数</span></span><br><span class="line">                count += <span class="number">1</span></span><br><span class="line">        <span class="comment"># count == 0 代表没有交换，序列已经有序</span></span><br><span class="line">        <span class="keyword">if</span> <span class="number">0</span> == count:</span><br><span class="line">            <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
+<p>堆排序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">def buildMaxHeap(arr):</span><br><span class="line">    import math</span><br><span class="line">    for i in range(math.floor(len(arr)/2),-1,-1):</span><br><span class="line">        heapify(arr,i)</span><br><span class="line"></span><br><span class="line">def heapify(arr, i):</span><br><span class="line">    left = 2*i+1</span><br><span class="line">    right = 2*i+2</span><br><span class="line">    largest = i</span><br><span class="line">    if left &lt; arrLen and arr[left] &gt; arr[largest]:</span><br><span class="line">        largest = left</span><br><span class="line">    if right &lt; arrLen and arr[right] &gt; arr[largest]:</span><br><span class="line">        largest = right</span><br><span class="line"></span><br><span class="line">    if largest != i:</span><br><span class="line">        swap(arr, i, largest)</span><br><span class="line">        heapify(arr, largest)</span><br><span class="line"></span><br><span class="line">def swap(arr, i, j):</span><br><span class="line">    arr[i], arr[j] = arr[j], arr[i]</span><br><span class="line"></span><br><span class="line">def heapSort(arr):</span><br><span class="line">    global arrLen</span><br><span class="line">    arrLen = len(arr)</span><br><span class="line">    buildMaxHeap(arr)</span><br><span class="line">    for i in range(len(arr)-1,0,-1):</span><br><span class="line">        swap(arr,0,i)</span><br><span class="line">        arrLen -=1</span><br><span class="line">        heapify(arr, 0)</span><br><span class="line">    return arr</span><br></pre></td></tr></table></figure>
+
+  </article>
+</div>
+
+
+    
+
+
+
+
+</div>
+
+<div class="footer-wrapper container">
+  <footer class="footer clearfix">
+    <div class="clearfix">
+    <a href="https://zhangdavids.github.io" class="footer-logo">
+      <i class="fa fa-github"></i>
+    </a>
+    <ul class="footer-social-link">
+      <li>© 2018 John Cheung</li>
+      <li><a href="https://zhangdavids.github.io">Home</a></li>
+      
+    </ul>
+    <div class="footer-theme-info">
+      Theme <a href="//github.com/sabrinaluo/hexo-theme-replica">Replica</a>
+      by <a href="//github.com/sabrinaluo">Hiitea</a> ❤ Powered by Hexo
+    </div>
+    </div>
+    
+  </footer>
+</div>
+
+
+
+
+<script src="/js/main.js"></script>
+
+</body>
+</html>
