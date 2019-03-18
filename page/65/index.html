@@ -275,6 +275,843 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/03/normal-library/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/03/normal-library/" itemprop="url">normal-library</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-03T08:14:00+08:00">
+                2018-03-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/03/03/normal-library/" class="leancloud_visitors" data-flag-title="normal-library">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.4k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ol>
+<li><p>我做运维的时候，使用Python完成了一些打包和备份的脚本，也就是把某个目录压缩成各种格式（tar.gz、tar.bz2、zip）。 这个脚本其实打包压缩的部分还是比较复杂的。直到我看到了这个：</p>
+<p> In : from shutil import make_archive<br> In : make_archive(‘archive_xxx’, ‘bztar’)<br> Out: ‘archive_xxx.tar.bz2’  </p>
+</li>
+</ol>
+<p>有兴趣的可以翻一下源码。你想要的说不定标准库里面已经实现。当然，有标准库不满足的额外需求，也可以参照它实现。</p>
+<ol>
+<li><p>你可能接触过定时任务（crontab），它管理的任务很规矩，到点执行（当然精确度不那么高）。现在设想你有更复杂的任务需求：这个任务是动态的，也就是不一定啥时候就来排上队约定一个事件等着执行。这时候你可以想，这可以使用队列（Queue模块）啊，嗯也不错。难度再提高：加上优先级策略并能取消某个指定的已经放入队列的任务。现在思考下，这个怎么实现？其实很多工程实践的最好范例都在标准库中。sched模块中的scheduler类就是一个这样的通用的事件调度类。你可以学习它的实现。你问我它的实现多复杂？整个模块加上大幅的注释才134行。</p>
+</li>
+<li><p>学习Python的过程中，一开始我对于装饰器contextmanager+yield怎么都不懂。直到我看了contextmanager的源代码, 其实非常简单就懂了。它的docstring清楚地不能再清楚了：</p>
+</li>
+</ol>
+<pre><code class="python">
+Typical usage:                                                                               
+
+<span class="meta">@contextmanager                                                                          </span>
+<span class="function"><span class="keyword">def</span> <span class="title">some_generator</span><span class="params">(&lt;arguments&gt;)</span>:</span>                                                         
+    &lt;setup&gt;                                                                              
+    <span class="keyword">try</span>:                                                                                 
+        <span class="keyword">yield</span> &lt;value&gt;                                                                    
+    <span class="keyword">finally</span>:                                                                             
+        &lt;cleanup&gt;                                                                        
+
+This makes this:                                                                             
+
+<span class="keyword">with</span> some_generator(&lt;arguments&gt;) <span class="keyword">as</span> &lt;variable&gt;:                                          
+    &lt;body&gt;                                                                               
+
+equivalent to this:                                                                          
+
+&lt;setup&gt;                                                                                  
+<span class="keyword">try</span>:                                                                                     
+    &lt;variable&gt; = &lt;value&gt;                                                                 
+    &lt;body&gt;                                                                               
+<span class="keyword">finally</span>:                                                                                 
+&lt;cleanup&gt;
+</code></pre>
+<ol>
+<li>我之前使用多线程编程都这样用，在好长一段时间里面对于多进程和多线程之前怎么选择都搞得不清楚。看多了开源项目代码，我发现了好多人在用multiprocessing.dummy这个子模块，「dummy」这个词本身好奇怪，我决定去看多进程（multiprocessing）库的代码。「咦！怎么和多线程的接口一样呢」。后知后觉的我看到文档中这样说：</li>
+</ol>
+<p>multiprocessing.dummy replicates the API of multiprocessing but is no more than a wrapper around the threading module.<br>恍然大悟！！！如果分不清任务是CPU密集型还是IO密集型，我就用如下2个方法分别试：</p>
+<p>from multiprocessing import Pool<br>from multiprocessing.dummy import Pool<br>哪个速度快就用那个。从此以后我都尽量在写兼容的方式，这样在多线程/多进程之间切换非常方便。</p>
+<ol>
+<li>13-14年间，Flask还没怎么火，那时候装饰器风格的Web框架还有一个Bottle。我当时就直接想去看Bottle代码，发现一上来import了一堆模块，你先感受下bottle/bottle.py at master · bottlepy/bottle · GitHub ，第一感觉就是懵啊，这都是干什么的啊，为什么要用啊？这就是促使我去看标准库实现最重要的原因：学会了我才能更好的看懂别人写的代码。</li>
+</ol>
+<p>但是不是所有的标准库都要一视同仁的看呢？你可以设置优先级，先看那些不可不知道的模块。我在这里列一下，并对它的用途和其中重要的类、函数的作用加以说明等。要是每个都写例子实在太多太密集，怕大家看不下去，我都用外部链接了。</p>
+<ol>
+<li>argparse。 用来替代optparse的命令行解析库。如果你考虑用更直观的，推荐docopt，它使用docstring所见即所得实现命令行解析。</li>
+<li>collections。 包含了一些额外的数据类型。其中的OrderedDict（有序列的字典）、defaultdict（带有默认值的字典）、namedtuple（通过创建带有字段属性的元组子类）和deque（高效实现插入和删除操作的双向列表）非常常用。</li>
+<li>functools。 这个模块有一些非常有用的工具，其中的partial（偏函数）、wraps（将被包装函数的信息拷贝过来）、total_ordering（只需要定义2个<strong>XX</strong>方法就可实现对象对比的类装饰器）、cmp_to_key（将老式的比较函数转化为关键字函数）非常常用。</li>
+<li>glob。 文件名的shell模式匹配，你不用遍历整个目录判断每个文件是不是符合，使用glob一句话就解决。</li>
+<li>multiprocessing。多进程模块，这重要性就不说了。</li>
+<li><p>os。应该是日常工作最常用的模块了，你是否了解它里面所有的函数和实现呢？举个例子，获取环境变量，我之前这样用：<br>In : os.environ.get(‘PYTHONPATH’)<br>读完源码之后我学了一招：<br>os.getenv(‘PYTHONPATH’)<br>好吧，省了5个字符。</p>
+</li>
+<li><p>Queue。这个模块用于多线程编程，它是一个线程安全的FIFO（先进先出）的队列实现。如果是多进程编程，选用multiprocessing.queues中的Queue、SimpleQueue、JoinableQueue这三个队列实现。 </p>
+</li>
+<li><p>SimpleHTTPServer。最简单地HTTP Server实现。不使用Web框架，一句：</p>
+<pre><code>python -m SimpleHTTPServer PORT
+</code></pre><p> 就可以运行起来静态服务。平时用它预览和下载文件太方便了。</p>
+</li>
+<li><p>subprocess。 如果你还被某些书籍引导使用os.system或者os.popen等模块，现在是放弃它们的时候了，这个模块会满足你绝大多数的系统命令执行、执行结果获取和解析等需求。其中最有用的是call（执行系统命令）、check_call（执行结果不为0则抛出异常）、check_output（最方便的获取执行的输出的函数）、Popen+PIPE（支持管道的多命令执行）。</p>
+</li>
+<li><p>threading。多线程模块，重要性也不必说。</p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/03/python-fp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/03/python-fp/" itemprop="url">python-fp</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-03T08:01:38+08:00">
+                2018-03-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/03/03/python-fp/" class="leancloud_visitors" data-flag-title="python-fp">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  660
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h2><p>函数式编程源自于数学理论，它似乎也更适用于数学计算相关的场景，因此本文以一个简单的数据处理问题为例，逐步介绍 Python 函数式编程从入门到走火入魔的过程。</p>
+<pre><code>问题：计算 N 位同学在某份试卷的 M 道选择题上的得分（每道题目的分值不同）。
+</code></pre><p>首先来生成一组用于计算的伪造数据：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># @file: data.py</span></span><br><span class="line"><span class="keyword">import</span> random  </span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> namedtuple</span><br><span class="line"> </span><br><span class="line">Student = namedtuple(<span class="string">'Student'</span>, [<span class="string">'id'</span>, <span class="string">'ans'</span>])</span><br><span class="line"> </span><br><span class="line">N_Questions = <span class="number">25</span>  </span><br><span class="line">N_Students = <span class="number">20</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gen_random_list</span><span class="params">(opts, n)</span>:</span>  </span><br><span class="line">    <span class="keyword">return</span> [random.choice(opts) <span class="keyword">for</span> i <span class="keyword">in</span> range(n)]</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 问题答案 'ABCD' 随机</span></span><br><span class="line">ANS   = gen_random_list(<span class="string">'ABCD'</span>, N_Questions)  </span><br><span class="line"><span class="comment"># 题目分值 1~5 分</span></span><br><span class="line">SCORE = gen_random_list(range(<span class="number">1</span>,<span class="number">6</span>), N_Questions)</span><br><span class="line"> </span><br><span class="line">QUIZE = zip(ANS, SCORE)  </span><br><span class="line">students = [  </span><br><span class="line">    <span class="comment"># 学生答案为 'ABCD*' 随机，'*' 代表未作答</span></span><br><span class="line">    Student(_id, gen_random_list(<span class="string">'ABCD*'</span>, N_Questions))</span><br><span class="line">    <span class="keyword">for</span> _id <span class="keyword">in</span> range(<span class="number">1</span>, N_Students+<span class="number">1</span>)</span><br><span class="line">]</span><br><span class="line"> </span><br><span class="line">print(QUIZE)  </span><br><span class="line"><span class="comment"># [('A', 3), ('B', 1), ('D', 1), ...</span></span><br><span class="line">print(students)  </span><br><span class="line"><span class="comment"># [Student(id=1, ans=['C', 'B', 'A', ...</span></span><br><span class="line"></span><br><span class="line">```	</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">常规的面向过程编程风格，我们需要遍历每个学生，然后遍历每个学生对每道题目的答案并与真实答案进行比较，然后将正确答案的分数累计：</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">```python</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> data  </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">normal</span><span class="params">(students, quize)</span>:</span>  </span><br><span class="line">    <span class="keyword">for</span> student <span class="keyword">in</span> students:</span><br><span class="line">        sid = student.id</span><br><span class="line">        score = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(quize)):</span><br><span class="line">            <span class="keyword">if</span> quize[i][<span class="number">0</span>] == student.ans[i]:</span><br><span class="line">                score += quize[i][<span class="number">1</span>]</span><br><span class="line">        print(sid, <span class="string">'\t'</span>, score)</span><br><span class="line"> </span><br><span class="line">print(<span class="string">'ID\tScore\n=================='</span>)  </span><br><span class="line">normal(data.students, data.quize)  </span><br><span class="line"><span class="string">"""</span><br><span class="line">ID    Score  </span><br><span class="line">==================</span><br><span class="line">1      5  </span><br><span class="line">2      12  </span><br><span class="line">...</span><br><span class="line">"""</span></span><br></pre></td></tr></table></figure>
+<p>通过创建嵌套两个 for 循环来遍历所有题目答案的判断和评分，这完全是为计算机服务的思路，虽然说 Python 中的 for 循环已经比 C 语言更进了一步，通常不需要额外的状态变量来记录当前循环的次数，但有时候也不得不使用状态变量，如上例中第二个循环中比较两个列表的元素。函数式编程的一大特点就是<strong>尽量抛弃这种明显循环遍历的做法，而是把注意集中在解决问题本身</strong>，一如在现实中我们批改试卷时，只需要将两组答案并列进行比较即可：</p>
+<pre><code>from data import students, QUIZE
+
+student = students[0]
+
+# 将学生答案与正确答案合并到一起
+# 然后过滤出答案一致的题目
+filtered = filter(lambda x: x[0] == x[1][0], zip(student.ans, QUIZE))
+
+print(list(filtered))  
+# [(&apos;A&apos;, (&apos;A&apos;, 3)), (&apos;D&apos;, (&apos;D&apos;, 1)), ...]
+</code></pre><p>正确题目的分数进行累加：    </p>
+<pre><code>from functools import reduce
+
+reduced = reduce(lambda x, y: x + y[1][1], filtered, 0)  
+print(reduced)      
+</code></pre><p>接下来进行推广：</p>
+<pre><code>def cal(quize):  
+    def inner(student):
+        filtered = filter(lambda x: x[0] == x[1][0], zip(student.ans, quize))
+        reduced = reduce(lambda x, y: x + y[1][1], filtered, 0)
+        print(student.id, &apos;\t&apos;, reduced)
+    return inner
+map(cal(QUIZE), students)      
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/01/python-interview-0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/01/python-interview-0/" itemprop="url">python-interview-0</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-01T23:01:05+08:00">
+                2018-03-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/03/01/python-interview-0/" class="leancloud_visitors" data-flag-title="python-interview-0">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.5k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ol>
+<li><p>我从来不问google可获得的答案的问题， 只是问问面试者「在过去的工作中，遇到的Ta认为最有成就感的一件事情是什么」和「如果出现了一个google不到的问题，你会怎么解决」这样的问题。</p>
+</li>
+<li><p>我从来不问操作系统等和Python无关的话题，首先是我不怎么问和工作太无关的话题，有些东西用不到很多就被会遗忘，挑起来这种问题其实挺无聊；其次我是非计算机专业毕业，问的东西说不定我自己都没有把握，那就不出来献丑了。我只关注面试者的学习能力和解决问题的方式，说白了，是不是就是看他是不是「聪明的人」。</p>
+</li>
+<li><p>不问面试者的短处。我在自己被面试的时候有过这种精力，面试者问他擅长的内容，我不一定搞的定，如果反过来面试Ta，我也会灭掉Ta。所以我会尽力寻找面试者的优势和优点，尤其是对方已经明确承认。其实很多经验和能力，只是需要一个机会和环境，所以我不想放过任何一个合适的人。</p>
+</li>
+<li><p>面试者不会Python也没有关系。面试者的主动性和学习能力觉得更重要，如果他在其他领域能证明做的不错或者能让我感觉到这个一个未来有潜质成为优秀工程师的人，不会Python没有关系。 嗯目前看来，我没有看错过。</p>
+</li>
+<li><p>我从来不问Python语法这种看书和google就能学会的问题，我只想了解Ta是否愿意去学。举个例子，我会让面试者「讲讲日常开发中都用到了那些Python内置的模块」，原因在我的专栏「Python之美 - 知乎专栏」的 Python不能不知的模块 - Python之美 - 知乎专栏中有写，基本上说完我就能评估出他的能力和风格，继而就是再问一些问题去验证我的评估是不是准确。</p>
+</li>
+<li><p>最后，我一般都会和面试者细聊一个Ta认为在过去的工作或者自己开源的项目中最熟悉的一个，从项目设计、踩过的坑儿、开发周期以及如何安排、如何确定需求、如何和其他人协作等方面，最后评估下Ta是否能很容易的融入到我们现在的团队，大家是否可以接受Ta，对工作不负责的、没有用心工作的、没有团队意识的、沟通能力有缺陷的就放弃掉，对性格上容易发生冲突的、不适合团队合作的我就得考虑下，未来也会如实反馈给HR。</p>
+</li>
+</ol>
+<hr>
+<p>推荐几本书</p>
+<p>《python参考手册》，绝对让你更上一层楼</p>
+<p>《图解密码技术》，密码入门不二之选</p>
+<p>《mysql技术内幕》（第五版），有点厚当手册读读，要有耐心，《高性能mysql》也强烈建议读读</p>
+<p>《effective tcp/ip programming》</p>
+<p>如果是搞web的对操作系统这块和密码技术会偏弱，但如果是系统工程师或是游戏服务端这块会明显偏强。吃午饭的时候我就一直在想这个问题，我觉得重点不是Python而是后端工程师，因为Python只是系统的一部分，linux基础操作要熟吧，sql要懂吧，消息队列要知道吧，git要熟悉吧……木桶理论，每一环都不能落下，精通其中一两环就更好了。基础功扎实，新东西学得快，代码写得溜，命令敲得顺，bug解的好，妈妈再也不用担心我天天加班了~~~</p>
+<h4 id="一-语言"><a href="#一-语言" class="headerlink" title="一.语言"></a>一.语言</h4><p>1.推荐一本看过最好的python书籍？ 拉开话题好扯淡</p>
+<p>2.谈谈python的装饰器，迭代器，yield？ </p>
+<p>3.标准库线程安全的队列是哪一个？不安全的是哪一个？logging是线程安全的吗？ </p>
+<p>4.python适合的场景有哪些？当遇到计算密集型任务怎么办？ </p>
+<p>5.python高并发解决方案？我希望听到twisted-&gt;tornado-&gt;gevent，能扯到golang,erlang更好</p>
+<h4 id="二-操作系统"><a href="#二-操作系统" class="headerlink" title="二.操作系统"></a>二.操作系统</h4><p>可以直接认为是linux，毕竟搞后端的多数是和linux打交道。 </p>
+<p>1.tcp/udp的区别？tcp粘包是怎么回事，如何处理？udp有粘包吗？ </p>
+<p>2.time_wait是什么情况？出现过多的close_wait可能是什么原因？ </p>
+<p>3.epoll,select的区别？边缘触发，水平触发区别？</p>
+<h4 id="三-存储"><a href="#三-存储" class="headerlink" title="三.存储"></a>三.存储</h4><p>存储可能包含rdbms，nosql以及缓存等，我以mysql,redis举例 </p>
+<p><em>mysql相关</em></p>
+<p>1.谈谈mysql字符集和排序规则？ </p>
+<p>2.varchar与char的区别是什么？大小限制？utf8字符集下varchar最多能存多少个字符 </p>
+<p>3.primary key和unique的区别？ </p>
+<p>4.外键有什么用，是否该用外键？外键一定需要索引吗？ </p>
+<p>5.myisam与innodb的区别？innodb的两阶段锁定协议是什么情况？ </p>
+<p>6.索引有什么用，大致原理是什么？设计索引有什么注意点？ </p>
+<p><em>redis相关</em></p>
+<p>1.什么场景用redis，为什么mysql不适合？ </p>
+<p>2.谈谈redis的事务？用事务模拟原子+1操作？原子操作还有其它解决方案吗？ </p>
+<p>3.redis内存满了会怎么样？</p>
+<h4 id="四-安全"><a href="#四-安全" class="headerlink" title="四.安全"></a>四.安全</h4><p>web安全相关 </p>
+<p>1.sql注入是怎么产生的，如何防止？ </p>
+<p>2.xss如何预防？htmlescape后能否避免xss? </p>
+<p>3.csrf是什么？django是如何防范的？ </p>
+<p>密码技术 </p>
+<p>1.什么是分组加密？加密模式有哪些？ecb和cbc模式有什么区别？为什么需要iv向量？ </p>
+<p>2.简单说说https的过程？ </p>
+<p>3.对称加密与非对称加密区别？ </p>
+<p>4.如何生成共享秘钥？ 如何防范中间人攻击？</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/03/01/about-react/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/01/about-react/" itemprop="url">about-react</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-01T20:39:31+08:00">
+                2018-03-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/frontend/" itemprop="url" rel="index">
+                    <span itemprop="name">frontend</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/03/01/about-react/" class="leancloud_visitors" data-flag-title="about-react">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="react-的概述"><a href="#react-的概述" class="headerlink" title="react 的概述"></a>react 的概述</h2><h3 id="React-的设计哲学："><a href="#React-的设计哲学：" class="headerlink" title="React 的设计哲学："></a>React 的设计哲学：</h3><p>以“简单直观”、“符合习惯”的方式去编程，让代码更容易被理解，从而易于维护和不断演化。</p>
+<h3 id="React-的最大价值？"><a href="#React-的最大价值？" class="headerlink" title="React 的最大价值？"></a>React 的最大价值？</h3><p>1.高性能虚拟 DOM 【★★】<br>2.声明式的、直观的编程方式（别样的组件化、JSX也不是核心）【★】<br>3.封装过的事件机制<br>4.服务器端 Reader（忽略，不是核心，锦上添花）<br>5.完善的错误提示信息</p>
+<h3 id="React-的适用场景："><a href="#React-的适用场景：" class="headerlink" title="React 的适用场景："></a>React 的适用场景：</h3><p>适用于数据不断变化的大型应用程序，eg.聊天、评论等<br>会面临问题：如何将服务器端 or 用户输入的数据高效地反应到复杂的用户界面上</p>
+<h3 id="React-原理"><a href="#React-原理" class="headerlink" title="React 原理"></a>React 原理</h3><p>新的前端 UI 的构建方式：两层编程模型：数据模型、UI界面。数据模型驱动UI界面（从概念角度上看是直观的，而实际开发中困难重重）</p>
+<p>React 的初衷之一就是：既然整体刷新一定能解决层叠更新的问题，那我们为什么不索性就每次都这么做呢？让框架自身去解决哪些局部 UI 需要更新的问题-React做到了，实现的途径就是通过虚拟 DOM。</p>
+<p>UI界面是一颗 DOM 树。我们再在全局定义一个唯一的数据模型。每次数据模型有任何变化，都将整个数据模型应用到 UI DOM 树上（由 React 来负责更新需要更新的界面部分）。</p>
+<h3 id="虚拟-DOM"><a href="#虚拟-DOM" class="headerlink" title="虚拟 DOM"></a>虚拟 DOM</h3><p>将变化的数据实时反应到UI上，就要对 DOM 进行操作。复杂和频繁的 DOM 操作，通常是性能瓶颈产生的原因。</p>
+<p>虚拟DOM，是在浏览器端用 JS 实现了一套 DOM API。基于 React 的所有 DOM 构造都是通过虚拟 DOM 进行的。每当数据变化时，React 会重 新构建整个 DOM 树，并将当前的树和上一次的 DOM 树进行对比，得到 DOM 结构的区别。然后仅仅将需要变化的部分进行实际的浏览器 DOM 更新。且，React 能够批处理虚拟 DOM 的刷新，在一个事件循环内的两次数据变化会被合并。</p>
+<p>虽然，每次都要构造完整的虚拟 DOM 树，但因为它是内存数据，性能极高 【那会消耗多少内存呢？】对实际 DOM 的操作，仅仅是 Diff 部分，故能提高性能。（至于 React 如何做到将原来 O(n^3) 复杂度的 Diff 算法降低到 O（n），感兴趣的你可以再深入学习下）</p>
+<p>你永远只需要关心数据整体，两次数据之间的 UI 如何变化，则完全交给框架去做。开发逻辑没那么复杂了，开发难度降低，产生的bug几率也就更少。</p>
+<h3 id="简化的组件模型"><a href="#简化的组件模型" class="headerlink" title="简化的组件模型"></a>简化的组件模型</h3><p>所谓组件，就是状态机器。对组件的管理 就是对状态的管理。这么，React 很少要暴露组件方法和外部交互，只要设置状态即可，只需要考虑在某个状态下UI是怎样的。</p>
+<p>React 将用户界面看做简单的状态机器。当组件处于某个状态时，那就输出这个状态对应的界面，以保证界面的一致性。在 React 中，你只需要简单的更新某个组件的状态即可，然后基于新状态输出整个页面。由 React 负责以最高效的方式去比较两个界面并更新 DOM 树。</p>
+<p>组件是 React 中构建用户界面的基本单位。与外界的交互除了 state（状态）之外，还有 props（属性）。事实上，state 更多由组件内部自己维护，props 则由外部初始化该组件时传递进来（一般是组件需要管理的数据）。React 认为，props 应该是只读的（一旦赋值过去就不要变化了）。</p>
+<p>虚拟化DOM，不仅简化了UI逻辑，也内含了组件化开发思想。组件，即封装起来的具有独立功能的UI部件。将UI上每一个功能相对独立的模块定义成组件，然后将小的组件通过组合 or 嵌套构成大的组件，最终完成整体UI的构建。</p>
+<p>MVC：开发者将三者定义成不同的类，实现了表现、数据、控制的分离（从技术角度拆分UI实现松耦合）<br>React：新的思路，开发者从功能的角度出发，将UI拆成不同的组件。每个组件都独立封装。即按照界面模块自然划分的方式来组织和编写你的代码。</p>
+<p>每个组件的UI和逻辑都定义在它们内部，高度自治。和外部完全通过API来交互，通过组合来实现复杂功能。</p>
+<p>React 认为，一个组件应该具备以下特征： </p>
+<ul>
+<li><p>可组合 Composeable：接口  </p>
+</li>
+<li><p>可重用 Reusable：独立</p>
+</li>
+<li><p>可维护 Maintainable：各个组件仅包含自身的逻辑，更容易被理解和维护</p>
+</li>
+<li><p>可测试 Testable</p>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/02/28/about-flask/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -592,716 +1429,6 @@ def full_dispatch_request(self):
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/02/26/python-text/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/26/python-text/" itemprop="url">python-text</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-26T10:40:57+08:00">
-                2018-02-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/02/26/python-text/" class="leancloud_visitors" data-flag-title="python-text">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  41
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>六款比较不错的特殊文本格式处理库</p>
-<p>1.tablib</p>
-<p>2.openpyxl  算是xlwt xlrd的替代品</p>
-<p>3.unoconv</p>
-<p>4.pypdf2</p>
-<p>5.mistune</p>
-<p>6.csvkit 命令行工具</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/02/23/运维题目搜集/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/23/运维题目搜集/" itemprop="url">运维题目搜集</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-23T19:40:03+08:00">
-                2018-02-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/ops/" itemprop="url" rel="index">
-                    <span itemprop="name">ops</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/02/23/运维题目搜集/" class="leancloud_visitors" data-flag-title="运维题目搜集">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  193
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>三百台服务器  如何进行管理</p>
-<p>1.设定跳板机 使用统一的账户登陆 便于安全与登陆的考量</p>
-<p>2.使用salt、ansible、puppet 进行系统的统一调度与配置统一的管理</p>
-<p>3.建立简单的服务器的系统、配置、应用的cmdb信息管理。便于查阅每台服务器上的各种信息记录</p>
-<hr>
-<p>rabbitMQ 也就是消息队列中间件，消息中间件是在消息的传息过程中保存消息的容器</p>
-<hr>
-<ul>
-<li>使用像pyflakes 这样的静态代码分析工具</li>
-<li>选定一个特定的代码风格</li>
-<li>开发工具保存高响应速度</li>
-<li>找到合适的编辑器</li>
-<li>感到舒服和更有效率的工具值得花钱</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/02/23/Japronto介绍/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/23/Japronto介绍/" itemprop="url">Japronto介绍</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-23T19:36:34+08:00">
-                2018-02-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/02/23/Japronto介绍/" class="leancloud_visitors" data-flag-title="Japronto介绍">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  59
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li>实现 HTTP 1.x 并且支持分片上传</li>
-<li>完整支持 HTTP 流水线</li>
-<li>可配置是否让链接 Keep-alive</li>
-<li>支持同步和异步视图</li>
-<li>多任务处理</li>
-<li>代码热加载</li>
-<li>简单易用的路由规则</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2018/02/23/it从业人员的核心竞争力/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/23/it从业人员的核心竞争力/" itemprop="url">it从业人员的核心竞争力</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-23T14:09:11+08:00">
-                2018-02-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/02/23/it从业人员的核心竞争力/" class="leancloud_visitors" data-flag-title="it从业人员的核心竞争力">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  252
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>以前的长辈会说， 你要小心，你会的东西千万不能交给别人。俗话说的好，教会了徒弟饿死了师傅。</p>
-<p>BUT， 在 IT 行业 ，这个是一个讲究分享的行业，业内有一句话叫做， <strong>if you can’t be replaced,you won’t get promoted</strong></p>
-<hr>
-<p>多写几条query Google 一下，从理论论文到工业实现到best practice code 瞬间一网打尽</p>
-<ul>
-<li>沟通能力</li>
-<li>学习能力</li>
-<li>全局眼光和行业洞察力</li>
-<li>创新能力</li>
-</ul>
-<p>体察对方，表达自己，将需求转化为design，将task拆解为AI 的能力</p>
-<p>从实际工作中总结提炼的能力，即将现实问题转换为经验，并举一反三推而广之的能力</p>
-<p>形成这种行业性的vision 需要时间积累。</p>
-<p>主要是 <em>顺利理解和跟进，以最快的速度将他人原创应用到自己所从事的领域和正在实践的具体业务上，这就是一种跟进式创新</em></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1356,7 +1483,7 @@ def full_dispatch_request(self):
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">396</span>
+                  <span class="site-state-item-count">400</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1471,7 +1598,7 @@ def full_dispatch_request(self):
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共153.4k字</span>
+  <span class="post-count">博客全站共154.1k字</span>
 </div>
 
         

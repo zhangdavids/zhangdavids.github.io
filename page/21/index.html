@@ -275,6 +275,807 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/02/13/2019-go-03/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/13/2019-go-03/" itemprop="url">2019-go-03</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-13T21:10:07+08:00">
+                2019-02-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/golang/" itemprop="url" rel="index">
+                    <span itemprop="name">golang</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/02/13/2019-go-03/" class="leancloud_visitors" data-flag-title="2019-go-03">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  480
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//创建Orm对象</span><br><span class="line">o := orm.NewOrm()</span><br><span class="line">// 获取 QuerySeter 对象，user 为表名</span><br><span class="line">qs := o.QueryTable(&quot;user&quot;)</span><br><span class="line">// 也可以直接使用对象作为表名</span><br><span class="line">user := new(User)</span><br><span class="line">qs = o.QueryTable(user) // 返回 QuerySeter</span><br></pre></td></tr></table></figure>
+<p>复杂一些的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">qs.Filter(&quot;id&quot;, 1) // WHERE id = 1</span><br><span class="line">qs.Filter(&quot;user__id&quot;,1) //where user.id =1</span><br><span class="line">qs.Filter(&quot;id_in&quot;,10，20) //where age in(10,20)</span><br><span class="line">qs.Filter(&quot;id__gte&quot;,18) //where id&gt;=18</span><br><span class="line">qs.Filter(&quot;id__gt&quot;,18) //where id&gt;18</span><br><span class="line">qs.Filter(&quot;id__,5) //where id&lt;5</span><br><span class="line">//gt 是greater缩写即大于  </span><br><span class="line">//get是 Greater or equal的缩写即大于等于 </span><br><span class="line">//lt 是less than 即小于</span><br></pre></td></tr></table></figure>
+<p>具体的例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">exact  -&gt;  =</span><br><span class="line">iexact -&gt; like&apos;</span><br><span class="line">in -&gt; in </span><br><span class="line">gt  -&gt;  &gt; </span><br><span class="line">gte-&gt; &gt;=</span><br><span class="line">lt -&gt;  &lt;</span><br><span class="line">lte -&gt;  &lt;=</span><br><span class="line">contains -&gt;  like BINARY &apos;%xxx%&apos; （区分大小写）</span><br><span class="line">icontains -&gt; like &apos;%xxx%&apos; (不区分大小写)</span><br><span class="line">startswith -&gt; LIKE BINARY &apos;xxx%&apos; （区分大小写）</span><br><span class="line">istartswith -&gt; LIKE  &apos;xxx%&apos;</span><br><span class="line">endswith -&gt; LIKE BINARY &apos;%xxx&apos; （区分大小写）</span><br><span class="line">iendswith -&gt; LIKE  &apos;%xxx&apos;</span><br><span class="line">isnull -&gt; is not null</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">qs.Filter(&quot;id&quot;, 1) // WHERE id = 1</span><br><span class="line">qs.Filter(&quot;user__id&quot;,1) //where user.id =1</span><br><span class="line">qs.Filter(&quot;_id_in&quot;,10，20) //where age in(10,20)</span><br><span class="line">qs.Filter(&quot;__id__gte&quot;,18) //where id&gt;=18</span><br><span class="line">qs.Filter(&quot;__id__gt&quot;,18) //where id&gt;18</span><br><span class="line">qs.Filter(&quot;__id__,5) //where id&lt;5</span><br><span class="line">//gt 是greater缩写即大于  </span><br><span class="line">//get是 Greater or equal的缩写即大于等于 </span><br><span class="line">//lt 是less than 即小于</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var DefaultRelsDepth = 5 // 默认情况下直接调用 RelatedSel 将进行最大 5 层的关系查询</span><br><span class="line"> </span><br><span class="line">qs := o.QueryTable(&quot;post&quot;)</span><br><span class="line"> </span><br><span class="line">qs.RelatedSel()</span><br><span class="line">// INNER JOIN user ... LEFT OUTER JOIN profile ...</span><br><span class="line"> </span><br><span class="line">qs.RelatedSel(&quot;user&quot;)</span><br><span class="line">// INNER JOIN user ...</span><br><span class="line">// 设置 expr 只对设置的字段进行关系查询</span><br><span class="line"> </span><br><span class="line">// 对设置 null 属性的 Field 将使用 LEFT OUTER JOIN</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">num, err := o.QueryTable(&quot;user&quot;).Filter(&quot;name&quot;, &quot;slene&quot;).Update(orm.Params&#123;</span><br><span class="line">    &quot;name&quot;: &quot;astaxie&quot;,</span><br><span class="line">&#125;)</span><br><span class="line">fmt.Printf(&quot;Affected Num: %s, %s&quot;, num, err)</span><br><span class="line">// SET name = &quot;astaixe&quot; WHERE name = &quot;slene&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var users []*User</span><br><span class="line">num, err := o.QueryTable(&quot;user&quot;).Filter(&quot;name&quot;, &quot;slene&quot;).All(&amp;users)</span><br><span class="line">fmt.Printf(&quot;Returned Rows Num: %s, %s&quot;, num, err)</span><br></pre></td></tr></table></figure>
+<p>受到limit限制 默认最大行数为1000</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/02/13/2019-go-02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/13/2019-go-02/" itemprop="url">2019-go-02</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-13T21:10:02+08:00">
+                2019-02-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/golang/" itemprop="url" rel="index">
+                    <span itemprop="name">golang</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/02/13/2019-go-02/" class="leancloud_visitors" data-flag-title="2019-go-02">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  417
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="新增"><a href="#新增" class="headerlink" title="新增"></a>新增</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">func (this *InsertController) Post()  &#123;</span><br><span class="line">/*</span><br><span class="line">	Name :=&quot;admin&quot;</span><br><span class="line">	Pwd  :=&quot;12346&quot;</span><br><span class="line">	Sex  :=&quot;男&quot;</span><br><span class="line">	Age  :=20</span><br><span class="line">*/</span><br><span class="line">	Name :=this.GetString(&quot;Name&quot;)</span><br><span class="line">	Pwd  :=this.GetString(&quot;Pwd&quot;)</span><br><span class="line">	Sex  :=this.GetString(&quot;Sex&quot;)</span><br><span class="line">	Age,err:=this.GetInt(&quot;Age&quot;)</span><br><span class="line">	if err!=nil &#123;</span><br><span class="line">		this.Ctx.WriteString(&quot;非法年龄字段&quot;)</span><br><span class="line">		return</span><br><span class="line">	&#125;</span><br><span class="line">	user:=models.Users&#123;Name:Name,Pwd:Pwd,Sex:Sex,Age:Age&#125;</span><br><span class="line">	insOrm:=orm.NewOrm()</span><br><span class="line">	n,err:=insOrm.Insert(&amp;user)</span><br><span class="line">	if err==nil&amp;&amp;n&gt;0 &#123;</span><br><span class="line">		this.Ctx.WriteString(&quot;数据插入成功&quot;)</span><br><span class="line">	&#125;else&#123;</span><br><span class="line">		this.Ctx.WriteString(&quot;数据插入失败&quot;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="读取read"><a href="#读取read" class="headerlink" title="读取read"></a>读取read</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">func (this *QueryController)Get()  &#123;</span><br><span class="line"> </span><br><span class="line">	id,err:=this.GetInt(&quot;id&quot;)</span><br><span class="line">	if err!=nil &#123;</span><br><span class="line">		this.Ctx.WriteString(&quot;id异常&quot;)</span><br><span class="line">		return</span><br><span class="line">	&#125;</span><br><span class="line">	user:= models.Users&#123;Id:id&#125; //获取指定id的数据</span><br><span class="line">	orm:=orm.NewOrm()</span><br><span class="line">	err=orm.Read(&amp;user) //读取数据</span><br><span class="line">	if  err==nil &#123;</span><br><span class="line">		this.Ctx.WriteString(&quot;id=&quot;+strconv.Itoa(user.Id)+&quot;\nname=&quot;+user.Name+&quot;\nsex=&quot;+user.Sex)</span><br><span class="line">	&#125;else&#123;</span><br><span class="line">		this.Ctx.WriteString(&quot;查询失败&quot;)</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="更新-update"><a href="#更新-update" class="headerlink" title="更新 update"></a>更新 update</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">func (this *UpdataController)Get()  &#123;</span><br><span class="line">	Id,err:=this.GetInt(&quot;Id&quot;)</span><br><span class="line">	if err!=nil &#123;</span><br><span class="line">		this.Ctx.WriteString(&quot;id异常&quot;)</span><br><span class="line">		return</span><br><span class="line">	&#125;</span><br><span class="line">	Name :=this.GetString(&quot;Name&quot;)</span><br><span class="line">	Pwd  :=this.GetString(&quot;Pwd&quot;)</span><br><span class="line">	Sex  :=this.GetString(&quot;Sex&quot;)</span><br><span class="line">	Age,err:=this.GetInt(&quot;Age&quot;)</span><br><span class="line">	if err!=nil &#123;</span><br><span class="line">		this.Ctx.WriteString(&quot;非法年龄字段&quot;)</span><br><span class="line">		return</span><br><span class="line">	&#125;</span><br><span class="line">	user:= models.Users&#123;Id:Id,Name:Name,Pwd:Pwd,Age:Age,Sex:Sex&#125;</span><br><span class="line">	orm:=orm.NewOrm()</span><br><span class="line">	n,err:=orm.Update(&amp;user)</span><br><span class="line">	if n&gt;0&amp;&amp;err==nil&#123;</span><br><span class="line">		this.Ctx.WriteString(&quot;更新成功&quot;)</span><br><span class="line">	&#125;else&#123;</span><br><span class="line">		this.Ctx.WriteString(&quot;更新失败&quot;)</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="删除-delete"><a href="#删除-delete" class="headerlink" title="删除 delete"></a>删除 delete</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">func (this *DeleteController) Get()  &#123;</span><br><span class="line">	id,err:=this.GetInt(&quot;id&quot;)</span><br><span class="line">	if err!=nil &#123;</span><br><span class="line">		this.Ctx.WriteString(&quot;删除失败&quot;)</span><br><span class="line">		return</span><br><span class="line">	&#125;</span><br><span class="line">	user:= models.Users&#123;Id:id&#125;</span><br><span class="line">	orm:=orm.NewOrm()</span><br><span class="line">	n,err:=orm.Delete(&amp;user)</span><br><span class="line">	if n&gt;0&amp;&amp;err==nil &#123;</span><br><span class="line">		this.Ctx.WriteString(&quot;删除成功&quot;)</span><br><span class="line">	&#125;else&#123;</span><br><span class="line">		this.Ctx.WriteString(&quot;删除失败&quot;)</span><br><span class="line">	&#125;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/02/13/2019-go-01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/13/2019-go-01/" itemprop="url">2019-go-01</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-13T21:09:57+08:00">
+                2019-02-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/golang/" itemprop="url" rel="index">
+                    <span itemprop="name">golang</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/02/13/2019-go-01/" class="leancloud_visitors" data-flag-title="2019-go-01">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  711
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="beego-orm"><a href="#beego-orm" class="headerlink" title="beego orm"></a>beego orm</h2><p>已支持数据库驱动：</p>
+<ul>
+<li>MySQL：github.com/go-sql-driver/mysql</li>
+<li>PostgreSQL：github.com/lib/pq</li>
+</ul>
+<p>导入驱动</p>
+<pre><code>import (
+    _ &quot;github.com/go-sql-driver/mysql&quot;
+)
+</code></pre><figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// models/User.go</span></span><br><span class="line">	</span><br><span class="line"><span class="keyword">type</span> Users <span class="keyword">struct</span> &#123;</span><br><span class="line">	Id  <span class="keyword">int</span></span><br><span class="line">	Name <span class="keyword">string</span></span><br><span class="line">	Pwd  <span class="keyword">string</span></span><br><span class="line">	Age  <span class="keyword">int</span></span><br><span class="line">	Sex  <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/*</span><br><span class="line">//我们也可以使用Tag对属性进行详细的设置</span><br><span class="line">type Users struct &#123;</span><br><span class="line">	Id  int   `pk:"auto;column(id)"`  //设置主键自增长 列名设为id</span><br><span class="line">	Name string `orm:"size(15);column(name)"`  //设置varchar长度为15 列名为name</span><br><span class="line">	Pwd  string  `orm:"size(15);column(pwd)"` </span><br><span class="line">	Age  int    `orm:"column(age)"`</span><br><span class="line">	Sex  string  `orm:"size(15);column(sex)"`</span><br><span class="line">&#125;</span><br><span class="line">*/</span></span><br><span class="line"> </span><br><span class="line"><span class="comment">//初始化</span></span><br><span class="line"><span class="keyword">func</span> init() &#123;</span><br><span class="line">	<span class="comment">//注册数据驱动</span></span><br><span class="line">	<span class="comment">// orm.RegisterDriver("mysql", orm.DR_MySQL)</span></span><br><span class="line">	<span class="comment">// mysql / sqlite3 / postgres 这三种是默认已经注册过的，所以可以无需设置</span></span><br><span class="line">	<span class="comment">//注册数据库 ORM 必须注册一个别名为 default 的数据库，作为默认使用</span></span><br><span class="line">	orm.RegisterDataBase(<span class="string">"default"</span>, <span class="string">"mysql"</span>, <span class="string">"root:123456@tcp(127.0.0.1:3306)/HelloBeego"</span>)</span><br><span class="line">	<span class="comment">//注册模型</span></span><br><span class="line">	orm.RegisterModel(<span class="built_in">new</span>(Users))</span><br><span class="line">	<span class="comment">//自动创建表 参数二为是否开启创建表   参数三是否更新表</span></span><br><span class="line">	orm.RunSyncdb(<span class="string">"default"</span>, <span class="literal">true</span>, <span class="literal">true</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">orm.RegisterDataBase(<span class="string">"default"</span>, <span class="string">"mysql"</span>, <span class="string">"root:root@/orm_test?charset=utf8"</span>, maxIdle, maxConn)</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 参数1        数据库的别名，用来在 ORM 中切换数据库使用</span></span><br><span class="line"><span class="comment">// 参数2        数据库驱</span></span><br><span class="line"><span class="comment">// 参数3        对应的连接字符串</span></span><br><span class="line"><span class="comment">// 参数4(可选)  设置最大空闲连接</span></span><br><span class="line"><span class="comment">// 参数5(可选)  设置最大数据库连接 (go &gt;= 1.2)</span></span><br></pre></td></tr></table></figure>
+<h3 id="模型设置详解"><a href="#模型设置详解" class="headerlink" title="模型设置详解"></a>模型设置详解</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line">忽略字段</span><br><span class="line">设置 - 即可忽略 struct 中的字段</span><br><span class="line">AnyField string `orm:&quot;-&quot;`</span><br><span class="line"> </span><br><span class="line">auto</span><br><span class="line">当 Field 类型为 int, int32, int64, uint, uint32, uint64 时，可以设置字段为自增健</span><br><span class="line">当模型定义里没有主键时，符合上述类型且名称为 Id 的 Field 将被视为自增健。</span><br><span class="line"> </span><br><span class="line">pk</span><br><span class="line">设置为主键，适用于自定义其他类型为主键</span><br><span class="line"> </span><br><span class="line">null</span><br><span class="line">数据库表默认为 NOT NULL，设置 null 代表 ALLOW NULL</span><br><span class="line">Name string `orm:&quot;null&quot;</span><br><span class="line"> </span><br><span class="line">index</span><br><span class="line">为单个字段增加索引</span><br><span class="line"> </span><br><span class="line">unique</span><br><span class="line">为单个字段增加 unique 键</span><br><span class="line">Name string `orm:&quot;unique&quot;`</span><br><span class="line"> </span><br><span class="line">column</span><br><span class="line">为字段设置 db 字段的名称</span><br><span class="line">Name string `orm:&quot;column(user_name)&quot;`</span><br><span class="line"> </span><br><span class="line">size</span><br><span class="line">string 类型字段默认为 varchar(255)</span><br><span class="line">设置 size 以后，db type 将使用 varchar(size)</span><br><span class="line">Title string `orm:&quot;size(60)&quot;`</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">digits / decimals</span><br><span class="line">设置 float32, float64 类型的浮点精度</span><br><span class="line">Money float64 `orm:&quot;digits(12);decimals(4)&quot;`</span><br><span class="line">总长度 12 小数点后 4 位 eg: 99999999.9999</span><br><span class="line"> </span><br><span class="line">auto_now / auto_now_add</span><br><span class="line">Created time.Time `orm:&quot;auto_now_add;type(datetime)&quot;`</span><br><span class="line">Updated time.Time `orm:&quot;auto_now;type(datetime)&quot;`</span><br><span class="line">auto_now 每次 model 保存时都会对时间自动更新</span><br><span class="line">auto_now_add 第一次保存时才设置时间</span><br><span class="line">对于批量的 update 此设置是不生效的</span><br><span class="line">type</span><br><span class="line">设置为 date 时，time.Time 字段的对应 db 类型使用 date</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">Created time.Time `orm:&quot;auto_now_add;type(date)&quot;`</span><br><span class="line">设置为 datetime 时，time.Time 字段的对应 db 类型使用 datetime</span><br><span class="line">Created time.Time `orm:&quot;auto_now_add;type(datetime)&quot;`</span><br><span class="line"> </span><br><span class="line">default</span><br><span class="line">为字段设置默认值，类型必须符合（目前仅用于级联删除时的默认值）</span><br><span class="line">Status int `orm:&quot;default(1)&quot;`</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/02/13/2019-go-00/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/02/13/2019-go-00/" itemprop="url">2019-go-00</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-13T21:09:50+08:00">
+                2019-02-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/golang/" itemprop="url" rel="index">
+                    <span itemprop="name">golang</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/02/13/2019-go-00/" class="leancloud_visitors" data-flag-title="2019-go-00">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  626
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="session-amp-cookie"><a href="#session-amp-cookie" class="headerlink" title="session &amp; cookie"></a>session &amp; cookie</h2><p>1.Http是无状态的协议，服务器不能记录浏览器的访问状态，也就是服务器不能区分两次请求是否是来自同一个客户端。</p>
+<p>2.Cookie实际上是服务器保存在浏览器上的一段信息，浏览器有了Cookie之后，每次向服务器发送请求都会带着该信息进行访问，服务器在收到请求之后，就可以通过该信息进行处理。</p>
+<p>3.Cookie由服务器创建，并发给浏览器，最终由浏览器保存。</p>
+<p>Cookie的用途</p>
+<ul>
+<li>电商网站的购物车</li>
+<li>保持用户登陆状态</li>
+</ul>
+<p>使用beego.Router()注册路由</p>
+<pre><code>beego.Router(&quot;/cookie&quot;,&amp;controllers.CookieController{})
+</code></pre><p>控制器</p>
+<pre><code>
+package controllers
+
+import &quot;github.com/astaxie/beego&quot;
+
+type CookieController struct {
+    beego.Controller
+}
+
+func (this *CookieController)Get()  {
+    if this.Ctx.GetCookie(&quot;user&quot;) ==&quot;&quot;{  
+        this.Ctx.SetCookie(&quot;user&quot;,&quot;admin&quot;)
+        this.Ctx.WriteString(&quot;Cookie设置成功&quot;)
+    }else{
+        user:= this.Ctx.GetCookie(&quot;user&quot;)
+        this.Ctx.WriteString(&quot;user=&quot;+user)
+    }
+}
+</code></pre><p>我们先通过this.Ctx.GetCookie(“key”)判断浏览器是否有Cookie ，如果没有就使用this.Ctx.SetCookie(“key”,”value”)设置，如果有就获取并输出。</p>
+<p>注意Cookie的键和值不能为中文</p>
+<pre><code>this.Ctx.SetCookie(&quot;user&quot;,&quot;admin&quot;，10)
+</code></pre><p>SetCookie的第三个参数是时间，单位是秒 ，如果不设置时间，Cookie只在本次会话有效，默认存活时间为3600秒      </p>
+<pre><code>this.Ctx.SetCookie(&quot;user&quot;,&quot;admin&quot;,&quot;100&quot;,&quot;/cookie&quot;)
+</code></pre><p>Session的使用</p>
+<p>Beego默认关闭Session，如果想要使用Session，需要在配置文件或程序中设置，分别为</p>
+<pre><code>beego.BConfig.WebConfig.Session.SessionOn = true和sessionon=true
+</code></pre><p>设置Session    </p>
+<pre><code>this.SetSession(“usesrname”, “admin”)
+</code></pre><p>删除Session</p>
+<pre><code>This.GetSession(“username”),如果没有获取到session，会返回nil，和cookie不一样，getCookie返回空字符串。
+</code></pre><p>Session是一段保存在服务器上的一段信息，当客户端第一次访问服务器时创建。同时也创建一个名为beegosessionID,值为创建Session的id的Cookie<br>这个beegosessionID对应服务器中的一个Session对象，通过它就可以获取到保存用户信息的Session</p>
+<p>通过this.DelSession(“password”)和this.DestroySession()均可以删除Session，其区别在于DelSession删除指定的Session, DestroySession删除所有session。</p>
+<p>可以通过beego.BConfig.WebConfig.Session.SessionName = “admin”和sessionname设置Cookie名称，如果在配置文件和主函数都设置了，主函数优先，因为beego先加载配置文件后执行主函数，所以主函数中设置的内容回对配置文件中设置的内容进行覆盖。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/02/11/one-line-python/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -436,820 +1237,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/02/11/how-to-be-a-daniu/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/11/how-to-be-a-daniu/" itemprop="url">how-to-be-a-daniu</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-11T13:41:32+08:00">
-                2019-02-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/02/11/how-to-be-a-daniu/" class="leancloud_visitors" data-flag-title="how-to-be-a-daniu">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  54
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="误区"><a href="#误区" class="headerlink" title="误区"></a>误区</h3><ul>
-<li>拜大牛为师</li>
-<li>业务代码一样很牛逼？</li>
-<li>上班太忙没时间学习</li>
-</ul>
-<h3 id="正确做法"><a href="#正确做法" class="headerlink" title="正确做法"></a>正确做法</h3><ul>
-<li>do more</li>
-</ul>
-<p>—&gt; 熟悉更多业务</p>
-<p>—&gt; 熟悉端到端</p>
-<p>—&gt; 自学</p>
-<ul>
-<li>do better</li>
-<li>do exercise</li>
-<li>learning</li>
-<li>trying</li>
-<li>teaching</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/02/10/前端总规划总结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/02/10/前端总规划总结/" itemprop="url">前端总规划总结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-10T21:54:06+08:00">
-                2019-02-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/02/10/前端总规划总结/" class="leancloud_visitors" data-flag-title="前端总规划总结">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  0
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/01/30/conda-cmd/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/01/30/conda-cmd/" itemprop="url">conda_cmd</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-30T14:28:04+08:00">
-                2019-01-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/python/" itemprop="url" rel="index">
-                    <span itemprop="name">python</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/01/30/conda-cmd/" class="leancloud_visitors" data-flag-title="conda_cmd">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  359
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>常用操作命令：</p>
-<p>一、环境操作</p>
-<p>1.查看环境管理的全部命令帮助：</p>
-<p>conda env -h</p>
-<p>2.查看当前系统下的环境：</p>
-<p>conda info -e</p>
-<p>3.创建环境：</p>
-<p>conda create env_name                (env_name)是环境名称,这条命令将会给Biopython创建一个新的环境，位置在Anaconda安装文件的/envs/snowflakes</p>
-<p>创建指定python版本的环境：</p>
-<p>conda create env_name python=3.6           (3.6为python的版本，根据自己的需要更改)</p>
-<p>创建包含某些包的环境：</p>
-<p>conda create env_name numpy scipy</p>
-<p>创建指定python版本下包含某些包的环境：</p>
-<p>conda create env_name python=3.6  numpy scipy</p>
-<p>激活（进入）某个环境：</p>
-<p>新的开发环境会被默认安装在conda目录下envs文件目录下,你可以指定一个其他的路径；</p>
-<p>如果没有指定安装python的版本，conda会安装最初安装conda时所装的那个版本的python。</p>
-<p>windows:</p>
-<p>activate env_name</p>
-<p>mac:</p>
-<p>source activate env_name</p>
-<p>退出某个环境：</p>
-<p>deactivate env_name</p>
-<p>复制某个环境：</p>
-<p>conda create new_env_name old_env_name</p>
-<p>删除某个环境：</p>
-<p>conda remove env_name</p>
-<p>二、包管理</p>
-<p>查看已安装的包：</p>
-<p>conda list</p>
-<p>查看指定环境下的包：</p>
-<p>conda list -n xxx</p>
-<p>查找包：</p>
-<p>conda search xxx</p>
-<p>更新包：</p>
-<p>conda update xxx</p>
-<p>安装包：</p>
-<p>conda install xxx</p>
-<p>pip install xxx</p>
-<p>指定的安装环境：</p>
-<p>conda install -n env_name xxx</p>
-<p>安装anaconda发行版中所有的包:</p>
-<p>conda install anaconda</p>
-<p>卸载包：</p>
-<p>conda remove xxx</p>
-<p>三、管理conda</p>
-<p>检查conda版本：</p>
-<p>conda –version</p>
-<p>升级当前版本的conda：</p>
-<p>conda update conda</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/01/30/kaggle总结/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/01/30/kaggle总结/" itemprop="url">kaggle总结</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-30T08:25:21+08:00">
-                2019-01-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/kaggle/" itemprop="url" rel="index">
-                    <span itemprop="name">kaggle</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/01/30/kaggle总结/" class="leancloud_visitors" data-flag-title="kaggle总结">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  2.8k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  12
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>主要是机器学习的过程</p>
-<p>采用scikit-learn 结合pandas numpy matplotlib seaborn</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line">input_df = pd.read_csv(&apos;data/raw/train.csv&apos;, header=0)</span><br><span class="line">submit_df  = pd.read_csv(&apos;data/raw/test.csv&apos;,  header=0)</span><br><span class="line"></span><br><span class="line"># 合并他们</span><br><span class="line">df = pd.concat([input_df, submit_df])</span><br><span class="line"></span><br><span class="line"># 重建index</span><br><span class="line">df.reset_index(inplace=True)</span><br><span class="line"></span><br><span class="line"># 删除reset_index()产生的index column</span><br><span class="line">df.drop(&apos;index&apos;, axis=1, inplace=True)</span><br><span class="line"></span><br><span class="line">print df.shape[1], &quot;columns:&quot;, df.columns.values</span><br><span class="line">print &quot;Row count:&quot;, df.shape[0]</span><br></pre></td></tr></table></figure>
-<p>输出如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">12 columns: [&apos;PassengerId&apos; &apos;Survived&apos; &apos;Pclass&apos; &apos;Name&apos; &apos;Sex&apos; &apos;Age&apos; &apos;SibSp&apos; &apos;Parch&apos;</span><br><span class="line"> &apos;Ticket&apos; &apos;Fare&apos; &apos;Cabin&apos; &apos;Embarked&apos;]</span><br><span class="line">Row count: 1309</span><br></pre></td></tr></table></figure>
-<p>可以看到有12个特征</p>
-<p>查看数据的完整性情况</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">def observe(df):</span><br><span class="line">	print &quot;column: &quot;, df.shape[1]</span><br><span class="line">	columns = df.columns</span><br><span class="line">	for i in columns:</span><br><span class="line">		print i, &quot;missing &quot;,pd.isnull(df[i]).sum(), &quot; type:&quot;, df[i].dtypes</span><br></pre></td></tr></table></figure>
-<ul>
-<li>Cabin 缺失很严重，我想可以忽略这一个特征了。</li>
-<li>Age 缺失的并不多，而且Age是一个重要的特征，应该保留。</li>
-</ul>
-<h3 id="如何处理缺失的数据"><a href="#如何处理缺失的数据" class="headerlink" title="如何处理缺失的数据"></a>如何处理缺失的数据</h3><ol>
-<li>直接扔掉出现缺失Value的数据：只有少量的数据出现缺失Value的情况，这样做比较简单快捷。</li>
-<li>给缺失的Value赋特殊值来表明它是缺失的：比较适用于分类变量，因为缺失Value就是不存在的数据，如果给他分配平均值之类的数值并没有什么意义。除非是某些潜在原因使某些缺失值会影响其与另外一个值的关联(correlation)。并且这种方法不适用于连续变量。不过对于二元变量(binary variables)，我们可以把他的缺失值赋为0，正常情况下True为1，False为-1。</li>
-<li>给缺失的Value赋平均值：这种简单的做法很普遍，对于不重要的特征来说用这种方法足矣。还可以结合其他变量来算平均值。对于分类变量，使用最常见的值或许比平均值更好。</li>
-<li>使用机器学习算法/模型来预测缺失数据：感觉只有数据量很大的情况下这样做才有效。</li>
-</ol>
-<h3 id="定量转换"><a href="#定量转换" class="headerlink" title="定量转换"></a>定量转换</h3><p>变量转换的目的是将数据转换为模型适用的格式，不同方法实现的随机森林(Random Forest)接受不同类型的数据，Scikit-learn要求数据都是数字型numeric，所以我们要将原始数据转换为数字型numeric。</p>
-<p>所有的数据可以分为两类：1.定性(Quantitative)变量可以以某种方式排序，Age就是一个很好的列子。2.定量(Qualitative)变量描述了物体的某一（不能被数学表示的）方面，Embarked就是一个例子。</p>
-<p>Dummy Variables<br>就是类别变量或者二元变量，当qualitative variable是一些频繁出现的几个独立变量时，Dummy Variables比较适合使用。我们以Embarked为例，Embarked只包含三个值’S’,’C’,’Q’，我们可以使用下面的代码将其转换为dummies:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">embark_dummies  = pd.get_dummies(df[&apos;Embarked&apos;])</span><br><span class="line">df = df.join(embark_dummies)</span><br><span class="line">df.drop([&apos;Embarked&apos;], axis=1,inplace=True)</span><br></pre></td></tr></table></figure>
-<p>Factorizing<br>dummy不好处理Cabin（船舱号）这种标称属性，因为他出现的变量比较多。所以Pandas有一个方法叫做factorize()，它可以创建一些数字，来表示类别变量，对每一个类别映射一个ID，这种映射最后只生成一个特征，不像dummy那样生成多个特征。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br><span class="line"></span><br><span class="line"># Replace missing values with &quot;U0&quot;</span><br><span class="line">df[&apos;Cabin&apos;][df.Cabin.isnull()] = &apos;U0&apos;</span><br><span class="line"></span><br><span class="line"># create feature for the alphabetical part of the cabin number</span><br><span class="line">df[&apos;CabinLetter&apos;] = df[&apos;Cabin&apos;].map( lambda x : re.compile(&quot;([a-zA-Z]+)&quot;).search(x).group())</span><br><span class="line"></span><br><span class="line"># convert the distinct cabin letters with incremental integer values</span><br><span class="line">df[&apos;CabinLetter&apos;] = pd.factorize(df[&apos;CabinLetter&apos;])[0]</span><br></pre></td></tr></table></figure>
-<p>Scaling<br>Scaling可以将一个很大范围的数值映射到一个很小的范围(通常是-1 - 1，或则是0 - 1)，很多情况下我们需要将数值做Scaling使其范围大小一样，否则大范围数值特征将会由更高的权重。比如：Age的范围可能只是0-100，而income的范围可能是0-10000000，在某些对数组大小敏感的模型中会影响其结果。</p>
-<p>下面的代码是对Age进行Scaling：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># StandardScaler will subtract the mean from each value then scale to the unit variance</span><br><span class="line">scaler = preprocessing.StandardScaler()</span><br><span class="line">df[&apos;Age_scaled&apos;] = scaler.fit_transform(df[&apos;Age&apos;])</span><br></pre></td></tr></table></figure>
-<p>Binning<br>Binning通过观察“邻居”(即周围的值)来连续数据离散化。存储的值被分布到一些“桶”或箱中，就像直方图的bin将数据划分成几块一样。下面的代码对Fare进行Binning。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># Divide all fares into quartiles</span><br><span class="line">df[&apos;Fare_bin&apos;] = pd.qcut(df[&apos;Fare&apos;], 4)</span><br><span class="line"></span><br><span class="line"># qcut() creates a new variable that identifies the quartile range, but we can&apos;t use the string so either</span><br><span class="line"># factorize or create dummies from the result</span><br><span class="line">df[&apos;Fare_bin_id&apos;] = pd.factorize(df[&apos;Fare_bin&apos;])</span><br><span class="line">df = pd.concat([df, pd.get_dummies(df[&apos;Fare_bin&apos;]).rename(columns=lambda x: &apos;Fare_&apos; + str(x))], axis=1)</span><br></pre></td></tr></table></figure>
-<p>特征提取很重要的一个方面是深入理解数据，并且能提取出新的特征来做预测。机器学习的核心就是模型选取和参数选择，特征提取可以说是重中之重。</p>
-<p>一个特征提取的例子是，从电话号码中提取中国家、地区、城市的信息，或者是从GPS中提取中国家、地区、城市的信息。只要能描述一个事物的qualitative变量，都有可能从中挖掘出有用的特征，另外，时序等信息也是非常有用的。</p>
-<p>泰坦尼克号的这些数据非常简单，我们并不需要对数据做太多的处理，我们下面只对name，cabin和ticket提取一些变量。</p>
-<ul>
-<li>name 提取称呼</li>
-<li>Cabin<br>客舱信息包含了甲板和房间号，不同甲板位置不同，逃生船数量不同，人群年龄分布不同等等。不同房间号离甲板距离不同，离逃生船距离不同，等等。所以从客舱中提取中甲板和房间号这两个特征很重要。</li>
-</ul>
-<p>机器学习的模型很多，用于分类有：</p>
-<ol>
-<li>回归算法：Logistic Regression、 Ordinary Least Square等等。</li>
-<li>决策树: CART、ID3、Random Forest等等。</li>
-<li>贝叶斯：Navie Bayesian、BBN等等。</li>
-<li>基于实例的算法：KNN、LVQ等等。</li>
-<li>组合模型、关联规则、神经网络、深度学习等等。<br>模型太多都看晕了，这种场景下选什么模型合适？</li>
-</ol>
-<p>随机森林</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">from sklearn.ensemble import RandomForestClassifier</span><br><span class="line">X = df[:input_df.shape[0]].values[:, 1::]</span><br><span class="line">y = df[:input_df.shape[0]].values[:, 0]</span><br><span class="line"></span><br><span class="line">X_test = df[input_df.shape[0]:].values[:, 1::]</span><br><span class="line">random_forest = RandomForestClassifier(oob_score=True, n_estimators=1000)</span><br><span class="line">random_forest.fit(X, y)</span><br><span class="line"></span><br><span class="line">Y_pred = random_forest.predict(X_test)</span><br><span class="line">print random_forest.score(X, y)</span><br><span class="line">submission = pd.DataFrame(&#123;</span><br><span class="line">	    &quot;PassengerId&quot;: X_origin[&quot;PassengerId&quot;],</span><br><span class="line">	    &quot;Survived&quot;: Y_pred.astype(int)</span><br><span class="line">	&#125;)</span><br><span class="line">submission.to_csv(&apos;result.csv&apos;, index=False)</span><br></pre></td></tr></table></figure>
-<p>GBDT</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.ensemble import GradientBoostingClassifier</span><br><span class="line">X = df[:input_df.shape[0]].values[:, 1::]</span><br><span class="line">y = df[:input_df.shape[0]].values[:, 0]</span><br><span class="line"></span><br><span class="line">X_test = df[input_df.shape[0]:].values[:, 1::]</span><br><span class="line">GBDT = GradientBoostingClassifier(n_estimators=1000)</span><br><span class="line">GBDT.fit(X, y)</span><br><span class="line"></span><br><span class="line">Y_pred = GBDT.predict(X_test)</span><br><span class="line">print GBDT.score(X, y)</span><br><span class="line">submission = pd.DataFrame(&#123;</span><br><span class="line">	    &quot;PassengerId&quot;: X_origin[&quot;PassengerId&quot;],</span><br><span class="line">	    &quot;Survived&quot;: Y_pred.astype(int)</span><br><span class="line">	&#125;)</span><br><span class="line">submission.to_csv(&apos;result2.csv&apos;, index=False)</span><br></pre></td></tr></table></figure>
-<h3 id="调优-优化"><a href="#调优-优化" class="headerlink" title="调优 优化"></a>调优 优化</h3><p>再观察一下数据，看看还有那些特征可以用到，又去Google了一番，整理出三个新特征：称谓、家庭大小、姓。</p>
-<p>称谓：不同的称谓意味着不同的社会地位、不同的社会地位的人对人生、事物的理解不同。并且不同的社会地位乘坐逃生舱的概率也不同？可能某一类人的生存概率更高？</p>
-<p>家庭大小：一家七个人的逃生概率大还是一家两个人的逃生概率大呢？人多的家庭会不会更难逃生呢？</p>
-<p>姓：其实姓这个特征是为了辅助家庭这个特征的，同一个姓是一个家庭的概率更大？</p>
-<p>参数调优，Sklean提供了两种方法，GridSearch和RandomizedSearch。在这两种情况下，都可以指定每个参数的取值范围，创建一个字典。将参数字典提供给search方法，它就会执行模型所指定的值的组合。GridSearch会测试参数每一个可能的组合。 而RandomizedSearch需要指定有多少不同的组合要测试，然后随机选择并组合他们。</p>
-<p>使用Random Forest, 加上参数max_depth=5 防止模型过拟合，并将n_estimators放到了30000</p>
-<p>首先 Error = Bias + Variance，Error反映的是整个模型的准确度，Bias反映的是模型在样本上的输出与真实值之间的误差，即模型本身的精准度，Variance反映的是模型每一次输出结果与模型输出期望之间的误差，即模型的稳定性。<br>举一个例子，一次打靶实验，目标是为了打到10环，但是实际上只打到了7环，那么这里面的Error就是3。具体分析打到7环的原因，可能有两方面：一是瞄准出了问题，比如实际上射击瞄准的是9环而不是10环；二是枪本身的稳定性有问题，虽然瞄准的是9环，但是只打到了7环。那么在上面一次射击实验中，Bias就是1,反应的是模型期望与真实目标的差距，而在这次试验中，由于Variance所带来的误差就是2，即虽然瞄准的是9环，但由于本身模型缺乏稳定性，造成了实际结果与模型期望之间的差距。</p>
-<p>High variance，low bias意味着”overfitting”，模型过拟合导致不能很好的用于新数据。而High bias，low variance意味着”underfitting”，模型欠拟合导致不能很好从样本中学习，很难去预测新数据。Bias与Variance往往是不能兼得的。如果要降低模型的Bias，就一定程度上会提高模型的Variance，反之亦然。</p>
-<p>例如，如果模型存在high variance，一个常见的解决方法是给他增加更多的特征。但是这样也会增加bias，这中间的平衡需要仔细考虑。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">from sklearn.learning_curve import learning_curve</span><br><span class="line">def plot_learning_curve(estimator, title, X, y, ylim=None, cv=None,</span><br><span class="line">                        n_jobs=1, train_sizes=np.linspace(.1, 1.0, 5)):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    Generate a simple plot of the test and traning learning curve.</span><br><span class="line"></span><br><span class="line">    Parameters</span><br><span class="line">    ----------</span><br><span class="line">    estimator : object type that implements the &quot;fit&quot; and &quot;predict&quot; methods</span><br><span class="line">        An object of that type which is cloned for each validation.</span><br><span class="line"></span><br><span class="line">    title : string</span><br><span class="line">        Title for the chart.</span><br><span class="line"></span><br><span class="line">    X : array-like, shape (n_samples, n_features)</span><br><span class="line">        Training vector, where n_samples is the number of samples and</span><br><span class="line">        n_features is the number of features.</span><br><span class="line"></span><br><span class="line">    y : array-like, shape (n_samples) or (n_samples, n_features), optional</span><br><span class="line">        Target relative to X for classification or regression;</span><br><span class="line">        None for unsupervised learning.</span><br><span class="line"></span><br><span class="line">    ylim : tuple, shape (ymin, ymax), optional</span><br><span class="line">        Defines minimum and maximum yvalues plotted.</span><br><span class="line"></span><br><span class="line">    cv : integer, cross-validation generator, optional</span><br><span class="line">        If an integer is passed, it is the number of folds (defaults to 3).</span><br><span class="line">        Specific cross-validation objects can be passed, see</span><br><span class="line">        sklearn.cross_validation module for the list of possible objects</span><br><span class="line"></span><br><span class="line">    n_jobs : integer, optional</span><br><span class="line">        Number of jobs to run in parallel (default 1).</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    plt.figure()</span><br><span class="line">    plt.title(title)</span><br><span class="line">    if ylim is not None:</span><br><span class="line">        plt.ylim(*ylim)</span><br><span class="line">    plt.xlabel(&quot;Training examples&quot;)</span><br><span class="line">    plt.ylabel(&quot;Score&quot;)</span><br><span class="line">    train_sizes, train_scores, test_scores = learning_curve(</span><br><span class="line">        estimator, X, y, cv=cv, n_jobs=n_jobs, train_sizes=train_sizes)</span><br><span class="line">    train_scores_mean = np.mean(train_scores, axis=1)</span><br><span class="line">    train_scores_std = np.std(train_scores, axis=1)</span><br><span class="line">    test_scores_mean = np.mean(test_scores, axis=1)</span><br><span class="line">    test_scores_std = np.std(test_scores, axis=1)</span><br><span class="line">    plt.grid()</span><br><span class="line"></span><br><span class="line">    plt.fill_between(train_sizes, train_scores_mean - train_scores_std,</span><br><span class="line">                     train_scores_mean + train_scores_std, alpha=0.1,</span><br><span class="line">                     color=&quot;r&quot;)</span><br><span class="line">    plt.fill_between(train_sizes, test_scores_mean - test_scores_std,</span><br><span class="line">                     test_scores_mean + test_scores_std, alpha=0.1, color=&quot;g&quot;)</span><br><span class="line">    plt.plot(train_sizes, train_scores_mean, &apos;o-&apos;, color=&quot;r&quot;,</span><br><span class="line">             label=&quot;Training score&quot;)</span><br><span class="line">    plt.plot(train_sizes, test_scores_mean, &apos;o-&apos;, color=&quot;g&quot;,</span><br><span class="line">             label=&quot;Cross-validation score&quot;)</span><br><span class="line"></span><br><span class="line">    plt.legend(loc=&quot;best&quot;)</span><br><span class="line">    return plt</span><br><span class="line">title = &quot;Learning Curves&quot;</span><br><span class="line">plot_learning_curve(RandomForestClassifier(oob_score=True, n_estimators=30000, max_depth=5), title, X, y, ylim=(0.5, 1.01), cv=None, n_jobs=4, train_sizes=[50, 100, 150, 200, 250, 350, 400])</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1304,7 +1291,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">396</span>
+                  <span class="site-state-item-count">400</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1419,7 +1406,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共153.4k字</span>
+  <span class="post-count">博客全站共154.1k字</span>
 </div>
 
         
