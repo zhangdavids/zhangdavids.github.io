@@ -546,7 +546,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  138
                 </span>
               
 
@@ -585,7 +585,7 @@
       
         
           
-            
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">func convert(s string, numRows int) string &#123;</span><br><span class="line">    if numRows == 1 || len(s) &lt;= numRows &#123;</span><br><span class="line">        return s</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    res := bytes.Buffer&#123;&#125;</span><br><span class="line">    // p pace 步距</span><br><span class="line">    p := numRows*2 - 2</span><br><span class="line"></span><br><span class="line">    // 处理第一行</span><br><span class="line">    for i := 0; i &lt; len(s); i += p &#123;</span><br><span class="line">        res.WriteByte(s[i])</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 处理中间的行</span><br><span class="line">    for r := 1; r &lt;= numRows-2; r++ &#123;</span><br><span class="line">        // 添加r行的第一个字符</span><br><span class="line">        res.WriteByte(s[r])</span><br><span class="line"></span><br><span class="line">        for k := p; k-r &lt; len(s); k += p &#123;</span><br><span class="line">            res.WriteByte(s[k-r])</span><br><span class="line">            if k+r &lt; len(s) &#123;</span><br><span class="line">                res.WriteByte(s[k+r])</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 处理最后一行</span><br><span class="line">    for i := numRows - 1; i &lt; len(s); i += p &#123;</span><br><span class="line">        res.WriteByte(s[i])</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return res.String()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           
         
       
@@ -707,7 +707,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  104
                 </span>
               
 
@@ -746,7 +746,7 @@
       
         
           
-            
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">func longestPalindrome(s string) string &#123;</span><br><span class="line">    if len(s) &lt; 2 &#123; </span><br><span class="line">        return s</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    begin, maxLen := 0, 1</span><br><span class="line"></span><br><span class="line">    for i := 0; i &lt; len(s); &#123; </span><br><span class="line">        if len(s)-i &lt;= maxLen/2 &#123;</span><br><span class="line">            break</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        b, e := i, i</span><br><span class="line">        for e &lt; len(s)-1 &amp;&amp; s[e+1] == s[e] &#123;</span><br><span class="line">            e++</span><br><span class="line">        &#125;</span><br><span class="line">        i = e + 1</span><br><span class="line"></span><br><span class="line">        for e &lt; len(s)-1 &amp;&amp; b &gt; 0 &amp;&amp; s[e+1] == s[b-1] &#123;</span><br><span class="line">            e++</span><br><span class="line">            b--</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        newLen := e + 1 - b</span><br><span class="line">        if newLen &gt; maxLen &#123;</span><br><span class="line">            begin = b</span><br><span class="line">            maxLen = newLen</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return s[begin : begin+maxLen]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           
         
       
@@ -868,7 +868,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  150
                 </span>
               
 
@@ -907,7 +907,8 @@
       
         
           
-            
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def findMedianSortedArrays(self, A, B):</span><br><span class="line">        m, n = len(A), len(B)</span><br><span class="line">        if m &gt; n:</span><br><span class="line">            A, B, m, n = B, A, n, m</span><br><span class="line">        if n == 0:</span><br><span class="line">            raise ValueError</span><br><span class="line"></span><br><span class="line">        imin, imax, half_len = 0, m, (m + n + 1) / 2</span><br><span class="line">        while imin &lt;= imax:</span><br><span class="line">            i = (imin + imax) / 2</span><br><span class="line">            j = half_len - i</span><br><span class="line">            if i &lt; m and B[j-1] &gt; A[i]:</span><br><span class="line">                # i is too small, must increase it</span><br><span class="line">                imin = i + 1</span><br><span class="line">            elif i &gt; 0 and A[i-1] &gt; B[j]:</span><br><span class="line">                # i is too big, must decrease it</span><br><span class="line">                imax = i - 1</span><br><span class="line">            else:</span><br><span class="line">                # i is perfect</span><br><span class="line"></span><br><span class="line">                if i == 0: max_of_left = B[j-1]</span><br><span class="line">                elif j == 0: max_of_left = A[i-1]</span><br><span class="line">                else: max_of_left = max(A[i-1], B[j-1])</span><br><span class="line"></span><br><span class="line">                if (m + n) % 2 == 1:</span><br><span class="line">                    return max_of_left</span><br><span class="line"></span><br><span class="line">                if i == m: min_of_right = B[j]</span><br><span class="line">                elif j == n: min_of_right = A[i]</span><br><span class="line">                else: min_of_right = min(A[i], B[j])</span><br><span class="line"></span><br><span class="line">                return (max_of_left + min_of_right) / 2.0</span><br></pre></td></tr></table></figure>
+
           
         
       
@@ -1273,7 +1274,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共154.1k字</span>
+  <span class="post-count">博客全站共154.5k字</span>
 </div>
 
         
