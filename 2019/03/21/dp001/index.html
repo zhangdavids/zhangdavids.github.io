@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="dp," />
 
 
 
@@ -81,16 +81,22 @@
 
 
 
-<meta name="description" content="曾因酒醉鞭名马 生怕情多累美人">
+<meta name="description" content="动态规化
+寻求最优解 比如最大值 最小值 降低时间复杂度
+0-1背包1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162from typing import List, Tupledef bag(items_info: L">
 <meta property="og:type" content="article">
 <meta property="og:title" content="dp001">
 <meta property="og:url" content="https://zhangdavids.github.io/2019/03/21/dp001/index.html">
 <meta property="og:site_name" content="上药三品，神与气精">
-<meta property="og:description" content="曾因酒醉鞭名马 生怕情多累美人">
-<meta property="og:updated_time" content="2019-03-21T05:15:36.441Z">
+<meta property="og:description" content="动态规化
+寻求最优解 比如最大值 最小值 降低时间复杂度
+0-1背包1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162from typing import List, Tupledef bag(items_info: L">
+<meta property="og:updated_time" content="2019-03-22T09:10:14.467Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="dp001">
-<meta name="twitter:description" content="曾因酒醉鞭名马 生怕情多累美人">
+<meta name="twitter:description" content="动态规化
+寻求最优解 比如最大值 最小值 降低时间复杂度
+0-1背包1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162from typing import List, Tupledef bag(items_info: L">
 
 
 
@@ -349,6 +355,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -381,7 +409,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  358
                 </span>
               
 
@@ -418,7 +446,10 @@
       
 
       
-        
+        <p>动态规化</p>
+<p>寻求最优解 比如最大值 最小值 降低时间复杂度</p>
+<h3 id="0-1背包"><a href="#0-1背包" class="headerlink" title="0-1背包"></a>0-1背包</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">from typing import List, Tuple</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def bag(items_info: List[int], capacity: int) -&gt; int:</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    固定容量的背包，计算能装进背包的物品组合的最大重量</span><br><span class="line">    :param items_info: 每个物品的重量</span><br><span class="line">    :param capacity: 背包容量</span><br><span class="line">    :return: 最大装载重量</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    n = len(items_info)</span><br><span class="line">    memo = [[-1]*(capacity+1) for i in range(n)]</span><br><span class="line">    memo[0][0] = 1</span><br><span class="line">    if items_info[0] &lt;= capacity:</span><br><span class="line">        memo[0][items_info[0]] = 1</span><br><span class="line"></span><br><span class="line">    for i in range(1, n):</span><br><span class="line">        for cur_weight in range(capacity+1):</span><br><span class="line">            if memo[i-1][cur_weight] != -1:</span><br><span class="line">                memo[i][cur_weight] = memo[i-1][cur_weight]   # 不选</span><br><span class="line">                if cur_weight + items_info[i] &lt;= capacity:    # 选</span><br><span class="line">                    memo[i][cur_weight + items_info[i]] = 1</span><br><span class="line"></span><br><span class="line">    for w in range(capacity, -1, -1):</span><br><span class="line">        if memo[-1][w] != -1:</span><br><span class="line">            return w</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def bag_with_max_value(items_info: List[Tuple[int, int]], capacity: int) -&gt; int:</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    固定容量的背包，计算能装进背包的物品组合的最大价值</span><br><span class="line">    :param items_info: 物品的重量和价值</span><br><span class="line">    :param capacity: 背包容量</span><br><span class="line">    :return: 最大装载价值</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    n = len(items_info)</span><br><span class="line">    memo = [[-1]*(capacity+1) for i in range(n)]</span><br><span class="line">    memo[0][0] = 0</span><br><span class="line">    if items_info[0][0] &lt;= capacity:</span><br><span class="line">        memo[0][items_info[0][0]] = items_info[0][1]</span><br><span class="line"></span><br><span class="line">    for i in range(1, n):</span><br><span class="line">        for cur_weight in range(capacity+1):</span><br><span class="line">            if memo[i-1][cur_weight] != -1:</span><br><span class="line">                memo[i][cur_weight] = memo[i-1][cur_weight]</span><br><span class="line">                if cur_weight + items_info[i][0] &lt;= capacity:</span><br><span class="line">                    memo[i][cur_weight + items_info[i][0]] = max(memo[i][cur_weight + items_info[i][0]],</span><br><span class="line">                                                                 memo[i-1][cur_weight] + items_info[i][1])</span><br><span class="line">    return max(memo[-1])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    # [weight, ...]</span><br><span class="line">    items_info = [2, 2, 4, 6, 3]</span><br><span class="line">    capacity = 9</span><br><span class="line">    print(bag(items_info, capacity))</span><br><span class="line"></span><br><span class="line">    # [(weight, value), ...]</span><br><span class="line">    items_info = [(3, 5), (2, 2), (1, 4), (1, 2), (4, 10)]</span><br><span class="line">    capacity = 8</span><br><span class="line">    print(bag_with_max_value(items_info, capacity))</span><br></pre></td></tr></table></figure>
+
       
     </div>
     
@@ -432,6 +463,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/zhangdavids.github.io/tags/dp/" rel="tag"># dp</a>
+          
+        </div>
       
 
       
@@ -506,8 +543,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -548,7 +594,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/zhangdavids.github.io/tags/index.html">
-                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -594,6 +640,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-1背包"><span class="nav-number">1.</span> <span class="nav-text">0-1背包</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -641,7 +703,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共161.3k字</span>
+  <span class="post-count">博客全站共161.7k字</span>
 </div>
 
         
