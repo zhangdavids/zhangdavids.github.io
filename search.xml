@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[1024-2-poisonous-40]]></title>
+    <url>%2Fzhangdavids.github.io%2F2019%2F03%2F28%2F1024-2-poisonous-40%2F</url>
+    <content type="text"><![CDATA[1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374from random import randrangedef to_b4(n): return [n/4**k%4 for k in range(5)]def fr_b4(li): return sum([li[k]*4**k for k in range(5)])def drink(p1,p2): li1,li2 = to_b4(p1),to_b4(p2) g0 = [li1[k]==0 or li2[k]==0 for k in range(5)] g1 = [li1[k]==1 or li2[k]==1 for k in range(5)] g2 = [li1[k]==2 or li2[k]==2 for k in range(5)] g3 = [li1[k]==3 or li2[k]==3 for k in range(5)] gc,gf = &#123;&#125;,&#123;&#125; for i in range(4): for j in range(i+1,5): diff1 = abs(li1[i]-li1[j]) diff2 = abs(li2[i]-li2[j]) gc[i,j] = diff1 == 1 or diff2 == 1 gf[i,j] = diff1 &gt; 1 or diff2 &gt; 1 return g0,g1,g2,g3,gc,gfdef check(u,v,d1,d2,c,f): a = [[0,1,2,2],[1,0,1,2],[2,1,0,1],[2,2,1,0]] a11 = a[u][d1] a22 = a[v][d2] c1 = a11 == 1 or a22 == 1 f1 = a11 == 2 or a22 == 2 if c == c1 and f == f1: return u,v else: return v,udef test(g0,g1,g2,g3,gc,gf): diff = 5 t1,t2 = range(5),range(5) for k in range(4,-1,-1): li = [g0[k],g1[k],g2[k],g3[k]] u = li.index(True) if (li.count(True) == 1): t1[k],t2[k] = u,u else: li[u] = False v = li.index(True) if diff == 5: diff = k t1[k],t2[k] = u,v else: t1[k],t2[k] = check(u,v,t1[diff],t2[diff],gc[k,diff],gf[k,diff]) return fr_b4(t1),fr_b4(t2)poison1 = randrange(1024)poison2 = (poison1 + randrange(1,1024)) % 1024g0,g1,g2,g3,gc,gf = drink(poison1,poison2)target1,target2 = test(g0,g1,g2,g3,gc,gf)print poison1,poison2print to_b4(poison1)print to_b4(poison2)print &quot;0:&quot;,g0print &quot;1:&quot;,g1print &quot;2:&quot;,g2print &quot;3:&quot;,g3print &quot;c:&quot;,gcprint &quot;f:&quot;,gfprint target1,target2]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[1024-2-poisonous-65]]></title>
+    <url>%2Fzhangdavids.github.io%2F2019%2F03%2F28%2F1024-2-poisonous-65%2F</url>
+    <content type="text"><![CDATA[123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354from random import randrangedef to_b2(n): return [n / 2**k % 2 for k in range(10)]def fr_b2(li): return sum([li[k] * 2**k for k in range(10)])def drink(p1, p2): li1, li2 = to_b2(p1), to_b2(p2) g0 = [li1[k] == 0 or li2[k] == 0 for k in range(10)] g1 = [li1[k] == 1 or li2[k] == 1 for k in range(10)] gd = &#123;&#125; for i in range(9): for j in range(i + 1, 10): gd[i, j] = li1[i] != li1[j] or li2[i] != li2[j] return g0, g1, gddef test(g0, g1, gd): diff = 10 t1, t2 = range(10), range(10) for k in range(9, -1, -1): if not g0[k]: t1[k], t2[k] = 1, 1 elif not g1[k]: t1[k], t2[k] = 0, 0 elif diff == 10: diff = k t1[k], t2[k] = 0, 1 elif gd[k, diff]: t1[k], t2[k] = 1, 0 else: t1[k], t2[k] = 0, 1 return fr_b2(t1), fr_b2(t2)if __name__ == &quot;__main__&quot;: poison1 = randrange(1024) poison2 = (poison1 + randrange(1, 1024)) % 1024 g0, g1, gd = drink(poison1, poison2) target1, target2 = test(g0, g1, gd) print(poison1, poison2) print(to_b2(poison1)) print(to_b2(poison2)) print(&quot;0:&quot;, g0) print(&quot;1:&quot;, g1) print(&quot;d:&quot;, gd) print(target1, target2)]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[problem-oj4]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F03%2F26%2Fproblem-oj4%2F</url>
     <content type="text"><![CDATA[123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657#!/usr/bin/env python# -*- coding: utf-8 -*-&quot;&quot;&quot;给定一个仅包含整数，且按照大小顺序排好序的列表，列表内不存在重复的整数。实现一个函数，将列表格式化为由`,`(逗号)分隔的字符串；如果相邻的整数(至少3个)是连续的(值相差1为连续)，则将这几个相邻的整数格式化为由`-`(减号)分隔、左右分别为起始和终止位整数的字符串。示例：func([-6,-3,-2,-1,0,1,3,4,5,7,8,9,10,11,14,15,17,18,19,20]) --&gt; &apos;-6,-3-1,3-5,7-11,14,15,17-20&apos;func([-3,-2,-1,2,10,15,16,18,19,20]) --&gt; &apos;-3--1,2,10,15,16,18-20&apos;特殊情况示例：func([]) --&gt; &apos;&apos;&quot;&quot;&quot;import unittestfrom itertools import groupbydef func(lst): # your code sum = sub_arr(lst) return &apos;,&apos;.join(sum)def sub_arr(lst): fun = lambda x: x[1] - x[0] sum = [] for k, g in groupby(enumerate(lst), fun): s = [v for i, v in g]# print(s) if len(s) &lt;= 1: sum.append(str(s[0])) elif len(s) == 2: sum.append(str(s[0])) sum.append(str(s[1])) else: target = [str(s[0]), str(s[-1])] n = &apos;-&apos;.join(target) sum.append(n) return sumclass DefaultTestCase(unittest.TestCase): def test_func(self): self.assertEqual(func([-6,-3,-2,-1,0,1,3,4,5,7,8,9,10,11,14,15,17,18,19,20]), &apos;-6,-3-1,3-5,7-11,14,15,17-20&apos;) self.assertEqual(func([-3,-2,-1,2,10,15,16,18,19,20]), &apos;-3--1,2,10,15,16,18-20&apos;) self.assertEqual(func([]), &apos;&apos;) self.assertEqual(func([-6,-4,-2,0,2,4,6]), &apos;-6,-4,-2,0,2,4,6&apos;) self.assertEqual(func([-6,-5,-3,-2,0,1,3,4,6]), &apos;-6,-5,-3,-2,0,1,3,4,6&apos;)if __name__ == &apos;__main__&apos;: unittest.main()]]></content>
