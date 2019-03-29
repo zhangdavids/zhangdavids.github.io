@@ -81,16 +81,19 @@
 
 
 
-<meta name="description" content="曾因酒醉鞭名马 生怕情多累美人">
+<meta name="description" content="beego 的模块化设计-gracegrace 模块是 beego 新增的一个独立支持热重启的模块。
+1234567891011121314151617181920212223242526import(   &amp;quot;log&amp;quot;    &amp;quot;net/http&amp;quot;    &amp;quot;os&amp;quot;    &amp;quot;strconv&amp;quot;   &amp;quot;github.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="2019-go-10">
 <meta property="og:url" content="https://zhangdavids.github.io/2019/02/23/2019-go-10/index.html">
 <meta property="og:site_name" content="上药三品，神与气精">
-<meta property="og:description" content="曾因酒醉鞭名马 生怕情多累美人">
-<meta property="og:updated_time" content="2019-03-03T07:38:26.000Z">
+<meta property="og:description" content="beego 的模块化设计-gracegrace 模块是 beego 新增的一个独立支持热重启的模块。
+1234567891011121314151617181920212223242526import(   &amp;quot;log&amp;quot;    &amp;quot;net/http&amp;quot;    &amp;quot;os&amp;quot;    &amp;quot;strconv&amp;quot;   &amp;quot;github.">
+<meta property="og:updated_time" content="2019-03-28T09:06:30.651Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2019-go-10">
-<meta name="twitter:description" content="曾因酒醉鞭名马 生怕情多累美人">
+<meta name="twitter:description" content="beego 的模块化设计-gracegrace 模块是 beego 新增的一个独立支持热重启的模块。
+1234567891011121314151617181920212223242526import(   &amp;quot;log&amp;quot;    &amp;quot;net/http&amp;quot;    &amp;quot;os&amp;quot;    &amp;quot;strconv&amp;quot;   &amp;quot;github.">
 
 
 
@@ -403,7 +406,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  176
                 </span>
               
 
@@ -440,7 +443,15 @@
       
 
       
-        
+        <h2 id="beego-的模块化设计-grace"><a href="#beego-的模块化设计-grace" class="headerlink" title="beego 的模块化设计-grace"></a>beego 的模块化设计-grace</h2><p>grace 模块是 beego 新增的一个独立支持热重启的模块。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import(</span><br><span class="line">   &quot;log&quot;</span><br><span class="line">    &quot;net/http&quot;</span><br><span class="line">    &quot;os&quot;</span><br><span class="line">    &quot;strconv&quot;</span><br><span class="line"></span><br><span class="line">   &quot;github.com/astaxie/beego/grace&quot;</span><br><span class="line"> )</span><br><span class="line"></span><br><span class="line">  func handler(w http.ResponseWriter, r *http.Request) &#123;</span><br><span class="line">      w.Write([]byte(&quot;WORLD!&quot;))</span><br><span class="line">      w.Write([]byte(&quot;ospid:&quot; + strconv.Itoa(os.Getpid())))</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  func main() &#123;</span><br><span class="line">      mux := http.NewServeMux()</span><br><span class="line">      mux.HandleFunc(&quot;/hello&quot;, handler)</span><br><span class="line"></span><br><span class="line">      err := grace.ListenAndServe(&quot;localhost:8080&quot;, mux)</span><br><span class="line">      if err != nil &#123;</span><br><span class="line">           log.Println(err)</span><br><span class="line">        &#125;</span><br><span class="line">      log.Println(&quot;Server on 8080 stopped&quot;)</span><br><span class="line">         os.Exit(0)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>打开两个终端</p>
+<p>一个终端输入：ps -ef|grep 应用名</p>
+<p>一个终端输入请求：curl “<a href="http://127.0.0.1:8080/hello" target="_blank" rel="external">http://127.0.0.1:8080/hello</a>“</p>
+<p>热升级</p>
+<p>kill -HUP 进程 ID</p>
+<p>打开一个终端输入请求：curl “<a href="http://127.0.0.1:8080/hello?sleep=0" target="_blank" rel="external">http://127.0.0.1:8080/hello?sleep=0</a>“</p>
+
       
     </div>
     
@@ -534,8 +545,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -554,7 +574,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">423</span>
+                  <span class="site-state-item-count">426</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -565,7 +585,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/zhangdavids.github.io/categories/index.html">
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -576,7 +596,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/zhangdavids.github.io/tags/index.html">
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -622,6 +642,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#beego-的模块化设计-grace"><span class="nav-number">1.</span> <span class="nav-text">beego 的模块化设计-grace</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -669,7 +705,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共165.6k字</span>
+  <span class="post-count">博客全站共168k字</span>
 </div>
 
         

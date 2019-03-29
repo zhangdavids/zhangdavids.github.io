@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="golang," />
 
 
 
@@ -81,16 +81,25 @@
 
 
 
-<meta name="description" content="曾因酒醉鞭名马 生怕情多累美人">
+<meta name="description" content="beego 模块化设计之cachebeego 的 cache 模块是用来做数据缓存的，设计思路来自于 database/sql，目前支持 file、memcache、memory 和 redis 四种引擎，安装方式如下：
+go get github.com/astaxie/beego/cache
+go get -u github.com/astaxie/beego/cache/memcache
+i">
 <meta property="og:type" content="article">
 <meta property="og:title" content="2019-go-22">
 <meta property="og:url" content="https://zhangdavids.github.io/2019/03/14/2019-go-22/index.html">
 <meta property="og:site_name" content="上药三品，神与气精">
-<meta property="og:description" content="曾因酒醉鞭名马 生怕情多累美人">
-<meta property="og:updated_time" content="2019-03-14T01:10:24.472Z">
+<meta property="og:description" content="beego 模块化设计之cachebeego 的 cache 模块是用来做数据缓存的，设计思路来自于 database/sql，目前支持 file、memcache、memory 和 redis 四种引擎，安装方式如下：
+go get github.com/astaxie/beego/cache
+go get -u github.com/astaxie/beego/cache/memcache
+i">
+<meta property="og:updated_time" content="2019-03-28T09:11:52.504Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2019-go-22">
-<meta name="twitter:description" content="曾因酒醉鞭名马 生怕情多累美人">
+<meta name="twitter:description" content="beego 模块化设计之cachebeego 的 cache 模块是用来做数据缓存的，设计思路来自于 database/sql，目前支持 file、memcache、memory 和 redis 四种引擎，安装方式如下：
+go get github.com/astaxie/beego/cache
+go get -u github.com/astaxie/beego/cache/memcache
+i">
 
 
 
@@ -349,6 +358,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/golang/" itemprop="url" rel="index">
+                    <span itemprop="name">golang</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -381,7 +412,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  125
                 </span>
               
 
@@ -418,7 +449,18 @@
       
 
       
-        
+        <h2 id="beego-模块化设计之cache"><a href="#beego-模块化设计之cache" class="headerlink" title="beego 模块化设计之cache"></a>beego 模块化设计之cache</h2><p>beego 的 cache 模块是用来做数据缓存的，设计思路来自于 database/sql，目前支持 file、memcache、memory 和 redis 四种引擎，安装方式如下：</p>
+<pre><code>go get github.com/astaxie/beego/cache
+go get -u github.com/astaxie/beego/cache/memcache
+import _ &quot;github.com/astaxie/beego/cache/memcache&quot;
+</code></pre><p>使用先初始化 然后 增删改缓存即可</p>
+<pre><code>bm, err := cache.NewCache(&quot;memory&quot;, `{&quot;interval&quot;:60}`)
+
+bm.Put(&quot;astaxie&quot;, 1, 10*time.Second)
+bm.Get(&quot;astaxie&quot;)
+bm.IsExist(&quot;astaxie&quot;)
+bm.Delete(&quot;astaxie&quot;)
+</code></pre>
       
     </div>
     
@@ -432,6 +474,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/zhangdavids.github.io/tags/golang/" rel="tag"># golang</a>
+          
+        </div>
       
 
       
@@ -506,8 +554,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -526,7 +583,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">423</span>
+                  <span class="site-state-item-count">426</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -537,7 +594,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/zhangdavids.github.io/categories/index.html">
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -548,7 +605,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/zhangdavids.github.io/tags/index.html">
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -594,6 +651,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#beego-模块化设计之cache"><span class="nav-number">1.</span> <span class="nav-text">beego 模块化设计之cache</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -641,7 +714,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共165.6k字</span>
+  <span class="post-count">博客全站共168k字</span>
 </div>
 
         

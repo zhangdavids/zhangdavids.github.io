@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="beego," />
 
 
 
@@ -81,16 +81,22 @@
 
 
 
-<meta name="description" content="曾因酒醉鞭名马 生怕情多累美人">
+<meta name="description" content="beego 模块化设计之logs用来处理日志的库，它的设计思路来自于 database/sql，目前支持的引擎有 file、console、net、smtp，
+使用
+123456789101112131415161718192021logs.SetLogger(logs.AdapterFile,`&amp;#123;&amp;quot;filename&amp;quot;:&amp;quot;project.log&amp;quot;,">
 <meta property="og:type" content="article">
 <meta property="og:title" content="2019-go-23">
 <meta property="og:url" content="https://zhangdavids.github.io/2019/03/14/2019-go-23/index.html">
 <meta property="og:site_name" content="上药三品，神与气精">
-<meta property="og:description" content="曾因酒醉鞭名马 生怕情多累美人">
-<meta property="og:updated_time" content="2019-03-14T01:10:30.216Z">
+<meta property="og:description" content="beego 模块化设计之logs用来处理日志的库，它的设计思路来自于 database/sql，目前支持的引擎有 file、console、net、smtp，
+使用
+123456789101112131415161718192021logs.SetLogger(logs.AdapterFile,`&amp;#123;&amp;quot;filename&amp;quot;:&amp;quot;project.log&amp;quot;,">
+<meta property="og:updated_time" content="2019-03-28T09:15:50.749Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2019-go-23">
-<meta name="twitter:description" content="曾因酒醉鞭名马 生怕情多累美人">
+<meta name="twitter:description" content="beego 模块化设计之logs用来处理日志的库，它的设计思路来自于 database/sql，目前支持的引擎有 file、console、net、smtp，
+使用
+123456789101112131415161718192021logs.SetLogger(logs.AdapterFile,`&amp;#123;&amp;quot;filename&amp;quot;:&amp;quot;project.log&amp;quot;,">
 
 
 
@@ -349,6 +355,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/beego/" itemprop="url" rel="index">
+                    <span itemprop="name">beego</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -381,7 +409,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  195
                 </span>
               
 
@@ -418,7 +446,9 @@
       
 
       
-        
+        <h2 id="beego-模块化设计之logs"><a href="#beego-模块化设计之logs" class="headerlink" title="beego 模块化设计之logs"></a>beego 模块化设计之logs</h2><p>用来处理日志的库，它的设计思路来自于 database/sql，目前支持的引擎有 file、console、net、smtp，</p>
+<p>使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">logs.SetLogger(logs.AdapterFile,`&#123;&quot;filename&quot;:&quot;project.log&quot;,&quot;level&quot;:7,&quot;maxlines&quot;:0,&quot;maxsize&quot;:0,&quot;daily&quot;:true,&quot;maxdays&quot;:10,&quot;color&quot;:true&#125;`)</span><br><span class="line"></span><br><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;github.com/astaxie/beego/logs&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">    //an official log.Logger</span><br><span class="line">    l := logs.GetLogger()</span><br><span class="line">    l.Println(&quot;this is a message of http&quot;)</span><br><span class="line">    //an official log.Logger with prefix ORM</span><br><span class="line">    logs.GetLogger(&quot;ORM&quot;).Println(&quot;this is a message of orm&quot;)</span><br><span class="line"></span><br><span class="line">    logs.Debug(&quot;my book is bought in the year of &quot;, 2016)</span><br><span class="line">    logs.Info(&quot;this %s cat is %v years old&quot;, &quot;yellow&quot;, 3)</span><br><span class="line">    logs.Warn(&quot;json is a type of kv like&quot;, map[string]int&#123;&quot;key&quot;: 2016&#125;)</span><br><span class="line">    logs.Error(1024, &quot;is a very&quot;, &quot;good game&quot;)</span><br><span class="line">    logs.Critical(&quot;oh,crash&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -432,6 +462,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/zhangdavids.github.io/tags/beego/" rel="tag"># beego</a>
+          
+        </div>
       
 
       
@@ -506,8 +542,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -526,7 +571,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">423</span>
+                  <span class="site-state-item-count">426</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -537,7 +582,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/zhangdavids.github.io/categories/index.html">
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -548,7 +593,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/zhangdavids.github.io/tags/index.html">
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -594,6 +639,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#beego-模块化设计之logs"><span class="nav-number">1.</span> <span class="nav-text">beego 模块化设计之logs</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -641,7 +702,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共165.6k字</span>
+  <span class="post-count">博客全站共168k字</span>
 </div>
 
         

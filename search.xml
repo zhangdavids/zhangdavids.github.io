@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[2019-go-28]]></title>
+    <url>%2Fzhangdavids.github.io%2F2019%2F03%2F28%2F2019-go-28%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
+    <title><![CDATA[2019-go-27]]></title>
+    <url>%2Fzhangdavids.github.io%2F2019%2F03%2F28%2F2019-go-27%2F</url>
+    <content type="text"><![CDATA[beego 模块化设计之 config解析文件的库，它的设计思路来自于 database/sql，目前支持解析的文件格式有 ini、json、xml、yaml 初始化解析器 iniconf, err := NewConfig(&quot;ini&quot;, &quot;testini.conf&quot;) if err != nil { t.Fatal(err) } iniconf.String(&quot;appname&quot;) 解析器对象支持的函数有如下： Set(key, val string) error String(key string) string Int(key string) (int, error) Int64(key string) (int64, error) Bool(key string) (bool, error) Float(key string) (float64, error) DIY(key string) (interface{}, error)]]></content>
+      <categories>
+        <category>golang</category>
+      </categories>
+      <tags>
+        <tag>golang</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[2019-go-26]]></title>
+    <url>%2Fzhangdavids.github.io%2F2019%2F03%2F28%2F2019-go-26%2F</url>
+    <content type="text"><![CDATA[beego 模块化设计之 toolbox健康检查 监控检查是用于当你应用于产品环境中进程，检查当前的状态是否正常， 12345678910type DatabaseCheck struct &#123;&#125;func (dc *DatabaseCheck) Check() error &#123; if dc.isConnected() &#123; return nil &#125; else &#123; return errors.New(&quot;can&apos;t connect database&quot;) &#125;&#125; toolbox.AddHealthCheck(&quot;database&quot;,&amp;DatabaseCheck{}) curl http://beego.me:8088/healthcheck 性能调试、访问统计、计划任务。 对于运行中的进程的性能监控是我们进行程序调优和查找问题的最佳方法，例如 GC、goroutine 等基础信息。profile 提供了方便的入口方便用户来调试程序，他主要是通过入口函数 ProcessInput 来进行处理各类请求，主要包括以下几种调试： lookup goroutine/heap/threadcreate/block/ start cpuprof 开始记录 cpuprof 信息，生产一个文件 cpu-pid.pprof，开始记录当前进程的 CPU 处理信息 stop cpuprof 关闭记录信息 get memprof 开启记录 memprof，生产一个文件 mem-pid.memprof gc summary 查看 GC 信息 toolbox.StatisticsMap.AddStatistics(&quot;POST&quot;, &quot;/api/user&quot;, &quot;&amp;admin.user&quot;, time.Duration(2000)) toolbox.StatisticsMap.AddStatistics(&quot;POST&quot;, &quot;/api/user&quot;, &quot;&amp;admin.user&quot;, time.Duration(120000)) toolbox.StatisticsMap.AddStatistics(&quot;GET&quot;, &quot;/api/user&quot;, &quot;&amp;admin.user&quot;, time.Duration(13000)) toolbox.StatisticsMap.AddStatistics(&quot;POST&quot;, &quot;/api/admin&quot;, &quot;&amp;admin.user&quot;, time.Duration(14000)) toolbox.StatisticsMap.AddStatistics(&quot;POST&quot;, &quot;/api/user/astaxie&quot;, &quot;&amp;admin.user&quot;, time.Duration(12000)) toolbox.StatisticsMap.AddStatistics(&quot;POST&quot;, &quot;/api/user/xiemengjun&quot;, &quot;&amp;admin.user&quot;, time.Duration(13000)) toolbox.StatisticsMap.AddStatistics(&quot;DELETE&quot;, &quot;/api/user&quot;, &quot;&amp;admin.user&quot;, time.Duration(1400)) toolbox.StatisticsMap.GetMap(os.Stdout) 玩过 linux 的用户都知道有一个计划任务的工具 crontab，我们经常利用该工具来定时的做一些任务，但是有些时候我们的进程内也希望定时的来处理一些事情，例如定时的汇报当前进程的内存信息，goroutine 信息等。或者定时的进行手工触发 GC，或者定时的清理一些日志数据等，所以实现了秒级别的定时任务，首先让我们看看如何使用： tk1 := toolbox.NewTask(&quot;tk1&quot;, &quot;0 12 * * * *&quot;, func() error { fmt.Println(&quot;tk1&quot;); return nil }) err := tk.Run() if err != nil { t.Fatal(err) } toolbox.AddTask(&quot;tk1&quot;, tk1) toolbox.StartTask() defer toolbox.StopTask() 字段的详细说明 //前6个字段分别表示： // 秒钟：0-59 // 分钟：0-59 // 小时：1-23 // 日期：1-31 // 月份：1-12 // 星期：0-6（0 表示周日） //还可以用一些特殊符号： // *： 表示任何时刻 // ,： 表示分割，如第三段里：2,4，表示 2 点和 4 点执行 // －：表示一个段，如第三端里： 1-5，就表示 1 到 5 点 // /n : 表示每个n的单位执行一次，如第三段里，*/1, 就表示每隔 1 个小时执行一次命令。也可以写成1-23/1. ///////////////////////////////////////////////////////// // 0/30 * * * * * 每 30 秒 执行 // 0 43 21 * * * 21:43 执行 // 0 15 05 * * * 05:15 执行 // 0 0 17 * * * 17:00 执行 // 0 0 17 * * 1 每周一的 17:00 执行 // 0 0,10 17 * * 0,2,3 每周日,周二,周三的 17:00和 17:10 执行 // 0 0-10 17 1 * * 毎月1日从 17:00 到 7:10 毎隔 1 分钟 执行 // 0 0 0 1,15 * 1 毎月1日和 15 日和 一日的 0:00 执行 // 0 42 4 1 * * 毎月1日的 4:42 分 执行 // 0 0 21 * * 1-6 周一到周六 21:00 执行 // 0 0,10,20,30,40,50 * * * * 每隔 10 分 执行 // 0 */10 * * * * 每隔 10 分 执行 // 0 * 1 * * * 从 1:0 到 1:59 每隔 1 分钟 执行 // 0 0 1 * * * 1:00 执行 // 0 0 */1 * * * 毎时 0 分 每隔 1 小时 执行 // 0 0 * * * * 毎时 0 分 每隔 1 小时 执行 // 0 2 8-20/3 * * * 8:02,11:02,14:02,17:02,20:02 执行 // 0 30 5 1,15 * * 1 日 和 15 日的 5:30 执行]]></content>
+      <categories>
+        <category>golang</category>
+      </categories>
+      <tags>
+        <tag>golang</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[1024-2-poisonous-40]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F03%2F28%2F1024-2-poisonous-40%2F</url>
     <content type="text"><![CDATA[1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374from random import randrangedef to_b4(n): return [n/4**k%4 for k in range(5)]def fr_b4(li): return sum([li[k]*4**k for k in range(5)])def drink(p1,p2): li1,li2 = to_b4(p1),to_b4(p2) g0 = [li1[k]==0 or li2[k]==0 for k in range(5)] g1 = [li1[k]==1 or li2[k]==1 for k in range(5)] g2 = [li1[k]==2 or li2[k]==2 for k in range(5)] g3 = [li1[k]==3 or li2[k]==3 for k in range(5)] gc,gf = &#123;&#125;,&#123;&#125; for i in range(4): for j in range(i+1,5): diff1 = abs(li1[i]-li1[j]) diff2 = abs(li2[i]-li2[j]) gc[i,j] = diff1 == 1 or diff2 == 1 gf[i,j] = diff1 &gt; 1 or diff2 &gt; 1 return g0,g1,g2,g3,gc,gfdef check(u,v,d1,d2,c,f): a = [[0,1,2,2],[1,0,1,2],[2,1,0,1],[2,2,1,0]] a11 = a[u][d1] a22 = a[v][d2] c1 = a11 == 1 or a22 == 1 f1 = a11 == 2 or a22 == 2 if c == c1 and f == f1: return u,v else: return v,udef test(g0,g1,g2,g3,gc,gf): diff = 5 t1,t2 = range(5),range(5) for k in range(4,-1,-1): li = [g0[k],g1[k],g2[k],g3[k]] u = li.index(True) if (li.count(True) == 1): t1[k],t2[k] = u,u else: li[u] = False v = li.index(True) if diff == 5: diff = k t1[k],t2[k] = u,v else: t1[k],t2[k] = check(u,v,t1[diff],t2[diff],gc[k,diff],gf[k,diff]) return fr_b4(t1),fr_b4(t2)poison1 = randrange(1024)poison2 = (poison1 + randrange(1,1024)) % 1024g0,g1,g2,g3,gc,gf = drink(poison1,poison2)target1,target2 = test(g0,g1,g2,g3,gc,gf)print poison1,poison2print to_b4(poison1)print to_b4(poison2)print &quot;0:&quot;,g0print &quot;1:&quot;,g1print &quot;2:&quot;,g2print &quot;3:&quot;,g3print &quot;c:&quot;,gcprint &quot;f:&quot;,gfprint target1,target2]]></content>
@@ -233,22 +260,43 @@
   <entry>
     <title><![CDATA[2019-go-25]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F03%2F14%2F2019-go-25%2F</url>
-    <content type="text"></content>
+    <content type="text"><![CDATA[beego 模块化设计之 context上下文模块主要是针对 HTTP 请求中，request 和 response 的进一步封装，他包括用户的输入和输出，用户的输入即为 request，context 模块中提供了 Input 对象进行解析，用户的输出即为 response，context 模块中提供了 Output 对象进行输出。 context 对象是对 Input 和 Output 的封装，里面封装了几个方法： Redirect Abort WriteString GetCookie SetCookie context 对象是 Filter 函数的参数对象，这样你就可以通过 filter 来修改相应的数据，或者提前结束整个的执行过程。]]></content>
+      <categories>
+        <category>golang</category>
+      </categories>
+      <tags>
+        <tag>golang</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[2019-go-24]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F03%2F14%2F2019-go-24%2F</url>
-    <content type="text"></content>
+    <content type="text"><![CDATA[beego 模块化设计之httplibhttplib 库主要用来模拟客户端发送 HTTP 请求，类似于 Curl 工具，支持 JQuery 类似的链式操作。使用起来相当的方便； 有点像 requests模块 httplib 包里面支持如下的方法返回 request 对象： Get(url string) Post(url string) Put(url string) Delete(url string) Head(url string) 发送文件 req := httplib.Post(&quot;http://beego.me/&quot;) bt,err:=ioutil.ReadFile(&quot;hello.txt&quot;) if err!=nil{ log.Fatal(&quot;read file err:&quot;,err) } req.Body(bt) 文件直接上传接口 b:=httplib.Post(&quot;http://beego.me/&quot;) b.Param(&quot;username&quot;,&quot;astaxie&quot;) b.Param(&quot;password&quot;,&quot;123456&quot;) b.PostFile(&quot;uploadfile1&quot;, &quot;httplib.pdf&quot;) b.PostFile(&quot;uploadfile2&quot;, &quot;httplib.txt&quot;) str, err := b.String() if err != nil { t.Fatal(err) } 获取数据主要有如下几种方式： 返回 Response 对象，req.Response() 方法 这个是 http.Response 对象，用户可以自己读取 body 的数据等。 返回 bytes, req.Bytes() 方法 直接返回请求 URL 返回的内容 返回 string，req.String() 方法 直接返回请求 URL 返回的内容 保存为文件，req.ToFile(filename) 方法 返回结果保存到文件名为 filename 的文件中 解析为 JSON 结构，req.ToJSON(&amp;result) 方法 返回结构直接解析为 JSON 格式，解析到 result 对象中 解析为 XML 结构，req.ToXml(&amp;result) 方法 返回结构直接解析为 XML 格式，解析到 result 对象中]]></content>
+      <tags>
+        <tag>golang</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[2019-go-23]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F03%2F14%2F2019-go-23%2F</url>
-    <content type="text"></content>
+    <content type="text"><![CDATA[beego 模块化设计之logs用来处理日志的库，它的设计思路来自于 database/sql，目前支持的引擎有 file、console、net、smtp， 使用 123456789101112131415161718192021logs.SetLogger(logs.AdapterFile,`&#123;&quot;filename&quot;:&quot;project.log&quot;,&quot;level&quot;:7,&quot;maxlines&quot;:0,&quot;maxsize&quot;:0,&quot;daily&quot;:true,&quot;maxdays&quot;:10,&quot;color&quot;:true&#125;`)package mainimport ( &quot;github.com/astaxie/beego/logs&quot;)func main() &#123; //an official log.Logger l := logs.GetLogger() l.Println(&quot;this is a message of http&quot;) //an official log.Logger with prefix ORM logs.GetLogger(&quot;ORM&quot;).Println(&quot;this is a message of orm&quot;) logs.Debug(&quot;my book is bought in the year of &quot;, 2016) logs.Info(&quot;this %s cat is %v years old&quot;, &quot;yellow&quot;, 3) logs.Warn(&quot;json is a type of kv like&quot;, map[string]int&#123;&quot;key&quot;: 2016&#125;) logs.Error(1024, &quot;is a very&quot;, &quot;good game&quot;) logs.Critical(&quot;oh,crash&quot;)&#125;]]></content>
+      <categories>
+        <category>beego</category>
+      </categories>
+      <tags>
+        <tag>beego</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[2019-go-22]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F03%2F14%2F2019-go-22%2F</url>
-    <content type="text"></content>
+    <content type="text"><![CDATA[beego 模块化设计之cachebeego 的 cache 模块是用来做数据缓存的，设计思路来自于 database/sql，目前支持 file、memcache、memory 和 redis 四种引擎，安装方式如下： go get github.com/astaxie/beego/cache go get -u github.com/astaxie/beego/cache/memcache import _ &quot;github.com/astaxie/beego/cache/memcache&quot; 使用先初始化 然后 增删改缓存即可 bm, err := cache.NewCache(&quot;memory&quot;, `{&quot;interval&quot;:60}`) bm.Put(&quot;astaxie&quot;, 1, 10*time.Second) bm.Get(&quot;astaxie&quot;) bm.IsExist(&quot;astaxie&quot;) bm.Delete(&quot;astaxie&quot;)]]></content>
+      <categories>
+        <category>golang</category>
+      </categories>
+      <tags>
+        <tag>golang</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[2019-go-21]]></title>
@@ -1073,7 +1121,7 @@
   <entry>
     <title><![CDATA[2019-go-10]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F02%2F23%2F2019-go-10%2F</url>
-    <content type="text"></content>
+    <content type="text"><![CDATA[beego 的模块化设计-gracegrace 模块是 beego 新增的一个独立支持热重启的模块。 1234567891011121314151617181920212223242526import( &quot;log&quot; &quot;net/http&quot; &quot;os&quot; &quot;strconv&quot; &quot;github.com/astaxie/beego/grace&quot; ) func handler(w http.ResponseWriter, r *http.Request) &#123; w.Write([]byte(&quot;WORLD!&quot;)) w.Write([]byte(&quot;ospid:&quot; + strconv.Itoa(os.Getpid()))) &#125; func main() &#123; mux := http.NewServeMux() mux.HandleFunc(&quot;/hello&quot;, handler) err := grace.ListenAndServe(&quot;localhost:8080&quot;, mux) if err != nil &#123; log.Println(err) &#125; log.Println(&quot;Server on 8080 stopped&quot;) os.Exit(0) &#125; 打开两个终端 一个终端输入：ps -ef|grep 应用名 一个终端输入请求：curl “http://127.0.0.1:8080/hello“ 热升级 kill -HUP 进程 ID 打开一个终端输入请求：curl “http://127.0.0.1:8080/hello?sleep=0“]]></content>
       <categories>
         <category>golang</category>
       </categories>
@@ -1084,7 +1132,7 @@
   <entry>
     <title><![CDATA[2019-go-09]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F02%2F23%2F2019-go-09%2F</url>
-    <content type="text"></content>
+    <content type="text"><![CDATA[beego 的模块化设计-sessionsession 模块是用来存储客户端用户，session 模块目前只支持 cookie 方式的请求，如果客户端不支持 cookie，那么就无法使用该模块。 session 模块参考了 database/sql 的引擎写法，采用了一个接口，多个实现的方式。目前实现了 memory、file、Redis 和 MySQL 四种存储引擎。 通过下面的方式安装 session： go get github.com/astaxie/beego/session 初始化 1234567891011121314func init() &#123; sessionConfig := &amp;session.ManagerConfig&#123; CookieName:&quot;gosessionid&quot;, EnableSetCookie: true, Gclifetime:3600, Maxlifetime: 3600, Secure: false, CookieLifeTime: 3600, ProviderConfig: &quot;./tmp&quot;, &#125; globalSessions, _ = session.NewManager(&quot;memory&quot;,sessionConfig) go globalSessions.GC()&#125; 一个 JSON 字符串,传入 Manager 的配置信息 cookieName: 客户端存储 cookie 的名字。 enableSetCookie,omitempty: 是否开启 SetCookie,omitempty 这个设置 gclifetime: 触发 GC 的时间。 maxLifetime: 服务器端存储的数据的过期时间 secure: 是否开启 HTTPS，在 cookie 设置的时候有 cookie.Secure 设置。 sessionIDHashFunc: sessionID 生产的函数，默认是 sha1 算法。 sessionIDHashKey: hash 算法中的 key。 cookieLifeTime: 客户端存储的 cookie 的时间，默认值是 0，即浏览器生命周期。 providerConfig: 配置信息，根据不同的引擎设置不同的配置信息，详细的配置请看下面的引擎设置 最后的逻辑处理 123456789101112func login(w http.ResponseWriter, r *http.Request) &#123; sess, _ := globalSessions.SessionStart(w, r) defer sess.SessionRelease(w) username := sess.Get(&quot;username&quot;) if r.Method == &quot;GET&quot; &#123; t, _ := template.ParseFiles(&quot;login.gtpl&quot;) t.Execute(w, nil) &#125; else &#123; sess.Set(&quot;username&quot;, r.Form[&quot;username&quot;]) &#125;&#125;]]></content>
       <categories>
         <category>golang</category>
       </categories>

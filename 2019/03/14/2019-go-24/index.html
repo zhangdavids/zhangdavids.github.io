@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="golang," />
 
 
 
@@ -81,16 +81,37 @@
 
 
 
-<meta name="description" content="曾因酒醉鞭名马 生怕情多累美人">
+<meta name="description" content="beego 模块化设计之httplibhttplib 库主要用来模拟客户端发送 HTTP 请求，类似于 Curl 工具，支持 JQuery 类似的链式操作。使用起来相当的方便；
+有点像 requests模块
+httplib 包里面支持如下的方法返回 request 对象：
+
+Get(url string)
+Post(url string)
+Put(url string)
+Delete(url st">
 <meta property="og:type" content="article">
 <meta property="og:title" content="2019-go-24">
 <meta property="og:url" content="https://zhangdavids.github.io/2019/03/14/2019-go-24/index.html">
 <meta property="og:site_name" content="上药三品，神与气精">
-<meta property="og:description" content="曾因酒醉鞭名马 生怕情多累美人">
-<meta property="og:updated_time" content="2019-03-14T01:10:35.227Z">
+<meta property="og:description" content="beego 模块化设计之httplibhttplib 库主要用来模拟客户端发送 HTTP 请求，类似于 Curl 工具，支持 JQuery 类似的链式操作。使用起来相当的方便；
+有点像 requests模块
+httplib 包里面支持如下的方法返回 request 对象：
+
+Get(url string)
+Post(url string)
+Put(url string)
+Delete(url st">
+<meta property="og:updated_time" content="2019-03-28T09:22:36.901Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2019-go-24">
-<meta name="twitter:description" content="曾因酒醉鞭名马 生怕情多累美人">
+<meta name="twitter:description" content="beego 模块化设计之httplibhttplib 库主要用来模拟客户端发送 HTTP 请求，类似于 Curl 工具，支持 JQuery 类似的链式操作。使用起来相当的方便；
+有点像 requests模块
+httplib 包里面支持如下的方法返回 request 对象：
+
+Get(url string)
+Post(url string)
+Put(url string)
+Delete(url st">
 
 
 
@@ -381,7 +402,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  347
                 </span>
               
 
@@ -418,7 +439,49 @@
       
 
       
-        
+        <h2 id="beego-模块化设计之httplib"><a href="#beego-模块化设计之httplib" class="headerlink" title="beego 模块化设计之httplib"></a>beego 模块化设计之httplib</h2><p>httplib 库主要用来模拟客户端发送 HTTP 请求，类似于 Curl 工具，支持 JQuery 类似的链式操作。使用起来相当的方便；</p>
+<p>有点像 requests模块</p>
+<p>httplib 包里面支持如下的方法返回 request 对象：</p>
+<ul>
+<li>Get(url string)</li>
+<li>Post(url string)</li>
+<li>Put(url string)</li>
+<li>Delete(url string)</li>
+<li>Head(url string)</li>
+</ul>
+<p>发送文件</p>
+<pre><code>req := httplib.Post(&quot;http://beego.me/&quot;)
+bt,err:=ioutil.ReadFile(&quot;hello.txt&quot;)
+if err!=nil{
+    log.Fatal(&quot;read file err:&quot;,err)
+}
+req.Body(bt)
+</code></pre><p>文件直接上传接口</p>
+<pre><code>b:=httplib.Post(&quot;http://beego.me/&quot;)
+b.Param(&quot;username&quot;,&quot;astaxie&quot;)
+b.Param(&quot;password&quot;,&quot;123456&quot;)
+b.PostFile(&quot;uploadfile1&quot;, &quot;httplib.pdf&quot;)
+b.PostFile(&quot;uploadfile2&quot;, &quot;httplib.txt&quot;)
+str, err := b.String()
+if err != nil {
+    t.Fatal(err)
+}
+</code></pre><p>获取数据主要有如下几种方式：</p>
+<ul>
+<li><p>返回 Response 对象，req.Response() 方法 这个是 http.Response 对象，用户可以自己读取 body 的数据等。</p>
+</li>
+<li><p>返回 bytes,  req.Bytes() 方法 直接返回请求 URL 返回的内容</p>
+</li>
+<li><p>返回 string，req.String() 方法 直接返回请求 URL 返回的内容</p>
+</li>
+<li><p>保存为文件，req.ToFile(filename) 方法 返回结果保存到文件名为 filename 的文件中</p>
+</li>
+<li><p>解析为 JSON 结构，req.ToJSON(&amp;result) 方法 返回结构直接解析为 JSON 格式，解析到 result 对象中</p>
+</li>
+<li><p>解析为 XML 结构，req.ToXml(&amp;result) 方法 返回结构直接解析为 XML 格式，解析到 result 对象中</p>
+</li>
+</ul>
+
       
     </div>
     
@@ -432,6 +495,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/zhangdavids.github.io/tags/golang/" rel="tag"># golang</a>
+          
+        </div>
       
 
       
@@ -506,8 +575,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -526,7 +604,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">423</span>
+                  <span class="site-state-item-count">426</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -537,7 +615,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/zhangdavids.github.io/categories/index.html">
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -548,7 +626,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/zhangdavids.github.io/tags/index.html">
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -594,6 +672,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#beego-模块化设计之httplib"><span class="nav-number">1.</span> <span class="nav-text">beego 模块化设计之httplib</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -641,7 +735,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共165.6k字</span>
+  <span class="post-count">博客全站共168k字</span>
 </div>
 
         

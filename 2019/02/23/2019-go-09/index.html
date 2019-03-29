@@ -81,16 +81,22 @@
 
 
 
-<meta name="description" content="曾因酒醉鞭名马 生怕情多累美人">
+<meta name="description" content="beego 的模块化设计-sessionsession 模块是用来存储客户端用户，session 模块目前只支持 cookie 方式的请求，如果客户端不支持 cookie，那么就无法使用该模块。
+session 模块参考了 database/sql 的引擎写法，采用了一个接口，多个实现的方式。目前实现了 memory、file、Redis 和 MySQL 四种存储引擎。
+通过下面的方式安装 ses">
 <meta property="og:type" content="article">
 <meta property="og:title" content="2019-go-09">
 <meta property="og:url" content="https://zhangdavids.github.io/2019/02/23/2019-go-09/index.html">
 <meta property="og:site_name" content="上药三品，神与气精">
-<meta property="og:description" content="曾因酒醉鞭名马 生怕情多累美人">
-<meta property="og:updated_time" content="2019-03-03T07:38:14.354Z">
+<meta property="og:description" content="beego 的模块化设计-sessionsession 模块是用来存储客户端用户，session 模块目前只支持 cookie 方式的请求，如果客户端不支持 cookie，那么就无法使用该模块。
+session 模块参考了 database/sql 的引擎写法，采用了一个接口，多个实现的方式。目前实现了 memory、file、Redis 和 MySQL 四种存储引擎。
+通过下面的方式安装 ses">
+<meta property="og:updated_time" content="2019-03-28T09:04:18.726Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2019-go-09">
-<meta name="twitter:description" content="曾因酒醉鞭名马 生怕情多累美人">
+<meta name="twitter:description" content="beego 的模块化设计-sessionsession 模块是用来存储客户端用户，session 模块目前只支持 cookie 方式的请求，如果客户端不支持 cookie，那么就无法使用该模块。
+session 模块参考了 database/sql 的引擎写法，采用了一个接口，多个实现的方式。目前实现了 memory、file、Redis 和 MySQL 四种存储引擎。
+通过下面的方式安装 ses">
 
 
 
@@ -403,7 +409,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  376
                 </span>
               
 
@@ -440,7 +446,26 @@
       
 
       
-        
+        <h2 id="beego-的模块化设计-session"><a href="#beego-的模块化设计-session" class="headerlink" title="beego 的模块化设计-session"></a>beego 的模块化设计-session</h2><p>session 模块是用来存储客户端用户，session 模块目前只支持 cookie 方式的请求，如果客户端不支持 cookie，那么就无法使用该模块。</p>
+<p>session 模块参考了 database/sql 的引擎写法，采用了一个接口，多个实现的方式。目前实现了 memory、file、Redis 和 MySQL 四种存储引擎。</p>
+<p>通过下面的方式安装 session：</p>
+<pre><code>go get github.com/astaxie/beego/session
+</code></pre><p>初始化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">func init() &#123;</span><br><span class="line">        sessionConfig := &amp;session.ManagerConfig&#123;</span><br><span class="line">    CookieName:&quot;gosessionid&quot;, </span><br><span class="line">    EnableSetCookie: true, </span><br><span class="line">    Gclifetime:3600,</span><br><span class="line">    Maxlifetime: 3600, </span><br><span class="line">    Secure: false,</span><br><span class="line">    CookieLifeTime: 3600,</span><br><span class="line">    ProviderConfig: &quot;./tmp&quot;,</span><br><span class="line">    &#125;</span><br><span class="line">    globalSessions, _ = session.NewManager(&quot;memory&quot;,sessionConfig)</span><br><span class="line">    go globalSessions.GC()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一个 JSON 字符串,传入 Manager 的配置信息</p>
+<ol>
+<li>cookieName: 客户端存储 cookie 的名字。</li>
+<li>enableSetCookie,omitempty: 是否开启 SetCookie,omitempty 这个设置</li>
+<li>gclifetime: 触发 GC 的时间。</li>
+<li>maxLifetime: 服务器端存储的数据的过期时间</li>
+<li>secure: 是否开启 HTTPS，在 cookie 设置的时候有 cookie.Secure 设置。</li>
+<li>sessionIDHashFunc: sessionID 生产的函数，默认是 sha1 算法。</li>
+<li>sessionIDHashKey: hash 算法中的 key。</li>
+<li>cookieLifeTime: 客户端存储的 cookie 的时间，默认值是 0，即浏览器生命周期。</li>
+<li>providerConfig: 配置信息，根据不同的引擎设置不同的配置信息，详细的配置请看下面的引擎设置</li>
+</ol>
+<p>最后的逻辑处理</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">func login(w http.ResponseWriter, r *http.Request) &#123;</span><br><span class="line">    sess, _ := globalSessions.SessionStart(w, r)</span><br><span class="line">    defer sess.SessionRelease(w)</span><br><span class="line">    username := sess.Get(&quot;username&quot;)</span><br><span class="line">    if r.Method == &quot;GET&quot; &#123;</span><br><span class="line">        t, _ := template.ParseFiles(&quot;login.gtpl&quot;)</span><br><span class="line">        t.Execute(w, nil)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        sess.Set(&quot;username&quot;, r.Form[&quot;username&quot;])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -534,8 +559,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -554,7 +588,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">423</span>
+                  <span class="site-state-item-count">426</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -565,7 +599,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/zhangdavids.github.io/categories/index.html">
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -576,7 +610,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/zhangdavids.github.io/tags/index.html">
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -622,6 +656,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#beego-的模块化设计-session"><span class="nav-number">1.</span> <span class="nav-text">beego 的模块化设计-session</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -669,7 +719,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共165.6k字</span>
+  <span class="post-count">博客全站共168k字</span>
 </div>
 
         
