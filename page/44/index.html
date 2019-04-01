@@ -309,6 +309,355 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/12/08/asyncio篇/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/12/08/asyncio篇/" itemprop="url">asyncio篇</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-08T13:33:05+08:00">
+                2018-12-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2018/12/08/asyncio篇/" class="leancloud_visitors" data-flag-title="asyncio篇">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  756
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Python 3.5添加了async和await这两个关键字，分别用来替换asyncio.coroutine和yield from。自此，协程成为新的语法，而不再是一种生成器类型了。</p>
+<p>事件循环与协程的引入，可以极大提高高负载下程序的I/O性能。除此之外还增加了async with(异步上下文管理)、async for(异步迭代器)语法。特别说的是，在Python 3.6里面终于可以用异步生成器了！</p>
+<p>1.给一个函数添加了async关键字，就会把它变成一个异步函数。<br>2.每个线程有一个事件循环，主线程调用asyncio.get_event_loop时会创建事件循环，你需要把异步的任务丢给这个循环的run_until_complete方法，事件循环会安排协同程序的执行。和方法名字一样，异步的任务完成方法才会就执行完成了。<br>3.为了在asyncio中使用concurrent.futures的执行器，我这用到了run_in_executor，它可以接收要同步执行的任务。<br>4.给task设置<strong>num属性，是因为后面的completed中的Future对象只包含结果，但是我们并不知道num是什么，所以hack了下，之后的例子中会有其他的方案，本文是给大家提供各种解题的思路，在合适的场景还是有用处的。<br>5.await asyncio.wait(blocking_tasks)就是协同的执行那些同步的任务，直到完成。<br>6.最后根据</strong>num找到和执行结果的对应关系，排序然后打印结果。</p>
+<p>async/await是Python提供的异步编程API，而asyncio只是一个利用 async/await API进行异步编程的框架</p>
+<p>现存的一些库其实并不能原生的支持asyncio（因为会发生阻塞或者功能不可用），比如requests，如果要写爬虫，配合asyncio的应该用aiohttp，其他的如数据库驱动等各种Python对应的库也都得使用对应的aioXXX版本了</p>
+<p>简单的说，进程/线程是操作系统充当了EventLoop调度，而协程是自己用epoll进行调度。</p>
+<p>协程是异步非阻塞的另外一种展现形式。Golang，Erlang，Lua协程都是这个模型。</p>
+<p>协程之间的切换，往往是用户通过代码来显式指定的（跟各种 callback 类似），不需要内核参与，可以很方便的实现异步。</p>
+<p>协程本质上也是异步非阻塞技术，它是将事件回调进行了包装，让程序员看不到里面的事件循环。程序员就像写阻塞代码一样简单。比如调用 client-&gt;recv() 等待接收数据时，就像阻塞代码一样写。实际上是底层库在执行recv时悄悄保存了一个状态，比如代码行数，局部变量的值。然后就跳回到EventLoop中了。什么时候真的数据到来时，它再把刚才保存的代码行数，局部变量值取出来，又开始继续执行。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/12/08/why-not-gevent/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/12/08/why-not-gevent/" itemprop="url">why-not-gevent</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-08T12:48:14+08:00">
+                2018-12-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2018/12/08/why-not-gevent/" class="leancloud_visitors" data-flag-title="why-not-gevent">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.1k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在python 的并发编程领域 以前有tornado 后来有gevent</p>
+<p>python 在发展的过程当中 有过一些失败的修复CPython 的缺陷和提高性能的尝试，比如消除GIL（这么多年 这么多的大牛 没有一个解决的方案？？？） 也有成功的案例 比如 Pypy</p>
+<p>协程</p>
+<p>每个人都在谈论协程的好处 优点 为了KPI 强行上协程 并不可取。</p>
+<p>Coroutine 也就是 corporate routine，直译为「协同的例程」，中文一般叫做「协程」, 实际上这个概念和进程与线程有相似之处, 因为linux线程就是所谓的「轻量级进程」。</p>
+<p>gevent源码分析的描述当中</p>
+<p>相同点:<br>二者都是可以看做是一种执行流, 该执行流可以挂起,并且在将来又可以在 你挂起的地方恢复执行, 这实际上都可以看做是continuation, 我们来看看当我们挂 起一个执行流时我们要保存的东西：<br>栈, 因为如果你不保存栈,那么局部变量你就无法恢复,同时函数的调用链你也无 法恢复,<br>寄存器的状态: 这好理解, 比如说EIP,如果你不保存,那么你恢复执行流就不知道 到底执行哪一条指令, 在比如说ESP,EBP, 如果你不保存,那么你即便有完整的栈 你也不知道怎么用.<br>这二者实际就是所谓的上下文,也可以说是continuation. 在执行流切换时必须保存 这两个东西, 内核调度进程时也是一回事.</p>
+<p>不同点:<br>执行流的调度者不同, 进程是内核调度, 而协程是在用户态调度, 也就是说进程 的上下文是在内核态保存恢复的,而协程是在用户态保存恢复的. 很显然用户态的 代价更低<br>进程会被抢占,而协程不会,也就是说协程如果不主动让出CPU,那么其他的协程是不 可能得到执行机会,这实际和早期的操作系统类似,比如DOS, 它有一个yield原语, 一个进程调用yield,那么它就会让出CPU, 其他的进程也就有机会执行了, 如果一 个进程进入了死循环,那么整个系统也就挂起了,永远无法运行其他的进程了, 但 对协程而言,这不是问题<br>对内存的占用不同,实际上协程可以只需要4K的栈就够了, 而进程占用的内存要大 的多.<br>从操作系统的角度讲, 多协程的程序是单线程,单进程的</p>
+<p>协程的优势在于</p>
+<p>由开发者决定协程的切换，操作系统无法干预切换，且占用内存小的多。</p>
+<p>Gevent是一种基于协程的Python网络库，它用到Greenlet提供的，封装了libevent事件循环的高层同步API。它让开发者在不改变编程习惯的同时，用同步的方式写异步I/O的代码。</p>
+<p>gevent 缺点</p>
+<ul>
+<li>Monkey-patching。中文「猴子补丁」，常用于对测试环境做一些hack。我个人不太喜欢这种「黑魔法」，因为如果其他人不了解细节，极为容易产生困惑。Gvanrossum说用它就是”patch-and-pray”，太形象了。由于Gevent直接修改标准库里面大部分的阻塞式系统调用，包括socket、ssl、threading和 select等模块，而变为协作式运行。但是我们无法保证你在复杂的生产环境中有哪些地方使用这些标准库会由于打了补丁而出现奇怪的问题，那么你只能祈祷（pray）了。其次，在Python之禅中明确说过：「Explicit is better than implicit.」，猴子补丁明显的背离了这个原则。最后，Gvanrossum说Stackless之父Christian Tismer也赞同他。 我喜欢显式的「yield from」</li>
+<li>第三方库支持。得确保项目中用到其他用到的网络库也必须使用纯Python或者明确说明支持Gevent，而且就算有这样的第三方库，我还会担心这个第三方库的代码质量和功能性。</li>
+<li>Greenlet不支持Jython和IronPython，这样就无法把gevent设计成一个标准库了。</li>
+</ul>
+<p>建议py 3.6 之后 选择标准库 asyncio</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/12/05/协程篇/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -905,393 +1254,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/12/01/react-learning-001/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/12/01/react-learning-001/" itemprop="url">react-learning-001</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-01T10:50:31+08:00">
-                2018-12-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/frontend/" itemprop="url" rel="index">
-                    <span itemprop="name">frontend</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2018/12/01/react-learning-001/" class="leancloud_visitors" data-flag-title="react-learning-001">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  501
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  2
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="react"><a href="#react" class="headerlink" title="react"></a>react</h3><p>javascript 是一种弱类型的语言 意味着可以修改变量值的数据类型。比如可以定义某个变量为字符串类型，然后将它的值改为数组。并不会对此类操作有任何异议，因此低效管理数据类型会导致花费大量时间在调试应用程序上。</p>
-<p>react 为变量类型设置了自动属性验证的机制</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">类型</th>
-<th style="text-align:left">验证器</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">数组</td>
-<td style="text-align:left">React.PropTypes.array</td>
-</tr>
-<tr>
-<td style="text-align:left">布尔值</td>
-<td style="text-align:left">React.PropTypes.bool</td>
-</tr>
-<tr>
-<td style="text-align:left">函数</td>
-<td style="text-align:left">React.PropTypes.func</td>
-</tr>
-<tr>
-<td style="text-align:left">数字</td>
-<td style="text-align:left">React.PropTypes.number</td>
-</tr>
-<tr>
-<td style="text-align:left">对象</td>
-<td style="text-align:left">React.PropTypes.object</td>
-</tr>
-<tr>
-<td style="text-align:left">字符串</td>
-<td style="text-align:left">React.PropTypes.string</td>
-</tr>
-</tbody>
-</table>
-<p>为组件提供三种属性 标题 食材成分数组 烹饪步骤数组</p>
-<p>需要对属性进行验证 确保类型是正确的 无法通过属性验证时，提供默认参数</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> summary = createClass(&#123;</span><br><span class="line">    displayName: <span class="string">"Summary"</span>,</span><br><span class="line">    propTypes: &#123;</span><br><span class="line">        ingredients: PropTypes.array.isRequired,</span><br><span class="line">        steps: PropTypes.array.isRequired,</span><br><span class="line">        title: (props, propName) =&gt; </span><br><span class="line">            (<span class="keyword">typeof</span> props[propName] != <span class="string">'string'</span>) ?</span><br><span class="line">            <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"A title must be a string"</span>):</span><br><span class="line">            (props[propName].length &gt; <span class="number">20</span>) ?</span><br><span class="line">                <span class="keyword">new</span> Erroe(<span class="string">'title is over 20 characters'</span>):</span><br><span class="line">                <span class="literal">null</span></span><br><span class="line">        </span><br><span class="line">    &#125;,</span><br><span class="line">    getDefaultProps() &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123;</span><br><span class="line">            ingredients:[a,b,c,d],</span><br><span class="line">            steps: [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>],</span><br><span class="line">            title: <span class="string">"[recipe]"</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="keyword">const</span> &#123; ingredients, steps, title &#125; = <span class="keyword">this</span>.props</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">"summary"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">h1</span>&gt;</span>&#123;title&#125;<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">span</span>&gt;</span>&#123;ingredients.length&#125; Ingredients<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">span</span>&gt;</span>&#123;steps.length&#125; Steps<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">                )</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
-<p>ES6 类时，propTypes defaultProps 是在类的实体之外定义的 一旦定义了类 就可以设置对象属性了。</p>
-<p>引用ref 这个特性允许react组件能够和子元素交互</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AddColorForm</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</span><br><span class="line">    <span class="keyword">constructor</span>(props) &#123;</span><br><span class="line">        <span class="keyword">super</span>(props)</span><br><span class="line">        <span class="keyword">this</span>.submit = <span class="keyword">this</span>.submit.bind(<span class="keyword">this</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    submit(e) &#123;</span><br><span class="line">        <span class="keyword">const</span> &#123; _title, _color &#125; = <span class="keyword">this</span>.refs</span><br><span class="line">        e.preventDefault();</span><br><span class="line">        alert(<span class="string">"New Color: $&#123;_title.value&#125; $&#123;_color.value&#125;"</span>)</span><br><span class="line">        _title.value = <span class="string">''</span>;</span><br><span class="line">        _color.value = <span class="string">'#000000'</span>;</span><br><span class="line">        _title.focus();</span><br><span class="line">    &#125;</span><br><span class="line">    render() &#123;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            <span class="xml"><span class="tag">&lt;<span class="name">form</span> <span class="attr">onSubmit</span>=<span class="string">&#123;this.submit&#125;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">ref</span>=<span class="string">"_title"</span></span><br><span class="line">                       <span class="attr">type</span>=<span class="string">"text"</span></span><br><span class="line">                       <span class="attr">placeholder</span>=<span class="string">"color title..."</span> <span class="attr">required</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">input</span> <span class="attr">ref</span>=<span class="string">"_color"</span></span><br><span class="line">                       <span class="attr">type</span>=<span class="string">"color"</span> <span class="attr">required</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">button</span>&gt;</span>ADD<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span></span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>一个文本输入框和一个用于选择十六进制颜色值的按钮来渲染html元素</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/11/29/linux-optimize000/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/11/29/linux-optimize000/" itemprop="url">linux-optimize000</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-11-29T22:43:10+08:00">
-                2018-11-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2018/11/29/linux-optimize000/" class="leancloud_visitors" data-flag-title="linux-optimize000">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  0
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1346,7 +1308,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">426</span>
+                  <span class="site-state-item-count">428</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1461,7 +1423,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共168k字</span>
+  <span class="post-count">博客全站共168.8k字</span>
 </div>
 
         

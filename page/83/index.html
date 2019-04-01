@@ -309,6 +309,371 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2016/05/19/scrapy爬虫实践详解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2016/05/19/scrapy爬虫实践详解/" itemprop="url">scrapy爬虫实践详解</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-19T20:40:16+08:00">
+                2016-05-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2016/05/19/scrapy爬虫实践详解/" class="leancloud_visitors" data-flag-title="scrapy爬虫实践详解">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>爬虫框架里最出色的的的确确还是Scrapy。  </p>
+<p>Scrapy是Python开发的一个快速,高层次的屏幕抓取和Web抓取框架，用于抓取Web站点并从页面中提取结构化的数据。</p>
+<p>下图展示了Scrapy的大致架构，其中包含了主要组件和系统的数据处理流程（绿色箭头表示）。下面会对组件和流程进行了一个简单的解释。  </p>
+<p><img src="http://o7b8j5zne.bkt.clouddn.com/scrapy%E7%88%AC%E8%99%AB%E6%A1%86%E6%9E%B6%E5%9B%BE.png" alt="框架图">    </p>
+<p>##来看看图中的组件  </p>
+<p>1.Scrapy Engine（Scrapy引擎）</p>
+<p>Scrapy引擎是用来控制整个系统的数据处理流程，并进行事务处理的触发。更多的详细内容可以看下面的数据处理流程。</p>
+<p>2.Scheduler（调度程序）</p>
+<p>调度程序从Scrapy引擎接受请求并排序列入队列，并在Scrapy引擎发出请求后返还给它们。</p>
+<p>3.Downloader（下载器）</p>
+<p>下载器的主要职责是抓取网页并将网页内容返还给蜘蛛（Spiders）。</p>
+<p>4.Spiders（蜘蛛）</p>
+<p>蜘蛛是有Scrapy用户自己定义用来解析网页并抓取制定URL返回的内容的类，每个蜘蛛都能处理一个域名或一组域名。换句话说就是用来定义特定网站的抓取和解析规则。</p>
+<p>5.Item Pipeline（项目管道）</p>
+<p>项目管道的主要责任是负责处理有蜘蛛从网页中抽取的项目，它的主要任务是清晰、验证和存储数据。当页面被蜘蛛解析后，将被发送到项目管道，并经过几个特定的次序处理数据。每个项目管道的组件都是有一个简单的方法组成的Python类。它们获取了项目并执行它们的方法，同时还需要确定的是是否需要在项目管道中继续执行下一步或是直接丢弃掉不处理。</p>
+<p>项目管道通常执行的过程有：</p>
+<p>清洗HTML数据 验证解析到的数据（检查项目是否包含必要的字段） 检查是否是重复数据（如果重复就删除） 将解析到的数据存储到数据库中</p>
+<p>6.Middlewares（中间件）</p>
+<p>中间件是介于Scrapy引擎和其他组件之间的一个钩子框架，主要是为了提供一个自定义的代码来拓展Scrapy的功能。  </p>
+<p>##数据的处理流程  </p>
+<p>Scrapy的整个数据处理流程有Scrapy引擎进行控制，其主要的运行方式为：</p>
+<ol>
+<li>引擎打开一个域名，时蜘蛛处理这个域名，并让蜘蛛获取第一个爬取的URL。  </li>
+<li>引擎从蜘蛛那获取第一个需要爬取的URL，然后作为请求在调度中进行调度。  </li>
+<li>引擎从调度那获取接下来进行爬取的页面。  </li>
+<li>调度将下一个爬取的URL返回给引擎，引擎将它们通过下载中间件发送到下载器。  </li>
+<li>当网页被下载器下载完成以后，响应内容通过下载中间件被发送到引擎。  </li>
+<li>引擎收到下载器的响应并将它通过蜘蛛中间件发送到蜘蛛进行处理。  </li>
+<li>蜘蛛处理响应并返回爬取到的项目，然后给引擎发送新的请求。  </li>
+<li>引擎将抓取到的项目项目管道，并向调度发送请求。  </li>
+<li>系统重复第二步后面的操作，直到调度中没有请求，然后断开引擎与域之间的联系。   </li>
+</ol>
+<p>##新建工程   </p>
+<pre><code>scrapy startproject doubanmovie  
+</code></pre><p>目录就不详细再说了。  </p>
+<p>##定义项目（Item）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># _*_ coding=utf-8 _*_</span></span><br><span class="line">  </span><br><span class="line"><span class="keyword">from</span> scrapy.item <span class="keyword">import</span> Item, Field</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DoubanmovieItem</span><span class="params">(Item)</span>:</span></span><br><span class="line">    name = Field()<span class="comment">#电影名</span></span><br><span class="line">    year = Field()<span class="comment">#上映年份</span></span><br><span class="line">    score = Field()<span class="comment">#豆瓣分数</span></span><br><span class="line">    director = Field()<span class="comment">#导演</span></span><br><span class="line">    classification = Field()<span class="comment">#分类</span></span><br><span class="line">    actor = Field()<span class="comment">#演员</span></span><br></pre></td></tr></table></figure>
+<p>这个地方只是需要相应添加需要的字段。  </p>
+<p>##编写爬虫 （spiders） </p>
+<p>Spider是整个项目中最核心的类，在这个类中我们需要定义抓取对象（url 域名）以及抓取规则。  scrapy官方文档中的教程是基于BaseSpider的，但是这个只能爬取给定的url，无法根据一个初始的url向外扩展。<br>还有scrapy.contrib.spiders.CrawlSpider可以使用。  </p>
+<p>在doubanmovie/spiders目录下新建movie_spider.py文件，并填写代码。  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">from</span> scrapy.selector <span class="keyword">import</span> Selector</span><br><span class="line"><span class="keyword">from</span> scrapy.contrib.spiders <span class="keyword">import</span> CrawlSpider,Rule</span><br><span class="line"><span class="keyword">from</span> scrapy.contrib.linkextractors.sgml <span class="keyword">import</span> SgmlLinkExtractor</span><br><span class="line"><span class="keyword">from</span> doubanmovie.items <span class="keyword">import</span> DoubanmovieItem</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">movieSpider</span><span class="params">(CrawlSpider)</span>:</span></span><br><span class="line">    name=<span class="string">"doubanmovie"</span></span><br><span class="line">    allowed_domains=[<span class="string">"movie.douban.com"</span>]</span><br><span class="line">    start_urls=[<span class="string">"https://movie.douban.com/top250"</span>]</span><br><span class="line">    rules=[</span><br><span class="line">        Rule(SgmlLinkExtractor(allow=(<span class="string">r'https://movie.douban.com/top250\?start=\d+.*'</span>))),</span><br><span class="line">        Rule(SgmlLinkExtractor(allow=(<span class="string">r'https://movie.douban.com/subject/\d+'</span>)),callback=<span class="string">"parse_item"</span>),</span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">parse_item</span><span class="params">(self,response)</span>:</span></span><br><span class="line">        sel=Selector(response)</span><br><span class="line">        item=DoubanmovieItem()</span><br><span class="line">        item[<span class="string">'name'</span>]=sel.xpath(<span class="string">'//*[@id="content"]/h1/span[1]/text()'</span>).extract()</span><br><span class="line">        item[<span class="string">'year'</span>]=sel.xpath(<span class="string">'//*[@id="content"]/h1/span[2]/text()'</span>).re(<span class="string">r'\((\d+)\)'</span>)</span><br><span class="line">        item[<span class="string">'score'</span>]=sel.xpath(<span class="string">'//*[@id="interest_sectl"]/div[1]/div[2]/strong/text()'</span>).extract()</span><br><span class="line">        item[<span class="string">'director'</span>]=sel.xpath(<span class="string">'//*[@id="info"]/span[1]/span[2]/a/text()'</span>).extract()</span><br><span class="line">        item[<span class="string">'classification'</span>]= sel.xpath(<span class="string">'//span[@property="v:genre"]/text()'</span>).extract()</span><br><span class="line">        item[<span class="string">'actor'</span>]= sel.xpath(<span class="string">'//*[@id="info"]/span[3]/a[1]/text()'</span>).extract()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> item</span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">首先是`name` 这个是定义spider名字的字符串，必须的。  </span><br><span class="line">接着是`allowed_domains` 包含了spider允许爬取的域名（domain）列表（list），可选。  </span><br><span class="line">`start_urls`  URL列表。当没有制定特定的URL时，spider将从该列表中开始进行爬取。 因此，第一个被获取到的页面的URL将是该列表之一。 后续的URL将会从获取到的数据中提取。  </span><br><span class="line">`rules` 一个包含一个(或多个) Rule 对象的集合(list)。 每个 Rule 对爬取网站的动作定义了特定表现。 Rule对象在下边会介绍。 如果多个rule匹配了相同的链接，则根据他们在本属性中被定义的顺序，第一个会被使用。  </span><br><span class="line"></span><br><span class="line">然后就是使用xpath从网页从抽取出来item，这里是较为重要的部分，一定要搞清楚抓取的item是什么类型的，要做哪些处理放入字典当中去。  </span><br><span class="line">这个需要不断尝试，耐心调试下  </span><br><span class="line">![shell 调试](http://o7b8j5zne.bkt.clouddn.com/shell%E8%B0%<span class="number">83</span>%E8%AF%<span class="number">95.</span>png)  </span><br><span class="line"></span><br><span class="line">	scrapy shell （domains）  </span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">Scrapy 使用一种叫做 XPath selectors的机制，它基于 XPath表达式。如果你想了解更多selectors和其他机制可以查阅资料[官网](http://doc.scrapy.org/topics/selectors.html<span class="comment">#topics-selectors )  </span></span><br><span class="line">这是一些XPath表达式的例子和他们的含义  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">为了方便使用XPaths，Scrapy提供XPathSelector 类， 有两种口味可以选择， HtmlXPathSelector (HTML数据解析) 和XmlXPathSelector (XML数据解析)。 为了使用他们你必须通过一个 Response 对象对他们进行实例化操作。你会发现Selector对象展示了文档的节点结构。因此，第一个实例化的selector必与根节点或者是整个目录有关 。 </span><br><span class="line">Selectors 有三种方法</span><br><span class="line"></span><br><span class="line">path()：返回selectors列表, 每一个select表示一个xpath参数表达式选择的节点.  </span><br><span class="line">extract()：返回一个unicode字符串，该字符串为XPath选择器返回的数据  </span><br><span class="line">re()： 返回unicode字符串列表，字符串作为参数由正则表达式提取出来    </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">##管道文件 （pipeline） </span></span><br><span class="line"></span><br><span class="line">```python  </span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> pymongo</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> scrapy.exceptions <span class="keyword">import</span> DropItem</span><br><span class="line"><span class="keyword">from</span> scrapy.conf <span class="keyword">import</span> settings</span><br><span class="line"><span class="keyword">from</span> scrapy <span class="keyword">import</span> log</span><br><span class="line"></span><br><span class="line"><span class="comment">#Connect to the MongoDB database</span></span><br><span class="line">client = pymongo.MongoClient()</span><br><span class="line">db = client[<span class="string">'pythontest'</span>]</span><br><span class="line">item_info = db[<span class="string">'mydouban'</span>]</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MongoDBPipeline</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">process_item</span><span class="params">(self, item, spider)</span>:</span></span><br><span class="line">        <span class="comment">#Remove invalid data</span></span><br><span class="line">        valid = <span class="keyword">True</span></span><br><span class="line">        <span class="keyword">for</span> data <span class="keyword">in</span> item:</span><br><span class="line">          <span class="keyword">if</span> <span class="keyword">not</span> data:</span><br><span class="line">            valid = <span class="keyword">False</span></span><br><span class="line">            <span class="keyword">raise</span> DropItem(<span class="string">"Missing %s of blogpost from %s"</span> %(data, item[<span class="string">'url'</span>]))</span><br><span class="line">        <span class="keyword">if</span> valid:</span><br><span class="line">        <span class="comment">#Insert data into database</span></span><br><span class="line">            new_movie = &#123;</span><br><span class="line">                <span class="string">"name"</span>:item[<span class="string">'name'</span>][<span class="number">0</span>],</span><br><span class="line">                <span class="string">"year"</span>:item[<span class="string">'year'</span>][<span class="number">0</span>],</span><br><span class="line">                <span class="string">"score"</span>:item[<span class="string">'score'</span>][<span class="number">0</span>],</span><br><span class="line">                <span class="string">"director"</span>:item[<span class="string">'director'</span>],</span><br><span class="line">                <span class="string">"classification"</span>:item[<span class="string">'classification'</span>],</span><br><span class="line">                <span class="string">"actor"</span>:item[<span class="string">'actor'</span>]</span><br><span class="line">            &#125;</span><br><span class="line">            item_info.insert_one(new_movie)</span><br><span class="line">            log.msg(<span class="string">"Item wrote to MongoDB database %s/%s"</span> %</span><br><span class="line">            (<span class="string">'pythontest'</span>, <span class="string">'mydouban'</span>),</span><br><span class="line">            level=log.DEBUG, spider=spider)</span><br><span class="line">        <span class="keyword">return</span> item</span><br><span class="line">        </span><br><span class="line">``` </span><br><span class="line"></span><br><span class="line">爬虫获取到数据以后我们需要将其存储到数据库中，之前我们提到该操作需要靠项目管道（pipeline）来处理，其通常执行的操作为：</span><br><span class="line"></span><br><span class="line">清洗HTML数据    </span><br><span class="line">验证解析到的数据（检查项目是否包含必要的字段）  </span><br><span class="line">检查是否是重复数据（如果重复就删除）  </span><br><span class="line">将解析到的数据存储到数据库中   </span><br><span class="line"></span><br><span class="line">这里考虑数据的复杂性，使用mongodb数据库来存储。</span><br><span class="line"></span><br><span class="line"><span class="comment">##配置文件（settings）  </span></span><br><span class="line"></span><br><span class="line">```python</span><br><span class="line">BOT_NAME = <span class="string">'doubanmovie'</span></span><br><span class="line">SPIDER_MODULES = [<span class="string">'doubanmovie.spiders'</span>]</span><br><span class="line">NEWSPIDER_MODULE = <span class="string">'doubanmovie.spiders'</span></span><br><span class="line">ITEM_PIPELINES=&#123;</span><br><span class="line">    <span class="string">'doubanmovie.pipelines.MongoDBPipeline'</span>:<span class="number">300</span>,</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">LOG_LEVEL=<span class="string">'DEBUG'</span></span><br><span class="line"></span><br><span class="line">DOWNLOAD_DELAY = <span class="number">2</span></span><br><span class="line">RANDOMIZE_DOWNLOAD_DELAY = <span class="keyword">True</span></span><br><span class="line">USER_AGENT = <span class="string">'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_3) AppleWebKit/536.5 (KHTML, like Gecko) Chrome/19.0.1084.54 Safari/536.5'</span></span><br><span class="line">COOKIES_ENABLED = <span class="keyword">True</span></span><br></pre></td></tr></table></figure>
+<p>在settings.py里设置一些信息。  </p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2016/05/17/python实战之django小试/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2016/05/17/python实战之django小试/" itemprop="url">python实战之django小试</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-17T17:26:04+08:00">
+                2016-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2016/05/17/python实战之django小试/" class="leancloud_visitors" data-flag-title="python实战之django小试">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  0
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2016/05/17/python实战之使用webpy构建小型电影网站/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -780,334 +1145,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2016/05/17/python实战之四使用tushare包/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2016/05/17/python实战之四使用tushare包/" itemprop="url">python实战之四使用tushare包</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-17T17:23:00+08:00">
-                2016-05-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2016/05/17/python实战之四使用tushare包/" class="leancloud_visitors" data-flag-title="python实战之四使用tushare包">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  69
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>tushare是比较著名的金融财经的包。<br>通过pip安装tushare包之后，<br>直接就可以调用  </p>
-<pre><code>import tushare as ts
-df = ts.get_sina_dd(&apos;600848&apos;, date=&apos;2015-12-24&apos;, vol=500)
-#指定大于等于500手的数据
-</code></pre><p>数据是直接dataframe，比较方便存储。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2016/05/17/python实战之三读取大文件/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2016/05/17/python实战之三读取大文件/" itemprop="url">python实战之三读取大文件</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-17T17:20:36+08:00">
-                2016-05-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2016/05/17/python实战之三读取大文件/" class="leancloud_visitors" data-flag-title="python实战之三读取大文件">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  40
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>这篇呢，就是如何来读取一个大型的excel表格，考虑文件大小在500M以上的这种如何进行读取和分析。  </p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1162,7 +1199,7 @@ df = ts.get_sina_dd(&apos;600848&apos;, date=&apos;2015-12-24&apos;, vol=500)
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">426</span>
+                  <span class="site-state-item-count">428</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1277,7 +1314,7 @@ df = ts.get_sina_dd(&apos;600848&apos;, date=&apos;2015-12-24&apos;, vol=500)
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共168k字</span>
+  <span class="post-count">博客全站共168.8k字</span>
 </div>
 
         
