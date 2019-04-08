@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/04/架构之app架构的演进/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/06/2019-go-14/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -328,7 +328,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/04/架构之app架构的演进/" itemprop="url">架构之app架构的演进</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/06/2019-go-14/" itemprop="url">2019-go-14</a></h1>
         
 
         <div class="post-meta">
@@ -340,8 +340,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-04T13:37:35+08:00">
-                2019-03-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-06T17:47:02+08:00">
+                2019-03-06
               </time>
             
 
@@ -363,8 +363,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/architecture/" itemprop="url" rel="index">
-                    <span itemprop="name">architecture</span>
+                  <a href="/zhangdavids.github.io/categories/golang/" itemprop="url" rel="index">
+                    <span itemprop="name">golang</span>
                   </a>
                 </span>
 
@@ -380,7 +380,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/03/04/架构之app架构的演进/" class="leancloud_visitors" data-flag-title="架构之app架构的演进">
+             <span id="/zhangdavids.github.io/2019/03/06/2019-go-14/" class="leancloud_visitors" data-flag-title="2019-go-14">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -405,7 +405,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  872
                 </span>
               
 
@@ -421,7 +421,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  4
                 </span>
               
             </div>
@@ -444,7 +444,79 @@
       
         
           
-            
+            <h2 id="数组和切片"><a href="#数组和切片" class="headerlink" title="数组和切片"></a>数组和切片</h2><p>数组类型的值的长度是固定的</p>
+<p>而切片类型的值是可变长的</p>
+<p>做个不算特别正确的对比 可以理解为python当中的元组和列表</p>
+<p>切片类型属于引用类型，同属引用类型的还有字典类型、通道类型、函数类型等；<br>数组类型属于值类型，同属值类型的还有基础数据类型以及结构体类型</p>
+<p>如果传递的值是引用类型，就是“传引用”</p>
+<p>内建函数 len 取长度<br>内建函数 cap 取容量</p>
+<p>数组的长度永远等于长度，切片的容量却不是</p>
+<p>扩容 在1024之后 调整的倍率从2下调到1.25</p>
+<p>切片的数组永远不会被替换</p>
+<p>几个例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">	// 示例 1。</span><br><span class="line">	s1 := make([]int, 5)</span><br><span class="line">	fmt.Printf(&quot;The length of s1: %d\n&quot;, len(s1))</span><br><span class="line">	fmt.Printf(&quot;The capacity of s1: %d\n&quot;, cap(s1))</span><br><span class="line">	fmt.Printf(&quot;The value of s1: %d\n&quot;, s1)</span><br><span class="line">	s2 := make([]int, 5, 8)</span><br><span class="line">	fmt.Printf(&quot;The length of s2: %d\n&quot;, len(s2))</span><br><span class="line">	fmt.Printf(&quot;The capacity of s2: %d\n&quot;, cap(s2))</span><br><span class="line">	fmt.Printf(&quot;The value of s2: %d\n&quot;, s2)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出是</p>
+<pre><code>The length of s1: 5
+The capacity of s1: 5
+The value of s1: [0 0 0 0 0]
+The length of s2: 5
+The capacity of s2: 8
+The value of s2: [0 0 0 0 0]
+</code></pre><p>切片的扩容</p>
+<p>生成新的切片 会做拷贝</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">package main</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">	// 示例1。</span><br><span class="line">	s6 := make([]int, 0)</span><br><span class="line">	fmt.Printf(&quot;The capacity of s6: %d\n&quot;, cap(s6))</span><br><span class="line">	for i := 1; i &lt;= 5; i++ &#123;</span><br><span class="line">		s6 = append(s6, i)</span><br><span class="line">		fmt.Printf(&quot;s6(%d): len: %d, cap: %d\n&quot;, i, len(s6), cap(s6))</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println()</span><br><span class="line"></span><br><span class="line">	// 示例2。</span><br><span class="line">	s7 := make([]int, 1024)</span><br><span class="line">	fmt.Printf(&quot;The capacity of s7: %d\n&quot;, cap(s7))</span><br><span class="line">	s7e1 := append(s7, make([]int, 200)...)</span><br><span class="line">	fmt.Printf(&quot;s7e1: len: %d, cap: %d\n&quot;, len(s7e1), cap(s7e1))</span><br><span class="line">	s7e2 := append(s7, make([]int, 400)...)</span><br><span class="line">	fmt.Printf(&quot;s7e2: len: %d, cap: %d\n&quot;, len(s7e2), cap(s7e2))</span><br><span class="line">	s7e3 := append(s7, make([]int, 600)...)</span><br><span class="line">	fmt.Printf(&quot;s7e3: len: %d, cap: %d\n&quot;, len(s7e3), cap(s7e3))</span><br><span class="line">	fmt.Println()</span><br><span class="line"></span><br><span class="line">	// 示例3。</span><br><span class="line">	s8 := make([]int, 10)</span><br><span class="line">	fmt.Printf(&quot;The capacity of s8: %d\n&quot;, cap(s8))</span><br><span class="line">	s8a := append(s8, make([]int, 11)...)</span><br><span class="line">	fmt.Printf(&quot;s8a: len: %d, cap: %d\n&quot;, len(s8a), cap(s8a))</span><br><span class="line">	s8b := append(s8a, make([]int, 23)...)</span><br><span class="line">	fmt.Printf(&quot;s8b: len: %d, cap: %d\n&quot;, len(s8b), cap(s8b))</span><br><span class="line">	s8c := append(s8b, make([]int, 45)...)</span><br><span class="line">	fmt.Printf(&quot;s8c: len: %d, cap: %d\n&quot;, len(s8c), cap(s8c))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<pre><code>The capacity of s6: 0
+s6(1): len: 1, cap: 1
+s6(2): len: 2, cap: 2
+s6(3): len: 3, cap: 4
+s6(4): len: 4, cap: 4
+s6(5): len: 5, cap: 8
+
+The capacity of s7: 1024
+s7e1: len: 1224, cap: 1280
+s7e2: len: 1424, cap: 1696  // 为啥不是1600
+s7e3: len: 1624, cap: 2048   //为啥不是2000
+
+The capacity of s8: 10
+s8a: len: 21, cap: 22
+s8b: len: 44, cap: 44
+s8c: len: 89, cap: 96
+</code></pre><pre><code>
+package main
+
+import &quot;fmt&quot;
+
+func main() {
+    // 示例1。
+    a1 := [7]int{1, 2, 3, 4, 5, 6, 7}
+    fmt.Printf(&quot;a1: %v (len: %d, cap: %d)\n&quot;,
+        a1, len(a1), cap(a1))
+    s9 := a1[1:4]
+    //s9[0] = 1
+    fmt.Printf(&quot;s9: %v (len: %d, cap: %d)\n&quot;,
+        s9, len(s9), cap(s9))
+    for i := 1; i &lt;= 5; i++ {
+        s9 = append(s9, i)
+        fmt.Printf(&quot;s9(%d): %v (len: %d, cap: %d)\n&quot;,
+            i, s9, len(s9), cap(s9))
+    }
+    fmt.Printf(&quot;a1: %v (len: %d, cap: %d)\n&quot;,
+        a1, len(a1), cap(a1))
+    fmt.Println()
+
+}
+</code></pre><p>输入如下所示</p>
+<pre><code>a1: [1 2 3 4 5 6 7] (len: 7, cap: 7)
+s9: [2 3 4] (len: 3, cap: 6)
+s9(1): [2 3 4 1] (len: 4, cap: 6)
+s9(2): [2 3 4 1 2] (len: 5, cap: 6)
+s9(3): [2 3 4 1 2 3] (len: 6, cap: 6)
+s9(4): [2 3 4 1 2 3 4] (len: 7, cap: 12)
+s9(5): [2 3 4 1 2 3 4 5] (len: 8, cap: 12)
+a1: [1 2 3 4 1 2 3] (len: 7, cap: 7)
+</code></pre><p>数组和切片的几个不同点？？？    </p>
+
           
         
       
@@ -492,7 +564,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/04/架构之如何选择、使用、二次开发开源项目/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/06/2019-go-13/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -511,7 +583,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/04/架构之如何选择、使用、二次开发开源项目/" itemprop="url">架构之如何选择、使用、二次开发开源项目</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/06/2019-go-13/" itemprop="url">2019-go-13</a></h1>
         
 
         <div class="post-meta">
@@ -523,8 +595,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-04T13:37:17+08:00">
-                2019-03-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-06T17:46:57+08:00">
+                2019-03-06
               </time>
             
 
@@ -546,8 +618,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/architecture/" itemprop="url" rel="index">
-                    <span itemprop="name">architecture</span>
+                  <a href="/zhangdavids.github.io/categories/golang/" itemprop="url" rel="index">
+                    <span itemprop="name">golang</span>
                   </a>
                 </span>
 
@@ -563,7 +635,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/03/04/架构之如何选择、使用、二次开发开源项目/" class="leancloud_visitors" data-flag-title="架构之如何选择、使用、二次开发开源项目">
+             <span id="/zhangdavids.github.io/2019/03/06/2019-go-13/" class="leancloud_visitors" data-flag-title="2019-go-13">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -588,7 +660,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  12
                 </span>
               
 
@@ -627,7 +699,8 @@
       
         
           
-            
+            <h3 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h3><p>go语言的运算符 如下</p>
+
           
         
       
@@ -675,7 +748,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/04/架构之内功心法运筹帷幄/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/06/2019-go-12/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -694,7 +767,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/04/架构之内功心法运筹帷幄/" itemprop="url">架构之内功心法运筹帷幄</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/06/2019-go-12/" itemprop="url">2019-go-12</a></h1>
         
 
         <div class="post-meta">
@@ -706,8 +779,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-04T13:36:49+08:00">
-                2019-03-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-06T17:46:52+08:00">
+                2019-03-06
               </time>
             
 
@@ -729,8 +802,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/architecture/" itemprop="url" rel="index">
-                    <span itemprop="name">architecture</span>
+                  <a href="/zhangdavids.github.io/categories/golang/" itemprop="url" rel="index">
+                    <span itemprop="name">golang</span>
                   </a>
                 </span>
 
@@ -746,7 +819,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/03/04/架构之内功心法运筹帷幄/" class="leancloud_visitors" data-flag-title="架构之内功心法运筹帷幄">
+             <span id="/zhangdavids.github.io/2019/03/06/2019-go-12/" class="leancloud_visitors" data-flag-title="2019-go-12">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -771,7 +844,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  118
                 </span>
               
 
@@ -810,7 +883,11 @@
       
         
           
-            
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">package type_test</span><br><span class="line"></span><br><span class="line">import &quot;testing&quot;</span><br><span class="line"></span><br><span class="line">type MyInt int64</span><br><span class="line"></span><br><span class="line">func TestImplicit(t *testing.T) &#123;</span><br><span class="line">	var a int32 = 1</span><br><span class="line">	var b int64</span><br><span class="line">	b = int64(a)</span><br><span class="line">	var c MyInt</span><br><span class="line">	c = MyInt(b)</span><br><span class="line">	t.Log(a, b, c)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func TestPoint(t *testing.T) &#123;</span><br><span class="line">	a := 1</span><br><span class="line">	aPtr := &amp;a</span><br><span class="line">	//aPtr = aPtr + 1</span><br><span class="line">	t.Log(a, aPtr)</span><br><span class="line">	t.Logf(&quot;%T %T&quot;, a, aPtr)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func TestString(t *testing.T) &#123;</span><br><span class="line">	var s string</span><br><span class="line">	t.Log(&quot;*&quot; + s + &quot;*&quot;) //初始化零值是“”</span><br><span class="line">	t.Log(len(s))</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也可以对单个的go测试文件进行 测试</p>
+<p>命令如下</p>
+<pre><code>go test -v type_test/type_test.go -test.run TestPoint 
+</code></pre>
           
         
       
@@ -858,7 +935,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/04/架构之内功心法合纵连横/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/06/2019-go-11/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -877,7 +954,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/04/架构之内功心法合纵连横/" itemprop="url">架构之内功心法合纵连横</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/06/2019-go-11/" itemprop="url">2019-go-11</a></h1>
         
 
         <div class="post-meta">
@@ -889,8 +966,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-04T13:36:38+08:00">
-                2019-03-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-06T17:46:43+08:00">
+                2019-03-06
               </time>
             
 
@@ -912,8 +989,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/architecture/" itemprop="url" rel="index">
-                    <span itemprop="name">architecture</span>
+                  <a href="/zhangdavids.github.io/categories/golang/" itemprop="url" rel="index">
+                    <span itemprop="name">golang</span>
                   </a>
                 </span>
 
@@ -929,7 +1006,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/03/04/架构之内功心法合纵连横/" class="leancloud_visitors" data-flag-title="架构之内功心法合纵连横">
+             <span id="/zhangdavids.github.io/2019/03/06/2019-go-11/" class="leancloud_visitors" data-flag-title="2019-go-11">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -954,7 +1031,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  580
                 </span>
               
 
@@ -970,7 +1047,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -993,7 +1070,28 @@
       
         
           
-            
+            <p>首先看看 go开发当中的测试</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.go</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">func</span> Add(x, y <span class="keyword">int</span>) <span class="keyword">int</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> x+y</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">func</span> main() &#123;</span><br><span class="line">    fmt.Println(Add(<span class="number">1</span>, <span class="number">2</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// main_test.go</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"testing"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">func</span> TestAdd(t * testing.T) &#123;</span><br><span class="line">    sum := Add(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">    <span class="keyword">if</span> sum != <span class="number">3</span> &#123;</span><br><span class="line">        t.Error(<span class="string">"Add 1 and 2 result is not 3!!!"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>命令运行</p>
+<pre><code>go test main_test.go main.go -v -cover
+</code></pre><p>因为以前补过单元测试什么的</p>
+<p>在此记录一下覆盖率</p>
+<ul>
+<li>语句覆盖</li>
+<li>判定（分支）覆盖  增加false的情况</li>
+<li>判定/条件覆盖</li>
+</ul>
+<ol>
+<li>语句覆盖是指选择足够的测试用例，使得运行这些测试用例时，被测程序的每一个语句至少执行一次，其覆盖标准无法发现判定中逻辑运算的错误；</li>
+<li>判定覆盖是指选择足够的测试用例，使得运行这些测试用例时，每个判定的所有可能结果至少出现一次，但若程序中的判定是有几个条件联合构成时，它未必能发现每个条件的错误； </li>
+<li>条件覆盖是指选择足够的测试用例，使得运行这些测试用例时，判定中每个条件的所有可能结果至少出现一次，但未必能覆盖全部分支；</li>
+<li>判定/条件覆盖是使判定中每个条件的所有可能结果至少出现一次，并且每个判定本身的所有可能结果也至少出现一次；</li>
+<li>条件组合覆盖是使每个判定中条件结果的所有可能组合至少出现一次，因此判定本身的所有可能解说也至少出现一次，同时也是每个条件的所有可能结果至少出现一次；</li>
+<li>路径覆盖是每条可能执行到的路径至少执行一次；</li>
+</ol>
+<p>其中语句覆盖是一种最弱的覆盖，判定覆盖和条件覆盖比语句覆盖强，满足判定/条件覆盖标准的测试用例一定也满足判定覆盖、条件覆盖和语句覆盖，条件组合覆盖是除路径覆盖外最强的，路径覆盖也是一种比较强的覆盖，但未必考虑判定条件结果的组合，并不能代替条件覆盖和条件组合覆盖。     </p>
+
           
         
       
@@ -1041,7 +1139,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/04/架构之内功心法有的放矢/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/06/leetcode-二分查找/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -1060,7 +1158,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/04/架构之内功心法有的放矢/" itemprop="url">架构之内功心法有的放矢</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/06/leetcode-二分查找/" itemprop="url">leetcode-二分查找</a></h1>
         
 
         <div class="post-meta">
@@ -1072,8 +1170,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-04T13:36:28+08:00">
-                2019-03-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-06T16:52:36+08:00">
+                2019-03-06
               </time>
             
 
@@ -1095,8 +1193,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/architecture/" itemprop="url" rel="index">
-                    <span itemprop="name">architecture</span>
+                  <a href="/zhangdavids.github.io/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
                   </a>
                 </span>
 
@@ -1112,7 +1210,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/03/04/架构之内功心法有的放矢/" class="leancloud_visitors" data-flag-title="架构之内功心法有的放矢">
+             <span id="/zhangdavids.github.io/2019/03/06/leetcode-二分查找/" class="leancloud_visitors" data-flag-title="leetcode-二分查找">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1137,7 +1235,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  68
                 </span>
               
 
@@ -1176,7 +1274,9 @@
       
         
           
-            
+            <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (nums.empty())</span><br><span class="line">		return <span class="number">-1</span></span><br><span class="line">	<span class="keyword">int</span> low = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> high = nums.size() <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">while</span> (low &lt;= high) &#123;</span><br><span class="line">		<span class="keyword">int</span> mid = low + (high -low) /<span class="number">2</span>;</span><br><span class="line">		<span class="keyword">if</span> (nums[mid] &lt; target)</span><br><span class="line">			low = mid + <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			high = mid - <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	return low;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>二分查找有很多变种 注意一些细节问题</p>
+
           
         
       
@@ -1215,7 +1315,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/12/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/zhangdavids.github.io/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/86/">86</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/14/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/12/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/12/">12</a><span class="page-number current">13</span><a class="page-number" href="/zhangdavids.github.io/page/14/">14</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/88/">88</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/14/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1265,7 +1365,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">428</span>
+                  <span class="site-state-item-count">436</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1380,7 +1480,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共169k字</span>
+  <span class="post-count">博客全站共173.4k字</span>
 </div>
 
         
