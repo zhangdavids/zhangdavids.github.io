@@ -309,6 +309,435 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2016/05/15/爬虫实践教程1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2016/05/15/爬虫实践教程1/" itemprop="url">爬虫实践教程1</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-15T09:34:43+08:00">
+                2016-05-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/pachong/" itemprop="url" rel="index">
+                    <span itemprop="name">pachong</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2016/05/15/爬虫实践教程1/" class="leancloud_visitors" data-flag-title="爬虫实践教程1">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  294
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>一般来说呢，很多网页都是直接分好页面直接下一页这样。不过还有很多网页是ajax异步请求数据的网页，以果壳网为例，我们尝试一下抓取。</p>
+<pre><code># coding:utf-8
+from bs4 import BeautifulSoup
+import requests
+import json
+import pymongo
+
+url = &apos;http://www.guokr.com/scientific/&apos;
+
+def dealData(url):
+    client = pymongo.MongoClient(&apos;localhost&apos;, 27017)
+    guoke = client[&apos;guoke&apos;]
+    guokeData = guoke[&apos;guokeData&apos;]
+    web_data = requests.get(url)
+    datas = json.loads(web_data.text)
+    print datas.keys()
+    for data in datas[&apos;result&apos;]:
+        guokeData.insert_one(data)
+
+def start():
+    urls = [&apos;http://www.guokr.com/apis/minisite/article.json?retrieve_type=by_subject&amp;limit=20&amp;offset={}&amp;_=1462252453410&apos;.format(str(i)) for i in range(20, 100, 20)]
+    for url in urls:
+        dealData(url)
+
+start()
+&apos;&apos;&apos;
+异步加载的网站  这里比如果壳网的抓取
+&apos;&apos;&apos;
+</code></pre><p>网页的抓取大概流程就是这样：<br>1.使用谷歌或者火狐浏览器，检查元素，分析下我们想抓取什么，有啥子障碍。<br>2.异步加载的数据不在返回的网页源码中，在网络标签和xhr分页面，向下滑动鼠标可以发现新的get请求被列出来。偏移量是多少，需要好好总结规律，然后不断尝试。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2016/05/15/爬虫实践教程0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2016/05/15/爬虫实践教程0/" itemprop="url">爬虫实践教程0</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-15T02:04:34+08:00">
+                2016-05-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/pachong/" itemprop="url" rel="index">
+                    <span itemprop="name">pachong</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2016/05/15/爬虫实践教程0/" class="leancloud_visitors" data-flag-title="爬虫实践教程0">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  273
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>爬虫的基本就是从网页上获取我们需要的信息。  </p>
+<pre><code># coding=utf-8
+from bs4 import BeautifulSoup
+import requests
+from pymongo import MongoClient
+
+client = MongoClient(&apos;localhost&apos;,27017)
+db = client[&apos;guazigz&apos;]
+item_info = db[&apos;item_info&apos;]
+
+
+def detailOper(url):
+    web_data = requests.get(url)
+    web_data.encoding=&apos;utf-8&apos;
+    soup = BeautifulSoup(web_data.text, &apos;lxml&apos;)
+    titles = soup.select(&apos;div.list &gt; ul &gt; li &gt; div &gt; p.infoBox &gt; a&apos;)
+    prices = soup.select(&apos;div.list &gt; ul &gt; li &gt; div &gt; p.priType-s &gt; span &gt; i.fc-org.priType&apos;)
+    for title, price in zip(titles, prices):
+        data = {
+            &apos;title&apos;: title.get_text(),
+            &apos;detailHerf&apos;: title.get(&apos;href&apos;),
+            &apos;price&apos;:price.get_text().replace(u&apos;万&apos;, &apos;&apos;).replace(&apos; &apos;,&apos;&apos;).replace(&apos;\n&apos;,&apos;&apos;)
+    }
+        item_info.insert_one(data)
+        print(data)
+
+def start():
+    urls = [&apos;http://www.guazi.com/gz/buy/o{}/&apos;.format(str(i)) for i in range(1, 30, 1)]
+    for url in urls:
+        detailOper(url)
+
+if __name__ == &apos;__main__&apos;:
+    start()
+</code></pre><p>  如上的程序相对来说很好阅读，<br>  从瓜子二手车网站抓取了29页数据，每页40条，共1160条数据存入到名为guazigz的mongo数据库中。集合名为item_info,注意一下，print（data）是为了能清晰显示数据，实际是可以删除注释掉的。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2016/05/15/hello-world/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -815,7 +1244,7 @@ db.foo.find( { a : 1 } )：对于当前数据库中的foo集合进行查找，�
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">437</span>
+                  <span class="site-state-item-count">439</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -930,7 +1359,7 @@ db.foo.find( { a : 1 } )：对于当前数据库中的foo集合进行查找，�
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共174.6k字</span>
+  <span class="post-count">博客全站共176k字</span>
 </div>
 
         

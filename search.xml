@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[分布式学习001]]></title>
+    <url>%2Fzhangdavids.github.io%2F2019%2F04%2F09%2F%E5%88%86%E5%B8%83%E5%BC%8F%E5%AD%A6%E4%B9%A0001%2F</url>
+    <content type="text"><![CDATA[分布式 目的 增加系统容量 提高系统的可用性 大流量处理关键业务保护 提高架构的吞吐量 服务更多的并发和流量提高系统的稳定性 让系统的可用性更高 加缓存负载均衡异步调用数据镜像数据分区 服务拆分服务冗余限流降级高可用架构高可用运维 服务治理架构软件管理devops自动化运维资源调度管理整体架构监控流量控制 全栈系统监控； 服务 / 资源调度； 流量调度； 状态 /数据调度 开发和运维的自动化]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[leetcode之合并K个链表]]></title>
+    <url>%2Fzhangdavids.github.io%2F2019%2F04%2F09%2Fleetcode%E4%B9%8B%E5%90%88%E5%B9%B6K%E4%B8%AA%E9%93%BE%E8%A1%A8%2F</url>
+    <content type="text"><![CDATA[先进行划分 划分到两个或者一个 再两两合并 1234567891011121314151617181920212223242526272829303132333435363738394041class Solution &#123; public ListNode mergeKLists(ListNode[] lists)&#123; if(lists.length == 0) return null; if(lists.length == 1) return lists[0]; if(lists.length == 2)&#123; return mergeTwoLists(lists[0],lists[1]); &#125; int mid = lists.length/2; ListNode[] l1 = new ListNode[mid]; for(int i = 0; i &lt; mid; i++)&#123; l1[i] = lists[i]; &#125; ListNode[] l2 = new ListNode[lists.length-mid]; for(int i = mid,j=0; i &lt; lists.length; i++,j++)&#123; l2[j] = lists[i]; &#125; return mergeTwoLists(mergeKLists(l1),mergeKLists(l2)); &#125; public ListNode mergeTwoLists(ListNode l1, ListNode l2) &#123; if (l1 == null) return l2; if (l2 == null) return l1; ListNode head = null; if (l1.val &lt;= l2.val)&#123; head = l1; head.next = mergeTwoLists(l1.next, l2); &#125; else &#123; head = l2; head.next = mergeTwoLists(l1, l2.next); &#125; return head; &#125;&#125;]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[lru-cache]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F04%2F08%2Flru-cache%2F</url>
     <content type="text"><![CDATA[1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677import collectionsimport functoolsfrom itertools import ifilterfalsedef lru_cache(maxsize=100, on_purge=None): &quot;&quot;&quot;Least-recently-used cache decorator. Arguments to the cached function must be hashable. Clear the cache with f.clear(). &quot;&quot;&quot; maxqueue = maxsize * 10 def decorating_function(user_function): cache = &#123;&#125; queue = collections.deque() refcount = collections.defaultdict(int) sentinel = object() kwd_mark = object() # lookup optimizations (ugly but fast) queue_append, queue_popleft = queue.append, queue.popleft queue_appendleft, queue_pop = queue.appendleft, queue.pop @functools.wraps(user_function) def wrapper(*args, **kwargs): # cache key records both positional and keyword args key = args if kwargs: key += (kwd_mark,) + tuple(sorted(kwargs.items())) # record recent use of this key queue_append(key) refcount[key] += 1 # get cache entry or compute if not found try: result = cache[key] except KeyError: result = user_function(*args, **kwargs) cache[key] = result # purge least recently used cache entry if len(cache) &gt; maxsize: key = queue_popleft() refcount[key] -= 1 while refcount[key]: key = queue_popleft() refcount[key] -= 1 if on_purge: on_purge(cache[key]) del cache[key], refcount[key] # periodically compact the queue by eliminating duplicate keys # while preserving order of most recent access if len(queue) &gt; maxqueue: refcount.clear() queue_appendleft(sentinel) for key in ifilterfalse(refcount.__contains__, iter(queue_pop, sentinel)): queue_appendleft(key) refcount[key] = 1 return result def clear(): if on_purge: for value in cache.itervalues(): on_purge(value) cache.clear() queue.clear() refcount.clear() wrapper._cache = cache wrapper.clear = clear return wrapper return decorating_function]]></content>
@@ -18,12 +28,18 @@
   <entry>
     <title><![CDATA[布隆过滤器]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F04%2F05%2F%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8%2F</url>
-    <content type="text"></content>
+    <content type="text"><![CDATA[100 亿是一个很大的数量级，这里每条 url 平均 64 字节，全部存储的话需要 640G 的内存空间。又因为使用了散列表这种数据结构，而散列表是会出现散列冲突的。为了让散列表维持较小的装载因子，避免出现过多的散列冲突，需要使用链表法来处理，这里就要存储链表指针。因此最后的内存空间可能超过 1000G 了。 判断一个数 是否存在 两种状态 存在true 或者不存在false 用每一位来存放某种状态，适用于大规模数据，但数据状态又不是很多的情况。 另外，位图法有一个优势就是空间不随集合内元素个数的增加而增加。它的存储空间计算方式是找到所有元素里面最大的元素（假设为 N ），所占空间为 N/8 bytes 出于对性能和内存占用的考虑 使用布隆过滤器 才是最好的 对于布隆过滤器而言，它的本质是一个位数组：位数组就是数组的每个元素都只占用 1 bit ，并且每个元素只能是 0 或者 1。 布隆过滤器除了一个位数组，还有 K 个哈希函数。当一个元素加入布隆过滤器中的时候，会进行如下操作： 使用 K 个哈希函数对元素值进行 K 次计算，得到 K 个哈希值。根据得到的哈希值，在位数组中把对应下标的值置为 1。举个例子，假设布隆过滤器有 3 个哈希函数：f1, f2, f3 和一个位数组 arr。现在要把 2333 插入布隆过滤器中： 对值进行三次哈希计算，得到三个值 n1, n2, n3。把位数组中三个元素 arr[n1], arr[n2], arr[3] 都置为 1。当要判断一个值是否在布隆过滤器中，对元素进行三次哈希计算，得到值之后判断位数组中的每个元素是否都为 1，如果值都为 1，那么说明这个值在布隆过滤器中，如果存在一个值不为 1，说明该元素不在布隆过滤器中。 不存在 一定是真的 存在 可能是误判！！！ 布隆过滤器的最大的用处就是，能够迅速判断一个元素是否在一个集合中。因此它有如下三个使用场景: 网页爬虫对 URL 的去重，避免爬取相同的 URL 地址进行垃圾邮件过滤：反垃圾邮件，从数十亿个垃圾邮件列表中判断某邮箱是否垃圾邮箱（同理，垃圾短信）有的黑客为了让服务宕机，他们会构建大量不存在于缓存中的 key 向服务器发起请求，在数据量足够大的情况下，频繁的数据库查询可能导致 DB 挂掉。布隆过滤器很好的解决了缓存击穿的问题。]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[红黑树详细]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F04%2F05%2F%E7%BA%A2%E9%BB%91%E6%A0%91%E8%AF%A6%E7%BB%86%2F</url>
-    <content type="text"></content>
+    <content type="text"><![CDATA[红黑树是一种含有红黑结点并能自平衡的二叉查找树。它必须满足下面性质： 性质1：每个节点要么是黑色，要么是红色。 性质2：根节点是黑色。 性质3：每个叶子节点（NIL）是黑色。 性质4：每个红色结点的两个子结点一定都是黑色。 性质5：任意一结点到每个叶子结点的路径都包含数量相同的黑结点。 从性质5又可以推出： 性质5.1：如果一个结点存在黑子结点，那么该结点肯定有两个子结点 红黑树能自平衡，它靠的是什么？三种操作：左旋、右旋和变色。 左旋：以某个结点作为支点(旋转结点)，其右子结点变为旋转结点的父结点，右子结点的左子结点变为旋转结点的右子结点，左子结点保持不变。 右旋：以某个结点作为支点(旋转结点)，其左子结点变为旋转结点的父结点，左子结点的右子结点变为旋转结点的左子结点，右子结点保持不变。 变色：结点的颜色由红变黑或由黑变红。]]></content>
   </entry>
   <entry>
     <title><![CDATA[图的两种遍历]]></title>
