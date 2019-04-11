@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[python3合并多个字典]]></title>
+    <url>%2Fzhangdavids.github.io%2F2019%2F04%2F11%2Fpython3%E5%90%88%E5%B9%B6%E5%A4%9A%E4%B8%AA%E5%AD%97%E5%85%B8%2F</url>
+    <content type="text"><![CDATA[123456789from collections import Countera = &#123;&apos;x&apos;: 1, &apos;z&apos;: 3&#125;b = &#123;&apos;y&apos;: 2, &apos;z&apos;: 4&#125;d = &#123;&apos;x&apos;: 1, &apos;z&apos;: 5&#125;c = sum(map(Counter, [a, b, d]), Counter())print(dict(c))]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[python2合并多个字典]]></title>
+    <url>%2Fzhangdavids.github.io%2F2019%2F04%2F11%2Fpython2%E5%90%88%E5%B9%B6%E5%A4%9A%E4%B8%AA%E5%AD%97%E5%85%B8%2F</url>
+    <content type="text"><![CDATA[1234567891011def union_dict(*objs): _keys = set(sum([obj.keys() for obj in objs],[])) _total = &#123;&#125; for _key in _keys: _total[_key] = sum([obj.get(_key,0) for obj in objs]) return _totalobj1 = &#123;&apos;a&apos;:1,&apos;b&apos;:2,&apos;c&apos;:3&#125;obj2 = &#123;&apos;a&apos;:1,&apos;b&apos;:3,&apos;d&apos;:4&#125;print union_dict(obj1,obj2)]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[lfu-cache]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F04%2F10%2Flfu-cache%2F</url>
     <content type="text"><![CDATA[123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869import collectionsimport functoolsfrom itertools import filterfalsefrom heapq import nsmallestfrom operator import itemgetterclass Counter(dict): def __missing__(self, key): return 0def lfu_cache(maxsize=100): def decorating_function(user_function): cache = &#123;&#125; # mapping of args to results use_count = Counter() # times each key has been accessed kwd_mark = object() # separate positional and keyword args @functools.wraps(user_function) def wrapper(*args, **kwds): key = args if kwds: key += (kwd_mark,) + tuple(sorted(kwds.items())) use_count[key] += 1 # get cache entry or compute if not found try: result = cache[key] wrapper.hits += 1 except KeyError: result = user_function(*args, **kwds) cache[key] = result wrapper.misses += 1 # purge least frequently used cache entry if len(cache) &gt; maxsize: for key, _ in nsmallest(maxsize // 10, use_count.items(), key=itemgetter(1)): del cache[key], use_count[key] return result def clear(): cache.clear() use_count.clear() wrapper.hits = wrapper.misses = 0 wrapper.hits = wrapper.misses = 0 wrapper.clear = clear return wrapper return decorating_functionif __name__ == &apos;__main__&apos;: @lfu_cache(maxsize=20) def f(x, y): return 3 * x + y domain = range(5) from random import choice for i in range(1000): r = f(choice(domain), choice(domain)) print(f.hits, f.misses)]]></content>
@@ -19,7 +29,13 @@
   <entry>
     <title><![CDATA[分布式学习001]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F04%2F09%2F%E5%88%86%E5%B8%83%E5%BC%8F%E5%AD%A6%E4%B9%A0001%2F</url>
-    <content type="text"><![CDATA[分布式 目的 增加系统容量 提高系统的可用性 大流量处理关键业务保护 提高架构的吞吐量 服务更多的并发和流量提高系统的稳定性 让系统的可用性更高 加缓存负载均衡异步调用数据镜像数据分区 服务拆分服务冗余限流降级高可用架构高可用运维 服务治理架构软件管理devops自动化运维资源调度管理整体架构监控流量控制 全栈系统监控； 服务 / 资源调度； 流量调度； 状态 /数据调度 开发和运维的自动化]]></content>
+    <content type="text"><![CDATA[分布式 目的 增加系统容量 提高系统的可用性 大流量处理 关键业务保护 提高架构的吞吐量 服务更多的并发和流量 提高系统的稳定性 让系统的可用性更高 加缓存 负载均衡 异步调用 数据镜像 数据分区 服务拆分 服务冗余 限流降级 高可用架构 高可用运维 服务治理 架构软件管理 devops 自动化运维 资源调度管理 整体架构监控 流量控制 全栈系统监控； 服务 / 资源调度； 流量调度； 状态 /数据调度 开发和运维的自动化]]></content>
+      <categories>
+        <category>distribute</category>
+      </categories>
+      <tags>
+        <tag>distribute</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[leetcode之合并K个链表]]></title>
@@ -60,7 +76,13 @@
   <entry>
     <title><![CDATA[图的两种遍历]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F04%2F05%2F%E5%9B%BE%E7%9A%84%E4%B8%A4%E7%A7%8D%E9%81%8D%E5%8E%86%2F</url>
-    <content type="text"></content>
+    <content type="text"><![CDATA[深度优先搜索使用递归的方式需要栈结构辅助实现 广度优先搜索需要使用队列辅助实现 连通图 任意顶点出发可以访问图中的所有顶点 图的深度搜索]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[字符串题]]></title>
@@ -97,6 +119,12 @@
     <title><![CDATA[2019-go-28]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F03%2F28%2F2019-go-28%2F</url>
     <content type="text"><![CDATA[go的 协程和线程都可以实现程序的并发执行 通过channel来进行协程之间的通信 一个包中可以包含多个init函数 程序编译的时候 先执行导入包init的函数 再执行本包内的init函数 几个缺陷 不支持函数式编程 go的泛型会給项目带来不必要的复杂性 通道/并行切片处理 垃圾回收器 以低延迟为最高优先级 错误处理 如果完成一个api 或者完成一个需要大量磁盘/网络调用的任务 go是首选！！！]]></content>
+      <categories>
+        <category>golang</category>
+      </categories>
+      <tags>
+        <tag>golang</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[2019-go-27]]></title>

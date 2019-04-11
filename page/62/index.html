@@ -81,15 +81,15 @@
 
 
 
-<meta name="description" content="曾因酒醉鞭名马 生怕情多累美人">
+<meta name="description" content="曾因酒醉鞭名马 生怕情多累美人 站在巨人的肩膀上 积累自己的知识库">
 <meta property="og:type" content="website">
 <meta property="og:title" content="上药三品，神与气精">
 <meta property="og:url" content="https://zhangdavids.github.io/page/62/index.html">
 <meta property="og:site_name" content="上药三品，神与气精">
-<meta property="og:description" content="曾因酒醉鞭名马 生怕情多累美人">
+<meta property="og:description" content="曾因酒醉鞭名马 生怕情多累美人 站在巨人的肩膀上 积累自己的知识库">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="上药三品，神与气精">
-<meta name="twitter:description" content="曾因酒醉鞭名马 生怕情多累美人">
+<meta name="twitter:description" content="曾因酒醉鞭名马 生怕情多累美人 站在巨人的肩膀上 积累自己的知识库">
 
 
 
@@ -295,6 +295,365 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/08/16/drf-custom-auth/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/08/16/drf-custom-auth/" itemprop="url">drf custom auth</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-16T15:49:04+08:00">
+                2018-08-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2018/08/16/drf-custom-auth/" class="leancloud_visitors" data-flag-title="drf custom auth">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  133
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class MyTokenAuthentication(TokenAuthentication):</span><br><span class="line">    def authenticate_credentials(self, key):</span><br><span class="line">        # get cache</span><br><span class="line">        token_cache = &quot;token&quot; + key</span><br><span class="line">        token_all = cache.get(token_cache)</span><br><span class="line">        if token_all:</span><br><span class="line">            return (token_all.user, token_all)       </span><br><span class="line">        model = self.get_model()</span><br><span class="line">        try:</span><br><span class="line">            token = model.objects.select_related(&apos;user&apos;).get(key=key)</span><br><span class="line">        except model.DoesNotExist:</span><br><span class="line">            raise exceptions.AuthenticationFailed(_(&apos;Invalid token.&apos;))            </span><br><span class="line">        if not token.user.is_active:</span><br><span class="line">            raise exceptions.AuthenticationFailed(_(&apos;User inactive or deleted.&apos;))        </span><br><span class="line">        # set cache</span><br><span class="line">        if token:</span><br><span class="line">            token_cache = &apos;token&apos; + key</span><br><span class="line">            cache.set(token_cache, token)</span><br><span class="line">        return (token.user, token)</span><br></pre></td></tr></table></figure>
+<p>第一次 查询mysql 数据库 将结果缓存至redis 数据库中 第二次的话，同样的请求过来 直接查询缓存 大大提高查询效率，增加web网站的QPS</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/08/16/how-to-be-a-data-scientist-12/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/08/16/how-to-be-a-data-scientist-12/" itemprop="url">how to be a data scientist 12</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-16T11:31:09+08:00">
+                2018-08-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2018/08/16/how-to-be-a-data-scientist-12/" class="leancloud_visitors" data-flag-title="how to be a data scientist 12">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  474
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>花一两年时间去向一些有经验和资历的人（以及他的队伍）学习，</p>
+<p>在此之后，再尝试一个人走下去。</p>
+<ol>
+<li>Hadoop是一项非常重要的工具，并且对于数据科学有非常非同一般的影响力。</li>
+<li>干这一行工作最重要的技能就是拥有扎实的技术知识（尤其是一些相关的工具），这包括了能够熟练使用合适的工具来解决手边遇到的各种问题。</li>
+<li>数据科学家每天的生活包括优化现有的运行流程，以及创造能够提高用户体验的产品。</li>
+<li>在实战中，“数据科学家”和“机器学习专家”基本上是同义词。</li>
+<li>零售业之所以需要数据科学是因为他们有大量亟待分析的数据，并且有很多数据相关的问题亟待解决。但是大部分的数据分析师仅仅是通过把现有的模型套进这些数据中去做出结果，而不是去思考开发新的模型。</li>
+<li>数据科学中最有挑战性的问题也可能是未来几年这个领域将会不得不面对的难题，那就是如何从大数据中归纳出合适的问题，找对正确的研究方向以及最终使用合适的方法做出可靠的结果。</li>
+<li>如果你想要成为一名出色的数据科学家，一定要记住，在你转向一个新的技术之前，一定要确保自己已经非常熟练于当前的技术了。</li>
+<li>你的工作环境以及行业对于你的职业发展是有很大影响的，尤其是在事业的起步阶段。</li>
+<li>数据科学的未来很光明的，这个领域在未来一定会越来越多元化。</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -806,394 +1165,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/08/16/how-to-be-a-data-scientist-08/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/08/16/how-to-be-a-data-scientist-08/" itemprop="url">how to be a data scientist 08</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-16T11:09:50+08:00">
-                2018-08-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/data-science/" itemprop="url" rel="index">
-                    <span itemprop="name">data science</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2018/08/16/how-to-be-a-data-scientist-08/" class="leancloud_visitors" data-flag-title="how to be a data scientist 08">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  643
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  2
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>一般经常使用的是hadoop 套件的备选工具 面向对象的编程语言 数据分析软件 虚拟化程序以及大数据集成系统</p>
-<ol>
-<li>MapReduce由Google创建，并且是Hadoop的主要组件。正如在之前的部分我们曾提到过的那样，这是任何大数据技术的核心。尽管这是Hadoop固有的特性，但它也可以在其他的大数据程序，例如MPP和NoSQL数据库（例如，MongoDB）。MapReduce最初是具有商业所有权的，但随着Yahoo在2006年提供了慷慨的资金支持，它以Hadoop的开源形式出现，并在两年内迅速受到广泛欢迎。作为一个著名的并行计算算法，它得以让数据库的查询建立在一个计算机集群上，任务可以分拆成小份，并跨越整个集群的节点。</li>
-<li>HDFS是Hadoop 分布式文件系统的简称，这是Hadoop系统所使用的文件系统。被Hadoop所处理的数据必须先导入到HDFS中，并备份在运行了Hadoop的计算机网络中。它的数据极限大约在30PB。</li>
-<li>Pig是针对Hadoop进行计算的一个高级编程语言（High-level programming language）。你可以将它视为Hadoop生态系统中各种操作的控制元件。它的性能是可扩展的。</li>
-<li>Hive是一个数据仓库程序，是以“类-SQL”语言进行访问使用的，他是为横跨Hadoop集群的数据设计的。并且它的性能是可扩展的。</li>
-<li>HBase、Sqoop以及Flume是Hadoop的数据库组件。HBase是一个可以运行在Hadoop环境上的列式数据库。它是基于Google的BigTable设计的，并且数据极限约为1PB。另外，它比直接在HDFS上访问数据要慢一些。这对于处理存在HBase里面的数据来说不是很好，对HBase对于归档和时间系列数据的计数很合适。Sqoop是一个将关系型数据库中的数据导入到HDFS中的程序。Flume与此类似，它关注于收集和导入各种数据源的日志和任务数据。</li>
-<li>Mahout是一个机器学习和数据挖掘算法的函数库，用于对存储在HDFS的数据进行处理。</li>
-<li>Zookeeper服务于Hadoop有一“群”各种各样功能的组件，所以调试管理以及协调程序是十分必要的。Zookeeper保证了整个套件的整合以及相对得简便操作。</li>
-</ol>
-<h3 id="选择合适的工具"><a href="#选择合适的工具" class="headerlink" title="选择合适的工具"></a>选择合适的工具</h3><h3 id="分解问题"><a href="#分解问题" class="headerlink" title="分解问题"></a>分解问题</h3><h3 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h3>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/08/16/how-to-be-a-data-scientist-07/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/08/16/how-to-be-a-data-scientist-07/" itemprop="url">how to be a data scientist 07</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-16T11:04:29+08:00">
-                2018-08-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/data-science/" itemprop="url" rel="index">
-                    <span itemprop="name">data science</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2018/08/16/how-to-be-a-data-scientist-07/" class="leancloud_visitors" data-flag-title="how to be a data scientist 07">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  388
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>社交圈   是职业的组成部分，使得他能够学习更多的技术、工具以及成为一个更优秀的数据科学家所应该知道的其他内容，通过同样的碰面，他可能会遇到一个导师，这就非常有价值，特别是在他职业生涯的早期</p>
-<ol>
-<li>社交圈对成为数据科学家是至关重要的，特别是在职业生涯的早期阶段。</li>
-<li>社交圈可以帮助你培养沟通技巧，并让你适应各种类型的人群，而这对于数据科学家来说十分重要。</li>
-<li>在获取大数据科学领域以及其他相邻的领域中最近的革命性技术方面，社交圈可以是一个无价的资源。</li>
-<li>数据科学家需要与学术界保持健康的关系，通过社交圈让自己跟进最新进展以及结识潜在的合作伙伴。</li>
-<li>数据科学家需要立足现实，这可以通过社交圈去保持与商业世界的关系来达到。这可以帮助他更好地了解需要什么，并且除了带来工作机会之外，还可以让自己触及有趣的商业机会。</li>
-</ol>
-<p>两种表示矩阵的方法 </p>
-<p>一种是matrix类  *默认的乘法是矩阵的乘法</p>
-<p>另外一种是二维数组array *默认的乘法是hadamard乘法</p>
-<p>大多数的情况下 我们使用第二种 也就是二维数组来表示矩阵</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1238,7 +1209,7 @@
                 alt="John Cheung" />
             
               <p class="site-author-name" itemprop="name">John Cheung</p>
-              <p class="site-description motion-element" itemprop="description">曾因酒醉鞭名马 生怕情多累美人</p>
+              <p class="site-description motion-element" itemprop="description">曾因酒醉鞭名马 生怕情多累美人 站在巨人的肩膀上 积累自己的知识库</p>
           </div>
 
           <nav class="site-state motion-element">
@@ -1248,7 +1219,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">441</span>
+                  <span class="site-state-item-count">443</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1259,7 +1230,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/zhangdavids.github.io/categories/index.html">
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1270,7 +1241,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/zhangdavids.github.io/tags/index.html">
-                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1363,7 +1334,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共176.5k字</span>
+  <span class="post-count">博客全站共176.6k字</span>
 </div>
 
         
