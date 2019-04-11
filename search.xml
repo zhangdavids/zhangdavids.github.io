@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[lfu-cache]]></title>
+    <url>%2Fzhangdavids.github.io%2F2019%2F04%2F10%2Flfu-cache%2F</url>
+    <content type="text"><![CDATA[123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869import collectionsimport functoolsfrom itertools import filterfalsefrom heapq import nsmallestfrom operator import itemgetterclass Counter(dict): def __missing__(self, key): return 0def lfu_cache(maxsize=100): def decorating_function(user_function): cache = &#123;&#125; # mapping of args to results use_count = Counter() # times each key has been accessed kwd_mark = object() # separate positional and keyword args @functools.wraps(user_function) def wrapper(*args, **kwds): key = args if kwds: key += (kwd_mark,) + tuple(sorted(kwds.items())) use_count[key] += 1 # get cache entry or compute if not found try: result = cache[key] wrapper.hits += 1 except KeyError: result = user_function(*args, **kwds) cache[key] = result wrapper.misses += 1 # purge least frequently used cache entry if len(cache) &gt; maxsize: for key, _ in nsmallest(maxsize // 10, use_count.items(), key=itemgetter(1)): del cache[key], use_count[key] return result def clear(): cache.clear() use_count.clear() wrapper.hits = wrapper.misses = 0 wrapper.hits = wrapper.misses = 0 wrapper.clear = clear return wrapper return decorating_functionif __name__ == &apos;__main__&apos;: @lfu_cache(maxsize=20) def f(x, y): return 3 * x + y domain = range(5) from random import choice for i in range(1000): r = f(choice(domain), choice(domain)) print(f.hits, f.misses)]]></content>
+      <categories>
+        <category>leetcode</category>
+      </categories>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[web监控]]></title>
+    <url>%2Fzhangdavids.github.io%2F2019%2F04%2F10%2Fweb%E7%9B%91%E6%8E%A7%2F</url>
+    <content type="text"><![CDATA[Web 应用程序在执行时，监控工具收集分析并显示其相关信息，每个有问题的应用程序都有网络堆栈。通过监控工具提供的堆栈信息，开发和运营团队能够响应并解决问题。 收集和分析生产环境的数据在保持稳定性，维持高性能方面是十分重要的，尤其对错误的 Web 应用程序进行优化很有必要。 监控和​​日志的区别监控和日志都旨在帮助应用程序诊断问题，在调试过程中他们的目的非常相似。唯一的差别是，日志数据只会根据明确的事件而进行记录，而监控数据则集合数据背景进行分析。 例如，当错误发生时，该事件被记录在日志中。同时，监控应用的代码还要收集数据，不仅是异常 log，还包括函数的性能数据。 其实，俩两者之间的区别也不是那么明显，毕竟解决问题不是只有一条路径。只要对 Web 生产应用程序有用都是可以用的。]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[分布式学习001]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F04%2F09%2F%E5%88%86%E5%B8%83%E5%BC%8F%E5%AD%A6%E4%B9%A0001%2F</url>
     <content type="text"><![CDATA[分布式 目的 增加系统容量 提高系统的可用性 大流量处理关键业务保护 提高架构的吞吐量 服务更多的并发和流量提高系统的稳定性 让系统的可用性更高 加缓存负载均衡异步调用数据镜像数据分区 服务拆分服务冗余限流降级高可用架构高可用运维 服务治理架构软件管理devops自动化运维资源调度管理整体架构监控流量控制 全栈系统监控； 服务 / 资源调度； 流量调度； 状态 /数据调度 开发和运维的自动化]]></content>

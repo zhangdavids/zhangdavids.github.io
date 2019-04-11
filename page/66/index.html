@@ -309,6 +309,486 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/08/10/数据科学起步01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/08/10/数据科学起步01/" itemprop="url">数据科学起步01</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-10T21:14:20+08:00">
+                2018-08-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/data/" itemprop="url" rel="index">
+                    <span itemprop="name">data</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2018/08/10/数据科学起步01/" class="leancloud_visitors" data-flag-title="数据科学起步01">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.8k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  13
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="线性回归是所有模型的基石"><a href="#线性回归是所有模型的基石" class="headerlink" title="线性回归是所有模型的基石"></a>线性回归是所有模型的基石</h2><p>手工玩偶店的小何童鞋，想分析下玩偶的数量和成本之间的关系，他得到了如下表格的数据。将这些数据放在了图像之上，似乎是一个线性的关系，但是感觉并不严格，像是在一条直线上下随机波动。其实数据是由“自然之力”按照下面的公式来产生的。 其中b是一个随机变量，服从期望为0，方差为1的正态分布。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 10,7.7</span></span><br><span class="line"><span class="comment"># 10,9.87</span></span><br><span class="line"><span class="comment"># 11,11.18</span></span><br><span class="line"><span class="comment"># 12,10.43</span></span><br><span class="line"><span class="comment"># 13,12.36</span></span><br><span class="line"><span class="comment"># 14,14.15</span></span><br><span class="line"><span class="comment"># 15,15.73</span></span><br><span class="line"><span class="comment"># 16,16.4</span></span><br><span class="line"><span class="comment"># 17,18.86</span></span><br><span class="line"><span class="comment"># 18,16.13</span></span><br><span class="line"><span class="comment"># 19,18.21</span></span><br><span class="line"><span class="comment"># 20,18.37</span></span><br><span class="line"><span class="comment"># 21,22.61</span></span><br><span class="line"><span class="comment"># 22,19.83</span></span><br><span class="line"><span class="comment"># 23,22.67</span></span><br><span class="line"><span class="comment"># 24,22.7</span></span><br><span class="line"><span class="comment"># 25,25.16</span></span><br><span class="line"><span class="comment"># 26,25.55</span></span><br><span class="line"><span class="comment"># 27,28.21</span></span><br><span class="line"><span class="comment"># 28,28.12</span></span><br><span class="line"><span class="comment"># ...</span></span><br></pre></td></tr></table></figure>
+<p><script type="text/javascript" async src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"><br></script><br>$$y<em>{i} = x</em>{i} + b_{i}$$</p>
+<h3 id="机器学习的解法"><a href="#机器学习的解法" class="headerlink" title="机器学习的解法"></a>机器学习的解法</h3><p>步骤如下：<br>1.确定场景的类型<br>2.定义损失函数，使得模型预测的成本和实际的成本相近<br>3.提取特征（可能需要除去记错或者是特别异常的数据）<br>4.确定模型并估计参数（直接上线性模型）<br>5.评估模型效果（均方差要达到最小）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%matplotlib inline</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line">sys.version</span><br></pre></td></tr></table></figure>
+<pre><code>&apos;3.6.4 (default, Jan 21 2018, 16:48:17) \n[GCC 4.2.1 Compatible Apple LLVM 9.0.0 (clang-900.0.39.2)]&apos;
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># _*_ coding=utf8 _*_</span></span><br><span class="line"></span><br><span class="line"><span class="string">"""</span><br><span class="line">机器学习方法实现</span><br><span class="line">"""</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd </span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> linear_model</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">data_load</span><span class="params">(path)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># data = pd.read_csv(path)</span></span><br><span class="line">    <span class="comment"># data = pd.read_csv(path, delimiter='', header=0)</span></span><br><span class="line">    <span class="comment"># # 选择列</span></span><br><span class="line">    <span class="comment"># data['x']</span></span><br><span class="line">    <span class="comment"># data[['x', 'y']]</span></span><br><span class="line">    <span class="comment"># data.x</span></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    <span class="comment">#</span></span><br><span class="line">    <span class="comment"># # 选择行</span></span><br><span class="line">    <span class="comment"># data[:10]</span></span><br><span class="line">    <span class="comment"># data[10:]</span></span><br><span class="line">    <span class="comment"># data[2:3]</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">read_data</span><span class="params">(path)</span>:</span></span><br><span class="line"><span class="comment">#     data = pd.read_csv(path, delimiter=',', header=0)</span></span><br><span class="line">    data = pd.read_csv(path)</span><br><span class="line">    <span class="keyword">return</span> data</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">linearModel</span><span class="params">(data)</span>:</span></span><br><span class="line">    features = [<span class="string">"x"</span>]</span><br><span class="line">    labels = [<span class="string">"y"</span>]</span><br><span class="line"></span><br><span class="line">    train_data = data[:<span class="number">15</span>]</span><br><span class="line">    test_data = data[<span class="number">15</span>:]</span><br><span class="line">    <span class="comment"># 产生并且训练模型</span></span><br><span class="line">    model = train_model(train_data, features, labels)</span><br><span class="line">    <span class="comment"># 评价模型效果</span></span><br><span class="line">    error, score = evaluate_model(model, test_data, features, labels)</span><br><span class="line">    <span class="comment"># 图形化模型结果</span></span><br><span class="line">    visual_model(model, data, features, labels, error, score)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train_model</span><span class="params">(train_data, features, labels)</span>:</span></span><br><span class="line">    model = linear_model.LinearRegression()</span><br><span class="line">    model.fit(train_data[features], train_data[labels])</span><br><span class="line">    <span class="keyword">return</span> model</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">evaluate_model</span><span class="params">(model, test_data, features, labels)</span>:</span></span><br><span class="line">    error = np.mean(</span><br><span class="line">        (model.predict(test_data[features]) - test_data[labels])**<span class="number">2</span>)</span><br><span class="line">    score = model.score(test_data[features], test_data[labels])</span><br><span class="line">    <span class="keyword">return</span> error, score</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">visual_model</span><span class="params">(model, data, features, labels, error, score)</span>:</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">    模型可视化</span><br><span class="line">    """</span></span><br><span class="line">    <span class="comment"># 为在Matplotlib中显示中文，设置特殊字体</span></span><br><span class="line">    plt.rcParams[<span class="string">'font.family'</span>] = [<span class="string">'Heiti'</span>]</span><br><span class="line">    <span class="comment"># 创建一个图形框</span></span><br><span class="line">    fig = plt.figure(figsize=(<span class="number">6</span>, <span class="number">6</span>), dpi=<span class="number">80</span>)</span><br><span class="line">    <span class="comment"># 在图形框里只画一幅图</span></span><br><span class="line">    ax = fig.add_subplot(<span class="number">111</span>)</span><br><span class="line">    <span class="comment"># 在Matplotlib中显示中文，需要使用unicode</span></span><br><span class="line">    <span class="comment"># 在Python3中，str不需要decode</span></span><br><span class="line">    <span class="keyword">if</span> sys.version_info[<span class="number">0</span>] == <span class="number">3</span>:</span><br><span class="line">        ax.set_title(<span class="string">u'%s'</span> % <span class="string">"线性回归示例"</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        ax.set_title(<span class="string">u'%s'</span> % <span class="string">"线性回归示例"</span>.decode(<span class="string">"utf-8"</span>))</span><br><span class="line">    ax.set_xlabel(<span class="string">'$x$'</span>)</span><br><span class="line">    ax.set_ylabel(<span class="string">'$y$'</span>)</span><br><span class="line">    <span class="comment"># 画点图，用蓝色圆点表示原始数据</span></span><br><span class="line">    <span class="comment"># 在Python3中，str不需要decode</span></span><br><span class="line">    <span class="keyword">if</span> sys.version_info[<span class="number">0</span>] == <span class="number">3</span>:</span><br><span class="line">        ax.scatter(data[features], data[labels], color=<span class="string">'b'</span>,</span><br><span class="line">            label=<span class="string">u'%s: $y = x + \epsilon$'</span> % <span class="string">"真实值"</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        ax.scatter(data[features], data[labels], color=<span class="string">'b'</span>,</span><br><span class="line">            label=<span class="string">u'%s: $y = x + \epsilon$'</span> % <span class="string">"真实值"</span>.decode(<span class="string">"utf-8"</span>))</span><br><span class="line">    <span class="comment"># 根据截距的正负，打印不同的标签</span></span><br><span class="line">    <span class="keyword">if</span> model.intercept_ &gt; <span class="number">0</span>:</span><br><span class="line">        <span class="comment"># 画线图，用红色线条表示模型结果</span></span><br><span class="line">        <span class="comment"># 在Python3中，str不需要decode</span></span><br><span class="line">        <span class="keyword">if</span> sys.version_info[<span class="number">0</span>] == <span class="number">3</span>:</span><br><span class="line">            ax.plot(data[features], model.predict(data[features]), color=<span class="string">'r'</span>,</span><br><span class="line">                label=<span class="string">u'%s: $y = %.3fx$ + %.3f'</span>\</span><br><span class="line">                % (<span class="string">"预测值"</span>, model.coef_, model.intercept_))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            ax.plot(data[features], model.predict(data[features]), color=<span class="string">'r'</span>,</span><br><span class="line">                label=<span class="string">u'%s: $y = %.3fx$ + %.3f'</span>\</span><br><span class="line">                % (<span class="string">"预测值"</span>.decode(<span class="string">"utf-8"</span>), model.coef_, model.intercept_))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="comment"># 在Python3中，str不需要decode</span></span><br><span class="line">        <span class="keyword">if</span> sys.version_info[<span class="number">0</span>] == <span class="number">3</span>:</span><br><span class="line">            ax.plot(data[features], model.predict(data[features]), color=<span class="string">'r'</span>,</span><br><span class="line">                label=<span class="string">u'%s: $y = %.3fx$ - %.3f'</span>\</span><br><span class="line">                % (<span class="string">"预测值"</span>, model.coef_, abs(model.intercept_)))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            ax.plot(data[features], model.predict(data[features]), color=<span class="string">'r'</span>,</span><br><span class="line">                label=<span class="string">u'%s: $y = %.3fx$ - %.3f'</span>\</span><br><span class="line">                % (<span class="string">"预测值"</span>.decode(<span class="string">"utf-8"</span>), model.coef_, abs(model.intercept_)))</span><br><span class="line">    legend = plt.legend(shadow=<span class="keyword">True</span>)</span><br><span class="line">    legend.get_frame().set_facecolor(<span class="string">'#6F93AE'</span>)</span><br><span class="line">    <span class="comment"># 显示均方差和决定系数</span></span><br><span class="line">    <span class="comment"># 在Python3中，str不需要decode</span></span><br><span class="line">    <span class="keyword">if</span> sys.version_info[<span class="number">0</span>] == <span class="number">3</span>:</span><br><span class="line">        ax.text(<span class="number">0.99</span>, <span class="number">0.01</span>, </span><br><span class="line">            <span class="string">u'%s%.3f\n%s%.3f'</span>\</span><br><span class="line">            % (<span class="string">"均方差："</span>, error, <span class="string">"决定系数："</span>, score),</span><br><span class="line">            style=<span class="string">'italic'</span>, verticalalignment=<span class="string">'bottom'</span>, horizontalalignment=<span class="string">'right'</span>,</span><br><span class="line">            transform=ax.transAxes, color=<span class="string">'m'</span>, fontsize=<span class="number">13</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">         ax.text(<span class="number">0.99</span>, <span class="number">0.01</span>, </span><br><span class="line">            <span class="string">u'%s%.3f\n%s%.3f'</span>\</span><br><span class="line">            % (<span class="string">"均方差："</span>.decode(<span class="string">"utf-8"</span>), error, <span class="string">"决定系数："</span>.decode(<span class="string">"utf-8"</span>), score),</span><br><span class="line">            style=<span class="string">'italic'</span>, verticalalignment=<span class="string">'bottom'</span>, horizontalalignment=<span class="string">'right'</span>,</span><br><span class="line">            transform=ax.transAxes, color=<span class="string">'m'</span>, fontsize=<span class="number">13</span>)</span><br><span class="line">    <span class="comment"># 展示上面所画的图片。图片将阻断程序的运行，直至所有的图片被关闭</span></span><br><span class="line">    <span class="comment"># 在Python shell里面，可以设置参数"block=False"，使阻断失效。</span></span><br><span class="line">    plt.show()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 为什么搭建模型 有两个目的 使用模型对未知数据做预测；或者利用模型分析数据，找出数据的内在规律，为决策提供支持。</span></span><br><span class="line"><span class="comment"># 在利用模型做预测时，我们希望模型的准确度越高越好，但是在利用模型做分析时， 我们则更关心模型是否是可靠的</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line"><span class="comment">#     home_path = os.path.dirname(os.path.abspath(__file__))</span></span><br><span class="line">    <span class="keyword">if</span> os.name == <span class="string">"posix"</span>:</span><br><span class="line">        data_path = <span class="string">"./data/simple_example.csv"</span></span><br><span class="line"></span><br><span class="line">    data = read_data(data_path)</span><br><span class="line">    print(data.shape)</span><br><span class="line"><span class="comment">#     linearModel(data)</span></span><br></pre></td></tr></table></figure>
+<pre><code>(20, 2)
+</code></pre><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">linearModel(data)</span><br></pre></td></tr></table></figure>
+<pre><code>/usr/local/Cellar/python3/3.6.4_2/Frameworks/Python.framework/Versions/3.6/lib/python3.6/site-packages/scipy/linalg/basic.py:1226: RuntimeWarning: internal gelsd driver lwork query error, required iwork dimension not returned. This is likely the result of LAPACK bug 0038, fixed in LAPACK 3.2.2 (released July 21, 2010). Falling back to &apos;gelss&apos; driver.
+  warnings.warn(mesg, RuntimeWarning)
+</code></pre><p><img src="output_10_1.png" alt="png"></p>
+<h3 id="统计学"><a href="#统计学" class="headerlink" title="统计学"></a>统计学</h3><p>1.假设条件概率<br>2.估计参数<br>3.推导参数的分布<br>4.假设检验和置信区间</p>
+<p>使用第三方库 statsmodels 来训练线性回归模型</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> statsmodels.api <span class="keyword">as</span> sm</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">linear_model2</span><span class="params">(data)</span>:</span></span><br><span class="line">    features = [<span class="string">"x"</span>]</span><br><span class="line">    labels = [<span class="string">"y"</span>]</span><br><span class="line">    Y = data[labels]</span><br><span class="line">    X = sm.add_constant(data[features])</span><br><span class="line">    result = train_model2(X, Y)</span><br><span class="line">    model_summary(result)</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">train_model2</span><span class="params">(X, Y)</span>:</span></span><br><span class="line">    model = sm.OLS(Y, X)</span><br><span class="line">    result = model.fit()</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">model_summary</span><span class="params">(result)</span>:</span></span><br><span class="line">    <span class="comment"># 整体统计分析结果</span></span><br><span class="line">    print(result.summary())</span><br><span class="line">    print(result.f_test(<span class="string">"x=0"</span>))</span><br><span class="line">    print(result.f_test(<span class="string">"const=0"</span>))</span><br><span class="line">    print(result.f_test([<span class="string">"x=0"</span>, <span class="string">"const=0"</span>]))</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">datapath = <span class="string">"./data/simple_example.csv"</span></span><br><span class="line">data = read_data(datapath)</span><br><span class="line">linear_model2(data)</span><br></pre></td></tr></table></figure>
+<pre><code>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                      y   R-squared:                       0.962
+Model:                            OLS   Adj. R-squared:                  0.960
+Method:                 Least Squares   F-statistic:                     460.5
+Date:                Tue, 07 Aug 2018   Prob (F-statistic):           2.85e-14
+Time:                        11:40:29   Log-Likelihood:                -31.374
+No. Observations:                  20   AIC:                             66.75
+Df Residuals:                      18   BIC:                             68.74
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const         -0.9495      0.934     -1.017      0.323      -2.912       1.013
+x              1.0330      0.048     21.458      0.000       0.932       1.134
+==============================================================================
+Omnibus:                        0.745   Durbin-Watson:                   2.345
+Prob(Omnibus):                  0.689   Jarque-Bera (JB):                0.673
+Skew:                           0.074   Prob(JB):                        0.714
+Kurtosis:                       2.113   Cond. No.                         66.3
+==============================================================================
+
+Warnings:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+&lt;F test: F=array([[ 460.4584822]]), p=2.848465414495684e-14, df_denom=18, df_num=1&gt;
+&lt;F test: F=array([[ 1.03355794]]), p=0.32279564008314576, df_denom=18, df_num=1&gt;
+&lt;F test: F=array([[ 2442.62159921]]), p=1.2108814742372977e-22, df_denom=18, df_num=2&gt;
+</code></pre><p>得到参数b的估计值为-0.9495, 但是这个值在b=0这个假设下的P-value高达32.3%，统计学上认为这种参数是不显著的，应该舍弃此参数。同理a的估计值是1.033，P-value小于0.01，因此a是显著的，应该被纳入模型。因此，需要调整模型。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> statsmodels.api <span class="keyword">as</span> sm</span><br><span class="line"><span class="keyword">from</span> statsmodels.sandbox.regression.predstd <span class="keyword">import</span> wls_prediction_std</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">modelSummary</span><span class="params">(re)</span>:</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">    分析线性回归模型的统计性质</span><br><span class="line">    """</span></span><br><span class="line">    <span class="comment"># 整体统计分析结果</span></span><br><span class="line">    print(re.summary())</span><br><span class="line">    <span class="comment"># 在Windows下运行此脚本需确保Windows下的命令提示符(cmd)能显示中文</span></span><br><span class="line">    <span class="comment"># 用f test检测x对应的系数a是否显著</span></span><br><span class="line">    print(<span class="string">"检验假设x的系数等于0："</span>)</span><br><span class="line">    print(re.f_test(<span class="string">"x=0"</span>))</span><br><span class="line">    <span class="comment"># 用f test检测常量b是否显著</span></span><br><span class="line">    print(<span class="string">"检测假设const的系数等于0："</span>)</span><br><span class="line">    print(re.f_test(<span class="string">"const=0"</span>))</span><br><span class="line">    <span class="comment"># 用f test检测a=1, b=0同时成立的显著性</span></span><br><span class="line">    print(<span class="string">"检测假设x的系数等于1和const的系数等于0同时成立："</span>)</span><br><span class="line">    print(re.f_test([<span class="string">"x=1"</span>, <span class="string">"const=0"</span>]))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">visualizeModel</span><span class="params">(re, data, features, labels)</span>:</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">    模型可视化</span><br><span class="line">    """</span></span><br><span class="line">    <span class="comment"># 计算预测结果的标准差，预测下界，预测上界</span></span><br><span class="line">    prstd, preLow, preUp = wls_prediction_std(re, alpha=<span class="number">0.05</span>)</span><br><span class="line">    <span class="comment"># 为在Matplotlib中显示中文，设置特殊字体</span></span><br><span class="line">    plt.rcParams[<span class="string">'font.family'</span>] = [<span class="string">'Heiti'</span>]</span><br><span class="line">    <span class="comment"># 创建一个图形框</span></span><br><span class="line">    fig = plt.figure(figsize=(<span class="number">6</span>, <span class="number">6</span>), dpi=<span class="number">80</span>)</span><br><span class="line">    <span class="comment"># 在图形框里只画一幅图</span></span><br><span class="line">    ax = fig.add_subplot(<span class="number">111</span>)</span><br><span class="line">    <span class="comment"># 在Matplotlib中显示中文，需要使用unicode</span></span><br><span class="line">    <span class="comment"># 在Python3中，str不需要decode</span></span><br><span class="line">    <span class="keyword">if</span> sys.version_info[<span class="number">0</span>] == <span class="number">3</span>:</span><br><span class="line">        ax.set_title(<span class="string">u'%s'</span> % <span class="string">"线性回归统计分析示例"</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        ax.set_title(<span class="string">u'%s'</span> % <span class="string">"线性回归统计分析示例"</span>.decode(<span class="string">"utf-8"</span>))</span><br><span class="line">    ax.set_xlabel(<span class="string">'$x$'</span>)</span><br><span class="line">    ax.set_ylabel(<span class="string">'$y$'</span>)</span><br><span class="line">    <span class="comment"># 画点图，用蓝色圆点表示原始数据</span></span><br><span class="line">    <span class="comment"># 在Python3中，str不需要decode</span></span><br><span class="line">    <span class="keyword">if</span> sys.version_info[<span class="number">0</span>] == <span class="number">3</span>:</span><br><span class="line">        ax.scatter(data[features], data[labels], color=<span class="string">'b'</span>,</span><br><span class="line">            label=<span class="string">u'%s: $y = x + \epsilon$'</span> % <span class="string">"真实值"</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        ax.scatter(data[features], data[labels], color=<span class="string">'b'</span>,</span><br><span class="line">            label=<span class="string">u'%s: $y = x + \epsilon$'</span> % <span class="string">"真实值"</span>.decode(<span class="string">"utf-8"</span>))</span><br><span class="line">    <span class="comment"># 画线图，用红色虚线表示95%置信区间</span></span><br><span class="line">    <span class="comment"># 在Python3中，str不需要decode</span></span><br><span class="line">    <span class="keyword">if</span> sys.version_info[<span class="number">0</span>] == <span class="number">3</span>:</span><br><span class="line">        ax.plot(data[features], preUp, <span class="string">"r--"</span>, label=<span class="string">u'%s'</span> % <span class="string">"95%置信区间"</span>)</span><br><span class="line">        ax.plot(data[features], re.predict(data[features]), color=<span class="string">'r'</span>,</span><br><span class="line">            label=<span class="string">u'%s: $y = %.3fx$'</span>\</span><br><span class="line">            % (<span class="string">"预测值"</span>, re.params[features]))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        ax.plot(data[features], preUp, <span class="string">"r--"</span>, label=<span class="string">u'%s'</span> % <span class="string">"95%置信区间"</span>.decode(<span class="string">"utf-8"</span>))</span><br><span class="line">        ax.plot(data[features], re.predict(data[features]), color=<span class="string">'r'</span>,</span><br><span class="line">            label=<span class="string">u'%s: $y = %.3fx$'</span>\</span><br><span class="line">            % (<span class="string">"预测值"</span>.decode(<span class="string">"utf-8"</span>), re.params[features]))</span><br><span class="line">    ax.plot(data[features], preLow, <span class="string">"r--"</span>)</span><br><span class="line">    legend = plt.legend(shadow=<span class="keyword">True</span>)</span><br><span class="line">    legend.get_frame().set_facecolor(<span class="string">'#6F93AE'</span>)</span><br><span class="line">    plt.show()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">trainModel</span><span class="params">(X, Y)</span>:</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">    训练模型</span><br><span class="line">    """</span></span><br><span class="line">    model = sm.OLS(Y, X)</span><br><span class="line">    re = model.fit()</span><br><span class="line">    <span class="keyword">return</span> re</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">linearModel2</span><span class="params">(data)</span>:</span></span><br><span class="line">    <span class="string">"""</span><br><span class="line">    线性回归统计性质分析步骤展示</span><br><span class="line"></span><br><span class="line">    参数</span><br><span class="line">    ----</span><br><span class="line">    data : DataFrame，建模数据</span><br><span class="line">    """</span></span><br><span class="line">    features = [<span class="string">"x"</span>]</span><br><span class="line">    labels = [<span class="string">"y"</span>]</span><br><span class="line">    Y = data[labels]</span><br><span class="line">    <span class="comment"># 加入常量变量</span></span><br><span class="line">    X = sm.add_constant(data[features])</span><br><span class="line">    <span class="comment"># 构建模型</span></span><br><span class="line">    re = trainModel(X, Y)</span><br><span class="line">    <span class="comment"># 分析模型效果</span></span><br><span class="line">    modelSummary(re)</span><br><span class="line">    <span class="comment"># const并不显著，去掉这个常量变量</span></span><br><span class="line">    resNew = trainModel(data[features], Y)</span><br><span class="line">    <span class="comment"># 输出新模型的分析结果</span></span><br><span class="line">    print(resNew.summary())</span><br><span class="line">    <span class="comment"># 将模型结果可视化</span></span><br><span class="line">    visualizeModel(resNew, data, features, labels)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">linearModel2(data)</span><br></pre></td></tr></table></figure>
+<pre><code>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                      y   R-squared:                       0.962
+Model:                            OLS   Adj. R-squared:                  0.960
+Method:                 Least Squares   F-statistic:                     460.5
+Date:                Tue, 07 Aug 2018   Prob (F-statistic):           2.85e-14
+Time:                        11:42:08   Log-Likelihood:                -31.374
+No. Observations:                  20   AIC:                             66.75
+Df Residuals:                      18   BIC:                             68.74
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+const         -0.9495      0.934     -1.017      0.323      -2.912       1.013
+x              1.0330      0.048     21.458      0.000       0.932       1.134
+==============================================================================
+Omnibus:                        0.745   Durbin-Watson:                   2.345
+Prob(Omnibus):                  0.689   Jarque-Bera (JB):                0.673
+Skew:                           0.074   Prob(JB):                        0.714
+Kurtosis:                       2.113   Cond. No.                         66.3
+==============================================================================
+
+Warnings:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+检验假设x的系数等于0：
+&lt;F test: F=array([[ 460.4584822]]), p=2.848465414495684e-14, df_denom=18, df_num=1&gt;
+检测假设const的系数等于0：
+&lt;F test: F=array([[ 1.03355794]]), p=0.32279564008314576, df_denom=18, df_num=1&gt;
+检测假设x的系数等于1和const的系数等于0同时成立：
+&lt;F test: F=array([[ 0.99654631]]), p=0.3886267976063851, df_denom=18, df_num=2&gt;
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                      y   R-squared:                       0.996
+Model:                            OLS   Adj. R-squared:                  0.996
+Method:                 Least Squares   F-statistic:                     4876.
+Date:                Tue, 07 Aug 2018   Prob (F-statistic):           2.26e-24
+Time:                        11:42:08   Log-Likelihood:                -31.933
+No. Observations:                  20   AIC:                             65.87
+Df Residuals:                      19   BIC:                             66.86
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+x              0.9862      0.014     69.825      0.000       0.957       1.016
+==============================================================================
+Omnibus:                        0.489   Durbin-Watson:                   2.218
+Prob(Omnibus):                  0.783   Jarque-Bera (JB):                0.561
+Skew:                           0.033   Prob(JB):                        0.755
+Kurtosis:                       2.182   Cond. No.                         1.00
+==============================================================================
+
+Warnings:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+</code></pre><p><img src="output_18_1.png" alt="png"></p>
+<p>来对比下两种解法，数据科学家在搭建模型时，通常会定义一些技术指标来衡量模型预测的准确度。需要模型参数的估计值是可靠的，但是事实并非如此，机器学习的模型结果显示，玩偶生产的固定成本是负数，这违背了事实。模型没有抓住数据真正的内在关系。为了提高预测的准确度，常常提取更多的特征，并以此搭建复杂的模型。大家都热衷于复杂度更高的模型。一旦发生过拟合，模型越复杂，错得越多。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/08/01/数据分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/08/01/数据分析/" itemprop="url">数据分析</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-01T19:26:00+08:00">
+                2018-08-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/data/" itemprop="url" rel="index">
+                    <span itemprop="name">data</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2018/08/01/数据分析/" class="leancloud_visitors" data-flag-title="数据分析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.5k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1.数据整合困难</p>
+<p>半导体制造涉及的工序和设备非常多，各种英文名字的系统很多到现在都还没有完全搞清楚，数据也分散在各个系统中，有结构化的，也有非结构化的（各种wafer map），很多数据存在于设备的日志中，基本没有被使用过。即使要使用这些数据，也面临一些困难，比如有些设备数据我们没有权限访问，需要跟Vendor申请，有些数据Vendor做过加密，需要解密（如PDF的FDC raw trace数据，与厂商沟通很久，才能得到你想要的），有些设备数据服务器挂掉了，都没人知道，甚至找不到服务器维护人员（如Tel公司的WIS数据，应该很有价值，但是数据服务器直接挂掉好久了）。另外，这些数据一般缺少元数据，没有数据字典这种东西，你拿到这些数据，也要花费很长时间去理解数据，更不用说将所有这些系统的数据整合打通了。还好目前已经整清楚一部分数据了，包括传统的YMS数据（WAT,CP,Metrology,WIP）和tool数据（iEMS，FDC），后续有机会把半导体行业数据一点一点理清楚，设计一套公共数据模型（类似互联网数据中台），可以满足各种数据应用</p>
+<p>2.组织架构不够完善</p>
+<p>随着大数据兴起，公司高层还是非常重视大数据的，但在组织架构上并没有提升到很高的位置，毕竟对于半导体制造，大数据仍然属于边缘的Support部门。在IT部门下面有传统的EA（Engineering Analysis）部门，很多资源在做数据接口、数据解析、报表等工作，在YE，YAE等偏业务部门也有数据分析团队，他们更接近Fab的用户，有实际的use case，能积累一定的行业经验。现在公司又冒出了大数据团队，既有IT的EA下面一个小团队（主要是搞个大数据平台hadoop，在上面做一些数据分析和应用），也有YE下面的一个小团队（面向业务需求，提供大数据应用），这几波人经常没有形成合力，事情推动起来比较困难，IT里面搞大数据的，接触用户的机会比较少，经常会搞一些研究型的项目（如做各种correlation），并没有跟实际业务问题对接起来。业务部门的大数据团队面临数据整合的困难，面临巧妇难为无米之炊的困境，在数据没有整合好之前，很难做出大的成果，IT在数据方面是有优势的，它负责各种数据库系统，对数据更清楚一些。这几个团队如果能够整合成一个大数据部门，并在组织架构上上升一层，价值会体现的更加明显。另外，团队内部角色定位和分工也不是很清晰，按照EA1,EA2这种划分有意义吗？团队内部也没有形成很好的工作流程，各个小组工作互不相干，在一个部门内部甚至很少会有接触到。智能制造不仅体现在IT自动化和信息化水平上，未来更多要体现在数据应用上，要让数据提供智能决策和生产。</p>
+<p>3、依赖外部大数据供应商</p>
+<p>IT部门比较忙的事情，就是跟各种大数据分析厂商搞POC，采购各种分析工具，大数据分析技能没有提升多少，各种厂商的工具倒接触了不少（PDF的extensio，bistel eDatalyzer，nanometrics，spotfire），主要是部门没有资源做自主分析，很多大数据人才不会选择制造业，还有部门领导也不相信自己的团队能做出来，借着POC名义让大家学习人家是怎么做的。目前大数据分析厂商大多数是国外的，主要是国外半导体行业发展好，有大量的应用机会，这其实是国内大数据的一个机会，制造业的问题相对比较通用一些，是比较容易做出解决方案和软件工具的，随着国内半导体行业的发展，是有制造业大数据创业机会的。</p>
+<p>4、传统方法使用大数据</p>
+<p>半导体制造分析使用传统统计分析方法较多（DOE，ANOVA，boxplot，假设检验），这跟行业特点是有关系的，不像互联网更关注相关关系，制造业更关注因果关系，发现了问题，要找到问题的根本原因，才能解决问题，所以DOE的思想是比较好理解的。但是这些方法的缺陷也比较明显，半导体制程太复杂，影响因素太多，每个因素都做DOE，是非常低效的，这时候机器学习、深度学习的方法是可以大大提高解决问题效率的，用户对这块的接受度还是比较低的，他们对可解释性要求较高，其实机器学习有些基于规则的模型还是比较有价值的，要让用户接受这些将会是一个漫长的过程，要逐渐改变用户的观念。另外，在与用户沟通时，要主动引导用户，不要问用户需要什么（用户想要的就是各种correlation，boxplot，regression），要搞清楚用户面临的痛点，我们提供更好的解决方案帮他们解决就好了，而不是为用户提供他们所要的那些功能。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/05/21/drl-does-not-work-yet/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -884,394 +1364,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/05/15/how-dl/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/05/15/how-dl/" itemprop="url">how-dl</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-15T22:30:37+08:00">
-                2018-05-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/AI/" itemprop="url" rel="index">
-                    <span itemprop="name">AI</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2018/05/15/how-dl/" class="leancloud_visitors" data-flag-title="how-dl">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  0
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/05/12/how-identify-tech-man/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/05/12/how-identify-tech-man/" itemprop="url">how-identify-tech-man</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-12T22:07:06+08:00">
-                2018-05-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/web/" itemprop="url" rel="index">
-                    <span itemprop="name">web</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2018/05/12/how-identify-tech-man/" class="leancloud_visitors" data-flag-title="how-identify-tech-man">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  2.5k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  8
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>技术招聘除了考察人的协作精神和工作态度，一大目标便是判断人的技术能力和实际水平。在这件事情上多做观察、思考是很有意义的。</p>
-<p>对于考察人的技术等级，学界是有认真的研究的。参见：德雷福斯模型解说。<br>德雷福斯模型把人的技能水平，分成5级：新手、高级新手、胜任者、精通者、专家。<br>对不同技能等级的认定是这样的：     </p>
-<ul>
-<li><p>新手：依靠指令清单，必须按部就班。就是必须给出详细而具体的操作规则，才能工作。比如你做一道从未做过的菜，需要看菜谱的说明，第一步做什么，第二步做什么等等，直到最后烹饪结束。</p>
-</li>
-<li><p>高级新手：有限的情景洞察力，同等对待工作的各个方面。对全局性、体系性的东西没兴趣。这是小工的水平。比如他能跟着师傅干点活，打打下手。可以靠着反复检索搜索引擎、StackOverflow解决具体的小问题。</p>
-</li>
-<li><p>胜任者：能够独立解决各种各样的领域内问题。这是一般的企业招聘，比较希望招到的等级，招进来稍作适应就能干活了，省心省力。</p>
-</li>
-<li><p>精通者：经验丰富，可以自我纠正、自我改进。这类等级的人，思考可以指向内在，通过反省、反馈改善技能。这种在企业可以算上高手、大拿了，培养不易。</p>
-</li>
-<li><p>专家：依靠直觉工作，不需要解释和理由。实际你让他解释，他可能也说不出个所以然，就是直觉给出答案，然后还是对的。专家人数稀少，需要很长时间训练、实践。通常的说法是10年出专家，10000小时定律。</p>
-</li>
-</ul>
-<p>　　这个是理论上的研究，实践中比较缺乏操作性，难以迅速的判定应聘者的实际情况。不信你打开收进来的大把简历，刚毕业的学生，每个技能名词上面都是一堆堆的“精通” – 你相信么？但它可以当成一个职业技能等级判定的参照标准。<br>　　于是乎，各家企业开启了各种“笔试”、“机试”，多轮面试，并且严格要求学历以及出身院校，试图以此过滤掉不合意的应征者，留下合格的人选。它当然是可行的，但是效果一般，而且容易出错，错失有思想有水平的人。不然也不会催生出各类“推荐式”的招聘。看重学历、学校当然也有其优点：它是快速过滤的手段，毕竟能考上好学校的人智商不会太差吧。但在大数字公司的一朋友说，公司里面还有初中毕业，一直精研安全领域的人，技术能力也是十分出色。如果严苛对待背景，这些人就会错过了。因为人的生活多种多样，有各种历史的背景因素影响经历。而部分人的经历，就是跟一些人不同的，可是不妨碍他们同样可以变得优秀。招聘，实际上是建立信任关系。如果有充足的信息证明，应聘者足够优秀，这就够了。条条框框只是辅助手段，并不是目的。<br>　　<br>　　<br>推荐式的招聘实际要靠谱的多，因为人很容易了解熟悉的人的水平。这是靠推荐者的信用背书。人平时沟通时说什么话，日常看什么书，关注哪些领域，琢磨过啥问题，哪些东西很熟，这个经常聊的熟人往往都知道。可是，这类招聘局限性也很大：面窄、靠机缘。靠推荐能招几个好手啊？好手往往是各家争抢的对象，窗口期有限，基本不会缺工作的。  </p>
-<p>说了一圈，还是要在技能水准判定上有更高效率的办法，招进合适的人来。</p>
-<p>回到开头的德雷福斯模型，既然人的技能是分级的，那么对待不同的职位要求，也应该侧重不同的考察角度。如果千篇一律的走招聘流程，就容易出问题了。比如你明明要找的是“精通者”，可上来就让人一堆笔试、机试，这是不合适的。对方会十分的厌烦。体现高水平技术能力的并不在默写什么“字符串算法”那里。这反倒是刚毕业的人占便宜，因为才学过不久，印象深。不信你让工作10年的人跟计算机专业应届生比比写排序算法，真未必能赢。但是这并不重要 – 你干活不看手册不查文档吗？聪明人从不死记硬背。重要的地方在于对问题域的准确、深刻的理解，对各类技术优劣点、各种条件平衡的评判和把握。<br>　　对待初阶新人，应着重考察的是基本功是否扎实，专业成绩是否优秀。更重要的，是他对职业的热情，学习能力和研究精神。某类人要说起技术来，滔滔不绝，两眼放光，充满热情，对未知的、新生的各类概念、技术非常好奇，这种人想差都难。因为他会自我驱动，不用督促，自己就钻研前进。反之，觉得这个职业待遇高，只是想混饭吃的人，很少走得长远。这类初阶新人以毕业生、工作年限少者为多。测试考核，可以笔试查看其对基础概念的理解是否准确，知识领域的大致范围。甚至，布置一个有点挑战性的小任务，让他尝试解决，说明思路。<br>　　考察胜任、精通者的策略不一样。笔试做题没啥用，原因前面说了。这类招聘是重头戏，企业都喜欢找这样的，能干活。所以考核评估的地方也较多。我觉得可以分成几个方面去看。意识是否先进，是否会反省思考；是否善于解决问题，富有创造性；是否有比较深的积累和广阔的知识面。<br>　　业界的开发思想也是在不断变化，工具链一直在革新。聪明的人不用蛮力，而爱用工具提升效率，喜欢自动化操作解放人力。要查看人用什么开发工具链，用什么开发环境，解释下为什么？好的开发者会及时注意新出现的工具，挖掘它能解决什么问题，并尝试吸收，解决自己的需求。如果没有这个思想意识，工作效率就会打折扣了。因为你会落后行业发展水平。人善于自我反省，则会催动自我纠正，这正是精通者的特征。参考：优秀的开发者为什么要学习研究新的编程语言？<br>　　解决问题的能力是重头戏，也是企业招聘人的主因。人要善于解决实际问题，而且，要学会聪明的解决问题。解决问题要看思路，看手段，看是否有创造性，这是真正考验人能力的地方。好的开发者，会考虑很多可能选项，预估各种优劣，给出一个较优的方案。 遇到难题，会用各种方法尝试。经验丰富的人，常常会使用技术的组合手段来处理难题，而不是一个语言一个工具到处用。所以，要查看下过往的项目经历遇到的问题、困难，是如何解决的，思路如何。一些公司据说不招聘不会用谷歌的工程师。谷歌打不开？嘿嘿，这就是你要克服的困难啊。这你都解决不了，还做什么研发。谷歌是人类最全、最新知识的总索引，充分利用事半功倍。<br>　　考察知识的深度、广度，对重要领域的概念是否有深刻的理解和掌握，以及从各类工作经验中得到的认知。问问他看过什么书，研究过什么东西。说白了，知道的东西是否多。一些公司很喜欢用CheckList模式来考核，列一堆领域的知识点、概念，问人懂不懂，知道就是水平好，不懂就是水平差。实际情况并非如此。人的工作过程是独立的，一些事情如果没有工作机会去接触并解决，那么一些冷僻的问题就永远都碰不上。当然也就不知道。但你能说没做过就一定做不好么？<br>　　另外，人的技能树，其实也是“犬牙交错、参差不齐”的。什么意思？技术领域非常的广阔，你真的没办法每个领域都很精通，实际上是这个做的多，懂的多，那个用的少，知道的少。这个时候，应看具体知识领域，是哪一类。它是否需要复杂的、难度较高的背景。门槛高的技术，需要的配套技能多得多，比如AI、机器学习。而一般产品应用领域则不然，了解核心概念、设计意图，看着手册、最佳实践，也就能上手了。这个暂时不会，实际无关紧要的，工作一段学的认真点就会了。但是门槛高的领域，就需要很长时间的学习了。这是本质的差别。<br>　　<br>学习了。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/65/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/65/">65</a><span class="page-number current">66</span><a class="page-number" href="/zhangdavids.github.io/page/67/">67</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/88/">88</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/67/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/65/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/65/">65</a><span class="page-number current">66</span><a class="page-number" href="/zhangdavids.github.io/page/67/">67</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/89/">89</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/67/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1321,7 +1418,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">439</span>
+                  <span class="site-state-item-count">441</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1436,7 +1533,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共176k字</span>
+  <span class="post-count">博客全站共176.5k字</span>
 </div>
 
         
