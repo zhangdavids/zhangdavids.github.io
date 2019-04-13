@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/04/架构之app架构的演进/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/07/django-ldap/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -328,7 +328,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/04/架构之app架构的演进/" itemprop="url">架构之app架构的演进</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/07/django-ldap/" itemprop="url">django-ldap</a></h1>
         
 
         <div class="post-meta">
@@ -340,8 +340,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-04T13:37:35+08:00">
-                2019-03-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-07T17:32:11+08:00">
+                2019-03-07
               </time>
             
 
@@ -351,28 +351,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/architecture/" itemprop="url" rel="index">
-                    <span itemprop="name">architecture</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -380,7 +358,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/03/04/架构之app架构的演进/" class="leancloud_visitors" data-flag-title="架构之app架构的演进">
+             <span id="/zhangdavids.github.io/2019/03/07/django-ldap/" class="leancloud_visitors" data-flag-title="django-ldap">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -405,7 +383,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  839
                 </span>
               
 
@@ -421,7 +399,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  3
                 </span>
               
             </div>
@@ -444,7 +422,19 @@
       
         
           
-            
+            <p>简单记录一下ldap</p>
+<p>LDAP用户验证基本原理<br>每个用户在LDAP系统中有一个唯一的DN值，例如配置文件中默认的admin用户在LDAP中的DN值是uid=admin,ou=system,dc=eoncloud,dc=com, 其中eoncloud.com是域名，system是组名，admin是用户名，有些LDAP用cn而不是uid来生成DN，在这种系统中admin的DN看起来像这样cn=admin,ou=system,dc=eoncloud,dc=com，无论是uid还是cn或是别的前缀，django-ldap-auth都是用dn来验证用户和获取用户信息的.</p>
+<p>假设用户输入的帐号及密码是：　test, password.</p>
+<p>django-auth-ldap有２个方式来获取用户的DN</p>
+<p>使用AUTH_LDAP_USER_DN_TEMPLATE提供的模板生成DN．如uid=%(user)s,ou=users,dc=eoncloud,dc=com, 其中%(user)s会被替换成用户名，这样最终的DN就是uid=test,ou=users,dc=eonclooud,dc=com.<br>使用AUTH_LDAP_GROUP_SEARCH．如果没有配置AUTH_LDAP_USER_DN_TEMPLATE，那么django-auth-ldap会使用AUTH_LDAP_BIND_DN和AUTH_LDAP_BIND_PASSWORD提供的dn与密码根据AUTH_LDAP_GROUP_SEARCH提供的查询条件去查找test用户，如果查不到，验证失败，如果查到用户，就使用返回的数据生成test的DN.　<br>利用第2步生成DN值与密码尝试访问LDAP系统，如果访问成功，则验证共过，否则验证失败．<br>基本配置<br>AUTH_LDAP_SERVER_URI． LDAP系统的地址及端口号<br>AUTH_LDAP_BIND_DN, AUTH_LDAP_BIND_PASSWORD. 查找用户及相关信息的默认用户信息<br>AUTH_LDAP_USER_SEARCH．　第一个参数指指定询目录，第三个参数是过滤条件，过滤条件可以很复杂，有需要请查看相关文档．<br>AUTH_LDAP_USER_DN_TEMPLATE．　用户DN模板，配置该参数后django-auth-ldap会用生成的DN配合密码验证该用户．<br>AUTH_LDAP_USER_ATTR_MAP.　LDAP与User model映射．<br>AUTH_LDAP_ALWAYS_UPDATE_USER.　是否同步LDAP修改．<br>用户组配置<br>如果需要，django-auth-ldap可以从ldap系统获取用户的组信息，也可以限定某个组里的用户访问，或者阻止某个组里的用户访问，无论是使用哪个功能都需要先配置组类型AUTH_LDAP_GROUP_TYPE及AUTH_LDAP_GROUP_SEARCH,　因为LDAP里组的种类非常多，具体信息请查询相关资料．</p>
+<p>AUTH_LDAP_GROUP_TYPE</p>
+<p>值类型: LDAPGroupType的子类实例．LDAPGroupType有２个初始化参数:member_attr, name_attr．member_attr是组成员的属性名, name_attr是组名称的属性名．<br>作用:　AUTH_LDAP_GROUP_SEARCH返回的组的类型，并用来判断用户与组的从属关系<br>AUTH_LDAP_GROUP_SEARCH</p>
+<p>值类型: LDAPSearch实例．<br>作用:　用户组的查询条件<br>AUTH_LDAP_REQUIRE_GROUP</p>
+<p>值类型: 组的DN<br>作用: 只有指定组的用户可以访问<br>AUTH_LDAP_DENY_GROUP指定的</p>
+<p>值类型: 组的DN<br>作用：　禁止指定组的用户访问<br>AUTH_LDAP_MIRROR_GROUPS</p>
+<p>值类型: bool值<br>作用: 导入用户的组信息</p>
+<p>　　AUTH_LDAP_MIRROR_GROUPS=True 这个参数是为了在用户登录的时候把用户的域组关系也获取并记录下来。不过开启这个参数会带来另外一个问题：每次用户登录时，都会把用户的组关系删除，重新从ldap中进行同步。由于我们的系统中除了域组还有些自定义的组关系，这样一来自定义组的用户关系就不能持久保留了。按照我们的需求，其实只希望在用户第一次登录的时候同步组关系，以后的登录并不需要。这个需求可以通过对django-auth-ldap的源码（backend.py）进行微调来实现。</p>
+
           
         
       
@@ -492,7 +482,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/04/架构之如何选择、使用、二次开发开源项目/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/06/2019-go-15/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -511,7 +501,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/04/架构之如何选择、使用、二次开发开源项目/" itemprop="url">架构之如何选择、使用、二次开发开源项目</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/06/2019-go-15/" itemprop="url">2019-go-15</a></h1>
         
 
         <div class="post-meta">
@@ -523,8 +513,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-04T13:37:17+08:00">
-                2019-03-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-06T17:47:07+08:00">
+                2019-03-06
               </time>
             
 
@@ -546,8 +536,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/architecture/" itemprop="url" rel="index">
-                    <span itemprop="name">architecture</span>
+                  <a href="/zhangdavids.github.io/categories/golang/" itemprop="url" rel="index">
+                    <span itemprop="name">golang</span>
                   </a>
                 </span>
 
@@ -563,7 +553,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/03/04/架构之如何选择、使用、二次开发开源项目/" class="leancloud_visitors" data-flag-title="架构之如何选择、使用、二次开发开源项目">
+             <span id="/zhangdavids.github.io/2019/03/06/2019-go-15/" class="leancloud_visitors" data-flag-title="2019-go-15">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -588,7 +578,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  474
                 </span>
               
 
@@ -627,7 +617,28 @@
       
         
           
-            
+            <p>go语言中的链表  container/list 代码包</p>
+<p>List（双向链表） Element（链表中元素的结构）</p>
+<p>moveafter movebefore</p>
+<p>movetofront movetoback</p>
+<ul>
+<li>零值拥有特定结构 零值只做了声明 还未做初始化的变量被给予的缺省值</li>
+</ul>
+<p>延迟初始化</p>
+<p>ring类型 实现的事一个循环链表</p>
+<p>list在内部就是一个循环链表 它的根元素永远不会持有任何实际的元素值，而该元素的存在就是为了连接这个循环链表的首尾两端。</p>
+<p>給定的元素 都是*element类型的</p>
+<ul>
+<li>ring类型的数据结构仅由它本身即可代表，而list类型则需要它和element类型联合表示 这是表示方式上的不同 也是结构复杂度的不同</li>
+<li>ring类型的值 严格来讲 只是代表所属循环链表中的一个元素，而list类型则代表了一个完整的链表  这是表示维度上的不同</li>
+<li>创建并初始化一个ring值的时候，可以指定包含的元素的数量 对于一个list值来说却不能这样做</li>
+<li>初始化的时候 ring是长度为1 list的长度为0</li>
+<li>ring值的len方法 复杂度是n， list则是1 性能方面显而易见的差别</li>
+</ul>
+<p>切片本身有着占用内存少和创建便捷等特点 但是它的本质上还是数组 切片的一大好处是可以通过窗口快速定位并获取 或者修改底层数组中的元素</p>
+<p>想删除切片的元素时，元素复制无法避免。元素“槽位”的清空有可能造成内存泄漏</p>
+<p>另外 切片频繁扩容 新的底层数组会不断产生 内存分配的量以及元素复制的次数就很可观了，对程序的性能产生负面的影响。</p>
+
           
         
       
@@ -675,7 +686,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/04/架构之内功心法运筹帷幄/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/06/2019-go-14/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -694,7 +705,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/04/架构之内功心法运筹帷幄/" itemprop="url">架构之内功心法运筹帷幄</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/06/2019-go-14/" itemprop="url">2019-go-14</a></h1>
         
 
         <div class="post-meta">
@@ -706,8 +717,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-04T13:36:49+08:00">
-                2019-03-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-06T17:47:02+08:00">
+                2019-03-06
               </time>
             
 
@@ -729,8 +740,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/architecture/" itemprop="url" rel="index">
-                    <span itemprop="name">architecture</span>
+                  <a href="/zhangdavids.github.io/categories/golang/" itemprop="url" rel="index">
+                    <span itemprop="name">golang</span>
                   </a>
                 </span>
 
@@ -746,7 +757,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/03/04/架构之内功心法运筹帷幄/" class="leancloud_visitors" data-flag-title="架构之内功心法运筹帷幄">
+             <span id="/zhangdavids.github.io/2019/03/06/2019-go-14/" class="leancloud_visitors" data-flag-title="2019-go-14">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -771,7 +782,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  872
                 </span>
               
 
@@ -787,7 +798,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  4
                 </span>
               
             </div>
@@ -810,7 +821,79 @@
       
         
           
-            
+            <h2 id="数组和切片"><a href="#数组和切片" class="headerlink" title="数组和切片"></a>数组和切片</h2><p>数组类型的值的长度是固定的</p>
+<p>而切片类型的值是可变长的</p>
+<p>做个不算特别正确的对比 可以理解为python当中的元组和列表</p>
+<p>切片类型属于引用类型，同属引用类型的还有字典类型、通道类型、函数类型等；<br>数组类型属于值类型，同属值类型的还有基础数据类型以及结构体类型</p>
+<p>如果传递的值是引用类型，就是“传引用”</p>
+<p>内建函数 len 取长度<br>内建函数 cap 取容量</p>
+<p>数组的长度永远等于长度，切片的容量却不是</p>
+<p>扩容 在1024之后 调整的倍率从2下调到1.25</p>
+<p>切片的数组永远不会被替换</p>
+<p>几个例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">package main</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">	// 示例 1。</span><br><span class="line">	s1 := make([]int, 5)</span><br><span class="line">	fmt.Printf(&quot;The length of s1: %d\n&quot;, len(s1))</span><br><span class="line">	fmt.Printf(&quot;The capacity of s1: %d\n&quot;, cap(s1))</span><br><span class="line">	fmt.Printf(&quot;The value of s1: %d\n&quot;, s1)</span><br><span class="line">	s2 := make([]int, 5, 8)</span><br><span class="line">	fmt.Printf(&quot;The length of s2: %d\n&quot;, len(s2))</span><br><span class="line">	fmt.Printf(&quot;The capacity of s2: %d\n&quot;, cap(s2))</span><br><span class="line">	fmt.Printf(&quot;The value of s2: %d\n&quot;, s2)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出是</p>
+<pre><code>The length of s1: 5
+The capacity of s1: 5
+The value of s1: [0 0 0 0 0]
+The length of s2: 5
+The capacity of s2: 8
+The value of s2: [0 0 0 0 0]
+</code></pre><p>切片的扩容</p>
+<p>生成新的切片 会做拷贝</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">package main</span><br><span class="line"></span><br><span class="line">import &quot;fmt&quot;</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">	// 示例1。</span><br><span class="line">	s6 := make([]int, 0)</span><br><span class="line">	fmt.Printf(&quot;The capacity of s6: %d\n&quot;, cap(s6))</span><br><span class="line">	for i := 1; i &lt;= 5; i++ &#123;</span><br><span class="line">		s6 = append(s6, i)</span><br><span class="line">		fmt.Printf(&quot;s6(%d): len: %d, cap: %d\n&quot;, i, len(s6), cap(s6))</span><br><span class="line">	&#125;</span><br><span class="line">	fmt.Println()</span><br><span class="line"></span><br><span class="line">	// 示例2。</span><br><span class="line">	s7 := make([]int, 1024)</span><br><span class="line">	fmt.Printf(&quot;The capacity of s7: %d\n&quot;, cap(s7))</span><br><span class="line">	s7e1 := append(s7, make([]int, 200)...)</span><br><span class="line">	fmt.Printf(&quot;s7e1: len: %d, cap: %d\n&quot;, len(s7e1), cap(s7e1))</span><br><span class="line">	s7e2 := append(s7, make([]int, 400)...)</span><br><span class="line">	fmt.Printf(&quot;s7e2: len: %d, cap: %d\n&quot;, len(s7e2), cap(s7e2))</span><br><span class="line">	s7e3 := append(s7, make([]int, 600)...)</span><br><span class="line">	fmt.Printf(&quot;s7e3: len: %d, cap: %d\n&quot;, len(s7e3), cap(s7e3))</span><br><span class="line">	fmt.Println()</span><br><span class="line"></span><br><span class="line">	// 示例3。</span><br><span class="line">	s8 := make([]int, 10)</span><br><span class="line">	fmt.Printf(&quot;The capacity of s8: %d\n&quot;, cap(s8))</span><br><span class="line">	s8a := append(s8, make([]int, 11)...)</span><br><span class="line">	fmt.Printf(&quot;s8a: len: %d, cap: %d\n&quot;, len(s8a), cap(s8a))</span><br><span class="line">	s8b := append(s8a, make([]int, 23)...)</span><br><span class="line">	fmt.Printf(&quot;s8b: len: %d, cap: %d\n&quot;, len(s8b), cap(s8b))</span><br><span class="line">	s8c := append(s8b, make([]int, 45)...)</span><br><span class="line">	fmt.Printf(&quot;s8c: len: %d, cap: %d\n&quot;, len(s8c), cap(s8c))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输出如下：</p>
+<pre><code>The capacity of s6: 0
+s6(1): len: 1, cap: 1
+s6(2): len: 2, cap: 2
+s6(3): len: 3, cap: 4
+s6(4): len: 4, cap: 4
+s6(5): len: 5, cap: 8
+
+The capacity of s7: 1024
+s7e1: len: 1224, cap: 1280
+s7e2: len: 1424, cap: 1696  // 为啥不是1600
+s7e3: len: 1624, cap: 2048   //为啥不是2000
+
+The capacity of s8: 10
+s8a: len: 21, cap: 22
+s8b: len: 44, cap: 44
+s8c: len: 89, cap: 96
+</code></pre><pre><code>
+package main
+
+import &quot;fmt&quot;
+
+func main() {
+    // 示例1。
+    a1 := [7]int{1, 2, 3, 4, 5, 6, 7}
+    fmt.Printf(&quot;a1: %v (len: %d, cap: %d)\n&quot;,
+        a1, len(a1), cap(a1))
+    s9 := a1[1:4]
+    //s9[0] = 1
+    fmt.Printf(&quot;s9: %v (len: %d, cap: %d)\n&quot;,
+        s9, len(s9), cap(s9))
+    for i := 1; i &lt;= 5; i++ {
+        s9 = append(s9, i)
+        fmt.Printf(&quot;s9(%d): %v (len: %d, cap: %d)\n&quot;,
+            i, s9, len(s9), cap(s9))
+    }
+    fmt.Printf(&quot;a1: %v (len: %d, cap: %d)\n&quot;,
+        a1, len(a1), cap(a1))
+    fmt.Println()
+
+}
+</code></pre><p>输入如下所示</p>
+<pre><code>a1: [1 2 3 4 5 6 7] (len: 7, cap: 7)
+s9: [2 3 4] (len: 3, cap: 6)
+s9(1): [2 3 4 1] (len: 4, cap: 6)
+s9(2): [2 3 4 1 2] (len: 5, cap: 6)
+s9(3): [2 3 4 1 2 3] (len: 6, cap: 6)
+s9(4): [2 3 4 1 2 3 4] (len: 7, cap: 12)
+s9(5): [2 3 4 1 2 3 4 5] (len: 8, cap: 12)
+a1: [1 2 3 4 1 2 3] (len: 7, cap: 7)
+</code></pre><p>数组和切片的几个不同点？？？    </p>
+
           
         
       
@@ -858,7 +941,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/04/架构之内功心法合纵连横/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/06/2019-go-13/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -877,7 +960,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/04/架构之内功心法合纵连横/" itemprop="url">架构之内功心法合纵连横</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/06/2019-go-13/" itemprop="url">2019-go-13</a></h1>
         
 
         <div class="post-meta">
@@ -889,8 +972,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-04T13:36:38+08:00">
-                2019-03-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-06T17:46:57+08:00">
+                2019-03-06
               </time>
             
 
@@ -912,8 +995,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/architecture/" itemprop="url" rel="index">
-                    <span itemprop="name">architecture</span>
+                  <a href="/zhangdavids.github.io/categories/golang/" itemprop="url" rel="index">
+                    <span itemprop="name">golang</span>
                   </a>
                 </span>
 
@@ -929,7 +1012,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/03/04/架构之内功心法合纵连横/" class="leancloud_visitors" data-flag-title="架构之内功心法合纵连横">
+             <span id="/zhangdavids.github.io/2019/03/06/2019-go-13/" class="leancloud_visitors" data-flag-title="2019-go-13">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -954,7 +1037,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  12
                 </span>
               
 
@@ -993,7 +1076,8 @@
       
         
           
-            
+            <h3 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h3><p>go语言的运算符 如下</p>
+
           
         
       
@@ -1041,7 +1125,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/04/架构之内功心法有的放矢/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/06/2019-go-12/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -1060,7 +1144,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/04/架构之内功心法有的放矢/" itemprop="url">架构之内功心法有的放矢</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/06/2019-go-12/" itemprop="url">2019-go-12</a></h1>
         
 
         <div class="post-meta">
@@ -1072,8 +1156,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-04T13:36:28+08:00">
-                2019-03-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-06T17:46:52+08:00">
+                2019-03-06
               </time>
             
 
@@ -1095,8 +1179,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/architecture/" itemprop="url" rel="index">
-                    <span itemprop="name">architecture</span>
+                  <a href="/zhangdavids.github.io/categories/golang/" itemprop="url" rel="index">
+                    <span itemprop="name">golang</span>
                   </a>
                 </span>
 
@@ -1112,7 +1196,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/03/04/架构之内功心法有的放矢/" class="leancloud_visitors" data-flag-title="架构之内功心法有的放矢">
+             <span id="/zhangdavids.github.io/2019/03/06/2019-go-12/" class="leancloud_visitors" data-flag-title="2019-go-12">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1137,7 +1221,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  118
                 </span>
               
 
@@ -1176,7 +1260,11 @@
       
         
           
-            
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">package type_test</span><br><span class="line"></span><br><span class="line">import &quot;testing&quot;</span><br><span class="line"></span><br><span class="line">type MyInt int64</span><br><span class="line"></span><br><span class="line">func TestImplicit(t *testing.T) &#123;</span><br><span class="line">	var a int32 = 1</span><br><span class="line">	var b int64</span><br><span class="line">	b = int64(a)</span><br><span class="line">	var c MyInt</span><br><span class="line">	c = MyInt(b)</span><br><span class="line">	t.Log(a, b, c)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func TestPoint(t *testing.T) &#123;</span><br><span class="line">	a := 1</span><br><span class="line">	aPtr := &amp;a</span><br><span class="line">	//aPtr = aPtr + 1</span><br><span class="line">	t.Log(a, aPtr)</span><br><span class="line">	t.Logf(&quot;%T %T&quot;, a, aPtr)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func TestString(t *testing.T) &#123;</span><br><span class="line">	var s string</span><br><span class="line">	t.Log(&quot;*&quot; + s + &quot;*&quot;) //初始化零值是“”</span><br><span class="line">	t.Log(len(s))</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也可以对单个的go测试文件进行 测试</p>
+<p>命令如下</p>
+<pre><code>go test -v type_test/type_test.go -test.run TestPoint 
+</code></pre>
           
         
       
@@ -1215,7 +1303,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/15/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/zhangdavids.github.io/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/89/">89</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/17/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/15/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/15/">15</a><span class="page-number current">16</span><a class="page-number" href="/zhangdavids.github.io/page/17/">17</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/91/">91</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/17/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1265,7 +1353,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">443</span>
+                  <span class="site-state-item-count">453</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1287,7 +1375,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/zhangdavids.github.io/tags/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1380,7 +1468,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共176.6k字</span>
+  <span class="post-count">博客全站共180.1k字</span>
 </div>
 
         

@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/04/架构之平台技术/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/06/2019-go-11/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -328,7 +328,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/04/架构之平台技术/" itemprop="url">架构之平台技术</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/06/2019-go-11/" itemprop="url">2019-go-11</a></h1>
         
 
         <div class="post-meta">
@@ -340,8 +340,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-04T13:36:10+08:00">
-                2019-03-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-06T17:46:43+08:00">
+                2019-03-06
               </time>
             
 
@@ -363,8 +363,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/architecture/" itemprop="url" rel="index">
-                    <span itemprop="name">architecture</span>
+                  <a href="/zhangdavids.github.io/categories/golang/" itemprop="url" rel="index">
+                    <span itemprop="name">golang</span>
                   </a>
                 </span>
 
@@ -380,7 +380,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/03/04/架构之平台技术/" class="leancloud_visitors" data-flag-title="架构之平台技术">
+             <span id="/zhangdavids.github.io/2019/03/06/2019-go-11/" class="leancloud_visitors" data-flag-title="2019-go-11">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -405,7 +405,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  580
                 </span>
               
 
@@ -421,7 +421,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -444,7 +444,28 @@
       
         
           
-            
+            <p>首先看看 go开发当中的测试</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.go</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"fmt"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">func</span> Add(x, y <span class="keyword">int</span>) <span class="keyword">int</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> x+y</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">func</span> main() &#123;</span><br><span class="line">    fmt.Println(Add(<span class="number">1</span>, <span class="number">2</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// main_test.go</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> main</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">"testing"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">func</span> TestAdd(t * testing.T) &#123;</span><br><span class="line">    sum := Add(<span class="number">1</span>, <span class="number">2</span>)</span><br><span class="line">    <span class="keyword">if</span> sum != <span class="number">3</span> &#123;</span><br><span class="line">        t.Error(<span class="string">"Add 1 and 2 result is not 3!!!"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>命令运行</p>
+<pre><code>go test main_test.go main.go -v -cover
+</code></pre><p>因为以前补过单元测试什么的</p>
+<p>在此记录一下覆盖率</p>
+<ul>
+<li>语句覆盖</li>
+<li>判定（分支）覆盖  增加false的情况</li>
+<li>判定/条件覆盖</li>
+</ul>
+<ol>
+<li>语句覆盖是指选择足够的测试用例，使得运行这些测试用例时，被测程序的每一个语句至少执行一次，其覆盖标准无法发现判定中逻辑运算的错误；</li>
+<li>判定覆盖是指选择足够的测试用例，使得运行这些测试用例时，每个判定的所有可能结果至少出现一次，但若程序中的判定是有几个条件联合构成时，它未必能发现每个条件的错误； </li>
+<li>条件覆盖是指选择足够的测试用例，使得运行这些测试用例时，判定中每个条件的所有可能结果至少出现一次，但未必能覆盖全部分支；</li>
+<li>判定/条件覆盖是使判定中每个条件的所有可能结果至少出现一次，并且每个判定本身的所有可能结果也至少出现一次；</li>
+<li>条件组合覆盖是使每个判定中条件结果的所有可能组合至少出现一次，因此判定本身的所有可能解说也至少出现一次，同时也是每个条件的所有可能结果至少出现一次；</li>
+<li>路径覆盖是每条可能执行到的路径至少执行一次；</li>
+</ol>
+<p>其中语句覆盖是一种最弱的覆盖，判定覆盖和条件覆盖比语句覆盖强，满足判定/条件覆盖标准的测试用例一定也满足判定覆盖、条件覆盖和语句覆盖，条件组合覆盖是除路径覆盖外最强的，路径覆盖也是一种比较强的覆盖，但未必考虑判定条件结果的组合，并不能代替条件覆盖和条件组合覆盖。     </p>
+
           
         
       
@@ -492,7 +513,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/04/架构之用户层业务层技术/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/06/leetcode-二分查找/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -511,7 +532,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/04/架构之用户层业务层技术/" itemprop="url">架构之用户层业务层技术</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/06/leetcode-二分查找/" itemprop="url">leetcode-二分查找</a></h1>
         
 
         <div class="post-meta">
@@ -523,8 +544,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-04T13:35:56+08:00">
-                2019-03-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-06T16:52:36+08:00">
+                2019-03-06
               </time>
             
 
@@ -546,8 +567,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/architecture/" itemprop="url" rel="index">
-                    <span itemprop="name">architecture</span>
+                  <a href="/zhangdavids.github.io/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
                   </a>
                 </span>
 
@@ -563,7 +584,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/03/04/架构之用户层业务层技术/" class="leancloud_visitors" data-flag-title="架构之用户层业务层技术">
+             <span id="/zhangdavids.github.io/2019/03/06/leetcode-二分查找/" class="leancloud_visitors" data-flag-title="leetcode-二分查找">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -588,7 +609,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  68
                 </span>
               
 
@@ -627,7 +648,9 @@
       
         
           
-            
+            <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (nums.empty())</span><br><span class="line">		return <span class="number">-1</span></span><br><span class="line">	<span class="keyword">int</span> low = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">int</span> high = nums.size() <span class="number">-1</span>;</span><br><span class="line">	<span class="keyword">while</span> (low &lt;= high) &#123;</span><br><span class="line">		<span class="keyword">int</span> mid = low + (high -low) /<span class="number">2</span>;</span><br><span class="line">		<span class="keyword">if</span> (nums[mid] &lt; target)</span><br><span class="line">			low = mid + <span class="number">1</span>;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">			high = mid - <span class="number">1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	return low;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>二分查找有很多变种 注意一些细节问题</p>
+
           
         
       
@@ -675,7 +698,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/04/架构之网络层技术/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/06/leetcode-六度分割/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -694,7 +717,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/04/架构之网络层技术/" itemprop="url">架构之网络层技术</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/06/leetcode-六度分割/" itemprop="url">leetcode-六度分割</a></h1>
         
 
         <div class="post-meta">
@@ -706,8 +729,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-04T13:35:40+08:00">
-                2019-03-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-06T14:34:34+08:00">
+                2019-03-06
               </time>
             
 
@@ -717,28 +740,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/architecture/" itemprop="url" rel="index">
-                    <span itemprop="name">architecture</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -746,7 +747,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/03/04/架构之网络层技术/" class="leancloud_visitors" data-flag-title="架构之网络层技术">
+             <span id="/zhangdavids.github.io/2019/03/06/leetcode-六度分割/" class="leancloud_visitors" data-flag-title="leetcode-六度分割">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -771,7 +772,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  128
                 </span>
               
 
@@ -810,7 +811,9 @@
       
         
           
-            
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># _*_ coding: utf-8 _*_</span><br><span class="line">import requests</span><br><span class="line">from bs4 import BeautifulSoup</span><br><span class="line">import re</span><br><span class="line">import random</span><br><span class="line">import datetime</span><br><span class="line"></span><br><span class="line">page = set()</span><br><span class="line">random.seed(datetime.datetime.now())</span><br><span class="line">def getlink(articleurl):</span><br><span class="line">    html = requests.get(&quot;https://en.wikipedia.org&quot;+articleurl)</span><br><span class="line">    soup = BeautifulSoup(html.text, &quot;html.parser&quot;)</span><br><span class="line">    return soup.find(&quot;div&quot;, &#123;&apos;id&apos;:&apos;bodyContent&apos;&#125;).findAll(&quot;a&quot;, &#123;&quot;href&quot;:re.compile(&apos;^(/wiki/)&apos;)&#125;)</span><br><span class="line"></span><br><span class="line">links = getlink(&quot;/wiki/Christopher_Nolan&quot;)</span><br><span class="line">i = 0</span><br><span class="line">while len(links) &gt; 0:</span><br><span class="line">    newArticle = links[random.randint(0, len(links)-1)][&quot;href&quot;]</span><br><span class="line">    i += 1</span><br><span class="line">    print &quot;第 %d 个页面：&quot; %i</span><br><span class="line">    print newArticle</span><br><span class="line">    if i == 6:</span><br><span class="line">        break</span><br><span class="line">    links = getlink(newArticle)</span><br></pre></td></tr></table></figure>
+<p>通过维基百科 只需要最多六次跳转</p>
+
           
         
       
@@ -858,7 +861,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/04/架构之开发层服务层技术/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/05/leetcode-lru/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -877,7 +880,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/04/架构之开发层服务层技术/" itemprop="url">架构之开发层服务层技术</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/05/leetcode-lru/" itemprop="url">leetcode-lru</a></h1>
         
 
         <div class="post-meta">
@@ -889,8 +892,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-04T13:24:22+08:00">
-                2019-03-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-05T11:20:11+08:00">
+                2019-03-05
               </time>
             
 
@@ -912,8 +915,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/architecture/" itemprop="url" rel="index">
-                    <span itemprop="name">architecture</span>
+                  <a href="/zhangdavids.github.io/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
                   </a>
                 </span>
 
@@ -929,7 +932,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/03/04/架构之开发层服务层技术/" class="leancloud_visitors" data-flag-title="架构之开发层服务层技术">
+             <span id="/zhangdavids.github.io/2019/03/05/leetcode-lru/" class="leancloud_visitors" data-flag-title="leetcode-lru">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -954,7 +957,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  258
                 </span>
               
 
@@ -993,7 +996,14 @@
       
         
           
-            
+            <p>设计一个LRU cache，实现两个功能：</p>
+<p>(cache中存放着（key,value）键值对)</p>
+<p><strong>get(key):获取key对应的value，如果key不在cache中那么返回-1（value 总是为正数）；</strong></p>
+<p><strong>set(key, value):如果key在cache中则更新它的value；如果不在则插入，如果cache已满则先删除最近最少使用的一项后在插入。</strong></p>
+<p>对于get，如果key在cache中，那个get(key）表示了对key的一次访问；而set(key，value)则总是表示对key的一次访问。</p>
+<p>使用一个list来记录访问的顺序，最先访问的放在list的前面，最后访问的放在list的后面，故cache已满时，则删除list[0]，然后插入新项；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">class LRUCache(object):</span><br><span class="line">    def __init__(self, capacity):</span><br><span class="line">        self.cache = dict()</span><br><span class="line">        self.used_list = list()</span><br><span class="line">        self.capacity = capacity</span><br><span class="line"> </span><br><span class="line">    def get(self, key):</span><br><span class="line">        if key in self.cache:</span><br><span class="line">            if key != self.used_list[-1]:</span><br><span class="line">                self.used_list.remove(key)</span><br><span class="line">                self.used_list.append(key)</span><br><span class="line">            return self.cache[key]</span><br><span class="line">        else:</span><br><span class="line">            return -1</span><br><span class="line"></span><br><span class="line">    def set(self, key, value):</span><br><span class="line">        if key in self.cache:</span><br><span class="line">            self.used_list.remove(key)</span><br><span class="line">        elif len(self.cache) == self.capacity:</span><br><span class="line">            self.cache.pop(self.used_list.pop(0))</span><br><span class="line">        self.used_list.append(key)</span><br><span class="line">        self.cache[key] = value</span><br></pre></td></tr></table></figure>
+
           
         
       
@@ -1041,7 +1051,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/04/架构之存储层技术/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/04/架构之架构设计文档模版/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -1060,7 +1070,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/04/架构之存储层技术/" itemprop="url">架构之存储层技术</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/04/架构之架构设计文档模版/" itemprop="url">架构之架构设计文档模版</a></h1>
         
 
         <div class="post-meta">
@@ -1072,7 +1082,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-04T13:06:28+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-04T13:37:51+08:00">
                 2019-03-04
               </time>
             
@@ -1112,7 +1122,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/03/04/架构之存储层技术/" class="leancloud_visitors" data-flag-title="架构之存储层技术">
+             <span id="/zhangdavids.github.io/2019/03/04/架构之架构设计文档模版/" class="leancloud_visitors" data-flag-title="架构之架构设计文档模版">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1215,7 +1225,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/16/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/16/">16</a><span class="page-number current">17</span><a class="page-number" href="/zhangdavids.github.io/page/18/">18</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/89/">89</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/18/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/16/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/16/">16</a><span class="page-number current">17</span><a class="page-number" href="/zhangdavids.github.io/page/18/">18</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/91/">91</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/18/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1265,7 +1275,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">443</span>
+                  <span class="site-state-item-count">453</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1287,7 +1297,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/zhangdavids.github.io/tags/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1380,7 +1390,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共176.6k字</span>
+  <span class="post-count">博客全站共180.1k字</span>
 </div>
 
         

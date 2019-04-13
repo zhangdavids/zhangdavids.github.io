@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/02/18/js-inter/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/03/01/python-interview-0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -328,7 +328,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/02/18/js-inter/" itemprop="url">js-inter</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/03/01/python-interview-0/" itemprop="url">python-interview-0</a></h1>
         
 
         <div class="post-meta">
@@ -340,8 +340,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-18T11:23:00+08:00">
-                2018-02-18
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-01T23:01:05+08:00">
+                2018-03-01
               </time>
             
 
@@ -358,7 +358,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2018/02/18/js-inter/" class="leancloud_visitors" data-flag-title="js-inter">
+             <span id="/zhangdavids.github.io/2018/03/01/python-interview-0/" class="leancloud_visitors" data-flag-title="python-interview-0">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -383,7 +383,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.3k
+                  1.5k
                 </span>
               
 
@@ -399,7 +399,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4
+                  5
                 </span>
               
             </div>
@@ -422,210 +422,57 @@
       
         
           
-            <p>1.使用 typeof bar === “object” 来确定 bar 是否是对象的潜在陷阱是什么？如何避免这个陷阱？</p>
-<p>null 也是对象</p>
-<pre><code>console.log((bar !== null) &amp;&amp; (typeof bar === &quot;object&quot;) &amp;&amp; (toString.call(bar) !== &quot;[object Array]&quot;));
-</code></pre><p>2.use strict??</p>
-<p>对于这个问题，既简要又最重要的答案是，use strict 是一种在JavaScript代码运行时自动实行更严格解析和错误处理的方法。那些被忽略或默默失败了的代码错误，会产生错误或抛出异常。通常而言，这是一个很好的做法。</p>
-<p>严格模式的一些主要优点包括：</p>
-<p>使调试更加容易。那些被忽略或默默失败了的代码错误，会产生错误或抛出异常，因此尽早提醒你代码中的问题，你才能更快地指引到它们的源代码。<br>防止意外的全局变量。如果没有严格模式，将值分配给一个未声明的变量会自动创建该名称的全局变量。这是JavaScript中最常见的错误之一。在严格模式下，这样做的话会抛出错误。<br>消除 this 强制。如果没有严格模式，引用null或未定义的值到 this 值会自动强制到全局变量。这可能会导致许多令人头痛的问题和让人恨不得拔自己头发的bug。在严格模式下，引用 null或未定义的 this 值会抛出错误。<br>不允许重复的属性名称或参数值。当检测到对象（例如，var object = {foo: “bar”, foo: “baz”};）中重复命名的属性，或检测到函数中（例如，function foo(val1, val2, val1){}）重复命名的参数时，严格模式会抛出错误，因此捕捉几乎可以肯定是代码中的bug可以避免浪费大量的跟踪时间。<br>使eval() 更安全。在严格模式和非严格模式下，eval() 的行为方式有所不同。最显而易见的是，在严格模式下，变量和声明在 eval() 语句内部的函数不会在包含范围内创建（它们会在非严格模式下的包含范围中被创建，这也是一个常见的问题源）。<br>在 delete使用无效时抛出错误。delete操作符（用于从对象中删除属性）不能用在对象不可配置的属性上。当试图删除一个不可配置的属性时，非严格代码将默默地失败，而严格模式将在这样的情况下抛出异常。</p>
-<p>3.NaN 是什么？它的类型是什么？你如何可靠地测试一个值是否等于 NaN ？</p>
-<p>NaN 属性代表一个“不是数字”的值。这个特殊的值是因为运算不能执行而导致的，不能执行的原因要么是因为其中的运算对象之一非数字（例如， “abc” / 4），要么是因为运算的结果非数字（例如，除数为零）。</p>
-<p>虽然这看上去很简单，但 NaN 有一些令人惊讶的特点，如果你不知道它们的话，可能会导致令人头痛的bug。</p>
-<p>首先，虽然 NaN 意味着“不是数字”，但是它的类型，不管你信不信，是 Number：</p>
-<p>console.log(typeof NaN === “number”);  // logs “true”<br>此外， NaN 和任何东西比较——甚至是它自己本身！——结果是false：</p>
-<p>console.log(NaN === NaN);  // logs “false”<br>一种半可靠的方法来测试一个数字是否等于 NaN，是使用内置函数 isNaN()，但即使使用 isNaN() 依然并非是一个完美的解决方案。</p>
-<p>一个更好的解决办法是使用 value !== value，如果值等于NaN，只会产生true。另外，ES6提供了一个新的 Number.isNaN() 函数，这是一个不同的函数，并且比老的全局 isNaN() 函数更可靠。    </p>
-<p>4.下列代码将输出什么？并解释原因。</p>
-<p>console.log(0.1 + 0.2);console.log(0.1 + 0.2 == 0.3);<br>一个稍微有点编程基础的回答是：“你不能确定。可能会输出“0.3”和“true”，也可能不会。JavaScript中的数字和浮点精度的处理相同，因此，可能不会总是产生预期的结果。“</p>
-<p>以上所提供的例子就是一个演示了这个问题的典型例子。但出人意料的是，它会输出：</p>
-<p>0.30000000000000004 false    </p>
-<p>浮点数并不准确！！！</p>
-<p>5.JavaScript中的“闭包”是什么？请举一个例子。</p>
-<p>闭包是一个可以访问外部（封闭）函数作用域链中的变量的内部函数。闭包可以访问三种范围中的变量：这三个范围具体为：（1）自己范围内的变量，（2）封闭函数范围内的变量，以及（3）全局变量。</p>
-<p>下面是一个简单的例子：</p>
-<pre><code>var globalVar = &quot;xyz&quot;;
-
-(function outerFunc(outerArg) {  var outerVar = &apos;a&apos;;
-
-  (function innerFunc(innerArg) {    var innerVar = &apos;b&apos;;    console.log(      &quot;outerArg = &quot; + outerArg + &quot;\n&quot; +      &quot;innerArg = &quot; + innerArg + &quot;\n&quot; +      &quot;outerVar = &quot; + outerVar + &quot;\n&quot; +      &quot;innerVar = &quot; + innerVar + &quot;\n&quot; +      &quot;globalVar = &quot; + globalVar);
-
-  })(456);
-})(123);
-</code></pre><p>在上面的例子中，来自于 innerFunc， outerFunc和全局命名空间的变量都在 innerFunc的范围内。因此，上面的代码将输出如下：</p>
-<pre><code>outerArg = 123innerArg = 456outerVar = ainnerVar = bglobalVar = xyz
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/02/18/python-hardest/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/02/18/python-hardest/" itemprop="url">python-hardest</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-18T10:33:45+08:00">
-                2018-02-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2018/02/18/python-hardest/" class="leancloud_visitors" data-flag-title="python-hardest">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.3k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  4
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Python社区会有如此多的人关注于这样的问题-“对于解释器全局锁能做什么-”"><a href="#Python社区会有如此多的人关注于这样的问题-“对于解释器全局锁能做什么-”" class="headerlink" title="Python社区会有如此多的人关注于这样的问题: “对于解释器全局锁能做什么?”"></a>Python社区会有如此多的人关注于这样的问题: “对于解释器全局锁能做什么?”</h2><ol>
-<li>要理解GIL的含义，我们需要从Python的基础讲起。像C++这样的语言是编译型语言，所谓编译型语言，是指程序输入到编译器，编译器再根据语言的语法进行解析，然后翻译成语言独立的中间表示，最终链接成具有高度优化的机器码的可执行程序。编译器之所以可以深层次的对代码进行优化，是因为它可以看到整个程序（或者一大块独立的部分）。这使得它可以对不同的语言指令之间的交互进行推理，从而给出更有效的优化手段。</li>
-<li>与此相反，Python是解释型语言。程序被输入到解释器来运行。解释器在程序执行之前对其并不了解；它所知道的只是Python的规则，以及在执行过程中怎样去动态的应用这些规则。它也有一些优化，但是这基本上只是另一个级别的优化。由于解释器没法很好的对程序进行推导，Python的大部分优化其实是解释器自身的优化。更快的解释器自然意味着程序的运行也能“免费”的更快。也就是说，解释器优化后，Python程序不用做修改就可以享受优化后的好处。</li>
+            <ol>
+<li><p>我从来不问google可获得的答案的问题， 只是问问面试者「在过去的工作中，遇到的Ta认为最有成就感的一件事情是什么」和「如果出现了一个google不到的问题，你会怎么解决」这样的问题。</p>
+</li>
+<li><p>我从来不问操作系统等和Python无关的话题，首先是我不怎么问和工作太无关的话题，有些东西用不到很多就被会遗忘，挑起来这种问题其实挺无聊；其次我是非计算机专业毕业，问的东西说不定我自己都没有把握，那就不出来献丑了。我只关注面试者的学习能力和解决问题的方式，说白了，是不是就是看他是不是「聪明的人」。</p>
+</li>
+<li><p>不问面试者的短处。我在自己被面试的时候有过这种精力，面试者问他擅长的内容，我不一定搞的定，如果反过来面试Ta，我也会灭掉Ta。所以我会尽力寻找面试者的优势和优点，尤其是对方已经明确承认。其实很多经验和能力，只是需要一个机会和环境，所以我不想放过任何一个合适的人。</p>
+</li>
+<li><p>面试者不会Python也没有关系。面试者的主动性和学习能力觉得更重要，如果他在其他领域能证明做的不错或者能让我感觉到这个一个未来有潜质成为优秀工程师的人，不会Python没有关系。 嗯目前看来，我没有看错过。</p>
+</li>
+<li><p>我从来不问Python语法这种看书和google就能学会的问题，我只想了解Ta是否愿意去学。举个例子，我会让面试者「讲讲日常开发中都用到了那些Python内置的模块」，原因在我的专栏「Python之美 - 知乎专栏」的 Python不能不知的模块 - Python之美 - 知乎专栏中有写，基本上说完我就能评估出他的能力和风格，继而就是再问一些问题去验证我的评估是不是准确。</p>
+</li>
+<li><p>最后，我一般都会和面试者细聊一个Ta认为在过去的工作或者自己开源的项目中最熟悉的一个，从项目设计、踩过的坑儿、开发周期以及如何安排、如何确定需求、如何和其他人协作等方面，最后评估下Ta是否能很容易的融入到我们现在的团队，大家是否可以接受Ta，对工作不负责的、没有用心工作的、没有团队意识的、沟通能力有缺陷的就放弃掉，对性格上容易发生冲突的、不适合团队合作的我就得考虑下，未来也会如实反馈给HR。</p>
+</li>
 </ol>
-<p><em>如果其他条件不变，Python程序的执行速度直接与解释器的“速度”相关。不管你怎样优化自己的程序，你的程序的执行速度还是依赖于解释器执行你的程序的效率。这就很明显的解释了为什么我们需要对优化Python解释器做这么多的工作了。对于Python程序员来说，这恐怕是与免费午餐最接近的了。</em></p>
-<p>大部分开发者听到“并发”通常会立刻想到多线程的程序。目前来说，多线程执行还是利用多核系统最常用的方式。尽管多线程编程大大好于“顺序”编程，不过即便是仔细的程序员也没法在代码中将并发性做到最好。编程语言在这方面应该做的更好，大部分应用广泛的现代编程语言都会支持多线程编程。</p>
-<p>要想利用多核系统，Python必须支持多线程运行。作为解释型语言，Python的解释器必须做到既安全又高效。我们都知道多线程编程会遇到的问题。解释器要留意的是避免在不同的线程操作内部共享的数据。同时它还要保证在管理用户线程时保证总是有最大化的计算资源。</p>
-<p>那么，不同线程同时访问时，数据的保护机制是怎样的呢？答案是解释器全局锁。从名字上看能告诉我们很多东西，很显然，这是一个加在解释器上的全局（从解释器的角度看）锁（从互斥或者类似角度看）。这种方式当然很安全，但是它有一层隐含的意思（Python初学者需要了解这个）：对于任何Python程序，不管有多少的处理器，任何时候都总是只有一个线程在执行。</p>
-<p><strong>不要使用多线程，请使用多进程</strong></p>
-<p>基于线程的编程毫无疑问是困难的。每当某个人觉得他了解关于线程是如何工作的一切的时候，总是会悄无声息的出现一些新的问题。因为在这方面想要得到正确合理的一致性真的是太难了，因此有一些非常知名的语言设计者和研究者已经总结得出了一些线程模型。就像某个写过多线程应用的人可以告诉你的一样，不管是多线程应用的开发还是调试都会比单线程的应用难上数倍。程序员通常所具有的顺序执行的思维模恰恰就是与并行执行模式不相匹配。GIL的出现无意中帮助了开发者免于陷入困境。在使用多线程时仍然需要同步原语的情况下，GIL事实上帮助我们保持不同线程之间的数据一致性问题。</p>
-<p>那么现在看起来讨论Python最难得问题是有点问错了问题。我们有非常好的理由来说明为什么Python专家推荐我们使用多进程代替多线程，而不是去试图隐藏Python线程实现的不足。更进一步，我们鼓励开发者使用更安全更直接的方式实现并发模型，同时保留使用多线程进行开发除非你觉的真的非常必要的话。对于大多数人来说什么是最好的并行编程模型可能并不是十分清楚。但是目前我们清楚的是多线程的方式可能并不是最好的。</p>
+<hr>
+<p>推荐几本书</p>
+<p>《python参考手册》，绝对让你更上一层楼</p>
+<p>《图解密码技术》，密码入门不二之选</p>
+<p>《mysql技术内幕》（第五版），有点厚当手册读读，要有耐心，《高性能mysql》也强烈建议读读</p>
+<p>《effective tcp/ip programming》</p>
+<p>如果是搞web的对操作系统这块和密码技术会偏弱，但如果是系统工程师或是游戏服务端这块会明显偏强。吃午饭的时候我就一直在想这个问题，我觉得重点不是Python而是后端工程师，因为Python只是系统的一部分，linux基础操作要熟吧，sql要懂吧，消息队列要知道吧，git要熟悉吧……木桶理论，每一环都不能落下，精通其中一两环就更好了。基础功扎实，新东西学得快，代码写得溜，命令敲得顺，bug解的好，妈妈再也不用担心我天天加班了~~~</p>
+<h4 id="一-语言"><a href="#一-语言" class="headerlink" title="一.语言"></a>一.语言</h4><p>1.推荐一本看过最好的python书籍？ 拉开话题好扯淡</p>
+<p>2.谈谈python的装饰器，迭代器，yield？ </p>
+<p>3.标准库线程安全的队列是哪一个？不安全的是哪一个？logging是线程安全的吗？ </p>
+<p>4.python适合的场景有哪些？当遇到计算密集型任务怎么办？ </p>
+<p>5.python高并发解决方案？我希望听到twisted-&gt;tornado-&gt;gevent，能扯到golang,erlang更好</p>
+<h4 id="二-操作系统"><a href="#二-操作系统" class="headerlink" title="二.操作系统"></a>二.操作系统</h4><p>可以直接认为是linux，毕竟搞后端的多数是和linux打交道。 </p>
+<p>1.tcp/udp的区别？tcp粘包是怎么回事，如何处理？udp有粘包吗？ </p>
+<p>2.time_wait是什么情况？出现过多的close_wait可能是什么原因？ </p>
+<p>3.epoll,select的区别？边缘触发，水平触发区别？</p>
+<h4 id="三-存储"><a href="#三-存储" class="headerlink" title="三.存储"></a>三.存储</h4><p>存储可能包含rdbms，nosql以及缓存等，我以mysql,redis举例 </p>
+<p><em>mysql相关</em></p>
+<p>1.谈谈mysql字符集和排序规则？ </p>
+<p>2.varchar与char的区别是什么？大小限制？utf8字符集下varchar最多能存多少个字符 </p>
+<p>3.primary key和unique的区别？ </p>
+<p>4.外键有什么用，是否该用外键？外键一定需要索引吗？ </p>
+<p>5.myisam与innodb的区别？innodb的两阶段锁定协议是什么情况？ </p>
+<p>6.索引有什么用，大致原理是什么？设计索引有什么注意点？ </p>
+<p><em>redis相关</em></p>
+<p>1.什么场景用redis，为什么mysql不适合？ </p>
+<p>2.谈谈redis的事务？用事务模拟原子+1操作？原子操作还有其它解决方案吗？ </p>
+<p>3.redis内存满了会怎么样？</p>
+<h4 id="四-安全"><a href="#四-安全" class="headerlink" title="四.安全"></a>四.安全</h4><p>web安全相关 </p>
+<p>1.sql注入是怎么产生的，如何防止？ </p>
+<p>2.xss如何预防？htmlescape后能否避免xss? </p>
+<p>3.csrf是什么？django是如何防范的？ </p>
+<p>密码技术 </p>
+<p>1.什么是分组加密？加密模式有哪些？ecb和cbc模式有什么区别？为什么需要iv向量？ </p>
+<p>2.简单说说https的过程？ </p>
+<p>3.对称加密与非对称加密区别？ </p>
+<p>4.如何生成共享秘钥？ 如何防范中间人攻击？</p>
 
           
         
@@ -674,7 +521,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/02/16/ai-keyword/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/03/01/about-react/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -693,7 +540,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/02/16/ai-keyword/" itemprop="url">ai-keyword</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/03/01/about-react/" itemprop="url">about-react</a></h1>
         
 
         <div class="post-meta">
@@ -705,8 +552,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-16T15:45:31+08:00">
-                2018-02-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-01T20:39:31+08:00">
+                2018-03-01
               </time>
             
 
@@ -728,8 +575,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/AI/" itemprop="url" rel="index">
-                    <span itemprop="name">AI</span>
+                  <a href="/zhangdavids.github.io/categories/frontend/" itemprop="url" rel="index">
+                    <span itemprop="name">frontend</span>
                   </a>
                 </span>
 
@@ -745,7 +592,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2018/02/16/ai-keyword/" class="leancloud_visitors" data-flag-title="ai-keyword">
+             <span id="/zhangdavids.github.io/2018/03/01/about-react/" class="leancloud_visitors" data-flag-title="about-react">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -770,7 +617,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  456
+                  1.3k
                 </span>
               
 
@@ -786,7 +633,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  4
                 </span>
               
             </div>
@@ -809,63 +656,33 @@
       
         
           
-            <p>深度学习</p>
-<p>进化策略</p>
-<p>迁移学习</p>
-<p>卷积神经网络</p>
-<p>知识图谱</p>
-<p>聚类</p>
-<p>回归</p>
-<p>PCA</p>
-<p>t-SNE</p>
-<p>贝叶斯</p>
-<p>决策树</p>
-<p>随机森林</p>
-<p>遗传算法</p>
-<p>强化学习</p>
-<p>马尔科夫</p>
-<p>概率图</p>
-<h2 id="什么是深度学习？"><a href="#什么是深度学习？" class="headerlink" title="什么是深度学习？"></a>什么是深度学习？</h2><p>深度学习是表征学习的通用框架，它有以下特征：</p>
-<ol>
-<li>给定一个目标（objective）</li>
-<li>学习能够实现目标的特征</li>
-<li>直接的原始输入</li>
-<li>使用最少的领域知识深度</li>
-</ol>
-<p>深度学习是一项实现机器学习的技术。它仅仅是一种机器学习的方法。</p>
-<p>深度神经网络通常被人们用来理解深度表征。</p>
-<p>循环神经网络 RNN</p>
-<p>卷积神经网络 CNN</p>
-<p>工作方式：</p>
-<ol>
-<li>选择数据： 训练 验证 测试</li>
-<li>模型数据</li>
-<li>验证模型</li>
-<li>测试模型</li>
-<li>使用模型</li>
-<li>调优模型</li>
-</ol>
-<p>机器学习所处在的位置：</p>
-<p>数据科学家使用训练数据集来教计算机应该怎么做，</p>
-<p>然后系统执行该任务</p>
-<p>首先存在大数据</p>
-<p>机器会学习使用训练数据集来进行分类，调节特定的算法来实现目标分类</p>
-<p>该计算机可学习识别数据中的关系、趋势和模式</p>
-<p>如何使用？</p>
-<p>快速三维地图测绘和建模</p>
-<p>增强分析以降低风险</p>
-<p>预测表现最佳的目标</p>
-<h3 id="九大算法"><a href="#九大算法" class="headerlink" title="九大算法"></a>九大算法</h3><ol>
-<li>决策树 在进行逐步应答过程中，典型的决策树分析会使用分层变量或决策节点，例如，可将一个给定用户分类成信用可靠或不可靠</li>
-<li>支持向量机</li>
-<li>回归</li>
-<li>朴素贝叶斯分类</li>
-<li>隐马尔可夫模型</li>
-<li>随机森林</li>
-<li>循环神经网络</li>
-<li>长短期记忆与门控循环单元神经网络</li>
-<li>卷积神经网络</li>
-</ol>
+            <h2 id="react-的概述"><a href="#react-的概述" class="headerlink" title="react 的概述"></a>react 的概述</h2><h3 id="React-的设计哲学："><a href="#React-的设计哲学：" class="headerlink" title="React 的设计哲学："></a>React 的设计哲学：</h3><p>以“简单直观”、“符合习惯”的方式去编程，让代码更容易被理解，从而易于维护和不断演化。</p>
+<h3 id="React-的最大价值？"><a href="#React-的最大价值？" class="headerlink" title="React 的最大价值？"></a>React 的最大价值？</h3><p>1.高性能虚拟 DOM 【★★】<br>2.声明式的、直观的编程方式（别样的组件化、JSX也不是核心）【★】<br>3.封装过的事件机制<br>4.服务器端 Reader（忽略，不是核心，锦上添花）<br>5.完善的错误提示信息</p>
+<h3 id="React-的适用场景："><a href="#React-的适用场景：" class="headerlink" title="React 的适用场景："></a>React 的适用场景：</h3><p>适用于数据不断变化的大型应用程序，eg.聊天、评论等<br>会面临问题：如何将服务器端 or 用户输入的数据高效地反应到复杂的用户界面上</p>
+<h3 id="React-原理"><a href="#React-原理" class="headerlink" title="React 原理"></a>React 原理</h3><p>新的前端 UI 的构建方式：两层编程模型：数据模型、UI界面。数据模型驱动UI界面（从概念角度上看是直观的，而实际开发中困难重重）</p>
+<p>React 的初衷之一就是：既然整体刷新一定能解决层叠更新的问题，那我们为什么不索性就每次都这么做呢？让框架自身去解决哪些局部 UI 需要更新的问题-React做到了，实现的途径就是通过虚拟 DOM。</p>
+<p>UI界面是一颗 DOM 树。我们再在全局定义一个唯一的数据模型。每次数据模型有任何变化，都将整个数据模型应用到 UI DOM 树上（由 React 来负责更新需要更新的界面部分）。</p>
+<h3 id="虚拟-DOM"><a href="#虚拟-DOM" class="headerlink" title="虚拟 DOM"></a>虚拟 DOM</h3><p>将变化的数据实时反应到UI上，就要对 DOM 进行操作。复杂和频繁的 DOM 操作，通常是性能瓶颈产生的原因。</p>
+<p>虚拟DOM，是在浏览器端用 JS 实现了一套 DOM API。基于 React 的所有 DOM 构造都是通过虚拟 DOM 进行的。每当数据变化时，React 会重 新构建整个 DOM 树，并将当前的树和上一次的 DOM 树进行对比，得到 DOM 结构的区别。然后仅仅将需要变化的部分进行实际的浏览器 DOM 更新。且，React 能够批处理虚拟 DOM 的刷新，在一个事件循环内的两次数据变化会被合并。</p>
+<p>虽然，每次都要构造完整的虚拟 DOM 树，但因为它是内存数据，性能极高 【那会消耗多少内存呢？】对实际 DOM 的操作，仅仅是 Diff 部分，故能提高性能。（至于 React 如何做到将原来 O(n^3) 复杂度的 Diff 算法降低到 O（n），感兴趣的你可以再深入学习下）</p>
+<p>你永远只需要关心数据整体，两次数据之间的 UI 如何变化，则完全交给框架去做。开发逻辑没那么复杂了，开发难度降低，产生的bug几率也就更少。</p>
+<h3 id="简化的组件模型"><a href="#简化的组件模型" class="headerlink" title="简化的组件模型"></a>简化的组件模型</h3><p>所谓组件，就是状态机器。对组件的管理 就是对状态的管理。这么，React 很少要暴露组件方法和外部交互，只要设置状态即可，只需要考虑在某个状态下UI是怎样的。</p>
+<p>React 将用户界面看做简单的状态机器。当组件处于某个状态时，那就输出这个状态对应的界面，以保证界面的一致性。在 React 中，你只需要简单的更新某个组件的状态即可，然后基于新状态输出整个页面。由 React 负责以最高效的方式去比较两个界面并更新 DOM 树。</p>
+<p>组件是 React 中构建用户界面的基本单位。与外界的交互除了 state（状态）之外，还有 props（属性）。事实上，state 更多由组件内部自己维护，props 则由外部初始化该组件时传递进来（一般是组件需要管理的数据）。React 认为，props 应该是只读的（一旦赋值过去就不要变化了）。</p>
+<p>虚拟化DOM，不仅简化了UI逻辑，也内含了组件化开发思想。组件，即封装起来的具有独立功能的UI部件。将UI上每一个功能相对独立的模块定义成组件，然后将小的组件通过组合 or 嵌套构成大的组件，最终完成整体UI的构建。</p>
+<p>MVC：开发者将三者定义成不同的类，实现了表现、数据、控制的分离（从技术角度拆分UI实现松耦合）<br>React：新的思路，开发者从功能的角度出发，将UI拆成不同的组件。每个组件都独立封装。即按照界面模块自然划分的方式来组织和编写你的代码。</p>
+<p>每个组件的UI和逻辑都定义在它们内部，高度自治。和外部完全通过API来交互，通过组合来实现复杂功能。</p>
+<p>React 认为，一个组件应该具备以下特征： </p>
+<ul>
+<li><p>可组合 Composeable：接口  </p>
+</li>
+<li><p>可重用 Reusable：独立</p>
+</li>
+<li><p>可维护 Maintainable：各个组件仅包含自身的逻辑，更容易被理解和维护</p>
+</li>
+<li><p>可测试 Testable</p>
+</li>
+</ul>
 
           
         
@@ -914,7 +731,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/02/15/artificial-intelligence/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/02/28/about-flask/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -933,7 +750,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/02/15/artificial-intelligence/" itemprop="url">artificial intelligence</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/02/28/about-flask/" itemprop="url">about-flask</a></h1>
         
 
         <div class="post-meta">
@@ -945,8 +762,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-15T21:00:03+08:00">
-                2018-02-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-28T20:47:07+08:00">
+                2018-02-28
               </time>
             
 
@@ -985,7 +802,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2018/02/15/artificial-intelligence/" class="leancloud_visitors" data-flag-title="artificial intelligence">
+             <span id="/zhangdavids.github.io/2018/02/28/about-flask/" class="leancloud_visitors" data-flag-title="about-flask">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1010,7 +827,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  58
+                  1.7k
                 </span>
               
 
@@ -1026,7 +843,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  7
                 </span>
               
             </div>
@@ -1049,13 +866,153 @@
       
         
           
-            <p>面向对象编程</p>
-<p>函数式编程</p>
-<p>了解CNN RCNN</p>
-<p>主流人工智能平台 熟悉一个 比如 keras</p>
-<p>会要求手写至少一个算法实现。。</p>
-<p>数据库 mysql 优化设计</p>
-<p>django 登陆 详细源码！！</p>
+            <p>谈一谈 flask</p>
+<p>从http 请求开始到响应</p>
+<p>前置技能 wsgi</p>
+<p>WSGI，全称 Web Server Gateway Interface，或者 Python Web Server Gateway Interface ，是为 Python 语言定义的 Web 服务器和 Web 应用程序或框架之间的一种简单而通用的接口。自从 WSGI 被开发出来以后，许多其它语言中也出现了类似接口。</p>
+<p>WSGI 的官方定义是，the Python Web Server Gateway Interface。从名字就可以看出来，这东西是一个Gateway，也就是网关。网关的作用就是在协议之间进行转换。</p>
+<p>WSGI 是作为 Web 服务器与 Web 应用程序或应用框架之间的一种低级别的接口，以提升可移植 Web 应用开发的共同点。WSGI 是基于现存的 CGI 标准而设计的。</p>
+<p>很多框架都自带了 WSGI server ，比如 Flask，webpy，Django、CherryPy等等。当然性能都不好，自带的 web server 更多的是测试用途，发布时则使用生产环境的 WSGI server或者是联合 nginx 做 uwsgi 。</p>
+<p>在网上搜过WSGI的人应该会看到一个图，左边是Server，右边是APP，中间有一个连接纽带是WSGI。</p>
+<p>不过，我看了源码以后的理解和这个有些不同，我个人觉得，实际上不应该单独写一个APP，因为，这个WSGI的使用方法实际上也是包含在APP里面的，最右端的app实际上应该指的是逻辑功能，包括URL和view function的对应关系。</p>
+<p>WSGI其实是作为一个接口，来接受Server传递过来的信息, 然后通过这个接口调用后台app里的view function进行响应。</p>
+<p><strong>起到一个接口的功能，前面对接服务器，后面对接app的具体功能</strong></p>
+<pre><code>def application(environ, start_response):               # 一个符合wsgi协议的应用程序写法应该接受2个参数
+    start_response(&apos;200 OK&apos;, [(&apos;Content-Type&apos;, &apos;text/html&apos;)])  # environ为http的相关信息，如请求头等 start_response则是响应信息
+    return [b&apos;&lt;h1&gt;Hello, web!&lt;/h1&gt;&apos;]        # return出来是响应内容
+</code></pre><p>但是，作为app本身，你就算启动了程序，你也没办法给application传递参数？</p>
+<p>所以，实际上，调用application和传递2个参数的动作，是服务器来进行的，比如Gunicorn.</p>
+<p>而这个叫做application的东西，在Flask框架内部的名字，叫做wsgi_app，请看下面章节的源码。</p>
+<pre><code>from flask import Flask  
+
+app = Flask(__name__)         #生成app实例  
+
+@app.route(&apos;/&apos;)  
+def index():  
+        return &apos;Hello World&apos;  
+</code></pre><p>这样，一个flask app就生成了</p>
+<p>但是这里有一个概念必须要搞清楚，就是当你的gunicorn收到http请求，去调用app的时候，他实际上是用了Flask 的 <strong>call</strong>方法，这点非常重要！！！</p>
+<p>因为<strong>call</strong>方法怎么写，决定了你整个流程从哪里开始。</p>
+<p>flask类的<strong>call</strong>方法</p>
+<pre><code>class Flask(_PackageBoundObject):        #Flask类  
+
+#中间省略一些代码  
+
+    def __call__(self, environ, start_response):    #Flask实例的__call__方法  
+        &quot;&quot;&quot;Shortcut for :attr:`wsgi_app`.&quot;&quot;&quot;  
+        return self.wsgi_app(environ, start_response)  #注意他的return，他返回的时候，实际上是调用了wsgi_app这个功能      
+</code></pre><p>如此一来，我们便知道，当http请求从server发送过来的时候，他会启动<strong>call</strong>功能，最终实际是调用了wsgi_app功能并传入environ和start_response</p>
+<pre><code class="python">
+<span class="class"><span class="keyword">class</span> <span class="title">Flask</span><span class="params">(_PackageBoundObject)</span>:</span>  
+
+<span class="comment">#中间省略一些代码  </span>
+                                <span class="comment">#请注意函数的说明，说得非常准确，这个wsgi_app是一个真正的WSGI应用  </span>
+    <span class="function"><span class="keyword">def</span> <span class="title">wsgi_app</span><span class="params">(self, environ, start_response)</span>:</span>    <span class="comment">#他扮演的是一个中间角色  </span>
+        <span class="string">"""The actual WSGI application.  This is not implemented in 
+        `__call__` so that middlewares can be applied without losing a 
+        reference to the class.  So instead of doing this:: 
+
+            app = MyMiddleware(app) 
+
+        It's a better idea to do this instead:: 
+
+            app.wsgi_app = MyMiddleware(app.wsgi_app) 
+
+        Then you still have the original application object around and 
+        can continue to call methods on it. 
+
+        :param environ: a WSGI environment 
+        :param start_response: a callable accepting a status code, 
+                               a list of headers and an optional 
+                               exception context to start the response 
+        """</span>  
+        ctx = self.request_context(environ)  
+        ctx.push()  
+        error = <span class="keyword">None</span>  
+        <span class="keyword">try</span>:  
+            <span class="keyword">try</span>:  
+                response = self.full_dispatch_request()    <span class="comment">#full_dispatch_request起到了预处理和错误处理以及分发请求的作用  </span>
+            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:  
+                error = e  
+                response = self.make_response(self.handle_exception(e))  <span class="comment">#如果有错误发生，则生成错误响应  </span>
+            <span class="keyword">return</span> response(environ, start_response)       <span class="comment">#如果没有错误发生，则正常响应请求，返回响应内容  </span>
+        <span class="keyword">finally</span>:  
+            <span class="keyword">if</span> self.should_ignore_error(error):  
+                error = <span class="keyword">None</span>  
+            ctx.auto_pop(error)
+</code></pre>
+<h3 id="WSGI-APP-的内部流程"><a href="#WSGI-APP-的内部流程" class="headerlink" title="WSGI_APP 的内部流程"></a>WSGI_APP 的内部流程</h3><ol>
+<li>生成request请求对象和请求上下文环境</li>
+<li><p>请求进入预处理，错误处理及请求转发到响应的过程</p>
+<pre><code>class Flask(_PackageBoundObject):  
+
+#此处省略一些代码  
+
+def full_dispatch_request(self):  
+    &quot;&quot;&quot;Dispatches the request and on top of that performs request 
+    pre and postprocessing as well as HTTP exception catching and 
+    error handling. 
+
+    .. versionadded:: 0.7 
+    &quot;&quot;&quot;  
+    self.try_trigger_before_first_request_functions()  #进行发生真实请求前的处理  
+    try:  
+        request_started.send(self)                     #socket部分的操作  
+        rv = self.preprocess_request()                 #进行请求的预处理  
+        if rv is None:  
+            rv = self.dispatch_request()  
+    except Exception as e:  
+        rv = self.handle_user_exception(e)  
+    response = self.make_response(rv)  
+    response = self.process_response(response)  
+    request_finished.send(self, response=response)  
+    return response  
+</code></pre></li>
+</ol>
+<ol>
+<li>请求分发</li>
+</ol>
+<pre><code class="python">
+<span class="class"><span class="keyword">class</span> <span class="title">Flask</span><span class="params">(_PackageBoundObject)</span>:</span>  
+
+<span class="comment">#省略一些代码  </span>
+
+    <span class="function"><span class="keyword">def</span> <span class="title">dispatch_request</span><span class="params">(self)</span>:</span>   <span class="comment">#看函数定义，matches the URL and returns the value of the view or error.  </span>
+        <span class="string">"""Does the request dispatching.  Matches the URL and returns the 
+        return value of the view or error handler.  This does not have to 
+        be a response object.  In order to convert the return value to a 
+        proper response object, call :func:`make_response`. 
+
+        .. versionchanged:: 0.7 
+           This no longer does the exception handling, this code was 
+           moved to the new :meth:`full_dispatch_request`. 
+        """</span>  
+        req = _request_ctx_stack.top.request  
+        <span class="keyword">if</span> req.routing_exception <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:  
+            self.raise_routing_exception(req)  
+        rule = req.url_rule  
+        <span class="comment"># if we provide automatic options for this URL and the  </span>
+        <span class="comment"># request came with the OPTIONS method, reply automatically  </span>
+        <span class="keyword">if</span> getattr(rule, <span class="string">'provide_automatic_options'</span>, <span class="keyword">False</span>) \  
+           <span class="keyword">and</span> req.method == <span class="string">'OPTIONS'</span>:  
+            <span class="keyword">return</span> self.make_default_options_response()  
+        <span class="comment"># otherwise dispatch to the handler for that endpoint  </span>
+        <span class="keyword">return</span> self.view_functions[rule.endpoint](**req.view_args)   <span class="comment">#最终进入view_functions，取出url对应的视图函数的返回值</span>
+</code></pre>
+<p> req = _request_ctx_stack.top.request 可以暂时理解为，将请求对象赋值给req</p>
+<p>这里先简单讲下，每个url进来以后，他都会对应一个view_function</p>
+<p>另外说下view_functions 是一个字典形式，他的key和value的关系是endpoint ——&gt; view function</p>
+<p>所以每个有效的URL进来，都能找到他对应的视图函数view function，取得返回值并赋值给  rv</p>
+<p>这时候，通过make_response函数，将刚才取得的 rv 生成响应，重新赋值response</p>
+<p>再通过process_response功能主要是处理一个after_request的功能，比如你在请求后，要把数据库连接关闭等动作，和上面提到的before_request对应和类似。</p>
+<p>之后再进行request_finished.send的处理，也是和socket处理有关，暂时不详细深入。</p>
+<p>之后返回新的response对象</p>
+<p>这里特别需要注意的是，make_response函数是一个非常重要的函数，他的作用是返回一个response_class的实例对象，也就是可以接受environ和start_reponse两个参数的对象</p>
+<ol>
+<li>返回wsgi_app 内部</li>
+</ol>
+<p>当response从刚刚的full_dispatch_request功能返回之后，函数会对这个response加上environ, start_response的参数并返回给Gunicorn</p>
+<p>至此，一个HTTP从请求到响应的流程就完毕了.  </p>
 
           
         
@@ -1104,7 +1061,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/02/12/inner-strength/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/02/26/python-text/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -1123,7 +1080,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/02/12/inner-strength/" itemprop="url">inner-strength</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/02/26/python-text/" itemprop="url">python-text</a></h1>
         
 
         <div class="post-meta">
@@ -1135,8 +1092,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-12T22:24:25+08:00">
-                2018-02-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-26T10:40:57+08:00">
+                2018-02-26
               </time>
             
 
@@ -1153,7 +1110,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2018/02/12/inner-strength/" class="leancloud_visitors" data-flag-title="inner-strength">
+             <span id="/zhangdavids.github.io/2018/02/26/python-text/" class="leancloud_visitors" data-flag-title="python-text">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1178,7 +1135,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  57
+                  41
                 </span>
               
 
@@ -1217,10 +1174,210 @@
       
         
           
-            <h2 id="从尊敬一事无成的自己开始"><a href="#从尊敬一事无成的自己开始" class="headerlink" title="从尊敬一事无成的自己开始"></a>从尊敬一事无成的自己开始</h2><p>尊敬自己 才能拥有改变的力量</p>
-<p>别在疲惫不堪时反省自己</p>
-<p>乐于付出才能得到最纯粹的喜悦</p>
-<p>喜悦永远不嫌多</p>
+            <p>六款比较不错的特殊文本格式处理库</p>
+<p>1.tablib</p>
+<p>2.openpyxl  算是xlwt xlrd的替代品</p>
+<p>3.unoconv</p>
+<p>4.pypdf2</p>
+<p>5.mistune</p>
+<p>6.csvkit 命令行工具</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/02/23/运维题目搜集/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/02/23/运维题目搜集/" itemprop="url">运维题目搜集</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-23T19:40:03+08:00">
+                2018-02-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/ops/" itemprop="url" rel="index">
+                    <span itemprop="name">ops</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2018/02/23/运维题目搜集/" class="leancloud_visitors" data-flag-title="运维题目搜集">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  193
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>三百台服务器  如何进行管理</p>
+<p>1.设定跳板机 使用统一的账户登陆 便于安全与登陆的考量</p>
+<p>2.使用salt、ansible、puppet 进行系统的统一调度与配置统一的管理</p>
+<p>3.建立简单的服务器的系统、配置、应用的cmdb信息管理。便于查阅每台服务器上的各种信息记录</p>
+<hr>
+<p>rabbitMQ 也就是消息队列中间件，消息中间件是在消息的传息过程中保存消息的容器</p>
+<hr>
+<ul>
+<li>使用像pyflakes 这样的静态代码分析工具</li>
+<li>选定一个特定的代码风格</li>
+<li>开发工具保存高响应速度</li>
+<li>找到合适的编辑器</li>
+<li>感到舒服和更有效率的工具值得花钱</li>
+</ul>
 
           
         
@@ -1260,7 +1417,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/75/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/75/">75</a><span class="page-number current">76</span><a class="page-number" href="/zhangdavids.github.io/page/77/">77</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/89/">89</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/77/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/75/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/75/">75</a><span class="page-number current">76</span><a class="page-number" href="/zhangdavids.github.io/page/77/">77</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/91/">91</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/77/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1310,7 +1467,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">443</span>
+                  <span class="site-state-item-count">453</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1332,7 +1489,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/zhangdavids.github.io/tags/index.html">
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">35</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1425,7 +1582,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共176.6k字</span>
+  <span class="post-count">博客全站共180.1k字</span>
 </div>
 
         
