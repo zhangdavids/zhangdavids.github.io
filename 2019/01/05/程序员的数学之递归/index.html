@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="math," />
 
 
 
@@ -81,16 +81,49 @@
 
 
 
-<meta name="description" content="曾因酒醉鞭名马 生怕情多累美人 站在巨人的肩膀上 积累自己的知识库">
+<meta name="description" content="递归自顶向下
+自底向上两种递归
+一般情况下 自底向上 也就是说从结果往上推一步 这种更符合计算机的思维习惯
+求八可以分解为哪几个树 1最多只能出现一次
+
+# coding=utf-8
+import copy
+
+
+def get_all_prod_factors(n, result=None):
+    &amp;quot;&amp;quot;&amp;quot;
+    使用递归编程，为给定的整数 n 找到所有可能的分解">
 <meta property="og:type" content="article">
 <meta property="og:title" content="程序员的数学之递归">
 <meta property="og:url" content="https://zhangdavids.github.io/2019/01/05/程序员的数学之递归/index.html">
 <meta property="og:site_name" content="上药三品，神与气精">
-<meta property="og:description" content="曾因酒醉鞭名马 生怕情多累美人 站在巨人的肩膀上 积累自己的知识库">
-<meta property="og:updated_time" content="2019-01-05T10:36:28.958Z">
+<meta property="og:description" content="递归自顶向下
+自底向上两种递归
+一般情况下 自底向上 也就是说从结果往上推一步 这种更符合计算机的思维习惯
+求八可以分解为哪几个树 1最多只能出现一次
+
+# coding=utf-8
+import copy
+
+
+def get_all_prod_factors(n, result=None):
+    &amp;quot;&amp;quot;&amp;quot;
+    使用递归编程，为给定的整数 n 找到所有可能的分解">
+<meta property="og:updated_time" content="2019-04-15T08:07:18.897Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="程序员的数学之递归">
-<meta name="twitter:description" content="曾因酒醉鞭名马 生怕情多累美人 站在巨人的肩膀上 积累自己的知识库">
+<meta name="twitter:description" content="递归自顶向下
+自底向上两种递归
+一般情况下 自底向上 也就是说从结果往上推一步 这种更符合计算机的思维习惯
+求八可以分解为哪几个树 1最多只能出现一次
+
+# coding=utf-8
+import copy
+
+
+def get_all_prod_factors(n, result=None):
+    &amp;quot;&amp;quot;&amp;quot;
+    使用递归编程，为给定的整数 n 找到所有可能的分解">
 
 
 
@@ -349,6 +382,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/math/" itemprop="url" rel="index">
+                    <span itemprop="name">math</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -381,7 +436,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  216
                 </span>
               
 
@@ -418,7 +473,43 @@
       
 
       
-        
+        <h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><p>自顶向下</p>
+<p>自底向上两种递归</p>
+<p>一般情况下 自底向上 也就是说从结果往上推一步 这种更符合计算机的思维习惯</p>
+<p>求八可以分解为哪几个树 1最多只能出现一次</p>
+<pre><code>
+# coding=utf-8
+import copy
+
+
+def get_all_prod_factors(n, result=None):
+    &quot;&quot;&quot;
+    使用递归编程，为给定的整数 n 找到所有可能的分解
+    :param n: 整数
+    :param result: 保存当前的分解
+    :return: None
+    &quot;&quot;&quot;
+    if result is None:
+        result = []
+    if n == 1:
+        print(&apos;x&apos;.join([str(_) for _ in result]))
+        if 1 not in result:
+            result.append(1)
+            print(&apos;x&apos;.join([str(_) for _ in result]))
+    elif n &lt; 0:
+        return
+    else:
+        for i in range(1, n + 1):
+            if (i == 1 and i not in result) or (i != 1 and n % i == 0):
+                new_result = copy.copy(result)
+                new_result.append(i)
+                get_all_prod_factors(n // i, new_result)  # python3 // 表示整除，不带小数
+
+
+if __name__ == &apos;__main__&apos;:
+    num = 8
+    get_all_prod_factors(num)
+</code></pre>
       
     </div>
     
@@ -432,6 +523,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/zhangdavids.github.io/tags/math/" rel="tag"># math</a>
+          
+        </div>
       
 
       
@@ -506,8 +603,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -526,7 +632,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">454</span>
+                  <span class="site-state-item-count">465</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -537,7 +643,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/zhangdavids.github.io/categories/index.html">
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -548,7 +654,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/zhangdavids.github.io/tags/index.html">
-                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -594,6 +700,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#递归"><span class="nav-number">1.</span> <span class="nav-text">递归</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -641,7 +763,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共180.7k字</span>
+  <span class="post-count">博客全站共181.7k字</span>
 </div>
 
         

@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/10/es6总结/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/25/leetcode-797/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -328,7 +328,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/10/es6总结/" itemprop="url">es6总结</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/25/leetcode-797/" itemprop="url">leetcode-797</a></h1>
         
 
         <div class="post-meta">
@@ -340,8 +340,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-10T13:57:40+08:00">
-                2019-01-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-25T09:36:07+08:00">
+                2019-01-25
               </time>
             
 
@@ -363,8 +363,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/frontend/" itemprop="url" rel="index">
-                    <span itemprop="name">frontend</span>
+                  <a href="/zhangdavids.github.io/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
                   </a>
                 </span>
 
@@ -380,7 +380,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/01/10/es6总结/" class="leancloud_visitors" data-flag-title="es6总结">
+             <span id="/zhangdavids.github.io/2019/01/25/leetcode-797/" class="leancloud_visitors" data-flag-title="leetcode-797">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -405,7 +405,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.2k
+                  95
                 </span>
               
 
@@ -421,7 +421,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4
+                  1
                 </span>
               
             </div>
@@ -444,43 +444,7 @@
       
         
           
-            <h3 id="1-变量声明let和const"><a href="#1-变量声明let和const" class="headerlink" title="1.变量声明let和const"></a>1.变量声明let和const</h3><p>我们都是知道在ES6以前，var关键字声明变量。无论声明在何处，都会被视为声明在函数的最顶部(不在函数内即在全局作用域的最顶部)。这就是函数变量提升例如:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function aa() &#123;</span><br><span class="line">    if(bool) &#123;</span><br><span class="line">        var test = &apos;hello man&apos;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        console.log(test)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-<p>现在的情况下 则是<br>我们通常用let和const来声明，let表示变量、const表示常量。let和const都是块级作用域。怎么理解这个块级作用域？</p>
-<p>在一个函数内部<br>在一个代码块内部</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function aa() &#123;</span><br><span class="line">    if(bool) &#123;</span><br><span class="line">       let test = &apos;hello man&apos;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        //test 在此处访问不到</span><br><span class="line">        console.log(test)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-<p>let的作用域是在它所在当前代码块，但不会被提升到当前函数的最顶部。</p>
-<p>2.模版字符串</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">const name = &apos;lux&apos;</span><br><span class="line">console.log(`hello $&#123;name&#125;`) //hello lux 基本的字符串格式化。将表达式嵌入字符串中进行拼接。用$&#123;&#125;来界定。</span><br><span class="line"></span><br><span class="line">多行字符串或者字符串一行行拼接。ES6反引号(``)直接搞定。</span><br><span class="line">// es5</span><br><span class="line">var msg = &quot;Hi \</span><br><span class="line">man!</span><br><span class="line">&quot;</span><br><span class="line">// es6</span><br><span class="line">const template = `&lt;div&gt;</span><br><span class="line">    &lt;span&gt;hello world&lt;/span&gt;</span><br><span class="line">&lt;/div&gt;`</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">// es5</span><br><span class="line">var msg = &quot;Hi \</span><br><span class="line">man!</span><br><span class="line">&quot;</span><br><span class="line">// es6</span><br><span class="line">const template = `&lt;div&gt;</span><br><span class="line">    &lt;span&gt;hello world&lt;/span&gt;</span><br><span class="line">&lt;/div&gt;`</span><br></pre></td></tr></table></figure>
-<p>3.函数</p>
-<p>为函数提供默认值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function action(num = 200) &#123;</span><br><span class="line">        console.log(num)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">action() //200</span><br><span class="line">action(300) //300</span><br></pre></td></tr></table></figure>
-<p>箭头函数</p>
-<p>箭头函数最直观的三个特点。</p>
-<p>不需要function关键字来创建函数<br>省略return关键字<br>继承当前上下文的 this 关键字</p>
-<p>4.拓展的对象功能</p>
-<ul>
-<li>键值对简写</li>
-<li>省掉function关键字</li>
-</ul>
-<p>5.更方便的数据访问 解构</p>
-<p>6.展开运算符</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">const number = [1,2,3,4,5]</span><br><span class="line">    const [first, ...rest] = number</span><br><span class="line">    console.log(rest) //2,3,4,5</span><br><span class="line">    //对象</span><br><span class="line">    const user = &#123;</span><br><span class="line">        username: &apos;lux&apos;,</span><br><span class="line">        gender: &apos;female&apos;,</span><br><span class="line">        age: 19,</span><br><span class="line">        address: &apos;peking&apos;</span><br><span class="line">    &#125;</span><br><span class="line">    const &#123; username, ...rest &#125; = user</span><br><span class="line">    console.log(rest) //&#123;&quot;address&quot;: &quot;peking&quot;, &quot;age&quot;: 19, &quot;gender&quot;: &quot;female&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>7.import export</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1.当用export default people导出时，就用 import people 导入（不带大括号）</span><br><span class="line"></span><br><span class="line">2.一个文件里，有且只能有一个export default。但可以有多个export。</span><br><span class="line"></span><br><span class="line">3.当用export name 时，就用import &#123; name &#125;导入（记得带上大括号）</span><br><span class="line"></span><br><span class="line">4.当一个文件里，既有一个export default people, 又有多个export name 或者 export age时，导入就用 import people, &#123; name, age &#125; </span><br><span class="line"></span><br><span class="line">5.当一个文件里出现n多个 export 导出很多模块，导入时除了一个一个导入，也可以用import * as example</span><br></pre></td></tr></table></figure>
-<p>8.promise</p>
-<p>在promise之前代码过多的回调或者嵌套，可读性差、耦合度高、扩展性低。通过Promise机制，扁平化的代码机构，大大提高了代码可读性；用同步编程的方式来编写异步代码，保存线性的代码逻辑，极大的降低了代码耦合性而提高了程序的可扩展性。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(function() &#123;</span><br><span class="line">  console.log(1)</span><br><span class="line">&#125;, 0);</span><br><span class="line">new Promise(function executor(resolve) &#123;</span><br><span class="line">  console.log(2);</span><br><span class="line">  for( var i=0 ; i&lt;10000 ; i++ ) &#123;</span><br><span class="line">    i == 9999 &amp;&amp; resolve();</span><br><span class="line">  &#125;</span><br><span class="line">  console.log(3);</span><br><span class="line">&#125;).then(function() &#123;</span><br><span class="line">  console.log(4);</span><br><span class="line">&#125;);</span><br><span class="line">console.log(5);</span><br></pre></td></tr></table></figure>
-<p>首先先碰到一个 setTimeout，于是会先设置一个定时，在定时结束后将传递这个函数放到任务队列里面，因此开始肯定不会输出 1 。</p>
-<p>然后是一个 Promise，里面的函数是直接执行的，因此应该直接输出 2 3 。</p>
-<p>然后，Promise 的 then 应当会放到当前 tick 的最后，但是还是在当前 tick 中。</p>
-<p>因此，应当先输出 5，然后再输出 4 。</p>
-<p>最后在到下一个 tick，就是 1 。</p>
-<p>“2 3 5 4 1”</p>
-<p>9.迭代器</p>
-<p>生成器（ generator）是能返回一个迭代器的函数。生成器函数也是一种函数，最直观的表现就是比普通的function多了个星号*，在其函数体内可以使用yield关键字,有意思的是函数会在每个yield后暂停。</p>
-<p>这里生活中有一个比较形象的例子。咱们到银行办理业务时候都得向大厅的机器取一张排队号。你拿到你的排队号，机器并不会自动为你再出下一张票。也就是说取票机“暂停”住了，直到下一个人再次唤起才会继续吐票。</p>
-<p>OK。说说迭代器。当你调用一个generator时，它将返回一个迭代器对象。这个迭代器对象拥有一个叫做next的方法来帮助你重启generator函数并得到下一个值。next方法不仅返回值，它返回的对象具有两个属性：done和value。value是你获得的值，done用来表明你的generator是否已经停止提供值。继续用刚刚取票的例子，每张排队号就是这里的value，打印票的纸是否用完就这是这里的done。</p>
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    void dfs(vector&lt;vector&lt;int&gt;&gt;&amp; g, vector&lt;vector&lt;int&gt;&gt;&amp; res, vector&lt;int&gt; path, int cur) &#123;</span><br><span class="line">        path.push_back(cur);</span><br><span class="line">        if (cur == g.size() - 1) res.push_back(path);</span><br><span class="line">        else for (auto it: g[cur]) dfs(g, res, path, it);</span><br><span class="line">    &#125;</span><br><span class="line">    vector&lt;vector&lt;int&gt;&gt; allPathsSourceTarget(vector&lt;vector&lt;int&gt;&gt;&amp; g) &#123;</span><br><span class="line">        vector&lt;vector&lt;int&gt;&gt; paths;</span><br><span class="line">        vector&lt;int&gt; path;</span><br><span class="line">        dfs(g, paths, path, 0);</span><br><span class="line">        return paths;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
           
         
@@ -529,7 +493,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/10/ds之堆/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/24/ds之dfs/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -548,7 +512,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/10/ds之堆/" itemprop="url">ds之堆</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/24/ds之dfs/" itemprop="url">ds之dfs</a></h1>
         
 
         <div class="post-meta">
@@ -560,8 +524,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-10T13:50:02+08:00">
-                2019-01-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-24T14:26:38+08:00">
+                2019-01-24
               </time>
             
 
@@ -600,7 +564,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/01/10/ds之堆/" class="leancloud_visitors" data-flag-title="ds之堆">
+             <span id="/zhangdavids.github.io/2019/01/24/ds之dfs/" class="leancloud_visitors" data-flag-title="ds之dfs">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -625,7 +589,564 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  610
+                  87
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>深度优先搜索 更符合计算机的习惯</p>
+<p>也就是一般使用栈来处理问题(递归)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">class Solution(object):</span><br><span class="line">    def levelOrder(self, root):</span><br><span class="line">        if not root:</span><br><span class="line">            return []</span><br><span class="line">        self.result = []</span><br><span class="line">        self._dfs(root, 0)</span><br><span class="line">        return self.result</span><br><span class="line"></span><br><span class="line">    def _dfs(self, node, level):</span><br><span class="line">        if not node: return</span><br><span class="line"></span><br><span class="line">        if len(self.result) &lt; level + 1:</span><br><span class="line">            self.result.append([])</span><br><span class="line"></span><br><span class="line">        self.result[level].append(node.val)</span><br><span class="line"></span><br><span class="line">        self._dfs(node.left, level+1)</span><br><span class="line">        self._dfs(node.right, level+1)</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/24/ds之bfs/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/24/ds之bfs/" itemprop="url">ds之bfs</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-24T14:26:17+08:00">
+                2019-01-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/data-structure/" itemprop="url" rel="index">
+                    <span itemprop="name">data structure</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/01/24/ds之bfs/" class="leancloud_visitors" data-flag-title="ds之bfs">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  102
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>广度优先搜索</p>
+<p>本质上就是<em>队列queue</em>的应用</p>
+<p>在写代码的时候 也可以使用双端队列</p>
+<p>以leetcode 102题 层次遍历为例子 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">levelOrder</span><span class="params">(self, root)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> root:</span><br><span class="line">            <span class="keyword">return</span> []</span><br><span class="line"></span><br><span class="line">        res = []</span><br><span class="line">        queue = collections.deque()</span><br><span class="line">        queue.append(root)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># visited = set(root)</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> queue:</span><br><span class="line">            level_size = len(queue)</span><br><span class="line">            current_size = []</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> _ <span class="keyword">in</span> range(level_size):</span><br><span class="line">                node = queue.popleft()</span><br><span class="line">                current_level.append(node.val)</span><br><span class="line">                <span class="keyword">if</span> node.left: queue.append(node.left)</span><br><span class="line">                <span class="keyword">if</span> node.right: queue.append(node.right)</span><br><span class="line"></span><br><span class="line">            res.append(current_level)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/23/leetcode-765/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/23/leetcode-765/" itemprop="url">leetcode-765</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-23T15:38:12+08:00">
+                2019-01-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/01/23/leetcode-765/" class="leancloud_visitors" data-flag-title="leetcode-765">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  56
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Solution(object):</span><br><span class="line">    def minSwapsCouples(self, row):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        :type row: List[int]</span><br><span class="line">        :rtype: int</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        res = 0</span><br><span class="line">        for i in xrange(0, len(row), 2):</span><br><span class="line">            p = row[i] ^ 1 </span><br><span class="line">            j = row.index(p)</span><br><span class="line">            if (j-i) &gt; 1:</span><br><span class="line">                row[i+1], row[j] = row[j], row[i+1]</span><br><span class="line">                res += 1</span><br><span class="line">        return res</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/21/ds之字典树/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/21/ds之字典树/" itemprop="url">ds之字典树</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-21T17:10:25+08:00">
+                2019-01-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/data-structure/" itemprop="url" rel="index">
+                    <span itemprop="name">data structure</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/01/21/ds之字典树/" class="leancloud_visitors" data-flag-title="ds之字典树">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  558
                 </span>
               
 
@@ -664,607 +1185,9 @@
       
         
           
-            <p>堆 </p>
-<p>为什么堆排序没有快速排序快？</p>
-<p>堆排序是一种原地的、时间复杂度为O(nlogn)的排序算法</p>
-<ul>
-<li>堆是一棵完全二叉树</li>
-<li>堆中每一个节点的值都必须大于等于（或者小于等于）其子树中每个节点的值</li>
-</ul>
-<p>如何实现一个堆？以大顶堆为例子</p>
-<p>完全二叉树比较适合用数组来存储。用数组存储非常节省存储空间，单纯通过数组下标就可以找到一个节点的左右子节点和父节点。</p>
-<p><em>堆的插入数据</em></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public class Heap &#123;</span><br><span class="line">  private int[] a; // 数组，从下标 1 开始存储数据</span><br><span class="line">  private int n;  // 堆可以存储的最大数据个数</span><br><span class="line">  private int count; // 堆中已经存储的数据个数</span><br><span class="line"></span><br><span class="line">  public Heap(int capacity) &#123;</span><br><span class="line">    a = new int[capacity + 1];</span><br><span class="line">    n = capacity;</span><br><span class="line">    count = 0;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public void insert(int data) &#123;</span><br><span class="line">    if (count &gt;= n) return; // 堆满了</span><br><span class="line">    ++count;</span><br><span class="line">    a[count] = data;</span><br><span class="line">    int i = count;</span><br><span class="line">    while (i/2 &gt; 0 &amp;&amp; a[i] &gt; a[i/2]) &#123; // 自下往上堆化</span><br><span class="line">      swap(a, i, i/2); // swap() 函数作用：交换下标为 i 和 i/2 的两个元素</span><br><span class="line">      i = i/2;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-<p><em>删除堆顶元素</em></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public void removeMax() &#123;</span><br><span class="line">  if (count == 0) return -1; // 堆中没有数据</span><br><span class="line">  a[1] = a[count];</span><br><span class="line">  --count;</span><br><span class="line">  heapify(a, count, 1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private void heapify(int[] a, int n, int i) &#123; // 自上往下堆化</span><br><span class="line">  while (true) &#123;</span><br><span class="line">    int maxPos = i;</span><br><span class="line">    if (i*2 &lt;= n &amp;&amp; a[i] &lt; a[i*2]) maxPos = i*2;</span><br><span class="line">    if (i*2+1 &lt;= n &amp;&amp; a[maxPos] &lt; a[i*2+1]) maxPos = i*2+1;</span><br><span class="line">    if (maxPos == i) break;</span><br><span class="line">    swap(a, i, maxPos);</span><br><span class="line">    i = maxPos;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><em>建堆</em></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">private static void buildHeap(int[] a, int n) &#123;</span><br><span class="line">  for (int i = n/2; i &gt;= 1; --i) &#123;</span><br><span class="line">    heapify(a, n, i);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private static void heapify(int[] a, int n, int i) &#123;</span><br><span class="line">  while (true) &#123;</span><br><span class="line">    int maxPos = i;</span><br><span class="line">    if (i*2 &lt;= n &amp;&amp; a[i] &lt; a[i*2]) maxPos = i*2;</span><br><span class="line">    if (i*2+1 &lt;= n &amp;&amp; a[maxPos] &lt; a[i*2+1]) maxPos = i*2+1;</span><br><span class="line">    if (maxPos == i) break;</span><br><span class="line">    swap(a, i, maxPos);</span><br><span class="line">    i = maxPos;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><em>堆排序</em></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// n 表示数据的个数，数组 a 中的数据从下标 1 到 n 的位置。</span><br><span class="line">public static void sort(int[] a, int n) &#123;</span><br><span class="line">  buildHeap(a, n);</span><br><span class="line">  int k = n;</span><br><span class="line">  while (k &gt; 1) &#123;</span><br><span class="line">    swap(a, 1, k);</span><br><span class="line">    --k;</span><br><span class="line">    heapify(a, k, 1);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>堆排序数据访问的方式没有快速排序友好。</li>
-</ul>
-<p>快速排序 数据是顺序访问的 对于堆来说 数据是跳着访问的</p>
-<ul>
-<li>对于同样的数据 排序过程中 堆排序算法的数据交换次数要多于快速排序。</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/10/ds之队列/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/10/ds之队列/" itemprop="url">ds之队列</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-10T13:49:54+08:00">
-                2019-01-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/data-structure/" itemprop="url" rel="index">
-                    <span itemprop="name">data structure</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/01/10/ds之队列/" class="leancloud_visitors" data-flag-title="ds之队列">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  227
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>python当中的队列</p>
-<p>源码在 Lib/queue.py</p>
-<p>提供三种队列</p>
-<ul>
-<li>Queue（普通先进先出队列）</li>
-<li>LifoQueue（后进先出队列）</li>
-<li>PriorityQueue（优先级队列）</li>
-</ul>
-<p>提供封装的方法为</p>
-<ul>
-<li>qsize</li>
-<li>empty</li>
-<li>full</li>
-<li>put</li>
-<li>put_nowait</li>
-<li>get</li>
-<li>get_nowait</li>
-<li>task_done</li>
-<li>join</li>
-</ul>
-<p>这里着重说一下join()</p>
-<p>阻塞调用线程，直到队列中的所有任务被处理掉。</p>
-<p>只要有数据被加入队列，未完成的任务数就会增加。当消费者线程调用task_done()以指示该项目已检索并且其上的所有工作都已完成时，计数将减少。当未完成的任务数降到0，join()解除阻塞。</p>
-<p>示例如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">def worker():</span><br><span class="line">    while True:</span><br><span class="line">        item = q.get()</span><br><span class="line">        if item is None:</span><br><span class="line">            break</span><br><span class="line">        do_work(item)</span><br><span class="line">        q.task_done()</span><br><span class="line"></span><br><span class="line">q = queue.Queue()</span><br><span class="line">threads = []</span><br><span class="line">for i in range(num_worker_threads):</span><br><span class="line">    t = threading.Thread(target=worker)</span><br><span class="line">    t.start()</span><br><span class="line">    threads.append(t)</span><br><span class="line"></span><br><span class="line">for item in source():</span><br><span class="line">    q.put(item)</span><br><span class="line"></span><br><span class="line"># block until all tasks are done</span><br><span class="line">q.join()</span><br><span class="line"></span><br><span class="line"># stop workers</span><br><span class="line">for i in range(num_worker_threads):</span><br><span class="line">    q.put(None)</span><br><span class="line">for t in threads:</span><br><span class="line">    t.join()</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/10/ds之栈/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/10/ds之栈/" itemprop="url">ds之栈</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-10T13:49:36+08:00">
-                2019-01-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/data-structure/" itemprop="url" rel="index">
-                    <span itemprop="name">data structure</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/01/10/ds之栈/" class="leancloud_visitors" data-flag-title="ds之栈">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  194
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>一般而言 很多数据结构 都可以使用数组实现（也就是顺序表）</p>
-<p>也可以使用链表实现 py里找一圈你可能没有看到栈的实现</p>
-<p>是因为可以直接使用list实现栈 简单！！！</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">class Stack(object):</span><br><span class="line">    # 初始化栈为空列表</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.items = []</span><br><span class="line"></span><br><span class="line">    # 判断栈是否为空，返回布尔值</span><br><span class="line">    def is_empty(self):</span><br><span class="line">        return self.items == []</span><br><span class="line"></span><br><span class="line">    # 返回栈顶元素</span><br><span class="line">    def peek(self):</span><br><span class="line">        return self.items[len(self.items) - 1]</span><br><span class="line"></span><br><span class="line">    # 返回栈的大小</span><br><span class="line">    def size(self):</span><br><span class="line">        return len(self.items)</span><br><span class="line"></span><br><span class="line">    # 把新的元素堆进栈里面（程序员喜欢把这个过程叫做压栈，入栈，进栈……）</span><br><span class="line">    def push(self, item):</span><br><span class="line">        self.items.append(item)</span><br><span class="line"></span><br><span class="line">    # 把栈顶元素丢出去（程序员喜欢把这个过程叫做出栈……）</span><br><span class="line">    def pop(self, item):</span><br><span class="line">        return self.items.pop()</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/10/taskflow详细4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/10/taskflow详细4/" itemprop="url">taskflow详细4</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-10T11:20:07+08:00">
-                2019-01-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/compute/" itemprop="url" rel="index">
-                    <span itemprop="name">compute</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/01/10/taskflow详细4/" class="leancloud_visitors" data-flag-title="taskflow详细4">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  0
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
+            <p>字典树</p>
+<p>字典树的目的其实并非用于存储字符，而是存储每个词语（虽然原理一致），并且支持获取某个词语序列的前后缀及其频率。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TrieNode</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, value=None, count=<span class="number">0</span>, parent=None)</span>:</span></span><br><span class="line">        <span class="comment"># 值</span></span><br><span class="line">        self.value = value</span><br><span class="line">        <span class="comment"># 频数统计</span></span><br><span class="line">        self.count = count</span><br><span class="line">        <span class="comment"># 父结点</span></span><br><span class="line">        self.parent = parent</span><br><span class="line">        <span class="comment"># 子节点，&#123;value:TrieNode&#125;</span></span><br><span class="line">        self.children = &#123;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trie</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment"># 创建空的根节点</span></span><br><span class="line">        self.root = TrieNode()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">insert</span><span class="params">(self, sequence)</span>:</span></span><br><span class="line">        <span class="string">"""</span><br><span class="line">        基操，插入一个序列</span><br><span class="line">        :param sequence: 列表</span><br><span class="line">        :return:</span><br><span class="line">        """</span></span><br><span class="line">        cur_node = self.root</span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> sequence:</span><br><span class="line">            <span class="keyword">if</span> item <span class="keyword">not</span> <span class="keyword">in</span> cur_node.children:</span><br><span class="line">                <span class="comment"># 插入结点</span></span><br><span class="line">                child = TrieNode(value=item, count=<span class="number">1</span>, parent=cur_node)</span><br><span class="line">                cur_node.children[item] = child</span><br><span class="line">                cur_node = child</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="comment"># 更新结点</span></span><br><span class="line">                cur_node = cur_node.children[item]</span><br><span class="line">                cur_node.count += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">search</span><span class="params">(self, sequence)</span>:</span></span><br><span class="line">        <span class="string">"""</span><br><span class="line">        基操，查询是否存在完整序列</span><br><span class="line">        :param sequence: 列表</span><br><span class="line">        :return:</span><br><span class="line">        """</span></span><br><span class="line">        cur_node = self.root</span><br><span class="line">        mark = <span class="keyword">True</span></span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> sequence:</span><br><span class="line">            <span class="keyword">if</span> item <span class="keyword">not</span> <span class="keyword">in</span> cur_node.children:</span><br><span class="line">                mark = <span class="keyword">False</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                cur_node = cur_node.children[item]</span><br><span class="line">        <span class="comment"># 如果还有子结点，说明序列并非完整</span></span><br><span class="line">        <span class="keyword">if</span> cur_node.children:</span><br><span class="line">            mark = <span class="keyword">False</span></span><br><span class="line">        <span class="keyword">return</span> mark</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">delete</span><span class="params">(self, sequence)</span>:</span></span><br><span class="line">        <span class="string">"""</span><br><span class="line">        基操，删除序列，准确来说是减少计数</span><br><span class="line">        :param sequence: 列表</span><br><span class="line">        :return:</span><br><span class="line">        """</span></span><br><span class="line">        mark = <span class="keyword">False</span></span><br><span class="line">        <span class="keyword">if</span> self.search(sequence):</span><br><span class="line">            mark = <span class="keyword">True</span></span><br><span class="line">            cur_node = self.root</span><br><span class="line">            <span class="keyword">for</span> item <span class="keyword">in</span> sequence:</span><br><span class="line">                cur_node.children[item].count -= <span class="number">1</span></span><br><span class="line">                <span class="keyword">if</span> cur_node.children[item].count == <span class="number">0</span>:</span><br><span class="line">                    cur_node.children.pop(item)</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    cur_node = cur_node.children[item]</span><br><span class="line">        <span class="keyword">return</span> mark</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">search_part</span><span class="params">(self, sequence, prefix, suffix, start_node=None)</span>:</span></span><br><span class="line">        <span class="string">"""</span><br><span class="line">        递归查找子序列，返回前缀和后缀结点</span><br><span class="line">        此处简化操作，仅返回一位前后缀的内容与频数</span><br><span class="line">        :param sequence: 列表</span><br><span class="line">        :param prefix: 前缀字典，初始传入空字典</span><br><span class="line">        :param suffix: 后缀字典，初始传入空字典</span><br><span class="line">        :param start_node: 起始结点，用于子树的查询</span><br><span class="line">        :return:</span><br><span class="line">        """</span></span><br><span class="line">        <span class="keyword">if</span> start_node:</span><br><span class="line">            cur_node = start_node</span><br><span class="line">            prefix_node = start_node.parent</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            cur_node = self.root</span><br><span class="line">            prefix_node = self.root</span><br><span class="line">        mark = <span class="keyword">True</span></span><br><span class="line">        <span class="comment"># 必须从第一个结点开始对比</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(sequence)):</span><br><span class="line">            <span class="keyword">if</span> i == <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">if</span> sequence[i] != cur_node.value:</span><br><span class="line">                    <span class="keyword">for</span> child_node <span class="keyword">in</span> cur_node.children.values():</span><br><span class="line">                        self.search_part(sequence, prefix, suffix, child_node)</span><br><span class="line">                    mark = <span class="keyword">False</span></span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">if</span> sequence[i] <span class="keyword">not</span> <span class="keyword">in</span> cur_node.children:</span><br><span class="line">                    <span class="keyword">for</span> child_node <span class="keyword">in</span> cur_node.children.values():</span><br><span class="line">                        self.search_part(sequence, prefix, suffix, child_node)</span><br><span class="line">                    mark = <span class="keyword">False</span></span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    cur_node = cur_node.children[sequence[i]]</span><br><span class="line">        <span class="keyword">if</span> mark:</span><br><span class="line">            <span class="keyword">if</span> prefix_node.value:</span><br><span class="line">                <span class="comment"># 前缀数量取序列词中最后一词的频数</span></span><br><span class="line">                <span class="keyword">if</span> prefix_node.value <span class="keyword">in</span> prefix:</span><br><span class="line">                    prefix[prefix_node.value] += cur_node.count</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    prefix[prefix_node.value] = cur_node.count</span><br><span class="line">            <span class="keyword">for</span> suffix_node <span class="keyword">in</span> cur_node.children.values():</span><br><span class="line">                <span class="keyword">if</span> suffix_node.value <span class="keyword">in</span> suffix:</span><br><span class="line">                    suffix[suffix_node.value] += suffix_node.count</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    suffix[suffix_node.value] = suffix_node.count</span><br><span class="line">            <span class="comment"># 即使找到一部分还需继续查找子结点</span></span><br><span class="line">            <span class="keyword">for</span> child_node <span class="keyword">in</span> cur_node.children.values():</span><br><span class="line">                self.search_part(sequence, prefix, suffix, child_node)</span><br></pre></td></tr></table></figure>
           
         
       
@@ -1303,7 +1226,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/36/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/36/">36</a><span class="page-number current">37</span><a class="page-number" href="/zhangdavids.github.io/page/38/">38</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/91/">91</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/38/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/36/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/36/">36</a><span class="page-number current">37</span><a class="page-number" href="/zhangdavids.github.io/page/38/">38</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/93/">93</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/38/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1353,7 +1276,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">454</span>
+                  <span class="site-state-item-count">465</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1364,7 +1287,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/zhangdavids.github.io/categories/index.html">
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1375,7 +1298,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/zhangdavids.github.io/tags/index.html">
-                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1468,7 +1391,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共180.7k字</span>
+  <span class="post-count">博客全站共181.7k字</span>
 </div>
 
         

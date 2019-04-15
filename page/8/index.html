@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/25/shortest-path/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/04/03/设计模式之责任链/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -328,7 +328,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/25/shortest-path/" itemprop="url">shortest_path</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/04/03/设计模式之责任链/" itemprop="url">设计模式之责任链</a></h1>
         
 
         <div class="post-meta">
@@ -340,8 +340,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-25T16:11:02+08:00">
-                2019-03-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-03T15:25:58+08:00">
+                2019-04-03
               </time>
             
 
@@ -358,7 +358,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/03/25/shortest-path/" class="leancloud_visitors" data-flag-title="shortest_path">
+             <span id="/zhangdavids.github.io/2019/04/03/设计模式之责任链/" class="leancloud_visitors" data-flag-title="设计模式之责任链">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -383,7 +383,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  228
+                  382
                 </span>
               
 
@@ -422,7 +422,262 @@
       
         
           
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">from dataclasses import dataclass</span><br><span class="line">from queue import PriorityQueue</span><br><span class="line"></span><br><span class="line">@dataclass</span><br><span class="line">class Edge:</span><br><span class="line">    start_id: int</span><br><span class="line">    end_id: int</span><br><span class="line">    weight: int</span><br><span class="line"></span><br><span class="line">@dataclass(order=True)</span><br><span class="line">class Vertex:</span><br><span class="line">    distance_to_start = float(&quot;inf&quot;)</span><br><span class="line">    vertex_id: int</span><br><span class="line"></span><br><span class="line">class Graph:</span><br><span class="line">    def __init__(self, num_vertices: int):</span><br><span class="line">        self._num_vertices = num_vertices</span><br><span class="line">        self._adjacency = [[] for _ in range(num_vertices)]</span><br><span class="line">    </span><br><span class="line">    def add_edge(self, from_vertex: int, to_vertex: int, weight: int) -&gt; None:</span><br><span class="line">        self._adjacency[from_vertex].append(Edge(from_vertex, to_vertex, weight))</span><br><span class="line"></span><br><span class="line">    def dijkstra(self, from_vertex: int, to_vertex: int) -&gt; None:</span><br><span class="line">        vertices = [Vertex(i) for i in range(self._num_vertices)]</span><br><span class="line">        vertices[from_vertex].distance_to_start = 0</span><br><span class="line">        visited = [False] * self._num_vertices</span><br><span class="line">        predecessor = [-1] * self._num_vertices</span><br><span class="line">        q = PriorityQueue()</span><br><span class="line">        q.put(vertices[from_vertex])</span><br><span class="line">        visited[from_vertex] = True</span><br><span class="line">        while not q.empty():</span><br><span class="line">            min_vertex = q.get()</span><br><span class="line">            if min_vertex.vertex_id == to_vertex:</span><br><span class="line">                break</span><br><span class="line">            for edge in self._adjacency[min_vertex.vertex_id]:</span><br><span class="line">                next_vertex = vertices[edge.end_id]</span><br><span class="line">                if min_vertex.distance_to_start + edge.weight &lt; next_vertex.distance_to_start:</span><br><span class="line">                    next_vertex.distance_to_start = min_vertex.distance_to_start + edge.weight</span><br><span class="line">                    predecessor[next_vertex.vertex_id] = min_vertex.vertex_id</span><br><span class="line">                    if not visited[next_vertex.vertex_id]:</span><br><span class="line">                        q.put(next_vertex)</span><br><span class="line">                        visited[next_vertex.vertex_id] = True</span><br><span class="line">            </span><br><span class="line">        path = lambda x: path(predecessor[x]) + [str(x)] if from_vertex != x else [str(from_vertex)]</span><br><span class="line">        print(&quot;-&gt;&quot;.join(path(to_vertex)))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">    graph = Graph(6)</span><br><span class="line">    graph.add_edge(0, 1, 10)</span><br><span class="line">    graph.add_edge(0, 4, 15)</span><br><span class="line">    graph.add_edge(1, 2, 15)</span><br><span class="line">    graph.add_edge(1, 3, 2)</span><br><span class="line">    graph.add_edge(2, 5, 5)</span><br><span class="line">    graph.add_edge(3, 2, 1)</span><br><span class="line">    graph.add_edge(3, 5, 12)</span><br><span class="line">    graph.add_edge(4, 5, 10)</span><br><span class="line">    graph.dijkstra(0, 5)</span><br></pre></td></tr></table></figure>
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># encoding: utf-8</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">责任链模式</span><br><span class="line">使多个对象都以机会处理请求, 从而避免请求的发送者和接受者之间的耦合关系</span><br><span class="line">将这个对象连成一条链, 沿着这条链传递请求, 直到有一个对象处理它为止</span><br><span class="line">- 可以随意增加或修改处理一个请求的链式结构</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">from abc import ABCMeta, abstractmethod</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Handler(object):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    定义一个处理请求的接口</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    __metaclass__ = ABCMeta</span><br><span class="line"></span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.__successor = None</span><br><span class="line"></span><br><span class="line">    @property</span><br><span class="line">    def successor(self):</span><br><span class="line">        return self.__successor</span><br><span class="line"></span><br><span class="line">    @successor.setter</span><br><span class="line">    def successor(self, value):</span><br><span class="line">        self.__successor = value</span><br><span class="line"></span><br><span class="line">    @abstractmethod</span><br><span class="line">    def handle_request(self, request):</span><br><span class="line">        pass</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class ConcreteHandlerA(Handler):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    具体处理类, 处理它所负责的请求</span><br><span class="line">    如果可以处理该请求, 处理之, 否则转给后继者</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">    def handle_request(self, request):</span><br><span class="line">        if 0 &lt;= request &lt; 10:</span><br><span class="line">            print &quot;%s process %s&quot; % (self.__class__.__name__, request)</span><br><span class="line">        else:</span><br><span class="line">            self.successor.handle_request(request)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class ConcreteHandlerB(Handler):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    具体处理类, 处理它所负责的请求</span><br><span class="line">    如果可以处理该请求, 处理之, 否则转给后继者</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">    def handle_request(self, request):</span><br><span class="line">        if 10 &lt;= request &lt; 20:</span><br><span class="line">            print &quot;%s process %s&quot; % (self.__class__.__name__, request)</span><br><span class="line">        else:</span><br><span class="line">            self.successor.handle_request(request)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class ConcreteHandlerC(Handler):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    具体处理类, 处理它所负责的请求</span><br><span class="line">    如果可以处理该请求, 处理之, 否则转给后继者</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">    def handle_request(self, request):</span><br><span class="line">        if 20 &lt;= request &lt; 30:</span><br><span class="line">            print &quot;%s process %s&quot; % (self.__class__.__name__, request)</span><br><span class="line">        else:</span><br><span class="line">            self.successor.handle_request(request)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    h1 = ConcreteHandlerA()</span><br><span class="line">    h2 = ConcreteHandlerB()</span><br><span class="line">    h3 = ConcreteHandlerC()</span><br><span class="line"></span><br><span class="line">    h1.successor = h2</span><br><span class="line">    h2.successor = h3</span><br><span class="line"></span><br><span class="line">    for req in [2, 14, 22]:</span><br><span class="line">        print req</span><br><span class="line">        h1.handle_request(req)</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/04/02/sanic源码阅读/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/04/02/sanic源码阅读/" itemprop="url">sanic源码阅读</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-02T11:11:34+08:00">
+                2019-04-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/04/02/sanic源码阅读/" class="leancloud_visitors" data-flag-title="sanic源码阅读">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">## Sanic源码阅读：基于0.1.2</span><br><span class="line"></span><br><span class="line">`Sanic`是一个可以使用`async/await`语法编写项目的异步非阻塞框架，它写法类似于`Flask`，但使用了异步特性，而且还使用`uvloop`作为事件循环，其底层使用的是`libuv`，从而使 `Sanic`的速度优势更加明显。</span><br><span class="line"></span><br><span class="line">本章，我将和大家一起看看`Sanic`里面的运行机制是怎样的，它的`Router Blueprint`等是如何实现的。</span><br><span class="line"></span><br><span class="line">如果你有以下的需求：</span><br><span class="line"></span><br><span class="line">- 想深入了解Sanic，迫切想知道它的运行机制</span><br><span class="line">- 直接阅读源码，做一些定制</span><br><span class="line">- 学习</span><br><span class="line"></span><br><span class="line">将Sanic-0.1.2阅读完后的一些建议，我觉得你应该有以下基础再阅读源码才会理解地比较好：</span><br><span class="line"></span><br><span class="line">- 理解[装饰器](https://github.com/howie6879/Sanic-For-Pythoneer/blob/master/docs/part2/%E9%99%84%E5%BD%95%EF%BC%9A%E5%85%B3%E4%BA%8E%E8%A3%85%E9%A5%B0%E5%99%A8.md)，见附录</span><br><span class="line">- 理解协程</span><br><span class="line"></span><br><span class="line">Sanic-0.1.2 的核心文件如下：</span><br><span class="line">``` shell</span><br><span class="line">.</span><br><span class="line">├── __init__.py</span><br><span class="line">├── blueprints.py</span><br><span class="line">├── config.py</span><br><span class="line">├── exceptions.py</span><br><span class="line">├── log.py</span><br><span class="line">├── request.py</span><br><span class="line">├── response.py</span><br><span class="line">├── router.py</span><br><span class="line">├── sanic.py</span><br><span class="line">├── server.py</span><br><span class="line">└── utils.py</span><br></pre></td></tr></table></figure>
+<p>通过运行下面的示例，这些文件都会被我们看到它的作用，拭目以待吧，为了方便诸位的理解，我已将我注解的一份<code>Sanic</code>代码上传到了<code>github</code>，见<a href="https://github.com/howie6879/sanic_annotation" target="_blank" rel="external">sanic_annotation</a>。</p>
+<h3 id="simple-server-py"><a href="#simple-server-py" class="headerlink" title="simple_server.py"></a>simple_server.py</h3><p>让我们从<a href="https://github.com/howie6879/sanic_annotation/blob/master/sanic_0_1_2/examples/simple_server.py" target="_blank" rel="external">simple_server</a>开始吧，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> sanic_0_1_2.src <span class="keyword">import</span> Sanic</span><br><span class="line"><span class="keyword">from</span> sanic_0_1_2.src.response <span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line">app = Sanic(__name__)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route("/")</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> json(&#123;<span class="string">"test"</span>: <span class="keyword">True</span>&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.run(host=<span class="string">"0.0.0.0"</span>, port=<span class="number">8000</span>)</span><br></pre></td></tr></table></figure>
+<p>或许你直接把<a href="https://github.com/howie6879/sanic_annotation" target="_blank" rel="external">sanic_annotation</a>项目直接clone到本地比较方便调试+理解：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/howie6879/sanic_annotation</span><br><span class="line">cd sanic_annotation/sanic_0_1_2/examples/</span><br></pre></td></tr></table></figure>
+<p>那么，现在一切准备就绪，开始阅读吧。</p>
+<p>前两行代码导入包：</p>
+<ul>
+<li><code>Sanic</code>：构建一个 Sanic 服务必须要实例化的类</li>
+<li><code>json</code>：以json格式返回结果，实际上是HTTPResponse类，根据实例化参数content_type的不同，构建不同的实例，如：<ul>
+<li><code>text</code>：<code>content_type=&quot;text/plain; charset=utf-8&quot;</code></li>
+<li><code>html</code>：<code>content_type=&quot;text/html; charset=utf-8&quot;</code></li>
+</ul>
+</li>
+</ul>
+<p>实例化一个<code>Sanic</code>对象，<code>app = Sanic(__name__)</code>，可见<a href="https://github.com/howie6879/sanic_annotation/blob/master/sanic_0_1_2/src/sanic.py" target="_blank" rel="external">sanic.py</a>，我已经在这个文件里面做了一些注释，这里也详细说下<code>Sanic</code>类：</p>
+<ul>
+<li><p>route()：装饰器，构建uri和视图函数的映射关系，调用Router().add()方法</p>
+</li>
+<li><p>exception()：装饰器，和上面差不多，不过针对的是错误处理类Handler</p>
+</li>
+<li><p>middleware()：装饰器，针对中间件</p>
+</li>
+<li><p>register_blueprint()：注册视图的函数，接受第一个参数是视图类<code>blueprint</code>，再调用该类下的<code>register</code>方法实现将此蓝图下的<code>route、exception、middleware</code>统一注册到<code>app.route、app.exception、app.exception</code></p>
+</li>
+<li><p>handle_request()：这是一个很重要的异步函数，当服务启动后，如果客户端发来一个有效的请求，会自动执行 <code>on_message_complete</code>函数，该函数的目的是异步调用 <code>handle_request</code>函数，<code>handle_request</code>函数会回调<code>write_response</code>函数，<code>write_response</code>接受的参数是此uri请求对应的视图函数，比如上面demo中，如果客户端请求’/‘，那么这里<code>write_response</code>就会接受<code>json({&quot;test&quot;: True})</code>，然后进一步处理，再返回给客户端</p>
+</li>
+<li><p>run()：Sanic服务的启动函数，必须执行，实际上会继续调用<code>server.serve</code>函数，详情下面会详细讲</p>
+</li>
+<li><p>stop()：终止服务</p>
+</li>
+</ul>
+<p>其实上面这部分介绍已经讲了Sanic基本的运行逻辑，如果你理解了，那下面的讲解对你来说是轻轻松松，如果不怎么明白，也不要紧，这是只是一个大体的介绍，跟着步骤来，也很容易理解，继续看代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 此处将路由 / 与视图函数 test 关联起来</span></span><br><span class="line"><span class="meta">@app.route("/")</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> json(&#123;<span class="string">"test"</span>: <span class="keyword">True</span>&#125;)</span><br></pre></td></tr></table></figure>
+<p><code>app.route</code>，上面介绍过，随着Sanic服务的启动而启动，可定义参数<code>uri, methods</code></p>
+<p>目的是为<code>url</code>的<code>path</code>和视图函数对应起来，构建一对映射关系，本例中<code>Sanic.router</code>类下的<code>Router.routes = []</code></p>
+<p>会增加一个名为<code>Route</code>的<code>namedtuple</code>，如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Route(handler=&lt;function test at <span class="number">0x10a0f6488</span>&gt;, methods=<span class="keyword">None</span>, pattern=re.compile(<span class="string">'^/$'</span>), parameters=[])]</span><br></pre></td></tr></table></figure>
+<p>看到没，<code>uri &#39;/&#39;</code> 和视图函数<code>test</code>对应起来了，如果客户端请求<code>&#39;/&#39;</code>，当服务器监听到这个请求的时候,<code>handle_request</code>可以通过参数中的<code>request.url</code>来找到视图函数<code>test</code>并且执行，随即生成视图返回</p>
+<p>那么这里<code>write_response</code>就会接受视图函数test返回的<code>json({&quot;test&quot;: True})</code></p>
+<p>说下<code>Router</code>类，这个类的目的就是添加和获取路由对应的视图函数，把它想象成<code>dict</code>或许更容易理解：</p>
+<ul>
+<li>add(self, uri, methods, handler)：添加一个映射关系到self.routes</li>
+<li>get(self, request)：获取request.url对应的视图函数</li>
+</ul>
+<p>最后一行，<code>app.run(host=&quot;0.0.0.0&quot;, port=8000)</code>，Sanic 下的<code>run</code>函数，启动一个<code>http server</code>，主要是启动<code>run</code>里面的<code>serve</code>函数，参数如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    serve(</span><br><span class="line">        host=host,</span><br><span class="line">        port=port,</span><br><span class="line">        debug=debug,</span><br><span class="line">        <span class="comment"># 服务开始后启动的函数</span></span><br><span class="line">        after_start=after_start,</span><br><span class="line">        <span class="comment"># 在服务关闭前启动的函数</span></span><br><span class="line">        before_stop=before_stop,</span><br><span class="line">        <span class="comment"># Sanic(__name__).handle_request()</span></span><br><span class="line">        request_handler=self.handle_request,</span><br><span class="line">        <span class="comment"># 默认读取Config</span></span><br><span class="line">        request_timeout=self.config.REQUEST_TIMEOUT,</span><br><span class="line">        request_max_size=self.config.REQUEST_MAX_SIZE,</span><br><span class="line">    )</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure></p>
+<p>让我们将目光投向<a href="https://github.com/howie6879/sanic_annotation/blob/master/sanic_0_1_2/src/server.py" target="_blank" rel="external">server.py</a>，这也是Sanic框架的核心代码：</p>
+<ul>
+<li><p>serve()：里面会创建一个TCP服务的协程，然后通过<code>loop.run_forever()</code>运行这个事件循环，以便接收客户端请求以及处理相关事件，每当一个新的客户端建立连接服务就会创建一个新的<code>Protocol</code>实例，接受请求与返回响应离不开其中的<code>HttpProtocol</code>，里面的函数支持接受数据、处理数据、执行视图函数、构建响应数据并返回给客户端</p>
+</li>
+<li><p>HttpProtocol：<code>asyncio.Protocol</code>的子类，用来处理与客户端的通信，我在<a href="https://github.com/howie6879/sanic_annotation/blob/master/sanic_0_1_2/src/server.py" target="_blank" rel="external">server.py</a>里写了对应的注释</p>
+</li>
+</ul>
+<p>至此，Sanic 服务启动了</p>
+<p>不要小看这一个小小的demo，执行一下，竟然涉及到下面这么多个文件，让我们总结一下：</p>
+<ul>
+<li><a href="https://github.com/howie6879/sanic_annotation/blob/master/sanic_0_1_2/src/sanic.py" target="_blank" rel="external">sanic.py</a></li>
+<li><a href="https://github.com/howie6879/sanic_annotation/blob/master/sanic_0_1_2/src/server.py" target="_blank" rel="external">server.py</a></li>
+<li><a href="https://github.com/howie6879/sanic_annotation/blob/master/sanic_0_1_2/src/router.py" target="_blank" rel="external">router.py</a></li>
+<li><a href="https://github.com/howie6879/sanic_annotation/blob/master/sanic_0_1_2/src/request.py" target="_blank" rel="external">request.py</a></li>
+<li><a href="https://github.com/howie6879/sanic_annotation/blob/master/sanic_0_1_2/src/response.py" target="_blank" rel="external">response.py</a></li>
+<li><a href="https://github.com/howie6879/sanic_annotation/blob/master/sanic_0_1_2/src/exceptions.py" target="_blank" rel="external">exceptions.py</a></li>
+<li><a href="https://github.com/howie6879/sanic_annotation/blob/master/sanic_0_1_2/src/config.py" target="_blank" rel="external">config.py</a></li>
+<li><a href="https://github.com/howie6879/sanic_annotation/blob/master/sanic_0_1_2/src/log.py" target="_blank" rel="external">log.py</a></li>
+</ul>
+<p>除去<code>__init__.py</code>，<code>Sanic</code>项目一共就10个文件，这个小demo不显山不露水地竟然用到了8个，虽然其中几个没有怎么用到，但也足够说明，你如果理解了这个demo，<code>Sanic</code>的运行逻辑以及框架代码你已经了解地很深入了</p>
+<h3 id="blueprints-py"><a href="#blueprints-py" class="headerlink" title="blueprints.py"></a>blueprints.py</h3><p>这个例子看完，我们就能轻易地明白什么是<code>blueprints</code>，以及<code>blueprints</code>的运行方式，代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> sanic_0_1_2.src <span class="keyword">import</span> Sanic</span><br><span class="line"><span class="comment"># 引入Blueprint</span></span><br><span class="line"><span class="keyword">from</span> sanic_0_1_2.src <span class="keyword">import</span> Blueprint</span><br><span class="line"><span class="keyword">from</span> sanic_0_1_2.src.response <span class="keyword">import</span> json, text</span><br><span class="line"></span><br><span class="line">app = Sanic(__name__)</span><br><span class="line">blueprint = Blueprint(<span class="string">'name'</span>, url_prefix=<span class="string">'/my_blueprint'</span>)</span><br><span class="line">blueprint2 = Blueprint(<span class="string">'name2'</span>, url_prefix=<span class="string">'/my_blueprint2'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@blueprint.route('/foo')</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> json(&#123;<span class="string">'msg'</span>: <span class="string">'hi from blueprint'</span>&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@blueprint2.route('/foo')</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">foo2</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> json(&#123;<span class="string">'msg'</span>: <span class="string">'hi from blueprint2'</span>&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.register_blueprint(blueprint)</span><br><span class="line">app.register_blueprint(blueprint2)</span><br><span class="line"></span><br><span class="line">app.run(host=<span class="string">"0.0.0.0"</span>, port=<span class="number">8000</span>, debug=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<p>让我们从这两行开始：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">blueprint = Blueprint(<span class="string">'name'</span>, url_prefix=<span class="string">'/my_blueprint'</span>)</span><br><span class="line">blueprint2 = Blueprint(<span class="string">'name2'</span>, url_prefix=<span class="string">'/my_blueprint2'</span>)</span><br></pre></td></tr></table></figure>
+<p>显然，<code>blueprint</code>以及<code>blueprint2</code>是<code>Blueprint</code>根据不同的参数生成的不同的实例对象，接下来要干嘛？没错，分析<a href="https://github.com/howie6879/sanic_annotation/blob/master/sanic_0_1_2/src/blueprints.py" target="_blank" rel="external">blueprints.py</a>:</p>
+<ul>
+<li>BlueprintSetup：蓝图注册类<ul>
+<li>add_route：添加路由到app</li>
+<li>add_exception：添加对应抛出的错误到app</li>
+<li>add_middleware：添加中间件到app</li>
+</ul>
+</li>
+<li>Blueprint：蓝图类，接收两个参数：name(蓝图名称) url_prefix 该蓝图的url前缀 <ul>
+<li>route：路由装饰器，将会生成一个匿名函数到self.deferred_functions列表里稍后一起处理注册到app里</li>
+<li>middleware：同上</li>
+<li>exception：同上</li>
+<li>record：注册一个回调函数到self.deferred_functions列表里面，</li>
+<li>make_setup_state：实例化BlueprintSetup</li>
+<li>register：注册视图，实际就是注册route、middleware、exception到app，此时会利用make_setup<em>state返回的BlueprintSetup示例进行对于的add</em><em>*</em>一系列操作，相当于Sanic().route()效果</li>
+</ul>
+</li>
+</ul>
+<p>请看下<code>route</code>和<code>register</code>函数，然后再看下面的代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 生成一个匿名函数到self.deferred_functions列表里 包含三个参数 handler(foo), uri, methods</span></span><br><span class="line"><span class="meta">@blueprint.route('/foo')</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> json(&#123;<span class="string">'msg'</span>: <span class="string">'hi from blueprint'</span>&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@blueprint2.route('/foo')</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">foo2</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> json(&#123;<span class="string">'msg'</span>: <span class="string">'hi from blueprint2'</span>&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 上一个例子说过这个函数，Sanic().register_blueprint() 注册蓝图</span></span><br><span class="line">app.register_blueprint(blueprint)</span><br><span class="line">app.register_blueprint(blueprint2)</span><br></pre></td></tr></table></figure>
+<p>怎么样，现在来看，是不是很轻松，这一行<code>app.run(host=&quot;0.0.0.0&quot;, port=8000, debug=True)</code>服务启动代码不用多说吧？</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>看到这里，相信你已经完全理解了<code>Sanic</code>的运行机制，虽然还有<code>middleware&amp;exception</code>的注册以及调用机制没讲，但这和<code>route</code>的运行机制一样，如果你懂了<code>route</code>那么这两个也很简单。</p>
+<p>如果诸位一遍没怎么看明白，这里我建议可以多看几遍，多结合编辑器<code>Debug</code>下源码，坚持下来，会发下<code>Sanic</code>真的很简单，当然，这只是第一个小版本的<code>Sanic</code>，和目前的版本相比，不论是代码结构的复杂程度以及功能对比，都有很大差距，毕竟，<code>Sanic</code>一直在开源工作者的努力下，慢慢成长。</p>
+<p>```</p>
 
           
         
@@ -471,7 +726,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/25/dijkstra/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/04/01/关注最后一步-部署/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -490,7 +745,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/25/dijkstra/" itemprop="url">dijkstra</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/04/01/关注最后一步-部署/" itemprop="url">关注最后一步-部署</a></h1>
         
 
         <div class="post-meta">
@@ -502,8 +757,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-25T15:55:19+08:00">
-                2019-03-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-01T15:04:40+08:00">
+                2019-04-01
               </time>
             
 
@@ -520,7 +775,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/03/25/dijkstra/" class="leancloud_visitors" data-flag-title="dijkstra">
+             <span id="/zhangdavids.github.io/2019/04/01/关注最后一步-部署/" class="leancloud_visitors" data-flag-title="关注最后一步-部署">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -545,7 +800,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  562
+                  715
                 </span>
               
 
@@ -561,7 +816,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3
+                  2
                 </span>
               
             </div>
@@ -584,7 +839,22 @@
       
         
           
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/python</span><br><span class="line"># -*- coding: UTF-8 -*-</span><br><span class="line"></span><br><span class="line">from typing import List, Generator</span><br><span class="line">import heapq</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Graph:</span><br><span class="line">    def __init__(self, vertex_count: int) -&gt; None:</span><br><span class="line">        self.adj = [[] for _ in range(vertex_count)]</span><br><span class="line"></span><br><span class="line">    def add_edge(self, s: int, t: int, w: int) -&gt; None:</span><br><span class="line">        edge = Edge(s, t, w)</span><br><span class="line">        self.adj[s].append(edge)</span><br><span class="line"></span><br><span class="line">    def __len__(self) -&gt; int:</span><br><span class="line">        return len(self.adj)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Vertex:</span><br><span class="line">    def __init__(self, v: int, dist: int) -&gt; None:</span><br><span class="line">        self.id = v</span><br><span class="line">        self.dist = dist</span><br><span class="line"></span><br><span class="line">    def __gt__(self, other) -&gt; bool:</span><br><span class="line">        return self.dist &gt; other.dist</span><br><span class="line"></span><br><span class="line">    def __repr__(self) -&gt; str:</span><br><span class="line">        return str((self.id, self.dist))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Edge:</span><br><span class="line">    def __init__(self, source: int, target: int, weight: int) -&gt; None:</span><br><span class="line">        self.s = source</span><br><span class="line">        self.t = target</span><br><span class="line">        self.w = weight</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class VertexPriorityQueue:</span><br><span class="line">    def __init__(self) -&gt; None:</span><br><span class="line">        self.vertices = []</span><br><span class="line"></span><br><span class="line">    def get(self) -&gt; Vertex:</span><br><span class="line">        return heapq.heappop(self.vertices)</span><br><span class="line"></span><br><span class="line">    def put(self, v: Vertex) -&gt; None:</span><br><span class="line">        self.vertices.append(v)</span><br><span class="line">        self.update_priority()</span><br><span class="line"></span><br><span class="line">    def empty(self) -&gt; bool:</span><br><span class="line">        return len(self.vertices) == 0</span><br><span class="line"></span><br><span class="line">    def update_priority(self) -&gt; None:</span><br><span class="line">        heapq.heapify(self.vertices)</span><br><span class="line"></span><br><span class="line">    def __repr__(self) -&gt; str:</span><br><span class="line">        return str(self.vertices)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def dijkstra(g: Graph, s: int, t: int) -&gt; int:</span><br><span class="line">    size = len(g)</span><br><span class="line"></span><br><span class="line">    pq = VertexPriorityQueue()  # 节点队列</span><br><span class="line">    in_queue = [False] * size   # 已入队标记</span><br><span class="line">    vertices = [                # 需要随时更新离s的最短距离的节点列表</span><br><span class="line">        Vertex(v, float(&apos;inf&apos;)) for v in range(size)</span><br><span class="line">    ]</span><br><span class="line">    predecessor = [-1] * size   # 先驱</span><br><span class="line"></span><br><span class="line">    vertices[s].dist = 0</span><br><span class="line">    pq.put(vertices[s])</span><br><span class="line">    in_queue[s] = True</span><br><span class="line"></span><br><span class="line">    while not pq.empty():</span><br><span class="line">        v = pq.get()</span><br><span class="line">        if v.id == t:</span><br><span class="line">            break</span><br><span class="line">        for edge in g.adj[v.id]:</span><br><span class="line">            if v.dist + edge.w &lt; vertices[edge.t].dist:</span><br><span class="line">                # 当修改了pq中的元素的优先级后：</span><br><span class="line">                # 1. 有入队操作：触发了pq的堆化，此后出队可以取到优先级最高的顶点</span><br><span class="line">                # 2. 无入队操作：此后出队取到的顶点可能不是优先级最高的，会有bug</span><br><span class="line">                # 为确保正确，需要手动更新一次</span><br><span class="line">                vertices[edge.t].dist = v.dist + edge.w</span><br><span class="line">                predecessor[edge.t] = v.id</span><br><span class="line">                pq.update_priority()        # 更新堆结构</span><br><span class="line">            if not in_queue[edge.t]:</span><br><span class="line">                pq.put(vertices[edge.t])</span><br><span class="line">                in_queue[edge.t] = True</span><br><span class="line"></span><br><span class="line">    for n in print_path(s, t, predecessor):</span><br><span class="line">        if n == t:</span><br><span class="line">            print(t)</span><br><span class="line">        else:</span><br><span class="line">            print(n, end=&apos; -&gt; &apos;)</span><br><span class="line">    return vertices[t].dist</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def print_path(s: int, t: int, p: List[int]) -&gt; Generator[int, None, None]:</span><br><span class="line">    if t == s:</span><br><span class="line">        yield s</span><br><span class="line">    else:</span><br><span class="line">        yield from print_path(s, p[t], p)</span><br><span class="line">        yield t</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    g = Graph(6)</span><br><span class="line">    g.add_edge(0, 1, 10)</span><br><span class="line">    g.add_edge(0, 4, 15)</span><br><span class="line">    g.add_edge(1, 2, 15)</span><br><span class="line">    g.add_edge(1, 3, 2)</span><br><span class="line">    g.add_edge(2, 5, 5)</span><br><span class="line">    g.add_edge(3, 2, 1)</span><br><span class="line">    g.add_edge(3, 5, 12)</span><br><span class="line">    g.add_edge(4, 5, 10)</span><br><span class="line">    print(dijkstra(g, 0, 5))</span><br><span class="line"></span><br><span class="line">    # 下面这个用例可以暴露更新队列元素优先级的问题</span><br><span class="line">    # g = Graph(4)</span><br><span class="line">    # g.add_edge(0, 1, 18)</span><br><span class="line">    # g.add_edge(0, 2, 3)</span><br><span class="line">    # g.add_edge(2, 1, 1)</span><br><span class="line">    # g.add_edge(1, 3, 5)</span><br><span class="line">    # g.add_edge(2, 3, 8)</span><br><span class="line">    # g.add_edge(0, 3, 15)</span><br><span class="line">    # print(dijkstra(g, 0, 3))</span><br></pre></td></tr></table></figure>
+            <h2 id="gunicorn"><a href="#gunicorn" class="headerlink" title="gunicorn"></a>gunicorn</h2><ol>
+<li>Gunicorn设计</li>
+</ol>
+<p>　　Gunicorn 是一个 master 进程，spawn 出数个工作进程的 web 服务器。master 进程控制工作进程的产生与消亡，工作进程只需要接受请求并且处理。这样分离的方式使得 reload 代码非常方便，也很容易增加或减少工作进程。 工作进程这块作者给了很大的扩展余地，它可以支持不同的IO方式，如 Gevent,Sync 同步进程，Asyc 异步进程，Eventlet 等等。master 跟 worker 进程完全分离，使得 Gunicorn 实质上就是一个控制进程的服务。</p>
+<ol>
+<li>Gunicorn源码结构</li>
+</ol>
+<p>　　从 Application.run() 开始，首先初始化配置，从文件读取，终端读取等等方式完成 configurate。然后启动 Arbiter，Arbiter 是实质上的 master 进程的核心，它首先从配置类中读取并设置，然后初始化信号处理函数，建立 socket。然后就是开始 spawn 工作进程，根据配置的工作进程数进行 spawn。然后就进入了轮询状态，收到信号，处理信号然后继续。这里唤醒进程的方式是建立一个 PIPE，通过信号处理函数往 pipe 里 write，然后 master 从 select.select() 中唤醒。</p>
+<p>工作进程在 spawn 后，开始初始化，然后同样对信号进行处理，并且开始轮询，处理 HTTP 请求，调用 WSGI 的应用端，得到 resopnse 返回。然后继续。</p>
+<p>Sync 同步进程的好处在于每个 request 都是分离的，每个 request 失败都不会影响其他 request，但这样导致了性能上的瓶颈。</p>
+<p>没有对错，找个框架入门好了~</p>
+<p>flask 上手快，插件多，但是随着项目的深入，慢慢就是变成一个 django，绝对的<br>django 一上来就是大而全，但胜在什么都有，什么都不用自己折腾</p>
+<p>tornado 这货从一出生就开始用到现在，没有啥好也没啥不好，就是用习惯了。flask 的上手快是以各种插件为代价的，模板你要去找 jinja 吧？ orm 要找 sqlachemy 吧？这些都需要你自己去熟悉一下</p>
+<p>而且，各种用 flask 和 django 的同学可能忽略了一个基本是事实就是，如果你有工作需要深入到源代码的话，那么 tornado 是一个极好的参考。django 的代码体系复杂而且庞大我就不说了，看 flask 的代码底层还要考虑 Werkzeug，其基于全局变量的 context 处理起来其实也不容易的。</p>
+<p>顺便的，部署 tornado 的项目可以少拖一个 gunicorn 或者 uwsgi 之如此类，少很多坑</p>
+<p>上面那些提及到性能的同学，完全没有必要进行对比。在 pypy/aiohttp/uvloop 的加持下，不是我非要针对谁，你们说的性能都是垃圾。</p>
 
           
         
@@ -633,7 +903,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/25/tg-sort/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/31/完美数/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -652,7 +922,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/25/tg-sort/" itemprop="url">tg_sort</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/31/完美数/" itemprop="url">完美数</a></h1>
         
 
         <div class="post-meta">
@@ -664,8 +934,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-25T14:48:05+08:00">
-                2019-03-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-31T15:28:35+08:00">
+                2019-03-31
               </time>
             
 
@@ -682,7 +952,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/03/25/tg-sort/" class="leancloud_visitors" data-flag-title="tg_sort">
+             <span id="/zhangdavids.github.io/2019/03/31/完美数/" class="leancloud_visitors" data-flag-title="完美数">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -707,7 +977,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  231
+                  71
                 </span>
               
 
@@ -746,7 +1016,8 @@
       
         
           
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">from collections import deque</span><br><span class="line">from itertools import filterfalse</span><br><span class="line"></span><br><span class="line">class Graph:</span><br><span class="line">    def __init__(self, num_vertices: int):</span><br><span class="line">        self._num_vertices = num_vertices</span><br><span class="line">        self._adjacency = [[] for _ in range(num_vertices)]</span><br><span class="line">    </span><br><span class="line">    def add_edge(self, s: int, t: int) -&gt; None:</span><br><span class="line">        self._adjacency[s].append(t)</span><br><span class="line"></span><br><span class="line">    def tsort_by_kahn(self) -&gt; None:</span><br><span class="line">        in_degree = [0] * self._num_vertices</span><br><span class="line">        for v in range(self._num_vertices):</span><br><span class="line">            if len(self._adjacency[v]):</span><br><span class="line">                for neighbour in self._adjacency[v]:</span><br><span class="line">                    in_degree[neighbour] += 1</span><br><span class="line">        q = deque(filterfalse(lambda x: in_degree[x], range(self._num_vertices)))</span><br><span class="line">        while q:</span><br><span class="line">            v = q.popleft()</span><br><span class="line">            print(f&quot;&#123;v&#125; -&gt; &quot;, end=&quot;&quot;)</span><br><span class="line">            for neighbour in self._adjacency[v]:</span><br><span class="line">                in_degree[neighbour] -= 1</span><br><span class="line">                if not in_degree[neighbour]:</span><br><span class="line">                    q.append(neighbour)</span><br><span class="line">        print(&quot;\b\b\b   &quot;)</span><br><span class="line"></span><br><span class="line">    def tsort_by_dfs(self) -&gt; None:</span><br><span class="line">        inverse_adjacency = [[] for _ in range(self._num_vertices)]</span><br><span class="line">        for v in range(self._num_vertices):</span><br><span class="line">            if len(self._adjacency[v]):</span><br><span class="line">                for neighbour in self._adjacency[v]:</span><br><span class="line">                    inverse_adjacency[neighbour].append(v)</span><br><span class="line">        visited = [False] * self._num_vertices</span><br><span class="line"></span><br><span class="line">        def dfs(vertex: int) -&gt; None:</span><br><span class="line">            if len(inverse_adjacency[vertex]):</span><br><span class="line">                for v in inverse_adjacency[vertex]:</span><br><span class="line">                    if not visited[v]:</span><br><span class="line">                        visited[v] = True</span><br><span class="line">                        dfs(v)</span><br><span class="line">            print(f&quot;&#123;vertex&#125; -&gt; &quot;, end=&quot;&quot;)</span><br><span class="line">        </span><br><span class="line">        for v in range(self._num_vertices):</span><br><span class="line">            if not visited[v]:</span><br><span class="line">                visited[v] = True</span><br><span class="line">                dfs(v)</span><br><span class="line">        </span><br><span class="line">        print(&quot;\b\b\b   &quot;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line"></span><br><span class="line">    dag = Graph(4)</span><br><span class="line">    dag.add_edge(1, 0)</span><br><span class="line">    dag.add_edge(2, 1)</span><br><span class="line">    dag.add_edge(1, 3)</span><br><span class="line">    dag.tsort_by_kahn()</span><br><span class="line">    dag.tsort_by_dfs()</span><br></pre></td></tr></table></figure>
+            <h2 id="完美数"><a href="#完美数" class="headerlink" title="完美数"></a>完美数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    bool checkPerfectNumber(int num) &#123;</span><br><span class="line">        int sum = 1;</span><br><span class="line">        for (int i = 2; i * i &lt;= num; ++i) &#123;</span><br><span class="line">            if (num % i == 0) &#123;</span><br><span class="line">                sum += i + (num / i == i ? 0 : num / i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return num != 1 &amp;&amp; sum == num;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    bool checkPerfectNumber(int num) &#123;</span><br><span class="line">        return num == 6 || num == 28 || num == 496 || num == 8128 || num == 33550336;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
           
         
@@ -795,7 +1066,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/24/dp-006/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/28/2019-go-28/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -814,7 +1085,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/24/dp-006/" itemprop="url">dp-006</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/28/2019-go-28/" itemprop="url">2019-go-28</a></h1>
         
 
         <div class="post-meta">
@@ -826,8 +1097,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-24T19:38:10+08:00">
-                2019-03-24
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-28T17:48:32+08:00">
+                2019-03-28
               </time>
             
 
@@ -837,6 +1108,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/golang/" itemprop="url" rel="index">
+                    <span itemprop="name">golang</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -844,7 +1137,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/03/24/dp-006/" class="leancloud_visitors" data-flag-title="dp-006">
+             <span id="/zhangdavids.github.io/2019/03/28/2019-go-28/" class="leancloud_visitors" data-flag-title="2019-go-28">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -869,7 +1162,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  236
+                  158
                 </span>
               
 
@@ -908,168 +1201,20 @@
       
         
           
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">from typing import List</span><br><span class="line">from itertools import accumulate</span><br><span class="line"></span><br><span class="line">def min_dist(weights: List[List[int]]) -&gt; int:</span><br><span class="line">    &quot;&quot;&quot;Find the minimum weight path from the weights matrix.&quot;&quot;&quot;</span><br><span class="line">    m, n = len(weights), len(weights[0])</span><br><span class="line">    table = [[0] * n for _ in range(m)]</span><br><span class="line">    # table[i][j] is the minimum distance (weight) when</span><br><span class="line">    # there are i vertical moves and j horizontal moves</span><br><span class="line">    # left.</span><br><span class="line">    table[0] = list(accumulate(reversed(weights[-1])))</span><br><span class="line">    for i, v in enumerate(accumulate(row[-1] for row in reversed(weights))):</span><br><span class="line">        table[i][0] = v</span><br><span class="line">    for i in range(1, m):</span><br><span class="line">        for j in range(1, n):</span><br><span class="line">            table[i][j] = weights[~i][~j] + min(table[i - 1][j], table[i][j - 1])</span><br><span class="line">    return table[-1][-1]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def min_dist_recur(weights: List[List[int]]) -&gt; int:</span><br><span class="line">    m, n = len(weights), len(weights[0])</span><br><span class="line">    table = [[0] * n for _ in range(m)]</span><br><span class="line">    def min_dist_to(i: int, j: int) -&gt; int:</span><br><span class="line">        if i == j == 0: return weights[0][0]</span><br><span class="line">        if table[i][j]: return table[i][j]</span><br><span class="line">        min_left = float(&quot;inf&quot;) if j - 1 &lt; 0 else min_dist_to(i, j - 1)</span><br><span class="line">        min_up = float(&quot;inf&quot;) if i - 1 &lt; 0 else min_dist_to(i - 1, j)</span><br><span class="line">        return weights[i][j] + min(min_left, min_up)</span><br><span class="line">    return min_dist_to(m - 1, n - 1)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">    weights = [[1, 3, 5, 9], [2, 1, 3, 4], [5, 2, 6, 7], [6, 8, 4, 3]]</span><br><span class="line">    print(min_dist(weights))</span><br><span class="line">    print(min_dist_recur(weights))</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/24/dp-005/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/24/dp-005/" itemprop="url">dp-005</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-24T19:38:04+08:00">
-                2019-03-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/03/24/dp-005/" class="leancloud_visitors" data-flag-title="dp-005">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  174
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">#!/usr/bin/python</span><br><span class="line"># -*- coding: UTF-8 -*-</span><br><span class="line"></span><br><span class="line">from typing import List</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def coins_dp(values: List[int], target: int) -&gt; int:</span><br><span class="line">    # memo[i]表示target为i的时候，所需的最少硬币数</span><br><span class="line">    memo = [0] * (target+1)</span><br><span class="line">    # 0元的时候为0个</span><br><span class="line">    memo[0] = 0</span><br><span class="line"></span><br><span class="line">    for i in range(1, target+1):</span><br><span class="line">        min_num = 999999</span><br><span class="line">        # 对于values中的所有n</span><br><span class="line">        # memo[i]为 min(memo[i-n1], memo[i-n2], ...) + 1</span><br><span class="line">        for n in values:</span><br><span class="line">            if i &gt;= n:</span><br><span class="line">                min_num = min(min_num, 1 + memo[i-n])</span><br><span class="line">            else:   # values中的数值要从小到大排序</span><br><span class="line">                break</span><br><span class="line">        memo[i] = min_num</span><br><span class="line"></span><br><span class="line">    # print(memo)</span><br><span class="line">    return memo[-1]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">min_num = 999999</span><br><span class="line">def coins_backtracking(values: List[int], target: int, cur_value: int, coins_count: int):</span><br><span class="line">    if cur_value == target:</span><br><span class="line">        global min_num</span><br><span class="line">        min_num = min(coins_count, min_num)</span><br><span class="line">    else:</span><br><span class="line">        for n in values:</span><br><span class="line">            if cur_value + n &lt;= target:</span><br><span class="line">                coins_backtracking(values, target, cur_value+n, coins_count+1)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    values = [1, 3, 5]</span><br><span class="line">    target = 23</span><br><span class="line">    print(coins_dp(values, target))</span><br><span class="line">    coins_backtracking(values, target, 0, 0)</span><br><span class="line">    print(min_num)</span><br></pre></td></tr></table></figure>
+            <p>go的 </p>
+<p>协程和线程都可以实现程序的并发执行</p>
+<p>通过channel来进行协程之间的通信</p>
+<p>一个包中可以包含多个init函数</p>
+<p>程序编译的时候 先执行导入包init的函数 再执行本包内的init函数</p>
+<hr>
+<p>几个缺陷</p>
+<ul>
+<li>不支持函数式编程  go的泛型会給项目带来不必要的复杂性</li>
+<li>通道/并行切片处理</li>
+<li>垃圾回收器 以低延迟为最高优先级</li>
+<li>错误处理</li>
+</ul>
+<p>如果完成一个api 或者完成一个需要大量磁盘/网络调用的任务 go是首选！！！</p>
 
           
         
@@ -1109,7 +1254,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/zhangdavids.github.io/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/91/">91</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/9/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/zhangdavids.github.io/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/93/">93</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/9/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1159,7 +1304,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">454</span>
+                  <span class="site-state-item-count">465</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1170,7 +1315,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/zhangdavids.github.io/categories/index.html">
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1181,7 +1326,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/zhangdavids.github.io/tags/index.html">
-                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1274,7 +1419,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共180.7k字</span>
+  <span class="post-count">博客全站共181.7k字</span>
 </div>
 
         

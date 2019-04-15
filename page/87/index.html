@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2017/07/14/django-rest-framework-tutorial-4/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2017/09/17/how-fabric-works/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -328,7 +328,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2017/07/14/django-rest-framework-tutorial-4/" itemprop="url">django-rest-framework-tutorial-4</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2017/09/17/how-fabric-works/" itemprop="url">how fabric works</a></h1>
         
 
         <div class="post-meta">
@@ -340,8 +340,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-14T00:28:49+08:00">
-                2017-07-14
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-17T22:13:30+08:00">
+                2017-09-17
               </time>
             
 
@@ -380,7 +380,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2017/07/14/django-rest-framework-tutorial-4/" class="leancloud_visitors" data-flag-title="django-rest-framework-tutorial-4">
+             <span id="/zhangdavids.github.io/2017/09/17/how-fabric-works/" class="leancloud_visitors" data-flag-title="how fabric works">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -405,261 +405,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.9k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  7
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="drf框架教程4（djangorestframework）"><a href="#drf框架教程4（djangorestframework）" class="headerlink" title="drf框架教程4（djangorestframework）"></a>drf框架教程4（djangorestframework）</h2><h3 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h3><p>在外包的这段日子，不知如何描述滋味，虽然没有网络可以说限制了工作时间逛网页这种，但是自我感觉收获满足不了自己。是时候重新出发了。</p>
-<p>工作当中有用到drf框架，在csdn中找到了还不错的中文翻译文档，受益匪浅。想着自己也做一部分翻译的工作。如有错误之处，请多多指教。</p>
-<h3 id="额外说明"><a href="#额外说明" class="headerlink" title="额外说明"></a>额外说明</h3><p>目前版本为 3.6.3</p>
-<p><a href="http://blog.csdn.net/ppppfly/article/details/51086122" target="_blank" rel="external">马太胖老师的前三篇翻译</a></p>
-<p><a href="https://github.com/encode/django-rest-framework" target="_blank" rel="external">框架github地址</a></p>
-<p><a href="http://www.django-rest-framework.org" target="_blank" rel="external">文档地址</a></p>
-<h3 id="认证和权限"><a href="#认证和权限" class="headerlink" title="认证和权限"></a>认证和权限</h3><p>目前为止，我们的API对谁能够编辑或者删除snippet（代码片段）还没有任何限制。我们将增加一些扩展功能来确保以下：  </p>
-<ul>
-<li>snippets总关联一个创建者  </li>
-<li>只有认证后的用户才能创建一个snippets</li>
-<li>只有创建者才能更新或者删除snippet</li>
-<li>非认证的请求只拥有只读的权限</li>
-</ul>
-<p>对model做一些修改，增加一个表示创建者，另外增加一个用来存储代码中的HTML高亮。  </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># snippets/models.py</span></span><br><span class="line">owner = models.ForeignKey(<span class="string">'auth.User'</span>,</span><br><span class="line">						  related_name=<span class="string">'snippets'</span>, on_delete=models.CASCADE)</span><br><span class="line">highlighted = models.TextField()</span><br></pre></td></tr></table></figure>
-<p>另外 我们需要确保模型保存的时候，我们能够生成高亮的字段，这里使用pygments代码高亮库。  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">from pygments.lexers import get_lexer_by_name</span><br><span class="line">from pygments.formatters.html import HtmlFormatter</span><br><span class="line">from pygments import highlight</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def save(self, *args, **kwargs):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    Use the `pygments` library to create a highlighted HTML</span><br><span class="line">    representation of the code snippet.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    lexer = get_lexer_by_name(self.language)</span><br><span class="line">    linenos = self.linenos and &apos;table&apos; or False</span><br><span class="line">    options = self.title and &#123;&apos;title&apos;: self.title&#125; or &#123;&#125;</span><br><span class="line">    formatter = HtmlFormatter(style=self.style, linenos=linenos,</span><br><span class="line">                              full=True, **options)</span><br><span class="line">    self.highlighted = highlight(self.code, lexer, formatter)</span><br><span class="line">    super(Snippet, self).save(*args, **kwargs)</span><br></pre></td></tr></table></figure>
-<h4 id="为用户模型增加endpoints"><a href="#为用户模型增加endpoints" class="headerlink" title="为用户模型增加endpoints"></a>为用户模型增加endpoints</h4><p>现在我们有一些用户了，我们最好也把用户增加到API上，创建一个新的序列化脚本serializers.py  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># snippets/serializers.py</span><br><span class="line">from django.contrib.auth.models import User</span><br><span class="line"></span><br><span class="line">class UserSerializer(serializers.ModelSerializer):</span><br><span class="line">    snippets = serializers.PrimaryKeyRelatedField(many=True, queryset=Snippet.objects.all())</span><br><span class="line"></span><br><span class="line">    class Meta:</span><br><span class="line">        model = User</span><br><span class="line">        fields = (&apos;id&apos;, &apos;username&apos;, &apos;snippets&apos;)</span><br></pre></td></tr></table></figure>
-<p>因为snippets和user是反向关联，所以在使用ModelSerializers时不会缺省加入，因此需要显示加入。  </p>
-<p>我们还需要创建一些对用户呈现而言的views，最好使用只读的view，所以使用ListAPIView和RetrieveAPIView泛型类Views。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"># snippets/views.py</span><br><span class="line">from django.contrib.auth.models import User</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class UserList(generics.ListAPIView):</span><br><span class="line">    queryset = User.objects.all()</span><br><span class="line">    serializer_class = UserSerializer</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class UserDetail(generics.RetrieveAPIView):</span><br><span class="line">    queryset = User.objects.all()</span><br><span class="line">    serializer_class = UserSerializer</span><br></pre></td></tr></table></figure>
-<p>确保导入了UserSerializers类  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from snippets.serializers import UserSerializer</span><br></pre></td></tr></table></figure>
-<p>修改url  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">url(r&apos;^users/$&apos;, views.UserList.as_view()),</span><br><span class="line">url(r&apos;^users/(?P&lt;pk&gt;[0-9]+)/$&apos;, views.UserDetail.as_view()),</span><br></pre></td></tr></table></figure>
-<h4 id="snippets与users关联"><a href="#snippets与users关联" class="headerlink" title="snippets与users关联"></a>snippets与users关联</h4><p>现在，如果我们创建一个code snippet，还没有方法指定其创建者。User并没有作为序列化内容的一部分发送，而是作为request的一个属性。</p>
-<p>这里的处理方法是重载snippet view中的.pre_save()方法，它可以让我们处理request中隐式的信息。</p>
-<p>在SnippetList和SnippetDetail的view类中，都需要添加如下的方法：</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">def perform_create(self, serializer):</span><br><span class="line">   serializer.save(owner=self.request.user)</span><br></pre></td></tr></table></figure>
-<h4 id="更新序列器"><a href="#更新序列器" class="headerlink" title="更新序列器"></a>更新序列器</h4><p>现在snippets已经和创建者关联起来了，我们接下来还需要更新SnippetSerializer，在其定义中增加一个新的字段：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">owner = serializers.ReadOnlyField(source=&apos;owner.username&apos;)</span><br></pre></td></tr></table></figure>
-<p>Note: 确定你在嵌入类Meta的字段列表中也加入了’owner’。</p>
-<p>这个字段所做的十分有趣。source参数表明增加一个新字段，可以指定序列化实例任何属性。它可以采用如上的点式表示（dotted notation），这时他可以直接遍历到指定的属性。在Django’s template中使用时，也可以采用类似的方式。</p>
-<p>我们增加字段是一个无类型Field类，而我们之前的字段都是有类型的，例如CharField,BooleanFieldetc… 无类型字段总是只读的，它们只用在序列化表示中，而在反序列化时（修改model）不被使用。</p>
-<h4 id="给views增加必需的权限"><a href="#给views增加必需的权限" class="headerlink" title="给views增加必需的权限"></a>给views增加必需的权限</h4><p>现在代码片段 snippets 已经关联了用户，我们需要确保只有认证用户才能增、删、改snippets.</p>
-<p>REST framework 包括许多权限类可用于view的控制。这里我们使用IsAuthenticatedOrReadOnly, 它可确保认证的request获取read-write权限，而非认证的request只有read-only 权限.</p>
-<p>现需要在views模块中增加 import。</p>
-<pre><code>from rest_framework import permissions
-</code></pre><p>然后需要在SnippetList和SnippetDetailview类中都增加如下属性：</p>
-<pre><code>permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
-</code></pre><h4 id="可视化API增加登陆"><a href="#可视化API增加登陆" class="headerlink" title="可视化API增加登陆"></a>可视化API增加登陆</h4><p>如果你打开浏览器，访问可浏览API，你会发现只有登录后才能创建新的snippet了。</p>
-<p>我们可以编辑URLconf来增加一个登录view。首先增加新的import：</p>
-<pre><code>from django.conf.urls import include
-</code></pre><p>然后，在文件末尾增加一个pattern来为browsable API增加 login 和 logout views.</p>
-<pre><code>urlpatterns += [
-    url(r&apos;^api-auth/&apos;, include(&apos;rest_framework.urls&apos;,
-                           namespace=&apos;rest_framework&apos;)),
-</code></pre><p>]</p>
-<p>具体的，r’^api-auth/‘部分可以用任何你想用的URL来替代。这里唯一的限制就是 urls 必须使用’rest_framework’命名空间。</p>
-<p>现在如果你打开浏览器，刷新页面会看到页面右上方的 ‘Login’ 链接。如果你用之前的用户登录后，你就又可以创建 snippets了。</p>
-<p>一旦你创建了一些snippets，当导航至’/users/‘时，你会看到在每个user的snippets字段都包含了一系列snippet的pk。</p>
-<h4 id="对象级权限"><a href="#对象级权限" class="headerlink" title="对象级权限"></a>对象级权限</h4><p>我们希望任何人都可以浏览snippets，但只有创建snippet的用户才能编辑或删除它。</p>
-<p>为了实现这个需求，我们需要创建定制的权限（custom permission）。</p>
-<p>在 snippets 应用中，创建一个新文件：permissions.py</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">from rest_framework import permissions</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class IsOwnerOrReadOnly(permissions.BasePermission):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    Custom permission to only allow owners of an object to edit it.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">    def has_object_permission(self, request, view, obj):</span><br><span class="line">        # Read permissions are allowed to any request,</span><br><span class="line">        # so we&apos;ll always allow GET, HEAD or OPTIONS requests.</span><br><span class="line">        if request.method in permissions.SAFE_METHODS:</span><br><span class="line">            return True</span><br><span class="line"></span><br><span class="line">        # Write permissions are only allowed to the owner of the snippet.</span><br><span class="line">        return obj.owner == request.user</span><br></pre></td></tr></table></figure>
-<p>现在我们可以为snippet实例增加定制权限了，需要编辑SnippetDetail 类的permission_classes属性：</p>
-<pre><code>permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-                  IsOwnerOrReadOnly,)
-</code></pre><p>别忘了import 这个IsOwnerOrReadOnly类。</p>
-<pre><code>from snippets.permissions import IsOwnerOrReadOnly
-</code></pre><p>现在打开浏览器，你可以看见 ‘DELETE’ 和 ‘PUT’ 动作只会出现在那些你的登录用户创建的snippet页面上了.</p>
-<h4 id="通过API验证"><a href="#通过API验证" class="headerlink" title="通过API验证"></a>通过API验证</h4><p>我们已经有了一系列的权限，如果我们需要编辑任何snippet，我们需要认证我们的request。因为我们还没有建立任何authentication classes, 所以目前是默认的SessionAuthentication和BasicAuthentication在起作用。</p>
-<p>当我们通过Web浏览器与API互动时，我们登录后、然后浏览器session可以为所有的request提供所需的验证。</p>
-<p>如果我们使用程序访问这些API，我们则需要显式的为每个request提供认证凭证（authentication credentials）。</p>
-<p>如果我们试图未认证就创建一个snippet，将得到错误如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">http POST http://127.0.0.1:8000/snippets/ code=<span class="string">"print 123"</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"detail"</span>: <span class="string">"Authentication credentials were not provided."</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如果我们带着用户名和密码来请求时则可以成功创建：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">http <span class="_">-a</span> tom:password123 POST http://127.0.0.1:8000/snippets/ code=<span class="string">"print 789"</span></span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    <span class="string">"id"</span>: 1,</span><br><span class="line">    <span class="string">"owner"</span>: <span class="string">"tom"</span>,</span><br><span class="line">    <span class="string">"title"</span>: <span class="string">"foo"</span>,</span><br><span class="line">    <span class="string">"code"</span>: <span class="string">"print 789"</span>,</span><br><span class="line">    <span class="string">"linenos"</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="string">"language"</span>: <span class="string">"python"</span>,</span><br><span class="line">    <span class="string">"style"</span>: <span class="string">"friendly"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>我们已经为我们的Web API创建了相当细粒度的权限控制和相应的系统用户。</p>
-<p>在教程第5部分part 5，我们将把所有的内容串联起来，为我们的高亮代码片段创建HTML节点，并利用系统内的超链接关联来提升API的一致性表现。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2016/11/24/a-gem-named-faraday/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2016/11/24/a-gem-named-faraday/" itemprop="url">a-gem-named-faraday</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-24T23:10:01+08:00">
-                2016-11-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/ruby/" itemprop="url" rel="index">
-                    <span itemprop="name">ruby</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2016/11/24/a-gem-named-faraday/" class="leancloud_visitors" data-flag-title="a-gem-named-faraday">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  104
+                  0
                 </span>
               
 
@@ -698,10 +444,7 @@
       
         
           
-            <p>  每天有各种繁琐事情，让自己有借口不写东西。尝试每天写点小东西，比如推荐一个库之类的。今天推荐faraday，这是一个ruby的库。</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">conn = Faraday.new(<span class="symbol">:url</span> =&gt; <span class="string">'https://github.com'</span>) <span class="keyword">do</span> <span class="params">|faraday|</span></span><br><span class="line">  faraday.request  <span class="symbol">:url_encoded</span>             <span class="comment"># form-encode POST params</span></span><br><span class="line">  faraday.response <span class="symbol">:logger</span>                  <span class="comment"># log requests to STDOUT</span></span><br><span class="line">  faraday.adapter  Faraday.default_adapter  <span class="comment"># make requests with Net::HTTP</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">response = conn.get</span><br><span class="line">puts response.status <span class="comment"># 200</span></span><br></pre></td></tr></table></figure>
-<p>  例子应该好懂，get post都有，详细咨询github =^_^=</p>
-
+            
           
         
       
@@ -749,7 +492,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2016/09/25/how-to-use-awk/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2017/09/17/how-ansible-works/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -768,7 +511,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2016/09/25/how-to-use-awk/" itemprop="url">how-to-use-awk</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2017/09/17/how-ansible-works/" itemprop="url">how ansible works</a></h1>
         
 
         <div class="post-meta">
@@ -780,457 +523,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-09-25T19:37:38+08:00">
-                2016-09-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2016/09/25/how-to-use-awk/" class="leancloud_visitors" data-flag-title="how-to-use-awk">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  755
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  3
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>说起linux下的几个用的人不多的上古神器，基本会想到sed awk，这里先总结下awk的用法。  </p>
-<p>直接上实例吧  </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">$ cat netstat.txt</span><br><span class="line">Proto Recv-Q Send-Q Local-Address          Foreign-Address             State</span><br><span class="line">tcp        0      0 0.0.0.0:3306           0.0.0.0:*                   LISTEN</span><br><span class="line">tcp        0      0 0.0.0.0:80             0.0.0.0:*                   LISTEN</span><br><span class="line">tcp        0      0 127.0.0.1:9000         0.0.0.0:*                   LISTEN</span><br><span class="line">tcp        0      0 coolshell.cn:80        124.205.5.146:18245         TIME_WAIT</span><br><span class="line">tcp        0      0 coolshell.cn:80        61.140.101.185:37538        FIN_WAIT2</span><br><span class="line">tcp        0      0 coolshell.cn:80        110.194.134.189:1032        ESTABLISHED</span><br><span class="line">tcp        0      0 coolshell.cn:80        123.169.124.111:49809       ESTABLISHED</span><br><span class="line">tcp        0      0 coolshell.cn:80        116.234.127.77:11502        FIN_WAIT2</span><br><span class="line">tcp        0      0 coolshell.cn:80        123.169.124.111:49829       ESTABLISHED</span><br><span class="line">tcp        0      0 coolshell.cn:80        183.60.215.36:36970         TIME_WAIT</span><br><span class="line">tcp        0   4166 coolshell.cn:80        61.148.242.38:30901         ESTABLISHED</span><br><span class="line">tcp        0      1 coolshell.cn:80        124.152.181.209:26825       FIN_WAIT1</span><br><span class="line">tcp        0      0 coolshell.cn:80        110.194.134.189:4796        ESTABLISHED</span><br><span class="line">tcp        0      0 coolshell.cn:80        183.60.212.163:51082        TIME_WAIT</span><br><span class="line">tcp        0      1 coolshell.cn:80        208.115.113.92:50601        LAST_ACK</span><br><span class="line">tcp        0      0 coolshell.cn:80        123.169.124.111:49840       ESTABLISHED</span><br><span class="line">tcp        0      0 coolshell.cn:80        117.136.20.85:50025         FIN_WAIT2</span><br><span class="line">tcp        0      0 :::22                  :::*                        LISTEN</span><br></pre></td></tr></table></figure>
-<p>从netstat命令中提取了如上信息作为用例  </p>
-<p>输出第1列和第4例  </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">'&#123;print $1, $4&#125;'</span> netstat.txt</span><br></pre></td></tr></table></figure>
-<ul>
-<li>其中单引号中的被大括号括着的就是awk的语句，注意，其只能被单引号包含。</li>
-<li>其中的$1..$n表示第几例。注：$0表示整个行。</li>
-</ul>
-<p>再来看看awk的格式化输出，和C语言的printf没什么两样：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">'&#123;printf "%-8s %-8s %-8s %-18s %-22s %-15s\n",$1,$2,$3,$4,$5,$6&#125;'</span> netstat.txt</span><br></pre></td></tr></table></figure>
-<p>再来看看如何过滤记录（下面过滤条件为：第三列的值为0 &amp;&amp; 第6列的值为LISTEN）  </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">'$3==0 &amp;&amp; $6=="LISTEN" '</span> netstat.txt</span><br></pre></td></tr></table></figure>
-<p>其中的“==”为比较运算符。其他比较运算符：!=, &gt;, &lt;, &gt;=, &lt;=</p>
-<p>我们来看看各种过滤记录的方式：  </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">' $3&gt;0 &#123;print $0&#125;'</span> netstat.txt</span><br></pre></td></tr></table></figure>
-<p>需要表头的话，我们可以引入内建变量NR：  </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">'$3==0 &amp;&amp; $6=="LISTEN" || NR==1 '</span> netstat.txt</span><br></pre></td></tr></table></figure>
-<p>加上格式化输出：  </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">'$3==0 &amp;&amp; $6=="LISTEN" || NR==1 &#123;printf "%-20s %-20s %s\n",$4,$5,$6&#125;'</span> netstat.txt</span><br></pre></td></tr></table></figure>
-<p>说到了内建变量，我们可以来看看awk的一些内建变量：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">变量</th>
-<th style="text-align:left">含义</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">$0</td>
-<td style="text-align:left">当前记录（这个变量中存放着整个行的内容）</td>
-</tr>
-<tr>
-<td style="text-align:center">$1~$n</td>
-<td style="text-align:left">当前记录的第n个字段，字段间由FS分隔</td>
-</tr>
-<tr>
-<td style="text-align:center">FS</td>
-<td style="text-align:left">输入字段分隔符 默认是空格或Tab</td>
-</tr>
-<tr>
-<td style="text-align:center">NF</td>
-<td style="text-align:left">当前记录中的字段个数，就是有多少列</td>
-</tr>
-<tr>
-<td style="text-align:center">NR</td>
-<td style="text-align:left">已经读出的记录数，就是行号，从1开始，如果有多个文件话，这个值也是不断累加中。</td>
-</tr>
-<tr>
-<td style="text-align:center">FNR</td>
-<td style="text-align:left">当前记录数，与NR不同的是，这个值会是各个文件自己的行号</td>
-</tr>
-<tr>
-<td style="text-align:center">RS</td>
-<td style="text-align:left">输入的记录分隔符， 默认为换行符</td>
-</tr>
-<tr>
-<td style="text-align:center">OFS</td>
-<td style="text-align:left">输出字段分隔符， 默认也是空格</td>
-</tr>
-<tr>
-<td style="text-align:center">ORS</td>
-<td style="text-align:left">输出的记录分隔符，默认为换行符</td>
-</tr>
-<tr>
-<td style="text-align:center">FILENAME</td>
-<td style="text-align:left">当前输入文件的名字</td>
-</tr>
-</tbody>
-</table>
-<p>如果要输出行号：  </p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">awk <span class="string">'$3==0 &amp;&amp; $6=="ESTABLISHED" || NR==1 &#123;printf "%02s %s %-20s %-20s %s\n",NR, FNR, $4,$5,$6&#125;'</span> netstat.txt</span><br></pre></td></tr></table></figure>
-<p>未完待续  </p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2016/08/08/how-to-use-sed-in-linux/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2016/08/08/how-to-use-sed-in-linux/" itemprop="url">how-to-use-sed-in-linux</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-08-08T20:08:19+08:00">
-                2016-08-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2016/08/08/how-to-use-sed-in-linux/" class="leancloud_visitors" data-flag-title="how-to-use-sed-in-linux">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  4
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>sed是一个很好的文件处理工具，本身是一个管道命令，主要是以行为单位进行处理，可以将数据行进行替换、删除、新增、选取等特定工作，下面先了解一下sed的用法<br>sed命令行格式为：  </p>
-<pre><code>sed [-nefri] ‘command’ 输入文本        
-</code></pre><p>常用选项：</p>
-<pre><code>-n∶使用安静(silent)模式。在一般 sed 的用法中，所有来自 STDIN的资料一般都会被列出到萤幕上。但如果加上 -n 参数后，则只有经过sed 特殊处理的那一行(或者动作)才会被列出来。  
--e∶直接在指令列模式上进行 sed 的动作编辑；  
--f∶直接将 sed 的动作写在一个档案内， -f filename 则可以执行 filename 内的sed 动作；  
--r∶sed 的动作支援的是延伸型正规表示法的语法。(预设是基础正规表示法语法)  
--i∶直接修改读取的档案内容，而不是由萤幕输出。         
-</code></pre><p>常用命令：</p>
-<pre><code>a  ∶新增， a 的后面可以接字串，而这些字串会在新的一行出现(目前的下一行)～
-c  ∶取代， c 的后面可以接字串，这些字串可以取代 n1,n2 之间的行！
-d  ∶删除，因为是删除啊，所以 d 后面通常不接任何咚咚；
-i  ∶插入， i 的后面可以接字串，而这些字串会在新的一行出现(目前的上一行)；
-p  ∶列印，亦即将某个选择的资料印出。通常 p 会与参数 sed -n 一起运作～
-s  ∶取代，可以直接进行取代的工作哩！通常这个 s 的动作可以搭配正规表示法！例如 1,20s/old/new/g 就是啦！
-</code></pre><p>举例：（假设我们有一文件名为ab）  </p>
-<p>   删除某行</p>
-<pre><code>[root@localhost ruby] # sed &apos;1d&apos; ab              #删除第一行 
-[root@localhost ruby] # sed &apos;$d&apos; ab              #删除最后一行
-[root@localhost ruby] # sed &apos;1,2d&apos; ab           #删除第一行到第二行
-[root@localhost ruby] # sed &apos;2,$d&apos; ab           #删除第二行到最后一行
-</code></pre><p>　显示某行  
-　</p>
-<pre><code>[root@localhost ruby] # sed -n &apos;1p&apos; ab           #显示第一行
-
-[root@localhost ruby] # sed -n &apos;$p&apos; ab           #显示最后一行  
-
-[root@localhost ruby] # sed -n &apos;1,2p&apos; ab        #显示第一行到第二行 
-
-[root@localhost ruby] # sed -n &apos;2,$p&apos; ab        #显示第二行到最后一行  
-</code></pre><p>　使用模式进行查询</p>
-<pre><code>[root@localhost ruby] # sed -n &apos;/ruby/p&apos; ab    #查询包括关键字ruby所在所有行   
-[root@localhost ruby] # sed -n &apos;/\$/p&apos; ab        #查询包括关键字$所在所有行，使用反斜线\屏蔽特殊含义
-</code></pre><p>　增加一行或多行字符串<br>　<br>　<br>　        [root@localhost ruby]# cat ab<br>    Hello!<br>    ruby is me,welcome to my blog.<br>    end    </p>
-<p>   [root@localhost ruby] # sed ‘1a drink tea’ ab  #第一行后增加字符串”drink tea”<br>     Hello!<br>     drink tea<br>     ruby is me,welcome to my blog.<br>     end<br>     [root@localhost ruby] # sed ‘1,3a drink tea’ ab #第一行到第三行后增加字符串”drink tea”<br>     Hello!<br>     drink tea<br>     ruby is me,welcome to my blog.<br>     drink tea<br>     end<br>     drink tea<br>     [root@localhost ruby] # sed ‘1a drink tea\nor coffee’ ab   #第一行后增加多行，使用换行符\n<br>     Hello!<br>     drink tea<br>     or coffee<br>     ruby is me,welcome to my blog.<br>     end</p>
-<p>　　代替一行或多行<br>     [root@localhost ruby] # sed ‘1c Hi’ ab                #第一行代替为Hi<br>     Hi<br>     ruby is me,welcome to my blog.<br>     end<br>     [root@localhost ruby] # sed ‘1,2c Hi’ ab             #第一行到第二行代替为Hi<br>     Hi<br>     end</p>
-<p>　　替换一行中的某部分<br>　　格式：sed ‘s/要替换的字符串/新的字符串/g’   （要替换的字符串可以用正则表达式）<br>     [root@localhost ruby] # sed -n ‘/ruby/p’ ab | sed ‘s/ruby/bird/g’    #替换ruby为bird<br>　  [root@localhost ruby] # sed -n ‘/ruby/p’ ab | sed ‘s/ruby//g’        #删除ruby</p>
-<pre><code>插入
-[root@localhost ruby] # sed -i &apos;$a bye&apos; ab         #在文件ab中最后一行直接输入&quot;bye&quot;
-[root@localhost ruby]# cat ab
-Hello!
-ruby is me,welcome to my blog.
-end
-bye
-
-删除匹配行
-
- sed -i &apos;/匹配字符串/d&apos;  filename  （注：若匹配字符串是变量，则需要“”，而不是‘’。记得好像是）
-
- 替换匹配行中的某个字符串
-
- sed -i &apos;/匹配字符串/s/替换源字符串/替换目标字符串/g&apos; filename
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2016/05/24/为何你学不好高等数学/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2016/05/24/为何你学不好高等数学/" itemprop="url">为何你学不好高等数学</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-24T14:58:08+08:00">
-                2016-05-24
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-17T22:13:14+08:00">
+                2017-09-17
               </time>
             
 
@@ -1252,8 +546,8 @@ bye
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/data/" itemprop="url" rel="index">
-                    <span itemprop="name">data</span>
+                  <a href="/zhangdavids.github.io/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
                   </a>
                 </span>
 
@@ -1269,7 +563,7 @@ bye
 
           
           
-             <span id="/zhangdavids.github.io/2016/05/24/为何你学不好高等数学/" class="leancloud_visitors" data-flag-title="为何你学不好高等数学">
+             <span id="/zhangdavids.github.io/2017/09/17/how-ansible-works/" class="leancloud_visitors" data-flag-title="how ansible works">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1294,7 +588,183 @@ bye
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  623
+                  285
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>ansible 是什么？    </p>
+<p>ansible 是如何工作的：  </p>
+<p>使用者认证通过之后在管理节点通过 ansible 工具调用各应用模块将指令推送到被管理端。  </p>
+<p>并且在执行完毕后自动删除产生的临时文件。</p>
+<p>主要由六个部分组成：</p>
+<ol>
+<li>playbooks 通常是 json 格式的 yml 文件</li>
+<li>inventory 管理主机的清单</li>
+<li>modules 执行命令的功能模块</li>
+<li>plugins 模块功能的补充，如循环插件等，功能不常用</li>
+<li>api  供第三方程序调用的应用程序编程接口</li>
+<li>ansible  ansible 命令工具</li>
+</ol>
+<p>遵循预先编排的规则将 playbook 逐条拆解为 play，将 play 组织成 ansible 可识别的任务 task，随后调用任务涉及的所有模块和插件，根据 inventory 中定义的主机列表通过 ssh 将任务集以临时文件或命令的形式传输到远程客户端执行并返回执行结果，如果是临时文件则执行完毕后自动删除。  </p>
+<p>下面会详细介绍一个企业级的应用，elk 日志系统基于 ansible 的自动化实现。  </p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2017/09/17/tensorflow-foundation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2017/09/17/tensorflow-foundation/" itemprop="url">tensorflow foundation</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-17T12:24:30+08:00">
+                2017-09-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2017/09/17/tensorflow-foundation/" class="leancloud_visitors" data-flag-title="tensorflow foundation">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  707
                 </span>
               
 
@@ -1333,17 +803,977 @@ bye
       
         
           
-            <p>今天看到一篇文章，很有感悟，顺笔就写点东西。  </p>
-<p>Google的I/O大会之后，“AI将无处不在，智能将无处不在”。  </p>
-<p>数据分析， 人工智能， 图像识别等趋势， 不彻底学习线性代数 信号处理 算法导论（特别重要，以前看的时候感觉有些算法就是没事找事），是无法应付的。  </p>
-<p>为什么学得不好，我前段时间看《射雕英雄传》的时候， 刚好看到郭靖在江南七怪的教导下，武功没长进，全真道长说了十个字“教而不得法，学而不得道”。<br>这里并不是指责说大学的老师没有良好的教授方法，主要还是自己学不知其所以然。。  </p>
-<p>这里的高等数学当然是包括 微积分 线性代数 概率统计。  </p>
-<p>《程序员的数学－－线性代数》这本书，综述里有一句话。</p>
-<p><strong>m＊n的矩阵A， 表示了从n维空间到m维空间的“映射”。具体来说就是，把n维空间中的点x（n维列向量）变换到m维空间的点（m维列向量）Ax的映射。</strong></p>
-<p>为什么要引入矩阵，矩阵是用来做空间变换的，矩阵是一种映射，所以要学习好矩阵的乘积。  </p>
-<p>行列式＝对角线元素的乘积，但是行列式有什么意义呢？<br>为什么对角矩阵如何特殊，要拿出来单独讲呢？  </p>
-<p>书中以“空间变换”的角度进行了解释。一个n维向量乘以一个n＊n的对角矩阵，<br>实际上就是把对角矩阵中的各个值直接乘到了n维向量的对应的值上，<br>也就是对n维空间的各个维度进行了系度拉伸。<br>那么这些对角元素的乘积，实际上是这个矩阵变换給n维空间带来的体积变化的倍数。<br>（n维空间体积＝第一维长度＊第二维长度……＊第n维长度）<br><strong>行列式的值是空间体积变化的倍数！！</strong>  </p>
-<p>接着有网友表示，他的线性代数，是看了mit的公开课才明白的，:),你感觉学的那些貌似没啥意义，自然也没有足够的兴趣，自然也学不好，线性代数教給我们的是一种方法，我们需要从更高级的学科中重新思考过它，才能看明白数学现象的本质。</p>
+            <h2 id="1-基础架构"><a href="#1-基础架构" class="headerlink" title="1. 基础架构"></a>1. 基础架构</h2><p>自底向上分为：  </p>
+<ul>
+<li>网络层和设备层</li>
+<li>数据操作层</li>
+<li>图计算层</li>
+<li>API 层</li>
+<li>应用层</li>
+</ul>
+<p>1.1 网络通信层和设备管理层</p>
+<p>网络通信层包括 gRPC 和 RDMA ，都是分布式计算时需要用到的。<br>设备管理层包括 tf 分别在 CPU GPU FPGA 等设备上的实现，也就是对上层提供了一个统一的接口，使得上层只需要处理卷积等逻辑，而不需要关心在硬件上的卷积的实现过程。  </p>
+<p>1.2  数据操作层</p>
+<p>包括卷积函数、激活函数等操作。  </p>
+<p>1.3 图计算层  </p>
+<p>本地计算图和分布式计算图的实现  </p>
+<p>1.4 API 层</p>
+<p>python实现和其他语言的实现  </p>
+<p>1.5 应用层  </p>
+<p>主要是训练相关类库和预测相关类库   </p>
+<h2 id="2-设计理念"><a href="#2-设计理念" class="headerlink" title="2. 设计理念"></a>2. 设计理念</h2><p>2.1 图的定义和图的实现完全分开  </p>
+<p>符号式编程涉及很多的嵌入和优化，不容易理解和调试，但是运行速度有所提升。  </p>
+<p>2.2 涉及的运算全部放在图中，图的运行只是发生在会话 session 中。  </p>
+<p>下面是举例：  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">a = tf.constant([<span class="number">1.0</span>, <span class="number">2.0</span>])</span><br><span class="line">b = tf.constant([<span class="number">3.0</span>, <span class="number">4.0</span>])</span><br><span class="line">c = a * b</span><br><span class="line"></span><br><span class="line">sess = tf.Session()</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> sess.run(c)</span><br><span class="line">sess.close()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 当然 一般写法是这样</span></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">	<span class="keyword">print</span> sess.run(c)</span><br></pre></td></tr></table></figure>
+<ol>
+<li>编程模型</li>
+</ol>
+<p>运行原理：</p>
+<ul>
+<li>输入input</li>
+<li>塑形reshape</li>
+<li>Relu层</li>
+<li>Logit层</li>
+<li>Softmax</li>
+<li>交叉熵cross entropy</li>
+<li>梯度gradient</li>
+<li>SGD 训练</li>
+</ul>
+<p>从输入开始，经过塑形后，一层一层进行前向传播运算。Relu层里会有两个参数，在输出前使用Relu激活函数来做非线性处理。然后进入Logit层，学习两个参数。用softmax来计算输出结果中各个类别的概率分布。用交叉熵来度量两个概率分布之间的相似性。然后开始计算梯度，以及交叉墒后的结果。随后进入SGD训练，也就是反向传播的过程，从上往下计算每一层的参数，依次进行更新。  </p>
+<p>tensorflow 顾名思义就是指“张量的流动”，数据流图是由节点node和边edge组成的有向无环图。</p>
+<p>3.1 边</p>
+<p>张量具有数据属性 如tf.float32等。</p>
+<p>3.2 节点</p>
+<p>节点的运算操作有数学、数组等。详细代码在源码tensorflow/python/ops/目录下。</p>
+<p>3.3 设备</p>
+<p>设备device是指一块可以用来运算且拥有自己地址空间的硬件。</p>
+<p>3.4 变量</p>
+<p>变量variable是一种特殊的数据，在图中有固定的位置，不像张量那样可以流动。  </p>
+<p>3.5 内核  </p>
+<p>操作是对抽象操作的一个统称，而内核kernel则是能够运行在特定设备上的一种对操作的实现。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2017/09/02/texas-poker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2017/09/02/texas-poker/" itemprop="url">texas poker</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-02T23:53:35+08:00">
+                2017-09-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2017/09/02/texas-poker/" class="leancloud_visitors" data-flag-title="texas poker">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>德州扑克比较大小的设计，设计全面还是有一些繁琐的。  </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#! /usr/bin/env python</span></span><br><span class="line"><span class="comment"># _*_ coding:utf8 _*_</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> random</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">poker</span><span class="params">(hands)</span>:</span></span><br><span class="line">    <span class="string">"Return a list of winning hands: poker([hand,...]) =&gt; [hand,...]"</span></span><br><span class="line">    <span class="keyword">return</span> allmax(hands, key=hand_rank)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">allmax</span><span class="params">(iterable, key=None)</span>:</span></span><br><span class="line">    <span class="string">"Return a list of all items equal to the max of the iterable."</span></span><br><span class="line">    iterable.sort(key=key,reverse=<span class="keyword">True</span>)</span><br><span class="line">    result = [iterable[<span class="number">0</span>]]</span><br><span class="line">    maxValue = key(iterable[<span class="number">0</span>]) <span class="keyword">if</span> key <span class="keyword">else</span> iterable[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">for</span> value <span class="keyword">in</span> iterable[<span class="number">1</span>:]:</span><br><span class="line">        v = key(value) <span class="keyword">if</span> key <span class="keyword">else</span> value</span><br><span class="line">        <span class="keyword">if</span> v == maxValue: result.append(value)</span><br><span class="line">        <span class="keyword">else</span>: <span class="keyword">break</span></span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">card_ranks</span><span class="params">(hand)</span>:</span></span><br><span class="line">    <span class="string">"Return a list of the ranks, sorted with higher first."</span></span><br><span class="line">    ranks = [<span class="string">'--23456789TJQKA'</span>.index(r) <span class="keyword">for</span> r, s <span class="keyword">in</span> hand]</span><br><span class="line">    ranks.sort(reverse = <span class="keyword">True</span>)</span><br><span class="line">    <span class="keyword">return</span> [<span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>] <span class="keyword">if</span> (ranks == [<span class="number">14</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>]) <span class="keyword">else</span> ranks</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 同花色</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">flush</span><span class="params">(hand)</span>:</span></span><br><span class="line">    <span class="string">"Return True if all the cards have the same suit."</span></span><br><span class="line">    suits = [s <span class="keyword">for</span> r,s <span class="keyword">in</span> hand]</span><br><span class="line">    <span class="keyword">return</span> len(set(suits)) == <span class="number">1</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 顺子</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">straight</span><span class="params">(ranks)</span>:</span></span><br><span class="line">    <span class="string">"Return True if the ordered ranks form a 5-card straight."</span></span><br><span class="line">    <span class="keyword">return</span> (max(ranks)-min(ranks) == <span class="number">4</span>) <span class="keyword">and</span> len(set(ranks)) == <span class="number">5</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 条子</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">kind</span><span class="params">(n, ranks)</span>:</span></span><br><span class="line">    <span class="string">"""Return the first rank that this hand has exactly n-of-a-kind of.</span><br><span class="line">    Return None if there is no n-of-a-kind in the hand."""</span></span><br><span class="line">    <span class="keyword">for</span> r <span class="keyword">in</span> ranks:</span><br><span class="line">        <span class="keyword">if</span> ranks.count(r) == n: <span class="keyword">return</span> r</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 两对</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">two_pair</span><span class="params">(ranks)</span>:</span></span><br><span class="line">    <span class="string">"If there are two pair here, return the two ranks of the two pairs, else None."</span></span><br><span class="line">    pair = kind(<span class="number">2</span>, ranks)</span><br><span class="line">    lowpair = kind(<span class="number">2</span>, list(reversed(ranks)))</span><br><span class="line">    <span class="keyword">if</span> pair <span class="keyword">and</span> lowpair != pair:</span><br><span class="line">        <span class="keyword">return</span> (pair, lowpair)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">None</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hand_rank</span><span class="params">(hand)</span>:</span></span><br><span class="line">    <span class="string">"Return a value indicating the ranking of a hand."</span></span><br><span class="line">    ranks = card_ranks(hand)</span><br><span class="line">    <span class="keyword">if</span> straight(ranks) <span class="keyword">and</span> flush(hand):</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">8</span>, max(ranks))</span><br><span class="line">    <span class="keyword">elif</span> kind(<span class="number">4</span>, ranks):</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">7</span>, kind(<span class="number">4</span>, ranks), kind(<span class="number">1</span>, ranks))</span><br><span class="line">    <span class="keyword">elif</span> kind(<span class="number">3</span>, ranks) <span class="keyword">and</span> kind(<span class="number">2</span>, ranks):</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">6</span>, kind(<span class="number">3</span>, ranks), kind(<span class="number">2</span>, ranks))</span><br><span class="line">    <span class="keyword">elif</span> flush(hand):</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">5</span>, ranks)</span><br><span class="line">    <span class="keyword">elif</span> straight(ranks):</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">4</span>, max(ranks))</span><br><span class="line">    <span class="keyword">elif</span> kind(<span class="number">3</span>, ranks):</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">3</span>, kind(<span class="number">3</span>, ranks), ranks)</span><br><span class="line">    <span class="keyword">elif</span> two_pair(ranks):</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">2</span>, two_pair(ranks), ranks)</span><br><span class="line">    <span class="keyword">elif</span> kind(<span class="number">2</span>, ranks):</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">1</span>, kind(<span class="number">2</span>, ranks), ranks)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> (<span class="number">0</span>, ranks)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hand_rank_alt</span><span class="params">(hand)</span>:</span></span><br><span class="line">    <span class="string">"Return a value indicating how high the hand ranks."</span></span><br><span class="line">    <span class="comment"># count is the count of each rank; ranks lists corresponding ranks</span></span><br><span class="line">    <span class="comment"># E.g. '7 T 7 9 7' =&gt; counts = (3, 1, 1) ranks = (7, 10, 9)</span></span><br><span class="line">    groups = group([<span class="string">'--23456789TJQKA'</span>.index(r) <span class="keyword">for</span> r,s <span class="keyword">in</span> hand])</span><br><span class="line">    counts, ranks = unzip(groups)</span><br><span class="line">    <span class="keyword">if</span> ranks == (<span class="number">14</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>):   <span class="comment"># Ace low straight</span></span><br><span class="line">        ranks = (<span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>)</span><br><span class="line">    straight = len(ranks) == <span class="number">5</span> <span class="keyword">and</span> max(ranks) - min(ranks) == <span class="number">4</span></span><br><span class="line">    flush = len(set([s <span class="keyword">for</span> r,s <span class="keyword">in</span> hand])) == <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> (<span class="number">9</span> <span class="keyword">if</span> (<span class="number">5</span>,) == counts <span class="keyword">else</span></span><br><span class="line">            <span class="number">8</span> <span class="keyword">if</span> straight <span class="keyword">and</span> flush <span class="keyword">else</span></span><br><span class="line">            <span class="number">7</span> <span class="keyword">if</span> (<span class="number">4</span>, <span class="number">1</span>) == counts <span class="keyword">else</span></span><br><span class="line">            <span class="number">6</span> <span class="keyword">if</span> (<span class="number">3</span>, <span class="number">2</span>) == counts <span class="keyword">else</span></span><br><span class="line">            <span class="number">5</span> <span class="keyword">if</span> flush <span class="keyword">else</span></span><br><span class="line">            <span class="number">4</span> <span class="keyword">if</span> straight <span class="keyword">else</span></span><br><span class="line">            <span class="number">3</span> <span class="keyword">if</span> (<span class="number">3</span>, <span class="number">1</span>, <span class="number">1</span>) == counts <span class="keyword">else</span></span><br><span class="line">            <span class="number">2</span> <span class="keyword">if</span> (<span class="number">2</span>, <span class="number">2</span>, <span class="number">1</span>) == counts <span class="keyword">else</span></span><br><span class="line">            <span class="number">1</span> <span class="keyword">if</span> (<span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>) == counts <span class="keyword">else</span></span><br><span class="line">            <span class="number">0</span>), ranks</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">count_rankings = &#123;(<span class="number">5</span>,): <span class="number">10</span>, (<span class="number">4</span>, <span class="number">1</span>): <span class="number">7</span>, (<span class="number">3</span>, <span class="number">2</span>): <span class="number">6</span>, (<span class="number">3</span>, <span class="number">1</span>, <span class="number">1</span>): <span class="number">3</span>, (<span class="number">2</span>, <span class="number">2</span>, <span class="number">1</span>): <span class="number">2</span>,</span><br><span class="line">                  (<span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>): <span class="number">1</span>, (<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>): <span class="number">0</span>&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hand_rank_table</span><span class="params">(hand)</span>:</span></span><br><span class="line">    <span class="string">"Return a value indicating how high the hand ranks."</span></span><br><span class="line">    <span class="comment"># count is the count of each rank; ranks lists corresponding ranks</span></span><br><span class="line">    <span class="comment"># E.g. '7 T 7 9 7' =&gt; counts = (3, 1, 1) ranks = (7, 10, 9)</span></span><br><span class="line">    groups = group([<span class="string">'--23456789TJQKA'</span>.index(r) <span class="keyword">for</span> r,s <span class="keyword">in</span> hand])</span><br><span class="line">    counts, ranks = unzip(groups)</span><br><span class="line">    <span class="keyword">if</span> ranks == (<span class="number">14</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>):   <span class="comment"># Ace low straight</span></span><br><span class="line">        ranks = (<span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">1</span>)</span><br><span class="line">    straight = len(ranks) == <span class="number">5</span> <span class="keyword">and</span> max(ranks) - min(ranks) == <span class="number">4</span></span><br><span class="line">    flush = len(set([s <span class="keyword">for</span> r,s <span class="keyword">in</span> hand])) == <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> max(count_rankings[counts], <span class="number">4</span>*straight + <span class="number">5</span>*flush), ranks</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">group</span><span class="params">(items)</span>:</span></span><br><span class="line">    <span class="string">"Return a list of [(count, x), ...], highest count first, then highest x first"</span></span><br><span class="line">    groups = [(items.count(x), x) <span class="keyword">for</span> x <span class="keyword">in</span> set(items)]</span><br><span class="line">    <span class="keyword">return</span> sorted(groups, reverse = <span class="keyword">True</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">unzip</span><span class="params">(iterable)</span>:</span></span><br><span class="line">    <span class="string">"Return a list of tuples from a list of tuples : e.g. [(2, 9), (2, 7)] =&gt; [(2, 2), (9, 7)]"</span></span><br><span class="line">    <span class="keyword">return</span> zip(*iterable)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">mydeck = [r+s <span class="keyword">for</span> r <span class="keyword">in</span> <span class="string">'23456789TJQKA'</span> <span class="keyword">for</span> s <span class="keyword">in</span> <span class="string">'SHDC'</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">deal</span><span class="params">(numhands, n=<span class="number">5</span>, deck=mydeck)</span>:</span></span><br><span class="line">    random.shuffle(mydeck)</span><br><span class="line">    <span class="keyword">return</span> [mydeck[n*i:n*(i+<span class="number">1</span>)] <span class="keyword">for</span> i <span class="keyword">in</span> range(numhands)]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">hand_names = [<span class="string">"Straight flush"</span>, </span><br><span class="line">              <span class="string">"Four of a kind"</span>, </span><br><span class="line">              <span class="string">"Full house"</span>, </span><br><span class="line">              <span class="string">"Flush"</span>, </span><br><span class="line">              <span class="string">"Straight"</span>,</span><br><span class="line">              <span class="string">"Three of a kind"</span>,</span><br><span class="line">               <span class="string">"Two pair"</span>, </span><br><span class="line">               <span class="string">"One pair"</span>, </span><br><span class="line">               <span class="string">"High card"</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hand_percentages</span><span class="params">(n=<span class="number">700</span>*<span class="number">1000</span>)</span>:</span></span><br><span class="line">    counts = [<span class="number">0</span>] * <span class="number">9</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n/<span class="number">10</span>):</span><br><span class="line">        <span class="keyword">for</span> hand <span class="keyword">in</span> deal(<span class="number">10</span>):</span><br><span class="line">            ranking = hand_rank(hand)[<span class="number">0</span>]</span><br><span class="line">            counts[ranking] += <span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> reversed(range(<span class="number">9</span>)):</span><br><span class="line">        <span class="keyword">print</span> <span class="string">"%15s: %6.3f %%"</span> % (hand_names[i], <span class="number">100.</span>*counts[i]/n)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="string">"Test cases for the functions in poker program."</span></span><br><span class="line">    sf1 = <span class="string">"6C 7C 8C 9C TC"</span>.split() <span class="comment"># Straight Flush</span></span><br><span class="line">    sf2 = <span class="string">"6D 7D 8D 9D TD"</span>.split() <span class="comment"># Straight Flush</span></span><br><span class="line">    fk = <span class="string">"9D 9H 9S 9C 7D"</span>.split() <span class="comment"># Four of a Kind</span></span><br><span class="line">    fh = <span class="string">"TD TC TH 7C 7D"</span>.split() <span class="comment"># Full House</span></span><br><span class="line">    tp = <span class="string">"5D 2C 2H 9H 5C"</span>.split() <span class="comment"># Two Pair</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Testing allmax</span></span><br><span class="line">    <span class="keyword">assert</span> allmax([<span class="number">2</span>,<span class="number">4</span>,<span class="number">7</span>,<span class="number">5</span>,<span class="number">1</span>]) == [<span class="number">7</span>]</span><br><span class="line">    <span class="keyword">assert</span> allmax([<span class="number">2</span>,<span class="number">4</span>,<span class="number">7</span>,<span class="number">5</span>,<span class="number">7</span>]) == [<span class="number">7</span>,<span class="number">7</span>]</span><br><span class="line">    <span class="keyword">assert</span> allmax([<span class="number">2</span>]) == [<span class="number">2</span>]</span><br><span class="line">    <span class="keyword">assert</span> allmax([<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>]) == [<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Testing card_ranks</span></span><br><span class="line">    <span class="keyword">assert</span> card_ranks(sf1) == [<span class="number">10</span>, <span class="number">9</span>, <span class="number">8</span>, <span class="number">7</span>, <span class="number">6</span>]</span><br><span class="line">    <span class="keyword">assert</span> card_ranks(fk) == [<span class="number">9</span>, <span class="number">9</span>, <span class="number">9</span>, <span class="number">9</span>, <span class="number">7</span>]</span><br><span class="line">    <span class="keyword">assert</span> card_ranks(fh) == [<span class="number">10</span>, <span class="number">10</span>, <span class="number">10</span>, <span class="number">7</span>, <span class="number">7</span>]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Testing flush</span></span><br><span class="line">    <span class="keyword">assert</span> flush([]) == <span class="keyword">False</span></span><br><span class="line">    <span class="keyword">assert</span> flush(sf1) == <span class="keyword">True</span></span><br><span class="line">    <span class="keyword">assert</span> flush(fh) == <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Testing straight</span></span><br><span class="line">    <span class="keyword">assert</span> straight(card_ranks(sf1)) == <span class="keyword">True</span></span><br><span class="line">    <span class="keyword">assert</span> straight(card_ranks(fk)) == <span class="keyword">False</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Testing kind</span></span><br><span class="line">    <span class="keyword">assert</span> kind(<span class="number">3</span>, card_ranks(sf1)) == <span class="keyword">None</span></span><br><span class="line">    <span class="keyword">assert</span> kind(<span class="number">4</span>, card_ranks(fk)) == <span class="number">9</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Tesing two pair</span></span><br><span class="line">    <span class="keyword">assert</span> two_pair(card_ranks(sf1)) == <span class="keyword">None</span></span><br><span class="line">    <span class="keyword">assert</span> two_pair(card_ranks(tp)) == (<span class="number">5</span>,<span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Testing group</span></span><br><span class="line">    <span class="keyword">assert</span> group([<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">6</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">9</span>]) == [(<span class="number">2</span>,<span class="number">2</span>),(<span class="number">1</span>,<span class="number">9</span>),(<span class="number">1</span>,<span class="number">6</span>),(<span class="number">1</span>,<span class="number">4</span>),(<span class="number">1</span>,<span class="number">3</span>),(<span class="number">1</span>,<span class="number">1</span>)]</span><br><span class="line">    <span class="keyword">assert</span> group([<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>,<span class="number">8</span>]) == [(<span class="number">4</span>,<span class="number">8</span>)]</span><br><span class="line">    <span class="keyword">assert</span> group([<span class="number">2</span>,<span class="number">6</span>,<span class="number">1</span>]) == [(<span class="number">1</span>,<span class="number">6</span>),(<span class="number">1</span>,<span class="number">2</span>),(<span class="number">1</span>,<span class="number">1</span>)]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Testing unzip</span></span><br><span class="line">    <span class="keyword">assert</span> unzip([(<span class="number">2</span>,<span class="number">2</span>),(<span class="number">1</span>,<span class="number">9</span>),(<span class="number">1</span>,<span class="number">6</span>),(<span class="number">1</span>,<span class="number">4</span>),(<span class="number">1</span>,<span class="number">3</span>),(<span class="number">1</span>,<span class="number">1</span>)]) == [(<span class="number">2</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>),(<span class="number">2</span>,<span class="number">9</span>,<span class="number">6</span>,<span class="number">4</span>,<span class="number">3</span>,<span class="number">1</span>)]</span><br><span class="line">    <span class="keyword">assert</span> unzip([(<span class="number">1</span>,<span class="number">6</span>),(<span class="number">1</span>,<span class="number">2</span>),(<span class="number">1</span>,<span class="number">1</span>)]) == [(<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>),(<span class="number">6</span>,<span class="number">2</span>,<span class="number">1</span>)]</span><br><span class="line">    <span class="keyword">assert</span> unzip([(<span class="number">2</span>, <span class="number">9</span>), (<span class="number">2</span>, <span class="number">7</span>)]) == [(<span class="number">2</span>, <span class="number">2</span>), (<span class="number">9</span>, <span class="number">7</span>)]</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Testing hand rank</span></span><br><span class="line">    <span class="keyword">assert</span> hand_rank(sf1) == (<span class="number">8</span>,<span class="number">10</span>)</span><br><span class="line">    <span class="keyword">assert</span> hand_rank(fk) == (<span class="number">7</span>,<span class="number">9</span>,<span class="number">7</span>)</span><br><span class="line">    <span class="keyword">assert</span> hand_rank(fh) == (<span class="number">6</span>,<span class="number">10</span>,<span class="number">7</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Testing hand rank alt</span></span><br><span class="line">    <span class="keyword">assert</span> hand_rank_alt(sf1) == (<span class="number">8</span>, (<span class="number">10</span>,<span class="number">9</span>,<span class="number">8</span>,<span class="number">7</span>,<span class="number">6</span>))</span><br><span class="line">    <span class="keyword">assert</span> hand_rank_alt(fk) == (<span class="number">7</span>,(<span class="number">9</span>,<span class="number">7</span>))</span><br><span class="line">    <span class="keyword">assert</span> hand_rank_alt(fh) == (<span class="number">6</span>,(<span class="number">10</span>,<span class="number">7</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Testing hand rank table</span></span><br><span class="line">    <span class="keyword">assert</span> hand_rank_table(sf1) == (<span class="number">9</span>, (<span class="number">10</span>,<span class="number">9</span>,<span class="number">8</span>,<span class="number">7</span>,<span class="number">6</span>))</span><br><span class="line">    <span class="keyword">assert</span> hand_rank_table(fk) == (<span class="number">7</span>,(<span class="number">9</span>,<span class="number">7</span>))</span><br><span class="line">    <span class="keyword">assert</span> hand_rank_table(fh) == (<span class="number">6</span>,(<span class="number">10</span>,<span class="number">7</span>))</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Testing poker</span></span><br><span class="line">    <span class="keyword">assert</span> poker([sf1, fk, fh]) == [sf1]</span><br><span class="line">    <span class="keyword">assert</span> poker([fk, fh]) == [fk]</span><br><span class="line">    <span class="keyword">assert</span> poker([fh, fh]) == [fh, fh]</span><br><span class="line">    <span class="keyword">assert</span> poker([fh]) == [fh]</span><br><span class="line">    <span class="keyword">assert</span> poker([sf2] + <span class="number">99</span>*[fh]) == [sf2]</span><br><span class="line">    <span class="keyword">assert</span> poker([sf1, sf2, fk, fh]) == [sf1, sf2]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">'tests pass'</span></span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2017/08/27/vim-table-cheatsheet/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2017/08/27/vim-table-cheatsheet/" itemprop="url">vim table cheatsheet</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-27T11:24:08+08:00">
+                2017-08-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2017/08/27/vim-table-cheatsheet/" class="leancloud_visitors" data-flag-title="vim table cheatsheet">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.1k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <table>
+<thead>
+<tr>
+<th style="text-align:left">命令</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">进入 vim</td>
+<td style="text-align:left">-</td>
+</tr>
+<tr>
+<td style="text-align:left">vim filename</td>
+<td style="text-align:left">打开或者新建文件，光标置于第一行行首</td>
+</tr>
+<tr>
+<td style="text-align:left">vim +n filename</td>
+<td style="text-align:left">n行行首</td>
+</tr>
+<tr>
+<td style="text-align:left">vim + filename</td>
+<td style="text-align:left">最后一行行首</td>
+</tr>
+<tr>
+<td style="text-align:left">vim +/pattern filename</td>
+<td style="text-align:left">第一个与pattern匹配的串处</td>
+</tr>
+<tr>
+<td style="text-align:left">vim -r filename</td>
+<td style="text-align:left">恢复</td>
+</tr>
+<tr>
+<td style="text-align:left">vim filename … filename</td>
+<td style="text-align:left">打开多个</td>
+</tr>
+<tr>
+<td style="text-align:left">vim 配置</td>
+<td style="text-align:left">-</td>
+</tr>
+<tr>
+<td style="text-align:left">all</td>
+<td style="text-align:left">列出所有选项设置情况</td>
+</tr>
+<tr>
+<td style="text-align:left">term</td>
+<td style="text-align:left">设置终端类型</td>
+</tr>
+<tr>
+<td style="text-align:left">ignorance</td>
+<td style="text-align:left">忽略大小写</td>
+</tr>
+<tr>
+<td style="text-align:left">list</td>
+<td style="text-align:left">显示制表位和行尾标志</td>
+</tr>
+<tr>
+<td style="text-align:left">number</td>
+<td style="text-align:left">显示行号</td>
+</tr>
+<tr>
+<td style="text-align:left">report</td>
+<td style="text-align:left">显示由面向行的命令修改过的数目</td>
+</tr>
+<tr>
+<td style="text-align:left">terse</td>
+<td style="text-align:left">显示简短的警告信息</td>
+</tr>
+<tr>
+<td style="text-align:left">warn</td>
+<td style="text-align:left">显示no write信息</td>
+</tr>
+<tr>
+<td style="text-align:left">nomagic</td>
+<td style="text-align:left">搜索模式使用前面不带\的特殊字符</td>
+</tr>
+<tr>
+<td style="text-align:left">nowrapscan</td>
+<td style="text-align:left">禁止vi在搜索到达文件两端时，又从另一端开始</td>
+</tr>
+<tr>
+<td style="text-align:left">mesg</td>
+<td style="text-align:left">允许vi显示其他用户用write写到自己终端上的信息</td>
+</tr>
+<tr>
+<td style="text-align:left">:set number</td>
+<td style="text-align:left">显示行号 加no不显示</td>
+</tr>
+<tr>
+<td style="text-align:left">:set ruler</td>
+<td style="text-align:left">标尺 有no</td>
+</tr>
+<tr>
+<td style="text-align:left">:set hisearch</td>
+<td style="text-align:left">高亮显示查找到的单词</td>
+</tr>
+<tr>
+<td style="text-align:left">:syntax on</td>
+<td style="text-align:left">语法高亮</td>
+</tr>
+<tr>
+<td style="text-align:left">:set tabstop=8</td>
+<td style="text-align:left">tab大小为8</td>
+</tr>
+<tr>
+<td style="text-align:left">:set softtabstop=8</td>
+<td style="text-align:left">4: 4个空格，8:正常制表符，16:两个制表符</td>
+</tr>
+<tr>
+<td style="text-align:left">:set autoindent</td>
+<td style="text-align:left">自动缩进</td>
+</tr>
+<tr>
+<td style="text-align:left">:set cindent</td>
+<td style="text-align:left">c语言格式自动缩进</td>
+</tr>
+<tr>
+<td style="text-align:left">移动光标</td>
+<td style="text-align:left">-</td>
+</tr>
+<tr>
+<td style="text-align:left">k nk</td>
+<td style="text-align:left">上</td>
+</tr>
+<tr>
+<td style="text-align:left">j nj</td>
+<td style="text-align:left">下</td>
+</tr>
+<tr>
+<td style="text-align:left">h nh</td>
+<td style="text-align:left">左</td>
+</tr>
+<tr>
+<td style="text-align:left">l nl</td>
+<td style="text-align:left">右</td>
+</tr>
+<tr>
+<td style="text-align:left">Space</td>
+<td style="text-align:left">光标右移一个字符</td>
+</tr>
+<tr>
+<td style="text-align:left">BackSpace</td>
+<td style="text-align:left">左移</td>
+</tr>
+<tr>
+<td style="text-align:left">Enter</td>
+<td style="text-align:left">下移动一行</td>
+</tr>
+<tr>
+<td style="text-align:left">w/W</td>
+<td style="text-align:left">右移动一个字至字首</td>
+</tr>
+<tr>
+<td style="text-align:left">b/B</td>
+<td style="text-align:left">左移</td>
+</tr>
+<tr>
+<td style="text-align:left">e/E</td>
+<td style="text-align:left">右移到字尾</td>
+</tr>
+<tr>
+<td style="text-align:left">)</td>
+<td style="text-align:left">句尾</td>
+</tr>
+<tr>
+<td style="text-align:left">(</td>
+<td style="text-align:left">句首</td>
+</tr>
+<tr>
+<td style="text-align:left">}</td>
+<td style="text-align:left">段落结尾</td>
+</tr>
+<tr>
+<td style="text-align:left">{</td>
+<td style="text-align:left">开头</td>
+</tr>
+<tr>
+<td style="text-align:left">n$</td>
+<td style="text-align:left">n行尾</td>
+</tr>
+<tr>
+<td style="text-align:left">H</td>
+<td style="text-align:left">屏幕顶行</td>
+</tr>
+<tr>
+<td style="text-align:left">M</td>
+<td style="text-align:left">中间行</td>
+</tr>
+<tr>
+<td style="text-align:left">L</td>
+<td style="text-align:left">最后行</td>
+</tr>
+<tr>
+<td style="text-align:left">0</td>
+<td style="text-align:left">当前行首</td>
+</tr>
+<tr>
+<td style="text-align:left">^</td>
+<td style="text-align:left">第一个非空字符上</td>
+</tr>
+<tr>
+<td style="text-align:left">$</td>
+<td style="text-align:left">当前行尾</td>
+</tr>
+<tr>
+<td style="text-align:left">gg</td>
+<td style="text-align:left">第一行</td>
+</tr>
+<tr>
+<td style="text-align:left">G</td>
+<td style="text-align:left">最后一行</td>
+</tr>
+<tr>
+<td style="text-align:left">f</td>
+<td style="text-align:left">当前行的字符a上</td>
+</tr>
+<tr>
+<td style="text-align:left">F</td>
+<td style="text-align:left">相反</td>
+</tr>
+<tr>
+<td style="text-align:left">%</td>
+<td style="text-align:left">匹配的符号如（）、[]、{}、&lt;&gt;等</td>
+</tr>
+<tr>
+<td style="text-align:left">nG</td>
+<td style="text-align:left">n行上</td>
+</tr>
+<tr>
+<td style="text-align:left">G</td>
+<td style="text-align:left">最后一行</td>
+</tr>
+<tr>
+<td style="text-align:left">屏幕滚动</td>
+<td style="text-align:left">-</td>
+</tr>
+<tr>
+<td style="text-align:left">ctrl + u</td>
+<td style="text-align:left">向文件首翻半屏</td>
+</tr>
+<tr>
+<td style="text-align:left">ctrl + d</td>
+<td style="text-align:left">尾</td>
+</tr>
+<tr>
+<td style="text-align:left">ctrl + f</td>
+<td style="text-align:left">文件尾一屏</td>
+</tr>
+<tr>
+<td style="text-align:left">ctrl + b</td>
+<td style="text-align:left">首一屏</td>
+</tr>
+<tr>
+<td style="text-align:left">nz</td>
+<td style="text-align:left">将第n行滚动至屏幕顶部，不指定n行时将当前行滚动到屏幕顶部</td>
+</tr>
+<tr>
+<td style="text-align:left">插入文本</td>
+<td style="text-align:left">-</td>
+</tr>
+<tr>
+<td style="text-align:left">i</td>
+<td style="text-align:left">光标前</td>
+</tr>
+<tr>
+<td style="text-align:left">I</td>
+<td style="text-align:left">行首</td>
+</tr>
+<tr>
+<td style="text-align:left">a</td>
+<td style="text-align:left">光标后</td>
+</tr>
+<tr>
+<td style="text-align:left">A</td>
+<td style="text-align:left">行尾</td>
+</tr>
+<tr>
+<td style="text-align:left">o</td>
+<td style="text-align:left">当前行之下新开一行</td>
+</tr>
+<tr>
+<td style="text-align:left">O</td>
+<td style="text-align:left">之上</td>
+</tr>
+<tr>
+<td style="text-align:left">r</td>
+<td style="text-align:left">替换当前字符</td>
+</tr>
+<tr>
+<td style="text-align:left">R</td>
+<td style="text-align:left">替换当前字符以及以后的字符，直到按esc键</td>
+</tr>
+<tr>
+<td style="text-align:left">s</td>
+<td style="text-align:left">从当前光标位置处开始，以输入的文本替代指定数目的字符</td>
+</tr>
+<tr>
+<td style="text-align:left">S</td>
+<td style="text-align:left">删除指定数目的行，并以所输入的文本代替之</td>
+</tr>
+<tr>
+<td style="text-align:left">ncw/W</td>
+<td style="text-align:left">修改指定数目的字</td>
+</tr>
+<tr>
+<td style="text-align:left">nCC</td>
+<td style="text-align:left">修改指定数目的行</td>
+</tr>
+<tr>
+<td style="text-align:left">删除命令</td>
+<td style="text-align:left">-</td>
+</tr>
+<tr>
+<td style="text-align:left">x/X</td>
+<td style="text-align:left">删除一个字符，一个后一个前</td>
+</tr>
+<tr>
+<td style="text-align:left">dw</td>
+<td style="text-align:left">删除一个单词</td>
+</tr>
+<tr>
+<td style="text-align:left">dnw</td>
+<td style="text-align:left">n个</td>
+</tr>
+<tr>
+<td style="text-align:left">dne</td>
+<td style="text-align:left">删除到单词尾</td>
+</tr>
+<tr>
+<td style="text-align:left">do</td>
+<td style="text-align:left">删除到行首</td>
+</tr>
+<tr>
+<td style="text-align:left">d$</td>
+<td style="text-align:left">行尾</td>
+</tr>
+<tr>
+<td style="text-align:left">dd</td>
+<td style="text-align:left">删除当前行</td>
+</tr>
+<tr>
+<td style="text-align:left">ndd</td>
+<td style="text-align:left">当前行和后面n-1行</td>
+</tr>
+<tr>
+<td style="text-align:left">dnl</td>
+<td style="text-align:left">向右删除n个字母</td>
+</tr>
+<tr>
+<td style="text-align:left">dnh</td>
+<td style="text-align:left">左</td>
+</tr>
+<tr>
+<td style="text-align:left">dnj</td>
+<td style="text-align:left">下n行（n不含当前行）</td>
+</tr>
+<tr>
+<td style="text-align:left">dnk</td>
+<td style="text-align:left">上n行</td>
+</tr>
+<tr>
+<td style="text-align:left">cnw[word]</td>
+<td style="text-align:left">将n个word改变为word</td>
+</tr>
+<tr>
+<td style="text-align:left">C$</td>
+<td style="text-align:left">改变到行尾</td>
+</tr>
+<tr>
+<td style="text-align:left">cc</td>
+<td style="text-align:left">改变整行</td>
+</tr>
+<tr>
+<td style="text-align:left">shift+j</td>
+<td style="text-align:left">删除行尾的换行符，下一行接上来了</td>
+</tr>
+<tr>
+<td style="text-align:left">复制粘贴</td>
+<td style="text-align:left">-</td>
+</tr>
+<tr>
+<td style="text-align:left">p</td>
+<td style="text-align:left">粘贴用x或者d删除的文本</td>
+</tr>
+<tr>
+<td style="text-align:left">ynw</td>
+<td style="text-align:left">复制n个单词</td>
+</tr>
+<tr>
+<td style="text-align:left">yy</td>
+<td style="text-align:left">复制一行</td>
+</tr>
+<tr>
+<td style="text-align:left">ynl</td>
+<td style="text-align:left">n个字符</td>
+</tr>
+<tr>
+<td style="text-align:left">y$</td>
+<td style="text-align:left">复制当前光标至行尾处</td>
+</tr>
+<tr>
+<td style="text-align:left">nyy</td>
+<td style="text-align:left">拷贝n行</td>
+</tr>
+<tr>
+<td style="text-align:left">撤销</td>
+<td style="text-align:left">-</td>
+</tr>
+<tr>
+<td style="text-align:left">u</td>
+<td style="text-align:left">撤销前一次的操作</td>
+</tr>
+<tr>
+<td style="text-align:left">shift+u</td>
+<td style="text-align:left">撤销对该行的所有操作</td>
+</tr>
+<tr>
+<td style="text-align:left">搜索以及替换</td>
+<td style="text-align:left">-</td>
+</tr>
+<tr>
+<td style="text-align:left">/pattern</td>
+<td style="text-align:left">光标开始处向文件尾搜索</td>
+</tr>
+<tr>
+<td style="text-align:left">?pattern</td>
+<td style="text-align:left">文件首</td>
+</tr>
+<tr>
+<td style="text-align:left">n</td>
+<td style="text-align:left">在同一个方向重复上一次搜索命令</td>
+</tr>
+<tr>
+<td style="text-align:left">N</td>
+<td style="text-align:left">反方向</td>
+</tr>
+<tr>
+<td style="text-align:left">cw newword</td>
+<td style="text-align:left">替换为newword</td>
+</tr>
+<tr>
+<td style="text-align:left">n</td>
+<td style="text-align:left">继续查找</td>
+</tr>
+<tr>
+<td style="text-align:left">.</td>
+<td style="text-align:left">执行替换</td>
+</tr>
+<tr>
+<td style="text-align:left">:s/p1/p2/g</td>
+<td style="text-align:left">将当前行中所有p1均用p2替代</td>
+</tr>
+<tr>
+<td style="text-align:left">:n1,n2 s/p1/p2/g</td>
+<td style="text-align:left">n1到n2行</td>
+</tr>
+<tr>
+<td style="text-align:left">:g/p1/s/p2/g</td>
+<td style="text-align:left">文件中所有</td>
+</tr>
+<tr>
+<td style="text-align:left">:1,$ s/string1/string2/g</td>
+<td style="text-align:left">全文中替换</td>
+</tr>
+<tr>
+<td style="text-align:left">书签</td>
+<td style="text-align:left">-</td>
+</tr>
+<tr>
+<td style="text-align:left">m[a-z]</td>
+<td style="text-align:left">标记</td>
+</tr>
+<tr>
+<td style="text-align:left">`a</td>
+<td style="text-align:left">移动到标记a处</td>
+</tr>
+<tr>
+<td style="text-align:left">visual模式</td>
+<td style="text-align:left">-</td>
+</tr>
+<tr>
+<td style="text-align:left">v</td>
+<td style="text-align:left">进入模式</td>
+</tr>
+<tr>
+<td style="text-align:left">V</td>
+<td style="text-align:left">行的</td>
+</tr>
+<tr>
+<td style="text-align:left">ctrl+v</td>
+<td style="text-align:left">进入块操作</td>
+</tr>
+<tr>
+<td style="text-align:left">行方式命令</td>
+<td style="text-align:left">-</td>
+</tr>
+<tr>
+<td style="text-align:left">:n1,n2 co n3</td>
+<td style="text-align:left">n1到n2行拷贝到第n3行下</td>
+</tr>
+<tr>
+<td style="text-align:left">:n1,n2 m n3</td>
+<td style="text-align:left">移动</td>
+</tr>
+<tr>
+<td style="text-align:left">:n1,n2 d</td>
+<td style="text-align:left">删除</td>
+</tr>
+<tr>
+<td style="text-align:left">:n1,n2 wlcommand</td>
+<td style="text-align:left">作为command的输入并执行之</td>
+</tr>
+<tr>
+<td style="text-align:left">宏</td>
+<td style="text-align:left">-</td>
+</tr>
+<tr>
+<td style="text-align:left">q[a-z]</td>
+<td style="text-align:left">q终止录宏</td>
+</tr>
+<tr>
+<td style="text-align:left">reg</td>
+<td style="text-align:left">显示当前所定义的所有宏</td>
+</tr>
+<tr>
+<td style="text-align:left">窗口操作</td>
+<td style="text-align:left">-</td>
+</tr>
+<tr>
+<td style="text-align:left">:split</td>
+<td style="text-align:left">分割一个</td>
+</tr>
+<tr>
+<td style="text-align:left">:split file.c</td>
+<td style="text-align:left">为另一个file.c分隔窗口</td>
+</tr>
+<tr>
+<td style="text-align:left">:nsplit file.c</td>
+<td style="text-align:left">并且指定行数</td>
+</tr>
+<tr>
+<td style="text-align:left">ctrl+w</td>
+<td style="text-align:left">在窗口中切换</td>
+</tr>
+<tr>
+<td style="text-align:left">:close</td>
+<td style="text-align:left">关闭当前窗口</td>
+</tr>
+<tr>
+<td style="text-align:left">文件及其他</td>
+<td style="text-align:left">-</td>
+</tr>
+<tr>
+<td style="text-align:left">:q</td>
+<td style="text-align:left">退出</td>
+</tr>
+<tr>
+<td style="text-align:left">:q!</td>
+<td style="text-align:left">强制</td>
+</tr>
+<tr>
+<td style="text-align:left">:e filename</td>
+<td style="text-align:left">打开文件并且进行编辑</td>
+</tr>
+<tr>
+<td style="text-align:left">:e!</td>
+<td style="text-align:left">放弃修改，并重载</td>
+</tr>
+<tr>
+<td style="text-align:left">:w</td>
+<td style="text-align:left">保存</td>
+</tr>
+<tr>
+<td style="text-align:left">:wq</td>
+<td style="text-align:left">存盘退出</td>
+</tr>
+<tr>
+<td style="text-align:left">:ZZ</td>
+<td style="text-align:left">保存退出</td>
+</tr>
+<tr>
+<td style="text-align:left">:!command</td>
+<td style="text-align:left">执行shell命令command</td>
+</tr>
+<tr>
+<td style="text-align:left">:r!command</td>
+<td style="text-align:left">输出结果放到当前行</td>
+</tr>
+<tr>
+<td style="text-align:left">:n1,n2 write temp.c</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">:read file.c</td>
+<td style="text-align:left">将文件file.c的内容放到当前光标所在的下面</td>
+</tr>
+</tbody>
+</table>
 
           
         
@@ -1383,7 +1813,7 @@ bye
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/86/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/86/">86</a><span class="page-number current">87</span><a class="page-number" href="/zhangdavids.github.io/page/88/">88</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/91/">91</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/88/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/86/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/86/">86</a><span class="page-number current">87</span><a class="page-number" href="/zhangdavids.github.io/page/88/">88</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/93/">93</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/88/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1433,7 +1863,7 @@ bye
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">454</span>
+                  <span class="site-state-item-count">465</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1444,7 +1874,7 @@ bye
               
               <div class="site-state-item site-state-categories">
                 <a href="/zhangdavids.github.io/categories/index.html">
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1455,7 +1885,7 @@ bye
               
               <div class="site-state-item site-state-tags">
                 <a href="/zhangdavids.github.io/tags/index.html">
-                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1548,7 +1978,7 @@ bye
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共180.7k字</span>
+  <span class="post-count">博客全站共181.7k字</span>
 </div>
 
         

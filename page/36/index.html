@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/21/ds之哈希表/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/26/al之排序/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -328,7 +328,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/21/ds之哈希表/" itemprop="url">ds之哈希表</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/26/al之排序/" itemprop="url">al之排序</a></h1>
         
 
         <div class="post-meta">
@@ -340,8 +340,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-21T17:09:58+08:00">
-                2019-01-21
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-26T13:36:24+08:00">
+                2019-01-26
               </time>
             
 
@@ -351,28 +351,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/data-structure/" itemprop="url" rel="index">
-                    <span itemprop="name">data structure</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -380,7 +358,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/01/21/ds之哈希表/" class="leancloud_visitors" data-flag-title="ds之哈希表">
+             <span id="/zhangdavids.github.io/2019/01/26/al之排序/" class="leancloud_visitors" data-flag-title="al之排序">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -405,7 +383,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  236
+                  189
                 </span>
               
 
@@ -444,16 +422,190 @@
       
         
           
-            <p>哈希表</p>
-<p>从Python 3.6开始，字典的Key将会保留插入时候的顺序。例如：<br>在Python 3.6和以上的版本中，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = &#123;&apos;hello&apos;: &apos;world&apos;, &apos;xyz&apos;: &apos;abc&apos;, &apos;163&apos;: &apos;netease&apos;&#125;</span><br><span class="line">&gt;&gt;&gt; print(a)</span><br><span class="line">&#123;&apos;hello&apos;: &apos;world&apos;, &apos;xyz&apos;: &apos;abc&apos;, &apos;163&apos;: &apos;netease&apos;&#125;</span><br><span class="line">&gt;&gt;&gt; keys = list(a.keys())</span><br><span class="line">&gt;&gt;&gt; assert keys[0] == &apos;hello&apos;</span><br><span class="line">&gt;&gt;&gt; assert keys[1] == &apos;xyz&apos;</span><br><span class="line">&gt;&gt;&gt; assert keys[2] == &apos;163&apos;</span><br></pre></td></tr></table></figure>
-<p>在Python 3.5或者以下的版本中：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; a = &#123;&apos;hello&apos;: &apos;world&apos;, &apos;xyz&apos;: &apos;abc&apos;, &apos;163&apos;: &apos;netease&apos;&#125;</span><br><span class="line">&gt;&gt;&gt; print(a)</span><br><span class="line">&#123;&apos;xyz&apos;: &apos;abc&apos;, &apos;hello&apos;: &apos;world&apos;, &apos;163&apos;: &apos;netease&apos;&#125;</span><br></pre></td></tr></table></figure>
-<p>需要注意的是，Python 3.6以后的字典，保留的是插入时候的顺序 并不是可以被排序的那种顺序。</p>
-<p>哈希冲突解决  </p>
+            <h3 id="第一梯队"><a href="#第一梯队" class="headerlink" title="第一梯队"></a>第一梯队</h3><p>选择排序 </p>
+<p>搜索整个列表 找到最小项的位置 如果该位置不是列表的第一个位置 就交换这两个位置的项</p>
+<p>因为每次经过一个主循环 都要选择一个要移动的项。</p>
+<p>冒泡排序</p>
+<p>策略是从列表的开头处开始 并且比较一对数据项 直到移动到列表的末尾 顺序不正确的时候 就交换其位置</p>
+<p>插入排序</p>
+<p>简单来说 就是我们平时打扑克牌时插入牌的算法</p>
+<p>这三种排序算法 都是n的平方的排序算法</p>
+<h3 id="第二梯队"><a href="#第二梯队" class="headerlink" title="第二梯队"></a>第二梯队</h3><p>快速排序</p>
+<p>需要先找一个基准点</p>
+<p>归并排序（merge_sort）</p>
+<p>采用递归 分治</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/26/al之查找/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/26/al之查找/" itemprop="url">al之查找</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-26T13:35:33+08:00">
+                2019-01-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/01/26/al之查找/" class="leancloud_visitors" data-flag-title="al之查找">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  105
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="查找最小值"><a href="#查找最小值" class="headerlink" title="查找最小值"></a>查找最小值</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">def index_of_min(lyst):</span><br><span class="line">	minIndex = 0</span><br><span class="line">	currentIndex = 1</span><br><span class="line">	while currentIndex &lt; len(lyst):</span><br><span class="line">		if lyst[currentIndex] &lt; lyst[minIndex]:</span><br><span class="line">			minIndex = currentIndex</span><br><span class="line">		currentIndex += 1</span><br><span class="line">	return minIndex</span><br></pre></td></tr></table></figure>
+<p>python当中的min函数返回列表中的最小的项</p>
+<h3 id="顺序搜索一个列表"><a href="#顺序搜索一个列表" class="headerlink" title="顺序搜索一个列表"></a>顺序搜索一个列表</h3><p>list类名为 __contains__ 的方法实现了in的运算符操作</p>
+<h3 id="有序列表中各种-二分查找"><a href="#有序列表中各种-二分查找" class="headerlink" title="有序列表中各种 二分查找"></a>有序列表中各种 二分查找</h3><p>的变种  一定需要自己多次手写</p>
+<p>比较数据项</p>
 <ul>
-<li>开放定址法  </li>
-<li>链地址法</li>
+<li>__eq__</li>
+<li>__lt__</li>
+<li>__gt__</li>
+<li>__le__</li>
+<li>__ge__</li>
 </ul>
 
           
@@ -503,7 +655,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/21/ds之并查集/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/25/leetcode-801/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -522,7 +674,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/21/ds之并查集/" itemprop="url">ds之并查集</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/25/leetcode-801/" itemprop="url">leetcode-801</a></h1>
         
 
         <div class="post-meta">
@@ -534,390 +686,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-21T13:13:13+08:00">
-                2019-01-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/data-structure/" itemprop="url" rel="index">
-                    <span itemprop="name">data structure</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/01/21/ds之并查集/" class="leancloud_visitors" data-flag-title="ds之并查集">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.4k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  6
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>六个关系网就能达到全世界</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// quick_find.java</span><br><span class="line"></span><br><span class="line">import java.io.File;</span><br><span class="line">import java.util.Scanner;</span><br><span class="line"></span><br><span class="line">public class UF &#123;</span><br><span class="line"></span><br><span class="line">    int count;   //连通分量数</span><br><span class="line">    int[] id;    //每个数所属的连通分量</span><br><span class="line"></span><br><span class="line">    public UF(int N) &#123;   //初始化时，N个点有N个分量</span><br><span class="line">        count = N;</span><br><span class="line">        id = new int[N];</span><br><span class="line">        for (int i = 0; i &lt; N; i++)</span><br><span class="line">            id[i] = i;</span><br><span class="line">    &#125;</span><br><span class="line">    //返回连通分量数</span><br><span class="line">    public int getCount()&#123;</span><br><span class="line">        return count;</span><br><span class="line">    &#125;</span><br><span class="line">    //查找x所属的连通分量</span><br><span class="line">    public int find(int x)&#123;</span><br><span class="line">        return id[x];</span><br><span class="line">    &#125;</span><br><span class="line">    //连接p,q(将q的分量改为p所在的分量)</span><br><span class="line">    public void union(int p,int q)&#123;</span><br><span class="line">        int pID=find(p);</span><br><span class="line">        int qID=find(q);</span><br><span class="line">        for(int i=0;i&lt;id.length;i++)&#123;</span><br><span class="line">            if(find(i)==pID)&#123;</span><br><span class="line">                id[i]=qID;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        count--;    //记得每进行一次连接，分量数减“1”</span><br><span class="line">    &#125;</span><br><span class="line">    //判断p,q是否连接，即是否属于同一个分量</span><br><span class="line">    public boolean connected(int p,int q)&#123;</span><br><span class="line">        return find(p)==find(q);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) throws Exception &#123;</span><br><span class="line"></span><br><span class="line">        //数据从外部文件读入，“data.txt”放在项目的根目录下</span><br><span class="line">        Scanner input = new Scanner(new File(&quot;data.txt&quot;));  </span><br><span class="line">        int N=input.nextInt();</span><br><span class="line">        UF uf = new UF(N);</span><br><span class="line">        while(input.hasNext())&#123;</span><br><span class="line">            int p=input.nextInt();</span><br><span class="line">            int q=input.nextInt();</span><br><span class="line">            if(uf.connected(p, q)) continue;        //若p,q已属于同一连通分量不再连接，则故直接跳过</span><br><span class="line">            uf.union(p, q);</span><br><span class="line">            System.out.println(p+&quot;-&quot;+q);</span><br><span class="line">        </span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;总连通分量数：&quot;+uf.getCount());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">// quick_union.java</span><br><span class="line"></span><br><span class="line">import java.io.File;</span><br><span class="line">import java.util.Scanner;</span><br><span class="line"></span><br><span class="line">public class UF &#123;</span><br><span class="line"></span><br><span class="line">    int count;   //连通分量数</span><br><span class="line">    int[] id;    //每个数所属的连通分量</span><br><span class="line"></span><br><span class="line">    public UF(int N) &#123;   //初始化时，N个点有N个分量</span><br><span class="line">        count = N;</span><br><span class="line">        id = new int[N];</span><br><span class="line">        for (int i = 0; i &lt; N; i++)</span><br><span class="line">            id[i] = i;</span><br><span class="line">    &#125;</span><br><span class="line">    //返回连通分量数</span><br><span class="line">    public int getCount()&#123;</span><br><span class="line">        return count;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //查找x所属的连通分量</span><br><span class="line">    public int find(int x)&#123;</span><br><span class="line">        while(x!=id[x]) x = id[x];  //若找不到，则一直往根root回溯</span><br><span class="line">        return x;</span><br><span class="line">    &#125;</span><br><span class="line">    //连接p,q(将q的分量改为p所在的分量)</span><br><span class="line">    public void union(int p,int q)&#123;</span><br><span class="line">        int pID=find(p);</span><br><span class="line">        int qID=find(q);</span><br><span class="line">        if(pID==qID) return ;</span><br><span class="line">        id[qID]=pID;</span><br><span class="line">        count--;</span><br><span class="line">    &#125;</span><br><span class="line">    /*</span><br><span class="line">    //查找x所属的连通分量</span><br><span class="line">    public int find(int x)&#123;</span><br><span class="line">        return id[x];</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    //连接p,q(将q的分量改为p所在的分量)</span><br><span class="line">    public void union(int p,int q)&#123;</span><br><span class="line">        int pID=find(p);</span><br><span class="line">        int qID=find(q);</span><br><span class="line">        if(pID==qID) return ;</span><br><span class="line">        for(int i=0;i&lt;id.length;i++)&#123;</span><br><span class="line">            if(find(i)==pID)&#123;</span><br><span class="line">                id[i]=qID;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        count--;    //记得每进行一次连接，分量数减“1”</span><br><span class="line">    &#125;</span><br><span class="line">    */</span><br><span class="line">    //判断p,q是否连接，即是否属于同一个分量</span><br><span class="line">    public boolean connected(int p,int q)&#123;</span><br><span class="line">        return find(p)==find(q);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) throws Exception &#123;</span><br><span class="line"></span><br><span class="line">        //数据从外部文件读入，“data.txt”放在项目的根目录下</span><br><span class="line">        Scanner input = new Scanner(new File(&quot;data.txt&quot;));  </span><br><span class="line">        int N=input.nextInt();</span><br><span class="line">        UF uf = new UF(N);</span><br><span class="line">        while(input.hasNext())&#123;</span><br><span class="line">            int p=input.nextInt();</span><br><span class="line">            int q=input.nextInt();</span><br><span class="line">            if(uf.connected(p, q)) continue;        //若p,q已属于同一连通分量不再连接，则故直接跳过</span><br><span class="line">            uf.union(p, q);</span><br><span class="line">            System.out.println(p+&quot;-&quot;+q);</span><br><span class="line">        </span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;总连通分量数：&quot;+uf.getCount());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line">// weighted_uf.java</span><br><span class="line"></span><br><span class="line">import java.io.File;</span><br><span class="line">import java.util.Scanner;</span><br><span class="line"></span><br><span class="line">public class UF &#123;</span><br><span class="line"></span><br><span class="line">    int count; // 连通分量数</span><br><span class="line">    int[] id; // 每个数所属的连通分量</span><br><span class="line">    int[] sz;</span><br><span class="line"></span><br><span class="line">    public UF(int N) &#123; // 初始化时，N个点有N个分量</span><br><span class="line">        count = N;</span><br><span class="line">        sz = new int[N];</span><br><span class="line">        id = new int[N];</span><br><span class="line">        for (int i = 0; i &lt; N; i++)</span><br><span class="line">            id[i] = i;</span><br><span class="line"></span><br><span class="line">        for (int i = 0; i &lt; N; i++)</span><br><span class="line">            sz[i] = 1;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 返回连通分量数</span><br><span class="line">    public int getCount() &#123;</span><br><span class="line">        return count;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 查找x所属的连通分量</span><br><span class="line">    public int find(int x) &#123;</span><br><span class="line">        while (x != id[x])</span><br><span class="line">            x = id[x]; // 若找不到，则一直往根root回溯</span><br><span class="line">        return x;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 连接p,q(将q的分量改为p所在的分量)</span><br><span class="line">    public void union(int p, int q) &#123;</span><br><span class="line">        int pID = find(p);</span><br><span class="line">        int qID = find(q);</span><br><span class="line">        if (pID == qID)</span><br><span class="line">            return;</span><br><span class="line"></span><br><span class="line">        if (sz[p] &lt; sz[q]) &#123;    //通过结点数量，判断树的大小并将小树并到大树下</span><br><span class="line">            id[p] = qID;</span><br><span class="line">            sz[q] += sz[p];</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            id[q] = pID;</span><br><span class="line">            sz[p] += sz[q];</span><br><span class="line">        &#125;</span><br><span class="line">        count--;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /*</span><br><span class="line">     * //查找x所属的连通分量 public int find(int x)&#123; return id[x]; &#125;</span><br><span class="line">     * </span><br><span class="line">     * //连接p,q(将q的分量改为p所在的分量) public void union(int p,int q)&#123; int pID=find(p);</span><br><span class="line">     * int qID=find(q); if(pID==qID) return ; for(int i=0;i&lt;id.length;i++)&#123;</span><br><span class="line">     * if(find(i)==pID)&#123; id[i]=qID; &#125; &#125; count--; //记得每进行一次连接，分量数减“1” &#125;</span><br><span class="line">     */</span><br><span class="line">    // 判断p,q是否连接，即是否属于同一个分量</span><br><span class="line">    public boolean connected(int p, int q) &#123;</span><br><span class="line">        return find(p) == find(q);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) throws Exception &#123;</span><br><span class="line"></span><br><span class="line">        // 数据从外部文件读入，“data.txt”放在项目的根目录下</span><br><span class="line">        Scanner input = new Scanner(new File(&quot;data.txt&quot;));</span><br><span class="line">        int N = input.nextInt();</span><br><span class="line">        UF uf = new UF(N);</span><br><span class="line">        while (input.hasNext()) &#123;</span><br><span class="line">            int p = input.nextInt();</span><br><span class="line">            int q = input.nextInt();</span><br><span class="line">            if (uf.connected(p, q))</span><br><span class="line">                continue; // 若p,q已属于同一连通分量不再连接，则故直接跳过</span><br><span class="line">            uf.union(p, q);</span><br><span class="line">            System.out.println(p + &quot;-&quot; + q);</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(&quot;总连通分量数：&quot; + uf.getCount());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p>网络通信（比如：是否需要在通信点p,q建立通信连接）</p>
-</li>
-<li><p>媒体社交（比如：向通一个社交圈的朋友推荐商品）</p>
-</li>
-<li><p>数学集合（比如：判断元素p,q之后选择是否进行集合合并）</p>
-</li>
-</ul>
-<p>六度分隔理论，该理论认为世界上任何互不相识的两人，只需要很少的中间人就能够建立起联系。</p>
-<p>哈佛大学心理学教授斯坦利·米尔格拉姆于1967年根据这个概念做过一次连锁信实验，尝试证明平均只需要6步就可以联系任何两个互不相识的美国人。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/19/leetcode-714/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/19/leetcode-714/" itemprop="url">leetcode-714</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-19T23:14:49+08:00">
-                2019-01-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/01/19/leetcode-714/" class="leancloud_visitors" data-flag-title="leetcode-714">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  75
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>leetcode 含有手续费的买卖股票时机</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">maxProfit</span><span class="params">(self, prices, fee)</span>:</span></span><br><span class="line">        <span class="string">"""</span><br><span class="line">        :type prices: List[int]</span><br><span class="line">        :type fee: int</span><br><span class="line">        :rtype: int</span><br><span class="line">        """</span></span><br><span class="line">        n = len(prices)</span><br><span class="line">        <span class="keyword">if</span> n &lt; <span class="number">2</span>:</span><br><span class="line">             <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">        ans, minimum = <span class="number">0</span>, prices[<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">1</span>, n):</span><br><span class="line">            <span class="keyword">if</span> prices[i] &lt; minimum:</span><br><span class="line">                minimum = prices[i]</span><br><span class="line">            <span class="keyword">elif</span> prices[i] &gt; minimum + fee:</span><br><span class="line">                ans += prices[i] - fee - minimum</span><br><span class="line">                minimum = prices[i] - fee</span><br><span class="line">        <span class="keyword">return</span> ans</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/19/py连接mysql的条条大路/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/19/py连接mysql的条条大路/" itemprop="url">py连接mysql的条条大路</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-19T21:41:13+08:00">
-                2019-01-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-25T09:59:03+08:00">
+                2019-01-25
               </time>
             
 
@@ -934,176 +704,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/01/19/py连接mysql的条条大路/" class="leancloud_visitors" data-flag-title="py连接mysql的条条大路">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  55
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>1.mysqldb<br>最古老的 c api开发</p>
-<p>2.mysqlclient<br>也不支持asyncio</p>
-<p>3.pymysql</p>
-<p>纯python开发的mysql连接库 </p>
-<p>4.aiomysql</p>
-<p>需要异步访问数据库时 就可以使用此库</p>
-<p>5.mysql-connector-python</p>
-<p>建议使用3和4</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/10/dl之15种回归/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/10/dl之15种回归/" itemprop="url">dl之15种回归</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-10T14:19:02+08:00">
-                2019-01-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/01/10/dl之15种回归/" class="leancloud_visitors" data-flag-title="dl之15种回归">
+             <span id="/zhangdavids.github.io/2019/01/25/leetcode-801/" class="leancloud_visitors" data-flag-title="leetcode-801">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1202,11 +803,335 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/25/leetcode-799/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/25/leetcode-799/" itemprop="url">leetcode-799</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-25T09:54:16+08:00">
+                2019-01-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/01/25/leetcode-799/" class="leancloud_visitors" data-flag-title="leetcode-799">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  84
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    double champagneTower(int poured, int query_row, int query_glass) &#123;</span><br><span class="line">        double result[101][101] = &#123;0.0&#125;;</span><br><span class="line">        result[0][0] = poured;</span><br><span class="line">        for (int i = 0; i &lt; 100; i++) &#123;</span><br><span class="line">            for (int j = 0; j &lt;= i; j++) &#123;</span><br><span class="line">                if (result[i][j] &gt;= 1) &#123;</span><br><span class="line">                    result[i + 1][j] += (result[i][j] - 1) / 2.0;</span><br><span class="line">                    result[i + 1][j + 1] += (result[i][j] - 1) / 2.0;</span><br><span class="line">                    result[i][j] = 1;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return result[query_row][query_glass];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/25/leetcode-798/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/25/leetcode-798/" itemprop="url">leetcode-798</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-25T09:48:37+08:00">
+                2019-01-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/01/25/leetcode-798/" class="leancloud_visitors" data-flag-title="leetcode-798">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  53
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Solution(object):</span><br><span class="line">    def bestRotation(self, A):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        :type A: List[int]</span><br><span class="line">        :rtype: int</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        N = len(A)</span><br><span class="line">        change = [1] * N</span><br><span class="line">        for i in xrange(N): </span><br><span class="line">            change[(i - A[i] + 1) % N] -= 1</span><br><span class="line">        for i in xrange(1, N): </span><br><span class="line">            change[i] += change[i - 1]</span><br><span class="line">        return change.index(max(change))</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/35/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/35/">35</a><span class="page-number current">36</span><a class="page-number" href="/zhangdavids.github.io/page/37/">37</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/91/">91</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/37/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/35/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/35/">35</a><span class="page-number current">36</span><a class="page-number" href="/zhangdavids.github.io/page/37/">37</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/93/">93</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/37/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1256,7 +1181,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">454</span>
+                  <span class="site-state-item-count">465</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1267,7 +1192,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/zhangdavids.github.io/categories/index.html">
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1278,7 +1203,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/zhangdavids.github.io/tags/index.html">
-                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1371,7 +1296,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共180.7k字</span>
+  <span class="post-count">博客全站共181.7k字</span>
 </div>
 
         

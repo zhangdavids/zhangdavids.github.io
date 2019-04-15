@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/03/14/django项目配置小结/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/03/28/inspect源码分析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -328,7 +328,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/03/14/django项目配置小结/" itemprop="url">django项目配置小结</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/03/28/inspect源码分析/" itemprop="url">inspect源码分析</a></h1>
         
 
         <div class="post-meta">
@@ -340,8 +340,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-14T19:10:55+08:00">
-                2018-03-14
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-28T22:37:56+08:00">
+                2018-03-28
               </time>
             
 
@@ -351,28 +351,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/web/" itemprop="url" rel="index">
-                    <span itemprop="name">web</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -380,7 +358,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2018/03/14/django项目配置小结/" class="leancloud_visitors" data-flag-title="django项目配置小结">
+             <span id="/zhangdavids.github.io/2018/03/28/inspect源码分析/" class="leancloud_visitors" data-flag-title="inspect源码分析">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -405,397 +383,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3.1k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  12
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="dockerfile-的配置"><a href="#dockerfile-的配置" class="headerlink" title="dockerfile 的配置"></a>dockerfile 的配置</h3><pre><code>FROM python:3.5
-
-COPY ./requirements.txt /src
-WORKDIR /src
-RUN pip install -r requirements.txt
-
-COPY . /src
-EXPOSE &lt;PORT&gt;
-CMD uwsgi --http :&lt;PORT&gt; --wsgi-file &lt;path/to/wsgi.py&gt;
-</code></pre><p>python 3.3开始     标准库已经支持创建虚拟环境</p>
-<pre><code>pyvenv ENV
-# 使用k神的pipenv 管理项目依赖
-# 使用ensurepip 模块来引导启动pip python 3.4开始
-python -m ensurepip 
-</code></pre><p>使用 <a href="https://www.gitignore.io" target="_blank" rel="external">gitignore.io</a>这个网站提供的 .gitignore 文件管理代码库文件</p>
-<p>日志管理的话（以下是直接写到标准输出）</p>
-<pre><code># settings.py 
-
-# ...
-
-LOGGING = {
-    &apos;version&apos;: 1,
-    &apos;disable_existing_loggers&apos;: False,
-    &apos;formatters&apos;: {
-        &apos;verbose&apos;: {
-            &apos;format&apos;: &apos;[application] %(levelname)s %(asctime)s %(module)s %(message)s&apos;
-        }
-    },
-    &apos;handlers&apos;: {
-        &apos;console&apos;: {
-            &apos;level&apos;: &apos;DEBUG&apos;,
-            &apos;class&apos;: &apos;logging.StreamHandler&apos;,
-            &apos;stream&apos;: sys.stdout,
-            &apos;formatter&apos;: &apos;verbose&apos;
-        },
-    },
-    &apos;loggers&apos;: {
-        &apos;app&apos;: {
-            &apos;handlers&apos;: [&apos;console&apos;],
-            &apos;level&apos;: &apos;DEBUG&apos;,
-            &apos;propagate&apos;: True,
-        },
-    },
-}
-</code></pre><h3 id="自动化测试"><a href="#自动化测试" class="headerlink" title="自动化测试"></a>自动化测试</h3><p>既然是纯后端项目，工程师完全可以通过自动化测试来检测自己的代码。Django 本身对测试提供了很好的支持，可以通过 sqlite 来搭建测试数据库，还有基于内存的缓存，做测试不会增加对其他系统的依赖。开发起来事半功倍。</p>
-<p>除了要写自动化测试代码，还要能统计测试覆盖率。目前我们用的是 coverage.py 这个工具，说实话没有 node.js 的 istanbul 好用，输出的报告没有 Istanbul 详细和易读。不过用来检查 “死代码” 还是够用的。</p>
-<h3 id="针对-http-代码的测试"><a href="#针对-http-代码的测试" class="headerlink" title="针对 http 代码的测试"></a>针对 http 代码的测试</h3><p>有些项目需要对接的第三方系统比较多，比如微信认证、支付、短信等常见的，可能还有其他一些垂直业务领域的系统。这部分接口对接的代码，也应该纳入到测试当中，毕竟 Python 作为脚本语言，代码很容易出现错误。</p>
-<p>这块一般是用 responses 这个模块来 mock http 请求。</p>
-<h3 id="定时任务"><a href="#定时任务" class="headerlink" title="定时任务"></a>定时任务</h3><p>封装到command</p>
-<pre><code>import schedule
-from django.core.management.base import BaseCommand
-
-class Command(BaseCommand):
-
-    def handle(self, *args, **kwargs):
-
-        schedule.every(45).minutes.do(do_this)
-        schedule.every().day.at(&apos;04:00&apos;).do(do_that)
-
-        while True:
-            schedule.run_pending()
-            time.sleep(1)    
-</code></pre><h3 id="Django如何处理并发"><a href="#Django如何处理并发" class="headerlink" title="Django如何处理并发"></a>Django如何处理并发</h3><ul>
-<li><p>django本身提供了一个wsgi的接口，可以通过gevent，uwsgi，fastcgi等实现高并发，这里的高并发采用协程，线程，和进程都可能，或者同时采用几种。</p>
-</li>
-<li><p>对于操作数据库来说，线程安全其实不用太考虑，因为数据库的链接已经由数据库的连接池处理了，反而是数据库的竞争性的访问需要考虑多进程安全的问题，比如同时写某一个统计信息，那么就需要对这样的请求加锁，或这cas这样的机制来保证这种写操作不会冲突。</p>
-</li>
-</ul>
-<h2 id="配置举例："><a href="#配置举例：" class="headerlink" title="配置举例："></a>配置举例：</h2><pre><code># /usr/local/nginx/conf/nginx.conf
-server {  
-    listen       8088;  
-    server_name  localhost;  
-
-    #charset koi8-r;  
-
-    #access_log  logs/host.access.log  main;  
-
-    location / {  
-        root   html;  
-        index  index.html index.htm;  
-    }  
-
-
-
-## 修改配置文件
-server {
-        listen       8088;
-        server_name  localhost;
-        #charset koi8-r;
-        #access_log  logs/host.access.log  main;
-       #注释以下四行
-        #location / {
-            #root   html;
-            #index  index.html index.htm;
-        #}
-       #添加以下内容
-        location / {
-            try_files @uri @pp;
-        }
-        location @pp {
-            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            proxy_set_header Host $http_host;
-            proxy_pass http://127.0.0.1:5000;
-            #反向代理的这个IP和端口
-        }
-
-
-## gun 配置文件 config.py
-
-import gevent.monkey
-import multiprocessing
-
-gevent.monkey.patch_all()
-
-#监听本机的5000端口
-bind=&apos;0.0.0.0:5000&apos;
-
-preload_app = True
-
-#开启进程
-#workers=4
-workers = multiprocessing.cpu_count() * 2 + 1
-
-#每个进程的开启线程
-threads = multiprocessing.cpu_count() * 2
-
-backlog=2048
-
-#工作模式为gevent
-worker_class=&quot;gevent&quot;
-
-# debug=True
-
-#如果不使用supervisord之类的进程管理工具可以是进程成为守护进程，否则会出问题
-daemon = True
-
-#进程名称
-proc_name=&apos;gunicorn.pid&apos;
-
-#进程pid记录文件
-pidfile=&apos;app_pid.log&apos;
-
-loglevel=&apos;debug&apos;
-logfile = &apos;debug.log&apos;
-accesslog = &apos;access.log&apos;
-access_log_format = &apos;%(h)s %(t)s %(U)s %(q)s&apos;
-errorlog = &apos;error.log’
-</code></pre><p>启动：</p>
-<pre><code>gunicorn -c config.py(gunicorn配置文件)  flask_nginx(flask启动文件):app
-</code></pre><p>启动nginx: </p>
-<pre><code>sudo /usr/local/nginx/sbin/nginx    
-</code></pre><p>Siege命令常用参数</p>
-<pre><code>-c 500 指定并发数500
--r 5 指定测试的次数5
--f urls.txt 制定url的文件
--i internet系统，随机发送url
--b 请求无需等待 delay=0
--t 5 持续测试5分钟，默认是分，5s为5秒
-# -t和-r不能同时使用
-</code></pre><p>模拟1000个并发向URL发送5次<br>测试：</p>
-<pre><code>siege -c 1000 -r 5 http://127.0.0.1:8088(gunicorn+gevent+nginx+flask)
-</code></pre><hr>
-<h2 id="从-Tornado-说起"><a href="#从-Tornado-说起" class="headerlink" title="从 Tornado 说起"></a>从 Tornado 说起</h2><p>刚开始，对 Tornado 的感觉最为新鲜，在官网介绍里其是一个无阻塞的Web服务器以及相关工具的集合，但 个人更为倾向其为一个颇为完备的微型 web 框架。Tornado 性能好的关键是其无阻塞异步的特性，但这魔术 似的效果是如何达成的呢？迷思与困惑。我那小脑袋里的思维还停留于多进程（多线程）那样的并发模型中， 实在有点难以理解 Tornado 的异步机制。</p>
-<p>通过查阅各式文章以及源代码，整体的框架脉络开始逐渐在脑海中显现出来。其实，Tornado 的异步模型 是由事件驱动以及特定的回调函数（callback）所组成的！一直没有弄明白，Tornado 具体是如何实现 无阻塞异步，当清楚了事件驱动和回调函数的概念后，事情似乎又变得简单起来了。</p>
-<p>对于一般的程序，在执行阶段若遇到 I/O 事件，整个进程将被阻塞住，直到 I/O 事件结束，程序又继续执行。 接设我们对一些 I/O 事件进行了定制，使其可以立即返回（即无阻塞），那么程序将能立即继续执行。但 问题又来了，那当 I/O 事件完成后又该怎么办呢？此时，回调函数的威力就出来了，我只需要将进行特定 处理的回调函数与该 I/O 事件绑定起来，当该 I/O 事件完成后就调用绑定的回调函数，就可以处理具体的 I/O 事件啦。啊，似乎还有一个问题，回调函数要如何与 I/O 事件绑定起来？最简单的想法是，直接通过 一个 while True 循环不断的轮询，当检测到 I/O 事件完成了即触发回调函数。但是，这样的效率当然不会 高，利用系统中高效的 I/O 事件轮询机制（epoll on Linux, kqueue on most BSD）就是最明智的 解决方案。于是，无阻塞 I/O +事件驱动+高效轮询方式便组成了 Tornado 的异步模型。</p>
-<p>Tornado 的核心是 ioloop 和 iostream 这两个模块，前者提供了一个高效的 I/O 事件循环，后者则封装了 一个无阻塞的 socket 。通过向 ioloop 中添加网络 I/O 事件，利用无阻塞的 socket ，再搭配相应的回调 函数，便可达到梦寐以求的高效异步执行啦。多说无益，来看一下具体的示例：</p>
-<pre><code>from tornado import ioloop
-from tornado.httpclient import AsyncHTTPClient
-
-urls = [&apos;http://www.google.com&apos;, &apos;http://www.yandex.ru&apos;, &apos;http://www.python.org&apos;]
-
-def print_head(response):
-    print (&apos;%s: %s bytes: %r&apos; % (response.request.url,
-                                 len(response.body),
-                                 response.body[:50]))
-
-http_client = AsyncHTTPClient()
-for url in urls:
-    print (&apos;Starting %s&apos; % url)
-    http_client.fetch(url, print_head)
-ioloop.IOLoop.instance().start()    
-</code></pre><p>因为使用了 AsyncHTTPClient 来处理请求操作，整个示例是异步执行的，即三个url请求无等待的依次发出。 我们可以看到 fetch 方法使用了 print_head 函数来作为回调函数，这意味着，当 fetch 完成了请求操作， 相应的 print_head 函数便会被触发调用。恩，… 额，…，乍看起来，使用 Tornado 进行异步编程似乎 并不难，让人跃跃欲试。但实际上，在现实生活中，事件驱动的编程还是会很费脑力，需要一定的创造性思维。 不过，这也许是 Tornado 受欢迎的原因之一呢。</p>
-<hr>
-<h2 id="看下-Gevent"><a href="#看下-Gevent" class="headerlink" title="看下 Gevent"></a>看下 Gevent</h2><p>Gevent 是基于协程（coroutine）实现的 Python 网络库，使用了轻量级的 greenlet 作为执行单元，并 基于 libevent 事件循环构建了直观的调用接口。</p>
-<p>当时看到这样的描述，脑袋的第一反应是，协程？？稍稍了解后，发现协程其实也不是什么高深的概念，协程 也被称为微线程，一看这别名就知道跟线程应该很类似。作为类比倒也可以这么认为，两者关键的区别在于， 线程是由系统进行调度的，而协程是由用户自己进行调度的。当知道这一事实后，立刻想到，这自行调度灵活 肯定是会很灵活，但要调度的话可是很有难度的吧？调度的方法暂时不谈，除了更为灵活外，自行调度的直接 结果当然就是省去了系统调度（什么用户态转内核态，以及什么 context switch），因此协程间切换的资源 消耗很小，再配合协程生成成本很低的另一特点，这可真是相当的美妙。事实上，Python 语言本身就支持基础 的协程的概念，generator 是其中的产物（这里）。</p>
-<p>对于 Gevent，其使用的协程实际上就是 greenlet 。当你使用 greenlet 生成了一些协程，就可以在这些 协程里不断跳转执行，两个 greenlet 之间的跳转被称为切换（switch）。通过切换，我们就可以实现对协程 的调度。还应该知道的是，每个 greenlet 都拥有一个父 greenlet ，这是在 greenlet 初始化时就确定的。 当一个 greenlet 执行完毕后，执行权会切换到其父 greenlet 中。实际上，所有的 greenlet 会被组织成 一颗树，树根便是最“老资格”的 greenlet ，这个老 greenlet 确定了各 greenlet 间的逻辑关系。</p>
-<p>上面说到协程必须自行调度，不会是要自己构造一个调度器吧？这当然可以做到，但不是必须，因为 Gevent 已经基于 greenlet 和 libevent 封装了许多基础常用的库，例如 socket 、event 和 queue 等，只要使用 这些库进行开发，或者对使用的标准库或第三方库打一下补丁（monket patch），就能保证生成的各协程在 I/O 等待时正确地进行切换，从而实现无阻塞的异步执行。</p>
-<p>刚接触 Gevent 时，感觉跟传统的并发编程很类似，但了解渐深后，才发现这货实际上跟 Tornado 更为类似。 因为， Gevent 本质上也是事件驱动。实现的策略可以是，在将要执行 I/O 阻塞事件时，先在事件循环中对该事件 进行注册，关联的回调函数便是对当前协程的切换操作（current_greenlet.switch()），注册成功后即 切换回当前协程的父协程中进行执行（current_greenlet.parent.switch()）。当注册的 I/O 事件被 触发后，事件循环在恰当时机便会执行该回调函数，也就是切换到原先的协程继续执行程序。从而，就实现 无阻塞的 I/O 事件处理。怎样，是否感觉相当的有趣？ :)</p>
-<p>Gevent 了不得的地方还在于，我们能像编写一般程序那样来编写异步程序，这可是弥足珍贵。为了更直观的 显示，让我们来看一下具体的运行示例:    </p>
-<pre><code>import gevent
-from gevent import monkey
-# patches stdlib (including socket and ssl modules) to cooperate with other greenlets
-monkey.patch_all()
-
-import urllib2
-
-urls = [&apos;http://www.google.com&apos;, &apos;http://www.yandex.ru&apos;, &apos;http://www.python.org&apos;]
-
-def print_head(url):
-    print (&apos;Starting %s&apos; % url)
-    data = urllib2.urlopen(url).read()
-    print (&apos;%s: %s bytes: %r&apos; % (url, len(data), data[:50]))
-
-jobs = [gevent.spawn(print_head, url) for url in urls]
-
-gevent.joinall(jobs)
-</code></pre><p>上面示例做的事情实际上跟前面 Tornado 的示例是一样，同样是异步的对url进行请求。在我看来，使用 Gevent 进行编程，无论是可读性还是可操作性都能让人满意。但也要清楚，在实际操作中，为了达到较理想 效果，经常还是需要根据不同的情况对代码进行一些相应的“雕琢”。还有一点很常被人忽略， Gevent 是 基于协程实现的 Python 网络库，其适用面更多的是在于网络 I/O 频繁的需求里，很多情况下 Gevent 可能 并不是很好的选择。总的来说，Gevent 确实很讨人喜爱，性能好，开销小，代码易维护，是广大 pythoner 手中的一大利器。    </p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/03/14/flask-gevent使用实例/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/03/14/flask-gevent使用实例/" itemprop="url">flask+gevent使用实例</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-14T18:59:51+08:00">
-                2018-03-14
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/web/" itemprop="url" rel="index">
-                    <span itemprop="name">web</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2018/03/14/flask-gevent使用实例/" class="leancloud_visitors" data-flag-title="flask+gevent使用实例">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  229
+                  0
                 </span>
               
 
@@ -834,64 +422,7 @@ gevent.joinall(jobs)
       
         
           
-            <pre><code>&quot;&quot;&quot;Asynchronous requests in Flask with gevent&quot;&quot;&quot;
-
-from time import time
-
-from flask import Flask, Response
-
-from gevent.pywsgi import WSGIServer
-from gevent import monkey
-
-import requests
-
-# need to patch sockets to make requests async
-monkey.patch_all()
-
-CHUNK_SIZE = 1024*1024  # bytes
-
-app = Flask(__name__)  # pylint: disable=invalid-name
-app.debug = True
-
-
-@app.route(&apos;/Seattle.jpg&apos;)
-def seattle(requests_counter=[0]):  # pylint: disable=dangerous-default-value
-    &quot;&quot;&quot;Asynchronous non-blocking streaming of relatively large (14.5MB) JPG
-    of Seattle from wikimedia commons.
-    &quot;&quot;&quot;
-    requests_counter[0] += 1
-    request_num = requests_counter[0]
-    url = &apos;http://upload.wikimedia.org/wikipedia/commons/3/39/Seattle_3.jpg&apos;
-
-    app.logger.debug(&apos;started %d&apos;, request_num)
-
-    rsp = requests.get(url, stream=True)
-
-    def generator():
-        &quot;streaming generator logging the end of request processing&quot;
-        yield &apos;&apos;  # to make greenlet switch
-        for data in rsp.iter_content(CHUNK_SIZE):
-            yield data
-        app.logger.debug(&apos;finished %d&apos;, request_num)
-
-    return Response(generator(), mimetype=&apos;image/jpeg&apos;)
-
-
-def main():
-    &quot;Start gevent WSGI server&quot;
-    # use gevent WSGI server instead of the Flask
-    http = WSGIServer((&apos;&apos;, 5000), app.wsgi_app)
-    # TODO gracefully handle shutdown
-    http.serve_forever()
-
-
-if __name__ == &apos;__main__&apos;:
-    main()
-</code></pre><p>使用测试：</p>
-<pre><code>pip install flask gevent requests
-
-python async_flask.py &amp; siege -c 1000 -t 5s http://127.0.0.1:5000/Seattle.jpg    
-</code></pre>
+            
           
         
       
@@ -939,7 +470,7 @@ python async_flask.py &amp; siege -c 1000 -t 5s http://127.0.0.1:5000/Seattle.jp
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/03/13/python当中的并发/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/03/28/gevent-note/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -958,7 +489,7 @@ python async_flask.py &amp; siege -c 1000 -t 5s http://127.0.0.1:5000/Seattle.jp
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/03/13/python当中的并发/" itemprop="url">python当中的并发</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/03/28/gevent-note/" itemprop="url">gevent-note</a></h1>
         
 
         <div class="post-meta">
@@ -970,198 +501,8 @@ python async_flask.py &amp; siege -c 1000 -t 5s http://127.0.0.1:5000/Seattle.jp
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-13T23:19:15+08:00">
-                2018-03-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2018/03/13/python当中的并发/" class="leancloud_visitors" data-flag-title="python当中的并发">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  361
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>并发的表现形式，并行处理是软件工程领域最广泛的话题之一。</p>
-<p>两个事件互不影响，则两个事件是并发的。<br>CPython的线程实现中带有一些麻烦的细节，使得实用性降低了。</p>
-<p>GIL 只是强制在任何时候只有一个线程可以执行python代码</p>
-<p>多线程可以使用的场景：</p>
-<ul>
-<li>构建响应式界面</li>
-<li>委派工作</li>
-<li>构建多用户应用程序</li>
-</ul>
-<p>如何让用户控制使用哪个处理后端（进程或者线程）</p>
-<pre><code>from multiprocessing import Pool as ProcessPool
-from multiprocessing.dummpy import Pool as ThreadPool
-
-
-def main(use_threads=False):
-    if use_threads:
-        pool_cls = ThreadPool
-    else:
-        pool_cls = ProcessPool
-
-    with pool_cls(4) as p:
-        results = p.map(fetch_place, PLACES)
-
-    for result in results:
-        present_result(result)
-</code></pre><h2 id="异步编程"><a href="#异步编程" class="headerlink" title="异步编程"></a>异步编程</h2><p>异步编程的解决方案，如twisted tornado eventlet,真的值得了解</p>
-<p>协同多任务是异步编程的核心。每个进程都在空闲时自动释放控制以允许同时执行多个程序。</p>
-<p>gevent 的工作方式，gevent 的作用一条线程跑多个协程，适合多 IO 操作。</p>
-<p>需要强调的是引入 gevent 不会加快获取数据的速度，例如，原来是 30ms，引入之后不会变少，只会变多，那么引入的好处是什么？原来你能在1秒之内接待33个客户端请求，引入之后可能可以接待100个/s，也可能接待 300个/s，这才是 gevent 的好处。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/03/13/flask-and-gevent/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/03/13/flask-and-gevent/" itemprop="url">flask and gevent</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-13T18:29:27+08:00">
-                2018-03-13
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-28T20:17:21+08:00">
+                2018-03-28
               </time>
             
 
@@ -1200,7 +541,7 @@ def main(use_threads=False):
 
           
           
-             <span id="/zhangdavids.github.io/2018/03/13/flask-and-gevent/" class="leancloud_visitors" data-flag-title="flask and gevent">
+             <span id="/zhangdavids.github.io/2018/03/28/gevent-note/" class="leancloud_visitors" data-flag-title="gevent-note">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1225,7 +566,7 @@ def main(use_threads=False):
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  359
+                  1.4k
                 </span>
               
 
@@ -1241,7 +582,7 @@ def main(use_threads=False):
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  4
                 </span>
               
             </div>
@@ -1264,25 +605,19 @@ def main(use_threads=False):
       
         
           
-            <h3 id="异步-WEB-架构的特点："><a href="#异步-WEB-架构的特点：" class="headerlink" title="异步 WEB 架构的特点："></a>异步 WEB 架构的特点：</h3><p>gevent 为 Python 提供了比较完善的协程支持，其基于 greenlet 实现协程。</p>
-<p>当 greenlet 遇到如网络访问、磁盘 IO 等操作时，就将自动切换至其他的 greenlet，待操作完成后，在适合的时间点回切 greenlet 继续执行。由于网络访问、磁盘 IO 等操作耗时较长，且实际 CPU 使用率较低（大部分工作由 DMA 等设备完成）。所以倘若非异步，涉及以上操作并发将以顺序执行， CPU 长期处于空闲状态。而异步模式将能实现并发程序间的切换，从而保证 CPU 有较高的利用率，而不是等待如网络访问、磁盘 IO 等操作。 </p>
-<p><em>注意：gevent 的使用并不能减少实际 CPU 的使用量，所以若程序的执行过程消耗的全为 CPU 资源，则其异步也是毫无意义的。</em></p>
-<h3 id="Flask-gevent-的最小程序实例："><a href="#Flask-gevent-的最小程序实例：" class="headerlink" title="Flask+gevent 的最小程序实例："></a>Flask+gevent 的最小程序实例：</h3><p>最小程序实例如下。</p>
-<pre><code>from gevent import monkey
-monkey.patch_all()
-from flask import Flask
-from gevent import pywsgi
-
-app = Flask(__name__)
-
-@app.route(&apos;/&apos;)
-def index():
-    return &apos;Hello World&apos;
-
-server = pywsgi.WSGIServer((&apos;127.0.0.1&apos;, 5000), app)
-server.serve_forever()
-</code></pre><p>注意：为实现 Flask 与 gevent 的结合，需在程序开头引入 monkey patch。monkey patch 将以闭包的形式修改可以实现异步的标准库，从而实现异步。</p>
-<p>注意：需使用支持 gevent 的 WSGI，例如：gevent.pywsgi、gunicorn 等。</p>
+            <p>Coroutine 也就是 corporate routine，直译为「协同的例程」，中文一般叫做「协程」, 实际上这个概念和进程与线程有相似之处, 因为linux线程就是所谓的「轻量级进程」。</p>
+<p>在gevent源码分析中找到一段表述的比较好的描述进程和协程异同的内容:</p>
+<p>相同点:</p>
+<p>二者都是可以看做是一种执行流, 该执行流可以挂起,并且在将来又可以在 你挂起的地方恢复执行, 这实际上都可以看做是continuation, 我们来看看当我们挂 起一个执行流时我们要保存的东西：<br>栈, 因为如果你不保存栈,那么局部变量你就无法恢复,同时函数的调用链你也无 法恢复,<br>寄存器的状态: 这好理解, 比如说EIP,如果你不保存,那么你恢复执行流就不知道 到底执行哪一条指令, 在比如说ESP,EBP, 如果你不保存,那么你即便有完整的栈 你也不知道怎么用.<br>这二者实际就是所谓的上下文,也可以说是continuation. 在执行流切换时必须保存 这两个东西, 内核调度进程时也是一回事.</p>
+<p>不同点:</p>
+<p>执行流的调度者不同, 进程是内核调度, 而协程是在用户态调度, 也就是说进程 的上下文是在内核态保存恢复的,而协程是在用户态保存恢复的. 很显然用户态的 代价更低<br>进程会被抢占,而协程不会,也就是说协程如果不主动让出CPU,那么其他的协程是不 可能得到执行机会,这实际和早期的操作系统类似,比如DOS, 它有一个yield原语, 一个进程调用yield,那么它就会让出CPU, 其他的进程也就有机会执行了, 如果一 个进程进入了死循环,那么整个系统也就挂起了,永远无法运行其他的进程了, 但 对协程而言,这不是问题<br>对内存的占用不同,实际上协程可以只需要4K的栈就够了, 而进程占用的内存要大 的多.<br>从操作系统的角度讲, 多协程的程序是单线程,单进程的<br>那用一句话描述协程的优势就是由开发者决定协程的切换，操作系统无法干预切换，且占用内存小的多。</p>
+<p>Gevent是一种基于协程的Python网络库，它用到Greenlet提供的，封装了libevent事件循环的高层同步API。它让开发者在不改变编程习惯的同时，用同步的方式写异步I/O的代码。</p>
+<p>Gvanrossum从来不喜欢Gevent，而是更愿意另辟蹊径的实现asyncio(基于生成器的协程)。</p>
+<p><strong>1.Monkey-patching</strong>。中文「猴子补丁」，常用于对测试环境做一些hack。我个人不太喜欢这种「黑魔法」，因为如果其他人不了解细节，极为容易产生困惑。Gvanrossum说用它就是”patch-and-pray”，太形象了。由于Gevent直接修改标准库里面大部分的阻塞式系统调用，包括socket、ssl、threading和 select等模块，而变为协作式运行。但是我们无法保证你在复杂的生产环境中有哪些地方使用这些标准库会由于打了补丁而出现奇怪的问题，那么你只能祈祷（pray）了。其次，在Python之禅中明确说过：「Explicit is better than implicit.」，猴子补丁明显的背离了这个原则。最后，Gvanrossum说Stackless之父Christian Tismer也赞同他。 我喜欢显式的「yield from」</p>
+<p><strong>2.第三方库支持</strong>。得确保项目中用到其他用到的网络库也必须使用纯Python或者明确说明支持Gevent，而且就算有这样的第三方库，我还会担心这个第三方库的代码质量和功能性。<br>Greenlet不支持Jython和IronPython，这样就无法把gevent设计成一个标准库了。<br>之前是没有选择，很多人选择了Gevent，而现在明确的有了更正统的、正确的选择：asyncio（下一篇会详细介绍）。所以建议大家放弃Gevent，拥抱asyncio。</p>
+<p>在Python 2的时代，高性能的网络编程主要是使用Twisted、Tornado和Gevent这三个库，但是它们的异步代码相互之间既不兼容也不能移植。如上一节说的，Gvanrossum希望在Python 3 实现一个原生的基于生成器的协程库，其中直接内置了对异步IO的支持，这就是asyncio，它在Python 3.4被引入到标准库。</p>
+<p>Python 3.5添加了async和await这两个关键字，分别用来替换asyncio.coroutine和yield from。自此，协程成为新的语法，而不再是一种生成器类型了。事件循环与协程的引入，可以极大提高高负载下程序的I/O性能。除此之外还增加了async with(异步上下文管理)、async for(异步迭代器)语法。特别说的是，在新发布的Python 3.6里面终于可以用异步生成器了！</p>
+<p>现存的一些库其实并不能原生的支持asyncio（因为会发生阻塞或者功能不可用），比如requests，如果要写爬虫，配合asyncio的应该用aiohttp，其他的如数据库驱动等各种Python对应的库也都得使用对应的aioXXX版本了。</p>
 
           
         
@@ -1331,7 +666,7 @@ server.serve_forever()
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/03/10/python基础20题/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/03/27/one-blockchain-src-anal/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -1350,7 +685,7 @@ server.serve_forever()
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/03/10/python基础20题/" itemprop="url">python基础20题</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/03/27/one-blockchain-src-anal/" itemprop="url">one-blockchain-src-anal</a></h1>
         
 
         <div class="post-meta">
@@ -1362,8 +697,8 @@ server.serve_forever()
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-10T10:20:36+08:00">
-                2018-03-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-27T22:37:51+08:00">
+                2018-03-27
               </time>
             
 
@@ -1380,7 +715,7 @@ server.serve_forever()
 
           
           
-             <span id="/zhangdavids.github.io/2018/03/10/python基础20题/" class="leancloud_visitors" data-flag-title="python基础20题">
+             <span id="/zhangdavids.github.io/2018/03/27/one-blockchain-src-anal/" class="leancloud_visitors" data-flag-title="one-blockchain-src-anal">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1405,7 +740,7 @@ server.serve_forever()
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.1k
+                  1.3k
                 </span>
               
 
@@ -1444,142 +779,840 @@ server.serve_forever()
       
         
           
-            <p>1.简述函数式编程</p>
-<p>在函数式编程中，函数是基本单位，变量只是一个名称，而不是一个存储单元。除了匿名函数外，Python还使用fliter(),map(),reduce(),apply()函数来支持函数式编程。</p>
-<p>2.什么是匿名函数，匿名函数有什么局限性</p>
-<p>匿名函数，也就是lambda函数，通常用在函数体比较简单的函数上。匿名函数顾名思义就是函数没有名字，因此不用担心函数名冲突。不过Python对匿名函数的支持有限，只有一些简单的情况下可以使用匿名函数。</p>
-<p>3.如何捕获异常，常用的异常机制有哪些？</p>
-<p>如果我们没有对异常进行任何预防，那么在程序执行的过程中发生异常，就会中断程序，调用python默认的异常处理器，并在终端输出异常信息。</p>
-<p>try…except…finally语句:当try语句执行时发生异常，回到try语句层，寻找后面是否有except语句。找到except语句后，会调用这个自定义的异常处理器。except将异常处理完毕后，程序继续往下执行。finally语句表示，无论异常发生与否，finally中的语句都要执行。</p>
-<p>assert语句：判断assert后面紧跟的语句是True还是False，如果是True则继续执行print，如果是False则中断程序，调用默认的异常处理器，同时输出assert语句逗号后面的提示信息。</p>
-<p>with语句：如果with语句或语句块中发生异常，会调用默认的异常处理器处理，但文件还是会正常关闭。</p>
-<p>4.copy()与deepcopy()的区别</p>
-<p>copy是浅拷贝，只拷贝可变对象的父级元素。 deepcopy是深拷贝，递归拷贝可变对象的所有元素。</p>
-<p>5.函数装饰器有什么作用（常考）</p>
-<p>装饰器本质上是一个Python函数，它可以让其他函数在不需要做任何代码变动的前提下增加额外功能，装饰器的返回值也是一个函数对象。它经常用于有切面需求的场景，比如：插入日志、性能测试、事务处理、缓存、权限校验等场景。有了装饰器，就可以抽离出大量与函数功能本身无关的雷同代码并继续重用。</p>
-<p>6.简述Python的作用域以及Python搜索变量的顺序</p>
-<p>Python作用域简单说就是一个变量的命名空间。代码中变量被赋值的位置，就决定了哪些范围的对象可以访问这个变量，这个范围就是变量的作用域。在Python中，只有模块（module），类（class）以及函数（def、lambda）才会引入新的作用域。Python的变量名解析机制也称为 LEGB 法则：本地作用域（Local）→当前作用域被嵌入的本地作用域（Enclosing locals）→全局/模块作用域（Global）→内置作用域（Built-in）</p>
-<p>7.新式类和旧式类的区别,如何确保使用的类是新式类</p>
-<p>为了统一类(class)和类型(type)，python在2.2版本引进来新式类。在2.1版本中，类和类型是不同的。</p>
-<p>为了确保使用的是新式类，有以下方法：</p>
-<p>放在类模块代码的最前面 <strong>metaclass</strong> = type<br>从内建类object直接或者间接地继承<br>在python3版本中，默认所有的类都是新式类。</p>
-<p>8.简述<strong>new</strong>和<strong>init</strong>的区别</p>
-<p>创建一个新实例时调用<strong>new</strong>,初始化一个实例时用<strong>init</strong>,这是它们最本质的区别。</p>
-<p>new方法会返回所构造的对象，init则不会.</p>
-<p>new函数必须以cls作为第一个参数，而init则以self作为其第一个参数.</p>
-<p>9.Python垃圾回收机制(常考)</p>
-<p>Python GC主要使用引用计数（reference counting）来跟踪和回收垃圾。在引用计数的基础上，通过“标记-清除”（mark and sweep）解决容器对象可能产生的循环引用问题，通过“分代回收”（generation collection）以空间换时间的方法提高垃圾回收效率。</p>
-<p>1 引用计数</p>
-<p>PyObject是每个对象必有的内容，其中ob_refcnt就是做为引用计数。当一个对象有新的引用时，它的ob_refcnt就会增加，当引用它的对象被删除，它的ob_refcnt就会减少.引用计数为0时，该对象生命就结束了。</p>
-<p>优点:</p>
-<p>简单 实时性 缺点:</p>
-<p>维护引用计数消耗资源 循环引用</p>
-<p>2 标记-清除机制</p>
-<p>基本思路是先按需分配，等到没有空闲内存的时候从寄存器和程序栈上的引用出发，遍历以对象为节点、以引用为边构成的图，把所有可以访问到的对象打上标记，然后清扫一遍内存空间，把所有没标记的对象释放。</p>
-<p>3 分代技术</p>
-<p>分代回收的整体思想是：将系统中的所有内存块根据其存活时间划分为不同的集合，每个集合就成为一个“代”，垃圾收集频率随着“代”的存活时间的增大而减小，存活时间通常利用经过几次垃圾回收来度量。</p>
-<p>Python默认定义了三代对象集合，索引数越大，对象存活时间越长。</p>
-<p>10.Python中的@property有什么作用?如何实现成员变量的只读属性？</p>
-<p>@property装饰器就是负责把一个方法变成属性调用，通常用在属性的get方法和set方法，通过设置@property可以实现实例成员变量的直接访问，又保留了参数的检查。另外通过设置get方法而不定义set方法可以实现成员变量的只读属性。</p>
-<p>11.*args and **kwargs</p>
-<pre><code>*args代表位置参数，它会接收任意多个参数并把这些参数作为元组传递给函数。**kwargs代表的关    
-键字参数，允许你使用没有事先定义的参数名，另外，位置参数一定要放在关键字参数的前面。
-</code></pre><p>12.有用过with statement吗？它的好处是什么？具体如何实现？</p>
-<p>with语句适用于对资源进行访问的场合，确保不管使用过程中是否发生异常都会执行必要的“清理”操作，释放资源，比如文件使用后自动关闭、线程中锁的自动获取和释放等。</p>
-<p>13.写出代码输出 并解释</p>
-<pre><code>def extend_list(val, list=[]):
-list.append(val)
-return list
+            <p>看看代码的实现：</p>
+<pre><code>import hashlib
+import json
+from time import time
+from urllib.parse import urlparse
+from uuid import uuid4
 
-list1 = extend_list(10)
-list2 = extend_list(123, [])
-list3 = extend_list(&apos;a&apos;)
+import requests
+from flask import Flask, jsonify, request
 
-print(list1) # list1 = [10, &apos;a&apos;]
-print(list2) # list2 = [123, []]
-print(list3) # list3 = [10, &apos;a&apos;]
 
-class Parent(object):
-    x = 1
+class Blockchain:
+    def __init__(self):
+        self.current_transactions = []
+        self.chain = []
+        self.nodes = set()
 
-class Child1(Parent):
-    pass
+        # Create the genesis block
+        self.new_block(previous_hash=&apos;1&apos;, proof=100)
 
-class Child2(Parent):
-    pass
+    def register_node(self, address):
+        &quot;&quot;&quot;
+        Add a new node to the list of nodes
 
-print(Parent.x, Child1.x, Child2.x)  # [1,1,1]
-Child1.x = 2
-print(Parent.x, Child1.x, Child2.x)  # [1,2,1]
-Partent.x = 3
-print(Parent.x, Child1.x, Child2.x)  # [3,2,3]
-</code></pre><p>14.在一个二维数组中，每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。</p>
-<pre><code>arr = [[1,4,7,10,15], [2,5,8,12,19], [3,6,9,16,22], [10,13,14,17,24], [18,21,23,26,30]]
+        :param address: Address of node. Eg. &apos;http://192.168.0.5:5000&apos;
+        &quot;&quot;&quot;
 
-def getNum(num, data=None):
-    while data:
-        if num &gt; data[0][-1]:
-            del data[0]
-            print(data)
-            getNum(num, data=None)
-        elif num &lt; data[0][-1]:
-            data = list(zip(*data))
-            del data[-1]
-            data = list(zip(*data))
-            print(data)
-            getNum(num, data=None)
+        parsed_url = urlparse(address)
+        if parsed_url.netloc:
+            self.nodes.add(parsed_url.netloc)
+        elif parsed_url.path:
+            # Accepts an URL without scheme like &apos;192.168.0.5:5000&apos;.
+            self.nodes.add(parsed_url.path)
         else:
+            raise ValueError(&apos;Invalid URL&apos;)
+
+
+    def valid_chain(self, chain):
+        &quot;&quot;&quot;
+        Determine if a given blockchain is valid
+
+        :param chain: A blockchain
+        :return: True if valid, False if not
+        &quot;&quot;&quot;
+
+        last_block = chain[0]
+        current_index = 1
+
+        while current_index &lt; len(chain):
+            block = chain[current_index]
+            print(f&apos;{last_block}&apos;)
+            print(f&apos;{block}&apos;)
+            print(&quot;\n-----------\n&quot;)
+            # Check that the hash of the block is correct
+            if block[&apos;previous_hash&apos;] != self.hash(last_block):
+                return False
+
+            # Check that the Proof of Work is correct
+            if not self.valid_proof(last_block[&apos;proof&apos;], block[&apos;proof&apos;], last_block[&apos;previous_hash&apos;]):
+                return False
+
+            last_block = block
+            current_index += 1
+
+        return True
+
+    def resolve_conflicts(self):
+        &quot;&quot;&quot;
+        This is our consensus algorithm, it resolves conflicts
+        by replacing our chain with the longest one in the network.
+
+        :return: True if our chain was replaced, False if not
+        &quot;&quot;&quot;
+
+        neighbours = self.nodes
+        new_chain = None
+
+        # We&apos;re only looking for chains longer than ours
+        max_length = len(self.chain)
+
+        # Grab and verify the chains from all the nodes in our network
+        for node in neighbours:
+            response = requests.get(f&apos;http://{node}/chain&apos;)
+
+            if response.status_code == 200:
+                length = response.json()[&apos;length&apos;]
+                chain = response.json()[&apos;chain&apos;]
+
+                # Check if the length is longer and the chain is valid
+                if length &gt; max_length and self.valid_chain(chain):
+                    max_length = length
+                    new_chain = chain
+
+        # Replace our chain if we discovered a new, valid chain longer than ours
+        if new_chain:
+            self.chain = new_chain
             return True
-            data.clear()
-    return False
+
+        return False
+
+    def new_block(self, proof, previous_hash):
+        &quot;&quot;&quot;
+        Create a new Block in the Blockchain
+
+        :param proof: The proof given by the Proof of Work algorithm
+        :param previous_hash: Hash of previous Block
+        :return: New Block
+        &quot;&quot;&quot;
+
+        block = {
+            &apos;index&apos;: len(self.chain) + 1,
+            &apos;timestamp&apos;: time(),
+            &apos;transactions&apos;: self.current_transactions,
+            &apos;proof&apos;: proof,
+            &apos;previous_hash&apos;: previous_hash or self.hash(self.chain[-1]),
+        }
+
+        # Reset the current list of transactions
+        self.current_transactions = []
+
+        self.chain.append(block)
+        return block
+
+    def new_transaction(self, sender, recipient, amount):
+        &quot;&quot;&quot;
+        Creates a new transaction to go into the next mined Block
+
+        :param sender: Address of the Sender
+        :param recipient: Address of the Recipient
+        :param amount: Amount
+        :return: The index of the Block that will hold this transaction
+        &quot;&quot;&quot;
+        self.current_transactions.append({
+            &apos;sender&apos;: sender,
+            &apos;recipient&apos;: recipient,
+            &apos;amount&apos;: amount,
+        })
+
+        return self.last_block[&apos;index&apos;] + 1
+
+    @property
+    def last_block(self):
+        return self.chain[-1]
+
+    @staticmethod
+    def hash(block):
+        &quot;&quot;&quot;
+        Creates a SHA-256 hash of a Block
+
+        :param block: Block
+        &quot;&quot;&quot;
+
+        # We must make sure that the Dictionary is Ordered, or we&apos;ll have inconsistent hashes
+        block_string = json.dumps(block, sort_keys=True).encode()
+        return hashlib.sha256(block_string).hexdigest()
+
+    def proof_of_work(self, last_block):
+        &quot;&quot;&quot;
+        Simple Proof of Work Algorithm:
+
+         - Find a number p&apos; such that hash(pp&apos;) contains leading 4 zeroes
+         - Where p is the previous proof, and p&apos; is the new proof
+
+        :param last_block: &lt;dict&gt; last Block
+        :return: &lt;int&gt;
+        &quot;&quot;&quot;
+
+        last_proof = last_block[&apos;proof&apos;]
+        last_hash = self.hash(last_block)
+
+        proof = 0
+        while self.valid_proof(last_proof, proof, last_hash) is False:
+            proof += 1
+
+        return proof
+
+    @staticmethod
+    def valid_proof(last_proof, proof, last_hash):
+        &quot;&quot;&quot;
+        Validates the Proof
+
+        :param last_proof: &lt;int&gt; Previous Proof
+        :param proof: &lt;int&gt; Current Proof
+        :param last_hash: &lt;str&gt; The hash of the Previous Block
+        :return: &lt;bool&gt; True if correct, False if not.
+
+        &quot;&quot;&quot;
+
+        guess = f&apos;{last_proof}{proof}{last_hash}&apos;.encode()
+        guess_hash = hashlib.sha256(guess).hexdigest()
+        return guess_hash[:4] == &quot;0000&quot;
 
 
-if __name__ == &apos;__main__&apos;:
-    print(getNum(18, arr))    
-</code></pre><p>15.获取最大公约数、最小公倍数</p>
-<pre><code>a = 36
-b = 21
+# Instantiate the Node
+app = Flask(__name__)
 
-def maxCommon(a, b):
-    while b: a,b = b, a%b
-    return a
+# Generate a globally unique address for this node
+node_identifier = str(uuid4()).replace(&apos;-&apos;, &apos;&apos;)
 
-def minCommon(a, b):
-    c = a*b
-    while b: a,b = b, a%b
-    return c//a
+# Instantiate the Blockchain
+blockchain = Blockchain()
 
-if __name__ == &apos;__main__&apos;:
-    print(maxCommon(a,b))
-    print(minCommon(a,b))
-</code></pre><p>16.获取中位数</p>
-<pre><code>def median(data):
-    data.sort()
-    half = len(data) // 2
-    return (data[half] + data[~half])/2
 
-l = [1,3,4,53,2,46,8,42,82]
+@app.route(&apos;/mine&apos;, methods=[&apos;GET&apos;])
+def mine():
+    # We run the proof of work algorithm to get the next proof...
+    last_block = blockchain.last_block
+    proof = blockchain.proof_of_work(last_block)
 
-if __name__ == &apos;__main__&apos;:
-    print(median(l))    
-</code></pre><p>17.输入一个整数，输出该数二进制表示中1的个数。其中负数用补码表示。</p>
-<pre><code>def getOneCount(num):
-    if num &gt; 0:
-        count = b_num.count(&apos;1&apos;)
-        print(b_num)
-        return count
-    elif num &lt; 0:
-        b_num = bin(~num)
-        count = 8 - b_num.count(&apos;1&apos;)
-        return count
+    # We must receive a reward for finding the proof.
+    # The sender is &quot;0&quot; to signify that this node has mined a new coin.
+    blockchain.new_transaction(
+        sender=&quot;0&quot;,
+        recipient=node_identifier,
+        amount=1,
+    )
+
+    # Forge the new Block by adding it to the chain
+    previous_hash = blockchain.hash(last_block)
+    block = blockchain.new_block(proof, previous_hash)
+
+    response = {
+        &apos;message&apos;: &quot;New Block Forged&quot;,
+        &apos;index&apos;: block[&apos;index&apos;],
+        &apos;transactions&apos;: block[&apos;transactions&apos;],
+        &apos;proof&apos;: block[&apos;proof&apos;],
+        &apos;previous_hash&apos;: block[&apos;previous_hash&apos;],
+    }
+    return jsonify(response), 200
+
+
+@app.route(&apos;/transactions/new&apos;, methods=[&apos;POST&apos;])
+def new_transaction():
+    values = request.get_json()
+
+    # Check that the required fields are in the POST&apos;ed data
+    required = [&apos;sender&apos;, &apos;recipient&apos;, &apos;amount&apos;]
+    if not all(k in values for k in required):
+        return &apos;Missing values&apos;, 400
+
+    # Create a new Transaction
+    index = blockchain.new_transaction(values[&apos;sender&apos;], values[&apos;recipient&apos;], values[&apos;amount&apos;])
+
+    response = {&apos;message&apos;: f&apos;Transaction will be added to Block {index}&apos;}
+    return jsonify(response), 201
+
+
+@app.route(&apos;/chain&apos;, methods=[&apos;GET&apos;])
+def full_chain():
+    response = {
+        &apos;chain&apos;: blockchain.chain,
+        &apos;length&apos;: len(blockchain.chain),
+    }
+    return jsonify(response), 200
+
+
+@app.route(&apos;/nodes/register&apos;, methods=[&apos;POST&apos;])
+def register_nodes():
+    values = request.get_json()
+
+    nodes = values.get(&apos;nodes&apos;)
+    if nodes is None:
+        return &quot;Error: Please supply a valid list of nodes&quot;, 400
+
+    for node in nodes:
+        blockchain.register_node(node)
+
+    response = {
+        &apos;message&apos;: &apos;New nodes have been added&apos;,
+        &apos;total_nodes&apos;: list(blockchain.nodes),
+    }
+    return jsonify(response), 201
+
+
+@app.route(&apos;/nodes/resolve&apos;, methods=[&apos;GET&apos;])
+def consensus():
+    replaced = blockchain.resolve_conflicts()
+
+    if replaced:
+        response = {
+            &apos;message&apos;: &apos;Our chain was replaced&apos;,
+            &apos;new_chain&apos;: blockchain.chain
+        }
     else:
-        return 8
+        response = {
+            &apos;message&apos;: &apos;Our chain is authoritative&apos;,
+            &apos;chain&apos;: blockchain.chain
+        }
+
+    return jsonify(response), 200
+
 
 if __name__ == &apos;__main__&apos;:
-    print(getOneCount(5))
-    print(getOneCount(-5))
-    print(getOneCount(0))    
+    from argparse import ArgumentParser
+
+    parser = ArgumentParser()
+    parser.add_argument(&apos;-p&apos;, &apos;--port&apos;, default=5000, type=int, help=&apos;port to listen on&apos;)
+    args = parser.parse_args()
+    port = args.port
+
+    app.run(host=&apos;0.0.0.0&apos;, port=port)
+</code></pre><p> 提供了几个url:</p>
+<pre><code>mine GET
+
+transactions/new POST
+
+chain GET
+
+nodes/register POST
+
+nodes/resolve GET
+
+/transactions/new to create a new transaction to a block
+/mine to tell our server to mine a new block.
+/chain to return the full Blockchain.
+/nodes/register to accept a list of new nodes in the form of URLs.
+/nodes/resolve to implement our Consensus Algorithm, which resolves any 
+        conflicts—to ensure a node has the correct chain.
+</code></pre><p>单个区块：</p>
+<pre><code>block = {
+    &apos;index&apos;: 1,
+    &apos;timestamp&apos;: 1506057125.900785,
+    &apos;transactions&apos;: [
+        {
+            &apos;sender&apos;: &quot;8527147fe1f5426f9dd545de4b27ee00&quot;,
+            &apos;recipient&apos;: &quot;a77f5cdfa2934df3954a5c7c7da5df1f&quot;,
+            &apos;amount&apos;: 5,
+        }
+    ],
+    &apos;proof&apos;: 324984774000,
+    &apos;previous_hash&apos;: &quot;2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824&quot;
+}    
 </code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/03/27/blockchain-note/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/03/27/blockchain-note/" itemprop="url">blockchain-note</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-27T19:21:12+08:00">
+                2018-03-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/AI/" itemprop="url" rel="index">
+                    <span itemprop="name">AI</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2018/03/27/blockchain-note/" class="leancloud_visitors" data-flag-title="blockchain-note">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  614
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="区块链"><a href="#区块链" class="headerlink" title="区块链"></a>区块链</h2><p>中本聪2008年发表了《比特币：一种点对点式的电子现金系统》的论文。<br>以太坊是2013年开创的项目。</p>
+<p>区块 账户 共识 智能合约</p>
+<p>本质上是一种健壮和安全的分布式状态机，五项核心能力：</p>
+<h4 id="存储数据"><a href="#存储数据" class="headerlink" title="存储数据"></a>存储数据</h4><h4 id="共有数据"><a href="#共有数据" class="headerlink" title="共有数据"></a>共有数据</h4><h4 id="分布式"><a href="#分布式" class="headerlink" title="分布式"></a>分布式</h4><h4 id="防篡改与隐私保护"><a href="#防篡改与隐私保护" class="headerlink" title="防篡改与隐私保护"></a>防篡改与隐私保护</h4><h4 id="数字化合约"><a href="#数字化合约" class="headerlink" title="数字化合约"></a>数字化合约</h4><p>三个方面可信：</p>
+<p>数据可信</p>
+<p>合约履行</p>
+<p>历史可证明</p>
+<p>目前典型的区块链账本设计为区块的单链表结构，只有增加没有减少，全局来说只有顺序处理，无法实现并行度。</p>
+<p>目前涉及到的知识：分布式 存储 密码学 网络通讯 芯片技术 经济学 法律等。</p>
+<p>应用场景</p>
+<ul>
+<li><p>供应链领域</p>
+</li>
+<li><p>金融领域</p>
+</li>
+<li><p>政务及公共服务领域</p>
+</li>
+<li><p>其他领域： 保险防欺诈、大数据安全</p>
+</li>
+</ul>
+<p>原则 面向业务、标准化、松耦合与模块化、安全可审计、简洁与效率。</p>
+<h3 id="对-python的认识"><a href="#对-python的认识" class="headerlink" title="对 python的认识"></a>对 python的认识</h3><p>1.上下文管理器</p>
+<pre><code>with open(&apos;data.txt&apos;) as source, open(&apos;target.txt&apos;) as target:
+    target.write(source.read())
+</code></pre><p> 上下文管理器协议 需要实现 __enter__(), __exit__()</p>
+<p>2.装饰器</p>
+<p>装饰器本质上就是一个函数，这个函数接收其他函数作为参数，并将其以一个新的修改后的函数进行替换。</p>
+<pre><code>import functools
+import inspect
+
+def check_is_admin(f):
+    @functools.wraps(f)
+    def wrapper(*args, **kwargs):
+        func_args = inspect.getcallargs(f, *args, **kwargs)
+        print func_args
+        if func_args.get(&apos;username&apos;) != &apos;admin&apos;:
+            raise Exception(&quot;This user is not allowed to get food&quot;)
+        return f(*args, **kwargs)
+    return wrapper
+
+
+@check_is_admin
+def get_food(username, food=&apos;chocolate&apos;):
+    return &quot;{0} get food: {1}&quot;.format(username, food)
+
+
+def main():
+    print get_food(&apos;admin&apos;)
+
+if __name__ == &apos;__main__&apos;:
+    main()
+</code></pre><p>装饰器不必检查参数username是基于位置的参数还是基于关键字的参数，而只需在字典中查找即可。</p>
+<pre><code>def makebold(fn):
+    def wrapped():
+        return &quot;&lt;b&gt;&quot; + fn() + &quot;&lt;/b&gt;&quot;
+    return wrapped
+
+def makeitalic(fn):
+    def wrapped():
+        return &quot;&lt;i&gt;&quot; + fn() + &quot;&lt;/i&gt;&quot;
+    return wrapped
+
+@makebold
+@makeitalic
+def hello():
+    return &quot;hello world&quot;
+
+print hello() ## returns &lt;b&gt;&lt;i&gt;hello world&lt;/i&gt;&lt;/b&gt;
+</code></pre><p>3.全局变量</p>
+<p>4.时间复杂度</p>
+<p>list实质上是一个数组</p>
+<p>使用链表的时候，应该用collection.deque 双向链表</p>
+<p>set的实现是hash标，判断元素是否在某个集合中使用set，时间复杂度低。</p>
+<p>5.python中的else</p>
+<p>循环使用else 不建议<br>try…except 中else 建议加else</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/03/23/云计算综述/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/03/23/云计算综述/" itemprop="url">云计算综述</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-23T22:51:10+08:00">
+                2018-03-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/compute/" itemprop="url" rel="index">
+                    <span itemprop="name">compute</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2018/03/23/云计算综述/" class="leancloud_visitors" data-flag-title="云计算综述">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.2k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>neutron nova keystone 各种组件</p>
+<p>网络技术领域知识</p>
+<p>平安科技（深圳）有限公司</p>
+<p>1.image 创建命令：</p>
+<pre><code class="shell">glance image-create --name cirros --file /tmp/cirros-0.3.4-x86_64-disk.img --
+disk-format qcow2 --container-format bare --progress
+</code></pre>
+<p>2.详细命令：</p>
+<pre><code>keystone user-list # 被取代
+openstack user list
+
+glance image-create
+glance image-delete
+glance image-update
+glance image-list
+glance image-show    
+
+neutron net-create
+neutron net -delete
+neutron net -update
+neutron net -list
+neutron net –show    
+
+neutron subnet-create
+neutron subnet -delete
+neutron subnet -update
+neutron subnet -list
+neutron subnet–show
+
+nova boot
+nova delete
+nova list
+nova show    
+
+# 每个对象都有id
+</code></pre><p><strong>tcp/ip协议</strong>不是一个协议，而是一个协议族的统称。里面包括了IP协议，IMCP协议，TCP协议，以及我们更加熟悉的http、ftp、pop3协议等等</p>
+<p>1．为什么建立连接协议是三次握手，而关闭连接却是四次握手呢？</p>
+<p>这是因为服务端的LISTEN状态下的SOCKET当收到SYN报文的建连请求后，它可以把ACK和SYN（ACK起应答作用，而SYN起同步作用）放在一个报文里来发送。但关闭连接时，当收到对方的FIN报文通知时，它仅仅表示对方没有数据发送给你了；但未必你所有的数据都全部发送给对方了，所以你可以未必会马上会关闭SOCKET,也即你可能还需要发送一些数据给对方之后，再发送FIN报文给对方来表示你同意现在可以关闭连接了，所以它这里的ACK报文和FIN报文多数情况下都是分开发送的。</p>
+<p>2．为什么TIME_WAIT状态还需要等2MSL后才能返回到CLOSED状态？</p>
+<p>这是因为虽然双方都同意关闭连接了，而且握手的4个报文也都协调和发送完毕，按理可以直接回到CLOSED状态（就好比从SYN_SEND状态到ESTABLISH状态那样）；但是因为我们必须要假想网络是不可靠的，你无法保证你最后发送的ACK报文会一定被对方收到，因此对方处于LAST_ACK状态下的SOCKET可能会因为超时未收到ACK报文，而重发FIN报文，所以这个TIME_WAIT状态的作用就是用来重发可能丢失的ACK报文。</p>
+<p>sdn</p>
+<p>SDN采用与传统网络截然不同的控制架构，将网络控制平面分离和转发平面分离，采用集中控制替代原有分布式控制，并通过开放和可编程接口实现“软件定义”。与传统的网络架构相比，SDN通过软硬件分离，实现了网络虚拟化、IT化及软件化，并降低了设备的复杂度、简化网络运维、提高网络利用率、加速网络创新。</p>
+<p>evpn</p>
+<p>EVPN是一种虚拟私有网络，那么在一套物理设备上必然可以有多个同时存在的EVPN实例，每个实例独立存在。每个EVI连接了一组或者多组用户网络，构成一个或者多个跨地域的二层网络。</p>
+<p>vxlan   </p>
+<p>虚拟可拓展局域网</p>
+<p>from multiprocessing import Pool<br>from multiprocessing.dummy import Pool<br>哪个速度快就用那个。尽量在写兼容的方式，这样在多线程/多进程之间切换非常方便。</p>
+<p>现在，如果一个任务拿不准是CPU密集还是I/O密集型，且没有其它不能选择多进程方式的因素，都统一直接上多进程模式。</p>
+<p>使用多线程(threading)和多进程(multiprocessing)完成常规的需求，在启动的时候start、jon等步骤不能省，复杂的需要还要用1-2个队列。随着需求越来越复杂，如果没有良好的设计和抽象这部分的功能层次，代码量越多调试的难度就越大。有没有什么好的方法把这些步骤抽象一下呢，让我们不关注这些细节，轻装上阵呢？</p>
+<p>答案是：有的。</p>
+<p>从Python3.2开始一个叫做concurrent.futures被纳入了标准库，而在Python2它属于第三方的futures库，需要手动安装：</p>
+<p>这个模块中有2个类：ThreadPoolExecutor和ProcessPoolExecutor，也就是对threading和multiprocessing的进行了高级别的抽象，<br>暴露出统一的接口，帮助开发者非常方便的实现异步调用</p>
+<ul>
+<li>lsvirtualenv: 列出全部的虚拟环境</li>
+<li>showvirtualenv: 列出单个虚拟环境的信息</li>
+<li>rmvirtualenv: 删除一个虚拟环境</li>
+<li>cpvirtualenv: 拷贝虚拟环境</li>
+<li>allvirtualenv: 对当前虚拟环境执行统一的命令。 比如， 要给 venv1 和 venv2 都安装flask, 就可以用allvirtualenv pip install flask</li>
+<li>cdvirtualenv: 可以直接切换到虚拟环境的子目录里面</li>
+</ul>
+
           
         
       
@@ -1618,7 +1651,7 @@ if __name__ == &apos;__main__&apos;:
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/73/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/73/">73</a><span class="page-number current">74</span><a class="page-number" href="/zhangdavids.github.io/page/75/">75</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/91/">91</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/75/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/73/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/73/">73</a><span class="page-number current">74</span><a class="page-number" href="/zhangdavids.github.io/page/75/">75</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/93/">93</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/75/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1668,7 +1701,7 @@ if __name__ == &apos;__main__&apos;:
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">454</span>
+                  <span class="site-state-item-count">465</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1679,7 +1712,7 @@ if __name__ == &apos;__main__&apos;:
               
               <div class="site-state-item site-state-categories">
                 <a href="/zhangdavids.github.io/categories/index.html">
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1690,7 +1723,7 @@ if __name__ == &apos;__main__&apos;:
               
               <div class="site-state-item site-state-tags">
                 <a href="/zhangdavids.github.io/tags/index.html">
-                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1783,7 +1816,7 @@ if __name__ == &apos;__main__&apos;:
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共180.7k字</span>
+  <span class="post-count">博客全站共181.7k字</span>
 </div>
 
         

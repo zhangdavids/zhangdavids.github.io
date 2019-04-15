@@ -1,6 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[程序员的数学之递归归并排序]]></title>
+    <url>%2Fzhangdavids.github.io%2F2019%2F04%2F15%2F%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E6%95%B0%E5%AD%A6%E4%B9%8B%E9%80%92%E5%BD%92%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F%2F</url>
+    <content type="text"><![CDATA[分治问题 适合于使用递归实现 帮助设计分布式系统和并行计算，细分后的问题交给不同的机器来处理 某些机器专门负责收集来自不同机器的处理结果 完成结果的合并 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566# coding=utf-8import copydef merge_sort(to_sort=None): &quot;&quot;&quot; 使用函数的递归（嵌套）调用，实现归并排序（从小到大） :param to_sort: 等待排序的数组 :return: 排序后的数组 &quot;&quot;&quot; if to_sort is None: return [] # 如果分解到只剩一个数，返回该数 if len(to_sort) == 1: return to_sort # 将数组分解成左右两半 mid = len(to_sort) // 2 # python3 // 表示整除，不带小数 left = copy.copy(to_sort[0:mid]) right = copy.copy(to_sort[mid:len(to_sort)]) # 嵌套调用 对两半数组分别进行排序 left = merge_sort(left) right = merge_sort(right) # 合并排序后的两半 merged = merge(left, right) return mergeddef merge(left=None, right=None): &quot;&quot;&quot; 合并两个已经排序完毕的数组（从小到大） :param left: 左半边数组 :param right: 右半边数组 :return: 合并后的数组 &quot;&quot;&quot; if left is None: left = [] if right is None: right = [] merged_one = list() ai = 0 bi = 0 # 轮流从两个数组中取出较小的值 放入合并后的数组中 while ai &lt; len(left) and bi &lt; len(right): if left[ai] &lt;= right[bi]: merged_one.append(left[ai]) ai = ai + 1 else: merged_one.append(right[bi]) bi = bi + 1 # 将某个数组内剩余的数字放入合并后的数组中 if ai &lt; len(left): for i in range(ai, len(left)): merged_one.append(left[i]) else: for i in range(bi, len(right)): merged_one.append(right[i]) return merged_oneif __name__ == &apos;__main__&apos;: to_sort_ = [7,6,2,4,1,9,3,8,0,5] sorted_ = merge_sort(to_sort_) print(sorted_)]]></content>
+      <categories>
+        <category>math</category>
+      </categories>
+      <tags>
+        <tag>math</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[程序员的数学之递归下]]></title>
+    <url>%2Fzhangdavids.github.io%2F2019%2F04%2F15%2F%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E6%95%B0%E5%AD%A6%E4%B9%8B%E9%80%92%E5%BD%92%E4%B8%8B%2F</url>
+    <content type="text"><![CDATA[假设有四种面额的钱币，1 元、2 元、5 元和 10 元，而您一共给我 10 元，那您可以奖赏我 1 张 10 元，或者 10 张 1 元，或者 5 张 1 元外加 1 张 5 元等等。 如果考虑每次奖赏的金额和先后顺序，那么最终一共有多少种不同的奖赏方式呢？ 12345678910111213141516171819202122232425262728293031323334 # coding=utf-8import copyrewards = [1, 2, 5, 10] # 四种面额的纸币def get_all_components(total_rewards, result=None): &quot;&quot;&quot; 使用函数的递归（嵌套调用），找出所有可能的奖赏组合 :param total_rewards 奖赏总金额 result 保存当前的解 :return: None &quot;&quot;&quot; # 当 total_rewards=0 时，证明它是满足条件的解，结束嵌套调用，输出解 if result is None: result = [] if total_rewards == 0: print(result) return # 当 total_rewards&lt;0 时，证明它不是满足条件的解，不输出 elif total_rewards &lt; 0: return else: for i, _ in enumerate(rewards): new_result = copy.copy(result) # 由于有4种情况，需要 clone 当前的解并传入被调用的函数 new_result.append(rewards[i]) # 记录但当前但选择，解决一点问题 get_all_components(total_rewards-rewards[i], new_result) # 剩下但问题，留给嵌套调用去解决if __name__ == &apos;__main__&apos;: total_reward = 10 get_all_components(total_reward)]]></content>
+      <categories>
+        <category>math</category>
+      </categories>
+      <tags>
+        <tag>math</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[程序员的数学之概率基础下]]></title>
+    <url>%2Fzhangdavids.github.io%2F2019%2F04%2F15%2F%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E6%95%B0%E5%AD%A6%E4%B9%8B%E6%A6%82%E7%8E%87%E5%9F%BA%E7%A1%80%E4%B8%8B%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
+    <title><![CDATA[程序员的数学之概率基础上]]></title>
+    <url>%2Fzhangdavids.github.io%2F2019%2F04%2F15%2F%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E6%95%B0%E5%AD%A6%E4%B9%8B%E6%A6%82%E7%8E%87%E5%9F%BA%E7%A1%80%E4%B8%8A%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
+    <title><![CDATA[程序员的数学之概率统计]]></title>
+    <url>%2Fzhangdavids.github.io%2F2019%2F04%2F15%2F%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E6%95%B0%E5%AD%A6%E4%B9%8B%E6%A6%82%E7%8E%87%E7%BB%9F%E8%AE%A1%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
+    <title><![CDATA[程序员的数学之阶段小结01]]></title>
+    <url>%2Fzhangdavids.github.io%2F2019%2F04%2F15%2F%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E6%95%B0%E5%AD%A6%E4%B9%8B%E9%98%B6%E6%AE%B5%E5%B0%8F%E7%BB%9301%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
+    <title><![CDATA[程序员的数学之空间复杂度]]></title>
+    <url>%2Fzhangdavids.github.io%2F2019%2F04%2F15%2F%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E6%95%B0%E5%AD%A6%E4%B9%8B%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
+    <title><![CDATA[程序员的数学之时间复杂度]]></title>
+    <url>%2Fzhangdavids.github.io%2F2019%2F04%2F15%2F%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E6%95%B0%E5%AD%A6%E4%B9%8B%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
+    <title><![CDATA[程序员的数学之从树到图]]></title>
+    <url>%2Fzhangdavids.github.io%2F2019%2F04%2F15%2F%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E6%95%B0%E5%AD%A6%E4%B9%8B%E4%BB%8E%E6%A0%91%E5%88%B0%E5%9B%BE%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
+    <title><![CDATA[程序员的数学之BFS]]></title>
+    <url>%2Fzhangdavids.github.io%2F2019%2F04%2F15%2F%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E6%95%B0%E5%AD%A6%E4%B9%8BBFS%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
+    <title><![CDATA[程序员的数学之DFS]]></title>
+    <url>%2Fzhangdavids.github.io%2F2019%2F04%2F15%2F%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E6%95%B0%E5%AD%A6%E4%B9%8BDFS%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
     <title><![CDATA[从语言的角度来看看python]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F04%2F13%2F%E4%BB%8E%E8%AF%AD%E8%A8%80%E7%9A%84%E8%A7%92%E5%BA%A6%E6%9D%A5%E7%9C%8B%E7%9C%8Bpython%2F</url>
     <content type="text"><![CDATA[python的优点 简单 语法优雅 易学 入手非常快 免费/开源 自动内存管理 C C++内存管理会带来很大的麻烦 程序非常容易出现内存方面的漏洞 但是python中内存管理是自动完成的 可以专注于程序本身 可以移植 解释性 大多数的计算机语言是编译型的 运行之前需要将源码编译为操作系统可以执行的二进制格式 这样大型项目编译过程非常消耗时间 python解释器把源代码转换成字节码的中间形式 然后再把它翻译成计算机使用的机器语言并运行 面向对象 混合型 可扩展 丰富的第三方库 缺点 速度慢 强制缩进？？ 习惯很正常 单行语句 如果没有对性能上的高要求 python在大部分领域都可以胜任 有些需要Cython甚至C这些工具 golang项目 设计一塌糊涂 但是多核支持好 轻松跑出需要的性能 python的服务往往一个小问题就很致命 10qps以下 学艺不精找不到问题 往往以为python本身这么慢 动态类型如果代码写得烂 下限更低对解释器的依赖容易出现各种问题 部署的时候还要专门的一块代码去帮客户配置环境 文件过多 导致部署不方便 golang的话 是一个binary完事 不那么容易暴露内部实现 因为给的是可执行文件 解决性能不够好的问题 golang相对来说 菜鸟也能写出性能远高于python的程序 语法简单 总体上也比较安全 不用瞻前顾后]]></content>
@@ -1755,41 +1822,89 @@
     <title><![CDATA[程序员的数学之动态规划]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F01%2F05%2F%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E6%95%B0%E5%AD%A6%E4%B9%8B%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92%2F</url>
     <content type="text"></content>
+      <categories>
+        <category>math</category>
+      </categories>
+      <tags>
+        <tag>math</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[程序员的数学之组合]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F01%2F05%2F%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E6%95%B0%E5%AD%A6%E4%B9%8B%E7%BB%84%E5%90%88%2F</url>
     <content type="text"></content>
+      <categories>
+        <category>math</category>
+      </categories>
+      <tags>
+        <tag>math</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[程序员的数学之排列]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F01%2F05%2F%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E6%95%B0%E5%AD%A6%E4%B9%8B%E6%8E%92%E5%88%97%2F</url>
     <content type="text"></content>
+      <categories>
+        <category>math</category>
+      </categories>
+      <tags>
+        <tag>math</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[程序员的数学之递归]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F01%2F05%2F%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E6%95%B0%E5%AD%A6%E4%B9%8B%E9%80%92%E5%BD%92%2F</url>
-    <content type="text"></content>
+    <content type="text"><![CDATA[递归自顶向下 自底向上两种递归 一般情况下 自底向上 也就是说从结果往上推一步 这种更符合计算机的思维习惯 求八可以分解为哪几个树 1最多只能出现一次 # coding=utf-8 import copy def get_all_prod_factors(n, result=None): &quot;&quot;&quot; 使用递归编程，为给定的整数 n 找到所有可能的分解 :param n: 整数 :param result: 保存当前的分解 :return: None &quot;&quot;&quot; if result is None: result = [] if n == 1: print(&apos;x&apos;.join([str(_) for _ in result])) if 1 not in result: result.append(1) print(&apos;x&apos;.join([str(_) for _ in result])) elif n &lt; 0: return else: for i in range(1, n + 1): if (i == 1 and i not in result) or (i != 1 and n % i == 0): new_result = copy.copy(result) new_result.append(i) get_all_prod_factors(n // i, new_result) # python3 // 表示整除，不带小数 if __name__ == &apos;__main__&apos;: num = 8 get_all_prod_factors(num)]]></content>
+      <categories>
+        <category>math</category>
+      </categories>
+      <tags>
+        <tag>math</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[程序员的数学之数学归纳法]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F01%2F05%2F%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E6%95%B0%E5%AD%A6%E4%B9%8B%E6%95%B0%E5%AD%A6%E5%BD%92%E7%BA%B3%E6%B3%95%2F</url>
     <content type="text"></content>
+      <categories>
+        <category>math</category>
+      </categories>
+      <tags>
+        <tag>math</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[程序员的数学之迭代法]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F01%2F05%2F%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E6%95%B0%E5%AD%A6%E4%B9%8B%E8%BF%AD%E4%BB%A3%E6%B3%95%2F</url>
     <content type="text"></content>
+      <categories>
+        <category>math</category>
+      </categories>
+      <tags>
+        <tag>math</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[程序员的数学之余数]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F01%2F05%2F%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E6%95%B0%E5%AD%A6%E4%B9%8B%E4%BD%99%E6%95%B0%2F</url>
     <content type="text"></content>
+      <categories>
+        <category>math</category>
+      </categories>
+      <tags>
+        <tag>math</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[程序员的数学之二进制]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F01%2F05%2F%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E6%95%B0%E5%AD%A6%E4%B9%8B%E4%BA%8C%E8%BF%9B%E5%88%B6%2F</url>
     <content type="text"><![CDATA[吴军先生在数学之美当中 也介绍了二进制 原始时代 用路边的小石子计数。 后来罗马人发明了罗马数字 公元三世纪左右，印度的数学家发明了阿拉伯数字 可以从0-9 二进制 就是2的n次方的形式。 计算机为什么使用二进制 因为 组成计算机系统的逻辑电路只有两个状态 即开关的接通与断开。 系统在受到一定程度的干扰时，仍然能够可靠地分辨出数字是”0”还是”1”。 在具体的系统实现当中，二进制数据表达具有抗干扰能力强、可靠性高的优点。 二进制也非常适合逻辑运算。 位运算 左移 其实就是将数字翻倍 右移 其实就是将数字除以2并求整数商 java当中的左移 是 &lt;&lt; 逻辑右移 是 &gt;&gt;&gt; &gt;&gt;是算术右移]]></content>
+      <categories>
+        <category>math</category>
+      </categories>
+      <tags>
+        <tag>math</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[拓扑排序]]></title>
