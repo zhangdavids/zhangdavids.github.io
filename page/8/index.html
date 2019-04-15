@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/04/03/设计模式之责任链/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/04/09/leetcode之合并K个链表/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -328,7 +328,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/04/03/设计模式之责任链/" itemprop="url">设计模式之责任链</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/04/09/leetcode之合并K个链表/" itemprop="url">leetcode之合并K个链表</a></h1>
         
 
         <div class="post-meta">
@@ -340,8 +340,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-03T15:25:58+08:00">
-                2019-04-03
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-09T13:49:34+08:00">
+                2019-04-09
               </time>
             
 
@@ -358,7 +358,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/04/03/设计模式之责任链/" class="leancloud_visitors" data-flag-title="设计模式之责任链">
+             <span id="/zhangdavids.github.io/2019/04/09/leetcode之合并K个链表/" class="leancloud_visitors" data-flag-title="leetcode之合并K个链表">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -383,7 +383,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  382
+                  161
                 </span>
               
 
@@ -422,7 +422,9 @@
       
         
           
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># encoding: utf-8</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">责任链模式</span><br><span class="line">使多个对象都以机会处理请求, 从而避免请求的发送者和接受者之间的耦合关系</span><br><span class="line">将这个对象连成一条链, 沿着这条链传递请求, 直到有一个对象处理它为止</span><br><span class="line">- 可以随意增加或修改处理一个请求的链式结构</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">from abc import ABCMeta, abstractmethod</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Handler(object):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    定义一个处理请求的接口</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    __metaclass__ = ABCMeta</span><br><span class="line"></span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.__successor = None</span><br><span class="line"></span><br><span class="line">    @property</span><br><span class="line">    def successor(self):</span><br><span class="line">        return self.__successor</span><br><span class="line"></span><br><span class="line">    @successor.setter</span><br><span class="line">    def successor(self, value):</span><br><span class="line">        self.__successor = value</span><br><span class="line"></span><br><span class="line">    @abstractmethod</span><br><span class="line">    def handle_request(self, request):</span><br><span class="line">        pass</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class ConcreteHandlerA(Handler):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    具体处理类, 处理它所负责的请求</span><br><span class="line">    如果可以处理该请求, 处理之, 否则转给后继者</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">    def handle_request(self, request):</span><br><span class="line">        if 0 &lt;= request &lt; 10:</span><br><span class="line">            print &quot;%s process %s&quot; % (self.__class__.__name__, request)</span><br><span class="line">        else:</span><br><span class="line">            self.successor.handle_request(request)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class ConcreteHandlerB(Handler):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    具体处理类, 处理它所负责的请求</span><br><span class="line">    如果可以处理该请求, 处理之, 否则转给后继者</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">    def handle_request(self, request):</span><br><span class="line">        if 10 &lt;= request &lt; 20:</span><br><span class="line">            print &quot;%s process %s&quot; % (self.__class__.__name__, request)</span><br><span class="line">        else:</span><br><span class="line">            self.successor.handle_request(request)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class ConcreteHandlerC(Handler):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    具体处理类, 处理它所负责的请求</span><br><span class="line">    如果可以处理该请求, 处理之, 否则转给后继者</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">    def handle_request(self, request):</span><br><span class="line">        if 20 &lt;= request &lt; 30:</span><br><span class="line">            print &quot;%s process %s&quot; % (self.__class__.__name__, request)</span><br><span class="line">        else:</span><br><span class="line">            self.successor.handle_request(request)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    h1 = ConcreteHandlerA()</span><br><span class="line">    h2 = ConcreteHandlerB()</span><br><span class="line">    h3 = ConcreteHandlerC()</span><br><span class="line"></span><br><span class="line">    h1.successor = h2</span><br><span class="line">    h2.successor = h3</span><br><span class="line"></span><br><span class="line">    for req in [2, 14, 22]:</span><br><span class="line">        print req</span><br><span class="line">        h1.handle_request(req)</span><br></pre></td></tr></table></figure>
+            <p>先进行划分 划分到两个或者一个 再两两合并</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">    public ListNode mergeKLists(ListNode[] lists)&#123;</span><br><span class="line">        if(lists.length == 0)</span><br><span class="line">            return null;</span><br><span class="line">        if(lists.length == 1)</span><br><span class="line">            return lists[0];</span><br><span class="line">        if(lists.length == 2)&#123;</span><br><span class="line">           return mergeTwoLists(lists[0],lists[1]);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        int mid = lists.length/2;</span><br><span class="line">        ListNode[] l1 = new ListNode[mid];</span><br><span class="line">        for(int i = 0; i &lt; mid; i++)&#123;</span><br><span class="line">            l1[i] = lists[i];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        ListNode[] l2 = new ListNode[lists.length-mid];</span><br><span class="line">        for(int i = mid,j=0; i &lt; lists.length; i++,j++)&#123;</span><br><span class="line">            l2[j] = lists[i];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return mergeTwoLists(mergeKLists(l1),mergeKLists(l2));</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    public ListNode mergeTwoLists(ListNode l1, ListNode l2) &#123;</span><br><span class="line">        if (l1 == null) return l2;</span><br><span class="line">        if (l2 == null) return l1;</span><br><span class="line"></span><br><span class="line">        ListNode head = null;</span><br><span class="line">        if (l1.val &lt;= l2.val)&#123;</span><br><span class="line">            head = l1;</span><br><span class="line">            head.next = mergeTwoLists(l1.next, l2);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            head = l2;</span><br><span class="line">            head.next = mergeTwoLists(l1, l2.next);</span><br><span class="line">        &#125;</span><br><span class="line">        return head;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
           
         
       
@@ -470,7 +472,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/04/02/sanic源码阅读/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/04/08/lru-cache/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -489,7 +491,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/04/02/sanic源码阅读/" itemprop="url">sanic源码阅读</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/04/08/lru-cache/" itemprop="url">lru-cache</a></h1>
         
 
         <div class="post-meta">
@@ -501,8 +503,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-02T11:11:34+08:00">
-                2019-04-02
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-08T15:20:11+08:00">
+                2019-04-08
               </time>
             
 
@@ -519,7 +521,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/04/02/sanic源码阅读/" class="leancloud_visitors" data-flag-title="sanic源码阅读">
+             <span id="/zhangdavids.github.io/2019/04/08/lru-cache/" class="leancloud_visitors" data-flag-title="lru-cache">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -544,7 +546,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.2k
+                  231
                 </span>
               
 
@@ -560,7 +562,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  8
+                  1
                 </span>
               
             </div>
@@ -583,101 +585,209 @@
       
         
           
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">## Sanic源码阅读：基于0.1.2</span><br><span class="line"></span><br><span class="line">`Sanic`是一个可以使用`async/await`语法编写项目的异步非阻塞框架，它写法类似于`Flask`，但使用了异步特性，而且还使用`uvloop`作为事件循环，其底层使用的是`libuv`，从而使 `Sanic`的速度优势更加明显。</span><br><span class="line"></span><br><span class="line">本章，我将和大家一起看看`Sanic`里面的运行机制是怎样的，它的`Router Blueprint`等是如何实现的。</span><br><span class="line"></span><br><span class="line">如果你有以下的需求：</span><br><span class="line"></span><br><span class="line">- 想深入了解Sanic，迫切想知道它的运行机制</span><br><span class="line">- 直接阅读源码，做一些定制</span><br><span class="line">- 学习</span><br><span class="line"></span><br><span class="line">将Sanic-0.1.2阅读完后的一些建议，我觉得你应该有以下基础再阅读源码才会理解地比较好：</span><br><span class="line"></span><br><span class="line">- 理解[装饰器](https://github.com/howie6879/Sanic-For-Pythoneer/blob/master/docs/part2/%E9%99%84%E5%BD%95%EF%BC%9A%E5%85%B3%E4%BA%8E%E8%A3%85%E9%A5%B0%E5%99%A8.md)，见附录</span><br><span class="line">- 理解协程</span><br><span class="line"></span><br><span class="line">Sanic-0.1.2 的核心文件如下：</span><br><span class="line">``` shell</span><br><span class="line">.</span><br><span class="line">├── __init__.py</span><br><span class="line">├── blueprints.py</span><br><span class="line">├── config.py</span><br><span class="line">├── exceptions.py</span><br><span class="line">├── log.py</span><br><span class="line">├── request.py</span><br><span class="line">├── response.py</span><br><span class="line">├── router.py</span><br><span class="line">├── sanic.py</span><br><span class="line">├── server.py</span><br><span class="line">└── utils.py</span><br></pre></td></tr></table></figure>
-<p>通过运行下面的示例，这些文件都会被我们看到它的作用，拭目以待吧，为了方便诸位的理解，我已将我注解的一份<code>Sanic</code>代码上传到了<code>github</code>，见<a href="https://github.com/howie6879/sanic_annotation" target="_blank" rel="external">sanic_annotation</a>。</p>
-<h3 id="simple-server-py"><a href="#simple-server-py" class="headerlink" title="simple_server.py"></a>simple_server.py</h3><p>让我们从<a href="https://github.com/howie6879/sanic_annotation/blob/master/sanic_0_1_2/examples/simple_server.py" target="_blank" rel="external">simple_server</a>开始吧，代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> sanic_0_1_2.src <span class="keyword">import</span> Sanic</span><br><span class="line"><span class="keyword">from</span> sanic_0_1_2.src.response <span class="keyword">import</span> json</span><br><span class="line"></span><br><span class="line">app = Sanic(__name__)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route("/")</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> json(&#123;<span class="string">"test"</span>: <span class="keyword">True</span>&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.run(host=<span class="string">"0.0.0.0"</span>, port=<span class="number">8000</span>)</span><br></pre></td></tr></table></figure>
-<p>或许你直接把<a href="https://github.com/howie6879/sanic_annotation" target="_blank" rel="external">sanic_annotation</a>项目直接clone到本地比较方便调试+理解：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/howie6879/sanic_annotation</span><br><span class="line">cd sanic_annotation/sanic_0_1_2/examples/</span><br></pre></td></tr></table></figure>
-<p>那么，现在一切准备就绪，开始阅读吧。</p>
-<p>前两行代码导入包：</p>
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">import collections</span><br><span class="line">import functools</span><br><span class="line">from itertools import ifilterfalse</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def lru_cache(maxsize=100, on_purge=None):</span><br><span class="line">    &quot;&quot;&quot;Least-recently-used cache decorator.</span><br><span class="line">    Arguments to the cached function must be hashable.</span><br><span class="line">    Clear the cache with f.clear().</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    maxqueue = maxsize * 10</span><br><span class="line"></span><br><span class="line">    def decorating_function(user_function):</span><br><span class="line">        cache = &#123;&#125;</span><br><span class="line">        queue = collections.deque()</span><br><span class="line">        refcount = collections.defaultdict(int)</span><br><span class="line">        sentinel = object()</span><br><span class="line">        kwd_mark = object()</span><br><span class="line"></span><br><span class="line">        # lookup optimizations (ugly but fast)</span><br><span class="line">        queue_append, queue_popleft = queue.append, queue.popleft</span><br><span class="line">        queue_appendleft, queue_pop = queue.appendleft, queue.pop</span><br><span class="line"></span><br><span class="line">        @functools.wraps(user_function)</span><br><span class="line">        def wrapper(*args, **kwargs):</span><br><span class="line">            # cache key records both positional and keyword args</span><br><span class="line">            key = args</span><br><span class="line">            if kwargs:</span><br><span class="line">                key += (kwd_mark,) + tuple(sorted(kwargs.items()))</span><br><span class="line"></span><br><span class="line">            # record recent use of this key</span><br><span class="line">            queue_append(key)</span><br><span class="line">            refcount[key] += 1</span><br><span class="line"></span><br><span class="line">            # get cache entry or compute if not found</span><br><span class="line">            try:</span><br><span class="line">                result = cache[key]</span><br><span class="line">            except KeyError:</span><br><span class="line">                result = user_function(*args, **kwargs)</span><br><span class="line">                cache[key] = result</span><br><span class="line"></span><br><span class="line">                # purge least recently used cache entry</span><br><span class="line">                if len(cache) &gt; maxsize:</span><br><span class="line">                    key = queue_popleft()</span><br><span class="line">                    refcount[key] -= 1</span><br><span class="line">                    while refcount[key]:</span><br><span class="line">                        key = queue_popleft()</span><br><span class="line">                        refcount[key] -= 1</span><br><span class="line">                    if on_purge:</span><br><span class="line">                        on_purge(cache[key])</span><br><span class="line">                    del cache[key], refcount[key]</span><br><span class="line"></span><br><span class="line">            # periodically compact the queue by eliminating duplicate keys</span><br><span class="line">            # while preserving order of most recent access</span><br><span class="line">            if len(queue) &gt; maxqueue:</span><br><span class="line">                refcount.clear()</span><br><span class="line">                queue_appendleft(sentinel)</span><br><span class="line">                for key in ifilterfalse(refcount.__contains__,</span><br><span class="line">                                        iter(queue_pop, sentinel)):</span><br><span class="line">                    queue_appendleft(key)</span><br><span class="line">                    refcount[key] = 1</span><br><span class="line">            return result</span><br><span class="line"></span><br><span class="line">        def clear():</span><br><span class="line">            if on_purge:</span><br><span class="line">                for value in cache.itervalues():</span><br><span class="line">                    on_purge(value)</span><br><span class="line">            cache.clear()</span><br><span class="line">            queue.clear()</span><br><span class="line">            refcount.clear()</span><br><span class="line"></span><br><span class="line">        wrapper._cache = cache</span><br><span class="line">        wrapper.clear = clear</span><br><span class="line">        return wrapper</span><br><span class="line">    return decorating_function</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/04/08/编程范式01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/04/08/编程范式01/" itemprop="url">编程范式01</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-08T10:26:57+08:00">
+                2019-04-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/04/08/编程范式01/" class="leancloud_visitors" data-flag-title="编程范式01">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  924
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="编程范式"><a href="#编程范式" class="headerlink" title="编程范式"></a>编程范式</h2><p>函数式编程 就是把一些功能或者逻辑代码通过函数拼接方式来组织的玩法</p>
+<p>代码当中还是需要处理状态的 函数式编程一般写出的 都是无状态的代码</p>
+<p>对于状态和数据的处理 oop编程的三大特性： 封装、继承、多态</p>
+<p>包含数据、属性、代码与方法  对象指的是类的实例</p>
+<p>面向对象 设计模式：可复用面向对象软件的基础 23种设计模式</p>
+<hr>
+<p>使用者不需要知道数据类型、结构、算法的细节<br>不需要知道实现细节 只需要知道提供的接口<br>利于抽象、封装、动态绑定、多态<br>符合面向对象的特质和理念</p>
+<p>继承需要給子类暴漏一些父类的设计和实现细节<br>父类实现的改变会造成子类也需要改变<br>继承主要是为了代码重用 但是实际上在子类中需要重新实现很多父类的方法<br>继承更多的是为了多态</p>
+<hr>
+<p>拼装对象<br>拼装功能<br>资源管理</p>
+<hr>
+<p>oop的优缺点</p>
+<p>能和真实的世界交相辉映 符合人的直觉<br>面向对象和数据库模型设计类型 更多地关注对象间的模型设计<br>强调于名词而不是动词 更多地关注对象和接口间的接口<br>根据业务的特征 形成了一个高内聚的对象 有效地分离了抽象和具体实现 增强可重用性和可扩展性<br>拥有大量非常优秀的设计原则和设计模式</p>
+<p>SOLID<br>单一功能<br>开闭原则<br>里氏替换<br>接口隔离以及依赖反转</p>
+<p>缺点：</p>
+<p>代码需要附着在一个类上 鼓励了类型<br>代码需要提供对象达到抽象的效果 导致了相当厚重的“代码粘合层”<br>太多的封装以及对状态的鼓励 导致了大量不透明并在并发下出现很多问题</p>
+<hr>
+<p>基于原型的编程范式</p>
+<p>主流的就是javascript</p>
+<p>__proto__ 主要是安放在一个实际的对象中 用来产生一个链接 一个原型链 用于寻找方法名或者属性</p>
+<p>prototype 是用new来创建一个对象时构造 __proto__ 用的<br>它是构造函数的一个属性</p>
+<hr>
+<p>go语言的委托模式</p>
+<p>声明一个struct 和C语言的很像</p>
+<p>然后直接把这个struct类型放到另一个struct里面</p>
+<hr>
+<p>编程的本质</p>
+<p>任何算法 都有两部分 一个是logic部分 用来解决实际问题的</p>
+<p>另一个是control部分 用什么策略来解决问题（影响解决这个问题的效率）</p>
+<p>程序=算法+数据结构<br>算法=逻辑+控制</p>
+<p>函数式编程 都是一种控制<br>undo是想要解决的问题 undo的流程是控制<br>接口是对逻辑的抽象 真正的逻辑放在不同的具体类中 通过依赖或者是依赖注入这样的控制来完成对数据在不同情况下的不同处理</p>
 <ul>
-<li><code>Sanic</code>：构建一个 Sanic 服务必须要实例化的类</li>
-<li><code>json</code>：以json格式返回结果，实际上是HTTPResponse类，根据实例化参数content_type的不同，构建不同的实例，如：<ul>
-<li><code>text</code>：<code>content_type=&quot;text/plain; charset=utf-8&quot;</code></li>
-<li><code>html</code>：<code>content_type=&quot;text/html; charset=utf-8&quot;</code></li>
+<li>control 是可以被标准化的 遍历数据、查找数据、多线程、并发、异步等 都是可以标准化的</li>
+<li>需要处理数据 泛型编程</li>
+<li>处理用户的逻辑 标准化接口/协议来实现 适配于任何的logic</li>
 </ul>
-</li>
-</ul>
-<p>实例化一个<code>Sanic</code>对象，<code>app = Sanic(__name__)</code>，可见<a href="https://github.com/howie6879/sanic_annotation/blob/master/sanic_0_1_2/src/sanic.py" target="_blank" rel="external">sanic.py</a>，我已经在这个文件里面做了一些注释，这里也详细说下<code>Sanic</code>类：</p>
-<ul>
-<li><p>route()：装饰器，构建uri和视图函数的映射关系，调用Router().add()方法</p>
-</li>
-<li><p>exception()：装饰器，和上面差不多，不过针对的是错误处理类Handler</p>
-</li>
-<li><p>middleware()：装饰器，针对中间件</p>
-</li>
-<li><p>register_blueprint()：注册视图的函数，接受第一个参数是视图类<code>blueprint</code>，再调用该类下的<code>register</code>方法实现将此蓝图下的<code>route、exception、middleware</code>统一注册到<code>app.route、app.exception、app.exception</code></p>
-</li>
-<li><p>handle_request()：这是一个很重要的异步函数，当服务启动后，如果客户端发来一个有效的请求，会自动执行 <code>on_message_complete</code>函数，该函数的目的是异步调用 <code>handle_request</code>函数，<code>handle_request</code>函数会回调<code>write_response</code>函数，<code>write_response</code>接受的参数是此uri请求对应的视图函数，比如上面demo中，如果客户端请求’/‘，那么这里<code>write_response</code>就会接受<code>json({&quot;test&quot;: True})</code>，然后进一步处理，再返回给客户端</p>
-</li>
-<li><p>run()：Sanic服务的启动函数，必须执行，实际上会继续调用<code>server.serve</code>函数，详情下面会详细讲</p>
-</li>
-<li><p>stop()：终止服务</p>
-</li>
-</ul>
-<p>其实上面这部分介绍已经讲了Sanic基本的运行逻辑，如果你理解了，那下面的讲解对你来说是轻轻松松，如果不怎么明白，也不要紧，这是只是一个大体的介绍，跟着步骤来，也很容易理解，继续看代码：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 此处将路由 / 与视图函数 test 关联起来</span></span><br><span class="line"><span class="meta">@app.route("/")</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">test</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> json(&#123;<span class="string">"test"</span>: <span class="keyword">True</span>&#125;)</span><br></pre></td></tr></table></figure>
-<p><code>app.route</code>，上面介绍过，随着Sanic服务的启动而启动，可定义参数<code>uri, methods</code></p>
-<p>目的是为<code>url</code>的<code>path</code>和视图函数对应起来，构建一对映射关系，本例中<code>Sanic.router</code>类下的<code>Router.routes = []</code></p>
-<p>会增加一个名为<code>Route</code>的<code>namedtuple</code>，如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[Route(handler=&lt;function test at <span class="number">0x10a0f6488</span>&gt;, methods=<span class="keyword">None</span>, pattern=re.compile(<span class="string">'^/$'</span>), parameters=[])]</span><br></pre></td></tr></table></figure>
-<p>看到没，<code>uri &#39;/&#39;</code> 和视图函数<code>test</code>对应起来了，如果客户端请求<code>&#39;/&#39;</code>，当服务器监听到这个请求的时候,<code>handle_request</code>可以通过参数中的<code>request.url</code>来找到视图函数<code>test</code>并且执行，随即生成视图返回</p>
-<p>那么这里<code>write_response</code>就会接受视图函数test返回的<code>json({&quot;test&quot;: True})</code></p>
-<p>说下<code>Router</code>类，这个类的目的就是添加和获取路由对应的视图函数，把它想象成<code>dict</code>或许更容易理解：</p>
-<ul>
-<li>add(self, uri, methods, handler)：添加一个映射关系到self.routes</li>
-<li>get(self, request)：获取request.url对应的视图函数</li>
-</ul>
-<p>最后一行，<code>app.run(host=&quot;0.0.0.0&quot;, port=8000)</code>，Sanic 下的<code>run</code>函数，启动一个<code>http server</code>，主要是启动<code>run</code>里面的<code>serve</code>函数，参数如下：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    serve(</span><br><span class="line">        host=host,</span><br><span class="line">        port=port,</span><br><span class="line">        debug=debug,</span><br><span class="line">        <span class="comment"># 服务开始后启动的函数</span></span><br><span class="line">        after_start=after_start,</span><br><span class="line">        <span class="comment"># 在服务关闭前启动的函数</span></span><br><span class="line">        before_stop=before_stop,</span><br><span class="line">        <span class="comment"># Sanic(__name__).handle_request()</span></span><br><span class="line">        request_handler=self.handle_request,</span><br><span class="line">        <span class="comment"># 默认读取Config</span></span><br><span class="line">        request_timeout=self.config.REQUEST_TIMEOUT,</span><br><span class="line">        request_max_size=self.config.REQUEST_MAX_SIZE,</span><br><span class="line">    )</span><br><span class="line"><span class="keyword">except</span>:</span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure></p>
-<p>让我们将目光投向<a href="https://github.com/howie6879/sanic_annotation/blob/master/sanic_0_1_2/src/server.py" target="_blank" rel="external">server.py</a>，这也是Sanic框架的核心代码：</p>
-<ul>
-<li><p>serve()：里面会创建一个TCP服务的协程，然后通过<code>loop.run_forever()</code>运行这个事件循环，以便接收客户端请求以及处理相关事件，每当一个新的客户端建立连接服务就会创建一个新的<code>Protocol</code>实例，接受请求与返回响应离不开其中的<code>HttpProtocol</code>，里面的函数支持接受数据、处理数据、执行视图函数、构建响应数据并返回给客户端</p>
-</li>
-<li><p>HttpProtocol：<code>asyncio.Protocol</code>的子类，用来处理与客户端的通信，我在<a href="https://github.com/howie6879/sanic_annotation/blob/master/sanic_0_1_2/src/server.py" target="_blank" rel="external">server.py</a>里写了对应的注释</p>
-</li>
-</ul>
-<p>至此，Sanic 服务启动了</p>
-<p>不要小看这一个小小的demo，执行一下，竟然涉及到下面这么多个文件，让我们总结一下：</p>
-<ul>
-<li><a href="https://github.com/howie6879/sanic_annotation/blob/master/sanic_0_1_2/src/sanic.py" target="_blank" rel="external">sanic.py</a></li>
-<li><a href="https://github.com/howie6879/sanic_annotation/blob/master/sanic_0_1_2/src/server.py" target="_blank" rel="external">server.py</a></li>
-<li><a href="https://github.com/howie6879/sanic_annotation/blob/master/sanic_0_1_2/src/router.py" target="_blank" rel="external">router.py</a></li>
-<li><a href="https://github.com/howie6879/sanic_annotation/blob/master/sanic_0_1_2/src/request.py" target="_blank" rel="external">request.py</a></li>
-<li><a href="https://github.com/howie6879/sanic_annotation/blob/master/sanic_0_1_2/src/response.py" target="_blank" rel="external">response.py</a></li>
-<li><a href="https://github.com/howie6879/sanic_annotation/blob/master/sanic_0_1_2/src/exceptions.py" target="_blank" rel="external">exceptions.py</a></li>
-<li><a href="https://github.com/howie6879/sanic_annotation/blob/master/sanic_0_1_2/src/config.py" target="_blank" rel="external">config.py</a></li>
-<li><a href="https://github.com/howie6879/sanic_annotation/blob/master/sanic_0_1_2/src/log.py" target="_blank" rel="external">log.py</a></li>
-</ul>
-<p>除去<code>__init__.py</code>，<code>Sanic</code>项目一共就10个文件，这个小demo不显山不露水地竟然用到了8个，虽然其中几个没有怎么用到，但也足够说明，你如果理解了这个demo，<code>Sanic</code>的运行逻辑以及框架代码你已经了解地很深入了</p>
-<h3 id="blueprints-py"><a href="#blueprints-py" class="headerlink" title="blueprints.py"></a>blueprints.py</h3><p>这个例子看完，我们就能轻易地明白什么是<code>blueprints</code>，以及<code>blueprints</code>的运行方式，代码如下：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">from</span> sanic_0_1_2.src <span class="keyword">import</span> Sanic</span><br><span class="line"><span class="comment"># 引入Blueprint</span></span><br><span class="line"><span class="keyword">from</span> sanic_0_1_2.src <span class="keyword">import</span> Blueprint</span><br><span class="line"><span class="keyword">from</span> sanic_0_1_2.src.response <span class="keyword">import</span> json, text</span><br><span class="line"></span><br><span class="line">app = Sanic(__name__)</span><br><span class="line">blueprint = Blueprint(<span class="string">'name'</span>, url_prefix=<span class="string">'/my_blueprint'</span>)</span><br><span class="line">blueprint2 = Blueprint(<span class="string">'name2'</span>, url_prefix=<span class="string">'/my_blueprint2'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@blueprint.route('/foo')</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> json(&#123;<span class="string">'msg'</span>: <span class="string">'hi from blueprint'</span>&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@blueprint2.route('/foo')</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">foo2</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> json(&#123;<span class="string">'msg'</span>: <span class="string">'hi from blueprint2'</span>&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">app.register_blueprint(blueprint)</span><br><span class="line">app.register_blueprint(blueprint2)</span><br><span class="line"></span><br><span class="line">app.run(host=<span class="string">"0.0.0.0"</span>, port=<span class="number">8000</span>, debug=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
-<p>让我们从这两行开始：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">blueprint = Blueprint(<span class="string">'name'</span>, url_prefix=<span class="string">'/my_blueprint'</span>)</span><br><span class="line">blueprint2 = Blueprint(<span class="string">'name2'</span>, url_prefix=<span class="string">'/my_blueprint2'</span>)</span><br></pre></td></tr></table></figure>
-<p>显然，<code>blueprint</code>以及<code>blueprint2</code>是<code>Blueprint</code>根据不同的参数生成的不同的实例对象，接下来要干嘛？没错，分析<a href="https://github.com/howie6879/sanic_annotation/blob/master/sanic_0_1_2/src/blueprints.py" target="_blank" rel="external">blueprints.py</a>:</p>
-<ul>
-<li>BlueprintSetup：蓝图注册类<ul>
-<li>add_route：添加路由到app</li>
-<li>add_exception：添加对应抛出的错误到app</li>
-<li>add_middleware：添加中间件到app</li>
-</ul>
-</li>
-<li>Blueprint：蓝图类，接收两个参数：name(蓝图名称) url_prefix 该蓝图的url前缀 <ul>
-<li>route：路由装饰器，将会生成一个匿名函数到self.deferred_functions列表里稍后一起处理注册到app里</li>
-<li>middleware：同上</li>
-<li>exception：同上</li>
-<li>record：注册一个回调函数到self.deferred_functions列表里面，</li>
-<li>make_setup_state：实例化BlueprintSetup</li>
-<li>register：注册视图，实际就是注册route、middleware、exception到app，此时会利用make_setup<em>state返回的BlueprintSetup示例进行对于的add</em><em>*</em>一系列操作，相当于Sanic().route()效果</li>
-</ul>
-</li>
-</ul>
-<p>请看下<code>route</code>和<code>register</code>函数，然后再看下面的代码：</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 生成一个匿名函数到self.deferred_functions列表里 包含三个参数 handler(foo), uri, methods</span></span><br><span class="line"><span class="meta">@blueprint.route('/foo')</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">foo</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> json(&#123;<span class="string">'msg'</span>: <span class="string">'hi from blueprint'</span>&#125;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@blueprint2.route('/foo')</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">def</span> <span class="title">foo2</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> json(&#123;<span class="string">'msg'</span>: <span class="string">'hi from blueprint2'</span>&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 上一个例子说过这个函数，Sanic().register_blueprint() 注册蓝图</span></span><br><span class="line">app.register_blueprint(blueprint)</span><br><span class="line">app.register_blueprint(blueprint2)</span><br></pre></td></tr></table></figure>
-<p>怎么样，现在来看，是不是很轻松，这一行<code>app.run(host=&quot;0.0.0.0&quot;, port=8000, debug=True)</code>服务启动代码不用多说吧？</p>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>看到这里，相信你已经完全理解了<code>Sanic</code>的运行机制，虽然还有<code>middleware&amp;exception</code>的注册以及调用机制没讲，但这和<code>route</code>的运行机制一样，如果你懂了<code>route</code>那么这两个也很简单。</p>
-<p>如果诸位一遍没怎么看明白，这里我建议可以多看几遍，多结合编辑器<code>Debug</code>下源码，坚持下来，会发下<code>Sanic</code>真的很简单，当然，这只是第一个小版本的<code>Sanic</code>，和目前的版本相比，不论是代码结构的复杂程度以及功能对比，都有很大差距，毕竟，<code>Sanic</code>一直在开源工作者的努力下，慢慢成长。</p>
-<p>```</p>
+<p><em>有效分离logic control data 是写好程序的关键所在！</em> </p>
+<p><em>有效分离logic control data 是写好程序的关键所在！</em> </p>
+<p><em>有效分离logic control data 是写好程序的关键所在！</em> </p>
+<hr>
+<p>prolog 逻辑编程范式</p>
+<hr>
 
           
         
@@ -726,7 +836,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/04/01/关注最后一步-部署/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/04/08/编程范式00/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -745,7 +855,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/04/01/关注最后一步-部署/" itemprop="url">关注最后一步-部署</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/04/08/编程范式00/" itemprop="url">编程范式00</a></h1>
         
 
         <div class="post-meta">
@@ -757,8 +867,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-01T15:04:40+08:00">
-                2019-04-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-08T10:26:46+08:00">
+                2019-04-08
               </time>
             
 
@@ -775,7 +885,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/04/01/关注最后一步-部署/" class="leancloud_visitors" data-flag-title="关注最后一步-部署">
+             <span id="/zhangdavids.github.io/2019/04/08/编程范式00/" class="leancloud_visitors" data-flag-title="编程范式00">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -800,7 +910,270 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  715
+                  1.3k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="编程范式游记"><a href="#编程范式游记" class="headerlink" title="编程范式游记"></a>编程范式游记</h2><ol>
+<li><p>C语言是静态弱类型语言 使用变量的时候需要声明变量类型 但是类型间可以有隐式转换</p>
+</li>
+<li><p>不同的变量类型 可以用结构体组合起来 以此来声明新的数据类型</p>
+</li>
+<li><p>typedef 关键字定义类型的别名 以此达到变量类型的抽象</p>
+</li>
+<li><p>变量作用域 递归功能的过程式语言</p>
+</li>
+<li><p>传递参数一般是传值 也可以传递指针</p>
+</li>
+<li><p>通过指针 对内存进行了低级控制 然而引入了非常大的时间复杂度</p>
+</li>
+<li><p>编译预处理让编译更具有弹性 比如跨平台</p>
+</li>
+</ol>
+<hr>
+<p>面向过程的C语言无法满足更高层次的编程需求 C++就出现了</p>
+<p>用引用来解决指针出现的问题<br>用namespace解决名字空间冲突的问题<br>用try-catch解决返回值编程的问题<br>用class来解决对象的创建、复制 销毁的问题<br>用重载操作符来达到操作上的泛型<br>用模板template和虚函数的多态以及运行时识别来达到更高层次的泛型和多态<br>用RALL 智能指针的方式 解决需要释放资源而出现的一些问题<br>用STL解决算法和数据结构当中的坑</p>
+<hr>
+<p>C++的泛型</p>
+<p>从swap函数开始</p>
+<ul>
+<li>编程语言中的类型问题</li>
+<li>对真实世界中业务代码的抽象、重用和拼装</li>
+</ul>
+<p>类型系统用于定义将编程语言当中的数值和表达式归类为许多不同的类型 如何操作这些类型 类型如何互相作用</p>
+<p>内建的类型</p>
+<p>抽象的类型</p>
+<ul>
+<li>程序语言的安全性</li>
+<li>利于编译器的优化</li>
+<li>代码的可读性</li>
+<li>抽象化</li>
+</ul>
+<p>静态语言的代表 C C++ java<br>动态语言 python php javascript</p>
+<p>静态类型检查是在编译器进行语义分析时进行的<br>动态类型检查系统更多的则是在运行时期做动态标记和相关检查</p>
+<p>泛型的本质是什么</p>
+<p>类型是对内存的一种抽象 不同的类型 会有不同的内存布局和内存分配的策略<br>不同的类型 有不同的操作 特定的类型 会有特定的一组操作</p>
+<p>标准化类型的内存分配、释放和访问<br>标准化类型的操作<br>标准化数据容器的操作 比如查找算法、过滤、聚合<br>标准化类型上特有的操作</p>
+<p>编程语言本质上帮助程序员屏蔽底层机器代码的实现 让我们更好的关注于业务代码逻辑 是一件很难trade-off的事</p>
+<hr>
+<p>函数式编程fp</p>
+<p>编程工作是解决业务上的问题 而不是计算机的问题 因此需要更贴近业务 更为抽象的语言 如oop的C++、java</p>
+<p>函数式编程的特点</p>
+<ul>
+<li>stateless 不维护任何状态</li>
+<li>immutale 输入数据是不能动的</li>
+</ul>
+<p>优势：</p>
+<ul>
+<li>没有状态就没有伤害</li>
+<li>并行执行没有伤害</li>
+<li>copy-paste重构代码没有伤害</li>
+<li>函数的执行没有并行上的问题</li>
+</ul>
+<p>还带来了一些好处</p>
+<ul>
+<li>惰性求值</li>
+<li>确定性</li>
+</ul>
+<p>劣势：</p>
+<p>数据复制比较严重<br>完全纯函数式haskell<br>容易写纯函数<br>纯函数需要花点精力</p>
+<p>头等函数<br>尾递归优化<br>map&amp;reduce<br>pipeline管道<br>递归<br>柯里化 多个参数分解成多个函数<br>高阶函数</p>
+<p>把函数当成变量来用 关注描述问题而不是怎么实现 这样可以让代码更易读<br>因为函数返回里面的这个函数 所以函数关注的是表达式 关注的是描述这个问题 而不是怎么实现这个事情</p>
+<p>函数式编程LISP语言</p>
+<hr>
+<p>修饰器模式（装饰器）</p>
+<p>Java Annotation</p>
+<p>一种纯粹的函数式编程的技巧</p>
+<p>用一个函数来构造另一个函数</p>
+<p>关注带参数的装饰器</p>
+<p>类装饰器</p>
+<p>一个 __init<strong> \</strong>call__  调用</p>
+<p>python的语法糖 写出的代码比较酷 但是对于没有修饰器语法糖这类语言 看看go的代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>反射机制 获取函数名</p>
+<p>Go的修饰器模式 好像无法做到泛型 无法做到通用</p>
+<p>最大的泛型是interface{} 还有比较简单的reflection机制</p>
+<p>表面上看 装饰器模式就是扩展现有的一个函数的功能 干一些其他的事情 或者是附加一些别的功能<br>除了体验到函数式编程的代码扩展能力 还能感受到代码互相和随意拼装带来的好处<br>Decorator这个函数其实是可以修饰几乎所有的函数的 可以将一些非业务功能 属于控制类型的代码抽象出来 像是for-loop 或者是打印日志 函数路由 或者是求函数运行时间这种非业务功能性的代码</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/04/05/布隆过滤器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/04/05/布隆过滤器/" itemprop="url">布隆过滤器</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-05T20:27:30+08:00">
+                2019-04-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/04/05/布隆过滤器/" class="leancloud_visitors" data-flag-title="布隆过滤器">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  776
                 </span>
               
 
@@ -839,382 +1212,19 @@
       
         
           
-            <h2 id="gunicorn"><a href="#gunicorn" class="headerlink" title="gunicorn"></a>gunicorn</h2><ol>
-<li>Gunicorn设计</li>
-</ol>
-<p>　　Gunicorn 是一个 master 进程，spawn 出数个工作进程的 web 服务器。master 进程控制工作进程的产生与消亡，工作进程只需要接受请求并且处理。这样分离的方式使得 reload 代码非常方便，也很容易增加或减少工作进程。 工作进程这块作者给了很大的扩展余地，它可以支持不同的IO方式，如 Gevent,Sync 同步进程，Asyc 异步进程，Eventlet 等等。master 跟 worker 进程完全分离，使得 Gunicorn 实质上就是一个控制进程的服务。</p>
-<ol>
-<li>Gunicorn源码结构</li>
-</ol>
-<p>　　从 Application.run() 开始，首先初始化配置，从文件读取，终端读取等等方式完成 configurate。然后启动 Arbiter，Arbiter 是实质上的 master 进程的核心，它首先从配置类中读取并设置，然后初始化信号处理函数，建立 socket。然后就是开始 spawn 工作进程，根据配置的工作进程数进行 spawn。然后就进入了轮询状态，收到信号，处理信号然后继续。这里唤醒进程的方式是建立一个 PIPE，通过信号处理函数往 pipe 里 write，然后 master 从 select.select() 中唤醒。</p>
-<p>工作进程在 spawn 后，开始初始化，然后同样对信号进行处理，并且开始轮询，处理 HTTP 请求，调用 WSGI 的应用端，得到 resopnse 返回。然后继续。</p>
-<p>Sync 同步进程的好处在于每个 request 都是分离的，每个 request 失败都不会影响其他 request，但这样导致了性能上的瓶颈。</p>
-<p>没有对错，找个框架入门好了~</p>
-<p>flask 上手快，插件多，但是随着项目的深入，慢慢就是变成一个 django，绝对的<br>django 一上来就是大而全，但胜在什么都有，什么都不用自己折腾</p>
-<p>tornado 这货从一出生就开始用到现在，没有啥好也没啥不好，就是用习惯了。flask 的上手快是以各种插件为代价的，模板你要去找 jinja 吧？ orm 要找 sqlachemy 吧？这些都需要你自己去熟悉一下</p>
-<p>而且，各种用 flask 和 django 的同学可能忽略了一个基本是事实就是，如果你有工作需要深入到源代码的话，那么 tornado 是一个极好的参考。django 的代码体系复杂而且庞大我就不说了，看 flask 的代码底层还要考虑 Werkzeug，其基于全局变量的 context 处理起来其实也不容易的。</p>
-<p>顺便的，部署 tornado 的项目可以少拖一个 gunicorn 或者 uwsgi 之如此类，少很多坑</p>
-<p>上面那些提及到性能的同学，完全没有必要进行对比。在 pypy/aiohttp/uvloop 的加持下，不是我非要针对谁，你们说的性能都是垃圾。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/31/完美数/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/31/完美数/" itemprop="url">完美数</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-31T15:28:35+08:00">
-                2019-03-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/03/31/完美数/" class="leancloud_visitors" data-flag-title="完美数">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  71
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="完美数"><a href="#完美数" class="headerlink" title="完美数"></a>完美数</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    bool checkPerfectNumber(int num) &#123;</span><br><span class="line">        int sum = 1;</span><br><span class="line">        for (int i = 2; i * i &lt;= num; ++i) &#123;</span><br><span class="line">            if (num % i == 0) &#123;</span><br><span class="line">                sum += i + (num / i == i ? 0 : num / i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return num != 1 &amp;&amp; sum == num;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    bool checkPerfectNumber(int num) &#123;</span><br><span class="line">        return num == 6 || num == 28 || num == 496 || num == 8128 || num == 33550336;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/28/2019-go-28/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/28/2019-go-28/" itemprop="url">2019-go-28</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-28T17:48:32+08:00">
-                2019-03-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/golang/" itemprop="url" rel="index">
-                    <span itemprop="name">golang</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/03/28/2019-go-28/" class="leancloud_visitors" data-flag-title="2019-go-28">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  158
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>go的 </p>
-<p>协程和线程都可以实现程序的并发执行</p>
-<p>通过channel来进行协程之间的通信</p>
-<p>一个包中可以包含多个init函数</p>
-<p>程序编译的时候 先执行导入包init的函数 再执行本包内的init函数</p>
-<hr>
-<p>几个缺陷</p>
-<ul>
-<li>不支持函数式编程  go的泛型会給项目带来不必要的复杂性</li>
-<li>通道/并行切片处理</li>
-<li>垃圾回收器 以低延迟为最高优先级</li>
-<li>错误处理</li>
-</ul>
-<p>如果完成一个api 或者完成一个需要大量磁盘/网络调用的任务 go是首选！！！</p>
+            <p>100 亿是一个很大的数量级，这里每条 url 平均 64 字节，全部存储的话需要 640G 的内存空间。又因为使用了散列表这种数据结构，而散列表是会出现散列冲突的。为了让散列表维持较小的装载因子，避免出现过多的散列冲突，需要使用链表法来处理，这里就要存储链表指针。因此最后的内存空间可能超过 1000G 了。</p>
+<p>判断一个数 是否存在 两种状态 存在true 或者不存在false</p>
+<p>用每一位来存放某种状态，适用于大规模数据，但数据状态又不是很多的情况。</p>
+<p>另外，位图法有一个优势就是空间不随集合内元素个数的增加而增加。它的存储空间计算方式是找到所有元素里面最大的元素（假设为 N ），所占空间为 N/8 bytes</p>
+<p>出于对性能和内存占用的考虑 使用布隆过滤器 才是最好的</p>
+<p>对于布隆过滤器而言，它的本质是一个位数组：位数组就是数组的每个元素都只占用 1 bit ，并且每个元素只能是 0 或者 1。</p>
+<p>布隆过滤器除了一个位数组，还有 K 个哈希函数。当一个元素加入布隆过滤器中的时候，会进行如下操作：</p>
+<p>使用  K 个哈希函数对元素值进行 K 次计算，得到 K 个哈希值。<br>根据得到的哈希值，在位数组中把对应下标的值置为 1。<br>举个例子，假设布隆过滤器有 3 个哈希函数：f1, f2, f3 和一个位数组 arr。现在要把 2333 插入布隆过滤器中：</p>
+<p>对值进行三次哈希计算，得到三个值 n1, n2, n3。<br>把位数组中三个元素 arr[n1], arr[n2], arr[3] 都置为 1。<br>当要判断一个值是否在布隆过滤器中，对元素进行三次哈希计算，得到值之后判断位数组中的每个元素是否都为 1，如果值都为 1，那么说明这个值在布隆过滤器中，如果存在一个值不为 1，说明该元素不在布隆过滤器中。</p>
+<p>不存在 一定是真的</p>
+<p>存在 可能是误判！！！</p>
+<p>布隆过滤器的最大的用处就是，能够迅速判断一个元素是否在一个集合中。因此它有如下三个使用场景:</p>
+<p>网页爬虫对 URL 的去重，避免爬取相同的 URL 地址<br>进行垃圾邮件过滤：反垃圾邮件，从数十亿个垃圾邮件列表中判断某邮箱是否垃圾邮箱（同理，垃圾短信）<br>有的黑客为了让服务宕机，他们会构建大量不存在于缓存中的 key 向服务器发起请求，在数据量足够大的情况下，频繁的数据库查询可能导致 DB 挂掉。布隆过滤器很好的解决了缓存击穿的问题。</p>
 
           
         
@@ -1254,7 +1264,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/zhangdavids.github.io/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/93/">93</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/9/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/7/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/7/">7</a><span class="page-number current">8</span><a class="page-number" href="/zhangdavids.github.io/page/9/">9</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/95/">95</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/9/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1304,7 +1314,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">465</span>
+                  <span class="site-state-item-count">473</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
