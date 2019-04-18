@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/04/12/分布式学习005/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/04/15/程序员的数学之从树到图/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -328,7 +328,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/04/12/分布式学习005/" itemprop="url">分布式学习005</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/04/15/程序员的数学之从树到图/" itemprop="url">程序员的数学之从树到图</a></h1>
         
 
         <div class="post-meta">
@@ -340,8 +340,196 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-12T10:25:08+08:00">
-                2019-04-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-15T09:24:33+08:00">
+                2019-04-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/math/" itemprop="url" rel="index">
+                    <span itemprop="name">math</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/04/15/程序员的数学之从树到图/" class="leancloud_visitors" data-flag-title="程序员的数学之从树到图">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  949
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>如何根据两点  入规划从一个地铁站到另外一个地铁站的小汽车出现路线？</p>
+<p>也就是地图提供的寻路？</p>
+<p>这个是预期准备做的项目题干</p>
+<hr>
+<p>dijkstra 算法 找最短路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import random</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Node(object):</span><br><span class="line">    def __init__(self, user_id):</span><br><span class="line">        self.user_id = user_id  # 用户节点 id</span><br><span class="line">        self.friends = list()  # 用户指向的节点，元素表示节点 id</span><br><span class="line">        self.weights = list()  # 用户指向的节点，其边的权重值</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def set_user_relation(user_num, relation_num):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    随机生成用户间的关系</span><br><span class="line">    :param user_num: 用户数量 即节点的数量</span><br><span class="line">    :param relation_num: 好友关系的数量 即边的数量</span><br><span class="line">    :return:</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    # 生成所有表示用户的节点</span><br><span class="line">    use_nodes = list()</span><br><span class="line">    for u in range(user_num):</span><br><span class="line">        use_nodes.append(Node(u))</span><br><span class="line"></span><br><span class="line">    # 生成所有表示好友关系的边</span><br><span class="line">    for r in range(relation_num):</span><br><span class="line">        friend_a_id = random.randrange(user_num)</span><br><span class="line">        friend_b_id = random.randrange(user_num)</span><br><span class="line">        # 自己不能是自己的好友 如果生成的两个好友 id 相同，跳过</span><br><span class="line">        if friend_a_id == friend_b_id or friend_b_id in use_nodes[friend_a_id].friends:</span><br><span class="line">            continue</span><br><span class="line">        friend_a = use_nodes[friend_a_id]</span><br><span class="line">        friend_a.friends.append(friend_b_id)  # 用户 friend_a 的好友</span><br><span class="line">        friend_a.weights.append(round(random.random(), 2))  # 权重值</span><br><span class="line">    return use_nodes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def dijkstra(graph, source):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    Dijkstra 单源最短路径算法简单实现</span><br><span class="line">    :param graph: 图</span><br><span class="line">    :param source: 源点（起始点）</span><br><span class="line">    :return: pre_node 前驱节点</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    nodes_list = list()</span><br><span class="line">    # 图 graph 中的节点id的集合</span><br><span class="line">    for node in range(len(graph)):</span><br><span class="line">        nodes_list.append(graph[node].user_id)</span><br><span class="line"></span><br><span class="line">    # 保存了从起始点 source 到任意节点到最小权重值（最短路径大小）</span><br><span class="line">    min_weights_list = list([float(&quot;Inf&quot;)] * len(graph))  # 无穷大 Inf , 下标与节点对应</span><br><span class="line">    # 从源点 source 出发，已经找到 最小权重值（最短路径值大小）的节点集合</span><br><span class="line">    found_nodes = list()  # 元素表示节点 id</span><br><span class="line">    # 前驱节点</span><br><span class="line">    pre_node = list([None] * len(graph))  # 下标与节点对应，其元素为下标对应的前驱节点</span><br><span class="line"></span><br><span class="line">    # 初始的时候</span><br><span class="line">    if len(graph[source].friends) == 0:</span><br><span class="line">        return pre_node</span><br><span class="line">    for node in range(len(graph[source].friends)):</span><br><span class="line">        min_weights_list[graph[source].friends[node]] = graph[source].weights[node]</span><br><span class="line">        # 初始，与源点 source 直连的节点，其前驱节点为 source</span><br><span class="line">        pre_node[graph[source].friends[node]] = source</span><br><span class="line">    # min_weights_list[source] = 0  # 去掉这一步，便于查找最小权重值</span><br><span class="line">    found_nodes.append(source)</span><br><span class="line"></span><br><span class="line">    while len(set(nodes_list) - set(found_nodes)) != 0:</span><br><span class="line">        # 图可能是不连通，min_weights_list 中, 源点 source 到某些节点的权重值无穷大</span><br><span class="line">        if min(min_weights_list) == float(&quot;Inf&quot;):</span><br><span class="line">            break</span><br><span class="line"></span><br><span class="line">        # 第一步 查找最小权重值的节点</span><br><span class="line">        min_weight_index = min_weights_list.index(min(min_weights_list))  # 下标对应节点的id</span><br><span class="line">        found_nodes.append(min_weight_index)</span><br><span class="line"></span><br><span class="line">        # 第二步 更新权重值</span><br><span class="line">        for node in range(len(graph[min_weight_index].friends)):</span><br><span class="line">            # 已经找到最短路径的节点，不再更新</span><br><span class="line">            if graph[min_weight_index].friends[node] in found_nodes:</span><br><span class="line">                continue</span><br><span class="line">            if min_weights_list[min_weight_index] + graph[min_weight_index].weights[node] &lt; \</span><br><span class="line">                    min_weights_list[graph[min_weight_index].friends[node]]:</span><br><span class="line">                # 更新 min_weights_list 中节点的权重值</span><br><span class="line">                min_weights_list[graph[min_weight_index].friends[node]] = min_weights_list[min_weight_index] + \</span><br><span class="line">                                                                          graph[min_weight_index].weights[node]</span><br><span class="line">                # 更新前驱节点</span><br><span class="line">                pre_node[graph[min_weight_index].friends[node]] = min_weight_index</span><br><span class="line">        # 该点权重值置为无穷大，为下一次循环准备</span><br><span class="line">        min_weights_list[min_weight_index] = float(&quot;Inf&quot;)</span><br><span class="line"></span><br><span class="line">    return pre_node</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def shortest_path(graph, source, pre_node):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    打印源点 source 到其它节点到最短路径</span><br><span class="line">    :param graph: 图</span><br><span class="line">    :param source: 源点</span><br><span class="line">    :param pre_node: 前驱节点列表</span><br><span class="line">    :return:</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    print(&quot;------------- 源点 %s 到其它各节点的最短路径 ----------&quot; % source)</span><br><span class="line">    for k, _ in enumerate(graph):</span><br><span class="line">        pre = pre_node[k]</span><br><span class="line">        if pre is None:</span><br><span class="line">            print(&quot;源点 %s 到 %s 的最短路径：不存在&quot; % (source, k))</span><br><span class="line">            continue</span><br><span class="line">        path = [str(k)]</span><br><span class="line">        while pre != source and pre is not None:</span><br><span class="line">            path.append(&quot; -&gt; &quot;)</span><br><span class="line">            path.append(str(pre))</span><br><span class="line">            pre = pre_node[pre]</span><br><span class="line">        if pre == source:</span><br><span class="line">            path.append(&quot; -&gt; &quot;)</span><br><span class="line">            path.append(str(pre))</span><br><span class="line">        print(&quot;源点 %s 到 %s 的最短路径：%s&quot; % (source, k, &apos;&apos;.join(path[::-1])))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">    user_nodes_list = set_user_relation(10, 20)</span><br><span class="line">    for i in range(len(user_nodes_list)):</span><br><span class="line">        if len(user_nodes_list[i].friends):</span><br><span class="line">            print(&quot;用户 &#123;&#125; 的好友: &#123;&#125;, \t权重值 &#123;&#125;&quot;.format(user_nodes_list[i].user_id, user_nodes_list[i].friends,</span><br><span class="line">                                                   user_nodes_list[i].weights))</span><br><span class="line">        else:</span><br><span class="line">            print(&quot;用户 &#123;&#125; 的好友: 不存在&quot;.format(user_nodes_list[i].user_id))</span><br><span class="line">    print(&quot;\n------------- Dijkstra 单源最短路径算法 --------------\n&quot;)</span><br><span class="line">    s = 1  # 源点</span><br><span class="line">    pre_node_list = dijkstra(user_nodes_list, s)</span><br><span class="line">    print(&quot;各下标节点对应的前驱节点：&quot;, pre_node_list, &quot;\n&quot;)</span><br><span class="line">    # 打印路径</span><br><span class="line">    shortest_path(user_nodes_list, s, pre_node_list)</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/04/15/程序员的数学之BFS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/04/15/程序员的数学之BFS/" itemprop="url">程序员的数学之BFS</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-15T08:42:03+08:00">
+                2019-04-15
               </time>
             
 
@@ -358,7 +546,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/04/12/分布式学习005/" class="leancloud_visitors" data-flag-title="分布式学习005">
+             <span id="/zhangdavids.github.io/2019/04/15/程序员的数学之BFS/" class="leancloud_visitors" data-flag-title="程序员的数学之BFS">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -470,7 +658,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/04/12/分布式学习004/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/04/15/程序员的数学之DFS/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -489,7 +677,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/04/12/分布式学习004/" itemprop="url">分布式学习004</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/04/15/程序员的数学之DFS/" itemprop="url">程序员的数学之DFS</a></h1>
         
 
         <div class="post-meta">
@@ -501,8 +689,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-12T10:25:01+08:00">
-                2019-04-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-15T08:41:28+08:00">
+                2019-04-15
               </time>
             
 
@@ -519,7 +707,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/04/12/分布式学习004/" class="leancloud_visitors" data-flag-title="分布式学习004">
+             <span id="/zhangdavids.github.io/2019/04/15/程序员的数学之DFS/" class="leancloud_visitors" data-flag-title="程序员的数学之DFS">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -544,7 +732,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  355
+                  0
                 </span>
               
 
@@ -583,43 +771,7 @@
       
         
           
-            <p>go语言的体会</p>
-<ul>
-<li>语言简单 上手快</li>
-<li>并行和异步编程几乎无痛点 goroutine channel</li>
-<li>lib库 麻雀虽小 五脏俱全</li>
-<li>c语言的理念和python的姿态</li>
-<li>存在诸多的问题 垃圾回收 异常处理 泛型编程等</li>
-</ul>
-<hr>
-<ul>
-<li>有没有一个好的社区</li>
-<li>有没有工业化的标准</li>
-<li>有没有一个或者多个杀手级应用</li>
-<li>学习难度是否低 上手是否快</li>
-<li>提高开发效率的开发框架</li>
-<li>技术公司作为后盾</li>
-<li>解决软件开发中的痛点（java解决内存管理问题）</li>
-</ul>
-<p>PaaS是承上启下的关键技术</p>
-<ol>
-<li>软件生产线的问题</li>
-<li>分布式服务化的问题</li>
-<li>提高服务的可用性SLA</li>
-<li>软件能力的复用</li>
-</ol>
-<hr>
-<p>挤出时间来干这些“逆人性”的事情 渴望程度</p>
-<ul>
-<li>使用语言开发 可维护的程序</li>
-<li>如何进行后续的优化</li>
-<li>前后端分离</li>
-<li><p>计算机提升社会运作效率并不是靠前端来完成的 而是靠自动化来完成的 所以后端的业务逻辑和计算 才是业务的核心 所以我从技术支持 测试这种支持性的工作中脱离出来 想做一些产出性的工作</p>
-</li>
-<li><p>开发测试工具 运维系统和工具 开发项目管理软件 只有到开发上 你才有更好的发展</p>
-</li>
-</ul>
-
+            
           
         
       
@@ -667,7 +819,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/04/12/分布式学习003/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/04/13/从语言的角度来看看python/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -686,7 +838,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/04/12/分布式学习003/" itemprop="url">分布式学习003</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/04/13/从语言的角度来看看python/" itemprop="url">从语言的角度来看看python</a></h1>
         
 
         <div class="post-meta">
@@ -698,8 +850,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-12T10:24:47+08:00">
-                2019-04-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-13T20:15:00+08:00">
+                2019-04-13
               </time>
             
 
@@ -716,7 +868,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/04/12/分布式学习003/" class="leancloud_visitors" data-flag-title="分布式学习003">
+             <span id="/zhangdavids.github.io/2019/04/13/从语言的角度来看看python/" class="leancloud_visitors" data-flag-title="从语言的角度来看看python">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -741,447 +893,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.3k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  7
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>中心化的设计思想</p>
-<p>中心化的设计思想很简单，按照角色分工 大体上两种</p>
-<p>一种是中心节点 另外就是普通节点 如果中心节点出现问题 则集群会崩溃</p>
-<p>去中心化的设计</p>
-<p>不存在单点故障</p>
-<p>完全意义的真正去中心化的分布式系统并不多见。相反，外部开来去中心化单工作机制采用了中心化设计思想的分布式系统正在不断涌出。在这种架构下，集群中的领导是被动态选择出来的，而不是认为预先置顶的，而且集群发声故障的情况下，集群的成员会自发的举行“会议”选举新的“领导”主持工作。最典型的案例就是ZooKeeper及Go语言实现的Etcd</p>
-<p>分布式环境的问题有：</p>
-<ol>
-<li>通信异常：从集中式向分布式演变过程中，必然会引入网络因素，而由于网络本身的不可靠性，因此也引入了额外的问题。分布式系统需要在各个节点之间进行网络通信，因此当网络通信设备故障就会导致无法顺利完成一次网络通信，就算各节点的网络通信正常，但是消息丢失和消息延时也是非常普遍的事情。</li>
-<li>网络分区（脑裂）：网络发生异常情况导致分布式系统中部分节点之间的网络延时不断增大，最终导致组成分布式系统的所有节点，只有部分节点能够正常通行，而另一些节点则不能。我们称这种情况叫做网络分区（脑裂），当网络分区出现时，分布式系统会出现多个局部小集群（多个小集群可能又会产生多个master节点），所以分布式系统要求这些小集群要能独立完成原本需要整个分布式系统才能完成的功能，这就对分布式一致性提出了非常大的挑战。</li>
-<li>节点故障：节点宕机是分布式环境中的常态，每个节点都有可能会出现宕机或僵死的情况，并且每天都在发生。</li>
-<li>三态：由于网络不可靠的原因，因此分布式系统的每一次请求，都存在特有的“三态”概念，即：成功，失败与超时。在集中式单机部署中，由于没有网络因素，所以程序的每一次调用都能得到“成功”或者“失败”的响应，但是在分布式系统中，网络不可靠，可能就会出现超时的情况。可能在消息发送时丢失或者在响应过程中丢失，当出现超时情况时，网络通信的发起方是无法确定当前请求是否被成功处理的，所以这也是分布式事务的难点。</li>
-</ol>
-<hr>
-<h3 id="基本可用-basically-available-："><a href="#基本可用-basically-available-：" class="headerlink" title="基本可用(basically available)："></a>基本可用(basically available)：</h3><p>基本可用是指分布式系统在出现不可预知故障的时候，允许损失部分可用性——但请注意，这绝不等价于系统不可用。以下两个就是“基本可用”的典型例子。</p>
-<ol>
-<li><p>响应时间上的损失：正常情况下，一个在线搜索引擎需要在0.5秒之内返回给用户相应的查询结果，但由于出现故障（比如系统部分机房发生断电或断网故障），查询结果的响应时间增加到了1～2秒。</p>
-</li>
-<li><p>功能上的损失：正常情况下，在一个电子商务网站上进行购物，消费者几乎能够顺利地完成每一笔订单，但是在一些节日大促购物高峰的时候，由于消费者的购物行为激增，为了保护购物系统的稳定性，部分消费者可能会被引导到一个降级页面。</p>
-</li>
-</ol>
-<h3 id="弱状态-soft-state"><a href="#弱状态-soft-state" class="headerlink" title="弱状态(soft state)"></a>弱状态(soft state)</h3><p>弱状态也称为软状态，和硬状态相对，是指允许系统中的数据存在中间状态，并认为该中间状态的存在不会影响系统的整体可用性，即允许系统在不同节点的数据副本之间进行数据同步的过程存在延时。</p>
-<h3 id="最终一致性-eventual-consistency"><a href="#最终一致性-eventual-consistency" class="headerlink" title="最终一致性(eventual consistency)"></a>最终一致性(eventual consistency)</h3><p>最终一致性强调的是系统中所有的数据副本，在经过一段时间的同步后，最终能够达到一个一致的状态。因此，最终一致性的本质是需要系统保证最终数据能够达到一致，而不需要实时保证系统数据的强一致性。</p>
-<p>注意：最终一致性是一种特殊的弱一致性：系统能够保证在没有其他新的更新操作的情况下，数据最终一定能够达到一致的状态，因此所有客户端对系统的数据访问都能够获取到最新的值。同时，在没有发生故障的前提下，数据达到一致状态的时间延迟，取决于网络延迟、系统负载和数据复制方案设计等因素。</p>
-<p>在实际工程实践中，最终一致性存在以下五类主要变种。</p>
-<p>1 因果一致性（Causal consistency）</p>
-<p>因果一致性是指，如果进程A在更新完某个数据项后通知了进程B，那么进程B之后对该数据项的访问都应该能够获取到进程A更新后的最新值，并且如果进程B要对该数据项进行更新操作的话，务必基于进程A更新后的最新值，即不能发生丢失更新情况。与此同时，与进程A无因果关系的进程C的数据访问则没有这样的限制。</p>
-<p>2 读己之所写（Read your writes）</p>
-<p>读己之所写是指，进程A更新一个数据项之后，它自己总是能够访问到更新过的最新值，而不会看到旧值。也就是说，对于单个数据获取者来说，其读取到的数据，一定不会比自己上次写入的值旧。因此，读己之所写也可以看作是一种特殊的因果一致性。</p>
-<p>3 会话一致性（Session consistency）</p>
-<p>会话一致性将对系统数据的访问过程框定在了一个会话当中：系统能保证在同一个有效的会话中实现“读己之所写”的一致性，也就是说，执行更能操作之后，客户端能够在同一个会话中始终读取到该数据项的最新值。</p>
-<p>4 单调读一致性（Monotonic read consistency）</p>
-<p>单调读一致性是指如果一个进程从系统中读取出一个数据项的某个值后，那么系统对于该进程后续的任何数据访问都不应该返回更旧的值。</p>
-<p>5 单调写一致性（Monotonic write consistency）</p>
-<p>单调写一致性是指，一个系统需要能够保证来自同一个进程的写操作被顺序地执行。</p>
-<p>事实上，最终一致性并不是只有那些大型分布式系统才涉及的特性，许多现代的关系型数据库都采用了最终一致性模型。在现代关系型数据库中，大多都会采用同步和异步方式来实现主备数据复制技术。1 .在同步方式中，数据的复制过程通常是更新事务的一部分，因此在事务完成后，主备数据库的数据就会达到一致（强一致性）。2. 而在异步方式中，备库的更新往往会存在延时，这取决于事务日志在主备数据库之间传输的时间长短，如果传输时间过长或者甚至在日志传输过程中出现异常导致无法及时将事务应用到备库上，那么很显然，从备库中读取的数据将是旧的，因此就出现了数据不一致的情况。当然，无论是采用多次重试还是人为数据订正，关系型数据库还是能够保证最终数据达到一致——这就是系统提供最终一致性保证的经典案例。</p>
-<p>总的来说，BASE理论面向的是大型高可用可扩展的分布式系统，和传统事务的ACID特性是相反的，它完全不同于ACID的强一致性模型，而是提出通过牺牲强一致性来获得可用性，并允许数据在一段时间内是不一致的，但最终达到一致状态。但同时，在实际的分布式场景中，不同业务单元和组件对数据一致性的要求是不同的，因此在具体的分布式系统架构设计过程中，ACID特性与BASE理论往往又会结合在一起使用。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/04/12/分布式学习002/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/04/12/分布式学习002/" itemprop="url">分布式学习002</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-12T10:24:32+08:00">
-                2019-04-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/distribute/" itemprop="url" rel="index">
-                    <span itemprop="name">distribute</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/04/12/分布式学习002/" class="leancloud_visitors" data-flag-title="分布式学习002">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  817
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  2
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>分布式学习的理论基础</p>
-<ul>
-<li>Consistency 一致性:<br>这里的一致性是针对于分布式读写的。对于一个分布式系统，当一条数据写成功，那么无论我怎么使用这个系统，我都应当能马上读取到这条最新的数据。<br>不一致性的例子:我更新了一条微博，而我的关注者还不能看到。</li>
-<li>Avalilability 可用性:<br>是指系统应当随时可用，在reasonable的时间内返回reasonable的结果。<br>一个反例:我更新了一条微博，我的关注者在刷我微博的时候显示对方正在更新微博，请稍后再试，或者显示一直在读取中。</li>
-<li>Partition Toleranc 分区容忍性:<br>分布式环境中数据必然会被划分成多个区分到不同的机器上，不同的机器之间会有数据交换。<br>而机器一多某台机器发生发生故障的概率就会比较高，而且机器间数据的交换依赖于网络，网络也很有可能会有延时、丢包之类的问题。<br>分区容忍性就要求在分布式系统要考虑到分布式环境的复杂性的前提下能正常提供服务。</li>
-</ul>
-<p>分布式的挑战来自不确定性，不确定计算机什么时候crash、断电，不确定磁盘什么时候损坏，不确定每次网络通信要延迟多久，也不确定通信对端是否处理了发送的消息。而分布式的规模放大了这个不确定性，不确定性是令人讨厌的，所以有诸多的分布式理论、协议来保证在这种不确定性的情况下，系统还能继续正常工作。</p>
-<hr>
-<h4 id="负载均衡："><a href="#负载均衡：" class="headerlink" title="负载均衡："></a>负载均衡：</h4><p>　　　　Nginx：高性能、高并发的web服务器；功能包括负载均衡、反向代理、静态内容缓存、访问控制；工作在应用层</p>
-<p>　　　　LVS： Linux virtual server，基于集群技术和Linux操作系统实现一个高性能、高可用的服务器；工作在网络层</p>
-<h4 id="webserver："><a href="#webserver：" class="headerlink" title="webserver："></a>webserver：</h4><p>　　　　Java：Tomcat，Apache，Jboss</p>
-<p>　　　　Python：gunicorn、uwsgi、twisted、webpy、tornado</p>
-<h4 id="service："><a href="#service：" class="headerlink" title="service：　　"></a>service：　　</h4><p>　　　　SOA、微服务、spring boot，django</p>
-<h4 id="容器："><a href="#容器：" class="headerlink" title="容器："></a>容器：</h4><p>　　　　docker，kubernetes</p>
-<h4 id="cache："><a href="#cache：" class="headerlink" title="cache："></a>cache：</h4><p>　　　　memcache、redis等</p>
-<h4 id="协调中心："><a href="#协调中心：" class="headerlink" title="协调中心："></a>协调中心：</h4><p>　　　　zookeeper、etcd等</p>
-<p>　　　　zookeeper使用了Paxos协议Paxos是强一致性，高可用的去中心化分布式。zookeeper的使用场景非常广泛，之后细讲。</p>
-<h4 id="rpc框架："><a href="#rpc框架：" class="headerlink" title="rpc框架："></a>rpc框架：</h4><p>　　　　grpc、dubbo、brpc</p>
-<p>　　　　dubbo是阿里开源的Java语言开发的高性能RPC框架，在阿里系的诸多架构中，都使用了dubbo + spring boot</p>
-<h4 id="消息队列："><a href="#消息队列：" class="headerlink" title="消息队列："></a>消息队列：</h4><p>　　　　kafka、rabbitMQ、rocketMQ、QSP</p>
-<p>　　　　消息队列的应用场景：异步处理、应用解耦、流量削锋和消息通讯</p>
-<h4 id="实时数据平台："><a href="#实时数据平台：" class="headerlink" title="实时数据平台："></a>实时数据平台：</h4><p>　　　　storm、akka</p>
-<h4 id="离线数据平台："><a href="#离线数据平台：" class="headerlink" title="离线数据平台："></a>离线数据平台：</h4><p>　　　　hadoop、spark</p>
-<p>　　　　PS: apark、akka、kafka都是scala语言写的，看到这个语言还是很牛逼的</p>
-<h4 id="dbproxy："><a href="#dbproxy：" class="headerlink" title="dbproxy："></a>dbproxy：</h4><p>　　　　cobar也是阿里开源的，在阿里系中使用也非常广泛，是关系型数据库的sharding + replica 代理</p>
-<h4 id="db："><a href="#db：" class="headerlink" title="db："></a>db：</h4><p>　　　　mysql、oracle、MongoDB、HBase、pg</p>
-<h4 id="搜索："><a href="#搜索：" class="headerlink" title="搜索："></a>搜索：</h4><p>　　　　elasticsearch、solr</p>
-<h4 id="日志："><a href="#日志：" class="headerlink" title="日志："></a>日志：</h4><p>　　　　rsyslog、elk、flume
-　　　　</p>
-<h2 id=""><a href="#" class="headerlink" title="　　　　"></a>　　　　</h2><p>　　　<br>通用的关系型数据库设计理论，需要满足四种指标:</p>
-<ul>
-<li>Atomicity 原子性:</li>
-<li>Consistency 一致性:</li>
-<li>Isolation 独立性:</li>
-<li>Durability 持久性:</li>
-</ul>
-<p>一般情况下  cap只能保证其中的两个 没法全部兼得</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/04/12/技术领导力/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/04/12/技术领导力/" itemprop="url">技术领导力</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-12T09:40:33+08:00">
-                2019-04-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/web/" itemprop="url" rel="index">
-                    <span itemprop="name">web</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/04/12/技术领导力/" class="leancloud_visitors" data-flag-title="技术领导力">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  207
+                  455
                 </span>
               
 
@@ -1220,37 +932,201 @@
       
         
           
-            <p>做技术有没有前途？</p>
-<p>目前中国的基础技术还在发展当中 技术能力不足</p>
-<p>西方“精耕细作” 比拼技术</p>
-<p>技术人员跟从和被驱动</p>
+            <p>python的优点</p>
 <ul>
-<li>野蛮开采</li>
-<li>资源整合</li>
-<li>精耕细作</li>
-<li>发明创造</li>
-</ul>
-<p>发展自己的核心技术 提高技术领导力</p>
-<p>技术不是问题 技术领导力才是问题！！！</p>
-<ul>
-<li>能够发现问题</li>
-<li>解决问题 比较优缺点</li>
-<li>技术决定</li>
-<li>更优雅、更简单、更容易的方式来解决问题</li>
-<li>提高扩展性、重用性、可维护性</li>
-<li>正确管理团队</li>
-<li>创新能力</li>
+<li>简单 语法优雅</li>
+<li>易学 入手非常快</li>
+<li>免费/开源</li>
+<li>自动内存管理  C C++内存管理会带来很大的麻烦 程序非常容易出现内存方面的漏洞 但是python中内存管理是自动完成的 可以专注于程序本身</li>
 </ul>
 <ul>
-<li>追求核心基础技术</li>
-<li>追逐自动化的工具和技术</li>
-<li>解放生产力</li>
-<li>开发高效可重用组件</li>
-<li>坚持高于社会主流的技术标准和要求</li>
+<li>可以移植</li>
+<li>解释性 大多数的计算机语言是编译型的 运行之前需要将源码编译为操作系统可以执行的二进制格式 这样大型项目编译过程非常消耗时间 python解释器把源代码转换成字节码的中间形式 然后再把它翻译成计算机使用的机器语言并运行</li>
+<li><p>面向对象 混合型</p>
+</li>
+<li><p>可扩展</p>
+</li>
+<li>丰富的第三方库</li>
 </ul>
 <hr>
-<p>严于律己</p>
+<p>缺点</p>
+<ul>
+<li>速度慢</li>
+<li>强制缩进？？ 习惯很正常</li>
+<li>单行语句</li>
+</ul>
+<p>如果没有对性能上的高要求 python在大部分领域都可以胜任</p>
+<p>有些需要Cython甚至C这些工具</p>
+<p>golang项目 设计一塌糊涂 但是多核支持好 轻松跑出需要的性能 python的服务往往一个小问题就很致命</p>
+<p>10qps以下 学艺不精找不到问题 往往以为python本身这么慢</p>
+<p>动态类型如果代码写得烂 下限更低<br>对解释器的依赖容易出现各种问题 部署的时候还要专门的一块代码去帮客户配置环境</p>
+<p>文件过多 导致部署不方便 golang的话 是一个binary完事</p>
+<p>不那么容易暴露内部实现 因为给的是可执行文件</p>
+<p>解决性能不够好的问题</p>
+<p>golang相对来说 菜鸟也能写出性能远高于python的程序</p>
+<p>语法简单 总体上也比较安全 不用瞻前顾后</p>
 
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/04/12/分布式学习010/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/04/12/分布式学习010/" itemprop="url">分布式学习010</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-12T10:25:35+08:00">
+                2019-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/04/12/分布式学习010/" class="leancloud_visitors" data-flag-title="分布式学习010">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  0
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
           
         
       
@@ -1289,7 +1165,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/zhangdavids.github.io/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/95/">95</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/7/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/zhangdavids.github.io/page/7/">7</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/97/">97</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/7/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1339,7 +1215,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">473</span>
+                  <span class="site-state-item-count">482</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1454,7 +1330,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共181.7k字</span>
+  <span class="post-count">博客全站共185.1k字</span>
 </div>
 
         

@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/09/10/深度学习0001/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/09/11/binary-search-tree/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -328,7 +328,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/09/10/深度学习0001/" itemprop="url">深度学习0001</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/09/11/binary-search-tree/" itemprop="url">binary_search_tree</a></h1>
         
 
         <div class="post-meta">
@@ -340,7 +340,559 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-10T10:40:55+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-11T22:58:39+08:00">
+                2018-09-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/algorithm/" itemprop="url" rel="index">
+                    <span itemprop="name">algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2018/09/11/binary-search-tree/" class="leancloud_visitors" data-flag-title="binary_search_tree">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  591
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>对树节点 二叉搜索树的简单抽象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class TreeNode(object):</span><br><span class="line">    def __init__(self, key, value, parent=None, left_node=None, right_node=None, balance_factor=0):</span><br><span class="line">        self.key = key</span><br><span class="line">        self.payload = value</span><br><span class="line">        self.left_child = left_node</span><br><span class="line">        self.right_child = right_node</span><br><span class="line">        self.parent = parent</span><br><span class="line">        self.balance_factor = balance_factor</span><br><span class="line"></span><br><span class="line">    def has_left_child(self):</span><br><span class="line">        return self.left_child</span><br><span class="line"></span><br><span class="line">    def has_right_child(self):</span><br><span class="line">        return self.right_child</span><br><span class="line"></span><br><span class="line">    def is_left_child(self):</span><br><span class="line">        return self.parent and self.parent.left_child == self</span><br><span class="line"></span><br><span class="line">    def is_right_child(self):</span><br><span class="line">        return self.parent and self.parent.right_child == self</span><br><span class="line"></span><br><span class="line">    def is_root(self):</span><br><span class="line">        return not self.parent</span><br><span class="line"></span><br><span class="line">    def is_leaf(self):</span><br><span class="line">        return not (self.right_child or self.left_child)</span><br><span class="line"></span><br><span class="line">    def has_any_children(self):</span><br><span class="line">        return self.right_child or self.left_child</span><br><span class="line"></span><br><span class="line">    def has_both_children(self):</span><br><span class="line">        return self.right_child or self.left_child</span><br><span class="line"></span><br><span class="line">    def replace_node_data(self, key, value, lc, rc):</span><br><span class="line">        self.key = key</span><br><span class="line">        self.payload = value</span><br><span class="line">        self.left_child = lc</span><br><span class="line">        self.right_child = rc</span><br><span class="line">        if self.has_left_child():</span><br><span class="line">            self.left_child.parent = self</span><br><span class="line">        if self.has_right_child():</span><br><span class="line">            self.right_child.parent = self</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class BinarySearchTree(object):</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.root = None</span><br><span class="line">        self.size = 0</span><br><span class="line"></span><br><span class="line">    def length(self):</span><br><span class="line">        return self.size</span><br><span class="line"></span><br><span class="line">    def __len__(self):</span><br><span class="line">        return self.size</span><br><span class="line"></span><br><span class="line">    # 中序遍历</span><br><span class="line">    def in_order(self, node):</span><br><span class="line">        if node.left_child:</span><br><span class="line">            self.inorder(node.left_child)</span><br><span class="line">        self.print_node(node)</span><br><span class="line">        if node.right_child:</span><br><span class="line">            self.inorder(node.right_child)</span><br><span class="line"></span><br><span class="line">    def level_order(self, node):</span><br><span class="line">        nodes = []</span><br><span class="line">        nodes.append(node)</span><br><span class="line">        while len(nodes) &gt; 0:</span><br><span class="line">            current_node = nodes.pop(0)</span><br><span class="line">            self.print_node(current_node)</span><br><span class="line">            if current_node.left_child:</span><br><span class="line">                nodes.append(current_node.left_child)</span><br><span class="line">            if current_node.right_child:</span><br><span class="line">                nodes.append(current_node.right_child)</span><br><span class="line"></span><br><span class="line">    def print_node(self, node):</span><br><span class="line">        if node.parent:</span><br><span class="line">            print([node.key,</span><br><span class="line">                   node.payload,</span><br><span class="line">                   node.parent.key])</span><br><span class="line">        else:</span><br><span class="line">            print([node.key, node.payload])</span><br><span class="line"></span><br><span class="line">    # ---------------------  插入节点 ----------------</span><br><span class="line">    def put(self, key, value):</span><br><span class="line">        if self.root:</span><br><span class="line">            self._put(key, value, self.root)</span><br><span class="line">        else:</span><br><span class="line">            self.root = TreeNode(key, value)</span><br><span class="line">        self.size += 1</span><br><span class="line"></span><br><span class="line">    def _put(self, key, value, current_node):</span><br><span class="line">        if key &lt; current_node.key:</span><br><span class="line">            if current_node.has_left_child():</span><br><span class="line">                self._put(key, value, current_node.left_child)</span><br><span class="line">            else:</span><br><span class="line">                current_node.left_child = TreeNode(key, value, parent=current_node)</span><br><span class="line"></span><br><span class="line">        else:</span><br><span class="line">            if current_node.has_right_child():</span><br><span class="line">                self._put(key, value, current_node.right_child)</span><br><span class="line">            else:</span><br><span class="line">                current_node.right_child = TreeNode(key, value, parent=current_node)</span><br><span class="line">    # ---------------------  插入节点 ----------------</span><br><span class="line"></span><br><span class="line">    def __setitem__(self, key, value):</span><br><span class="line">        self.put(key, value)</span><br><span class="line"></span><br><span class="line">    # ---------------------  删除节点 ----------------</span><br><span class="line">    def find_min(self):  # Gets minimum node (leftmost leaf) in a subtree</span><br><span class="line">        current_node = self</span><br><span class="line">        while current_node.left_child:</span><br><span class="line">            current_node = current_node.left_child</span><br><span class="line">        return current_node</span><br><span class="line"></span><br><span class="line">    def replace_node_in_parent(self, new_value=None):</span><br><span class="line">        if self.parent:</span><br><span class="line">            if self == self.parent.left_child:</span><br><span class="line">                self.parent.left_child = new_value</span><br><span class="line">            else:</span><br><span class="line">                self.parent.right_child = new_value</span><br><span class="line">        if new_value:</span><br><span class="line">            new_value.parent = self.parent</span><br><span class="line"></span><br><span class="line">    def binary_tree_delete(self, key):</span><br><span class="line">        if key &lt; self.key:</span><br><span class="line">            self.left_child.binary_tree_delete(key)</span><br><span class="line">        elif key &gt; self.key:</span><br><span class="line">            self.right_child.binary_tree_delete(key)</span><br><span class="line">        else:  # delete the key here</span><br><span class="line">            if self.left_child and self.right_child:  # if both children are present</span><br><span class="line">                successor = self.right_child.find_min()</span><br><span class="line">                self.key = successor.key</span><br><span class="line">                successor.binary_tree_delete(successor.key)</span><br><span class="line">            elif self.left_child:  # if the node has only a *left* child</span><br><span class="line">                self.replace_node_in_parent(self.left_child)</span><br><span class="line">            elif self.right_child:  # if the node has only a *right* child</span><br><span class="line">                self.replace_node_in_parent(self.right_child)</span><br><span class="line">            else:  # this node has no children</span><br><span class="line">                self.replace_node_in_parent(None)</span><br><span class="line">    # ---------------------  删除节点 ----------------</span><br><span class="line"></span><br><span class="line">    def get(self, key):</span><br><span class="line">        if self.root:</span><br><span class="line">            res = self._get(key, self.root)</span><br><span class="line">            if res:</span><br><span class="line">                return res.payload</span><br><span class="line">            else:</span><br><span class="line">                return None</span><br><span class="line">        else:</span><br><span class="line">            return None</span><br><span class="line"></span><br><span class="line">    def _get(self, key, current_node):</span><br><span class="line">        if not current_node:</span><br><span class="line">            return None</span><br><span class="line">        elif current_node.key == key:</span><br><span class="line">            return current_node</span><br><span class="line">        elif key &lt; current_node.key:</span><br><span class="line">            return self._get(key, current_node.left_child)</span><br><span class="line">        else:</span><br><span class="line">            return self._get(key, current_node.right_child)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def run():</span><br><span class="line">    print(&apos;test bst&apos;)</span><br><span class="line">    mytree = BinarySearchTree()</span><br><span class="line">    mytree[3] = &quot;red&quot;</span><br><span class="line">    mytree[4] = &quot;blue&quot;</span><br><span class="line">    mytree[2] = &quot;rat&quot;</span><br><span class="line">    mytree[5] = &quot;cat&quot;</span><br><span class="line">    mytree[1] = &quot;dog&quot;</span><br><span class="line"></span><br><span class="line">    mytree.level_order(mytree.root)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    run()</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/09/11/二叉搜索树的处理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/09/11/二叉搜索树的处理/" itemprop="url">二叉搜索树的处理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-11T17:30:30+08:00">
+                2018-09-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/algorithm/" itemprop="url" rel="index">
+                    <span itemprop="name">algorithm</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2018/09/11/二叉搜索树的处理/" class="leancloud_visitors" data-flag-title="二叉搜索树的处理">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  76
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>一种特殊的二叉树，它满足下面的性质：<strong>任何一个节点的key值都比它左子树上的节点的key值要大，但是比它右子树上的节点的key值要小</strong>。节点查找，插入，删除等操作的时间复杂度都是O(lgn)</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/09/11/ansible-自定义模块开发/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/09/11/ansible-自定义模块开发/" itemprop="url">ansible-自定义模块开发</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-11T17:11:27+08:00">
+                2018-09-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2018/09/11/ansible-自定义模块开发/" class="leancloud_visitors" data-flag-title="ansible-自定义模块开发">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  284
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Ansible就没有 ansible_private_ipv4_address 这样一个Facts，用来保存私网IP地址。 而我们恰恰就需要这样的一个Facts，因为我们有很多服务器的默认网卡并非是eth0，有的是bond0，eth1，em0，em1等，而公网IP地址与私网IP地址也并没有固定的绑定在某个网卡上，很多时候还是虚拟网卡。 还好，我们可以通过编写Ansible模块并自定义Facts来实现。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/python</span><br><span class="line"> </span><br><span class="line">import json</span><br><span class="line">import commands</span><br><span class="line">import re</span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">def get_ansible_private_ipv4_address():</span><br><span class="line">    iprex = &quot;(^192\.168)|(^10\.)|(^172\.1[6-9])|(^172\.2[0-9])|(^172\.3[0-1])&quot;</span><br><span class="line">    output = commands.getoutput(&quot;&quot;&quot;/sbin/ifconfig |grep &quot;Link encap&quot; |awk &apos;&#123;print $1&#125;&apos; |grep -wv &apos;lo&apos;&quot;&quot;&quot;)</span><br><span class="line">    nics = output.split(&apos;\n&apos;)</span><br><span class="line">    for i in nics:</span><br><span class="line">        ipaddr = commands.getoutput(&quot;&quot;&quot;/sbin/ifconfig %s |grep -w &quot;inet addr&quot; |cut -d: -f2 | awk &apos;&#123;print $1&#125;&apos;&quot;&quot;&quot; % (i))</span><br><span class="line">        if re.match(iprex,ipaddr):</span><br><span class="line">            ansible_private_ipv4_address = ipaddr</span><br><span class="line">            return ansible_private_ipv4_address</span><br><span class="line"> </span><br><span class="line">def main():</span><br><span class="line">    global module</span><br><span class="line">    module = AnsibleModule(</span><br><span class="line">        argument_spec = dict(</span><br><span class="line">            get_facts=dict(default=&quot;yes&quot;, required=False),</span><br><span class="line">        ),</span><br><span class="line">        supports_check_mode = True,</span><br><span class="line">    )</span><br><span class="line"> </span><br><span class="line">    ansible_facts_dict = &#123;</span><br><span class="line">        &quot;changed&quot; : False,</span><br><span class="line">        &quot;ansible_facts&quot;: &#123;</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    if module.params[&apos;get_facts&apos;] == &apos;yes&apos;:</span><br><span class="line">        ansible_private_ipv4_address = get_ansible_private_ipv4_address()</span><br><span class="line">        ansible_facts_dict[&apos;ansible_facts&apos;][&apos;ansible_private_ipv4_address&apos;] = ansible_private_ipv4_address</span><br><span class="line"> </span><br><span class="line">    print json.dumps(ansible_facts_dict)</span><br><span class="line"> </span><br><span class="line">from ansible.module_utils.basic import *</span><br><span class="line">from ansible.module_utils.facts import *</span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/09/10/tensorflow-interview-problem/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/09/10/tensorflow-interview-problem/" itemprop="url">tensorflow-interview-problem</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-10T17:08:59+08:00">
                 2018-09-10
               </time>
             
@@ -351,28 +903,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/AI/" itemprop="url" rel="index">
-                    <span itemprop="name">AI</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -380,7 +910,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2018/09/10/深度学习0001/" class="leancloud_visitors" data-flag-title="深度学习0001">
+             <span id="/zhangdavids.github.io/2018/09/10/tensorflow-interview-problem/" class="leancloud_visitors" data-flag-title="tensorflow-interview-problem">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -405,7 +935,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  246
+                  444
                 </span>
               
 
@@ -421,7 +951,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -444,45 +974,7 @@
       
         
           
-            <p>首先是一些基本的概念  人工神经网络 ann</p>
-<p>tensorflow 主要做了什么？</p>
-<p>特征提取    运算</p>
-<p>框架的主要目的 是提供一个工具箱，使得开发时能够简化代码，呈现出来的模型尽可能简单易懂。</p>
-<hr>
-<p>神经元函数以及优化方法：</p>
-<ul>
-<li>激活函数的选取</li>
-<li>卷积函数</li>
-<li>池化函数</li>
-<li>分类函数</li>
-<li>优化方法有哪些？</li>
-</ul>
-<p>队列和线程</p>
-<ol>
-<li>队列</li>
-<li>队列管理器</li>
-<li>线程和协调器</li>
-</ol>
-<p>普通纯粹的神经网络</p>
-<p>卷积神经网络</p>
-<p>循环神经网络</p>
-<p>gan</p>
-<p>强化学习的未来</p>
-<ul>
-<li>人脸识别</li>
-<li>自然语言处理</li>
-<li>图像与语音的结合</li>
-<li>生成式对抗网络</li>
-</ul>
-<p><strong>tensorflowonspark 在 MNIST 上的实践</strong></p>
-<p>0.预留 为在executor 上执行的每个tf进程保留一个端口，并且启动数据消息的监听器</p>
-<p>1.启动 在executor 上启动tensorflow 主函数</p>
-<p>2.数据获取</p>
-<ul>
-<li>readers 和 queuerunners</li>
-<li>feeding 发送到tf节点</li>
-</ul>
-
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np </span><br><span class="line">import pandas as pd </span><br><span class="line"></span><br><span class="line">import tensorflow as tf </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">NUM_DIGITS = 10</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def binary_encode(i, num_digits):</span><br><span class="line">    return np.array([i &gt;&gt; d &amp; 1 for d in range(num_digits)])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def fizz_buzz_encode(i):</span><br><span class="line">    if i % 15 == 0:</span><br><span class="line">        return np.array([0, 0, 0, 1])</span><br><span class="line">    elif i % 5 == 0:</span><br><span class="line">        return np.array([0, 0, 1, 0])</span><br><span class="line">    elif i % 3 == 0:</span><br><span class="line">        return np.array([0, 1, 0, 0])</span><br><span class="line">    else:</span><br><span class="line">        return np.array([1, 0, 0, 0])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">train_X = np.array([binary_encode(i, NUM_DIGITS) for i in range(101, 2 ** NUM_DIGITS)])</span><br><span class="line">train_y = np.array([fizz_buzz_encode(i)          for i in range(101, 2 ** NUM_DIGITS)])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def init_weights(shape):</span><br><span class="line">    return tf.Variable(tf.random_normal(shape, stddev=0.01))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># Our model is a standard 1-hidden-layer multi-layer-perceptron with ReLU</span><br><span class="line"># activation. The softmax (which turns arbitrary real-valued outputs into</span><br><span class="line"># probabilities) gets applied in the cost function.</span><br><span class="line">def model(X, w_h, w_o):</span><br><span class="line">    h = tf.nn.relu(tf.matmul(X, w_h))</span><br><span class="line">    return tf.matmul(h, w_o)</span><br><span class="line"> </span><br><span class="line"># Our variables. The input has width NUM_DIGITS, and the output has width 4.</span><br><span class="line">X = tf.placeholder(&quot;float&quot;, [None, NUM_DIGITS])</span><br><span class="line">Y = tf.placeholder(&quot;float&quot;, [None, 4])</span><br><span class="line"> </span><br><span class="line"># How many units in the hidden layer.</span><br><span class="line">NUM_HIDDEN = 100</span><br><span class="line"> </span><br><span class="line"># Initialize the weights.</span><br><span class="line">w_h = init_weights([NUM_DIGITS, NUM_HIDDEN])</span><br><span class="line">w_o = init_weights([NUM_HIDDEN, 4])</span><br><span class="line"> </span><br><span class="line"># Predict y given x using the model.</span><br><span class="line">py_x = model(X, w_h, w_o)</span><br><span class="line"> </span><br><span class="line"># We&apos;ll train our model by minimizing a cost function.</span><br><span class="line">cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=py_x, labels=Y))</span><br><span class="line"># print(&quot;cost is: &quot;, cost)</span><br><span class="line">train_op = tf.train.GradientDescentOptimizer(0.01).minimize(cost)</span><br><span class="line"> </span><br><span class="line"># And we&apos;ll make predictions by choosing the largest output.</span><br><span class="line">predict_op = tf.argmax(py_x, 1)</span><br><span class="line"> </span><br><span class="line"># Finally, we need a way to turn a prediction (and an original number)</span><br><span class="line"># into a fizz buzz output</span><br><span class="line">def fizz_buzz(i, prediction):</span><br><span class="line">    return [str(i), &quot;fizz&quot;, &quot;buzz&quot;, &quot;fizzbuzz&quot;][prediction]</span><br><span class="line"> </span><br><span class="line">BATCH_SIZE = 128</span><br><span class="line"> </span><br><span class="line"># Launch the graph in a session</span><br><span class="line">with tf.Session() as sess:</span><br><span class="line">    tf.initialize_all_variables().run()</span><br><span class="line">    </span><br><span class="line">    # how many times for train?</span><br><span class="line">    for epoch in range(10000):</span><br><span class="line">        # Shuffle the data before each training iteration.</span><br><span class="line">        p = np.random.permutation(range(len(train_X)))</span><br><span class="line">        train_X, train_y = train_X[p], train_y[p]</span><br><span class="line"> </span><br><span class="line">        # Train in batches of 128 inputs.</span><br><span class="line">        for start in range(0, len(train_X), BATCH_SIZE):</span><br><span class="line">            end = start + BATCH_SIZE</span><br><span class="line">            sess.run(train_op, feed_dict=&#123;X: train_X[start:end], </span><br><span class="line">                                          Y: train_y[start:end]&#125;)</span><br><span class="line"> </span><br><span class="line">        # And print the current accuracy on the training data.</span><br><span class="line">        print(epoch, np.mean(np.argmax(train_y, axis=1) ==</span><br><span class="line">                             sess.run(predict_op, feed_dict=&#123;X: train_X, </span><br><span class="line">                                                             Y: train_y&#125;)))</span><br><span class="line"> </span><br><span class="line">    # And now for some fizz buzz</span><br><span class="line">    numbers = np.arange(1, 101)</span><br><span class="line">    teX = np.transpose(binary_encode(numbers, NUM_DIGITS))</span><br><span class="line">    teY = sess.run(predict_op, feed_dict=&#123;X: teX&#125;)</span><br><span class="line">    output = np.vectorize(fizz_buzz)(numbers, teY)</span><br><span class="line"> </span><br><span class="line">    print(output)</span><br></pre></td></tr></table></figure>
           
         
       
@@ -530,7 +1022,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/09/08/机器学习和人工智能/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/09/10/sql-面试题/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -549,7 +1041,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/09/08/机器学习和人工智能/" itemprop="url">机器学习和人工智能</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/09/10/sql-面试题/" itemprop="url">sql 面试题</a></h1>
         
 
         <div class="post-meta">
@@ -561,8 +1053,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-08T10:14:07+08:00">
-                2018-09-08
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-10T12:10:43+08:00">
+                2018-09-10
               </time>
             
 
@@ -572,28 +1064,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/AI/" itemprop="url" rel="index">
-                    <span itemprop="name">AI</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -601,7 +1071,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2018/09/08/机器学习和人工智能/" class="leancloud_visitors" data-flag-title="机器学习和人工智能">
+             <span id="/zhangdavids.github.io/2018/09/10/sql-面试题/" class="leancloud_visitors" data-flag-title="sql 面试题">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -626,7 +1096,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  273
+                  231
                 </span>
               
 
@@ -665,612 +1135,20 @@
       
         
           
-            <p>机器学习主要有两种形式，一种是监督学习，另外一种是非监督学习。</p>
-<p>监督学习，需要提供一组学习样本，也就是说数据是需要手动打上标签。程序可以通过这组样本学习相关的规律或者是模式，然后通过得到的规律或者模式来判断没有被打过标签的数据是什么样子的数据。</p>
-<p>非监督学习，数据没有被标注过。</p>
-<p>监督学习是在被告诉过了正确的答案后的学习，<br>而非监督学习是在没有被告诉正确答案时的学习。</p>
-<p>非监督学习是在大量的非常乱的数据中寻找一些潜在的关系，这个成本非常高。</p>
-<ul>
-<li>决策树 自动化放贷、风控</li>
-<li>朴素贝叶斯分类器 判断垃圾邮件、新闻分类</li>
-<li>最小二乘法 （是一种线性回归）</li>
-<li>逻辑回归</li>
-<li>支持向量机</li>
-<li>集成方法</li>
+            <ul>
+<li>说说对SQL语句优化有哪些方法？（选择几条）</li>
 </ul>
-<hr>
+<p>（1）Where子句中：where表之间的连接必须写在其他Where条件之前，那些可以过滤掉最大数量记录的条件必须写在Where子句的末尾.HAVING最后。</p>
+<p>（2）用EXISTS替代IN、用NOT EXISTS替代NOT IN。</p>
+<p>（3） 避免在索引列上使用计算</p>
+<p>（4）避免在索引列上使用IS NULL和IS NOT NULL</p>
+<p>（5）对查询进行优化，应尽量避免全表扫描，首先应考虑在 where 及 order by 涉及的列上建立索引。　　</p>
+<p>（6）应尽量避免在 where 子句中对字段进行 null 值判断，否则将导致引擎放弃使用索引而进行全表扫描</p>
+<p>（7）应尽量避免在 where 子句中对字段进行表达式操作，这将导致引擎放弃使用索引而进行全表扫描</p>
 <ul>
-<li>聚类算法</li>
-<li>主成分分析</li>
-<li>奇异值分解</li>
-<li>独立成分分析</li>
+<li>sql 索引 有哪几种类型？</li>
 </ul>
 
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/09/07/一点小小的感悟/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/09/07/一点小小的感悟/" itemprop="url">一点小小的感悟</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-07T21:33:26+08:00">
-                2018-09-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/growth/" itemprop="url" rel="index">
-                    <span itemprop="name">growth</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2018/09/07/一点小小的感悟/" class="leancloud_visitors" data-flag-title="一点小小的感悟">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  107
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>有人说 有修养的程序员才可能成长为真正的工程师和架构师，否则只能沦为码农。</p>
-<hr>
-<p>比较重要的几个方面：</p>
-<ul>
-<li>英文能力</li>
-<li>问问题的能力</li>
-<li>写代码的修养</li>
-<li>安全防范意识</li>
-<li>软件工程和上线规范</li>
-<li>编程规范</li>
-</ul>
-<p>取法其上，得乎其中，<br>取法其中，得乎其下，<br>取法其下，法不得也。</p>
-<p>C C++ JAVA GO Python</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/09/07/深度学习0000/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/09/07/深度学习0000/" itemprop="url">深度学习0000</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-07T10:59:40+08:00">
-                2018-09-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/AI/" itemprop="url" rel="index">
-                    <span itemprop="name">AI</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2018/09/07/深度学习0000/" class="leancloud_visitors" data-flag-title="深度学习0000">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  315
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>tensorflow 是一个google开源的深度学习的框架，执行性能良好，值得使用。</p>
-<p>caffe，caffe2 通过配置就可以拼凑一个深度学习框架，大大简化流程但也依赖大量的开源库，性能也不错。2013开始面世，很有活力的一个框架。</p>
-<p>keras 这个一个积木式的框架，有很多现成的函数 可以直接拿来用，开发速度杠杠的，就是缺少灵活性。</p>
-<p>MXNet 是一个全功能,灵活可编程和高扩展性的深度学习框架，可能学术上用的比较多吧！</p>
-<p>Torch 是一个facebook在维护的框架，灵活性也很大，不过要lua语言结合使用；</p>
-<p>CNTK微软推出的一个深度学习框架，可以在window上执行，性能据说是最优的，可是使用者不多，可能是市场都被主流的几个占有了；</p>
-<p>Deeplearning4j  java的一个深度学习库，不甚了解；</p>
-<p>Theano 是一个很古老的框架，性能比较差，速度最慢的，生产环境不会用的，只是现在有些研究室还在用。</p>
-<p>其他：</p>
-<p>SciKit-learn 是老牌的开源 Python 算法框架 </p>
-<p>openCV 是一个图片及视觉算法的框架</p>
-<hr>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/09/04/python的一些问题/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/09/04/python的一些问题/" itemprop="url">python的一些问题</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-04T09:15:38+08:00">
-                2018-09-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2018/09/04/python的一些问题/" class="leancloud_visitors" data-flag-title="python的一些问题">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  296
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>交换两个变量的值 没有C语言那么麻烦</p>
-<p>链状比较</p>
-<p>三元操作符进行条件赋值</p>
-<p>多行字符串</p>
-<p>存储列表元素到新的变量中</p>
-<p>打印引入模块的文件路径</p>
-<p>_ 是上一个执行的表达式的输出</p>
-<p>字典集合推导</p>
-<p>调试脚本</p>
-<p>开启文件分享</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 -m http.server</span><br></pre></td></tr></table></figure>
-<p>检查python中的对象</p>
-<p>简化if语句</p>
-<p>一行代码计算阶乘</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import functools</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">result = (lambda k: functools.reduce(int.__mul__, range(1, k+1))(3)</span><br></pre></td></tr></table></figure>
-<p>找到列表中出现最频繁的数</p>
-<pre><code>max(set(test), key=test.count)
-</code></pre><p>python递归限制次数到1000</p>
-<p>检查一个对象的内存使用情况：</p>
-<p>2.7中一个32比特的整数占用24字节<br>3.5中一个32比特的整数占用28字节</p>
-<p>确定内存使用情况 可以调用getsizeof</p>
-<p>使用 __slot__减少内存开支</p>
-<p>使用lambda 来模仿输出方法</p>
-<p>从两个相关的序列构建一个字典</p>
-<p>搜索字符串的多个前后缀</p>
-<p>endswith()后面可以连接字符串 元组也是可以的</p>
-<p>不使用循环构建一个列表</p>
-<p>itertools.chain.from_iterable</p>
-<ul>
-<li>实现 switch-case 语句</li>
-</ul>
-<pre><code>def xswitch(x):
-    return xswitch._system_dict.get(x, None)
-</code></pre>
           
         
       
@@ -1309,7 +1187,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/62/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/62/">62</a><span class="page-number current">63</span><a class="page-number" href="/zhangdavids.github.io/page/64/">64</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/95/">95</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/64/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/62/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/62/">62</a><span class="page-number current">63</span><a class="page-number" href="/zhangdavids.github.io/page/64/">64</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/97/">97</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/64/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1359,7 +1237,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">473</span>
+                  <span class="site-state-item-count">482</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1474,7 +1352,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共181.7k字</span>
+  <span class="post-count">博客全站共185.1k字</span>
 </div>
 
         

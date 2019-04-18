@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/11/2019-go-20/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/17/leetcode-0004/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -328,7 +328,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/11/2019-go-20/" itemprop="url">2019-go-20</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/17/leetcode-0004/" itemprop="url">leetcode-0004</a></h1>
         
 
         <div class="post-meta">
@@ -340,8 +340,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-11T18:15:20+08:00">
-                2019-03-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-17T15:37:08+08:00">
+                2019-03-17
               </time>
             
 
@@ -351,28 +351,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/golang/" itemprop="url" rel="index">
-                    <span itemprop="name">golang</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -380,7 +358,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/03/11/2019-go-20/" class="leancloud_visitors" data-flag-title="2019-go-20">
+             <span id="/zhangdavids.github.io/2019/03/17/leetcode-0004/" class="leancloud_visitors" data-flag-title="leetcode-0004">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -405,7 +383,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  135
+                  150
                 </span>
               
 
@@ -444,9 +422,7 @@
       
         
           
-            <p>一旦主gorountine 中的代码执行完毕 当前的go程序就会结束运行</p>
-<p>那么在go程序结束的那一刻 还有gorountine 未得到运行机会 它们就没有运行机会了 它们中的代码也不会被执行了</p>
-<p>go语言不会去保证这些 gorountine 会以怎样的顺序运行 哪个gorountine 先执行完 哪个gorountine 后执行完 往往是不可预知的 除非我们使用了某种go语言提供的方式进行了人为干预</p>
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">class Solution:</span><br><span class="line">    def findMedianSortedArrays(self, A, B):</span><br><span class="line">        m, n = len(A), len(B)</span><br><span class="line">        if m &gt; n:</span><br><span class="line">            A, B, m, n = B, A, n, m</span><br><span class="line">        if n == 0:</span><br><span class="line">            raise ValueError</span><br><span class="line"></span><br><span class="line">        imin, imax, half_len = 0, m, (m + n + 1) / 2</span><br><span class="line">        while imin &lt;= imax:</span><br><span class="line">            i = (imin + imax) / 2</span><br><span class="line">            j = half_len - i</span><br><span class="line">            if i &lt; m and B[j-1] &gt; A[i]:</span><br><span class="line">                # i is too small, must increase it</span><br><span class="line">                imin = i + 1</span><br><span class="line">            elif i &gt; 0 and A[i-1] &gt; B[j]:</span><br><span class="line">                # i is too big, must decrease it</span><br><span class="line">                imax = i - 1</span><br><span class="line">            else:</span><br><span class="line">                # i is perfect</span><br><span class="line"></span><br><span class="line">                if i == 0: max_of_left = B[j-1]</span><br><span class="line">                elif j == 0: max_of_left = A[i-1]</span><br><span class="line">                else: max_of_left = max(A[i-1], B[j-1])</span><br><span class="line"></span><br><span class="line">                if (m + n) % 2 == 1:</span><br><span class="line">                    return max_of_left</span><br><span class="line"></span><br><span class="line">                if i == m: min_of_right = B[j]</span><br><span class="line">                elif j == n: min_of_right = A[i]</span><br><span class="line">                else: min_of_right = min(A[i], B[j])</span><br><span class="line"></span><br><span class="line">                return (max_of_left + min_of_right) / 2.0</span><br></pre></td></tr></table></figure>
 
           
         
@@ -495,7 +471,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/11/2019-go-19/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/15/leetcode-0003/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -514,7 +490,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/11/2019-go-19/" itemprop="url">2019-go-19</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/15/leetcode-0003/" itemprop="url">leetcode-0003</a></h1>
         
 
         <div class="post-meta">
@@ -526,8 +502,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-11T18:15:13+08:00">
-                2019-03-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-15T14:19:11+08:00">
+                2019-03-15
               </time>
             
 
@@ -537,28 +513,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/golang/" itemprop="url" rel="index">
-                    <span itemprop="name">golang</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -566,7 +520,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/03/11/2019-go-19/" class="leancloud_visitors" data-flag-title="2019-go-19">
+             <span id="/zhangdavids.github.io/2019/03/15/leetcode-0003/" class="leancloud_visitors" data-flag-title="leetcode-0003">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -591,7 +545,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  21
+                  58
                 </span>
               
 
@@ -630,7 +584,7 @@
       
         
           
-            <p>单向通道最主要的用途 就是约束其他代码的行为</p>
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int lengthOfLongestSubstring(string s) &#123;</span><br><span class="line">        set&lt;char&gt; t;</span><br><span class="line">        int res = 0, left = 0, right = 0;</span><br><span class="line">        while (right &lt; s.size()) &#123;</span><br><span class="line">            if (t.find(s[right]) == t.end()) &#123;</span><br><span class="line">                t.insert(s[right++]);</span><br><span class="line">                res = max(res, (int)t.size());</span><br><span class="line">            &#125;  else &#123;</span><br><span class="line">                t.erase(s[left++]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
           
         
@@ -679,7 +633,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/11/2019-go-18/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/14/2019-go-25/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -698,7 +652,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/11/2019-go-18/" itemprop="url">2019-go-18</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/14/2019-go-25/" itemprop="url">2019-go-25</a></h1>
         
 
         <div class="post-meta">
@@ -710,8 +664,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-11T18:15:07+08:00">
-                2019-03-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-14T09:10:41+08:00">
+                2019-03-14
               </time>
             
 
@@ -750,7 +704,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/03/11/2019-go-18/" class="leancloud_visitors" data-flag-title="2019-go-18">
+             <span id="/zhangdavids.github.io/2019/03/14/2019-go-25/" class="leancloud_visitors" data-flag-title="2019-go-25">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -775,7 +729,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  107
+                  153
                 </span>
               
 
@@ -814,9 +768,16 @@
       
         
           
-            <p>通道（channel）完全可以与 goroutine（也可称go 程）并驾齐驱，共同代表go语言独有的并发编程模式和编程哲学</p>
-<p>通道类型的值本身就是并发安全的</p>
-<p>发送接收都是互斥<br>发送和接收操作中对元素值的处理 都是不可分割的<br>发送操作在完全完成之前会被阻塞，接收操作也是如此</p>
+            <h2 id="beego-模块化设计之-context"><a href="#beego-模块化设计之-context" class="headerlink" title="beego 模块化设计之 context"></a>beego 模块化设计之 context</h2><p>上下文模块主要是针对 HTTP 请求中，request 和 response 的进一步封装，他包括用户的输入和输出，用户的输入即为 request，context 模块中提供了 Input 对象进行解析，用户的输出即为 response，context 模块中提供了 Output 对象进行输出。</p>
+<p>context 对象是对 Input 和 Output 的封装，里面封装了几个方法：</p>
+<ul>
+<li>Redirect</li>
+<li>Abort</li>
+<li>WriteString</li>
+<li>GetCookie</li>
+<li>SetCookie</li>
+</ul>
+<p>context 对象是 Filter 函数的参数对象，这样你就可以通过 filter 来修改相应的数据，或者提前结束整个的执行过程。</p>
 
           
         
@@ -865,7 +826,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/11/2019-go-17/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/14/2019-go-24/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -884,7 +845,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/11/2019-go-17/" itemprop="url">2019-go-17</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/14/2019-go-24/" itemprop="url">2019-go-24</a></h1>
         
 
         <div class="post-meta">
@@ -896,8 +857,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-11T18:15:01+08:00">
-                2019-03-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-14T09:10:35+08:00">
+                2019-03-14
               </time>
             
 
@@ -907,28 +868,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/golang/" itemprop="url" rel="index">
-                    <span itemprop="name">golang</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -936,7 +875,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/03/11/2019-go-17/" class="leancloud_visitors" data-flag-title="2019-go-17">
+             <span id="/zhangdavids.github.io/2019/03/14/2019-go-24/" class="leancloud_visitors" data-flag-title="2019-go-24">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -961,7 +900,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  396
+                  347
                 </span>
               
 
@@ -1000,21 +939,48 @@
       
         
           
-            <h2 id="字典的操作和约束"><a href="#字典的操作和约束" class="headerlink" title="字典的操作和约束"></a>字典的操作和约束</h2><p>map </p>
-<p>键值对</p>
-<p>字典类型本质上是一个哈希表的特定实现，在这个实现当中，键和元素的最大不同在于，键的类型是受限制的，元素的类型却可以是任意类型的</p>
-<p>哈希表中比较重要的一个过程 就是映射</p>
-<p>键可以理解为元素的一个索引，在哈希表中通过键查找与它成对的那个元素</p>
-<p>这种对应关系，在数学里就被称为映射 也是map这个词的本意</p>
-<p>哈希表的映射过程就存在于对键–元素的增、删、改、查的操作之中</p>
-<p>映射的第一步 就是把键值转换为哈希值</p>
-<p>键值的类型 不可以是函数类型、字典类型和切片类型</p>
-<p>键的值之间支持判等的操作</p>
-<p>另外 键的类型是揭接口类型的，那么键值的实际类型也不能是上述的三种类型，否则在程序运行过程当中会引发panic</p>
-<p>键的类型 优先选用数值类型和指针类型，类型的宽度越小越好</p>
-<p>字符串类型的话 对键值的长度进行额外的约束</p>
-<p>字典是引用的类型 声明而不初始化 值是nil<br>除了添加键–元素对，在一个值为nil的字典上做任何操作都不会引起错误</p>
-<p>试图在一个值为nil的字典中添加键–元素对的时候，运行时系统会抛出一个panic</p>
+            <h2 id="beego-模块化设计之httplib"><a href="#beego-模块化设计之httplib" class="headerlink" title="beego 模块化设计之httplib"></a>beego 模块化设计之httplib</h2><p>httplib 库主要用来模拟客户端发送 HTTP 请求，类似于 Curl 工具，支持 JQuery 类似的链式操作。使用起来相当的方便；</p>
+<p>有点像 requests模块</p>
+<p>httplib 包里面支持如下的方法返回 request 对象：</p>
+<ul>
+<li>Get(url string)</li>
+<li>Post(url string)</li>
+<li>Put(url string)</li>
+<li>Delete(url string)</li>
+<li>Head(url string)</li>
+</ul>
+<p>发送文件</p>
+<pre><code>req := httplib.Post(&quot;http://beego.me/&quot;)
+bt,err:=ioutil.ReadFile(&quot;hello.txt&quot;)
+if err!=nil{
+    log.Fatal(&quot;read file err:&quot;,err)
+}
+req.Body(bt)
+</code></pre><p>文件直接上传接口</p>
+<pre><code>b:=httplib.Post(&quot;http://beego.me/&quot;)
+b.Param(&quot;username&quot;,&quot;astaxie&quot;)
+b.Param(&quot;password&quot;,&quot;123456&quot;)
+b.PostFile(&quot;uploadfile1&quot;, &quot;httplib.pdf&quot;)
+b.PostFile(&quot;uploadfile2&quot;, &quot;httplib.txt&quot;)
+str, err := b.String()
+if err != nil {
+    t.Fatal(err)
+}
+</code></pre><p>获取数据主要有如下几种方式：</p>
+<ul>
+<li><p>返回 Response 对象，req.Response() 方法 这个是 http.Response 对象，用户可以自己读取 body 的数据等。</p>
+</li>
+<li><p>返回 bytes,  req.Bytes() 方法 直接返回请求 URL 返回的内容</p>
+</li>
+<li><p>返回 string，req.String() 方法 直接返回请求 URL 返回的内容</p>
+</li>
+<li><p>保存为文件，req.ToFile(filename) 方法 返回结果保存到文件名为 filename 的文件中</p>
+</li>
+<li><p>解析为 JSON 结构，req.ToJSON(&amp;result) 方法 返回结构直接解析为 JSON 格式，解析到 result 对象中</p>
+</li>
+<li><p>解析为 XML 结构，req.ToXml(&amp;result) 方法 返回结构直接解析为 XML 格式，解析到 result 对象中</p>
+</li>
+</ul>
 
           
         
@@ -1063,7 +1029,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/11/2019-go-16/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/14/2019-go-23/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -1082,7 +1048,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/11/2019-go-16/" itemprop="url">2019-go-16</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/14/2019-go-23/" itemprop="url">2019-go-23</a></h1>
         
 
         <div class="post-meta">
@@ -1094,8 +1060,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-11T18:14:50+08:00">
-                2019-03-11
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-14T09:10:30+08:00">
+                2019-03-14
               </time>
             
 
@@ -1117,8 +1083,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/golang/" itemprop="url" rel="index">
-                    <span itemprop="name">golang</span>
+                  <a href="/zhangdavids.github.io/categories/beego/" itemprop="url" rel="index">
+                    <span itemprop="name">beego</span>
                   </a>
                 </span>
 
@@ -1134,7 +1100,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/03/11/2019-go-16/" class="leancloud_visitors" data-flag-title="2019-go-16">
+             <span id="/zhangdavids.github.io/2019/03/14/2019-go-23/" class="leancloud_visitors" data-flag-title="2019-go-23">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1159,7 +1125,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  99
+                  195
                 </span>
               
 
@@ -1198,12 +1164,9 @@
       
         
           
-            <p>函数是第一等公民</p>
-<p>函数不仅可以封装代码、分割功能、解耦逻辑</p>
-<p>还可以化身普通的值 在其他函数之间传递、赋予变量、做类型判断和转换等等</p>
-<p>就像切片和字典的值一样</p>
-<p>函数值可以由此成为能够被随意传播的独立逻辑组件（或者说功能模块）</p>
-
+            <h2 id="beego-模块化设计之logs"><a href="#beego-模块化设计之logs" class="headerlink" title="beego 模块化设计之logs"></a>beego 模块化设计之logs</h2><p>用来处理日志的库，它的设计思路来自于 database/sql，目前支持的引擎有 file、console、net、smtp，</p>
+<p>使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">logs.SetLogger(logs.AdapterFile,`&#123;&quot;filename&quot;:&quot;project.log&quot;,&quot;level&quot;:7,&quot;maxlines&quot;:0,&quot;maxsize&quot;:0,&quot;daily&quot;:true,&quot;maxdays&quot;:10,&quot;color&quot;:true&#125;`)</span><br><span class="line"></span><br><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">    &quot;github.com/astaxie/beego/logs&quot;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">func main() &#123;</span><br><span class="line">    //an official log.Logger</span><br><span class="line">    l := logs.GetLogger()</span><br><span class="line">    l.Println(&quot;this is a message of http&quot;)</span><br><span class="line">    //an official log.Logger with prefix ORM</span><br><span class="line">    logs.GetLogger(&quot;ORM&quot;).Println(&quot;this is a message of orm&quot;)</span><br><span class="line"></span><br><span class="line">    logs.Debug(&quot;my book is bought in the year of &quot;, 2016)</span><br><span class="line">    logs.Info(&quot;this %s cat is %v years old&quot;, &quot;yellow&quot;, 3)</span><br><span class="line">    logs.Warn(&quot;json is a type of kv like&quot;, map[string]int&#123;&quot;key&quot;: 2016&#125;)</span><br><span class="line">    logs.Error(1024, &quot;is a very&quot;, &quot;good game&quot;)</span><br><span class="line">    logs.Critical(&quot;oh,crash&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           
         
       
@@ -1242,7 +1205,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/17/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/zhangdavids.github.io/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/95/">95</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/19/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/17/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/17/">17</a><span class="page-number current">18</span><a class="page-number" href="/zhangdavids.github.io/page/19/">19</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/97/">97</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/19/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1292,7 +1255,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">473</span>
+                  <span class="site-state-item-count">482</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1407,7 +1370,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共181.7k字</span>
+  <span class="post-count">博客全站共185.1k字</span>
 </div>
 
         

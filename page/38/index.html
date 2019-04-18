@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/25/leetcode-801/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/02/13/2019-go-00/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -328,7 +328,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/25/leetcode-801/" itemprop="url">leetcode-801</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/02/13/2019-go-00/" itemprop="url">2019-go-00</a></h1>
         
 
         <div class="post-meta">
@@ -340,8 +340,235 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-25T09:59:03+08:00">
-                2019-01-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-13T21:09:50+08:00">
+                2019-02-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/golang/" itemprop="url" rel="index">
+                    <span itemprop="name">golang</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/02/13/2019-go-00/" class="leancloud_visitors" data-flag-title="2019-go-00">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  626
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="session-amp-cookie"><a href="#session-amp-cookie" class="headerlink" title="session &amp; cookie"></a>session &amp; cookie</h2><p>1.Http是无状态的协议，服务器不能记录浏览器的访问状态，也就是服务器不能区分两次请求是否是来自同一个客户端。</p>
+<p>2.Cookie实际上是服务器保存在浏览器上的一段信息，浏览器有了Cookie之后，每次向服务器发送请求都会带着该信息进行访问，服务器在收到请求之后，就可以通过该信息进行处理。</p>
+<p>3.Cookie由服务器创建，并发给浏览器，最终由浏览器保存。</p>
+<p>Cookie的用途</p>
+<ul>
+<li>电商网站的购物车</li>
+<li>保持用户登陆状态</li>
+</ul>
+<p>使用beego.Router()注册路由</p>
+<pre><code>beego.Router(&quot;/cookie&quot;,&amp;controllers.CookieController{})
+</code></pre><p>控制器</p>
+<pre><code>
+package controllers
+
+import &quot;github.com/astaxie/beego&quot;
+
+type CookieController struct {
+    beego.Controller
+}
+
+func (this *CookieController)Get()  {
+    if this.Ctx.GetCookie(&quot;user&quot;) ==&quot;&quot;{  
+        this.Ctx.SetCookie(&quot;user&quot;,&quot;admin&quot;)
+        this.Ctx.WriteString(&quot;Cookie设置成功&quot;)
+    }else{
+        user:= this.Ctx.GetCookie(&quot;user&quot;)
+        this.Ctx.WriteString(&quot;user=&quot;+user)
+    }
+}
+</code></pre><p>我们先通过this.Ctx.GetCookie(“key”)判断浏览器是否有Cookie ，如果没有就使用this.Ctx.SetCookie(“key”,”value”)设置，如果有就获取并输出。</p>
+<p>注意Cookie的键和值不能为中文</p>
+<pre><code>this.Ctx.SetCookie(&quot;user&quot;,&quot;admin&quot;，10)
+</code></pre><p>SetCookie的第三个参数是时间，单位是秒 ，如果不设置时间，Cookie只在本次会话有效，默认存活时间为3600秒      </p>
+<pre><code>this.Ctx.SetCookie(&quot;user&quot;,&quot;admin&quot;,&quot;100&quot;,&quot;/cookie&quot;)
+</code></pre><p>Session的使用</p>
+<p>Beego默认关闭Session，如果想要使用Session，需要在配置文件或程序中设置，分别为</p>
+<pre><code>beego.BConfig.WebConfig.Session.SessionOn = true和sessionon=true
+</code></pre><p>设置Session    </p>
+<pre><code>this.SetSession(“usesrname”, “admin”)
+</code></pre><p>删除Session</p>
+<pre><code>This.GetSession(“username”),如果没有获取到session，会返回nil，和cookie不一样，getCookie返回空字符串。
+</code></pre><p>Session是一段保存在服务器上的一段信息，当客户端第一次访问服务器时创建。同时也创建一个名为beegosessionID,值为创建Session的id的Cookie<br>这个beegosessionID对应服务器中的一个Session对象，通过它就可以获取到保存用户信息的Session</p>
+<p>通过this.DelSession(“password”)和this.DestroySession()均可以删除Session，其区别在于DelSession删除指定的Session, DestroySession删除所有session。</p>
+<p>可以通过beego.BConfig.WebConfig.Session.SessionName = “admin”和sessionname设置Cookie名称，如果在配置文件和主函数都设置了，主函数优先，因为beego先加载配置文件后执行主函数，所以主函数中设置的内容回对配置文件中设置的内容进行覆盖。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/02/11/one-line-python/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/02/11/one-line-python/" itemprop="url">one-line-python</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-11T17:49:36+08:00">
+                2019-02-11
               </time>
             
 
@@ -358,7 +585,360 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/01/25/leetcode-801/" class="leancloud_visitors" data-flag-title="leetcode-801">
+             <span id="/zhangdavids.github.io/2019/02/11/one-line-python/" class="leancloud_visitors" data-flag-title="one-line-python">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  411
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="一行python代码能够做什么"><a href="#一行python代码能够做什么" class="headerlink" title="一行python代码能够做什么"></a>一行python代码能够做什么</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -c &quot;import this&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">python -m SimpleHTTPServer 8080    # python2</span><br><span class="line"></span><br><span class="line">python3 -m http.server 8080      # python3</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">for x in range(1, 101): print(&quot;fizz&quot;[x % 3 * 4:]+&quot;buzz&quot;[x % 5 * 4:] or x)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(&apos;\n&apos;.join([&apos;&apos;.join([(&apos;Love&apos;[(x-y) % len(&apos;Love&apos;)] if ((x*0.05)**2+(y*0.1)**2-1)**3-(x*0.05)**2*(y*0.1)**3 &lt;= 0else&apos; &apos;) forx in range(-30, 30)]) fory in range(30, -30, -1)]))</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(&apos;\n&apos;.join([&apos;&apos;.join([&apos;*&apos;if abs((lambda a: lambda z, c, n: a(a, z, c, n))(lambda s, z, c, n: z if n == 0 else s(s, z*z+c, c, n-1))(0, 0.02*x+0.05j*y, 40)) &lt; 2 else &apos; &apos; for x in range(-80, 20)]) for y in range(-20, 20)]))</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(&apos;\n&apos;.join([&apos; &apos;.join([&apos;%s*%s=%-2s&apos; % (y, x, x*y) fory in range(1, x+1)]) forx in range(1, 10)]))</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(&apos; &apos;.join([str(item) for item in filter(lambda x: not [x % i for i in range(2, x) if x % i == 0], range(2, 101))]))</span><br><span class="line"></span><br><span class="line">print(&apos; &apos;.join([str(item) for item in filter(lambda x: all(map(lambda p: x % p != 0, range(2, x))), range(2, 101))]))</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print([x[0] for x in [(a[i][0], a.append([a[i][1], a[i][0]+a[i][1]])) for a in ([[1, 1]], ) for i in range(30)]])</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qsort = lambda arr: len(arr) &gt; 1and qsort(list(filter(lambda x: x &lt;= arr[0], arr[1:]))) + arr[0:1] + qsort(list(filter(lambda x: x &gt; arr[0], arr[1:]))) or arr</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[__import__(&apos;sys&apos;).stdout.write(&apos;\n&apos;.join(&apos;.&apos; * i + &apos;Q&apos; + &apos;.&apos; * (8-i-1) for i in vec) + &quot;\n========\n&quot;) for vec in __import__(&apos;itertools&apos;).permutations(range(8)) if 8 == len(set(vec[i]+i for i in range(8))) == len(set(vec[i]-i for i in range(8)))]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">flatten = lambda x: [y for l in x for y in flatten(l)] if isinstance(x, list) else [x]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">array = lambda x: [x[i:i+3] for i in range(0, len(x), 3)]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(sum(map(int, str(2**1000))))</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/02/11/how-to-be-a-daniu/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/02/11/how-to-be-a-daniu/" itemprop="url">how-to-be-a-daniu</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-11T13:41:32+08:00">
+                2019-02-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/02/11/how-to-be-a-daniu/" class="leancloud_visitors" data-flag-title="how-to-be-a-daniu">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  54
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="误区"><a href="#误区" class="headerlink" title="误区"></a>误区</h3><ul>
+<li>拜大牛为师</li>
+<li>业务代码一样很牛逼？</li>
+<li>上班太忙没时间学习</li>
+</ul>
+<h3 id="正确做法"><a href="#正确做法" class="headerlink" title="正确做法"></a>正确做法</h3><ul>
+<li>do more</li>
+</ul>
+<p>—&gt; 熟悉更多业务</p>
+<p>—&gt; 熟悉端到端</p>
+<p>—&gt; 自学</p>
+<ul>
+<li>do better</li>
+<li>do exercise</li>
+<li>learning</li>
+<li>trying</li>
+<li>teaching</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/02/10/前端总规划总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/02/10/前端总规划总结/" itemprop="url">前端总规划总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-10T21:54:06+08:00">
+                2019-02-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/02/10/前端总规划总结/" class="leancloud_visitors" data-flag-title="前端总规划总结">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -470,7 +1050,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/25/leetcode-799/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/30/conda-cmd/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -489,7 +1069,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/25/leetcode-799/" itemprop="url">leetcode-799</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/30/conda-cmd/" itemprop="url">conda_cmd</a></h1>
         
 
         <div class="post-meta">
@@ -501,332 +1081,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-25T09:54:16+08:00">
-                2019-01-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/01/25/leetcode-799/" class="leancloud_visitors" data-flag-title="leetcode-799">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  84
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    double champagneTower(int poured, int query_row, int query_glass) &#123;</span><br><span class="line">        double result[101][101] = &#123;0.0&#125;;</span><br><span class="line">        result[0][0] = poured;</span><br><span class="line">        for (int i = 0; i &lt; 100; i++) &#123;</span><br><span class="line">            for (int j = 0; j &lt;= i; j++) &#123;</span><br><span class="line">                if (result[i][j] &gt;= 1) &#123;</span><br><span class="line">                    result[i + 1][j] += (result[i][j] - 1) / 2.0;</span><br><span class="line">                    result[i + 1][j + 1] += (result[i][j] - 1) / 2.0;</span><br><span class="line">                    result[i][j] = 1;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return result[query_row][query_glass];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/25/leetcode-798/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/25/leetcode-798/" itemprop="url">leetcode-798</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-25T09:48:37+08:00">
-                2019-01-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/01/25/leetcode-798/" class="leancloud_visitors" data-flag-title="leetcode-798">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  53
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Solution(object):</span><br><span class="line">    def bestRotation(self, A):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        :type A: List[int]</span><br><span class="line">        :rtype: int</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        N = len(A)</span><br><span class="line">        change = [1] * N</span><br><span class="line">        for i in xrange(N): </span><br><span class="line">            change[(i - A[i] + 1) % N] -= 1</span><br><span class="line">        for i in xrange(1, N): </span><br><span class="line">            change[i] += change[i - 1]</span><br><span class="line">        return change.index(max(change))</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/25/leetcode-797/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/25/leetcode-797/" itemprop="url">leetcode-797</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-25T09:36:07+08:00">
-                2019-01-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-30T14:28:04+08:00">
+                2019-01-30
               </time>
             
 
@@ -848,8 +1104,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
+                  <a href="/zhangdavids.github.io/categories/python/" itemprop="url" rel="index">
+                    <span itemprop="name">python</span>
                   </a>
                 </span>
 
@@ -865,7 +1121,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/01/25/leetcode-797/" class="leancloud_visitors" data-flag-title="leetcode-797">
+             <span id="/zhangdavids.github.io/2019/01/30/conda-cmd/" class="leancloud_visitors" data-flag-title="conda_cmd">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -890,7 +1146,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  95
+                  359
                 </span>
               
 
@@ -929,193 +1185,56 @@
       
         
           
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    void dfs(vector&lt;vector&lt;int&gt;&gt;&amp; g, vector&lt;vector&lt;int&gt;&gt;&amp; res, vector&lt;int&gt; path, int cur) &#123;</span><br><span class="line">        path.push_back(cur);</span><br><span class="line">        if (cur == g.size() - 1) res.push_back(path);</span><br><span class="line">        else for (auto it: g[cur]) dfs(g, res, path, it);</span><br><span class="line">    &#125;</span><br><span class="line">    vector&lt;vector&lt;int&gt;&gt; allPathsSourceTarget(vector&lt;vector&lt;int&gt;&gt;&amp; g) &#123;</span><br><span class="line">        vector&lt;vector&lt;int&gt;&gt; paths;</span><br><span class="line">        vector&lt;int&gt; path;</span><br><span class="line">        dfs(g, paths, path, 0);</span><br><span class="line">        return paths;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/24/ds之dfs/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/24/ds之dfs/" itemprop="url">ds之dfs</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-24T14:26:38+08:00">
-                2019-01-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/data-structure/" itemprop="url" rel="index">
-                    <span itemprop="name">data structure</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/01/24/ds之dfs/" class="leancloud_visitors" data-flag-title="ds之dfs">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  87
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>深度优先搜索 更符合计算机的习惯</p>
-<p>也就是一般使用栈来处理问题(递归)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">class Solution(object):</span><br><span class="line">    def levelOrder(self, root):</span><br><span class="line">        if not root:</span><br><span class="line">            return []</span><br><span class="line">        self.result = []</span><br><span class="line">        self._dfs(root, 0)</span><br><span class="line">        return self.result</span><br><span class="line"></span><br><span class="line">    def _dfs(self, node, level):</span><br><span class="line">        if not node: return</span><br><span class="line"></span><br><span class="line">        if len(self.result) &lt; level + 1:</span><br><span class="line">            self.result.append([])</span><br><span class="line"></span><br><span class="line">        self.result[level].append(node.val)</span><br><span class="line"></span><br><span class="line">        self._dfs(node.left, level+1)</span><br><span class="line">        self._dfs(node.right, level+1)</span><br></pre></td></tr></table></figure>
+            <p>常用操作命令：</p>
+<p>一、环境操作</p>
+<p>1.查看环境管理的全部命令帮助：</p>
+<p>conda env -h</p>
+<p>2.查看当前系统下的环境：</p>
+<p>conda info -e</p>
+<p>3.创建环境：</p>
+<p>conda create env_name                (env_name)是环境名称,这条命令将会给Biopython创建一个新的环境，位置在Anaconda安装文件的/envs/snowflakes</p>
+<p>创建指定python版本的环境：</p>
+<p>conda create env_name python=3.6           (3.6为python的版本，根据自己的需要更改)</p>
+<p>创建包含某些包的环境：</p>
+<p>conda create env_name numpy scipy</p>
+<p>创建指定python版本下包含某些包的环境：</p>
+<p>conda create env_name python=3.6  numpy scipy</p>
+<p>激活（进入）某个环境：</p>
+<p>新的开发环境会被默认安装在conda目录下envs文件目录下,你可以指定一个其他的路径；</p>
+<p>如果没有指定安装python的版本，conda会安装最初安装conda时所装的那个版本的python。</p>
+<p>windows:</p>
+<p>activate env_name</p>
+<p>mac:</p>
+<p>source activate env_name</p>
+<p>退出某个环境：</p>
+<p>deactivate env_name</p>
+<p>复制某个环境：</p>
+<p>conda create new_env_name old_env_name</p>
+<p>删除某个环境：</p>
+<p>conda remove env_name</p>
+<p>二、包管理</p>
+<p>查看已安装的包：</p>
+<p>conda list</p>
+<p>查看指定环境下的包：</p>
+<p>conda list -n xxx</p>
+<p>查找包：</p>
+<p>conda search xxx</p>
+<p>更新包：</p>
+<p>conda update xxx</p>
+<p>安装包：</p>
+<p>conda install xxx</p>
+<p>pip install xxx</p>
+<p>指定的安装环境：</p>
+<p>conda install -n env_name xxx</p>
+<p>安装anaconda发行版中所有的包:</p>
+<p>conda install anaconda</p>
+<p>卸载包：</p>
+<p>conda remove xxx</p>
+<p>三、管理conda</p>
+<p>检查conda版本：</p>
+<p>conda –version</p>
+<p>升级当前版本的conda：</p>
+<p>conda update conda</p>
 
           
         
@@ -1155,7 +1274,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/37/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/37/">37</a><span class="page-number current">38</span><a class="page-number" href="/zhangdavids.github.io/page/39/">39</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/95/">95</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/39/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/37/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/37/">37</a><span class="page-number current">38</span><a class="page-number" href="/zhangdavids.github.io/page/39/">39</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/97/">97</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/39/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1205,7 +1324,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">473</span>
+                  <span class="site-state-item-count">482</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1320,7 +1439,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共181.7k字</span>
+  <span class="post-count">博客全站共185.1k字</span>
 </div>
 
         

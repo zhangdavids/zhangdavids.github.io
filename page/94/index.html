@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2016/05/16/python之数据结构/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2016/05/17/python实战之django小试/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -328,7 +328,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2016/05/16/python之数据结构/" itemprop="url">python之数据结构</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2016/05/17/python实战之django小试/" itemprop="url">python实战之django小试</a></h1>
         
 
         <div class="post-meta">
@@ -340,8 +340,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-16T19:04:29+08:00">
-                2016-05-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-17T17:26:04+08:00">
+                2016-05-17
               </time>
             
 
@@ -358,7 +358,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2016/05/16/python之数据结构/" class="leancloud_visitors" data-flag-title="python之数据结构">
+             <span id="/zhangdavids.github.io/2016/05/17/python实战之django小试/" class="leancloud_visitors" data-flag-title="python实战之django小试">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -383,288 +383,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2.6k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  10
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>对于一门语言来说，数据结构是其所有精华的所在，是python开发的基础。对于很多新人来说，就是觉得挺简单的，实际上手还是较困难。    </p>
-<p>python这里介绍四种数据结构：<br><em>1.元组<br>2.列表<br>3.字典<br>4.序列</em>  </p>
-<h2 id="元组"><a href="#元组" class="headerlink" title="元组"></a>元组</h2><p>tuple是由一系列元素组成的ds，所有元素被包含在一对圆括号中。创建元组时，可以不指定元素个数，但是一旦创建之后，就不能进行任何修改。<br>这里需要注意一下，如果创建的元组只包含一个元素，通常会忽略单元素后的逗号。正确写法如下：</p>
-<pre><code>tuple = (apple,)
-print (tuple[0])
-print (type(tuple))
-</code></pre><p> 这段代码定义了一个单元素的tuple“apple”，并且类型为<class 'tuple'="">。  </class></p>
-<p> 元组，列表，字典等都是从0开始的，［0］获取的就是第一个元素。  </p>
-<p> 元组创建之后，不能进行修改，也不能进行赋值操作。  </p>
-<p> 元组可以进行负数索引，分片索引，另外元组还可以由其他元组组成，就成了二元元组。</p>
-<p> 元组的遍历<br> 这里介绍下二元元组的遍历。</p>
-<pre><code>for i in tuple:
-    for j in i:
-        print(j)
-</code></pre><p>##列表    </p>
-<p> 列表是方括号。  </p>
-<p> 列表可以实现添加 删除 查找等操作，元素的值可以被修改。  </p>
-<p> 添加使用append（）<br> 还可以考虑insert（），不过insert要指明位置。<br> 删除直接用remove（）<br> pop（）是取出最后一个元素。<br> 列表的使用和元组十分相似，支持负数索引 分片还有多元列表等特性，但是列表中的元素可以进行修改。  </p>
-<p> 列表还可以进行连接操作。一种是extend（）连接两个不同的列表，另外一种是使用运算符“＋”或“＋＝”。</p>
-<pre><code>list = [&quot;apple&quot;,&quot;banana&quot;,&quot;orange&quot;,&quot;grape&quot;]  
-print(list.index(&quot;grape&quot;))  
-print(&quot;orange&quot; in list)
-</code></pre><p> 打印索引，<br> 判断orange是否在列表中。  </p>
-<p> 列表排序和反转  </p>
-<pre><code>list.sort()
-list.reverse()  
-</code></pre><p> sort()这个函数，需要仔细说明下，sort（cmp,key=None,reverse=False）  </p>
-<p> 在这和大家分享一下机器学习里的一个案例，看看列表的操作。  </p>
-<p> 统计 Python 中的字数<br>问题<br>在 Python 中实施函数“count_words()”，该函数将字符串“s”和数字“n”用作输入，并返回“s”中“n”个出现频率最高的单词。返回值应该是一个元组列表 - 出现频率最高的“n”个单词及其相应的出现次数“[(, ), (, ), …]”，按出现次数的降序排列。<br>您可以假设所有输入都是小写形式，并且不含标点符号或其他字符（只包含字母和单个分隔空格）。如果出现次数相同，则按字母顺序排列出现次数相同的单词。<br>例如：</p>
-<pre><code>print count_words(&quot;betty bought a bit of butter but the butter was bitter&quot;,3)
-</code></pre><p>Output:</p>
-<pre><code>[(&apos;butter&apos;, 2), (&apos;a&apos;, 1), (&apos;betty&apos;, 1)]
-</code></pre><pre><code>  &quot;&quot;&quot;Count words.&quot;&quot;&quot;
-from collections import Counter
-from operator import itemgetter
-def count_words(s, n):
-    &quot;&quot;&quot;Return the n most frequently occuring words in s.&quot;&quot;&quot;
-    cnt = Counter()
-    for word in s.split(&quot; &quot;):
-        cnt[word] += 1
-    a = cnt.items()
-    b = sorted(a,key=lambda a:a[0],reverse=False)
-    c = sorted(b,key=itemgetter(1),reverse=True)
-    top_n = c[0:n]
-    # TODO: Count the number of occurences of each word in s
-
-    # TODO: Sort the occurences in descending order (alphabetically in case of ties)
-
-    # TODO: Return the top n words as a list of tuples (&lt;word&gt;, &lt;count&gt;)
-    return top_n
-
-
-def test_run():
-    &quot;&quot;&quot;Test count_words() with some inputs.&quot;&quot;&quot;
-    print count_words(&quot;cat bat mat cat bat cat&quot;, 3)
-    print count_words(&quot;betty bought a bit of butter but the butter was bitter&quot;, 3)
-
-
-if __name__ == &apos;__main__&apos;:
-    test_run()
-</code></pre><p>如何来分析这个案例呢？  </p>
-<p>首先是定义一个字符串  </p>
-<pre><code>s＝“betty bought a bit of butter but the butter was bitter”
-</code></pre><p>接着使用文档中提到的collections来处理这个统计</p>
-<pre><code>from collections import Counter
-cnt = Counter()
-for word in s.split(&quot; &quot;):
-    cnt[word] += 1
-</code></pre><p>这里处理完之后，需要停下来检查一下cnt是啥类型<br>class ‘collections.Counter’  </p>
-<pre><code>Counter({&apos;butter&apos;: 2, &apos;a&apos;: 1, &apos;bitter&apos;: 1, &apos;of&apos;: 1, &apos;but&apos;: 1, &apos;betty&apos;: 1, &apos;bit&apos;: 1, &apos;was&apos;: 1, &apos;the&apos;: 1, &apos;bought&apos;: 1})
-</code></pre><p>这个形式应该就是我们后续要介绍的dict字典类型，我们需要把它转换为列表  </p>
-<p>cnt.items()  </p>
-<p>转换了之后，我们还需要做哪些处理呢？</p>
-<pre><code>[(&apos;a&apos;, 1), (&apos;butter&apos;, 2), (&apos;bitter&apos;, 1), (&apos;of&apos;, 1), (&apos;but&apos;, 1), (&apos;betty&apos;, 1), (&apos;bit&apos;, 1), (&apos;was&apos;, 1), (&apos;the&apos;, 1), (&apos;bought&apos;, 1)]   
-</code></pre><p>看看题目的要求，统计次数多的在前，一是数值大的要靠前站；<br>另外就是数值一样，按照字典顺序，a-z这种排列一下。  </p>
-<p>这里我就考虑使用这种顺序尝试一下咯。  </p>
-<p>先根据字典顺序，排列一下</p>
-<pre><code>sorted(a,key=lambda a:a[0],reverse=False)
-</code></pre><p>这个是正常的升序排列，得到结果：</p>
-<pre><code>[(&apos;a&apos;, 1), (&apos;betty&apos;, 1), (&apos;bit&apos;, 1), (&apos;bitter&apos;, 1), (&apos;bought&apos;, 1), (&apos;but&apos;, 1), (&apos;butter&apos;, 2), (&apos;of&apos;, 1), (&apos;the&apos;, 1), (&apos;was&apos;, 1)]
-</code></pre><p>接下来就是把数值大的调到前面去，也就是比较一下第二个值，按照降序排列处理一下  </p>
-<pre><code>from operator import itemgetter
-sorted(b,key=itemgetter(1),reverse=True)
-</code></pre><p>这样就基本实现了对列表里的排序，接着分片处理下就达到了题目要求。</p>
-<p>这个方案是我的初步方案，可能不是最简便的，供大家参考下，嘻嘻。  </p>
-<p>列表还有一个操作就是实现堆栈和队列，这个在大学的数据结构课程有简单接触的，问题就是很多只知道大概了啊。。</p>
-<p>堆栈就是后进先出</p>
-<p>队列则是先进先出<br>使用列表的append（）和pop（）操作可以模拟这两个数据结构<br>append（）可以把一个元素添加到堆栈的顶部，<br>pop（）把堆栈的最后一个元素弹出来。  </p>
-<p>队列的不同之处在于弹出时参数设置不一样，<br>pop（－1）弹出第一个元素  </p>
-<p>##字典  </p>
-<p>字典也是较为常见的，也是比较的重要的数据结构。key-value这种键值对，也是数据库的一种基本模式。  </p>
-<p>字典是花括号｛｝  </p>
-<p>这里需要注意一下，键是区分大小写的。一般而言，创建字典时，可以使用数字作为索引。<br>键值对这种结构，  </p>
-<pre><code>value=dict[key]
-</code></pre><p>说下字典的遍历：</p>
-<pre><code>for (k,v) in  dict.items():
-    print (&quot;dict[%s] =&quot;% k,v)
-</code></pre><p>值也可以是字典 元组 或者是字典，这种称为混合型字典。<br>字典有这么些方法：</p>
-<p>keys（） 返回keys列表<br>value（）返回value列表<br>get（）<br>get（）访问字典中的value值减少了代码的长度，而且表达方式容易理解，避免了使用if语句带来的维护代价。<br>update（）<br>update（）函数相当于一个合并函数，把一个字典的key和value值全部复制到另外一个字典中。<br>D.update(E) -&gt; None  </p>
-<p>把字典E的内容合并到字典D中，有相同的键值，e的值会覆盖d的。<br>setdefault（）<br>可以创建新的元素并设置默认值，声明如下：</p>
-<p>D.setdefault(k,[d]) -&gt; D.get(k,[d])  </p>
-<p>还有一些常用方法：<br>items（） 返回（key，value）元组组成的列表<br>iteritems（） 返回指向字典的遍历器  </p>
-<p>字典还有排序和复制  </p>
-<p>排序的话和列表的差不多  </p>
-<pre><code>print （sorted(dict.items(), key=lambda d:d[0])）
-</code></pre><p>这是按照key排序  </p>
-<p>前面提到的update函数，比如把a字典的内容复制到b字典，并且b字典原有的顺序保持不变，从而实现字典b的扩展。但是，如果需要把a的内容复制到b，并且清除b中的原有内容的话，则需要使用copy（）。  </p>
-<p>copy（）是浅拷贝<br>还有deepcopy（）是深拷贝  </p>
-<p>深拷贝能够拷贝对象内部所有的数据和引用，很像c语言中的指针。<br>字典b浅拷贝a的数据，如何b的数据发生添加 删除或者修改，a中的数据也将发生变化。<br>如果是深拷贝，a的数据是不会受到b的变化而变化的。  </p>
-<p><strong>深拷贝和浅拷贝适用于python的任何对象，不只是局限于字典。</strong>  </p>
-<p>另外，还有全局字典 sys.modules模块，这个字典是python启动时就加载在内存当中的，这个起到缓存的作用。  </p>
-<p>##序列  </p>
-<p>序列是具有索引和切片能力的集合，元组 列表 字符串都属于序列。  </p>
-<p>这里主要是元组和列表的区别。  </p>
-<p>元组是只读的，而且元组没有提供排序和查找的方法。<br>列表可读写，而且提供丰富的操作，支持排序 查找。<br>元组的数据通常具有不同的含义，而列表的数据通常具有相同的含义。<br>相同之处则是都支持负数索引和分片的操作。  </p>
-<p>每天能适当做一些自己的总结，对于知识的掌握还是很有好处的。<br>希望自己能够好好坚持。<br>有目标的人咋个说呢？<br>今天看到一个前辈说，真正的牛人也许一辈子只投4次简历。<br>你就错过了毕业就去好公司的机会，所以需要更加努力学习。<br>对于初级的程序员来说，很想做出一点东西来，但是又不知道哪些重要哪些不重要，到底该学到什么程度，不知道导致不确定，不确定导致决策瘫痪，干脆就啥也不动，整年整年苦闷的像没头苍蝇一样到处乱撞，荒废时间。  </p>
-<p>今年不论在哪里工作，决定給自己设定一个目标，在博客上写下52篇博客，虽然前期可能借鉴他人的经验较多，但是希望自己还是能保持到平均一周一篇的水平，不断写写写去积累。  </p>
-<p>周博客这里可能局限于一些技术见闻，所见所感这块，另外希望自己能写下10篇左右的读书笔记。</p>
-<hr>
-<p>没有什么面试比持续两年的面试更具有信息量，书单加上github。  </p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2016/05/15/macdown语法简介/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2016/05/15/macdown语法简介/" itemprop="url">macdown语法简介</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-15T15:06:44+08:00">
-                2016-05-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2016/05/15/macdown语法简介/" class="leancloud_visitors" data-flag-title="macdown语法简介">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  451
+                  0
                 </span>
               
 
@@ -703,85 +422,7 @@ sorted(b,key=itemgetter(1),reverse=True)
       
         
           
-            <p>#markdown语法简介</p>
-<p>1.标题<br>1）使用＝和－标记一级和二级标题<br>使用方法是文字下方加上＝＝＝＝＝＝这样  </p>
-<h1 id="一级标题"><a href="#一级标题" class="headerlink" title="一级标题  "></a>一级标题  </h1><p>2） 使用＃，可以表示1-6级标题  </p>
-<p>##二级标题  </p>
-<p>2.段落<br>段落的前后要有空行，所谓的空行是指没有文字内容。<br>若想在段内强制换行的方式是使用两个以上空格加上回车（引用中换行省略回车）。  </p>
-<p>3.区块引用<br>在段落的每行或者只在第一行使用符号&gt;,还可以使用多个嵌套引用，如：</p>
-<blockquote>
-<p>区块引用</p>
-<blockquote>
-<p>嵌套引用  </p>
-</blockquote>
-</blockquote>
-<p>4.代码区块<br>代码区块的建立是在每行加上4个空格或者一个制表符（如同写代码一样）。如<br>普通段落：  </p>
-<pre><code>void main()
-{
-printf(&quot;Hello, Markdown.&quot;);
-}
-</code></pre><p>注意:需要和普通段落之间存在空行。</p>
-<p>5.强调<br>在强调内容两侧分别加上<em>或者_，如：  
-</em>,  <em>还是斜体</em></p>
-<p><em>粗体</em>，  <em>还是粗体</em>  </p>
-<p>6.列表<br>使用*、+、或-标记无序列表，如：</p>
-<ul>
-<li>为什么   </li>
-</ul>
-<ul>
-<li>怎么办  </li>
-</ul>
-<ul>
-<li>啥时候  </li>
-</ul>
-<p>有序列表的标记方式是将上述的符号换成数字,并且加上点  </p>
-<ol>
-<li>第一点 </li>
-</ol>
-<p>7.分割线  </p>
-<p>分割线最常使用就是三个或以上*，还可以使用_。  </p>
-<p>大道至简  </p>
-<hr>
-<p>道法三千</p>
-<hr>
-<p>杏杏冥冥  </p>
-<p>8.链接<br>链接可以由两种形式生成：行内式和参考式。</p>
-<p>行内式：<br><a href="https:://github.com/younghz/Markdown" title="Markdown" target="_blank" rel="external">markdown库</a></p>
-<p>参考式：<br><a href="https:://github.com/younghz/Markdown" title="Markdown" target="_blank" rel="external">younghz的Markdown库1</a><br><a href="https:://github.com/younghz/Markdown" title="Markdown" target="_blank" rel="external">younghz的Markdown库2</a></p>
-<p>9.图片  </p>
-<p> 添加图片的形式和链接相似，只需在链接的基础上前方加一个！。<br>10.反斜杠\  </p>
-<p>相当于反转义作用。使符号成为普通符号。  </p>
-<p>11.符号``</p>
-<p>起到表记作用。如：  </p>
-<p><code>ctrl+a</code>  </p>
-<p>12.表格  </p>
-<table>
-<thead>
-<tr>
-<th>Tables</th>
-<th style="text-align:center">Are</th>
-<th style="text-align:right">Cool</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>col 3 is</td>
-<td style="text-align:center">right-aligned</td>
-<td style="text-align:right">$1600</td>
-</tr>
-<tr>
-<td>col 2 is</td>
-<td style="text-align:center">centered</td>
-<td style="text-align:right">$12</td>
-</tr>
-<tr>
-<td>zebra stripes</td>
-<td style="text-align:center">are neat</td>
-<td style="text-align:right">$1</td>
-</tr>
-</tbody>
-</table>
-
+            
           
         
       
@@ -829,7 +470,7 @@ printf(&quot;Hello, Markdown.&quot;);
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2016/05/15/爬虫实践教程3-多进程/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2016/05/17/python实战之使用webpy构建小型电影网站/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -848,7 +489,7 @@ printf(&quot;Hello, Markdown.&quot;);
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2016/05/15/爬虫实践教程3-多进程/" itemprop="url">爬虫实践教程3-多进程</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2016/05/17/python实战之使用webpy构建小型电影网站/" itemprop="url">python实战之使用webpy构建小型电影网站</a></h1>
         
 
         <div class="post-meta">
@@ -860,8 +501,8 @@ printf(&quot;Hello, Markdown.&quot;);
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-15T11:40:05+08:00">
-                2016-05-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-17T17:25:17+08:00">
+                2016-05-17
               </time>
             
 
@@ -871,28 +512,6 @@ printf(&quot;Hello, Markdown.&quot;);
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/pachong/" itemprop="url" rel="index">
-                    <span itemprop="name">pachong</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -900,7 +519,7 @@ printf(&quot;Hello, Markdown.&quot;);
 
           
           
-             <span id="/zhangdavids.github.io/2016/05/15/爬虫实践教程3-多进程/" class="leancloud_visitors" data-flag-title="爬虫实践教程3-多进程">
+             <span id="/zhangdavids.github.io/2016/05/17/python实战之使用webpy构建小型电影网站/" class="leancloud_visitors" data-flag-title="python实战之使用webpy构建小型电影网站">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -925,7 +544,7 @@ printf(&quot;Hello, Markdown.&quot;);
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  402
+                  0
                 </span>
               
 
@@ -964,13 +583,7 @@ printf(&quot;Hello, Markdown.&quot;);
       
         
           
-            <p>python爬虫多数都是运行在linux内核的服务器上的，多进程比多线程更合适，调度开销差不多，但是进程性能更好。<br>爬虫不是服务器交互，一般情况下提升几倍效率即可。  </p>
-<p>直接来看看代码  </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding:utf-8</span></span><br><span class="line"><span class="keyword">import</span> multiprocessing</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line"><span class="comment">#url详情页</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">pageUrls</span><span class="params">(url)</span>:</span></span><br><span class="line">    web_data = requests.get(url)</span><br><span class="line">    soup = BeautifulSoup(web_data.text, <span class="string">'lxml'</span>)</span><br><span class="line">    sum = int(soup.select(<span class="string">'span.total &gt; em:nth-of-type(1)'</span>)[<span class="number">0</span>].get_text())</span><br><span class="line">    pageNum = sum/<span class="number">50</span></span><br><span class="line">    <span class="keyword">return</span> [url+<span class="string">'/loupan/s?p=&#123;&#125;'</span>.format(str(i)) <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, pageNum+<span class="number">2</span>, <span class="number">1</span>)]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">detailPage</span><span class="params">(myurl)</span>:</span></span><br><span class="line">    urls = pageUrls(myurl)</span><br><span class="line">    <span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">        web_data = requests.get(url)</span><br><span class="line">        soup = BeautifulSoup(web_data.text, <span class="string">'lxml'</span>)</span><br><span class="line">        titles = soup.select(<span class="string">'div.list-results &gt; div.key-list &gt; div &gt; div.infos &gt; div &gt; h3 &gt; a'</span>)</span><br><span class="line">        <span class="keyword">for</span> title <span class="keyword">in</span> titles:</span><br><span class="line">            <span class="keyword">print</span> url</span><br><span class="line">            <span class="keyword">print</span> title.get_text()</span><br><span class="line">            <span class="keyword">print</span> title.get(<span class="string">'href'</span>)</span><br><span class="line">            <span class="keyword">print</span> <span class="string">"**********"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">(urls)</span>:</span></span><br><span class="line">    pool = multiprocessing.Pool(multiprocessing.cpu_count())</span><br><span class="line">    <span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">        pool.apply_async(detailPage, (url, ))</span><br><span class="line">    <span class="comment"># pool.map(detailPage, urls)</span></span><br><span class="line">    pool.close()</span><br><span class="line">    pool.join()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    startUrl = <span class="string">'http://gz.fang.anjuke.com/?from=navigation'</span></span><br><span class="line">    web_data = requests.get(startUrl)</span><br><span class="line">    soup = BeautifulSoup(web_data.text, <span class="string">'lxml'</span>)</span><br><span class="line">    urls = [url.get(<span class="string">'href'</span>) <span class="keyword">for</span> url <span class="keyword">in</span> soup.select(<span class="string">'.city-mod &gt; dl &gt; dd &gt; a'</span>)]</span><br><span class="line">    main(urls)</span><br></pre></td></tr></table></figure>
-<p>这次我们准备爬取的是安居客的网站。<br>先从主代码开始，startUrl，使用requests和beautifulsoup进行解析。获取地址之后，进入main函数。<br>multiprocessing 创建一个进程池，进程个数为cpu内核数，一般写4或6个即可。<br>apply_async函数从进程池中取出一个进程执行func，args为func的参数，我们这段代码不断地从进程池中取出进程去执行我们的detailPage方法。当然，也可以采用下面这种方式：  </p>
-<pre><code>pool.map(detailPage, urls)
-</code></pre><p>接着就是关闭进程池还有wait进程池中的全部进程。  </p>
-
+            
           
         
       
@@ -1018,7 +631,7 @@ printf(&quot;Hello, Markdown.&quot;);
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2016/05/15/爬虫实践教程2/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2016/05/17/python实战之六抓取58同城数据/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -1037,7 +650,7 @@ printf(&quot;Hello, Markdown.&quot;);
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2016/05/15/爬虫实践教程2/" itemprop="url">爬虫实践教程2</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2016/05/17/python实战之六抓取58同城数据/" itemprop="url">python实战之六抓取58同城数据</a></h1>
         
 
         <div class="post-meta">
@@ -1049,8 +662,8 @@ printf(&quot;Hello, Markdown.&quot;);
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-15T09:55:40+08:00">
-                2016-05-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-17T17:24:34+08:00">
+                2016-05-17
               </time>
             
 
@@ -1060,28 +673,6 @@ printf(&quot;Hello, Markdown.&quot;);
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/pachong/" itemprop="url" rel="index">
-                    <span itemprop="name">pachong</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -1089,7 +680,7 @@ printf(&quot;Hello, Markdown.&quot;);
 
           
           
-             <span id="/zhangdavids.github.io/2016/05/15/爬虫实践教程2/" class="leancloud_visitors" data-flag-title="爬虫实践教程2">
+             <span id="/zhangdavids.github.io/2016/05/17/python实战之六抓取58同城数据/" class="leancloud_visitors" data-flag-title="python实战之六抓取58同城数据">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1114,230 +705,7 @@ printf(&quot;Hello, Markdown.&quot;);
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  781
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  3
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>这里先介绍一下，我们使用工具selenium和Phantomjs来配合抓取。<br>安装的话， 直接   </p>
-<pre><code>pip install -U selenium
-</code></pre><p>而Phantomjs则通过brew来安装，不细说。  </p>
-<pre><code>brew install phantomjs
-</code></pre><p>选择原因：<br>Phantomjs是基于webkit的没有界面的浏览器，可以像浏览器一样解析网页，个人感觉的效果比firefox和chrome稍微快些。<br>selenium是web的自动测试工具，可以模拟人的操作。几乎支持市面上所有的主流浏览器。  </p>
-<p>来看看代码  </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding:utf-8</span></span><br><span class="line"><span class="keyword">import</span> unittest</span><br><span class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">seleniumTest</span><span class="params">(unittest.TestCase)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">setUp</span><span class="params">(self)</span>:</span></span><br><span class="line">        self.driver = webdriver.PhantomJS()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">testEle</span><span class="params">(self)</span>:</span></span><br><span class="line">        driver = self.driver</span><br><span class="line">        driver.get(<span class="string">'http://www.douyu.com/directory/all'</span>)</span><br><span class="line">        soup = BeautifulSoup(driver.page_source, <span class="string">'xml'</span>)</span><br><span class="line">        <span class="keyword">while</span> <span class="keyword">True</span>:</span><br><span class="line">            titles = soup.find_all(<span class="string">'h3'</span>, &#123;<span class="string">'class'</span>: <span class="string">'ellipsis'</span>&#125;)</span><br><span class="line">            nums = soup.find_all(<span class="string">'span'</span>, &#123;<span class="string">'class'</span>: <span class="string">'dy-num fr'</span>&#125;)</span><br><span class="line">            <span class="keyword">for</span> title, num <span class="keyword">in</span> zip(titles, nums):</span><br><span class="line">                <span class="keyword">print</span> title.get_text(), num.get_text()</span><br><span class="line">            <span class="keyword">if</span> driver.page_source.find(<span class="string">'shark-pager-disable-next'</span>) != <span class="number">-1</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            elem = driver.find_element_by_class_name(<span class="string">'shark-pager-next'</span>)</span><br><span class="line">            elem.click()</span><br><span class="line">            soup = BeautifulSoup(driver.page_source, <span class="string">'xml'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">tearDown</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">print</span> <span class="string">'down'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    unittest.main()</span><br></pre></td></tr></table></figure>
-<p>这里一些概念说明：<br>1.unittest  单元测试，简单的测试用例。以setup开头，中间测试的方法以test开头，测试完成之后会有一个teardown。<br>2.斗鱼tv是看直播时较常去的，直接用浏览器打开 <a href="http://www.douyu.com/directory/all" target="_blank" rel="external">斗鱼</a><br>网页源码中可以直接看到房间的信息，返回的不是json格式而是html，直接使用phantomjs模拟浏览器的访问过程，通过driver.get方法获取浏览器加载完成后的代码，无论是否是异步，取到的source都是和在浏览器中看到的完全一样！  </p>
-<p>这里lxml方式有数据丢失，原因未知。。后来尝试了xml无误，暂时不知原因。。   </p>
-<p>还有对比之前的瓜子和果壳，我们只从中抓取了部分页面。这里抓取全部我们需要加上条件判断，最后一页时斗鱼下一页的标签会变灰，这个时候我们就加上这个跳出循环。  </p>
-<pre><code>if driver.page_source.find(&apos;shark-pager-disable-next&apos;) != -1: 
-    break  
-</code></pre><p>还有这里  </p>
-<pre><code>elem = driver.find_element_by_class_name(&apos;shark-pager-next&apos;) 
-elem.click() 
-soup = BeautifulSoup(driver.page_source, &apos;xml&apos;)
-</code></pre><p>第一行代码是webdriver里面带有的定位标签的方法，直接使用class来定位，取到这个控件，<br>然后执行element的click（）方法模拟鼠标的点击，<br>页面会自动跳到下一页，接着解析网页的源码。  </p>
-<p><strong>tips</strong><br>这里加上一点selenium的小操作<br>编码学习的一个小突破感觉就是不断滴回顾学习吧，有些看完文档之后，觉得是这样没错，可是不久就好像啥也不剩了，在基础阶段模范性学习当中，要不断深化下已经学到的东西，适当做些归纳总结会很好。  </p>
-<p>填入表单数据  </p>
-<pre><code>#coding:utf-8
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-
-driver = webdriver.Firefox()
-driver.get(&apos;https://www.baidu.com/&apos;)
-elem = driver.find_element_by_id(&apos;kw&apos;)
-elem.send_keys(u&apos;爬虫&apos;)
-elem.send_keys(Keys.RETURN)
-print(driver.page_source)
-</code></pre><p>滚动页面至最下方  </p>
-<pre><code>#coding:utf-8
-from selenium import webdriver
-import time
-
-driver = webdriver.Firefox()
-driver.get(&apos;http://www.jianshu.com/collections&apos;)
-time.sleep(1)
-for i in range(10):
-    dirver.execute_script(&apos;window.scrollTo(0,document.body.scrollHeight)&apos;)
-    time.sleep(1)
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2016/05/15/爬虫实践教程1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2016/05/15/爬虫实践教程1/" itemprop="url">爬虫实践教程1</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-15T09:34:43+08:00">
-                2016-05-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/pachong/" itemprop="url" rel="index">
-                    <span itemprop="name">pachong</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2016/05/15/爬虫实践教程1/" class="leancloud_visitors" data-flag-title="爬虫实践教程1">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  294
+                  0
                 </span>
               
 
@@ -1376,35 +744,334 @@ for i in range(10):
       
         
           
-            <p>一般来说呢，很多网页都是直接分好页面直接下一页这样。不过还有很多网页是ajax异步请求数据的网页，以果壳网为例，我们尝试一下抓取。</p>
-<pre><code># coding:utf-8
-from bs4 import BeautifulSoup
-import requests
-import json
-import pymongo
+            
+          
+        
+      
+    </div>
+    
+    
+    
 
-url = &apos;http://www.guokr.com/scientific/&apos;
+    
 
-def dealData(url):
-    client = pymongo.MongoClient(&apos;localhost&apos;, 27017)
-    guoke = client[&apos;guoke&apos;]
-    guokeData = guoke[&apos;guokeData&apos;]
-    web_data = requests.get(url)
-    datas = json.loads(web_data.text)
-    print datas.keys()
-    for data in datas[&apos;result&apos;]:
-        guokeData.insert_one(data)
+    
 
-def start():
-    urls = [&apos;http://www.guokr.com/apis/minisite/article.json?retrieve_type=by_subject&amp;limit=20&amp;offset={}&amp;_=1462252453410&apos;.format(str(i)) for i in range(20, 100, 20)]
-    for url in urls:
-        dealData(url)
+    
 
-start()
-&apos;&apos;&apos;
-异步加载的网站  这里比如果壳网的抓取
-&apos;&apos;&apos;
-</code></pre><p>网页的抓取大概流程就是这样：<br>1.使用谷歌或者火狐浏览器，检查元素，分析下我们想抓取什么，有啥子障碍。<br>2.异步加载的数据不在返回的网页源码中，在网络标签和xhr分页面，向下滑动鼠标可以发现新的get请求被列出来。偏移量是多少，需要好好总结规律，然后不断尝试。</p>
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2016/05/17/python实战之五推特数据流分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2016/05/17/python实战之五推特数据流分析/" itemprop="url">python实战之五推特数据流分析</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-17T17:23:45+08:00">
+                2016-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2016/05/17/python实战之五推特数据流分析/" class="leancloud_visitors" data-flag-title="python实战之五推特数据流分析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  19
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>一直想着能够从twitter获取一些数据来做些分析。  </p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2016/05/17/python实战之四使用tushare包/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2016/05/17/python实战之四使用tushare包/" itemprop="url">python实战之四使用tushare包</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-17T17:23:00+08:00">
+                2016-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2016/05/17/python实战之四使用tushare包/" class="leancloud_visitors" data-flag-title="python实战之四使用tushare包">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  69
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>tushare是比较著名的金融财经的包。<br>通过pip安装tushare包之后，<br>直接就可以调用  </p>
+<pre><code>import tushare as ts
+df = ts.get_sina_dd(&apos;600848&apos;, date=&apos;2015-12-24&apos;, vol=500)
+#指定大于等于500手的数据
+</code></pre><p>数据是直接dataframe，比较方便存储。</p>
 
           
         
@@ -1444,7 +1111,7 @@ start()
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/93/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/93/">93</a><span class="page-number current">94</span><a class="page-number" href="/zhangdavids.github.io/page/95/">95</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/95/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/93/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/93/">93</a><span class="page-number current">94</span><a class="page-number" href="/zhangdavids.github.io/page/95/">95</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/97/">97</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/95/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1494,7 +1161,7 @@ start()
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">473</span>
+                  <span class="site-state-item-count">482</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1609,7 +1276,7 @@ start()
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共181.7k字</span>
+  <span class="post-count">博客全站共185.1k字</span>
 </div>
 
         
