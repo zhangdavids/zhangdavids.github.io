@@ -309,6 +309,217 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/08/16/django-or-say-python-web-architecture/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/08/16/django-or-say-python-web-architecture/" itemprop="url">django or say python web architecture</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-16T17:33:48+08:00">
+                2018-08-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2018/08/16/django-or-say-python-web-architecture/" class="leancloud_visitors" data-flag-title="django or say python web architecture">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  389
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>一个django 网站 比如 著名的 disqus 它是如何支持 两个亿的月活</p>
+<p>于2007年 创办 第三方社会化评论系统 为网站提供评论托管服务</p>
+<p>中国目前有 多说 友言 评论啦 与之相似。</p>
+<hr>
+<p>1.缓存为什么要存在</p>
+<p>因为 用户量的增加 所做的计算越来越多 但是 应用服务器资源是有限的 数据库每秒接受请求的次数也是有限的</p>
+<p>如何解决</p>
+<p>减少计算量  缩短请求流程（减少网络io或者硬盘io） 在标准的流程中 任何一个环节都可以被切断， 这样请求可以直接从缓存里取到数据直接返回</p>
+<p>2.缓存存在于哪些地方</p>
+<p>理论上来说 缓存可以存在于请求的任意一个环节</p>
+<p>根据数据的变化特征 将数据特征总结为一段时间内变或者不变</p>
+<p>3.缓存的属性</p>
+<ul>
+<li>命中率</li>
+<li>最大元素（可以存放的最大元素的个数）</li>
+<li>清空策略（FIFO LRU）</li>
+</ul>
+<p>4.缓存介质</p>
+<ul>
+<li>内存</li>
+<li>硬盘文件</li>
+<li>数据库</li>
+</ul>
+<p>根据缓存和应用的耦合程度划分为本地和远程缓存</p>
+<p>本地有ehcache oscache</p>
+<p>远程有 memcached</p>
+<p>缓存的使用是架构师的必备技能 根据数据的类型，业务的场景来确定使用何种类型的缓存。</p>
+<p>但是没有一种缓存可以解决任何的业务场景或者数据类型，每种都各有优缺点！！！</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/08/16/drf-custom-auth/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -993,178 +1204,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/08/16/how-to-be-a-data-scientist-09/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/08/16/how-to-be-a-data-scientist-09/" itemprop="url">how to be a data scientist 09</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-16T11:17:04+08:00">
-                2018-08-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2018/08/16/how-to-be-a-data-scientist-09/" class="leancloud_visitors" data-flag-title="how to be a data scientist 09">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  556
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ol>
-<li>让你的知识与时俱进是成为数据科学家非常重要的一个方面，特别是当这个领域在不断创新的时候。</li>
-<li>研讨会是学习新知识的最有效途径，特别是技术性主题。研讨会可能会涉及花费，但它们是颇具投资价值的，因为你可以通过它们来修饰简历，并且它们时常能提供比大学课程更具实用性的知识。</li>
-<li>会议是一种扩展数据科学知识的好方法，你可以在会议中了解最近的创新成果，结交许多领域内有趣的人，同时学习一些有用的东西，让你有机会把它们用到你的难题或是正在面对的数据科学挑战中。</li>
-<li>在线课程，特别是MOOC，是最能增长和改善你对各种主题知识的途径之一。在Coursera上有各种现成的数据相关课程，Coursera也是最有威望的MOOC提供方。</li>
-<li>数据科学小组是一个学习领域新知的既有效又充满乐趣的方法。你需要找到一个的举办大量教育活动的小组，有大量活跃在数据科学领域内的成员（不只是初学者），同时与小组内的其他成员积极地参与交流。</li>
-<li>资源问题十分普遍，并涉及以有限的资源来处理数据分析业务。</li>
-<li>需求问题是老生常谈的问题，牵涉到沟通不畅、误解以及曲解了包括你的经理和客户所提出的需求的实现。这可以积极地通过创造力、外交手段、沟通以及耐心地得到解决。</li>
-<li>缺乏专业知识可以通过阅读好的文章、书籍、网站来克服，或是咨询专业人士。</li>
-<li>综合运用各种工具在IT世界中极为普遍，它牵涉使各种程序、数据集以及各种数据格式协同工作，这会在新开发一个程序时显得十分棘手。你可以通过良好积极的沟通、创造性以及耐心来克服这类问题。</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1219,7 +1258,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">483</span>
+                  <span class="site-state-item-count">484</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1334,7 +1373,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共185.3k字</span>
+  <span class="post-count">博客全站共185.5k字</span>
 </div>
 
         

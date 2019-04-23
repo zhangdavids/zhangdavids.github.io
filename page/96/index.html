@@ -309,6 +309,182 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2016/05/17/python实战之一发送电子邮件/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2016/05/17/python实战之一发送电子邮件/" itemprop="url">python实战之一发送电子邮件</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-17T08:42:04+08:00">
+                2016-05-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2016/05/17/python实战之一发送电子邮件/" class="leancloud_visitors" data-flag-title="python实战之一发送电子邮件">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  549
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>把曾经做过的东西做下小结吧。<br>如何来使用python发送电子邮件呢？  </p>
+<p>一般而言，官方提供的思路就是使用smtplib包，但是实现起来个人感觉还是稍显复杂，需要按照要求书写好多比如smtp mime 手动添加邮件头，还需要一些email标准的某些知识。<br>like this：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/python</span><br><span class="line">#-*- coding: utf-8 -*-</span><br><span class="line"></span><br><span class="line">import smtplib</span><br><span class="line">from email.mime.text import MIMEText</span><br><span class="line">from email.mime.multipart import MIMEMultipart</span><br><span class="line">from email.header import Header</span><br><span class="line"></span><br><span class="line">sender = &apos;z.j19910903@163.com&apos;# 发件人</span><br><span class="line">to = [&quot;815012839@qq.com&quot;, &quot;a@qq.com&quot;]  # 多个收件人的写法</span><br><span class="line">subject = &apos;From Python Email test&apos;# 邮件主题</span><br><span class="line">smtpserver = &apos;smtp.163.com&apos;# smtp服务器</span><br><span class="line">username = &apos;z.j19910903&apos;# 发件人邮箱用户名</span><br><span class="line">password = &apos;******&apos;# 发件人邮箱密码</span><br><span class="line">mail_postfix = &apos;163.com&apos;</span><br><span class="line">contents = &apos;这是一个Python的邮件，收到请勿回复，谢谢！！&apos;</span><br><span class="line"></span><br><span class="line">def send_mail(to_list, sub, content):</span><br><span class="line">    me = sender</span><br><span class="line">    msg = MIMEText(content, _subtype=&apos;plain&apos;, _charset=&apos;utf-8&apos;)</span><br><span class="line">    msg[&apos;Subject&apos;] = subject</span><br><span class="line">    msg[&apos;From&apos;] = me</span><br><span class="line">    msg[&apos;To&apos;] = &quot;;&quot;.join(to_list)</span><br><span class="line">    try:</span><br><span class="line">        server = smtplib.SMTP()</span><br><span class="line">        server.connect(smtpserver)</span><br><span class="line">        server.login(username, password)</span><br><span class="line">        server.sendmail(me, to_list, msg.as_string())</span><br><span class="line">        server.close()</span><br><span class="line">        return True</span><br><span class="line">    except Exception, e:</span><br><span class="line">        print str(e)</span><br><span class="line">        return False</span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    if send_mail(to, subject, contents):</span><br><span class="line">        print &quot;邮件发送成功! &quot;</span><br><span class="line">    else:</span><br><span class="line">        print &quot;失败!!!&quot;</span><br></pre></td></tr></table></figure>
+<p>可能看起来也不是很多，但是还是感觉稍稍有点麻烦。python让人着迷的地方，就是有大量的优秀开发人员开发的各种第三方库，现在我们需要的只是yagmail。  </p>
+<hr>
+<p>##yagmail<br>安装不多说，直接pip  </p>
+<pre><code>pip install yagmail
+</code></pre><p>它支持python2.7＋  </p>
+<p>使用的话也相对简单  </p>
+<pre><code>import yagmail
+yag = yagmail(zhangjohn202@gmail.com,&apos;your2-steppassword&apos;)
+contents=&apos;i love you more!&apos;
+yag.send(to=&apos;815012839@qq.com&apos;,subject=&apos;fall love at first sight&apos;,contents=contents)
+</code></pre><p>这里说下，一般的邮箱都是用户名和登录密码，别的邮箱我不知道现在有多少改进，感觉gmail不愧是属于全人类的邮箱，这里采用更为安全的方式来进行登录，两步验证密码。  </p>
+<p>自然只是最简单的举例，yagmail实现的功能还有富文本邮件 邮件附件以及使用邮件模板这较为常见的三项，详细可以参考yagmail的github主页。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2016/05/16/python之数据结构/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1228,218 +1404,6 @@ for i in range(10):
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2016/05/15/爬虫实践教程1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2016/05/15/爬虫实践教程1/" itemprop="url">爬虫实践教程1</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-05-15T09:34:43+08:00">
-                2016-05-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/pachong/" itemprop="url" rel="index">
-                    <span itemprop="name">pachong</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2016/05/15/爬虫实践教程1/" class="leancloud_visitors" data-flag-title="爬虫实践教程1">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  294
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>一般来说呢，很多网页都是直接分好页面直接下一页这样。不过还有很多网页是ajax异步请求数据的网页，以果壳网为例，我们尝试一下抓取。</p>
-<pre><code># coding:utf-8
-from bs4 import BeautifulSoup
-import requests
-import json
-import pymongo
-
-url = &apos;http://www.guokr.com/scientific/&apos;
-
-def dealData(url):
-    client = pymongo.MongoClient(&apos;localhost&apos;, 27017)
-    guoke = client[&apos;guoke&apos;]
-    guokeData = guoke[&apos;guokeData&apos;]
-    web_data = requests.get(url)
-    datas = json.loads(web_data.text)
-    print datas.keys()
-    for data in datas[&apos;result&apos;]:
-        guokeData.insert_one(data)
-
-def start():
-    urls = [&apos;http://www.guokr.com/apis/minisite/article.json?retrieve_type=by_subject&amp;limit=20&amp;offset={}&amp;_=1462252453410&apos;.format(str(i)) for i in range(20, 100, 20)]
-    for url in urls:
-        dealData(url)
-
-start()
-&apos;&apos;&apos;
-异步加载的网站  这里比如果壳网的抓取
-&apos;&apos;&apos;
-</code></pre><p>网页的抓取大概流程就是这样：<br>1.使用谷歌或者火狐浏览器，检查元素，分析下我们想抓取什么，有啥子障碍。<br>2.异步加载的数据不在返回的网页源码中，在网络标签和xhr分页面，向下滑动鼠标可以发现新的get请求被列出来。偏移量是多少，需要好好总结规律，然后不断尝试。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1494,7 +1458,7 @@ start()
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">483</span>
+                  <span class="site-state-item-count">484</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1609,7 +1573,7 @@ start()
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共185.3k字</span>
+  <span class="post-count">博客全站共185.5k字</span>
 </div>
 
         
