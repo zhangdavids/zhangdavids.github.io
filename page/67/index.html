@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/09/01/redis-again/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/09/10/tensorflow-interview-problem/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -328,7 +328,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/09/01/redis-again/" itemprop="url">redis again</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/09/10/tensorflow-interview-problem/" itemprop="url">tensorflow-interview-problem</a></h1>
         
 
         <div class="post-meta">
@@ -340,8 +340,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-01T08:46:22+08:00">
-                2018-09-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-10T17:08:59+08:00">
+                2018-09-10
               </time>
             
 
@@ -358,7 +358,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2018/09/01/redis-again/" class="leancloud_visitors" data-flag-title="redis again">
+             <span id="/zhangdavids.github.io/2018/09/10/tensorflow-interview-problem/" class="leancloud_visitors" data-flag-title="tensorflow-interview-problem">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -383,7 +383,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.5k
+                  444
                 </span>
               
 
@@ -399,7 +399,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  5
+                  2
                 </span>
               
             </div>
@@ -422,38 +422,180 @@
       
         
           
-            <p>Redis有哪些数据结构？</p>
-<p>字符串String、字典Hash、列表List、集合Set、有序集合SortedSet。</p>
-<p>如果你是Redis中高级用户，还需要加上下面几种数据结构HyperLogLog、Geo、Pub/Sub。</p>
-<p>如果你说还玩过Redis Module，像BloomFilter，RedisSearch，Redis-ML，面试官得眼睛就开始发亮了。</p>
-<p>使用过Redis分布式锁么，它是什么回事？</p>
-<p>先拿setnx来争抢锁，抢到之后，再用expire给锁加一个过期时间防止锁忘记了释放。</p>
-<p>这时候对方会告诉你说你回答得不错，然后接着问如果在setnx之后执行expire之前进程意外crash或者要重启维护了，那会怎么样？</p>
-<p>这时候你要给予惊讶的反馈：唉，是喔，这个锁就永远得不到释放了。紧接着你需要抓一抓自己得脑袋，故作思考片刻，好像接下来的结果是你主动思考出来的，然后回答：我记得set指令有非常复杂的参数，这个应该是可以同时把setnx和expire合成一条指令来用的！对方这时会显露笑容，心里开始默念：摁，这小子还不错。</p>
-<p>假如Redis里面有1亿个key，其中有10w个key是以某个固定的已知的前缀开头的，如果将它们全部找出来？</p>
-<p>使用keys指令可以扫出指定模式的key列表。</p>
-<p>对方接着追问：如果这个redis正在给线上的业务提供服务，那使用keys指令会有什么问题？</p>
-<p>这个时候你要回答redis关键的一个特性：redis的单线程的。keys指令会导致线程阻塞一段时间，线上服务会停顿，直到指令执行完毕，服务才能恢复。这个时候可以使用scan指令，scan指令可以无阻塞的提取出指定模式的key列表，但是会有一定的重复概率，在客户端做一次去重就可以了，但是整体所花费的时间会比直接用keys指令长。</p>
-<p>使用过Redis做异步队列么，你是怎么用的？</p>
-<p>一般使用list结构作为队列，rpush生产消息，lpop消费消息。当lpop没有消息的时候，要适当sleep一会再重试。</p>
-<p>如果对方追问可不可以不用sleep呢？list还有个指令叫blpop，在没有消息的时候，它会阻塞住直到消息到来。</p>
-<p>如果对方追问能不能生产一次消费多次呢？使用pub/sub主题订阅者模式，可以实现1:N的消息队列。</p>
-<p>如果对方追问pub/sub有什么缺点？在消费者下线的情况下，生产的消息会丢失，得使用专业的消息队列如rabbitmq等。</p>
-<p>如果对方追问redis如何实现延时队列？我估计现在你很想把面试官一棒打死如果你手上有一根棒球棍的话，怎么问的这么详细。但是你很克制，然后神态自若的回答道：使用sortedset，拿时间戳作为score，消息内容作为key调用zadd来生产消息，消费者用zrangebyscore指令获取N秒之前的数据轮询进行处理。</p>
-<p>到这里，面试官暗地里已经对你竖起了大拇指。但是他不知道的是此刻你却竖起了中指，在椅子背后。</p>
-<p>如果有大量的key需要设置同一时间过期，一般需要注意什么？</p>
-<p>如果大量的key过期时间设置的过于集中，到过期的那个时间点，redis可能会出现短暂的卡顿现象。一般需要在时间上加一个随机值，使得过期时间分散一些。</p>
-<p>Redis如何做持久化的？</p>
-<p>bgsave做镜像全量持久化，aof做增量持久化。因为bgsave会耗费较长时间，不够实时，在停机的时候会导致大量丢失数据，所以需要aof来配合使用。在redis实例重启时，会使用bgsave持久化文件重新构建内存，再使用aof重放近期的操作指令来实现完整恢复重启之前的状态。</p>
-<p>对方追问那如果突然机器掉电会怎样？取决于aof日志sync属性的配置，如果不要求性能，在每条写指令时都sync一下磁盘，就不会丢失数据。但是在高性能的要求下每次都sync是不现实的，一般都使用定时sync，比如1s1次，这个时候最多就会丢失1s的数据。</p>
-<p>对方追问bgsave的原理是什么？你给出两个词汇就可以了，fork和cow。fork是指redis通过创建子进程来进行bgsave操作，cow指的是copy on write，子进程创建后，父子进程共享数据段，父进程继续提供读写服务，写脏的页面数据会逐渐和子进程分离开来。</p>
-<p>Pipeline有什么好处，为什么要用pipeline？</p>
-<p>可以将多次IO往返的时间缩减为一次，前提是pipeline执行的指令之间没有因果相关性。使用redis-benchmark进行压测的时候可以发现影响redis的QPS峰值的一个重要因素是pipeline批次指令的数目。</p>
-<p>Redis的同步机制了解么？</p>
-<p>Redis可以使用主从同步，从从同步。第一次同步时，主节点做一次bgsave，并同时将后续修改操作记录到内存buffer，待完成后将rdb文件全量同步到复制节点，复制节点接受完成后将rdb镜像加载到内存。加载完成后，再通知主节点将期间修改的操作记录同步到复制节点进行重放就完成了同步过程。</p>
-<p>是否使用过Redis集群，集群的原理是什么？</p>
-<p>Redis Sentinal着眼于高可用，在master宕机时会自动将slave提升为master，继续提供服务。</p>
-<p>Redis Cluster着眼于扩展性，在单个redis内存不足时，使用Cluster进行分片存储。</p>
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np </span><br><span class="line">import pandas as pd </span><br><span class="line"></span><br><span class="line">import tensorflow as tf </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">NUM_DIGITS = 10</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def binary_encode(i, num_digits):</span><br><span class="line">    return np.array([i &gt;&gt; d &amp; 1 for d in range(num_digits)])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def fizz_buzz_encode(i):</span><br><span class="line">    if i % 15 == 0:</span><br><span class="line">        return np.array([0, 0, 0, 1])</span><br><span class="line">    elif i % 5 == 0:</span><br><span class="line">        return np.array([0, 0, 1, 0])</span><br><span class="line">    elif i % 3 == 0:</span><br><span class="line">        return np.array([0, 1, 0, 0])</span><br><span class="line">    else:</span><br><span class="line">        return np.array([1, 0, 0, 0])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">train_X = np.array([binary_encode(i, NUM_DIGITS) for i in range(101, 2 ** NUM_DIGITS)])</span><br><span class="line">train_y = np.array([fizz_buzz_encode(i)          for i in range(101, 2 ** NUM_DIGITS)])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def init_weights(shape):</span><br><span class="line">    return tf.Variable(tf.random_normal(shape, stddev=0.01))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># Our model is a standard 1-hidden-layer multi-layer-perceptron with ReLU</span><br><span class="line"># activation. The softmax (which turns arbitrary real-valued outputs into</span><br><span class="line"># probabilities) gets applied in the cost function.</span><br><span class="line">def model(X, w_h, w_o):</span><br><span class="line">    h = tf.nn.relu(tf.matmul(X, w_h))</span><br><span class="line">    return tf.matmul(h, w_o)</span><br><span class="line"> </span><br><span class="line"># Our variables. The input has width NUM_DIGITS, and the output has width 4.</span><br><span class="line">X = tf.placeholder(&quot;float&quot;, [None, NUM_DIGITS])</span><br><span class="line">Y = tf.placeholder(&quot;float&quot;, [None, 4])</span><br><span class="line"> </span><br><span class="line"># How many units in the hidden layer.</span><br><span class="line">NUM_HIDDEN = 100</span><br><span class="line"> </span><br><span class="line"># Initialize the weights.</span><br><span class="line">w_h = init_weights([NUM_DIGITS, NUM_HIDDEN])</span><br><span class="line">w_o = init_weights([NUM_HIDDEN, 4])</span><br><span class="line"> </span><br><span class="line"># Predict y given x using the model.</span><br><span class="line">py_x = model(X, w_h, w_o)</span><br><span class="line"> </span><br><span class="line"># We&apos;ll train our model by minimizing a cost function.</span><br><span class="line">cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=py_x, labels=Y))</span><br><span class="line"># print(&quot;cost is: &quot;, cost)</span><br><span class="line">train_op = tf.train.GradientDescentOptimizer(0.01).minimize(cost)</span><br><span class="line"> </span><br><span class="line"># And we&apos;ll make predictions by choosing the largest output.</span><br><span class="line">predict_op = tf.argmax(py_x, 1)</span><br><span class="line"> </span><br><span class="line"># Finally, we need a way to turn a prediction (and an original number)</span><br><span class="line"># into a fizz buzz output</span><br><span class="line">def fizz_buzz(i, prediction):</span><br><span class="line">    return [str(i), &quot;fizz&quot;, &quot;buzz&quot;, &quot;fizzbuzz&quot;][prediction]</span><br><span class="line"> </span><br><span class="line">BATCH_SIZE = 128</span><br><span class="line"> </span><br><span class="line"># Launch the graph in a session</span><br><span class="line">with tf.Session() as sess:</span><br><span class="line">    tf.initialize_all_variables().run()</span><br><span class="line">    </span><br><span class="line">    # how many times for train?</span><br><span class="line">    for epoch in range(10000):</span><br><span class="line">        # Shuffle the data before each training iteration.</span><br><span class="line">        p = np.random.permutation(range(len(train_X)))</span><br><span class="line">        train_X, train_y = train_X[p], train_y[p]</span><br><span class="line"> </span><br><span class="line">        # Train in batches of 128 inputs.</span><br><span class="line">        for start in range(0, len(train_X), BATCH_SIZE):</span><br><span class="line">            end = start + BATCH_SIZE</span><br><span class="line">            sess.run(train_op, feed_dict=&#123;X: train_X[start:end], </span><br><span class="line">                                          Y: train_y[start:end]&#125;)</span><br><span class="line"> </span><br><span class="line">        # And print the current accuracy on the training data.</span><br><span class="line">        print(epoch, np.mean(np.argmax(train_y, axis=1) ==</span><br><span class="line">                             sess.run(predict_op, feed_dict=&#123;X: train_X, </span><br><span class="line">                                                             Y: train_y&#125;)))</span><br><span class="line"> </span><br><span class="line">    # And now for some fizz buzz</span><br><span class="line">    numbers = np.arange(1, 101)</span><br><span class="line">    teX = np.transpose(binary_encode(numbers, NUM_DIGITS))</span><br><span class="line">    teY = sess.run(predict_op, feed_dict=&#123;X: teX&#125;)</span><br><span class="line">    output = np.vectorize(fizz_buzz)(numbers, teY)</span><br><span class="line"> </span><br><span class="line">    print(output)</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/09/10/sql-面试题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/09/10/sql-面试题/" itemprop="url">sql 面试题</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-10T12:10:43+08:00">
+                2018-09-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2018/09/10/sql-面试题/" class="leancloud_visitors" data-flag-title="sql 面试题">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  231
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ul>
+<li>说说对SQL语句优化有哪些方法？（选择几条）</li>
+</ul>
+<p>（1）Where子句中：where表之间的连接必须写在其他Where条件之前，那些可以过滤掉最大数量记录的条件必须写在Where子句的末尾.HAVING最后。</p>
+<p>（2）用EXISTS替代IN、用NOT EXISTS替代NOT IN。</p>
+<p>（3） 避免在索引列上使用计算</p>
+<p>（4）避免在索引列上使用IS NULL和IS NOT NULL</p>
+<p>（5）对查询进行优化，应尽量避免全表扫描，首先应考虑在 where 及 order by 涉及的列上建立索引。　　</p>
+<p>（6）应尽量避免在 where 子句中对字段进行 null 值判断，否则将导致引擎放弃使用索引而进行全表扫描</p>
+<p>（7）应尽量避免在 where 子句中对字段进行表达式操作，这将导致引擎放弃使用索引而进行全表扫描</p>
+<ul>
+<li>sql 索引 有哪几种类型？</li>
+</ul>
 
           
         
@@ -502,7 +644,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/08/30/lua-table库/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/09/10/深度学习0005/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -521,7 +663,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/08/30/lua-table库/" itemprop="url">lua table库</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/09/10/深度学习0005/" itemprop="url">深度学习0005</a></h1>
         
 
         <div class="post-meta">
@@ -533,8 +675,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-30T17:23:36+08:00">
-                2018-08-30
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-10T10:41:22+08:00">
+                2018-09-10
               </time>
             
 
@@ -544,6 +686,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/AI/" itemprop="url" rel="index">
+                    <span itemprop="name">AI</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -551,7 +715,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2018/08/30/lua-table库/" class="leancloud_visitors" data-flag-title="lua table库">
+             <span id="/zhangdavids.github.io/2018/09/10/深度学习0005/" class="leancloud_visitors" data-flag-title="深度学习0005">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -663,7 +827,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/08/30/lua-string库/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/09/10/深度学习0004/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -682,7 +846,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/08/30/lua-string库/" itemprop="url">lua string库</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/09/10/深度学习0004/" itemprop="url">深度学习0004</a></h1>
         
 
         <div class="post-meta">
@@ -694,8 +858,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-30T17:23:22+08:00">
-                2018-08-30
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-10T10:41:16+08:00">
+                2018-09-10
               </time>
             
 
@@ -705,6 +869,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/AI/" itemprop="url" rel="index">
+                    <span itemprop="name">AI</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -712,7 +898,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2018/08/30/lua-string库/" class="leancloud_visitors" data-flag-title="lua string库">
+             <span id="/zhangdavids.github.io/2018/09/10/深度学习0004/" class="leancloud_visitors" data-flag-title="深度学习0004">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -824,7 +1010,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/08/30/lua-模块/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/09/10/深度学习0003/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -843,7 +1029,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/08/30/lua-模块/" itemprop="url">lua 模块</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/09/10/深度学习0003/" itemprop="url">深度学习0003</a></h1>
         
 
         <div class="post-meta">
@@ -855,8 +1041,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-30T17:23:03+08:00">
-                2018-08-30
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-10T10:41:10+08:00">
+                2018-09-10
               </time>
             
 
@@ -866,166 +1052,27 @@
           </span>
 
           
-
-          
+            <span class="post-category" >
             
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2018/08/30/lua-模块/" class="leancloud_visitors" data-flag-title="lua 模块">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  0
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/08/30/lua-函数/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/08/30/lua-函数/" itemprop="url">lua 函数</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
+              <span class="post-meta-divider">|</span>
             
               <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
+                <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">发表于</span>
+                <span class="post-meta-item-text">分类于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-30T17:22:54+08:00">
-                2018-08-30
-              </time>
-            
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/AI/" itemprop="url" rel="index">
+                    <span itemprop="name">AI</span>
+                  </a>
+                </span>
 
-            
-
-            
-          </span>
-
+                
+                
+              
+            </span>
           
 
           
@@ -1034,7 +1081,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2018/08/30/lua-函数/" class="leancloud_visitors" data-flag-title="lua 函数">
+             <span id="/zhangdavids.github.io/2018/09/10/深度学习0003/" class="leancloud_visitors" data-flag-title="深度学习0003">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1137,7 +1184,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/66/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/66/">66</a><span class="page-number current">67</span><a class="page-number" href="/zhangdavids.github.io/page/68/">68</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/98/">98</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/68/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/66/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/66/">66</a><span class="page-number current">67</span><a class="page-number" href="/zhangdavids.github.io/page/68/">68</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/100/">100</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/68/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1187,7 +1234,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">487</span>
+                  <span class="site-state-item-count">499</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1302,7 +1349,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共187k字</span>
+  <span class="post-count">博客全站共187.8k字</span>
 </div>
 
         

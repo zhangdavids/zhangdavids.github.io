@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/10/ds之队列/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/24/ds之dfs/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -328,7 +328,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/10/ds之队列/" itemprop="url">ds之队列</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/24/ds之dfs/" itemprop="url">ds之dfs</a></h1>
         
 
         <div class="post-meta">
@@ -340,8 +340,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-10T13:49:54+08:00">
-                2019-01-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-24T14:26:38+08:00">
+                2019-01-24
               </time>
             
 
@@ -380,7 +380,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/01/10/ds之队列/" class="leancloud_visitors" data-flag-title="ds之队列">
+             <span id="/zhangdavids.github.io/2019/01/24/ds之dfs/" class="leancloud_visitors" data-flag-title="ds之dfs">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -405,7 +405,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  227
+                  87
                 </span>
               
 
@@ -444,31 +444,10 @@
       
         
           
-            <p>python当中的队列</p>
-<p>源码在 Lib/queue.py</p>
-<p>提供三种队列</p>
-<ul>
-<li>Queue（普通先进先出队列）</li>
-<li>LifoQueue（后进先出队列）</li>
-<li>PriorityQueue（优先级队列）</li>
-</ul>
-<p>提供封装的方法为</p>
-<ul>
-<li>qsize</li>
-<li>empty</li>
-<li>full</li>
-<li>put</li>
-<li>put_nowait</li>
-<li>get</li>
-<li>get_nowait</li>
-<li>task_done</li>
-<li>join</li>
-</ul>
-<p>这里着重说一下join()</p>
-<p>阻塞调用线程，直到队列中的所有任务被处理掉。</p>
-<p>只要有数据被加入队列，未完成的任务数就会增加。当消费者线程调用task_done()以指示该项目已检索并且其上的所有工作都已完成时，计数将减少。当未完成的任务数降到0，join()解除阻塞。</p>
-<p>示例如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">def worker():</span><br><span class="line">    while True:</span><br><span class="line">        item = q.get()</span><br><span class="line">        if item is None:</span><br><span class="line">            break</span><br><span class="line">        do_work(item)</span><br><span class="line">        q.task_done()</span><br><span class="line"></span><br><span class="line">q = queue.Queue()</span><br><span class="line">threads = []</span><br><span class="line">for i in range(num_worker_threads):</span><br><span class="line">    t = threading.Thread(target=worker)</span><br><span class="line">    t.start()</span><br><span class="line">    threads.append(t)</span><br><span class="line"></span><br><span class="line">for item in source():</span><br><span class="line">    q.put(item)</span><br><span class="line"></span><br><span class="line"># block until all tasks are done</span><br><span class="line">q.join()</span><br><span class="line"></span><br><span class="line"># stop workers</span><br><span class="line">for i in range(num_worker_threads):</span><br><span class="line">    q.put(None)</span><br><span class="line">for t in threads:</span><br><span class="line">    t.join()</span><br></pre></td></tr></table></figure>
+            <p>深度优先搜索 更符合计算机的习惯</p>
+<p>也就是一般使用栈来处理问题(递归)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">class Solution(object):</span><br><span class="line">    def levelOrder(self, root):</span><br><span class="line">        if not root:</span><br><span class="line">            return []</span><br><span class="line">        self.result = []</span><br><span class="line">        self._dfs(root, 0)</span><br><span class="line">        return self.result</span><br><span class="line"></span><br><span class="line">    def _dfs(self, node, level):</span><br><span class="line">        if not node: return</span><br><span class="line"></span><br><span class="line">        if len(self.result) &lt; level + 1:</span><br><span class="line">            self.result.append([])</span><br><span class="line"></span><br><span class="line">        self.result[level].append(node.val)</span><br><span class="line"></span><br><span class="line">        self._dfs(node.left, level+1)</span><br><span class="line">        self._dfs(node.right, level+1)</span><br></pre></td></tr></table></figure>
+
           
         
       
@@ -516,7 +495,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/10/ds之栈/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/24/ds之bfs/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -535,7 +514,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/10/ds之栈/" itemprop="url">ds之栈</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/24/ds之bfs/" itemprop="url">ds之bfs</a></h1>
         
 
         <div class="post-meta">
@@ -547,8 +526,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-10T13:49:36+08:00">
-                2019-01-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-24T14:26:17+08:00">
+                2019-01-24
               </time>
             
 
@@ -587,7 +566,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/01/10/ds之栈/" class="leancloud_visitors" data-flag-title="ds之栈">
+             <span id="/zhangdavids.github.io/2019/01/24/ds之bfs/" class="leancloud_visitors" data-flag-title="ds之bfs">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -612,7 +591,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  194
+                  102
                 </span>
               
 
@@ -651,10 +630,11 @@
       
         
           
-            <p>一般而言 很多数据结构 都可以使用数组实现（也就是顺序表）</p>
-<p>也可以使用链表实现 py里找一圈你可能没有看到栈的实现</p>
-<p>是因为可以直接使用list实现栈 简单！！！</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">class Stack(object):</span><br><span class="line">    # 初始化栈为空列表</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.items = []</span><br><span class="line"></span><br><span class="line">    # 判断栈是否为空，返回布尔值</span><br><span class="line">    def is_empty(self):</span><br><span class="line">        return self.items == []</span><br><span class="line"></span><br><span class="line">    # 返回栈顶元素</span><br><span class="line">    def peek(self):</span><br><span class="line">        return self.items[len(self.items) - 1]</span><br><span class="line"></span><br><span class="line">    # 返回栈的大小</span><br><span class="line">    def size(self):</span><br><span class="line">        return len(self.items)</span><br><span class="line"></span><br><span class="line">    # 把新的元素堆进栈里面（程序员喜欢把这个过程叫做压栈，入栈，进栈……）</span><br><span class="line">    def push(self, item):</span><br><span class="line">        self.items.append(item)</span><br><span class="line"></span><br><span class="line">    # 把栈顶元素丢出去（程序员喜欢把这个过程叫做出栈……）</span><br><span class="line">    def pop(self, item):</span><br><span class="line">        return self.items.pop()</span><br></pre></td></tr></table></figure>
+            <p>广度优先搜索</p>
+<p>本质上就是<em>队列queue</em>的应用</p>
+<p>在写代码的时候 也可以使用双端队列</p>
+<p>以leetcode 102题 层次遍历为例子 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">levelOrder</span><span class="params">(self, root)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> root:</span><br><span class="line">            <span class="keyword">return</span> []</span><br><span class="line"></span><br><span class="line">        res = []</span><br><span class="line">        queue = collections.deque()</span><br><span class="line">        queue.append(root)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># visited = set(root)</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> queue:</span><br><span class="line">            level_size = len(queue)</span><br><span class="line">            current_size = []</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> _ <span class="keyword">in</span> range(level_size):</span><br><span class="line">                node = queue.popleft()</span><br><span class="line">                current_level.append(node.val)</span><br><span class="line">                <span class="keyword">if</span> node.left: queue.append(node.left)</span><br><span class="line">                <span class="keyword">if</span> node.right: queue.append(node.right)</span><br><span class="line"></span><br><span class="line">            res.append(current_level)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
           
         
       
@@ -702,7 +682,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/10/taskflow详细4/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/23/leetcode-765/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -721,7 +701,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/10/taskflow详细4/" itemprop="url">taskflow详细4</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/23/leetcode-765/" itemprop="url">leetcode-765</a></h1>
         
 
         <div class="post-meta">
@@ -733,8 +713,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-10T11:20:07+08:00">
-                2019-01-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-23T15:38:12+08:00">
+                2019-01-23
               </time>
             
 
@@ -756,8 +736,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/compute/" itemprop="url" rel="index">
-                    <span itemprop="name">compute</span>
+                  <a href="/zhangdavids.github.io/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
                   </a>
                 </span>
 
@@ -773,7 +753,376 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/01/10/taskflow详细4/" class="leancloud_visitors" data-flag-title="taskflow详细4">
+             <span id="/zhangdavids.github.io/2019/01/23/leetcode-765/" class="leancloud_visitors" data-flag-title="leetcode-765">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  56
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Solution(object):</span><br><span class="line">    def minSwapsCouples(self, row):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        :type row: List[int]</span><br><span class="line">        :rtype: int</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        res = 0</span><br><span class="line">        for i in xrange(0, len(row), 2):</span><br><span class="line">            p = row[i] ^ 1 </span><br><span class="line">            j = row.index(p)</span><br><span class="line">            if (j-i) &gt; 1:</span><br><span class="line">                row[i+1], row[j] = row[j], row[i+1]</span><br><span class="line">                res += 1</span><br><span class="line">        return res</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/21/ds之字典树/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/21/ds之字典树/" itemprop="url">ds之字典树</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-21T17:10:25+08:00">
+                2019-01-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/data-structure/" itemprop="url" rel="index">
+                    <span itemprop="name">data structure</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/01/21/ds之字典树/" class="leancloud_visitors" data-flag-title="ds之字典树">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  558
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>字典树</p>
+<p>字典树的目的其实并非用于存储字符，而是存储每个词语（虽然原理一致），并且支持获取某个词语序列的前后缀及其频率。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TrieNode</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, value=None, count=<span class="number">0</span>, parent=None)</span>:</span></span><br><span class="line">        <span class="comment"># 值</span></span><br><span class="line">        self.value = value</span><br><span class="line">        <span class="comment"># 频数统计</span></span><br><span class="line">        self.count = count</span><br><span class="line">        <span class="comment"># 父结点</span></span><br><span class="line">        self.parent = parent</span><br><span class="line">        <span class="comment"># 子节点，&#123;value:TrieNode&#125;</span></span><br><span class="line">        self.children = &#123;&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trie</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="comment"># 创建空的根节点</span></span><br><span class="line">        self.root = TrieNode()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">insert</span><span class="params">(self, sequence)</span>:</span></span><br><span class="line">        <span class="string">"""</span><br><span class="line">        基操，插入一个序列</span><br><span class="line">        :param sequence: 列表</span><br><span class="line">        :return:</span><br><span class="line">        """</span></span><br><span class="line">        cur_node = self.root</span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> sequence:</span><br><span class="line">            <span class="keyword">if</span> item <span class="keyword">not</span> <span class="keyword">in</span> cur_node.children:</span><br><span class="line">                <span class="comment"># 插入结点</span></span><br><span class="line">                child = TrieNode(value=item, count=<span class="number">1</span>, parent=cur_node)</span><br><span class="line">                cur_node.children[item] = child</span><br><span class="line">                cur_node = child</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="comment"># 更新结点</span></span><br><span class="line">                cur_node = cur_node.children[item]</span><br><span class="line">                cur_node.count += <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">search</span><span class="params">(self, sequence)</span>:</span></span><br><span class="line">        <span class="string">"""</span><br><span class="line">        基操，查询是否存在完整序列</span><br><span class="line">        :param sequence: 列表</span><br><span class="line">        :return:</span><br><span class="line">        """</span></span><br><span class="line">        cur_node = self.root</span><br><span class="line">        mark = <span class="keyword">True</span></span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> sequence:</span><br><span class="line">            <span class="keyword">if</span> item <span class="keyword">not</span> <span class="keyword">in</span> cur_node.children:</span><br><span class="line">                mark = <span class="keyword">False</span></span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                cur_node = cur_node.children[item]</span><br><span class="line">        <span class="comment"># 如果还有子结点，说明序列并非完整</span></span><br><span class="line">        <span class="keyword">if</span> cur_node.children:</span><br><span class="line">            mark = <span class="keyword">False</span></span><br><span class="line">        <span class="keyword">return</span> mark</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">delete</span><span class="params">(self, sequence)</span>:</span></span><br><span class="line">        <span class="string">"""</span><br><span class="line">        基操，删除序列，准确来说是减少计数</span><br><span class="line">        :param sequence: 列表</span><br><span class="line">        :return:</span><br><span class="line">        """</span></span><br><span class="line">        mark = <span class="keyword">False</span></span><br><span class="line">        <span class="keyword">if</span> self.search(sequence):</span><br><span class="line">            mark = <span class="keyword">True</span></span><br><span class="line">            cur_node = self.root</span><br><span class="line">            <span class="keyword">for</span> item <span class="keyword">in</span> sequence:</span><br><span class="line">                cur_node.children[item].count -= <span class="number">1</span></span><br><span class="line">                <span class="keyword">if</span> cur_node.children[item].count == <span class="number">0</span>:</span><br><span class="line">                    cur_node.children.pop(item)</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    cur_node = cur_node.children[item]</span><br><span class="line">        <span class="keyword">return</span> mark</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">search_part</span><span class="params">(self, sequence, prefix, suffix, start_node=None)</span>:</span></span><br><span class="line">        <span class="string">"""</span><br><span class="line">        递归查找子序列，返回前缀和后缀结点</span><br><span class="line">        此处简化操作，仅返回一位前后缀的内容与频数</span><br><span class="line">        :param sequence: 列表</span><br><span class="line">        :param prefix: 前缀字典，初始传入空字典</span><br><span class="line">        :param suffix: 后缀字典，初始传入空字典</span><br><span class="line">        :param start_node: 起始结点，用于子树的查询</span><br><span class="line">        :return:</span><br><span class="line">        """</span></span><br><span class="line">        <span class="keyword">if</span> start_node:</span><br><span class="line">            cur_node = start_node</span><br><span class="line">            prefix_node = start_node.parent</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            cur_node = self.root</span><br><span class="line">            prefix_node = self.root</span><br><span class="line">        mark = <span class="keyword">True</span></span><br><span class="line">        <span class="comment"># 必须从第一个结点开始对比</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(sequence)):</span><br><span class="line">            <span class="keyword">if</span> i == <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">if</span> sequence[i] != cur_node.value:</span><br><span class="line">                    <span class="keyword">for</span> child_node <span class="keyword">in</span> cur_node.children.values():</span><br><span class="line">                        self.search_part(sequence, prefix, suffix, child_node)</span><br><span class="line">                    mark = <span class="keyword">False</span></span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="keyword">if</span> sequence[i] <span class="keyword">not</span> <span class="keyword">in</span> cur_node.children:</span><br><span class="line">                    <span class="keyword">for</span> child_node <span class="keyword">in</span> cur_node.children.values():</span><br><span class="line">                        self.search_part(sequence, prefix, suffix, child_node)</span><br><span class="line">                    mark = <span class="keyword">False</span></span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    cur_node = cur_node.children[sequence[i]]</span><br><span class="line">        <span class="keyword">if</span> mark:</span><br><span class="line">            <span class="keyword">if</span> prefix_node.value:</span><br><span class="line">                <span class="comment"># 前缀数量取序列词中最后一词的频数</span></span><br><span class="line">                <span class="keyword">if</span> prefix_node.value <span class="keyword">in</span> prefix:</span><br><span class="line">                    prefix[prefix_node.value] += cur_node.count</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    prefix[prefix_node.value] = cur_node.count</span><br><span class="line">            <span class="keyword">for</span> suffix_node <span class="keyword">in</span> cur_node.children.values():</span><br><span class="line">                <span class="keyword">if</span> suffix_node.value <span class="keyword">in</span> suffix:</span><br><span class="line">                    suffix[suffix_node.value] += suffix_node.count</span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    suffix[suffix_node.value] = suffix_node.count</span><br><span class="line">            <span class="comment"># 即使找到一部分还需继续查找子结点</span></span><br><span class="line">            <span class="keyword">for</span> child_node <span class="keyword">in</span> cur_node.children.values():</span><br><span class="line">                self.search_part(sequence, prefix, suffix, child_node)</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/21/ds之二叉树/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/21/ds之二叉树/" itemprop="url">ds之二叉树</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-21T17:10:14+08:00">
+                2019-01-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/data-structure/" itemprop="url" rel="index">
+                    <span itemprop="name">data structure</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/01/21/ds之二叉树/" class="leancloud_visitors" data-flag-title="ds之二叉树">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -838,385 +1187,6 @@
         
           
             
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/10/taskflow详细3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/10/taskflow详细3/" itemprop="url">taskflow详细3</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-10T11:20:02+08:00">
-                2019-01-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/compute/" itemprop="url" rel="index">
-                    <span itemprop="name">compute</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/01/10/taskflow详细3/" class="leancloud_visitors" data-flag-title="taskflow详细3">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  0
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/10/taskflow详细2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/10/taskflow详细2/" itemprop="url">taskflow详细2</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-10T11:19:55+08:00">
-                2019-01-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/compute/" itemprop="url" rel="index">
-                    <span itemprop="name">compute</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/01/10/taskflow详细2/" class="leancloud_visitors" data-flag-title="taskflow详细2">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  814
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  3
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Engine的必要初始化参数一个是flow,一个就是backends,backends对应的是storage使用何种后端存储,我简化后的代码storage只支持sqlalchemy,所以不直接传入sqlalchemy的session即可,另外一个参数就是我们马上要说的flow</p>
-<p>Engine是通过flow来找到需要执行的task的,所以,我们的task都是add到flow的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">from simpleflow.patterns import graph_flow as gf</span><br><span class="line"></span><br><span class="line">class Adder(task.Task):</span><br><span class="line"></span><br><span class="line">    def execute(self, x, y):</span><br><span class="line">        print &apos;do!!!&apos;, x, y</span><br><span class="line">        return x + y</span><br><span class="line"></span><br><span class="line">gflow = gf.Flow(&apos;root&apos;)</span><br><span class="line">gflow.add(Adder(name=&apos;atask&apos;))</span><br><span class="line">gflow2 = gf.Flow(&apos;leaf&apos;)</span><br><span class="line">gflow.add(gflow2)</span><br></pre></td></tr></table></figure>
-<p>当然flow的add参数可以是task,还可以flow.</p>
-<p>flow的代码比较复杂,关键属性_graph就是networkx的图了,不建议现在读代码,粗读一部分,稍微看一下对应的图和关键变量是什么就好和add部分就好。</p>
-<p>flow一共有三种,使用到有向图和无向图,当flow调用add添加的task/flow的时候,就是在图中增加节点,对于有向图,添加节点后自动增加边</p>
-<p>这里我就直接用我已经砍掉backends层的代码来说明了,我们来看storage里用到的几个对象（taskflow在persistence包,也就持久化包里,我的代码都集中到storage包里了）</p>
-<p>Connection taskflow中,Connection上面还套了一层backends,backends就一个函数get_connection用于返回Connection实例, 因为原来代码可以支持文件、内存等接口,所以有这么一层Connection用于存放通用方法,具体有什么方法可以直接看代码我这里就不描述了,方法的名字很明确的描述了方法的作用</p>
-<p>models中LogBook,FlowDetail,AtomDetail 原taskflow的models我改为了middleware,这里的models对应的是tables<br>这样改是为了统一orm框架写法,orm框架中都在models里放表结构<br>所以这里的这3个对象对应了三张表<br>LogBook：一次工作流有且只有一个LogBook,其实条记录用处不大,主要用来识别一次工作流,由于外键关系,删除一条logbook将会删除对应的其他表的记录,工作流正常结束后是可以删除相关记录的<br>FlowDetail：一次工作流只能接收一个flow,虽然前面我们flow中可以添加flow,但是并不会生成FlowDetail记录,顶层flow直接会获取下层flow的具体atom<br>AtomDetail: task和retry都是继承自atom,所以AtomDetail的的每一行就对应一个task或retry(retry后面单独说),还有之前说的用于传输初始参数的_TaskFlow_INJECTORD</p>
-<p>middleware middleware里的LogBook,FlowDetail,AtomDetail就是models里表的dict版增加了一些方法,TaskDetail/RetryDetail自然也是继承了AtomDetail,它们都是存到AtomDetail里,为什么要拆两份而不统一起来呢？一个原因是原taskflow了因为要支持各种backends,所以分了一层出来。还有一个原因是在没有写入（task初始化,返回,取消,报错）的的情况下,图的相关动作都在内存中进行,直接用orm的对象太过笨重,middleware中的对应对象就轻量很多</p>
-<p>现在我们来看Storage类了</p>
-<p>我们看看engine里对Storage的初始化</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">@misc.cachedproperty</span><br><span class="line">def storage(self):</span><br><span class="line">    def _scope_fetcher(atom_name):</span><br><span class="line">        if self._compiled:</span><br><span class="line">            return self._runtime.fetch_scopes_for(atom_name)</span><br><span class="line">        else:</span><br><span class="line">            return None</span><br><span class="line">    return storage.Storage(self._flow_detail,</span><br><span class="line">                           connection=self.connection,</span><br><span class="line">                           scope_fetcher=_scope_fetcher)</span><br></pre></td></tr></table></figure>
-
           
         
       
@@ -1255,7 +1225,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/43/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/43/">43</a><span class="page-number current">44</span><a class="page-number" href="/zhangdavids.github.io/page/45/">45</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/98/">98</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/45/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/43/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/43/">43</a><span class="page-number current">44</span><a class="page-number" href="/zhangdavids.github.io/page/45/">45</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/100/">100</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/45/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1305,7 +1275,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">487</span>
+                  <span class="site-state-item-count">499</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1420,7 +1390,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共187k字</span>
+  <span class="post-count">博客全站共187.8k字</span>
 </div>
 
         

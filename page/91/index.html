@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2017/11/06/tf-note-1/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2017/12/03/tensorflow-note-2017-12-03/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -328,7 +328,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2017/11/06/tf-note-1/" itemprop="url">tf-note-1</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2017/12/03/tensorflow-note-2017-12-03/" itemprop="url">tensorflow note 2017.12.03</a></h1>
         
 
         <div class="post-meta">
@@ -340,8 +340,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-06T23:29:30+08:00">
-                2017-11-06
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-03T21:27:19+08:00">
+                2017-12-03
               </time>
             
 
@@ -358,7 +358,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2017/11/06/tf-note-1/" class="leancloud_visitors" data-flag-title="tf-note-1">
+             <span id="/zhangdavids.github.io/2017/12/03/tensorflow-note-2017-12-03/" class="leancloud_visitors" data-flag-title="tensorflow note 2017.12.03">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -383,7 +383,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  443
+                  440
                 </span>
               
 
@@ -422,24 +422,16 @@
       
         
           
-            <p>andrew ng </p>
-<p>深度学习 是 什么？</p>
-<p>简单点来说 是训练神经网络。 神经网络有时候规模会很大。 非常传统的例子， 是房价的预测。</p>
-<p>假设有一个六间房的数据集，已知房屋的面积 房屋价格 想要找到一个函数来预测房价。</p>
-<p>很显然，懂线性回归的同学会知道直接拟合一条直线就好。</p>
-<p>这就是最简单的神经网络。</p>
-<p>输入x， 经过一个神经元，得到预测价格y</p>
-<p>这个函数被称为 ReLU 函数，全称是修正线性单元，修正指的是取不小于0的值。</p>
-<p>大点的神经网络是把这些单个神经元堆叠起来形成的，你可以想象成搭乐高积木。</p>
-<p>预测房屋价格，现在可能还有一些其他的特征，如卧室的数量，邮编也可以作为一个特性，因为说明了步行化程度。还有其他等等特性。。。</p>
-<p>对于神经网络，只有你喂给它足够多的x和y的数据，得到足够多的x y 训练样本，就非常擅于计算从x到y的精准映射函数。这就是一个基本的神经网络，自己的神经网络在监督学习的环境下是如此有效和强大。</p>
-<p>常见的应用有<br>预测房价<br>在线广告<br>还有图像 文本等的处理<br>语言翻译<br>自动驾驶  </p>
-<p>图像领域，经常使用卷积神经网络，也就是CNN  </p>
-<p>对于序列数据，例如音频中含有时间成分，则使用 RNN </p>
-<p>英语翻译 也 属于序列数据， RNN</p>
-<p>无人驾驶，基于图片， </p>
-<p>另外  就是 GAN  无监督学习了。</p>
-<p>待续 。。。</p>
+            <h3 id="Tensorflow"><a href="#Tensorflow" class="headerlink" title="Tensorflow"></a>Tensorflow</h3><p>Tensorflow既是机器学习算法实现接口，又是机器学习算法执行框架。TensorFlow的前端支持Python、C++、Go、Java等，目前推荐优先使用Python。后端使用C++、CUDA等。TensorFlow算法在异构系统方便移植，Android、iOS、CPU服务器、GPU集群等。可以实现机器学习、线性回归、逻辑回归、随机森林等算法。在语音识别、自然语言处理、计算机视觉、机器人控制、信息抽取、药物研发、分子活动预测等方面应用广泛。</p>
+<p>TensorFlow方便设计神经网络结构。</p>
+<p>不必写C++、CUDA。自动求导。</p>
+<p>C++核心方便线上部署。支持低配置嵌入式设备。通过SWIG添加其他脚本支持。</p>
+<p>每个mini-batch要从Python feed到网络，延迟大。</p>
+<p>内置TF.lean、TF.Slim快速设计网络。兼容scikit-lean estimator接口，实现evaluate、grid、search、cross、validation等功能。</p>
+<p>自动将分支转为子图。灵活移值，轻易部署任意数量设备。编译快。</p>
+<p>TensorBoard可视化网络结构、过程。支持常见网络结构（卷积神经网络CNN，循环神经网络RNN）、深度强化学习、计算密集科学计算等。</p>
+<p>缺点，计算图必须为静态图。异构支持各种硬件和操作系统。框架分布式性能是关键。TensorFlow 单机reduction只能用CPU，分布式通信使用socket RPC,不是RDMA，待优化。TensorFlow Serving 组件可导出训练好的模型，部署成对外提供预测是服务RESTful接口。实现应用机器学习全流程，训练模型、调试参数、打包模型、部署服务。</p>
+<p>TensorBoard，监控运行过程关键指标，支持标量、图片、直方图、计算图可视化。</p>
 
           
         
@@ -488,7 +480,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2017/11/05/lagou-spider/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2017/11/29/javascript-foundation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -507,7 +499,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2017/11/05/lagou-spider/" itemprop="url">lagou-spider</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2017/11/29/javascript-foundation/" itemprop="url">javascript foundation</a></h1>
         
 
         <div class="post-meta">
@@ -519,8 +511,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-05T20:26:44+08:00">
-                2017-11-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-29T00:05:29+08:00">
+                2017-11-29
               </time>
             
 
@@ -537,7 +529,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2017/11/05/lagou-spider/" class="leancloud_visitors" data-flag-title="lagou-spider">
+             <span id="/zhangdavids.github.io/2017/11/29/javascript-foundation/" class="leancloud_visitors" data-flag-title="javascript foundation">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -562,7 +554,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  212
+                  189
                 </span>
               
 
@@ -601,9 +593,21 @@
       
         
           
-            <h2 id="很久没有写爬虫了"><a href="#很久没有写爬虫了" class="headerlink" title="很久没有写爬虫了"></a>很久没有写爬虫了</h2><p>今天试着爬了一下 拉勾网站 深圳 python 的前 150 个职位</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">from</span> pprint <span class="keyword">import</span> pprint</span><br><span class="line"><span class="keyword">from</span> fake_useragent <span class="keyword">import</span> UserAgent</span><br><span class="line">ua = UserAgent()</span><br><span class="line"><span class="keyword">import</span> pymongo</span><br><span class="line">client = pymongo.MongoClient(<span class="string">"localhost"</span>, <span class="number">27017</span>)</span><br><span class="line">db = client.job</span><br><span class="line"></span><br><span class="line">user_agent = ua.random</span><br><span class="line"></span><br><span class="line">url = <span class="string">'https://www.lagou.com/jobs/positionAjax.json?px=default&amp;city=%E6%B7%B1%E5%9C%B3&amp;needAddtionalResult=false&amp;isSchoolJob=0'</span></span><br><span class="line"></span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">"Cookie"</span>: <span class="string">"user_trace_token=20171105173814-0b824fa6-c20d-11e7-978b-5254005c3644; LGUID=20171105173814-0b825535-c20d-11e7-978b-5254005c3644; index_location_city=%E6%B7%B1%E5%9C%B3; TG-TRACK-CODE=index_search; SEARCH_ID=5bb5150d5d314f32a34bdb68f6e2dbbc; _gid=GA1.2.1886275699.1509874693; _ga=GA1.2.1197843841.1509874693; LGRID=20171105173909-2cac9846-c20d-11e7-978b-5254005c3644; Hm_lvt_4233e74dff0ae5bd0a3d81c6ccf756e6=1509874693; Hm_lpvt_4233e74dff0ae5bd0a3d81c6ccf756e6=1509874749; JSESSIONID=ABAAABAAAFCAAEG674AE53B34CFB49996425F9659B657CF"</span>,</span><br><span class="line">    <span class="string">"Referer"</span>: <span class="string">"https://www.lagou.com/jobs/list_python?px=default&amp;city=%E6%B7%B1%E5%9C%B3"</span>,</span><br><span class="line">    <span class="string">"User-Agent"</span>: user_agent</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_job_data</span><span class="params">(num)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(num):</span><br><span class="line">        payload = &#123;</span><br><span class="line">            <span class="string">"first"</span>: <span class="string">"false"</span>,</span><br><span class="line">            <span class="string">"pn"</span>: str(i+<span class="number">1</span>),</span><br><span class="line">            <span class="string">"kd"</span>: <span class="string">"python"</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        response = requests.post(url, data=payload, headers=headers)</span><br><span class="line">        time.sleep(<span class="number">5</span>)</span><br><span class="line">        <span class="comment"># pprint(response.json()['content']['positionResult']['result'])</span></span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> response.json()[<span class="string">'content'</span>][<span class="string">'positionResult'</span>][<span class="string">'result'</span>]:</span><br><span class="line">            db.my_collection.insert_one(item)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    get_job_data(<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
-<p>还想着做一些可视化的东西。。。</p>
+            <p>js的分层</p>
+<p>jquery tool<br>组件 ui<br>应用 app<br>mvc backboneJS  </p>
+<p>js的规划</p>
+<p>避免全局变量和方法（命名空间 闭包 面向对象）</p>
+<p>模块化</p>
+<p>常用内部类:Data Array Math String</p>
+<p>HTML属性，CSS属性<br>HTML：属性.HTML属性=”值”；<br>CSS：对象.style.CSS属性=”值”;  </p>
+<p>class和float  </p>
+<p>1.class:className<br>2.float:cssFloat  </p>
+<p>获取对象  </p>
+<p>id:document.getElementById(“id 名”)  </p>
+<p>事件:用户的动作  </p>
+<p>鼠标事件：<br>onclick：点击<br>onmouseover: 鼠标放上<br>onmouseout:鼠标离开<br>ondbclick:双击事件<br>onmousedown:鼠标按下<br>onmouseup:鼠标抬起<br>onmousemove鼠标移动  </p>
+<p>表单事件：<br>onfocus:获取焦点<br>onblur:失去焦点<br>onsubmit:提交事件<br>onchange:当发生改变的时候<br>onreset:重置事件  </p>
+<p>键盘事件:<br>onkeyup:键盘抬起<br>onkeydown:键盘按下<br>onkeypress:键盘按键一次<br>窗口时间:onload事件  </p>
 
           
         
@@ -652,7 +656,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2017/09/17/how-fabric-works/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2017/11/28/scrapy-middleware/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -671,7 +675,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2017/09/17/how-fabric-works/" itemprop="url">how fabric works</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2017/11/28/scrapy-middleware/" itemprop="url">scrapy middleware</a></h1>
         
 
         <div class="post-meta">
@@ -683,8 +687,219 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-17T22:13:30+08:00">
-                2017-09-17
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-28T23:43:44+08:00">
+                2017-11-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2017/11/28/scrapy-middleware/" class="leancloud_visitors" data-flag-title="scrapy middleware">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  152
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="scrapy-常用的中间件-总结"><a href="#scrapy-常用的中间件-总结" class="headerlink" title="scrapy 常用的中间件 总结"></a>scrapy 常用的中间件 总结</h3><table>
+<thead>
+<tr>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">retry</td>
+<td style="text-align:left">重试可能由于临时问题引起的超时问题</td>
+</tr>
+<tr>
+<td style="text-align:left">cookie</td>
+<td style="text-align:left">该中间件使得爬取需要cookie(例如使用session)的网站成为了可能。 其追踪了web server发送的cookie，并在之后的request中发送回去， 就如浏览器所做的那样。</td>
+</tr>
+<tr>
+<td style="text-align:left">DefaultHeadersMiddleware</td>
+<td style="text-align:left">头设置为默认模式</td>
+</tr>
+<tr>
+<td style="text-align:left">downloadtimeout</td>
+<td style="text-align:left">设置超时</td>
+</tr>
+<tr>
+<td style="text-align:left">httpauth</td>
+<td style="text-align:left">对来自特定spider的request授权</td>
+</tr>
+<tr>
+<td style="text-align:left">httpcache</td>
+<td style="text-align:left">給request&amp;response设置缓存策略</td>
+</tr>
+<tr>
+<td style="text-align:left">httpproxy</td>
+<td style="text-align:left">給所有request设置http代理</td>
+</tr>
+<tr>
+<td style="text-align:left">redirect</td>
+<td style="text-align:left">重定向</td>
+</tr>
+<tr>
+<td style="text-align:left">metarefresh</td>
+<td style="text-align:left">根据meta-refresh html tag处理重定向</td>
+</tr>
+<tr>
+<td style="text-align:left">robotsTxt</td>
+<td style="text-align:left">robots封禁处理</td>
+</tr>
+</tbody>
+</table>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2017/11/28/cookie-and-session/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2017/11/28/cookie-and-session/" itemprop="url">cookie and session</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-28T22:01:15+08:00">
+                2017-11-28
               </time>
             
 
@@ -723,7 +938,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2017/09/17/how-fabric-works/" class="leancloud_visitors" data-flag-title="how fabric works">
+             <span id="/zhangdavids.github.io/2017/11/28/cookie-and-session/" class="leancloud_visitors" data-flag-title="cookie and session">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -748,366 +963,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2017/09/17/how-ansible-works/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2017/09/17/how-ansible-works/" itemprop="url">how ansible works</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-17T22:13:14+08:00">
-                2017-09-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/web/" itemprop="url" rel="index">
-                    <span itemprop="name">web</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2017/09/17/how-ansible-works/" class="leancloud_visitors" data-flag-title="how ansible works">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  285
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>ansible 是什么？    </p>
-<p>ansible 是如何工作的：  </p>
-<p>使用者认证通过之后在管理节点通过 ansible 工具调用各应用模块将指令推送到被管理端。  </p>
-<p>并且在执行完毕后自动删除产生的临时文件。</p>
-<p>主要由六个部分组成：</p>
-<ol>
-<li>playbooks 通常是 json 格式的 yml 文件</li>
-<li>inventory 管理主机的清单</li>
-<li>modules 执行命令的功能模块</li>
-<li>plugins 模块功能的补充，如循环插件等，功能不常用</li>
-<li>api  供第三方程序调用的应用程序编程接口</li>
-<li>ansible  ansible 命令工具</li>
-</ol>
-<p>遵循预先编排的规则将 playbook 逐条拆解为 play，将 play 组织成 ansible 可识别的任务 task，随后调用任务涉及的所有模块和插件，根据 inventory 中定义的主机列表通过 ssh 将任务集以临时文件或命令的形式传输到远程客户端执行并返回执行结果，如果是临时文件则执行完毕后自动删除。  </p>
-<p>下面会详细介绍一个企业级的应用，elk 日志系统基于 ansible 的自动化实现。  </p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2017/09/17/tensorflow-foundation/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2017/09/17/tensorflow-foundation/" itemprop="url">tensorflow foundation</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-17T12:24:30+08:00">
-                2017-09-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2017/09/17/tensorflow-foundation/" class="leancloud_visitors" data-flag-title="tensorflow foundation">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  707
+                  709
                 </span>
               
 
@@ -1146,56 +1002,214 @@
       
         
           
-            <h2 id="1-基础架构"><a href="#1-基础架构" class="headerlink" title="1. 基础架构"></a>1. 基础架构</h2><p>自底向上分为：  </p>
-<ul>
-<li>网络层和设备层</li>
-<li>数据操作层</li>
-<li>图计算层</li>
-<li>API 层</li>
-<li>应用层</li>
-</ul>
-<p>1.1 网络通信层和设备管理层</p>
-<p>网络通信层包括 gRPC 和 RDMA ，都是分布式计算时需要用到的。<br>设备管理层包括 tf 分别在 CPU GPU FPGA 等设备上的实现，也就是对上层提供了一个统一的接口，使得上层只需要处理卷积等逻辑，而不需要关心在硬件上的卷积的实现过程。  </p>
-<p>1.2  数据操作层</p>
-<p>包括卷积函数、激活函数等操作。  </p>
-<p>1.3 图计算层  </p>
-<p>本地计算图和分布式计算图的实现  </p>
-<p>1.4 API 层</p>
-<p>python实现和其他语言的实现  </p>
-<p>1.5 应用层  </p>
-<p>主要是训练相关类库和预测相关类库   </p>
-<h2 id="2-设计理念"><a href="#2-设计理念" class="headerlink" title="2. 设计理念"></a>2. 设计理念</h2><p>2.1 图的定义和图的实现完全分开  </p>
-<p>符号式编程涉及很多的嵌入和优化，不容易理解和调试，但是运行速度有所提升。  </p>
-<p>2.2 涉及的运算全部放在图中，图的运行只是发生在会话 session 中。  </p>
-<p>下面是举例：  </p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">a = tf.constant([<span class="number">1.0</span>, <span class="number">2.0</span>])</span><br><span class="line">b = tf.constant([<span class="number">3.0</span>, <span class="number">4.0</span>])</span><br><span class="line">c = a * b</span><br><span class="line"></span><br><span class="line">sess = tf.Session()</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> sess.run(c)</span><br><span class="line">sess.close()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 当然 一般写法是这样</span></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">	<span class="keyword">print</span> sess.run(c)</span><br></pre></td></tr></table></figure>
-<ol>
-<li>编程模型</li>
+            <h1 id="Cookie和Session"><a href="#Cookie和Session" class="headerlink" title="Cookie和Session"></a>Cookie和Session</h1><ol>
+<li>由于HTTP协议是无状态的协议，所以服务端需要记录用户的状态时，就需要用某种机制来识具体的用户，这个机制就是Session.典型的场景比如购物车，当你点击下单按钮时，由于HTTP协议无状态，所以并不知道是哪个用户操作的，所以服务端要为特定的用户创建了特定的Session，用用于标识这个用户，并且跟踪用户，这样才知道购物车里面有几本书。这个Session是保存在服务端的，有一个唯一标识。在服务端保存Session的方法很多，内存、数据库、文件都有。集群的时候也要考虑Session的转移，在大型的网站，一般会有专门的Session服务器集群，用来保存用户会话，这个时候 Session 信息都是放在内存的，使用一些缓存服务比如Memcached之类的来放 Session</li>
 </ol>
-<p>运行原理：</p>
-<ul>
-<li>输入input</li>
-<li>塑形reshape</li>
-<li>Relu层</li>
-<li>Logit层</li>
-<li>Softmax</li>
-<li>交叉熵cross entropy</li>
-<li>梯度gradient</li>
-<li>SGD 训练</li>
-</ul>
-<p>从输入开始，经过塑形后，一层一层进行前向传播运算。Relu层里会有两个参数，在输出前使用Relu激活函数来做非线性处理。然后进入Logit层，学习两个参数。用softmax来计算输出结果中各个类别的概率分布。用交叉熵来度量两个概率分布之间的相似性。然后开始计算梯度，以及交叉墒后的结果。随后进入SGD训练，也就是反向传播的过程，从上往下计算每一层的参数，依次进行更新。  </p>
-<p>tensorflow 顾名思义就是指“张量的流动”，数据流图是由节点node和边edge组成的有向无环图。</p>
-<p>3.1 边</p>
-<p>张量具有数据属性 如tf.float32等。</p>
-<p>3.2 节点</p>
-<p>节点的运算操作有数学、数组等。详细代码在源码tensorflow/python/ops/目录下。</p>
-<p>3.3 设备</p>
-<p>设备device是指一块可以用来运算且拥有自己地址空间的硬件。</p>
-<p>3.4 变量</p>
-<p>变量variable是一种特殊的数据，在图中有固定的位置，不像张量那样可以流动。  </p>
-<p>3.5 内核  </p>
-<p>操作是对抽象操作的一个统称，而内核kernel则是能够运行在特定设备上的一种对操作的实现。</p>
+<ol>
+<li>思考一下服务端如何识别特定的客户？这个时候Cookie就登场了。每次HTTP请求的时候，客户端都会发送相应的Cookie信息到服务端。实际上大多数的应用都是用 Cookie 来实现Session跟踪的，第一次创建Session的时候，服务端会在HTTP协议中告诉客户端，需要在 Cookie 里面记录一个Session ID，以后每次请求把这个会话ID发送到服务器，我就知道你是谁了。有人问，如果客户端的浏览器禁用了 Cookie 怎么办？一般这种情况下，会使用一种叫做URL重写的技术来进行会话跟踪，即每次HTTP交互，URL后面都会被附加上一个诸如 sid=xxxxx 这样的参数，服务端据此来识别用户</li>
+</ol>
+<ol>
+<li><p>Cookie其实还可以用在一些方便用户的场景下，设想你某次登陆过一个网站，下次登录的时候不想再次输入账号了，怎么办？这个信息可以写到Cookie里面，访问网站的时候，网站页面的脚本可以读取这个信息，就自动帮你把用户名给填了，能够方便一下用户。这也是Cookie名称的由来，给用户的一点甜头。</p>
+</li>
+<li><p>所以，总结一下：</p>
+</li>
+</ol>
+<p>Session是在服务端保存的一个数据结构，用来跟踪用户的状态，这个数据可以保存在集群、数据库、文件中；</p>
+<p>Cookie是客户端保存用户信息的一种机制，用来记录用户的一些信息，也是实现Session的一种方式</p>
+<pre><code>生产环境下，nginx将请求分发给多个后端uwsgi进程，而不是线程...
 
+开发服务器runserver从1.4开始就是单进程多线程的了。
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2017/11/27/js-foundation/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2017/11/27/js-foundation/" itemprop="url">js-foundation</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-27T23:32:55+08:00">
+                2017-11-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2017/11/27/js-foundation/" class="leancloud_visitors" data-flag-title="js-foundation">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  369
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1.javascript 的数据类型都有哪些？</p>
+<p>null 表示“没有对象”，即该处不应该有值。<br>（1） 作为函数的参数，表示该函数的参数不是对象。<br>（2） 作为对象原型链的终点。</p>
+<pre><code>Object.getPrototypeOf(Object.prototype)// null
+</code></pre><p>获取元素时，如果当前文档中特定元素不存在则返回null.</p>
+<p>undefined表示”缺少值”，就是此处应该有一个值，但是还没有定义。典型用法是：<br>（1）变量被声明了，但没有赋值时，就等于undefined。<br>（2) 调用函数时，应该提供的参数没有提供，该参数等于undefined。<br>（3）对象没有赋值的属性，该属性的值为undefined。<br>（4）函数没有返回值时，默认返回undefined。  </p>
+<p>引用数据类型：Object(Array,Date,RegExp,Function)</p>
+<p>数组数据类型：</p>
+<pre><code>function isArrayFn(value){  
+    if (typeof Array.isArray === &quot;function&quot;) {  
+        return Array.isArray(value);      
+    }else{  
+        return Object.prototype.toString.call(value) === &quot;[object Array]&quot;;      
+    }  
+}
+</code></pre><p>2.已知ID的Input输入框，希望获取这个输入框的输入值，怎么做？(不使用第三方框架)</p>
+<pre><code>document.getElementById(“ID”).value
+</code></pre><p>3.希望获取到页面中所有的checkbox怎么做？(不使用第三方框架)</p>
+<pre><code>var domList = document.getElementsByTagName(‘input’)
+var checkBoxList = [];
+var len = domList.length;　　//缓存到局部变量
+while (len--) {　　//使用while的效率会比for循环更高
+　　if (domList[len].type == ‘checkbox’) {
+    　　checkBoxList.push(domList[len]);
+　　}
+}
+</code></pre><p>4.设置一个已知ID的DIV的html内容为xxxx，字体颜色设置为黑色(不使用第三方框架)</p>
+<pre><code>var dom = document.getElementById(“ID”);
+dom.innerHTML = “xxxx”;
+dom.style.color = “#000”;    
+</code></pre>
           
         
       
@@ -1234,7 +1248,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/90/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/90/">90</a><span class="page-number current">91</span><a class="page-number" href="/zhangdavids.github.io/page/92/">92</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/98/">98</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/92/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/90/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/90/">90</a><span class="page-number current">91</span><a class="page-number" href="/zhangdavids.github.io/page/92/">92</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/100/">100</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/92/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1284,7 +1298,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">487</span>
+                  <span class="site-state-item-count">499</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1399,7 +1413,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共187k字</span>
+  <span class="post-count">博客全站共187.8k字</span>
 </div>
 
         

@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/05/程序员的数学之排列/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/10/es6总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -328,7 +328,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/05/程序员的数学之排列/" itemprop="url">程序员的数学之排列</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/10/es6总结/" itemprop="url">es6总结</a></h1>
         
 
         <div class="post-meta">
@@ -340,8 +340,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-05T18:37:50+08:00">
-                2019-01-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-10T13:57:40+08:00">
+                2019-01-10
               </time>
             
 
@@ -363,8 +363,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/math/" itemprop="url" rel="index">
-                    <span itemprop="name">math</span>
+                  <a href="/zhangdavids.github.io/categories/frontend/" itemprop="url" rel="index">
+                    <span itemprop="name">frontend</span>
                   </a>
                 </span>
 
@@ -380,7 +380,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/01/05/程序员的数学之排列/" class="leancloud_visitors" data-flag-title="程序员的数学之排列">
+             <span id="/zhangdavids.github.io/2019/01/10/es6总结/" class="leancloud_visitors" data-flag-title="es6总结">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -405,7 +405,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  1.2k
                 </span>
               
 
@@ -421,7 +421,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  4
                 </span>
               
             </div>
@@ -444,7 +444,44 @@
       
         
           
-            
+            <h3 id="1-变量声明let和const"><a href="#1-变量声明let和const" class="headerlink" title="1.变量声明let和const"></a>1.变量声明let和const</h3><p>我们都是知道在ES6以前，var关键字声明变量。无论声明在何处，都会被视为声明在函数的最顶部(不在函数内即在全局作用域的最顶部)。这就是函数变量提升例如:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function aa() &#123;</span><br><span class="line">    if(bool) &#123;</span><br><span class="line">        var test = &apos;hello man&apos;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        console.log(test)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>现在的情况下 则是<br>我们通常用let和const来声明，let表示变量、const表示常量。let和const都是块级作用域。怎么理解这个块级作用域？</p>
+<p>在一个函数内部<br>在一个代码块内部</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">function aa() &#123;</span><br><span class="line">    if(bool) &#123;</span><br><span class="line">       let test = &apos;hello man&apos;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        //test 在此处访问不到</span><br><span class="line">        console.log(test)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>let的作用域是在它所在当前代码块，但不会被提升到当前函数的最顶部。</p>
+<p>2.模版字符串</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">const name = &apos;lux&apos;</span><br><span class="line">console.log(`hello $&#123;name&#125;`) //hello lux 基本的字符串格式化。将表达式嵌入字符串中进行拼接。用$&#123;&#125;来界定。</span><br><span class="line"></span><br><span class="line">多行字符串或者字符串一行行拼接。ES6反引号(``)直接搞定。</span><br><span class="line">// es5</span><br><span class="line">var msg = &quot;Hi \</span><br><span class="line">man!</span><br><span class="line">&quot;</span><br><span class="line">// es6</span><br><span class="line">const template = `&lt;div&gt;</span><br><span class="line">    &lt;span&gt;hello world&lt;/span&gt;</span><br><span class="line">&lt;/div&gt;`</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">// es5</span><br><span class="line">var msg = &quot;Hi \</span><br><span class="line">man!</span><br><span class="line">&quot;</span><br><span class="line">// es6</span><br><span class="line">const template = `&lt;div&gt;</span><br><span class="line">    &lt;span&gt;hello world&lt;/span&gt;</span><br><span class="line">&lt;/div&gt;`</span><br></pre></td></tr></table></figure>
+<p>3.函数</p>
+<p>为函数提供默认值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function action(num = 200) &#123;</span><br><span class="line">        console.log(num)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">action() //200</span><br><span class="line">action(300) //300</span><br></pre></td></tr></table></figure>
+<p>箭头函数</p>
+<p>箭头函数最直观的三个特点。</p>
+<p>不需要function关键字来创建函数<br>省略return关键字<br>继承当前上下文的 this 关键字</p>
+<p>4.拓展的对象功能</p>
+<ul>
+<li>键值对简写</li>
+<li>省掉function关键字</li>
+</ul>
+<p>5.更方便的数据访问 解构</p>
+<p>6.展开运算符</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">const number = [1,2,3,4,5]</span><br><span class="line">    const [first, ...rest] = number</span><br><span class="line">    console.log(rest) //2,3,4,5</span><br><span class="line">    //对象</span><br><span class="line">    const user = &#123;</span><br><span class="line">        username: &apos;lux&apos;,</span><br><span class="line">        gender: &apos;female&apos;,</span><br><span class="line">        age: 19,</span><br><span class="line">        address: &apos;peking&apos;</span><br><span class="line">    &#125;</span><br><span class="line">    const &#123; username, ...rest &#125; = user</span><br><span class="line">    console.log(rest) //&#123;&quot;address&quot;: &quot;peking&quot;, &quot;age&quot;: 19, &quot;gender&quot;: &quot;female&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>7.import export</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1.当用export default people导出时，就用 import people 导入（不带大括号）</span><br><span class="line"></span><br><span class="line">2.一个文件里，有且只能有一个export default。但可以有多个export。</span><br><span class="line"></span><br><span class="line">3.当用export name 时，就用import &#123; name &#125;导入（记得带上大括号）</span><br><span class="line"></span><br><span class="line">4.当一个文件里，既有一个export default people, 又有多个export name 或者 export age时，导入就用 import people, &#123; name, age &#125; </span><br><span class="line"></span><br><span class="line">5.当一个文件里出现n多个 export 导出很多模块，导入时除了一个一个导入，也可以用import * as example</span><br></pre></td></tr></table></figure>
+<p>8.promise</p>
+<p>在promise之前代码过多的回调或者嵌套，可读性差、耦合度高、扩展性低。通过Promise机制，扁平化的代码机构，大大提高了代码可读性；用同步编程的方式来编写异步代码，保存线性的代码逻辑，极大的降低了代码耦合性而提高了程序的可扩展性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">setTimeout(function() &#123;</span><br><span class="line">  console.log(1)</span><br><span class="line">&#125;, 0);</span><br><span class="line">new Promise(function executor(resolve) &#123;</span><br><span class="line">  console.log(2);</span><br><span class="line">  for( var i=0 ; i&lt;10000 ; i++ ) &#123;</span><br><span class="line">    i == 9999 &amp;&amp; resolve();</span><br><span class="line">  &#125;</span><br><span class="line">  console.log(3);</span><br><span class="line">&#125;).then(function() &#123;</span><br><span class="line">  console.log(4);</span><br><span class="line">&#125;);</span><br><span class="line">console.log(5);</span><br></pre></td></tr></table></figure>
+<p>首先先碰到一个 setTimeout，于是会先设置一个定时，在定时结束后将传递这个函数放到任务队列里面，因此开始肯定不会输出 1 。</p>
+<p>然后是一个 Promise，里面的函数是直接执行的，因此应该直接输出 2 3 。</p>
+<p>然后，Promise 的 then 应当会放到当前 tick 的最后，但是还是在当前 tick 中。</p>
+<p>因此，应当先输出 5，然后再输出 4 。</p>
+<p>最后在到下一个 tick，就是 1 。</p>
+<p>“2 3 5 4 1”</p>
+<p>9.迭代器</p>
+<p>生成器（ generator）是能返回一个迭代器的函数。生成器函数也是一种函数，最直观的表现就是比普通的function多了个星号*，在其函数体内可以使用yield关键字,有意思的是函数会在每个yield后暂停。</p>
+<p>这里生活中有一个比较形象的例子。咱们到银行办理业务时候都得向大厅的机器取一张排队号。你拿到你的排队号，机器并不会自动为你再出下一张票。也就是说取票机“暂停”住了，直到下一个人再次唤起才会继续吐票。</p>
+<p>OK。说说迭代器。当你调用一个generator时，它将返回一个迭代器对象。这个迭代器对象拥有一个叫做next的方法来帮助你重启generator函数并得到下一个值。next方法不仅返回值，它返回的对象具有两个属性：done和value。value是你获得的值，done用来表明你的generator是否已经停止提供值。继续用刚刚取票的例子，每张排队号就是这里的value，打印票的纸是否用完就这是这里的done。</p>
+
           
         
       
@@ -492,7 +529,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/05/程序员的数学之递归/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/10/ds之堆/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -511,7 +548,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/05/程序员的数学之递归/" itemprop="url">程序员的数学之递归</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/10/ds之堆/" itemprop="url">ds之堆</a></h1>
         
 
         <div class="post-meta">
@@ -523,8 +560,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-05T18:36:28+08:00">
-                2019-01-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-10T13:50:02+08:00">
+                2019-01-10
               </time>
             
 
@@ -546,8 +583,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/math/" itemprop="url" rel="index">
-                    <span itemprop="name">math</span>
+                  <a href="/zhangdavids.github.io/categories/data-structure/" itemprop="url" rel="index">
+                    <span itemprop="name">data structure</span>
                   </a>
                 </span>
 
@@ -563,7 +600,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2019/01/05/程序员的数学之递归/" class="leancloud_visitors" data-flag-title="程序员的数学之递归">
+             <span id="/zhangdavids.github.io/2019/01/10/ds之堆/" class="leancloud_visitors" data-flag-title="ds之堆">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -588,7 +625,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  216
+                  610
                 </span>
               
 
@@ -604,7 +641,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -627,43 +664,31 @@
       
         
           
-            <h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><p>自顶向下</p>
-<p>自底向上两种递归</p>
-<p>一般情况下 自底向上 也就是说从结果往上推一步 这种更符合计算机的思维习惯</p>
-<p>求八可以分解为哪几个树 1最多只能出现一次</p>
-<pre><code>
-# coding=utf-8
-import copy
+            <p>堆 </p>
+<p>为什么堆排序没有快速排序快？</p>
+<p>堆排序是一种原地的、时间复杂度为O(nlogn)的排序算法</p>
+<ul>
+<li>堆是一棵完全二叉树</li>
+<li>堆中每一个节点的值都必须大于等于（或者小于等于）其子树中每个节点的值</li>
+</ul>
+<p>如何实现一个堆？以大顶堆为例子</p>
+<p>完全二叉树比较适合用数组来存储。用数组存储非常节省存储空间，单纯通过数组下标就可以找到一个节点的左右子节点和父节点。</p>
+<p><em>堆的插入数据</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public class Heap &#123;</span><br><span class="line">  private int[] a; // 数组，从下标 1 开始存储数据</span><br><span class="line">  private int n;  // 堆可以存储的最大数据个数</span><br><span class="line">  private int count; // 堆中已经存储的数据个数</span><br><span class="line"></span><br><span class="line">  public Heap(int capacity) &#123;</span><br><span class="line">    a = new int[capacity + 1];</span><br><span class="line">    n = capacity;</span><br><span class="line">    count = 0;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public void insert(int data) &#123;</span><br><span class="line">    if (count &gt;= n) return; // 堆满了</span><br><span class="line">    ++count;</span><br><span class="line">    a[count] = data;</span><br><span class="line">    int i = count;</span><br><span class="line">    while (i/2 &gt; 0 &amp;&amp; a[i] &gt; a[i/2]) &#123; // 自下往上堆化</span><br><span class="line">      swap(a, i, i/2); // swap() 函数作用：交换下标为 i 和 i/2 的两个元素</span><br><span class="line">      i = i/2;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p><em>删除堆顶元素</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public void removeMax() &#123;</span><br><span class="line">  if (count == 0) return -1; // 堆中没有数据</span><br><span class="line">  a[1] = a[count];</span><br><span class="line">  --count;</span><br><span class="line">  heapify(a, count, 1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private void heapify(int[] a, int n, int i) &#123; // 自上往下堆化</span><br><span class="line">  while (true) &#123;</span><br><span class="line">    int maxPos = i;</span><br><span class="line">    if (i*2 &lt;= n &amp;&amp; a[i] &lt; a[i*2]) maxPos = i*2;</span><br><span class="line">    if (i*2+1 &lt;= n &amp;&amp; a[maxPos] &lt; a[i*2+1]) maxPos = i*2+1;</span><br><span class="line">    if (maxPos == i) break;</span><br><span class="line">    swap(a, i, maxPos);</span><br><span class="line">    i = maxPos;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><em>建堆</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">private static void buildHeap(int[] a, int n) &#123;</span><br><span class="line">  for (int i = n/2; i &gt;= 1; --i) &#123;</span><br><span class="line">    heapify(a, n, i);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private static void heapify(int[] a, int n, int i) &#123;</span><br><span class="line">  while (true) &#123;</span><br><span class="line">    int maxPos = i;</span><br><span class="line">    if (i*2 &lt;= n &amp;&amp; a[i] &lt; a[i*2]) maxPos = i*2;</span><br><span class="line">    if (i*2+1 &lt;= n &amp;&amp; a[maxPos] &lt; a[i*2+1]) maxPos = i*2+1;</span><br><span class="line">    if (maxPos == i) break;</span><br><span class="line">    swap(a, i, maxPos);</span><br><span class="line">    i = maxPos;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><em>堆排序</em></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// n 表示数据的个数，数组 a 中的数据从下标 1 到 n 的位置。</span><br><span class="line">public static void sort(int[] a, int n) &#123;</span><br><span class="line">  buildHeap(a, n);</span><br><span class="line">  int k = n;</span><br><span class="line">  while (k &gt; 1) &#123;</span><br><span class="line">    swap(a, 1, k);</span><br><span class="line">    --k;</span><br><span class="line">    heapify(a, k, 1);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>堆排序数据访问的方式没有快速排序友好。</li>
+</ul>
+<p>快速排序 数据是顺序访问的 对于堆来说 数据是跳着访问的</p>
+<ul>
+<li>对于同样的数据 排序过程中 堆排序算法的数据交换次数要多于快速排序。</li>
+</ul>
 
-
-def get_all_prod_factors(n, result=None):
-    &quot;&quot;&quot;
-    使用递归编程，为给定的整数 n 找到所有可能的分解
-    :param n: 整数
-    :param result: 保存当前的分解
-    :return: None
-    &quot;&quot;&quot;
-    if result is None:
-        result = []
-    if n == 1:
-        print(&apos;x&apos;.join([str(_) for _ in result]))
-        if 1 not in result:
-            result.append(1)
-            print(&apos;x&apos;.join([str(_) for _ in result]))
-    elif n &lt; 0:
-        return
-    else:
-        for i in range(1, n + 1):
-            if (i == 1 and i not in result) or (i != 1 and n % i == 0):
-                new_result = copy.copy(result)
-                new_result.append(i)
-                get_all_prod_factors(n // i, new_result)  # python3 // 表示整除，不带小数
-
-
-if __name__ == &apos;__main__&apos;:
-    num = 8
-    get_all_prod_factors(num)
-</code></pre>
           
         
       
@@ -711,7 +736,7 @@ if __name__ == &apos;__main__&apos;:
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/05/程序员的数学之数学归纳法/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/10/ds之队列/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -730,7 +755,7 @@ if __name__ == &apos;__main__&apos;:
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/05/程序员的数学之数学归纳法/" itemprop="url">程序员的数学之数学归纳法</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/10/ds之队列/" itemprop="url">ds之队列</a></h1>
         
 
         <div class="post-meta">
@@ -742,8 +767,8 @@ if __name__ == &apos;__main__&apos;:
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-05T18:36:13+08:00">
-                2019-01-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-10T13:49:54+08:00">
+                2019-01-10
               </time>
             
 
@@ -765,8 +790,8 @@ if __name__ == &apos;__main__&apos;:
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/math/" itemprop="url" rel="index">
-                    <span itemprop="name">math</span>
+                  <a href="/zhangdavids.github.io/categories/data-structure/" itemprop="url" rel="index">
+                    <span itemprop="name">data structure</span>
                   </a>
                 </span>
 
@@ -782,7 +807,7 @@ if __name__ == &apos;__main__&apos;:
 
           
           
-             <span id="/zhangdavids.github.io/2019/01/05/程序员的数学之数学归纳法/" class="leancloud_visitors" data-flag-title="程序员的数学之数学归纳法">
+             <span id="/zhangdavids.github.io/2019/01/10/ds之队列/" class="leancloud_visitors" data-flag-title="ds之队列">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -807,7 +832,7 @@ if __name__ == &apos;__main__&apos;:
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  227
                 </span>
               
 
@@ -846,7 +871,31 @@ if __name__ == &apos;__main__&apos;:
       
         
           
-            
+            <p>python当中的队列</p>
+<p>源码在 Lib/queue.py</p>
+<p>提供三种队列</p>
+<ul>
+<li>Queue（普通先进先出队列）</li>
+<li>LifoQueue（后进先出队列）</li>
+<li>PriorityQueue（优先级队列）</li>
+</ul>
+<p>提供封装的方法为</p>
+<ul>
+<li>qsize</li>
+<li>empty</li>
+<li>full</li>
+<li>put</li>
+<li>put_nowait</li>
+<li>get</li>
+<li>get_nowait</li>
+<li>task_done</li>
+<li>join</li>
+</ul>
+<p>这里着重说一下join()</p>
+<p>阻塞调用线程，直到队列中的所有任务被处理掉。</p>
+<p>只要有数据被加入队列，未完成的任务数就会增加。当消费者线程调用task_done()以指示该项目已检索并且其上的所有工作都已完成时，计数将减少。当未完成的任务数降到0，join()解除阻塞。</p>
+<p>示例如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">def worker():</span><br><span class="line">    while True:</span><br><span class="line">        item = q.get()</span><br><span class="line">        if item is None:</span><br><span class="line">            break</span><br><span class="line">        do_work(item)</span><br><span class="line">        q.task_done()</span><br><span class="line"></span><br><span class="line">q = queue.Queue()</span><br><span class="line">threads = []</span><br><span class="line">for i in range(num_worker_threads):</span><br><span class="line">    t = threading.Thread(target=worker)</span><br><span class="line">    t.start()</span><br><span class="line">    threads.append(t)</span><br><span class="line"></span><br><span class="line">for item in source():</span><br><span class="line">    q.put(item)</span><br><span class="line"></span><br><span class="line"># block until all tasks are done</span><br><span class="line">q.join()</span><br><span class="line"></span><br><span class="line"># stop workers</span><br><span class="line">for i in range(num_worker_threads):</span><br><span class="line">    q.put(None)</span><br><span class="line">for t in threads:</span><br><span class="line">    t.join()</span><br></pre></td></tr></table></figure>
           
         
       
@@ -894,7 +943,7 @@ if __name__ == &apos;__main__&apos;:
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/05/程序员的数学之迭代法/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/10/ds之栈/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -913,7 +962,7 @@ if __name__ == &apos;__main__&apos;:
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/05/程序员的数学之迭代法/" itemprop="url">程序员的数学之迭代法</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/10/ds之栈/" itemprop="url">ds之栈</a></h1>
         
 
         <div class="post-meta">
@@ -925,8 +974,8 @@ if __name__ == &apos;__main__&apos;:
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-05T18:35:56+08:00">
-                2019-01-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-10T13:49:36+08:00">
+                2019-01-10
               </time>
             
 
@@ -948,8 +997,8 @@ if __name__ == &apos;__main__&apos;:
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/math/" itemprop="url" rel="index">
-                    <span itemprop="name">math</span>
+                  <a href="/zhangdavids.github.io/categories/data-structure/" itemprop="url" rel="index">
+                    <span itemprop="name">data structure</span>
                   </a>
                 </span>
 
@@ -965,7 +1014,7 @@ if __name__ == &apos;__main__&apos;:
 
           
           
-             <span id="/zhangdavids.github.io/2019/01/05/程序员的数学之迭代法/" class="leancloud_visitors" data-flag-title="程序员的数学之迭代法">
+             <span id="/zhangdavids.github.io/2019/01/10/ds之栈/" class="leancloud_visitors" data-flag-title="ds之栈">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -990,7 +1039,7 @@ if __name__ == &apos;__main__&apos;:
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  194
                 </span>
               
 
@@ -1029,7 +1078,10 @@ if __name__ == &apos;__main__&apos;:
       
         
           
-            
+            <p>一般而言 很多数据结构 都可以使用数组实现（也就是顺序表）</p>
+<p>也可以使用链表实现 py里找一圈你可能没有看到栈的实现</p>
+<p>是因为可以直接使用list实现栈 简单！！！</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">class Stack(object):</span><br><span class="line">    # 初始化栈为空列表</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.items = []</span><br><span class="line"></span><br><span class="line">    # 判断栈是否为空，返回布尔值</span><br><span class="line">    def is_empty(self):</span><br><span class="line">        return self.items == []</span><br><span class="line"></span><br><span class="line">    # 返回栈顶元素</span><br><span class="line">    def peek(self):</span><br><span class="line">        return self.items[len(self.items) - 1]</span><br><span class="line"></span><br><span class="line">    # 返回栈的大小</span><br><span class="line">    def size(self):</span><br><span class="line">        return len(self.items)</span><br><span class="line"></span><br><span class="line">    # 把新的元素堆进栈里面（程序员喜欢把这个过程叫做压栈，入栈，进栈……）</span><br><span class="line">    def push(self, item):</span><br><span class="line">        self.items.append(item)</span><br><span class="line"></span><br><span class="line">    # 把栈顶元素丢出去（程序员喜欢把这个过程叫做出栈……）</span><br><span class="line">    def pop(self, item):</span><br><span class="line">        return self.items.pop()</span><br></pre></td></tr></table></figure>
           
         
       
@@ -1077,7 +1129,7 @@ if __name__ == &apos;__main__&apos;:
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/05/程序员的数学之余数/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/10/taskflow详细4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -1096,7 +1148,7 @@ if __name__ == &apos;__main__&apos;:
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/05/程序员的数学之余数/" itemprop="url">程序员的数学之余数</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/10/taskflow详细4/" itemprop="url">taskflow详细4</a></h1>
         
 
         <div class="post-meta">
@@ -1108,8 +1160,8 @@ if __name__ == &apos;__main__&apos;:
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-05T18:35:43+08:00">
-                2019-01-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-10T11:20:07+08:00">
+                2019-01-10
               </time>
             
 
@@ -1131,8 +1183,8 @@ if __name__ == &apos;__main__&apos;:
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/math/" itemprop="url" rel="index">
-                    <span itemprop="name">math</span>
+                  <a href="/zhangdavids.github.io/categories/compute/" itemprop="url" rel="index">
+                    <span itemprop="name">compute</span>
                   </a>
                 </span>
 
@@ -1148,7 +1200,7 @@ if __name__ == &apos;__main__&apos;:
 
           
           
-             <span id="/zhangdavids.github.io/2019/01/05/程序员的数学之余数/" class="leancloud_visitors" data-flag-title="程序员的数学之余数">
+             <span id="/zhangdavids.github.io/2019/01/10/taskflow详细4/" class="leancloud_visitors" data-flag-title="taskflow详细4">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1251,7 +1303,7 @@ if __name__ == &apos;__main__&apos;:
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/45/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/45/">45</a><span class="page-number current">46</span><a class="page-number" href="/zhangdavids.github.io/page/47/">47</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/98/">98</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/47/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/45/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/45/">45</a><span class="page-number current">46</span><a class="page-number" href="/zhangdavids.github.io/page/47/">47</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/100/">100</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/47/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1301,7 +1353,7 @@ if __name__ == &apos;__main__&apos;:
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">487</span>
+                  <span class="site-state-item-count">499</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1416,7 +1468,7 @@ if __name__ == &apos;__main__&apos;:
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共187k字</span>
+  <span class="post-count">博客全站共187.8k字</span>
 </div>
 
         

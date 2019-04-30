@@ -309,7 +309,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/12/19/how-to-make-django-auth-with-both-email-and-username/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/01/02/ds之树/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -328,7 +328,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/12/19/how-to-make-django-auth-with-both-email-and-username/" itemprop="url">how-to-make-django-auth-with-both-email-and-username</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/01/02/ds之树/" itemprop="url">ds之树</a></h1>
         
 
         <div class="post-meta">
@@ -340,8 +340,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-19T18:33:52+08:00">
-                2018-12-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-02T09:46:12+08:00">
+                2019-01-02
               </time>
             
 
@@ -351,6 +351,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/data-structure/" itemprop="url" rel="index">
+                    <span itemprop="name">data structure</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -358,7 +380,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2018/12/19/how-to-make-django-auth-with-both-email-and-username/" class="leancloud_visitors" data-flag-title="how-to-make-django-auth-with-both-email-and-username">
+             <span id="/zhangdavids.github.io/2019/01/02/ds之树/" class="leancloud_visitors" data-flag-title="ds之树">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -383,7 +405,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  73
+                  913
                 </span>
               
 
@@ -399,7 +421,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  4
                 </span>
               
             </div>
@@ -422,8 +444,41 @@
       
         
           
-            <p>做一个小小的记录 扩展认证</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">from django.contrib.auth.backends import ModelBackend</span><br><span class="line">from django.db.models import Q</span><br><span class="line">from .models import UserProfile</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class CustomBackend(ModelBackend):</span><br><span class="line">    &quot;&quot;&quot;邮箱也能登录&quot;&quot;&quot;</span><br><span class="line">    def authenticate(self, request, username=None, password=None, **kwargs):</span><br><span class="line">        try:</span><br><span class="line">            user=UserProfile.objects.get(Q(username=username)|Q(email=username))</span><br><span class="line">            if user.check_password(password):</span><br><span class="line">                return user</span><br><span class="line">        except Exception as e:</span><br><span class="line">            return None</span><br></pre></td></tr></table></figure>
+            <p>数据结构的树</p>
+<h3 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h3><p>给予一个二叉树的根节点，验证该树是否是二叉树搜索树，在O(n)时间内。</p>
+<h3 id="分析与解答"><a href="#分析与解答" class="headerlink" title="分析与解答"></a>分析与解答</h3><p>二叉搜索树是一种特殊的二叉树</p>
+<p>它满足如下的条件：</p>
+<ul>
+<li>结点的左子树所有结点的值都小于等于该结点的值。</li>
+<li>结点的右子树所有结点的值都大于该结点的值。</li>
+<li>结点的左右子树同样都必须是二叉搜索树。</li>
+</ul>
+<p>也就是说</p>
+<ul>
+<li>任何一个节点的key值都比它左子树上的节点的key值要大，但是比它右子树上的key值要小。</li>
+<li>节点查找、插入、删除等操作的时间复杂度都是O(logn)</li>
+</ul>
+<p>主要的一个特点 就是中序遍历一棵树 会得到一个递增的序列</p>
+<p>在此题目的条件是給出一个根节点 </p>
+<p>简化起见  考虑简单的情况 </p>
+<p>即是給出的二叉树形式为列表的形式 顺序为前序 也就是一个元素就是根节点</p>
+<p>比如</p>
+<p>[5,1,4,#,#,3,6]  这个是給出的二叉树 根节点为第一个元素 也就是5</p>
+<p>注意一下 实际上在 python 当中給出的应该是这样的列表</p>
+<p>[5, 1, 4, None, None, 3, 6]</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">def traverse_binary_tree(node, callback):</span><br><span class="line">    if node is None:</span><br><span class="line">        return</span><br><span class="line">    traverse_binary_tree(node.leftChild, callback)</span><br><span class="line">    callback(node.value)</span><br><span class="line">    traverse_binary_tree(node.rightChild, callback)</span><br><span class="line">    </span><br><span class="line">    </span><br><span class="line">def get_inorder_traversal(root):</span><br><span class="line">    result = []</span><br><span class="line">    traverse_binary_tree(root, lambda element: result.append(element))</span><br><span class="line">    return result</span><br></pre></td></tr></table></figure>
+<p>解法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class Solution1(object):</span><br><span class="line"></span><br><span class="line">	def valid_bst(self, root):</span><br><span class="line">	    # 直接先中序遍历 得到序列</span><br><span class="line">	    def inorder_traversal(root):</span><br><span class="line">	        if root is None:</span><br><span class="line">	            return []</span><br><span class="line">	        res = []</span><br><span class="line">	        res += inorder_traversal(root.left)</span><br><span class="line">	        res.append(root.val)</span><br><span class="line">	        res += inorder_traversal(root.right)</span><br><span class="line">	        return res</span><br><span class="line">	</span><br><span class="line">	    # 根据中序遍历的结果进行比对</span><br><span class="line">	    return (inorder_traversal(root) == sorted(list(set(inorder_traversal(root)))))</span><br></pre></td></tr></table></figure>
+<p>另外也可以依次比较左右子树各个子节点的值 保证 左 &lt; zhong &lt; 右</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class Solution2(object):</span><br><span class="line"></span><br><span class="line">	def valid_bst(self, root):</span><br><span class="line">		return self.helper(root, -2**64, 2**64-1)</span><br><span class="line">		</span><br><span class="line">	def helper(self, root, left, right):</span><br><span class="line">		if root is None:</span><br><span class="line">			return True</span><br><span class="line">		if left &gt;= root.val or right &lt;= root.val:</span><br><span class="line">			return False</span><br><span class="line">		retun self.helper(root.left, left, root.val) and self.helper(root.right, root.val, right)</span><br></pre></td></tr></table></figure>
+<p>工程化的项目当中 一般是测试先行 也就是说需要先把测试用例这些东西准备好</p>
+<p>在此 为了完善起见 肯定是需要补上测试用例的</p>
+<p>能跑过测试 说明代码是正确的</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Node</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, x)</span>:</span></span><br><span class="line">        self.val = x</span><br><span class="line">        self.left = <span class="keyword">None</span></span><br><span class="line">        self.right = <span class="keyword">None</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_val</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.val</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">dict_form</span><span class="params">(self)</span>:</span></span><br><span class="line">        dict_set = &#123;</span><br><span class="line">            <span class="string">"val"</span>: self.val,</span><br><span class="line">            <span class="string">"left"</span>: self.left,</span><br><span class="line">            <span class="string">"right"</span>: self.right,</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dict_set</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> str(self.val)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Tree</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, data_list)</span>:</span></span><br><span class="line">        <span class="comment"># 初始化即将传入的列表的迭代器</span></span><br><span class="line">        self.root = data_list[<span class="number">0</span>] <span class="keyword">if</span> data_list <span class="keyword">else</span> <span class="keyword">None</span></span><br><span class="line">        self.it = iter(data_list)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">create_tree</span><span class="params">(self, bt=None)</span>:</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="comment"># 获取下一个元素</span></span><br><span class="line">            next_data = next(self.it)</span><br><span class="line">            <span class="comment"># 如果当前列表元素为 "#", 则认为其为 None</span></span><br><span class="line">            <span class="keyword">if</span> next_data == <span class="string">'#'</span> <span class="keyword">or</span> next_data <span class="keyword">is</span> <span class="keyword">None</span>:</span><br><span class="line">                bt = <span class="keyword">None</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                bt = Node(next_data)</span><br><span class="line">                bt.left = self.create_tree(bt.left)</span><br><span class="line">                bt.right = self.create_tree(bt.right)</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            print(e)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> bt</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 前序遍历</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">preorder_traverse</span><span class="params">(self, bt)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> bt <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">            print(bt.val, end=<span class="string">" "</span>)</span><br><span class="line">            self.preorder_traverse(bt.left)</span><br><span class="line">            self.preorder_traverse(bt.right)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 中序遍历</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">inorder_traverse</span><span class="params">(self, bt)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> bt <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">            self.inorder_traverse(bt.left)</span><br><span class="line">            print(bt.val, end=<span class="string">" "</span>)</span><br><span class="line">            self.inorder_traverse(bt.right)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 后序遍历</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">postorder_traverse</span><span class="params">(self, bt)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> bt <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</span><br><span class="line">            self.postorder_traverse(bt.left)</span><br><span class="line">            self.postorder_traverse(bt.right)</span><br><span class="line">            print(bt.val, end=<span class="string">" "</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 综合打印</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">print_traverse</span><span class="params">(self, bt)</span>:</span></span><br><span class="line">        print(<span class="string">"前序遍历: "</span>, end=<span class="string">""</span>)</span><br><span class="line">        self.preorder_traverse(bt)</span><br><span class="line">        print(<span class="string">'\n'</span>)</span><br><span class="line">        print(<span class="string">"中序遍历: "</span>, end=<span class="string">""</span>)</span><br><span class="line">        self.inorder_traverse(bt)</span><br><span class="line">        print(<span class="string">'\n'</span>)</span><br><span class="line">        print(<span class="string">"后序遍历: "</span>, end=<span class="string">""</span>)</span><br><span class="line">        self.postorder_traverse(bt)</span><br><span class="line">        print(<span class="string">'\n'</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">    data_list = list(<span class="string">"124#7###35##68###"</span>)</span><br><span class="line">    btree = Tree(data_list)</span><br><span class="line">    root = btree.create_tree()</span><br><span class="line">    btree.print_traverse(root)</span><br></pre></td></tr></table></figure>
+<p>首先可以运行tests.py 文件 里面暂时只放了6个测试用例 可以看到是通过的</p>
+<p>本次 运行环境为 python3.5</p>
+<p>当然工程环境下可能有上百个以上的测试用例</p>
+
           
         
       
@@ -471,7 +526,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/12/15/js0022/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/12/24/sql优化之oracle/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -490,7 +545,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/12/15/js0022/" itemprop="url">js0022</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/12/24/sql优化之oracle/" itemprop="url">sql优化之oracle</a></h1>
         
 
         <div class="post-meta">
@@ -502,8 +557,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-15T17:32:05+08:00">
-                2018-12-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-24T19:24:30+08:00">
+                2018-12-24
               </time>
             
 
@@ -520,7 +575,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2018/12/15/js0022/" class="leancloud_visitors" data-flag-title="js0022">
+             <span id="/zhangdavids.github.io/2018/12/24/sql优化之oracle/" class="leancloud_visitors" data-flag-title="sql优化之oracle">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -545,7 +600,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  130
+                  114
                 </span>
               
 
@@ -584,9 +639,8 @@
       
         
           
-            <p>拒绝promise</p>
-<p>显示拒绝</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">	&lt;head&gt;</span><br><span class="line">		&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">		&lt;title&gt;Explicitly rejecting promises&lt;/title&gt;</span><br><span class="line">		&lt;link rel=&quot;stylesheet&quot; href=&quot;../assert.css&quot;&gt;</span><br><span class="line">		&lt;script src=&quot;../assert.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">		&lt;script src=&quot;getJSON.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">	&lt;/head&gt;</span><br><span class="line">	&lt;body&gt;</span><br><span class="line">		&lt;script&gt;</span><br><span class="line">			&quot;use script&quot;;</span><br><span class="line">			</span><br><span class="line">			const promise = new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">			  reject(&quot;Explicitly reject a promise!&quot;);</span><br><span class="line">			&#125;);</span><br><span class="line"></span><br><span class="line">			promise.then(</span><br><span class="line">			  () =&gt; fail(&quot;Happy path, won&apos;t be called!&quot;),</span><br><span class="line">			  error =&gt; pass(&quot;A promise was explicitly rejected!&quot;)</span><br><span class="line">			);</span><br><span class="line">		&lt;/script&gt;</span><br><span class="line">	&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+            <p>Oracle Hints是一种机制，用来告诉优化器按照我们的告诉它的方式生成执行计划。我们可以用Oracle Hints来实现：<br>使用的优化器的类型<br>基于代价的优化器的优化目标，是all_rows还是first_rows<br>表的访问路径，是全表扫描，还是索引扫描，还是直接利用rowid<br>表之间的连接类型<br>表之间的连接顺序<br>语句的并行程度</p>
+
           
         
       
@@ -634,7 +688,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/12/15/js0021/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/12/21/js0030/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -653,7 +707,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/12/15/js0021/" itemprop="url">js0021</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/12/21/js0030/" itemprop="url">js0030</a></h1>
         
 
         <div class="post-meta">
@@ -665,8 +719,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-15T16:56:07+08:00">
-                2018-12-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-21T20:24:24+08:00">
+                2018-12-21
               </time>
             
 
@@ -683,7 +737,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2018/12/15/js0021/" class="leancloud_visitors" data-flag-title="js0021">
+             <span id="/zhangdavids.github.io/2018/12/21/js0030/" class="leancloud_visitors" data-flag-title="js0030">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -708,7 +762,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  296
+                  0
                 </span>
               
 
@@ -747,12 +801,7 @@
       
         
           
-            <p>深入研究promise的执行顺序</p>
-<p>promise 作为用于异步任务对象的占位符 代表了一个我们还未获得但是在未来有希望获得的值</p>
-<p>基于这个原因 对象从等待状态开始 此时对承诺的值 一无所知</p>
-<p>promise 的 resolve 函数 被调用的时候 会进入完成状态 fulfilled 状态</p>
-<p>如果是reject 函数被调用 状态不能再进行切换了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">	&lt;head&gt;</span><br><span class="line">		&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">		&lt;title&gt;A closer look at promise order of execution&lt;/title&gt;</span><br><span class="line">		&lt;link rel=&quot;stylesheet&quot; href=&quot;../assert.css&quot;&gt;</span><br><span class="line">		&lt;script src=&quot;../assert.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">	&lt;/head&gt;</span><br><span class="line">	&lt;body&gt;</span><br><span class="line">		&lt;script&gt;</span><br><span class="line">			&quot;use script&quot;;</span><br><span class="line">			</span><br><span class="line">			report(&quot;At code start&quot;);</span><br><span class="line"></span><br><span class="line">			const ninjaDelayedPromise = new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">			  report(&quot;ninjaDelayedPromise executor&quot;);</span><br><span class="line">			  setTimeout(() =&gt; &#123;</span><br><span class="line">			    report(&quot;Resolving ninjaDelayedPromise&quot;);</span><br><span class="line">			    resolve(&quot;Hatori&quot;);</span><br><span class="line">			  &#125;, 500);</span><br><span class="line">			&#125;);</span><br><span class="line"></span><br><span class="line">			assert(ninjaDelayedPromise !== null, &quot;After creating ninjaDelayedPromise&quot;);</span><br><span class="line"></span><br><span class="line">			ninjaDelayedPromise.then(ninja =&gt; &#123;</span><br><span class="line">			  assert(ninja === &quot;Hatori&quot;,</span><br><span class="line">			        &quot;ninjaDelayedPromise resolve handled with Hatori&quot;);</span><br><span class="line">			&#125;);</span><br><span class="line"></span><br><span class="line">			const ninjaImmediatePromise = new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">			  report(&quot;ninjaImmediatePromise executor. Immediate resolve.&quot;);</span><br><span class="line">			  resolve(&quot;Yoshi&quot;);</span><br><span class="line">			&#125;);</span><br><span class="line"></span><br><span class="line">			ninjaImmediatePromise.then(ninja =&gt; &#123;</span><br><span class="line">			  assert(ninja === &quot;Yoshi&quot;,</span><br><span class="line">			   	    &quot;ninjaImmediatePromise resolve handled with Yoshi&quot;);</span><br><span class="line">			&#125;);</span><br><span class="line"></span><br><span class="line">			report(&quot;At code end&quot;);</span><br><span class="line">		&lt;/script&gt;</span><br><span class="line">	&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+            
           
         
       
@@ -800,7 +849,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/12/15/js0020/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/12/21/js0029/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -819,7 +868,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/12/15/js0020/" itemprop="url">js0020</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/12/21/js0029/" itemprop="url">js0029</a></h1>
         
 
         <div class="post-meta">
@@ -831,8 +880,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-15T16:56:00+08:00">
-                2018-12-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-21T20:24:18+08:00">
+                2018-12-21
               </time>
             
 
@@ -849,7 +898,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2018/12/15/js0020/" class="leancloud_visitors" data-flag-title="js0020">
+             <span id="/zhangdavids.github.io/2018/12/21/js0029/" class="leancloud_visitors" data-flag-title="js0029">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -874,7 +923,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  133
+                  0
                 </span>
               
 
@@ -913,8 +962,7 @@
       
         
           
-            <p>使用promise 的简单例子</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">	&lt;head&gt;</span><br><span class="line">		&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">		&lt;title&gt;Creating a simple promise&lt;/title&gt;</span><br><span class="line">		&lt;link rel=&quot;stylesheet&quot; href=&quot;../assert.css&quot;&gt;</span><br><span class="line">		&lt;script src=&quot;../assert.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">	&lt;/head&gt;</span><br><span class="line">	&lt;body&gt;</span><br><span class="line">		&lt;script&gt;</span><br><span class="line">			&quot;use script&quot;;</span><br><span class="line">			</span><br><span class="line">			const ninjaPromise = new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">			  resolve(&quot;Hatori&quot;);</span><br><span class="line">			  //reject(&quot;An error resolving a promise!&quot;);</span><br><span class="line">			&#125;);</span><br><span class="line"></span><br><span class="line">			ninjaPromise.then(ninja =&gt; &#123;</span><br><span class="line">			  assert(ninja === &quot;Hatori&quot;, &quot;We were promised Hatori!&quot;);</span><br><span class="line">			&#125;, err =&gt; &#123;</span><br><span class="line">			  fail(&quot;There shouldn’t be an error&quot;);</span><br><span class="line">			&#125;);</span><br><span class="line">		&lt;/script&gt;</span><br><span class="line">	&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+            
           
         
       
@@ -962,7 +1010,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/12/15/js0019/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/12/21/js0028/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -981,7 +1029,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/12/15/js0019/" itemprop="url">js0019</a></h1>
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/12/21/js0028/" itemprop="url">js0028</a></h1>
         
 
         <div class="post-meta">
@@ -993,8 +1041,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-15T16:55:49+08:00">
-                2018-12-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-21T20:24:10+08:00">
+                2018-12-21
               </time>
             
 
@@ -1011,7 +1059,7 @@
 
           
           
-             <span id="/zhangdavids.github.io/2018/12/15/js0019/" class="leancloud_visitors" data-flag-title="js0019">
+             <span id="/zhangdavids.github.io/2018/12/21/js0028/" class="leancloud_visitors" data-flag-title="js0028">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1036,7 +1084,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  162
+                  0
                 </span>
               
 
@@ -1075,8 +1123,7 @@
       
         
           
-            <p>作为生成器函数参数发送值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">	&lt;head&gt;</span><br><span class="line">		&lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">		&lt;title&gt;Sending data to and recieving data from a generator&lt;/title&gt;</span><br><span class="line">		&lt;link rel=&quot;stylesheet&quot; href=&quot;../assert.css&quot;&gt;</span><br><span class="line">		&lt;script src=&quot;../assert.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">	&lt;/head&gt;</span><br><span class="line">	&lt;body&gt;</span><br><span class="line">		&lt;script&gt;</span><br><span class="line">			function* NinjaGenerator(action) &#123;</span><br><span class="line">			  const imposter = yield (&quot;Hatori &quot; + action);</span><br><span class="line"></span><br><span class="line">			  assert(imposter === &quot;Hanzo&quot;,</span><br><span class="line">			        &quot;The generator has been infiltrated&quot;);</span><br><span class="line"></span><br><span class="line">			  yield (&quot;Yoshi (&quot; + imposter + &quot;) &quot; + action);</span><br><span class="line">		  	&#125;</span><br><span class="line">			 </span><br><span class="line">			const ninjaIterator = NinjaGenerator(&quot;skulk&quot;);</span><br><span class="line">			       </span><br><span class="line">			const result1 = ninjaIterator.next();</span><br><span class="line">			assert(result1.value === &quot;Hatori skulk&quot;, &quot;Hatori is skulking&quot;);</span><br><span class="line"></span><br><span class="line">			const result2 = ninjaIterator.next(&quot;Hanzo&quot;);</span><br><span class="line">			assert(result2.value === &quot;Yoshi (Hanzo) skulk&quot;,</span><br><span class="line">			       &quot;We have an imposter!&quot;);</span><br><span class="line">		&lt;/script&gt;</span><br><span class="line">	&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+            
           
         
       
@@ -1115,7 +1162,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/49/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/49/">49</a><span class="page-number current">50</span><a class="page-number" href="/zhangdavids.github.io/page/51/">51</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/98/">98</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/51/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/49/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/49/">49</a><span class="page-number current">50</span><a class="page-number" href="/zhangdavids.github.io/page/51/">51</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/100/">100</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/51/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1165,7 +1212,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">487</span>
+                  <span class="site-state-item-count">499</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1280,7 +1327,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共187k字</span>
+  <span class="post-count">博客全站共187.8k字</span>
 </div>
 
         
