@@ -309,6 +309,208 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/02/23/2019-go-09/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/02/23/2019-go-09/" itemprop="url">2019-go-09</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-23T00:26:38+08:00">
+                2019-02-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/golang/" itemprop="url" rel="index">
+                    <span itemprop="name">golang</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/02/23/2019-go-09/" class="leancloud_visitors" data-flag-title="2019-go-09">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  376
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="beego-的模块化设计-session"><a href="#beego-的模块化设计-session" class="headerlink" title="beego 的模块化设计-session"></a>beego 的模块化设计-session</h2><p>session 模块是用来存储客户端用户，session 模块目前只支持 cookie 方式的请求，如果客户端不支持 cookie，那么就无法使用该模块。</p>
+<p>session 模块参考了 database/sql 的引擎写法，采用了一个接口，多个实现的方式。目前实现了 memory、file、Redis 和 MySQL 四种存储引擎。</p>
+<p>通过下面的方式安装 session：</p>
+<pre><code>go get github.com/astaxie/beego/session
+</code></pre><p>初始化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">func init() &#123;</span><br><span class="line">        sessionConfig := &amp;session.ManagerConfig&#123;</span><br><span class="line">    CookieName:&quot;gosessionid&quot;, </span><br><span class="line">    EnableSetCookie: true, </span><br><span class="line">    Gclifetime:3600,</span><br><span class="line">    Maxlifetime: 3600, </span><br><span class="line">    Secure: false,</span><br><span class="line">    CookieLifeTime: 3600,</span><br><span class="line">    ProviderConfig: &quot;./tmp&quot;,</span><br><span class="line">    &#125;</span><br><span class="line">    globalSessions, _ = session.NewManager(&quot;memory&quot;,sessionConfig)</span><br><span class="line">    go globalSessions.GC()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>一个 JSON 字符串,传入 Manager 的配置信息</p>
+<ol>
+<li>cookieName: 客户端存储 cookie 的名字。</li>
+<li>enableSetCookie,omitempty: 是否开启 SetCookie,omitempty 这个设置</li>
+<li>gclifetime: 触发 GC 的时间。</li>
+<li>maxLifetime: 服务器端存储的数据的过期时间</li>
+<li>secure: 是否开启 HTTPS，在 cookie 设置的时候有 cookie.Secure 设置。</li>
+<li>sessionIDHashFunc: sessionID 生产的函数，默认是 sha1 算法。</li>
+<li>sessionIDHashKey: hash 算法中的 key。</li>
+<li>cookieLifeTime: 客户端存储的 cookie 的时间，默认值是 0，即浏览器生命周期。</li>
+<li>providerConfig: 配置信息，根据不同的引擎设置不同的配置信息，详细的配置请看下面的引擎设置</li>
+</ol>
+<p>最后的逻辑处理</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">func login(w http.ResponseWriter, r *http.Request) &#123;</span><br><span class="line">    sess, _ := globalSessions.SessionStart(w, r)</span><br><span class="line">    defer sess.SessionRelease(w)</span><br><span class="line">    username := sess.Get(&quot;username&quot;)</span><br><span class="line">    if r.Method == &quot;GET&quot; &#123;</span><br><span class="line">        t, _ := template.ParseFiles(&quot;login.gtpl&quot;)</span><br><span class="line">        t.Execute(w, nil)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        sess.Set(&quot;username&quot;, r.Form[&quot;username&quot;])</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/02/23/2019-go-08/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1061,189 +1263,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/02/18/leetcode-986/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/02/18/leetcode-986/" itemprop="url">leetcode-986</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-18T09:21:38+08:00">
-                2019-02-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/02/18/leetcode-986/" class="leancloud_visitors" data-flag-title="leetcode-986">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  113
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># Definition for an interval.</span><br><span class="line">class Interval(object):</span><br><span class="line">    def __init__(self, s=0, e=0):</span><br><span class="line">        self.start = s</span><br><span class="line">        self.end = e</span><br><span class="line"></span><br><span class="line">class Solution(object):</span><br><span class="line">    def intervalIntersection(self, A, B):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        :type A: List[Interval]</span><br><span class="line">        :type B: List[Interval]</span><br><span class="line">        :rtype: List[Interval]</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        a, b, res, i, j = len(A), len(B), [], 0, 0</span><br><span class="line">        while i &lt; a and j &lt; b:</span><br><span class="line">            left_a, right_a = A[i].start, A[i].end</span><br><span class="line">            left_b, right_b = B[j].start, B[j].end</span><br><span class="line">            if left_a &lt; left_b:</span><br><span class="line">                left = left_b</span><br><span class="line">            else:</span><br><span class="line">                left = left_a</span><br><span class="line">            if right_a &lt; right_b:</span><br><span class="line">                right = right_a</span><br><span class="line">                i += 1</span><br><span class="line">            else:</span><br><span class="line">                right = right_b</span><br><span class="line">                j += 1</span><br><span class="line">            if right &gt;= left:</span><br><span class="line">                res.append(Interval(left, right))</span><br><span class="line">        return res</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1298,7 +1317,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">499</span>
+                  <span class="site-state-item-count">500</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1413,7 +1432,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共187.8k字</span>
+  <span class="post-count">博客全站共188k字</span>
 </div>
 
         
