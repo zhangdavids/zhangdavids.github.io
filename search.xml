@@ -1,6 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[EFK使用]]></title>
+    <url>%2Fzhangdavids.github.io%2F2019%2F05%2F02%2FEFK%E4%BD%BF%E7%94%A8%2F</url>
+    <content type="text"><![CDATA[EFK不是一个软件，而是一套解决方案，并且都是开源软件，之间互相配合使用，完美衔接，高效的满足了很多场合的应用，是目前主流的一种日志系统。EFK是三个开源软件的缩写，分别表示：Elasticsearch , FileBeat, Kibana , 其中ELasticsearch负责日志保存和搜索，FileBeat负责收集日志，Kibana 负责界面,当然EFK和大名鼎鼎的ELK只有一个区别，那就是EFK把ELK的Logstash替换成了FileBeat，因为Filebeat相对于Logstash来说有2个好处：1、侵入低，无需修改程序目前任何代码和配置2、相对于Logstash来说性能高，Logstash对于IO占用很大当然FileBeat也并不是完全好过Logstash，毕竟Logstash对于日志的格式化这些相对FileBeat好很多，FileBeat只是将日志从日志文件中读取出来，当然如果你日志本身是有一定格式的，FileBeat也可以格式化，但是相对于Logstash来说，还是差一点 Filebeat隶属于Beats。目前Beats包含六种工具：Packetbeat（搜集网络流量数据）Metricbeat（搜集系统、进程和文件系统级别的 CPU 和内存使用情况等数据）Filebeat（搜集文件数据）Winlogbeat（搜集 Windows 事件日志数据）Auditbeat（ 轻量型审计日志采集器）Heartbeat（轻量级服务器健康采集器） 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283wget http://download.oracle.com/otn-pub/java/jdk/8u181-b13/96a7b8442fe848ef90c96a2fad6ed6d1/jdk-8u181-linux-x64.tar.gz?AuthParam=1536892035_945cb24c750d0971b8c5b1925cc723a9mv jdk-8u181-linux-x64.tar.gz\?AuthParam\=1536892035_945cb24c750d0971b8c5b1925cc723a9 jdk-8u181-linux-x64.tar.gztar -zxvf jdk-8u181-linux-x64.tar.gz# 编辑环境变量 vi /etc/profileJAVA_HOME=/usr/local/jdk1.8.0_181/JRE_HOME=$JAVA_HOME/jreCLASS_PATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/libPATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/binexport JAVA_HOME JRE_HOME CLASS_PATH PATHsource /etc/profilejava -versionwget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.2.4.tar.gztar -zxvf elasticsearch-6.2.4.tar.gzvi config/elasticsearch.ymlnetwork.host: 0.0.0.0 http.port: 9200$ adduser elastic#设置密码$ passwd elastic#需要输入2次密码#授权$ chmod -R 777 /usr/local/elasticsearch-6.2.4#切换用户$ su elastic./bin/elasticsearchvi /etc/security/limits.conf vi /etc/sysctl.confsysctl -pwget https://artifacts.elastic.co/downloads/kibana/kibana-6.2.4-linux-x86_64.tar.gztar -zxvf kibana-6.2.4-linux-x86_64.tar.gzvi config/kibana.ymlelasticsearch.url: &quot;http://localhost:9200&quot;server.host: &quot;0.0.0.0&quot;kibana.index: &quot;.kibana&quot;./bin/kibanawget https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-6.2.4-linux-x86_64.tar.gztar -zxvf filebeat-6.2.4-linux-x86_64.tar.gzvi filebeat.ymlfilebeat.prospectors:- type: log enabled: true paths: - /var/xxx/*.log - /var/xxx/*.out multiline.pattern: ^\[ multiline.negate: true multiline.match: aftersetup.kibana: host: &quot;localhost:5601&quot;output.elasticsearch: hosts: [&quot;localhost:9200&quot;]./filebeat -c /usr/local/filebeat/filebeat.yml端口 9200/5601/]]></content>
+  </entry>
+  <entry>
+    <title><![CDATA[异步编程（python3）]]></title>
+    <url>%2Fzhangdavids.github.io%2F2019%2F05%2F02%2F%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%EF%BC%88python3%EF%BC%89%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
+    <title><![CDATA[python装饰器总结]]></title>
+    <url>%2Fzhangdavids.github.io%2F2019%2F05%2F02%2Fpython%E8%A3%85%E9%A5%B0%E5%99%A8%E6%80%BB%E7%BB%93%2F</url>
+    <content type="text"><![CDATA[写一个记录函数运行时间的装饰器123456789101112131415161718192021222324252627from functools import wrapsimport time# 使用直接装饰器 @listener(Monitor)class Monitor(object): @staticmethod def start_monitor(): return time.clock() @staticmethod def end_monitor(): return time.clock()def listener(listen): def log(func): @wraps(func) def wrapper(*args, **kw): startime = listen.start_monitor() f = func(*args, **kw) endtime = listen.end_monitor() print(&quot;total time is &#123;0&#125;&quot;.format(startime-endtime)) return f return wrapper return log 一个函数 挂多个装饰器的执行顺序1234567891011121314151617181920212223242526272829303132333435363738394041424344454647# -*- coding: utf-8 -*-import functools# 采用functools.wraps的目的是为了使装饰器返回的类型始终是func的类型，否则将返回嵌套高阶函数的中的类型，例如返回的是wraper# 采用参数*args ,**kw是解决函数多参数的问题def log(func): @functools.wraps(func) def wrapper(*args, **kw): print(&apos;call %s():&apos; % func.__name__) return func(*args, **kw) return wrapper# 修饰器参数的情况def logger(pram): def log(func): @functools.wraps(func) def wrapper(*args, **kw): print(&apos;call %s(): and parsms is %s&apos; %(func.__name__,pram)) return func(*args, **kw) return wrapper return log@logdef showMesage(name,age): print(&quot;my name is &#123;0&#125; and my age is &#123;1&#125;&quot;.format(name,age))@logger(&quot;hello&quot;)def getMessage(name,age): print(&quot;my name is &#123;0&#125; and my age is &#123;1&#125;&quot;.format(name,age))# 添加多个修饰器来拓展所需的功能@log@logger(&quot;hello15466&quot;)def recieveMessage(name,age): print(&quot;my name is &#123;0&#125; and my age is &#123;1&#125;&quot;.format(name,age))if __name__==&apos;__main__&apos;: # showMesage(&quot;ddd&quot;,21) # getMessage(&quot;aaa&quot;,43) recieveMessage(&quot;ccc&quot;,34) 类装饰器带参数的装饰器]]></content>
+      <categories>
+        <category>web</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[python-web的未来]]></title>
+    <url>%2Fzhangdavids.github.io%2F2019%2F05%2F01%2Fpython-web%E7%9A%84%E6%9C%AA%E6%9D%A5%2F</url>
+    <content type="text"><![CDATA[没有人愿意从事即将过时的技术 学习过气的技术 Django 主要是为web开发服务的 基于MVC的MTV模型 非常适合开发基于PC的传统网站，因为它同时包括了后端的开发(逻辑层，数据库层) 和前端的开发(如模板语言，样式)。基于PC的网站和自适应(responsive)的手机网站不会消失，不过其重要性会随着手机APP和小程序等的普及而逐渐降低。即使对于开发传统网站，Django也只有在后台开发上有些优势，在前端仍需要借助流行的JS框架如Vue.js才能开发出互动性强且符合未来审美趋势的优秀网站来。 最近几年及未来几年更流行的开发模式肯定是前后端分离。现代网络应用Web APP或大型网站一般是一个后台，然后对应各种客户端(iOS, android, 浏览器)。由于客户端的开发语言与后台的开发语言经常不一样，这时需要后台能够提供可以跨平台跨语言的一种标准的资源或数据(如Json格式)供前后端沟通，这就是Web API(网络应用程序结口)的作用了。Django本身开发不了符合REST规范的Web API, 不过借助django-rest-framework (DRF)可以快速开发出优秀规范的Web API来。所以我们这里要感谢DRF，因为它，Django的应用前景更广了，减少了被淘汰的风险。 web开发 一定会有 网络爬虫 计算与数据分析 人工智能 自动化运维 云计算 Python的最强大之处在于模块化和灵活性，而构建云计算的平台的IasS服务的OpenStack就是采用Python的，云计算的其他服务也都是在IasS服务之上的。 网络编程 Python提供了丰富的模块支持sockets编程，能方便快速地开发分布式应用程序。很多大规模软件开发计划例如Zope，Mnet, BitTorrent和Google都在广泛地使用它。 游戏开发 对比flask]]></content>
+      <categories>
+        <category>web</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[python爬虫要点]]></title>
+    <url>%2Fzhangdavids.github.io%2F2019%2F05%2F01%2Fpython%E7%88%AC%E8%99%AB%E8%A6%81%E7%82%B9%2F</url>
+    <content type="text"><![CDATA[分块 抓取 解析 存储 反爬 加速 抓取爬虫的目标绝大多数是网页 少部分是app 网页分为两种 服务端渲染和客户端渲染 app 分为四种 普通接口 加密参数接口 加密内容接口 非常规协议接口 服务端有效的信息在HTML页面里 真实的数据 一般通过ajax接口形式进行获取的 服务端渲染 一般基本的http库 就可以爬取 客户端寻找 Ajax 接口，此种情形可以直接使用 Chrome/Firefox 的开发者工具直接查看 Ajax 具体的请求方式、参数等内容，然后用 HTTP 请求库模拟即可，另外还可以通过设置代理抓包来查看接口，如 Fiddler/Charles。 模拟浏览器执行，此种情形适用于网页接口和逻辑较为复杂的情况，可以直接以可见即可爬的方式进行爬取，如可以使用 Selenium、Splinter、Spynner、pyppeteer、PhantomJS、Splash、requests-html 等来实现。 直接提取 JavaScript 数据，此种情形适用于真实数据没有经过 Ajax 接口获取，而是直接包含在 HTML 结果的某个变量中，直接使用正则表达式将其提取即可。 模拟执行 JavaScript，某些情况下直接模拟浏览器执行效率会偏低，如果我们把 JavaScript 的某些执行和加密逻辑摸清楚了，可以直接执行相关的 JavaScript 来完成逻辑处理和接口请求，比如使用 Selenium、PyExecJS、PyV8、js2py 等库来完成即可。 对于普通无加密接口，这种直接抓包拿到接口的具体请求形式就好了，可用的抓包工具有 Charles、Fiddler、mitmproxy。 对于加密参数的接口，一种方法可以实时处理，例如 Fiddler、mitmdump、Xposed 等，另一种方法是将加密逻辑破解，直接模拟构造即可，可能需要一些反编译的技巧。 对于加密内容的接口，即接口返回结果完全看不懂是什么东西，可以使用可见即可爬的工具 Appium，也可以使用 Xposed 来 hook 获取渲染结果，也可以通过反编译和改写手机底层来实现破解。 对于非常规协议，可以使用 Wireshark 来抓取所有协议的包，或者使用 Tcpdump 来进行 TCP 数据包截获。 解析基本上两种 css xpath 一些其他接口 json xml 使用对应的库即可处理 智能解析意思就是说，如果能提供一个页面，算法可以自动来提取页面的标题、正文、日期等内容，同时把无用的信息给刨除。对于智能解析，分为四个方法进行了划分： readability 算法，这个算法定义了不同区块的不同标注集合，通过权重计算来得到最可能的区块位置。 疏密度判断，计算单位个数区块内的平均文本内容长度，根据疏密程度来大致区分。 Scrapyly 自学习，是 Scrapy 开发的组件，指定⻚页⾯面和提取结果样例例，其可⾃自学习提取规则，提取其他同类⻚页⾯面。 深度学习，使⽤用深度学习来对解析位置进⾏行行有监督学习，需要⼤大量量标注数据。如果能够容忍一定的错误率，可以使用智能解析来大大节省时间。 存储即选用合适的存储媒介来存储爬取到的结果，这里还是分为四种存储方式来进行介绍。 文件，如 JSON、CSV、TXT、图⽚、视频、⾳频等，常用的一些库有 csv、xlwt、json、pandas、pickle、python-docx 等。 数据库，分为关系型数据库、非关系型数据库，如 MySQL、MongoDB、HBase 等，常用的库有 pymysql、pymssql、redis-py、pymongo、py2neo、thrift。 搜索引擎，如 Solr、ElasticSearch 等，便于检索和实现⽂本匹配，常用的库有 elasticsearch、pysolr 等。 云存储，某些媒体文件可以存到如七⽜牛云、又拍云、阿里云、腾讯云、Amazon S3 等，常用的库有 qiniu、upyun、boto、azure-storage、google-cloud-storage 等。 反爬现在爬虫已经越来越难了 非浏览器检测 封IP 验证码 封账户 字体反爬等 对于封 IP 的情况，可以分为几种情况来处理：首先寻找手机站点、App 站点，如果存在此类站点，反爬会相对较弱。使用代理，如抓取免费代理、购买付费代理、使用 Tor 代理、Socks 代理等。在代理的基础上维护自己的代理池，防止代理浪费，保证实时可用。搭建 ADSL 拨号代理，稳定高效。 验证码分为非常多种，如普通图形验证码、算术题验证码、滑动验证码、点触验证码、手机验证码、扫二维码等。对于普通图形验证码，如果非常规整且没有变形或干扰，可以使用 OCR 识别，也可以使用机器学习、深度学习来进行模型训练，当然打码平台是最方便的方式。对于算术题验证码，推荐直接使用打码平台。对于滑动验证码，可以使用破解算法，也可以模拟滑动。后者的关键在于缺口的找寻，可以使用图片比对，也可以写基本的图形识别算法，也可以对接打码平台，也可以使用深度学习训练识别接口。对于点触验证码，推荐使用打码平台。对于手机验证码，可以使用验证码分发平台，也可以购买专门的收码设备，也可以人工验证。对于扫二维码，可以人工扫码，也可以对接打码平台。 某些网站需要登录才能爬取，但是一个账号登录之后请求过于频繁会被封号，为了避免封号，可以采取如下措施：寻找手机站点或 App 站点，此种类别通常是接口形式，校验较弱。寻找无登录接口，尽可能寻找⽆无需登录即可爬取的接口。维护 Cookies 池，使⽤用批量账号模拟登录，使⽤时随机挑选可用 Cookies 使⽤即可，实现：https://github.com/Python3WebSpider/CookiesPool。 加速常见的措施 多线程 多进程 异步 分布式 细节优化 爬虫是网络请求密集型任务，所以使用多进程和多线程可以大大提高抓取效率，如使用 threading、multiprocessing 等。 将爬取过程改成非阻塞形式，当有响应式再进行处理，否则在等待时间内可以运行其他任务，如使用 asyncio、aiohttp、Tornado、Twisted、gevent、grequests、pyppeteer、pyspider、Scrapy 等。 分布式的关键在于共享爬取队列，可以使用 celery、huey、rq、rabbitmq、kafka 等来实现任务队列的对接，也可以使用现成的框架 pyspider、Scrapy-Redis、Scrapy-Cluster 等。 可以采取某些优化措施来实现爬取的加速，如： DNS 缓存 使用更快的解析方法 使用更高效的去重方法 模块分离化管控 如果搭建了分布式，要实现高效的爬取和管理调度、监控等操作，我们可以使用两种架构来维护我们的爬虫项目。 将 Scrapy 项目打包为 Docker 镜像，使用 K8S 控制调度过程。 将 Scrapy 项目部署到 Scrapyd，使用专用的管理工具如 SpiderKeeper、Gerapy 等管理。]]></content>
+      <categories>
+        <category>web</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[python2-3迁移问题]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F04%2F30%2Fpython2-3%E8%BF%81%E7%A7%BB%E9%97%AE%E9%A2%98%2F</url>
     <content type="text"><![CDATA[使用pathlib 处理更好的路径 类型现在是语言的一部分 运行时类型提示类型检查 使用@表示矩阵的乘法 **通配符的使用 print函数 数字文字的下划线（千位分隔符） 简单可看的字符串格式化f-string / 和 // 在数学运算当中有着明显的区别 严格的顺序 检查对象为None的合理方案 NLP unicode问题 保留了字典和**kwargs的顺序 可迭代对象拆包 提供了更高性能的pickle 更安全的列表推导 更简单的super（） IDE能够给出更好的提示 合并多个字典 1z = &#123;**x, **y&#125; 3.7加入data class类 存储数据对象 自定义对模块属性的访问 内置的断点 12breakout() # 3.7 加入 math 当中的常数 整数类型只有 int 代码变得更短 更易读 更安全]]></content>
@@ -299,41 +342,89 @@
     <title><![CDATA[分布式学习010]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F04%2F12%2F%E5%88%86%E5%B8%83%E5%BC%8F%E5%AD%A6%E4%B9%A0010%2F</url>
     <content type="text"></content>
+      <categories>
+        <category>distribute</category>
+      </categories>
+      <tags>
+        <tag>distribute</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[分布式学习009]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F04%2F12%2F%E5%88%86%E5%B8%83%E5%BC%8F%E5%AD%A6%E4%B9%A0009%2F</url>
     <content type="text"></content>
+      <categories>
+        <category>distribute</category>
+      </categories>
+      <tags>
+        <tag>distribute</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[分布式学习008]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F04%2F12%2F%E5%88%86%E5%B8%83%E5%BC%8F%E5%AD%A6%E4%B9%A0008%2F</url>
     <content type="text"></content>
+      <categories>
+        <category>distribute</category>
+      </categories>
+      <tags>
+        <tag>distribute</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[分布式学习007]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F04%2F12%2F%E5%88%86%E5%B8%83%E5%BC%8F%E5%AD%A6%E4%B9%A0007%2F</url>
     <content type="text"></content>
+      <categories>
+        <category>distribute</category>
+      </categories>
+      <tags>
+        <tag>distribute</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[分布式学习006]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F04%2F12%2F%E5%88%86%E5%B8%83%E5%BC%8F%E5%AD%A6%E4%B9%A0006%2F</url>
     <content type="text"></content>
+      <categories>
+        <category>distribute</category>
+      </categories>
+      <tags>
+        <tag>distribute</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[分布式学习005]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F04%2F12%2F%E5%88%86%E5%B8%83%E5%BC%8F%E5%AD%A6%E4%B9%A0005%2F</url>
-    <content type="text"></content>
+    <content type="text"><![CDATA[亚马逊的实践 程序模块通过service interface 开放 信息接口 通过接口 除此之外 没有其他通信方式 任何技术都可以使用 对外界开放的设计 不这样做的人 会被炒鱿鱼 配额和限流 分布式团队架构 分布式服务查错不易 没有专职的测试人员 也没有专职的运维人员 运维优先 崇尚简化和自动化 内部服务和外部服务一致 需要注意的问题 异构系统的不标准问题 软件和应用不标准 通讯协议不标准 数据格式不标准 开发和运维的过程和方法不标准 系统架构中的服务依赖性问题木桶短板效应 整个SLA由最差的那个服务所决定 故障发生的概率更大 出现故障不可怕 故障恢复时间过长才可怕 出现故障不可怕 故障影响面过大才可怕 多层架构的运维复杂度更大]]></content>
+      <categories>
+        <category>distribute</category>
+      </categories>
+      <tags>
+        <tag>distribute</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[分布式学习004]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F04%2F12%2F%E5%88%86%E5%B8%83%E5%BC%8F%E5%AD%A6%E4%B9%A0004%2F</url>
     <content type="text"><![CDATA[go语言的体会 语言简单 上手快 并行和异步编程几乎无痛点 goroutine channel lib库 麻雀虽小 五脏俱全 c语言的理念和python的姿态 存在诸多的问题 垃圾回收 异常处理 泛型编程等 有没有一个好的社区 有没有工业化的标准 有没有一个或者多个杀手级应用 学习难度是否低 上手是否快 提高开发效率的开发框架 技术公司作为后盾 解决软件开发中的痛点（java解决内存管理问题） PaaS是承上启下的关键技术 软件生产线的问题 分布式服务化的问题 提高服务的可用性SLA 软件能力的复用 挤出时间来干这些“逆人性”的事情 渴望程度 使用语言开发 可维护的程序 如何进行后续的优化 前后端分离 计算机提升社会运作效率并不是靠前端来完成的 而是靠自动化来完成的 所以后端的业务逻辑和计算 才是业务的核心 所以我从技术支持 测试这种支持性的工作中脱离出来 想做一些产出性的工作 开发测试工具 运维系统和工具 开发项目管理软件 只有到开发上 你才有更好的发展]]></content>
+      <categories>
+        <category>distribute</category>
+      </categories>
+      <tags>
+        <tag>distribute</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[分布式学习003]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F04%2F12%2F%E5%88%86%E5%B8%83%E5%BC%8F%E5%AD%A6%E4%B9%A0003%2F</url>
     <content type="text"><![CDATA[中心化的设计思想 中心化的设计思想很简单，按照角色分工 大体上两种 一种是中心节点 另外就是普通节点 如果中心节点出现问题 则集群会崩溃 去中心化的设计 不存在单点故障 完全意义的真正去中心化的分布式系统并不多见。相反，外部开来去中心化单工作机制采用了中心化设计思想的分布式系统正在不断涌出。在这种架构下，集群中的领导是被动态选择出来的，而不是认为预先置顶的，而且集群发声故障的情况下，集群的成员会自发的举行“会议”选举新的“领导”主持工作。最典型的案例就是ZooKeeper及Go语言实现的Etcd 分布式环境的问题有： 通信异常：从集中式向分布式演变过程中，必然会引入网络因素，而由于网络本身的不可靠性，因此也引入了额外的问题。分布式系统需要在各个节点之间进行网络通信，因此当网络通信设备故障就会导致无法顺利完成一次网络通信，就算各节点的网络通信正常，但是消息丢失和消息延时也是非常普遍的事情。 网络分区（脑裂）：网络发生异常情况导致分布式系统中部分节点之间的网络延时不断增大，最终导致组成分布式系统的所有节点，只有部分节点能够正常通行，而另一些节点则不能。我们称这种情况叫做网络分区（脑裂），当网络分区出现时，分布式系统会出现多个局部小集群（多个小集群可能又会产生多个master节点），所以分布式系统要求这些小集群要能独立完成原本需要整个分布式系统才能完成的功能，这就对分布式一致性提出了非常大的挑战。 节点故障：节点宕机是分布式环境中的常态，每个节点都有可能会出现宕机或僵死的情况，并且每天都在发生。 三态：由于网络不可靠的原因，因此分布式系统的每一次请求，都存在特有的“三态”概念，即：成功，失败与超时。在集中式单机部署中，由于没有网络因素，所以程序的每一次调用都能得到“成功”或者“失败”的响应，但是在分布式系统中，网络不可靠，可能就会出现超时的情况。可能在消息发送时丢失或者在响应过程中丢失，当出现超时情况时，网络通信的发起方是无法确定当前请求是否被成功处理的，所以这也是分布式事务的难点。 基本可用(basically available)：基本可用是指分布式系统在出现不可预知故障的时候，允许损失部分可用性——但请注意，这绝不等价于系统不可用。以下两个就是“基本可用”的典型例子。 响应时间上的损失：正常情况下，一个在线搜索引擎需要在0.5秒之内返回给用户相应的查询结果，但由于出现故障（比如系统部分机房发生断电或断网故障），查询结果的响应时间增加到了1～2秒。 功能上的损失：正常情况下，在一个电子商务网站上进行购物，消费者几乎能够顺利地完成每一笔订单，但是在一些节日大促购物高峰的时候，由于消费者的购物行为激增，为了保护购物系统的稳定性，部分消费者可能会被引导到一个降级页面。 弱状态(soft state)弱状态也称为软状态，和硬状态相对，是指允许系统中的数据存在中间状态，并认为该中间状态的存在不会影响系统的整体可用性，即允许系统在不同节点的数据副本之间进行数据同步的过程存在延时。 最终一致性(eventual consistency)最终一致性强调的是系统中所有的数据副本，在经过一段时间的同步后，最终能够达到一个一致的状态。因此，最终一致性的本质是需要系统保证最终数据能够达到一致，而不需要实时保证系统数据的强一致性。 注意：最终一致性是一种特殊的弱一致性：系统能够保证在没有其他新的更新操作的情况下，数据最终一定能够达到一致的状态，因此所有客户端对系统的数据访问都能够获取到最新的值。同时，在没有发生故障的前提下，数据达到一致状态的时间延迟，取决于网络延迟、系统负载和数据复制方案设计等因素。 在实际工程实践中，最终一致性存在以下五类主要变种。 1 因果一致性（Causal consistency） 因果一致性是指，如果进程A在更新完某个数据项后通知了进程B，那么进程B之后对该数据项的访问都应该能够获取到进程A更新后的最新值，并且如果进程B要对该数据项进行更新操作的话，务必基于进程A更新后的最新值，即不能发生丢失更新情况。与此同时，与进程A无因果关系的进程C的数据访问则没有这样的限制。 2 读己之所写（Read your writes） 读己之所写是指，进程A更新一个数据项之后，它自己总是能够访问到更新过的最新值，而不会看到旧值。也就是说，对于单个数据获取者来说，其读取到的数据，一定不会比自己上次写入的值旧。因此，读己之所写也可以看作是一种特殊的因果一致性。 3 会话一致性（Session consistency） 会话一致性将对系统数据的访问过程框定在了一个会话当中：系统能保证在同一个有效的会话中实现“读己之所写”的一致性，也就是说，执行更能操作之后，客户端能够在同一个会话中始终读取到该数据项的最新值。 4 单调读一致性（Monotonic read consistency） 单调读一致性是指如果一个进程从系统中读取出一个数据项的某个值后，那么系统对于该进程后续的任何数据访问都不应该返回更旧的值。 5 单调写一致性（Monotonic write consistency） 单调写一致性是指，一个系统需要能够保证来自同一个进程的写操作被顺序地执行。 事实上，最终一致性并不是只有那些大型分布式系统才涉及的特性，许多现代的关系型数据库都采用了最终一致性模型。在现代关系型数据库中，大多都会采用同步和异步方式来实现主备数据复制技术。1 .在同步方式中，数据的复制过程通常是更新事务的一部分，因此在事务完成后，主备数据库的数据就会达到一致（强一致性）。2. 而在异步方式中，备库的更新往往会存在延时，这取决于事务日志在主备数据库之间传输的时间长短，如果传输时间过长或者甚至在日志传输过程中出现异常导致无法及时将事务应用到备库上，那么很显然，从备库中读取的数据将是旧的，因此就出现了数据不一致的情况。当然，无论是采用多次重试还是人为数据订正，关系型数据库还是能够保证最终数据达到一致——这就是系统提供最终一致性保证的经典案例。 总的来说，BASE理论面向的是大型高可用可扩展的分布式系统，和传统事务的ACID特性是相反的，它完全不同于ACID的强一致性模型，而是提出通过牺牲强一致性来获得可用性，并允许数据在一段时间内是不一致的，但最终达到一致状态。但同时，在实际的分布式场景中，不同业务单元和组件对数据一致性的要求是不同的，因此在具体的分布式系统架构设计过程中，ACID特性与BASE理论往往又会结合在一起使用。]]></content>
+      <categories>
+        <category>distribute</category>
+      </categories>
+      <tags>
+        <tag>distribute</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[分布式学习002]]></title>
@@ -398,7 +489,7 @@
   <entry>
     <title><![CDATA[分布式学习001]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F04%2F09%2F%E5%88%86%E5%B8%83%E5%BC%8F%E5%AD%A6%E4%B9%A0001%2F</url>
-    <content type="text"><![CDATA[分布式 目的 增加系统容量 提高系统的可用性 大流量处理 关键业务保护 提高架构的吞吐量 服务更多的并发和流量 提高系统的稳定性 让系统的可用性更高 加缓存 负载均衡 异步调用 数据镜像 数据分区 服务拆分 服务冗余 限流降级 高可用架构 高可用运维 服务治理 架构软件管理 devops 自动化运维 资源调度管理 整体架构监控 流量控制 全栈系统监控； 服务 / 资源调度； 流量调度； 状态 /数据调度 开发和运维的自动化]]></content>
+    <content type="text"><![CDATA[分布式 目的 增大系统容量 提高系统的可用性 大流量处理 关键业务保护 提高架构的吞吐量 服务更多的并发和流量 提高系统的稳定性 让系统的可用性更高 加缓存 负载均衡 异步调用 数据镜像 数据分区 服务拆分 服务冗余 限流降级 高可用架构 高可用运维 服务治理 架构软件管理 devops 自动化运维 资源调度管理 整体架构监控 流量控制 全栈系统监控； 服务 / 资源调度； 流量调度； 状态 /数据调度 开发和运维的自动化 分布式的优势 模块化 系统模块重用度更高 开发和发布速度更快 系统协作性更高 团队协作改善 任何技术方案 都是 “按下葫芦浮起瓢” trade-off]]></content>
       <categories>
         <category>distribute</category>
       </categories>
@@ -1596,6 +1687,12 @@
     <title><![CDATA[2darraySearch]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F02%2F25%2F2darraySearch%2F</url>
     <content type="text"><![CDATA[12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849 public class Solution &#123; public boolean Find(int target, int [][] array) &#123; // 特殊情况处理 if (array == null || array.length == 0 || array[0].length == 0) &#123; return false; &#125; int h = array.length - 1; int w = array[0].length - 1; // 如果目标值小于最小值 或者 目标值大于最大值，那肯定不存在 if (array[0][0] &gt; target || array[h][w] &lt; target) &#123; return false; &#125; return binarySearchIn2DArray(array, target, 0, h, 0, w); &#125; public static boolean binarySearchIn2DArray(int[][] array, int target, int startX, int endX, int startY, int endY) &#123; if (startX &gt; endX || startY &gt; endY) &#123; return false; &#125; //首先，根据二分法找出中间行 int x = startX + (endX - startX) / 2; //对该行进行二分查找 int result = binarySearch(array[x], target, startY, endY); //找到的值位于 x 行，result 列 if (array[x][result] == target) &#123; return true; // 如果找到则成功 &#125; //对剩余的两部分分别进行递归查找 return binarySearchIn2DArray(array, target, startX, x - 1, result + 1, endY) || binarySearchIn2DArray(array, target, x + 1, endX, startY, result); &#125; public static int binarySearch(int[] array, int target, int start, int end) &#123; int i = start + (end - start) / 2; if (array[i] == target || start &gt; end) &#123; return i; &#125; else if (array[i] &gt; target) &#123; return binarySearch(array, target, start, i - 1); &#125; else &#123; return binarySearch(array, target, i + 1, end); &#125; &#125;&#125;]]></content>
+      <categories>
+        <category>suanfa</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[leetcode-994]]></title>
@@ -2138,6 +2235,12 @@
     <title><![CDATA[20190102]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F01%2F02%2F20190102%2F</url>
     <content type="text"><![CDATA[欲做精金美玉的人品，定从烈火中锻来； 思立掀天揭地的事功，须向薄冰上履过。 一念错，便觉百行皆非，防之当如渡海浮囊，勿容一针之罅漏； 万善全，始得一生无愧。修之当如凌云宝树，须假众木以撑持。]]></content>
+      <categories>
+        <category>life</category>
+      </categories>
+      <tags>
+        <tag>life</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[ds之树]]></title>
