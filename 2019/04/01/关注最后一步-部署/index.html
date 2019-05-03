@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="python," />
 
 
 
@@ -81,25 +81,16 @@
 
 
 
-<meta name="description" content="gunicorn
-Gunicorn设计
-
-　　Gunicorn 是一个 master 进程，spawn 出数个工作进程的 web 服务器。master 进程控制工作进程的产生与消亡，工作进程只需要接受请求并且处理。这样分离的方式使得 reload 代码非常方便，也很容易增加或减少工作进程。 工作进程这块作者给了很大的扩展余地，它可以支持不同的IO方式，如 Gevent,Sync 同步进程，Asyc">
+<meta name="description" content="gunicorn1.Gunicorn设计　　Gunicorn 是一个 master 进程，spawn 出数个工作进程的 web 服务器。master 进程控制工作进程的产生与消亡，工作进程只需要接受请求并且处理。这样分离的方式使得 reload 代码非常方便，也很容易增加或减少工作进程。 工作进程这块作者给了很大的扩展余地，它可以支持不同的IO方式，如 Gevent,Sync 同步进程，Asyc">
 <meta property="og:type" content="article">
 <meta property="og:title" content="关注最后一步-部署">
 <meta property="og:url" content="https://zhangdavids.github.io/2019/04/01/关注最后一步-部署/index.html">
 <meta property="og:site_name" content="上药三品，神与气精">
-<meta property="og:description" content="gunicorn
-Gunicorn设计
-
-　　Gunicorn 是一个 master 进程，spawn 出数个工作进程的 web 服务器。master 进程控制工作进程的产生与消亡，工作进程只需要接受请求并且处理。这样分离的方式使得 reload 代码非常方便，也很容易增加或减少工作进程。 工作进程这块作者给了很大的扩展余地，它可以支持不同的IO方式，如 Gevent,Sync 同步进程，Asyc">
-<meta property="og:updated_time" content="2019-04-01T07:11:18.931Z">
+<meta property="og:description" content="gunicorn1.Gunicorn设计　　Gunicorn 是一个 master 进程，spawn 出数个工作进程的 web 服务器。master 进程控制工作进程的产生与消亡，工作进程只需要接受请求并且处理。这样分离的方式使得 reload 代码非常方便，也很容易增加或减少工作进程。 工作进程这块作者给了很大的扩展余地，它可以支持不同的IO方式，如 Gevent,Sync 同步进程，Asyc">
+<meta property="og:updated_time" content="2019-05-03T05:27:54.779Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="关注最后一步-部署">
-<meta name="twitter:description" content="gunicorn
-Gunicorn设计
-
-　　Gunicorn 是一个 master 进程，spawn 出数个工作进程的 web 服务器。master 进程控制工作进程的产生与消亡，工作进程只需要接受请求并且处理。这样分离的方式使得 reload 代码非常方便，也很容易增加或减少工作进程。 工作进程这块作者给了很大的扩展余地，它可以支持不同的IO方式，如 Gevent,Sync 同步进程，Asyc">
+<meta name="twitter:description" content="gunicorn1.Gunicorn设计　　Gunicorn 是一个 master 进程，spawn 出数个工作进程的 web 服务器。master 进程控制工作进程的产生与消亡，工作进程只需要接受请求并且处理。这样分离的方式使得 reload 代码非常方便，也很容易增加或减少工作进程。 工作进程这块作者给了很大的扩展余地，它可以支持不同的IO方式，如 Gevent,Sync 同步进程，Asyc">
 
 
 
@@ -358,6 +349,28 @@ Gunicorn设计
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -390,7 +403,7 @@ Gunicorn设计
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  715
+                  716
                 </span>
               
 
@@ -427,14 +440,8 @@ Gunicorn设计
       
 
       
-        <h2 id="gunicorn"><a href="#gunicorn" class="headerlink" title="gunicorn"></a>gunicorn</h2><ol>
-<li>Gunicorn设计</li>
-</ol>
-<p>　　Gunicorn 是一个 master 进程，spawn 出数个工作进程的 web 服务器。master 进程控制工作进程的产生与消亡，工作进程只需要接受请求并且处理。这样分离的方式使得 reload 代码非常方便，也很容易增加或减少工作进程。 工作进程这块作者给了很大的扩展余地，它可以支持不同的IO方式，如 Gevent,Sync 同步进程，Asyc 异步进程，Eventlet 等等。master 跟 worker 进程完全分离，使得 Gunicorn 实质上就是一个控制进程的服务。</p>
-<ol>
-<li>Gunicorn源码结构</li>
-</ol>
-<p>　　从 Application.run() 开始，首先初始化配置，从文件读取，终端读取等等方式完成 configurate。然后启动 Arbiter，Arbiter 是实质上的 master 进程的核心，它首先从配置类中读取并设置，然后初始化信号处理函数，建立 socket。然后就是开始 spawn 工作进程，根据配置的工作进程数进行 spawn。然后就进入了轮询状态，收到信号，处理信号然后继续。这里唤醒进程的方式是建立一个 PIPE，通过信号处理函数往 pipe 里 write，然后 master 从 select.select() 中唤醒。</p>
+        <h2 id="gunicorn"><a href="#gunicorn" class="headerlink" title="gunicorn"></a>gunicorn</h2><h3 id="1-Gunicorn设计"><a href="#1-Gunicorn设计" class="headerlink" title="1.Gunicorn设计"></a>1.Gunicorn设计</h3><p>　　Gunicorn 是一个 master 进程，spawn 出数个工作进程的 web 服务器。master 进程控制工作进程的产生与消亡，工作进程只需要接受请求并且处理。这样分离的方式使得 reload 代码非常方便，也很容易增加或减少工作进程。 工作进程这块作者给了很大的扩展余地，它可以支持不同的IO方式，如 Gevent,Sync 同步进程，Asyc 异步进程，Eventlet 等等。master 跟 worker 进程完全分离，使得 Gunicorn 实质上就是一个控制进程的服务。</p>
+<h3 id="2-Gunicorn源码结构"><a href="#2-Gunicorn源码结构" class="headerlink" title="2.Gunicorn源码结构"></a>2.Gunicorn源码结构</h3><p>　　从 Application.run() 开始，首先初始化配置，从文件读取，终端读取等等方式完成 configurate。然后启动 Arbiter，Arbiter 是实质上的 master 进程的核心，它首先从配置类中读取并设置，然后初始化信号处理函数，建立 socket。然后就是开始 spawn 工作进程，根据配置的工作进程数进行 spawn。然后就进入了轮询状态，收到信号，处理信号然后继续。这里唤醒进程的方式是建立一个 PIPE，通过信号处理函数往 pipe 里 write，然后 master 从 select.select() 中唤醒。</p>
 <p>工作进程在 spawn 后，开始初始化，然后同样对信号进行处理，并且开始轮询，处理 HTTP 请求，调用 WSGI 的应用端，得到 resopnse 返回。然后继续。</p>
 <p>Sync 同步进程的好处在于每个 request 都是分离的，每个 request 失败都不会影响其他 request，但这样导致了性能上的瓶颈。</p>
 <p>没有对错，找个框架入门好了~</p>
@@ -457,6 +464,12 @@ Gunicorn设计
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/zhangdavids.github.io/tags/python/" rel="tag"># python</a>
+          
+        </div>
       
 
       
@@ -560,7 +573,7 @@ Gunicorn设计
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">505</span>
+                  <span class="site-state-item-count">507</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -571,7 +584,7 @@ Gunicorn设计
               
               <div class="site-state-item site-state-categories">
                 <a href="/zhangdavids.github.io/categories/index.html">
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -582,7 +595,7 @@ Gunicorn设计
               
               <div class="site-state-item site-state-tags">
                 <a href="/zhangdavids.github.io/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -638,7 +651,7 @@ Gunicorn设计
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#gunicorn"><span class="nav-number">1.</span> <span class="nav-text">gunicorn</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#gunicorn"><span class="nav-number">1.</span> <span class="nav-text">gunicorn</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Gunicorn设计"><span class="nav-number">1.1.</span> <span class="nav-text">1.Gunicorn设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Gunicorn源码结构"><span class="nav-number">1.2.</span> <span class="nav-text">2.Gunicorn源码结构</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -691,7 +704,7 @@ Gunicorn设计
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共191.8k字</span>
+  <span class="post-count">博客全站共192.6k字</span>
 </div>
 
         

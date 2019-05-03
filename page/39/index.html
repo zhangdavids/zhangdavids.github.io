@@ -309,6 +309,373 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/02/25/leetcode-309/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/02/25/leetcode-309/" itemprop="url">leetcode-309</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-25T15:07:19+08:00">
+                2019-02-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/02/25/leetcode-309/" class="leancloud_visitors" data-flag-title="leetcode-309">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  212
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">n = len(prices)</span><br><span class="line">    if n &lt; 2:</span><br><span class="line">        return 0</span><br><span class="line">    # k is big enougth to cover all ramps.</span><br><span class="line">    if k &gt;= n / 2:</span><br><span class="line">        return sum(i - j</span><br><span class="line">                   for i, j in zip(prices[1:], prices[:-1]) if i - j &gt; 0)</span><br><span class="line">    globalMax = [[0] * n for _ in xrange(k + 1)]</span><br><span class="line">    for i in xrange(1, k + 1):</span><br><span class="line">        # The max profit with i transations and selling stock on day j.</span><br><span class="line">        localMax = [0] * n</span><br><span class="line">        for j in xrange(1, n):</span><br><span class="line">            profit = prices[j] - prices[j - 1]</span><br><span class="line">            localMax[j] = max(</span><br><span class="line">                # We have made max profit with (i - 1) transations in</span><br><span class="line">                # (j - 1) days.</span><br><span class="line">                # For the last transation, we buy stock on day (j - 1)</span><br><span class="line">                # and sell it on day j.</span><br><span class="line">                globalMax[i - 1][j - 1] + profit,</span><br><span class="line">                # We have made max profit with (i - 1) transations in</span><br><span class="line">                # (j - 1) days.</span><br><span class="line">                # For the last transation, we buy stock on day j and</span><br><span class="line">                # sell it on the same day, so we have 0 profit, apparently</span><br><span class="line">                # we do not have to add it.</span><br><span class="line">                globalMax[i - 1][j - 1],  # + 0,</span><br><span class="line">                # We have made profit in (j - 1) days.</span><br><span class="line">                # We want to cancel the day (j - 1) sale and sell it on</span><br><span class="line">                # day j.</span><br><span class="line">                localMax[j - 1] + profit)</span><br><span class="line">            globalMax[i][j] = max(globalMax[i][j - 1], localMax[j])</span><br><span class="line">    return globalMax[k][-1]</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/02/25/leetcode-188/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/02/25/leetcode-188/" itemprop="url">leetcode-188</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-25T11:14:40+08:00">
+                2019-02-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/02/25/leetcode-188/" class="leancloud_visitors" data-flag-title="leetcode-188">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  315
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">class</span> Solution &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxProfit</span><span class="params">(<span class="keyword">int</span> k, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; prices)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Step 1: Find out all profit opportunities            </span></span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; profits;</span><br><span class="line">        <span class="built_in">stack</span>&lt;pair&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt;&gt; vps; <span class="comment">// valley-peak pairs</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span> v;</span><br><span class="line">        <span class="keyword">int</span> p = <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">            <span class="comment">// find next valley-peak pair</span></span><br><span class="line">            <span class="keyword">for</span> (v = p+<span class="number">1</span>; (v+<span class="number">1</span> &lt; prices.size()) &amp;&amp; (prices[v] &gt;= prices[v+<span class="number">1</span>]); ++v);</span><br><span class="line">            <span class="keyword">for</span> (p = v  ; (p+<span class="number">1</span> &lt; prices.size()) &amp;&amp; (prices[p] &lt;= prices[p+<span class="number">1</span>]); ++p);</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> (v == p) &#123; <span class="comment">// v==p means that both v and p reach the end of the array</span></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// Consider two transactions (v1, p1) (back of the stack) and (v2, p2) (the new-found).</span></span><br><span class="line">            <span class="comment">// If prices[v1] &gt;= prices[v2], </span></span><br><span class="line">            <span class="comment">// it is meaningless to combine the two transactions.</span></span><br><span class="line">            <span class="comment">// Save of profit of (v1, p1), and pop it out of the record.</span></span><br><span class="line">            <span class="keyword">while</span> ((!vps.empty()) &amp;&amp; (prices[v] &lt;= prices[vps.top().first])) &#123;</span><br><span class="line">                profits.push_back(prices[vps.top().second] - prices[vps.top().first]);</span><br><span class="line">                vps.pop();</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// If prices[v1]&lt;prices[v2] and prices[p1]&lt;prices[p2], </span></span><br><span class="line">            <span class="comment">// then it is meaningful to combine the two transactions</span></span><br><span class="line">            <span class="comment">// update (v1, p1) to (v1, p2), and save the profit of (v2, p1)</span></span><br><span class="line">            <span class="keyword">while</span> ((!vps.empty()) &amp;&amp; (prices[p] &gt;= prices[vps.top().second])) &#123;</span><br><span class="line">                profits.push_back(prices[vps.top().second] - prices[v]);</span><br><span class="line">                v = vps.top().first;</span><br><span class="line">                vps.pop();</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// save the new-found valley-peak pair</span></span><br><span class="line">            vps.emplace(v, p);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// save all remaining profits</span></span><br><span class="line">        <span class="keyword">while</span> (!vps.empty()) &#123;</span><br><span class="line">            profits.push_back(prices[vps.top().second] - prices[vps.top().first]);</span><br><span class="line">            vps.pop();</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="comment">// Step 2: Calculate the k highest profits</span></span><br><span class="line">        <span class="keyword">int</span> ret;</span><br><span class="line">        <span class="keyword">if</span> (profits.size() &lt;= k) &#123;</span><br><span class="line">            ret = accumulate(profits.begin(), profits.end(), <span class="number">0</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            nth_element(profits.begin(), profits.end() - k, profits.end());</span><br><span class="line">            ret = accumulate(profits.end() - k, profits.end(), <span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        return ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/02/25/leetcode-122/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -851,386 +1218,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/02/25/leetcode-994/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/02/25/leetcode-994/" itemprop="url">leetcode-994</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-25T08:26:11+08:00">
-                2019-02-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/02/25/leetcode-994/" class="leancloud_visitors" data-flag-title="leetcode-994">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  123
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">orangesRotting</span><span class="params">(self, A)</span>:</span></span><br><span class="line">        R, C = len(A), len(A[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line">        <span class="comment"># queue - all starting cells with rotting oranges</span></span><br><span class="line">        queue = collections.deque()</span><br><span class="line">        <span class="keyword">for</span> r, row <span class="keyword">in</span> enumerate(A):</span><br><span class="line">            <span class="keyword">for</span> c, val <span class="keyword">in</span> enumerate(row):</span><br><span class="line">                <span class="keyword">if</span> val == <span class="number">2</span>:</span><br><span class="line">                    queue.append((r, c, <span class="number">0</span>))</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">def</span> <span class="title">neighbors</span><span class="params">(r, c)</span>:</span></span><br><span class="line">            <span class="keyword">for</span> nr, nc <span class="keyword">in</span> ((r<span class="number">-1</span>,c),(r,c<span class="number">-1</span>),(r+<span class="number">1</span>,c),(r,c+<span class="number">1</span>)):</span><br><span class="line">                <span class="keyword">if</span> <span class="number">0</span> &lt;= nr &lt; R <span class="keyword">and</span> <span class="number">0</span> &lt;= nc &lt; C:</span><br><span class="line">                    <span class="keyword">yield</span> nr, nc</span><br><span class="line"></span><br><span class="line">        d = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> queue:</span><br><span class="line">            r, c, d = queue.popleft()</span><br><span class="line">            <span class="keyword">for</span> nr, nc <span class="keyword">in</span> neighbors(r, c):</span><br><span class="line">                <span class="keyword">if</span> A[nr][nc] == <span class="number">1</span>:</span><br><span class="line">                    A[nr][nc] = <span class="number">2</span></span><br><span class="line">                    queue.append((nr, nc, d+<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> any(<span class="number">1</span> <span class="keyword">in</span> row <span class="keyword">for</span> row <span class="keyword">in</span> A):</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span></span><br><span class="line">        <span class="keyword">return</span> d</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/02/23/2019-go-10/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/02/23/2019-go-10/" itemprop="url">2019-go-10</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-23T00:26:46+08:00">
-                2019-02-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/golang/" itemprop="url" rel="index">
-                    <span itemprop="name">golang</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/02/23/2019-go-10/" class="leancloud_visitors" data-flag-title="2019-go-10">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  176
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="beego-的模块化设计-grace"><a href="#beego-的模块化设计-grace" class="headerlink" title="beego 的模块化设计-grace"></a>beego 的模块化设计-grace</h2><p>grace 模块是 beego 新增的一个独立支持热重启的模块。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import(</span><br><span class="line">   &quot;log&quot;</span><br><span class="line">    &quot;net/http&quot;</span><br><span class="line">    &quot;os&quot;</span><br><span class="line">    &quot;strconv&quot;</span><br><span class="line"></span><br><span class="line">   &quot;github.com/astaxie/beego/grace&quot;</span><br><span class="line"> )</span><br><span class="line"></span><br><span class="line">  func handler(w http.ResponseWriter, r *http.Request) &#123;</span><br><span class="line">      w.Write([]byte(&quot;WORLD!&quot;))</span><br><span class="line">      w.Write([]byte(&quot;ospid:&quot; + strconv.Itoa(os.Getpid())))</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  func main() &#123;</span><br><span class="line">      mux := http.NewServeMux()</span><br><span class="line">      mux.HandleFunc(&quot;/hello&quot;, handler)</span><br><span class="line"></span><br><span class="line">      err := grace.ListenAndServe(&quot;localhost:8080&quot;, mux)</span><br><span class="line">      if err != nil &#123;</span><br><span class="line">           log.Println(err)</span><br><span class="line">        &#125;</span><br><span class="line">      log.Println(&quot;Server on 8080 stopped&quot;)</span><br><span class="line">         os.Exit(0)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>打开两个终端</p>
-<p>一个终端输入：ps -ef|grep 应用名</p>
-<p>一个终端输入请求：curl “<a href="http://127.0.0.1:8080/hello" target="_blank" rel="external">http://127.0.0.1:8080/hello</a>“</p>
-<p>热升级</p>
-<p>kill -HUP 进程 ID</p>
-<p>打开一个终端输入请求：curl “<a href="http://127.0.0.1:8080/hello?sleep=0" target="_blank" rel="external">http://127.0.0.1:8080/hello?sleep=0</a>“</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/38/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/38/">38</a><span class="page-number current">39</span><a class="page-number" href="/zhangdavids.github.io/page/40/">40</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/101/">101</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/40/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/38/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/38/">38</a><span class="page-number current">39</span><a class="page-number" href="/zhangdavids.github.io/page/40/">40</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/102/">102</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/40/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1280,7 +1272,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">505</span>
+                  <span class="site-state-item-count">507</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1291,7 +1283,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/zhangdavids.github.io/categories/index.html">
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -1302,7 +1294,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/zhangdavids.github.io/tags/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1395,7 +1387,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共191.8k字</span>
+  <span class="post-count">博客全站共192.6k字</span>
 </div>
 
         
