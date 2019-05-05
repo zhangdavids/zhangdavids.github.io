@@ -309,6 +309,407 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/03/03/python-fp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/03/03/python-fp/" itemprop="url">python-fp</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-03T08:01:38+08:00">
+                2018-03-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2018/03/03/python-fp/" class="leancloud_visitors" data-flag-title="python-fp">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  660
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程"></a>函数式编程</h2><p>函数式编程源自于数学理论，它似乎也更适用于数学计算相关的场景，因此本文以一个简单的数据处理问题为例，逐步介绍 Python 函数式编程从入门到走火入魔的过程。</p>
+<pre><code>问题：计算 N 位同学在某份试卷的 M 道选择题上的得分（每道题目的分值不同）。
+</code></pre><p>首先来生成一组用于计算的伪造数据：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># @file: data.py</span></span><br><span class="line"><span class="keyword">import</span> random  </span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> namedtuple</span><br><span class="line"> </span><br><span class="line">Student = namedtuple(<span class="string">'Student'</span>, [<span class="string">'id'</span>, <span class="string">'ans'</span>])</span><br><span class="line"> </span><br><span class="line">N_Questions = <span class="number">25</span>  </span><br><span class="line">N_Students = <span class="number">20</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">gen_random_list</span><span class="params">(opts, n)</span>:</span>  </span><br><span class="line">    <span class="keyword">return</span> [random.choice(opts) <span class="keyword">for</span> i <span class="keyword">in</span> range(n)]</span><br><span class="line"> </span><br><span class="line"><span class="comment"># 问题答案 'ABCD' 随机</span></span><br><span class="line">ANS   = gen_random_list(<span class="string">'ABCD'</span>, N_Questions)  </span><br><span class="line"><span class="comment"># 题目分值 1~5 分</span></span><br><span class="line">SCORE = gen_random_list(range(<span class="number">1</span>,<span class="number">6</span>), N_Questions)</span><br><span class="line"> </span><br><span class="line">QUIZE = zip(ANS, SCORE)  </span><br><span class="line">students = [  </span><br><span class="line">    <span class="comment"># 学生答案为 'ABCD*' 随机，'*' 代表未作答</span></span><br><span class="line">    Student(_id, gen_random_list(<span class="string">'ABCD*'</span>, N_Questions))</span><br><span class="line">    <span class="keyword">for</span> _id <span class="keyword">in</span> range(<span class="number">1</span>, N_Students+<span class="number">1</span>)</span><br><span class="line">]</span><br><span class="line"> </span><br><span class="line">print(QUIZE)  </span><br><span class="line"><span class="comment"># [('A', 3), ('B', 1), ('D', 1), ...</span></span><br><span class="line">print(students)  </span><br><span class="line"><span class="comment"># [Student(id=1, ans=['C', 'B', 'A', ...</span></span><br><span class="line"></span><br><span class="line">```	</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">常规的面向过程编程风格，我们需要遍历每个学生，然后遍历每个学生对每道题目的答案并与真实答案进行比较，然后将正确答案的分数累计：</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">```python</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> data  </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">normal</span><span class="params">(students, quize)</span>:</span>  </span><br><span class="line">    <span class="keyword">for</span> student <span class="keyword">in</span> students:</span><br><span class="line">        sid = student.id</span><br><span class="line">        score = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(len(quize)):</span><br><span class="line">            <span class="keyword">if</span> quize[i][<span class="number">0</span>] == student.ans[i]:</span><br><span class="line">                score += quize[i][<span class="number">1</span>]</span><br><span class="line">        print(sid, <span class="string">'\t'</span>, score)</span><br><span class="line"> </span><br><span class="line">print(<span class="string">'ID\tScore\n=================='</span>)  </span><br><span class="line">normal(data.students, data.quize)  </span><br><span class="line"><span class="string">"""</span><br><span class="line">ID    Score  </span><br><span class="line">==================</span><br><span class="line">1      5  </span><br><span class="line">2      12  </span><br><span class="line">...</span><br><span class="line">"""</span></span><br></pre></td></tr></table></figure>
+<p>通过创建嵌套两个 for 循环来遍历所有题目答案的判断和评分，这完全是为计算机服务的思路，虽然说 Python 中的 for 循环已经比 C 语言更进了一步，通常不需要额外的状态变量来记录当前循环的次数，但有时候也不得不使用状态变量，如上例中第二个循环中比较两个列表的元素。函数式编程的一大特点就是<strong>尽量抛弃这种明显循环遍历的做法，而是把注意集中在解决问题本身</strong>，一如在现实中我们批改试卷时，只需要将两组答案并列进行比较即可：</p>
+<pre><code>from data import students, QUIZE
+
+student = students[0]
+
+# 将学生答案与正确答案合并到一起
+# 然后过滤出答案一致的题目
+filtered = filter(lambda x: x[0] == x[1][0], zip(student.ans, QUIZE))
+
+print(list(filtered))  
+# [(&apos;A&apos;, (&apos;A&apos;, 3)), (&apos;D&apos;, (&apos;D&apos;, 1)), ...]
+</code></pre><p>正确题目的分数进行累加：    </p>
+<pre><code>from functools import reduce
+
+reduced = reduce(lambda x, y: x + y[1][1], filtered, 0)  
+print(reduced)      
+</code></pre><p>接下来进行推广：</p>
+<pre><code>def cal(quize):  
+    def inner(student):
+        filtered = filter(lambda x: x[0] == x[1][0], zip(student.ans, quize))
+        reduced = reduce(lambda x, y: x + y[1][1], filtered, 0)
+        print(student.id, &apos;\t&apos;, reduced)
+    return inner
+map(cal(QUIZE), students)      
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/03/01/python-interview-0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/03/01/python-interview-0/" itemprop="url">python-interview-0</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-01T23:01:05+08:00">
+                2018-03-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2018/03/01/python-interview-0/" class="leancloud_visitors" data-flag-title="python-interview-0">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.5k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ol>
+<li><p>我从来不问google可获得的答案的问题， 只是问问面试者「在过去的工作中，遇到的Ta认为最有成就感的一件事情是什么」和「如果出现了一个google不到的问题，你会怎么解决」这样的问题。</p>
+</li>
+<li><p>我从来不问操作系统等和Python无关的话题，首先是我不怎么问和工作太无关的话题，有些东西用不到很多就被会遗忘，挑起来这种问题其实挺无聊；其次我是非计算机专业毕业，问的东西说不定我自己都没有把握，那就不出来献丑了。我只关注面试者的学习能力和解决问题的方式，说白了，是不是就是看他是不是「聪明的人」。</p>
+</li>
+<li><p>不问面试者的短处。我在自己被面试的时候有过这种精力，面试者问他擅长的内容，我不一定搞的定，如果反过来面试Ta，我也会灭掉Ta。所以我会尽力寻找面试者的优势和优点，尤其是对方已经明确承认。其实很多经验和能力，只是需要一个机会和环境，所以我不想放过任何一个合适的人。</p>
+</li>
+<li><p>面试者不会Python也没有关系。面试者的主动性和学习能力觉得更重要，如果他在其他领域能证明做的不错或者能让我感觉到这个一个未来有潜质成为优秀工程师的人，不会Python没有关系。 嗯目前看来，我没有看错过。</p>
+</li>
+<li><p>我从来不问Python语法这种看书和google就能学会的问题，我只想了解Ta是否愿意去学。举个例子，我会让面试者「讲讲日常开发中都用到了那些Python内置的模块」，原因在我的专栏「Python之美 - 知乎专栏」的 Python不能不知的模块 - Python之美 - 知乎专栏中有写，基本上说完我就能评估出他的能力和风格，继而就是再问一些问题去验证我的评估是不是准确。</p>
+</li>
+<li><p>最后，我一般都会和面试者细聊一个Ta认为在过去的工作或者自己开源的项目中最熟悉的一个，从项目设计、踩过的坑儿、开发周期以及如何安排、如何确定需求、如何和其他人协作等方面，最后评估下Ta是否能很容易的融入到我们现在的团队，大家是否可以接受Ta，对工作不负责的、没有用心工作的、没有团队意识的、沟通能力有缺陷的就放弃掉，对性格上容易发生冲突的、不适合团队合作的我就得考虑下，未来也会如实反馈给HR。</p>
+</li>
+</ol>
+<hr>
+<p>推荐几本书</p>
+<p>《python参考手册》，绝对让你更上一层楼</p>
+<p>《图解密码技术》，密码入门不二之选</p>
+<p>《mysql技术内幕》（第五版），有点厚当手册读读，要有耐心，《高性能mysql》也强烈建议读读</p>
+<p>《effective tcp/ip programming》</p>
+<p>如果是搞web的对操作系统这块和密码技术会偏弱，但如果是系统工程师或是游戏服务端这块会明显偏强。吃午饭的时候我就一直在想这个问题，我觉得重点不是Python而是后端工程师，因为Python只是系统的一部分，linux基础操作要熟吧，sql要懂吧，消息队列要知道吧，git要熟悉吧……木桶理论，每一环都不能落下，精通其中一两环就更好了。基础功扎实，新东西学得快，代码写得溜，命令敲得顺，bug解的好，妈妈再也不用担心我天天加班了~~~</p>
+<h4 id="一-语言"><a href="#一-语言" class="headerlink" title="一.语言"></a>一.语言</h4><p>1.推荐一本看过最好的python书籍？ 拉开话题好扯淡</p>
+<p>2.谈谈python的装饰器，迭代器，yield？ </p>
+<p>3.标准库线程安全的队列是哪一个？不安全的是哪一个？logging是线程安全的吗？ </p>
+<p>4.python适合的场景有哪些？当遇到计算密集型任务怎么办？ </p>
+<p>5.python高并发解决方案？我希望听到twisted-&gt;tornado-&gt;gevent，能扯到golang,erlang更好</p>
+<h4 id="二-操作系统"><a href="#二-操作系统" class="headerlink" title="二.操作系统"></a>二.操作系统</h4><p>可以直接认为是linux，毕竟搞后端的多数是和linux打交道。 </p>
+<p>1.tcp/udp的区别？tcp粘包是怎么回事，如何处理？udp有粘包吗？ </p>
+<p>2.time_wait是什么情况？出现过多的close_wait可能是什么原因？ </p>
+<p>3.epoll,select的区别？边缘触发，水平触发区别？</p>
+<h4 id="三-存储"><a href="#三-存储" class="headerlink" title="三.存储"></a>三.存储</h4><p>存储可能包含rdbms，nosql以及缓存等，我以mysql,redis举例 </p>
+<p><em>mysql相关</em></p>
+<p>1.谈谈mysql字符集和排序规则？ </p>
+<p>2.varchar与char的区别是什么？大小限制？utf8字符集下varchar最多能存多少个字符 </p>
+<p>3.primary key和unique的区别？ </p>
+<p>4.外键有什么用，是否该用外键？外键一定需要索引吗？ </p>
+<p>5.myisam与innodb的区别？innodb的两阶段锁定协议是什么情况？ </p>
+<p>6.索引有什么用，大致原理是什么？设计索引有什么注意点？ </p>
+<p><em>redis相关</em></p>
+<p>1.什么场景用redis，为什么mysql不适合？ </p>
+<p>2.谈谈redis的事务？用事务模拟原子+1操作？原子操作还有其它解决方案吗？ </p>
+<p>3.redis内存满了会怎么样？</p>
+<h4 id="四-安全"><a href="#四-安全" class="headerlink" title="四.安全"></a>四.安全</h4><p>web安全相关 </p>
+<p>1.sql注入是怎么产生的，如何防止？ </p>
+<p>2.xss如何预防？htmlescape后能否避免xss? </p>
+<p>3.csrf是什么？django是如何防范的？ </p>
+<p>密码技术 </p>
+<p>1.什么是分组加密？加密模式有哪些？ecb和cbc模式有什么区别？为什么需要iv向量？ </p>
+<p>2.简单说说https的过程？ </p>
+<p>3.对称加密与非对称加密区别？ </p>
+<p>4.如何生成共享秘钥？ 如何防范中间人攻击？</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/03/01/about-react/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1004,373 +1405,6 @@ def full_dispatch_request(self):
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/02/23/运维题目搜集/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/02/23/运维题目搜集/" itemprop="url">运维题目搜集</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-23T19:40:03+08:00">
-                2018-02-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/ops/" itemprop="url" rel="index">
-                    <span itemprop="name">ops</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2018/02/23/运维题目搜集/" class="leancloud_visitors" data-flag-title="运维题目搜集">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  193
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>三百台服务器  如何进行管理</p>
-<p>1.设定跳板机 使用统一的账户登陆 便于安全与登陆的考量</p>
-<p>2.使用salt、ansible、puppet 进行系统的统一调度与配置统一的管理</p>
-<p>3.建立简单的服务器的系统、配置、应用的cmdb信息管理。便于查阅每台服务器上的各种信息记录</p>
-<hr>
-<p>rabbitMQ 也就是消息队列中间件，消息中间件是在消息的传息过程中保存消息的容器</p>
-<hr>
-<ul>
-<li>使用像pyflakes 这样的静态代码分析工具</li>
-<li>选定一个特定的代码风格</li>
-<li>开发工具保存高响应速度</li>
-<li>找到合适的编辑器</li>
-<li>感到舒服和更有效率的工具值得花钱</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/02/23/Japronto介绍/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/02/23/Japronto介绍/" itemprop="url">Japronto介绍</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-23T19:36:34+08:00">
-                2018-02-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2018/02/23/Japronto介绍/" class="leancloud_visitors" data-flag-title="Japronto介绍">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  59
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li>实现 HTTP 1.x 并且支持分片上传</li>
-<li>完整支持 HTTP 流水线</li>
-<li>可配置是否让链接 Keep-alive</li>
-<li>支持同步和异步视图</li>
-<li>多任务处理</li>
-<li>代码热加载</li>
-<li>简单易用的路由规则</li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1425,7 +1459,7 @@ def full_dispatch_request(self):
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">507</span>
+                  <span class="site-state-item-count">509</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1540,7 +1574,7 @@ def full_dispatch_request(self):
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共192.6k字</span>
+  <span class="post-count">博客全站共196.5k字</span>
 </div>
 
         
