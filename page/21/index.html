@@ -309,6 +309,190 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/21/字符串之字典树/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/21/字符串之字典树/" itemprop="url">字符串之字典树</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-21T09:48:57+08:00">
+                2019-03-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/03/21/字符串之字典树/" class="leancloud_visitors" data-flag-title="字符串之字典树">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  152
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">class TrieNode:</span><br><span class="line">    def __init__(self, data: str):</span><br><span class="line">        self._data = data</span><br><span class="line">        self._children = [None] * 26</span><br><span class="line">        self._is_ending_char = False</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">class Trie:</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self._root = TrieNode(&quot;/&quot;)</span><br><span class="line"></span><br><span class="line">    def insert(self, text: str) -&gt; None:</span><br><span class="line">        node = self._root</span><br><span class="line">        for index, char in map(lambda x: (ord(x) - ord(&quot;a&quot;), x), text):</span><br><span class="line">            if not node._children[index]:</span><br><span class="line">                node._children[index] = TrieNode(char)</span><br><span class="line">            node = node._children[index]</span><br><span class="line">        node._is_ending_char = True</span><br><span class="line">    </span><br><span class="line">    def find(self, pattern: str) -&gt; bool:</span><br><span class="line">        node = self._root</span><br><span class="line">        for index in map(lambda x: ord(x) - ord(&quot;a&quot;), pattern):</span><br><span class="line">            if not node._children[index]: return False</span><br><span class="line">            node = node._children[index]</span><br><span class="line">        return node._is_ending_char</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line"></span><br><span class="line">    strs = [&quot;how&quot;, &quot;hi&quot;, &quot;her&quot;, &quot;hello&quot;, &quot;so&quot;, &quot;see&quot;]</span><br><span class="line">    trie = Trie()</span><br><span class="line">    for s in strs:</span><br><span class="line">        trie.insert(s)</span><br><span class="line">    </span><br><span class="line">    for s in strs:</span><br><span class="line">        print(trie.find(s))</span><br><span class="line">    </span><br><span class="line">    print(trie.find(&quot;swift&quot;))</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/20/字符串匹配-kmp/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1049,203 +1233,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/19/leetcode-linklist/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/19/leetcode-linklist/" itemprop="url">leetcode-linklist</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-19T16:07:02+08:00">
-                2019-03-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/03/19/leetcode-linklist/" class="leancloud_visitors" data-flag-title="leetcode-linklist">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.3k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  6
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>输出单链表倒数第k个节点</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">// 双指针法</span><br><span class="line"></span><br><span class="line">ListNode* findKthTail(ListNode *pHead, int K)&#123;</span><br><span class="line">    if (NULL == pHead || K == 0)</span><br><span class="line">        return NULL;</span><br><span class="line">    //p1，p2均指向头节点</span><br><span class="line">    ListNode *p1 = pHead;</span><br><span class="line">    ListNode *p2 = pHead;</span><br><span class="line">    //p1先出发，前进K个节点</span><br><span class="line">    for (int i = 0; i &lt; K; i++) &#123;</span><br><span class="line">        if (p1)//防止k大于链表节点的个数</span><br><span class="line">            p1 = p1-&gt;_next;</span><br><span class="line">        else</span><br><span class="line">            return NULL;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    while (p1)//如果p1没有到达链表结尾，则p1，p2继续遍历</span><br><span class="line">    &#123;</span><br><span class="line">        p1 = p1-&gt;_next;</span><br><span class="line">        p2 = p2-&gt;_next;</span><br><span class="line">    &#125;</span><br><span class="line">    return p2;//当p1到达末尾时，p2正好指向倒数第K个节点</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>链表中存在环的问题</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isExistLoop</span><span class="params">(ListNode* pHead)</span>  </span>&#123;  </span><br><span class="line">    ListNode* fast;<span class="comment">//慢指针，每次前进一个节点</span></span><br><span class="line">    ListNode* slow;<span class="comment">//快指针，每次前进2个节点 </span></span><br><span class="line">    slow = fast = pHead ;  <span class="comment">//两个指针均指向链表头节点</span></span><br><span class="line">    <span class="comment">//当没有到达链表结尾，则继续前进</span></span><br><span class="line">    <span class="keyword">while</span> (slow != <span class="literal">NULL</span> &amp;&amp; fast -&gt; next != <span class="literal">NULL</span>)  &#123;  </span><br><span class="line">        slow = slow -&gt; next ; <span class="comment">//慢指针前进一个节点</span></span><br><span class="line">        fast = fast -&gt; next -&gt; next ; <span class="comment">//快指针前进两个节点</span></span><br><span class="line">        <span class="keyword">if</span> (slow == fast)  <span class="comment">//若两个指针相遇，且均不为NULL则存在环</span></span><br><span class="line">            return <span class="literal">true</span> ;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="comment">//到达末尾仍然没有相遇，则不存在环</span></span><br><span class="line">    return <span class="literal">false</span> ;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line"><span class="comment">// 快慢指针 </span></span><br><span class="line"></span><br><span class="line"><span class="comment">//找到环中的相遇节点</span></span><br><span class="line"><span class="function">ListNode* <span class="title">getMeetingNode</span><span class="params">(ListNode* pHead)</span> <span class="comment">// 假设为带头节点的单链表</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    ListNode* fast;<span class="comment">//慢指针，每次前进一个节点</span></span><br><span class="line">    ListNode* slow;<span class="comment">//快指针，每次前进2个节点 </span></span><br><span class="line">    slow = fast = pHead ;  <span class="comment">//两个指针均指向链表头节点</span></span><br><span class="line">    <span class="comment">//当没有到达链表结尾，则继续前进</span></span><br><span class="line">    <span class="keyword">while</span> (slow != <span class="literal">NULL</span> &amp;&amp; fast -&gt; next != <span class="literal">NULL</span>)&#123;  </span><br><span class="line">        slow = slow -&gt; next ; <span class="comment">//慢指针前进一个节点</span></span><br><span class="line">        fast = fast -&gt; next -&gt; next ; <span class="comment">//快指针前进两个节点</span></span><br><span class="line">        <span class="keyword">if</span> (slow == fast)  <span class="comment">//若两个指针相遇，且均不为NULL则存在环</span></span><br><span class="line">            return slow;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    <span class="comment">//到达末尾仍然没有相遇，则不存在环</span></span><br><span class="line">    return <span class="literal">NULL</span> ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//找出环的入口节点</span></span><br><span class="line"><span class="function">ListNode* <span class="title">getEntryNodeOfLoop</span><span class="params">(ListNode* pHead)</span></span>&#123;</span><br><span class="line">    ListNode* meetingNode = getMeetingNode(pHead); <span class="comment">// 先找出环中的相遇节点</span></span><br><span class="line">    <span class="keyword">if</span> (meetingNode == <span class="literal">NULL</span>)</span><br><span class="line">        return <span class="literal">NULL</span>;</span><br><span class="line">    ListNode* p1 = meetingNode;</span><br><span class="line">    ListNode* p2 = pHead;</span><br><span class="line">    <span class="keyword">while</span> (p1 != p2) <span class="comment">// p1和p2以相同的速度向前移动，当p2指向环的入口节点时，p1已经围绕着环走了n圈又回到了入口节点。</span></span><br><span class="line">    &#123;</span><br><span class="line">        p1 = p1-&gt;next;</span><br><span class="line">        p2 = p2-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//返回入口节点</span></span><br><span class="line">    return p1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 计算环的长度</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getLoopLength</span><span class="params">(ListNode* head)</span></span>&#123;</span><br><span class="line">    ListNode* slow = head;</span><br><span class="line">    ListNode* fast = head;</span><br><span class="line">    <span class="keyword">while</span> ( fast &amp;&amp; fast-&gt;next )&#123;</span><br><span class="line">        slow = slow-&gt;next;</span><br><span class="line">        fast = fast-&gt;next-&gt;next;</span><br><span class="line">        <span class="keyword">if</span> ( slow == fast )<span class="comment">//第一次相遇</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//slow与fast继续前进</span></span><br><span class="line">    slow = slow-&gt;next;</span><br><span class="line">    fast = fast-&gt;next-&gt;next;</span><br><span class="line">    <span class="keyword">int</span> length = <span class="number">1</span>;       <span class="comment">//环长度</span></span><br><span class="line">    <span class="keyword">while</span> ( fast != slow )<span class="comment">//再次相遇</span></span><br><span class="line">    &#123;</span><br><span class="line">        slow = slow-&gt;next;</span><br><span class="line">        fast = fast-&gt;next-&gt;next;</span><br><span class="line">        length ++;        <span class="comment">//累加</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//当slow与fast再次相遇，得到环长度</span></span><br><span class="line">    return length;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用链表实现大数相加</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">ListNode* numberAddAsList(ListNode* l1, ListNode* l2) &#123;</span><br><span class="line">        ListNode *ret = l1, *pre = l1;</span><br><span class="line">        int up = 0;</span><br><span class="line">        while (l1 != NULL &amp;&amp; l2 != NULL) &#123;</span><br><span class="line">            //数值相加</span><br><span class="line">            l1-&gt;val = l1-&gt;val + l2-&gt;val + up;</span><br><span class="line">            //计算是否有进位</span><br><span class="line">            up = l1-&gt;val / 10;</span><br><span class="line">            //保留计算结果的个位</span><br><span class="line">            l1-&gt;val %= 10;</span><br><span class="line">            //记录当前节点位置</span><br><span class="line">            pre = l1;</span><br><span class="line">            //同时向后移位</span><br><span class="line">            l1 = l1-&gt;next;</span><br><span class="line">            l2 = l2-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        //若l1到达末尾，说明l1长度小于l2</span><br><span class="line">        if (l1 == NULL)</span><br><span class="line">            //pre-&gt;next指向l2的当前位置</span><br><span class="line">            pre-&gt;next = l2;</span><br><span class="line">        //l1指针指向l2节点当前位置</span><br><span class="line">        l1 = pre-&gt;next;</span><br><span class="line">        //继续计算剩余节点</span><br><span class="line">        while (l1 != NULL) &#123;</span><br><span class="line">            l1-&gt;val = l1-&gt;val + up;</span><br><span class="line">            up = l1-&gt;val / 10;</span><br><span class="line">            l1-&gt;val %= 10;</span><br><span class="line">            pre = l1;</span><br><span class="line">            l1 = l1-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //最高位计算有进位，则新建一个节点保留最高位</span><br><span class="line">        if (up != 0) &#123;</span><br><span class="line">            ListNode *tmp = new ListNode(up);</span><br><span class="line">            pre-&gt;next = tmp;</span><br><span class="line">        &#125;</span><br><span class="line">        //返回计算结果链表</span><br><span class="line">        return ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>有序链表合并</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">ListNode* mergeTwoOrderedLists(ListNode* pHead1, ListNode* pHead2)&#123;</span><br><span class="line">    ListNode* newHead = NULL;</span><br><span class="line">    if (NULL == pHead1)&#123;</span><br><span class="line">        return pHead2;</span><br><span class="line">    &#125;else if(NULL ==pHead2)&#123;</span><br><span class="line">        return pHead2;</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        if (pHead1-&gt;data &lt; pHead2-&gt;data)&#123;</span><br><span class="line">            newHead = pHead1;</span><br><span class="line">            newHead-&gt;next = mergeTwoOrderedLists(pHead1-&gt;next, pHead2);</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            newHead = pHead2;</span><br><span class="line">            newHead-&gt;next = mergeTwoOrderedLists(pHead1, pHead2-&gt;next);</span><br><span class="line">         &#125;</span><br><span class="line">        return newHead;</span><br><span class="line">    &#125;   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>删除链表中节点 要求时间复杂度为1</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">void deleteNode(ListNode **pHead, ListNode* pDelNode) &#123;</span><br><span class="line">        if(pDelNode == NULL)</span><br><span class="line">            return;</span><br><span class="line">        if(pDelNode-&gt;next != NULL)&#123;</span><br><span class="line">            ListNode *pNext = pDelNode-&gt;next;</span><br><span class="line">            //下一个节点值赋给待删除节点</span><br><span class="line">            pDelNode-&gt;val   =  pNext-&gt;val;</span><br><span class="line">            //待删除节点指针指后面第二个节点</span><br><span class="line">            pDelNode-&gt;next  = pNext-&gt;next;</span><br><span class="line">            //删除待删除节点的下一个节点</span><br><span class="line">            delete pNext;</span><br><span class="line">            pNext = NULL;</span><br><span class="line">        &#125;else if(*pHead == pDelNode)//删除的节点是头节点</span><br><span class="line">         &#123;</span><br><span class="line">            delete pDelNode;</span><br><span class="line">            pDelNode= NULL;</span><br><span class="line">            *pHead = NULL;</span><br><span class="line">        &#125; else//删除的是尾节点</span><br><span class="line">        &#123;</span><br><span class="line">            ListNode *pNode = *pHead;</span><br><span class="line">            while(pNode-&gt;next != pDelNode) &#123;</span><br><span class="line">                pNode = pNode-&gt;next;</span><br><span class="line">            &#125;</span><br><span class="line">            pNode-&gt;next = NULL;</span><br><span class="line">            delete pDelNode;</span><br><span class="line">            pDelNode= NULL;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>从尾到头打印链表</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    vector&lt;int&gt; printListFromTailToHead(ListNode* head) &#123;</span><br><span class="line">        vector&lt;int&gt; value;</span><br><span class="line">        ListNode *p=NULL;</span><br><span class="line">        p=head;</span><br><span class="line">        stack&lt;int&gt; stk;</span><br><span class="line">        while(p!=NULL)&#123;</span><br><span class="line">            stk.push(p-&gt;val);</span><br><span class="line">            p=p-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        while(!stk.empty())&#123;</span><br><span class="line">            value.push_back(stk.top());</span><br><span class="line">            stk.pop();</span><br><span class="line">        &#125;</span><br><span class="line">        return value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    vector&lt;int&gt; value;</span><br><span class="line">    vector&lt;int&gt; printListFromTailToHead(ListNode* head) &#123;</span><br><span class="line">        ListNode *p=NULL;</span><br><span class="line">        p=head;</span><br><span class="line">        if(p!=NULL)&#123;</span><br><span class="line">            if(p-&gt;next!=NULL)&#123;</span><br><span class="line">                printListFromTailToHead(p-&gt;next);</span><br><span class="line">            &#125;</span><br><span class="line">            value.push_back(p-&gt;val);</span><br><span class="line">        &#125;</span><br><span class="line">        return value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>反转链表</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// 迭代</span><br><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    ListNode* reverseList(ListNode* head) &#123;</span><br><span class="line">        ListNode* pre = NULL;</span><br><span class="line">        ListNode* cur = head;</span><br><span class="line">        while(cur != NULL)&#123;</span><br><span class="line">            ListNode* next = cur-&gt;next;</span><br><span class="line">            cur-&gt;next = pre;</span><br><span class="line">            pre = cur;</span><br><span class="line">            cur = next;</span><br><span class="line">        &#125;</span><br><span class="line">        return pre;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//递归</span><br><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    ListNode* reverseList(ListNode* head) &#123;</span><br><span class="line">        // 递归终止条件</span><br><span class="line">        if(head == NULL || head-&gt;next == NULL)</span><br><span class="line">            return head;</span><br><span class="line"></span><br><span class="line">        ListNode* rhead = reverseList(head-&gt;next);</span><br><span class="line">        // head-&gt;next此刻指向head后面的链表的尾节点</span><br><span class="line">        // head-&gt;next-&gt;next = head把head节点放在了尾部</span><br><span class="line">        head-&gt;next-&gt;next = head;</span><br><span class="line">        head-&gt;next = NULL;</span><br><span class="line">        return rhead;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1300,7 +1287,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">509</span>
+                  <span class="site-state-item-count">510</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1415,7 +1402,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共196.5k字</span>
+  <span class="post-count">博客全站共196.6k字</span>
 </div>
 
         
