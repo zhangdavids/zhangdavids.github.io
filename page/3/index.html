@@ -309,6 +309,650 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/05/02/python装饰器总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/05/02/python装饰器总结/" itemprop="url">python装饰器总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-02T10:39:13+08:00">
+                2019-05-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/05/02/python装饰器总结/" class="leancloud_visitors" data-flag-title="python装饰器总结">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  357
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="写一个记录函数运行时间的装饰器"><a href="#写一个记录函数运行时间的装饰器" class="headerlink" title="写一个记录函数运行时间的装饰器"></a>写一个记录函数运行时间的装饰器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">from functools import wraps</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 使用直接装饰器 @listener(Monitor)</span><br><span class="line">class Monitor(object):</span><br><span class="line">    @staticmethod</span><br><span class="line">    def start_monitor():</span><br><span class="line">        return time.clock()</span><br><span class="line"></span><br><span class="line">    @staticmethod</span><br><span class="line">    def end_monitor():</span><br><span class="line">        return time.clock()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def listener(listen):</span><br><span class="line">    def log(func):</span><br><span class="line">        @wraps(func)</span><br><span class="line">        def wrapper(*args, **kw):</span><br><span class="line">            startime = listen.start_monitor()</span><br><span class="line">            f = func(*args, **kw)</span><br><span class="line">            endtime = listen.end_monitor()</span><br><span class="line">            print(&quot;total time is &#123;0&#125;&quot;.format(startime-endtime))</span><br><span class="line">            return  f</span><br><span class="line">        return wrapper</span><br><span class="line">    return log</span><br></pre></td></tr></table></figure>
+<h3 id="一个函数-挂多个装饰器的执行顺序"><a href="#一个函数-挂多个装饰器的执行顺序" class="headerlink" title="一个函数 挂多个装饰器的执行顺序"></a>一个函数 挂多个装饰器的执行顺序</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"></span><br><span class="line">import functools</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 采用functools.wraps的目的是为了使装饰器返回的类型始终是func的类型，否则将返回嵌套高阶函数的中的类型，例如返回的是wraper</span><br><span class="line"># 采用参数*args ,**kw是解决函数多参数的问题</span><br><span class="line">def log(func):</span><br><span class="line">	@functools.wraps(func)</span><br><span class="line">	def wrapper(*args, **kw):</span><br><span class="line">		print(&apos;call %s():&apos; % func.__name__)</span><br><span class="line">		return func(*args, **kw)</span><br><span class="line">	return wrapper</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 修饰器参数的情况</span><br><span class="line">def logger(pram):</span><br><span class="line">	def log(func):</span><br><span class="line">		@functools.wraps(func)</span><br><span class="line">		def wrapper(*args, **kw):</span><br><span class="line">			print(&apos;call %s(): and parsms is %s&apos; %(func.__name__,pram))</span><br><span class="line">			return func(*args, **kw)</span><br><span class="line">		return wrapper</span><br><span class="line">	return log</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@log</span><br><span class="line">def showMesage(name,age):</span><br><span class="line">	print(&quot;my name is &#123;0&#125; and my age is &#123;1&#125;&quot;.format(name,age))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@logger(&quot;hello&quot;)</span><br><span class="line">def getMessage(name,age):</span><br><span class="line">	print(&quot;my name is &#123;0&#125; and my age is &#123;1&#125;&quot;.format(name,age))</span><br><span class="line"></span><br><span class="line"># 添加多个修饰器来拓展所需的功能</span><br><span class="line">@log</span><br><span class="line">@logger(&quot;hello15466&quot;)</span><br><span class="line">def recieveMessage(name,age):</span><br><span class="line">	print(&quot;my name is &#123;0&#125; and my age is &#123;1&#125;&quot;.format(name,age))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__==&apos;__main__&apos;:</span><br><span class="line">	# showMesage(&quot;ddd&quot;,21)</span><br><span class="line">	# getMessage(&quot;aaa&quot;,43)</span><br><span class="line">	recieveMessage(&quot;ccc&quot;,34)</span><br></pre></td></tr></table></figure>
+<h3 id="类装饰器"><a href="#类装饰器" class="headerlink" title="类装饰器"></a>类装饰器</h3><h3 id="带参数的装饰器"><a href="#带参数的装饰器" class="headerlink" title="带参数的装饰器"></a>带参数的装饰器</h3>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/05/01/python-web的未来/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/05/01/python-web的未来/" itemprop="url">python-web的未来</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-01T19:22:43+08:00">
+                2019-05-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/05/01/python-web的未来/" class="leancloud_visitors" data-flag-title="python-web的未来">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  546
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>没有人愿意从事即将过时的技术 学习过气的技术</p>
+<hr>
+<p>Django 主要是为web开发服务的</p>
+<p>基于MVC的MTV模型</p>
+<p>非常适合开发基于PC的传统网站，因为它同时包括了后端的开发(逻辑层，数据库层) 和前端的开发(如模板语言，样式)。基于PC的网站和自适应(responsive)的手机网站不会消失，不过其重要性会随着手机APP和小程序等的普及而逐渐降低。即使对于开发传统网站，Django也只有在后台开发上有些优势，在前端仍需要借助流行的JS框架如Vue.js才能开发出互动性强且符合未来审美趋势的优秀网站来。</p>
+<p>最近几年及未来几年更流行的开发模式肯定是前后端分离。现代网络应用Web APP或大型网站一般是一个后台，然后对应各种客户端(iOS, android, 浏览器)。由于客户端的开发语言与后台的开发语言经常不一样，这时需要后台能够提供可以跨平台跨语言的一种标准的资源或数据(如Json格式)供前后端沟通，这就是Web API(网络应用程序结口)的作用了。Django本身开发不了符合REST规范的Web API, 不过借助django-rest-framework (DRF)可以快速开发出优秀规范的Web API来。所以我们这里要感谢DRF，因为它，Django的应用前景更广了，减少了被淘汰的风险。</p>
+<ul>
+<li>web开发 </li>
+</ul>
+<p>一定会有</p>
+<ul>
+<li>网络爬虫</li>
+<li>计算与数据分析</li>
+<li>人工智能</li>
+<li>自动化运维</li>
+<li>云计算</li>
+</ul>
+<p>Python的最强大之处在于模块化和灵活性，而构建云计算的平台的IasS服务的OpenStack就是采用Python的，云计算的其他服务也都是在IasS服务之上的。</p>
+<ul>
+<li>网络编程</li>
+</ul>
+<p>Python提供了丰富的模块支持sockets编程，能方便快速地开发分布式应用程序。很多大规模软件开发计划例如Zope，Mnet, BitTorrent和Google都在广泛地使用它。</p>
+<ul>
+<li>游戏开发</li>
+</ul>
+<hr>
+<p>对比flask</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/05/01/python爬虫要点/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/05/01/python爬虫要点/" itemprop="url">python爬虫要点</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-01T06:53:35+08:00">
+                2019-05-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/05/01/python爬虫要点/" class="leancloud_visitors" data-flag-title="python爬虫要点">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.9k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="分块"><a href="#分块" class="headerlink" title="分块"></a>分块</h2><ul>
+<li>抓取</li>
+<li>解析</li>
+<li>存储</li>
+<li>反爬</li>
+<li>加速</li>
+</ul>
+<h3 id="抓取"><a href="#抓取" class="headerlink" title="抓取"></a>抓取</h3><p>爬虫的目标绝大多数是网页 少部分是app</p>
+<p>网页分为两种 服务端渲染和客户端渲染</p>
+<p>app 分为四种 普通接口 加密参数接口 加密内容接口 非常规协议接口</p>
+<h4 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h4><p>有效的信息在HTML页面里</p>
+<p>真实的数据 一般通过ajax接口形式进行获取的</p>
+<p>服务端渲染 一般基本的http库 就可以爬取</p>
+<h4 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h4><p>寻找 Ajax 接口，此种情形可以直接使用 Chrome/Firefox 的开发者工具直接查看 Ajax 具体的请求方式、参数等内容，然后用 HTTP 请求库模拟即可，另外还可以通过设置代理抓包来查看接口，如 Fiddler/Charles。</p>
+<p>模拟浏览器执行，此种情形适用于网页接口和逻辑较为复杂的情况，可以直接以可见即可爬的方式进行爬取，如可以使用 Selenium、Splinter、Spynner、pyppeteer、PhantomJS、Splash、requests-html 等来实现。</p>
+<p>直接提取 JavaScript 数据，此种情形适用于真实数据没有经过 Ajax 接口获取，而是直接包含在 HTML 结果的某个变量中，直接使用正则表达式将其提取即可。</p>
+<p>模拟执行 JavaScript，某些情况下直接模拟浏览器执行效率会偏低，如果我们把 JavaScript 的某些执行和加密逻辑摸清楚了，可以直接执行相关的 JavaScript 来完成逻辑处理和接口请求，比如使用 Selenium、PyExecJS、PyV8、js2py 等库来完成即可。</p>
+<hr>
+<p>对于普通无加密接口，这种直接抓包拿到接口的具体请求形式就好了，可用的抓包工具有 Charles、Fiddler、mitmproxy。</p>
+<p>对于加密参数的接口，一种方法可以实时处理，例如 Fiddler、mitmdump、Xposed 等，另一种方法是将加密逻辑破解，直接模拟构造即可，可能需要一些反编译的技巧。</p>
+<p>对于加密内容的接口，即接口返回结果完全看不懂是什么东西，可以使用可见即可爬的工具 Appium，也可以使用 Xposed 来 hook 获取渲染结果，也可以通过反编译和改写手机底层来实现破解。</p>
+<p>对于非常规协议，可以使用 Wireshark 来抓取所有协议的包，或者使用 Tcpdump 来进行 TCP 数据包截获。</p>
+<h3 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h3><p>基本上两种</p>
+<p>css</p>
+<p>xpath</p>
+<p>一些其他接口 json xml 使用对应的库即可处理</p>
+<p>智能解析意思就是说，如果能提供一个页面，算法可以自动来提取页面的标题、正文、日期等内容，同时把无用的信息给刨除。对于智能解析，分为四个方法进行了划分：</p>
+<p>readability 算法，这个算法定义了不同区块的不同标注集合，通过权重计算来得到最可能的区块位置。</p>
+<p>疏密度判断，计算单位个数区块内的平均文本内容长度，根据疏密程度来大致区分。</p>
+<p>Scrapyly 自学习，是 Scrapy 开发的组件，指定⻚页⾯面和提取结果样例例，其可⾃自学习提取规则，提取其他同类⻚页⾯面。</p>
+<p>深度学习，使⽤用深度学习来对解析位置进⾏行行有监督学习，需要⼤大量量标注数据。如果能够容忍一定的错误率，可以使用智能解析来大大节省时间。</p>
+<hr>
+<h3 id="存储"><a href="#存储" class="headerlink" title="存储"></a>存储</h3><p>即选用合适的存储媒介来存储爬取到的结果，这里还是分为四种存储方式来进行介绍。</p>
+<p>文件，如 JSON、CSV、TXT、图⽚、视频、⾳频等，常用的一些库有 csv、xlwt、json、pandas、pickle、python-docx 等。</p>
+<p>数据库，分为关系型数据库、非关系型数据库，如 MySQL、MongoDB、HBase 等，常用的库有 pymysql、pymssql、redis-py、pymongo、py2neo、thrift。</p>
+<p>搜索引擎，如 Solr、ElasticSearch 等，便于检索和实现⽂本匹配，常用的库有 elasticsearch、pysolr 等。</p>
+<p>云存储，某些媒体文件可以存到如七⽜牛云、又拍云、阿里云、腾讯云、Amazon S3 等，常用的库有 qiniu、upyun、boto、azure-storage、google-cloud-storage 等。</p>
+<h3 id="反爬"><a href="#反爬" class="headerlink" title="反爬"></a>反爬</h3><p>现在爬虫已经越来越难了</p>
+<p>非浏览器检测</p>
+<p>封IP</p>
+<p>验证码</p>
+<p>封账户</p>
+<p>字体反爬等</p>
+<p>对于封 IP 的情况，可以分为几种情况来处理：首先寻找手机站点、App 站点，如果存在此类站点，反爬会相对较弱。使用代理，如抓取免费代理、购买付费代理、使用 Tor 代理、Socks 代理等。在代理的基础上维护自己的代理池，防止代理浪费，保证实时可用。搭建 ADSL 拨号代理，稳定高效。</p>
+<p>验证码分为非常多种，如普通图形验证码、算术题验证码、滑动验证码、点触验证码、手机验证码、扫二维码等。对于普通图形验证码，如果非常规整且没有变形或干扰，可以使用 OCR 识别，也可以使用机器学习、深度学习来进行模型训练，当然打码平台是最方便的方式。对于算术题验证码，推荐直接使用打码平台。对于滑动验证码，可以使用破解算法，也可以模拟滑动。后者的关键在于缺口的找寻，可以使用图片比对，也可以写基本的图形识别算法，也可以对接打码平台，也可以使用深度学习训练识别接口。对于点触验证码，推荐使用打码平台。对于手机验证码，可以使用验证码分发平台，也可以购买专门的收码设备，也可以人工验证。对于扫二维码，可以人工扫码，也可以对接打码平台。</p>
+<p>某些网站需要登录才能爬取，但是一个账号登录之后请求过于频繁会被封号，为了避免封号，可以采取如下措施：寻找手机站点或 App 站点，此种类别通常是接口形式，校验较弱。寻找无登录接口，尽可能寻找⽆无需登录即可爬取的接口。维护 Cookies 池，使⽤用批量账号模拟登录，使⽤时随机挑选可用 Cookies 使⽤即可，实现：<a href="https://github.com/Python3WebSpider/CookiesPool。" target="_blank" rel="external">https://github.com/Python3WebSpider/CookiesPool。</a></p>
+<hr>
+<h3 id="加速"><a href="#加速" class="headerlink" title="加速"></a>加速</h3><p>常见的措施</p>
+<p>多线程</p>
+<p>多进程</p>
+<p>异步</p>
+<p>分布式</p>
+<p>细节优化</p>
+<p>爬虫是网络请求密集型任务，所以使用多进程和多线程可以大大提高抓取效率，如使用 threading、multiprocessing 等。</p>
+<p>将爬取过程改成非阻塞形式，当有响应式再进行处理，否则在等待时间内可以运行其他任务，如使用 asyncio、aiohttp、Tornado、Twisted、gevent、grequests、pyppeteer、pyspider、Scrapy 等。</p>
+<p>分布式的关键在于共享爬取队列，可以使用 celery、huey、rq、rabbitmq、kafka 等来实现任务队列的对接，也可以使用现成的框架 pyspider、Scrapy-Redis、Scrapy-Cluster 等。</p>
+<p>可以采取某些优化措施来实现爬取的加速，如：</p>
+<ul>
+<li>DNS 缓存</li>
+<li>使用更快的解析方法</li>
+<li>使用更高效的去重方法</li>
+<li>模块分离化管控</li>
+</ul>
+<p>如果搭建了分布式，要实现高效的爬取和管理调度、监控等操作，我们可以使用两种架构来维护我们的爬虫项目。</p>
+<p>将 Scrapy 项目打包为 Docker 镜像，使用 K8S 控制调度过程。</p>
+<p>将 Scrapy 项目部署到 Scrapyd，使用专用的管理工具如 SpiderKeeper、Gerapy 等管理。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/04/30/python2-3迁移问题/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -673,494 +1317,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/04/29/提升工作效率的方法论005/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/04/29/提升工作效率的方法论005/" itemprop="url">提升工作效率的方法论005</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-29T21:40:38+08:00">
-                2019-04-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/04/29/提升工作效率的方法论005/" class="leancloud_visitors" data-flag-title="提升工作效率的方法论005">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  0
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/04/29/提升工作效率的方法论004/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/04/29/提升工作效率的方法论004/" itemprop="url">提升工作效率的方法论004</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-29T21:40:33+08:00">
-                2019-04-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/04/29/提升工作效率的方法论004/" class="leancloud_visitors" data-flag-title="提升工作效率的方法论004">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  0
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/04/29/提升工作效率的方法论003/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/04/29/提升工作效率的方法论003/" itemprop="url">提升工作效率的方法论003</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-29T21:40:24+08:00">
-                2019-04-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/04/29/提升工作效率的方法论003/" class="leancloud_visitors" data-flag-title="提升工作效率的方法论003">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  0
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><a class="page-number" href="/zhangdavids.github.io/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/zhangdavids.github.io/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/102/">102</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/4/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><a class="page-number" href="/zhangdavids.github.io/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/zhangdavids.github.io/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/103/">103</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/4/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1210,7 +1371,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">510</span>
+                  <span class="site-state-item-count">513</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1232,7 +1393,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/zhangdavids.github.io/tags/index.html">
-                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1325,7 +1486,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共196.6k字</span>
+  <span class="post-count">博客全站共202k字</span>
 </div>
 
         
