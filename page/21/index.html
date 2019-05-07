@@ -309,6 +309,491 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/24/dp-006/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/24/dp-006/" itemprop="url">dp-006</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-24T19:38:10+08:00">
+                2019-03-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/03/24/dp-006/" class="leancloud_visitors" data-flag-title="dp-006">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  236
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">from typing import List</span><br><span class="line">from itertools import accumulate</span><br><span class="line"></span><br><span class="line">def min_dist(weights: List[List[int]]) -&gt; int:</span><br><span class="line">    &quot;&quot;&quot;Find the minimum weight path from the weights matrix.&quot;&quot;&quot;</span><br><span class="line">    m, n = len(weights), len(weights[0])</span><br><span class="line">    table = [[0] * n for _ in range(m)]</span><br><span class="line">    # table[i][j] is the minimum distance (weight) when</span><br><span class="line">    # there are i vertical moves and j horizontal moves</span><br><span class="line">    # left.</span><br><span class="line">    table[0] = list(accumulate(reversed(weights[-1])))</span><br><span class="line">    for i, v in enumerate(accumulate(row[-1] for row in reversed(weights))):</span><br><span class="line">        table[i][0] = v</span><br><span class="line">    for i in range(1, m):</span><br><span class="line">        for j in range(1, n):</span><br><span class="line">            table[i][j] = weights[~i][~j] + min(table[i - 1][j], table[i][j - 1])</span><br><span class="line">    return table[-1][-1]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def min_dist_recur(weights: List[List[int]]) -&gt; int:</span><br><span class="line">    m, n = len(weights), len(weights[0])</span><br><span class="line">    table = [[0] * n for _ in range(m)]</span><br><span class="line">    def min_dist_to(i: int, j: int) -&gt; int:</span><br><span class="line">        if i == j == 0: return weights[0][0]</span><br><span class="line">        if table[i][j]: return table[i][j]</span><br><span class="line">        min_left = float(&quot;inf&quot;) if j - 1 &lt; 0 else min_dist_to(i, j - 1)</span><br><span class="line">        min_up = float(&quot;inf&quot;) if i - 1 &lt; 0 else min_dist_to(i - 1, j)</span><br><span class="line">        return weights[i][j] + min(min_left, min_up)</span><br><span class="line">    return min_dist_to(m - 1, n - 1)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">    weights = [[1, 3, 5, 9], [2, 1, 3, 4], [5, 2, 6, 7], [6, 8, 4, 3]]</span><br><span class="line">    print(min_dist(weights))</span><br><span class="line">    print(min_dist_recur(weights))</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/24/dp-005/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/24/dp-005/" itemprop="url">dp-005</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-24T19:38:04+08:00">
+                2019-03-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/03/24/dp-005/" class="leancloud_visitors" data-flag-title="dp-005">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  174
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">#!/usr/bin/python</span><br><span class="line"># -*- coding: UTF-8 -*-</span><br><span class="line"></span><br><span class="line">from typing import List</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def coins_dp(values: List[int], target: int) -&gt; int:</span><br><span class="line">    # memo[i]表示target为i的时候，所需的最少硬币数</span><br><span class="line">    memo = [0] * (target+1)</span><br><span class="line">    # 0元的时候为0个</span><br><span class="line">    memo[0] = 0</span><br><span class="line"></span><br><span class="line">    for i in range(1, target+1):</span><br><span class="line">        min_num = 999999</span><br><span class="line">        # 对于values中的所有n</span><br><span class="line">        # memo[i]为 min(memo[i-n1], memo[i-n2], ...) + 1</span><br><span class="line">        for n in values:</span><br><span class="line">            if i &gt;= n:</span><br><span class="line">                min_num = min(min_num, 1 + memo[i-n])</span><br><span class="line">            else:   # values中的数值要从小到大排序</span><br><span class="line">                break</span><br><span class="line">        memo[i] = min_num</span><br><span class="line"></span><br><span class="line">    # print(memo)</span><br><span class="line">    return memo[-1]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">min_num = 999999</span><br><span class="line">def coins_backtracking(values: List[int], target: int, cur_value: int, coins_count: int):</span><br><span class="line">    if cur_value == target:</span><br><span class="line">        global min_num</span><br><span class="line">        min_num = min(coins_count, min_num)</span><br><span class="line">    else:</span><br><span class="line">        for n in values:</span><br><span class="line">            if cur_value + n &lt;= target:</span><br><span class="line">                coins_backtracking(values, target, cur_value+n, coins_count+1)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    values = [1, 3, 5]</span><br><span class="line">    target = 23</span><br><span class="line">    print(coins_dp(values, target))</span><br><span class="line">    coins_backtracking(values, target, 0, 0)</span><br><span class="line">    print(min_num)</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/24/dp-004/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/24/dp-004/" itemprop="url">dp-004</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-24T19:23:31+08:00">
+                2019-03-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/03/24/dp-004/" class="leancloud_visitors" data-flag-title="dp-004">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  245
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">def levenshtein_dp(s: str, t: str) -&gt; int:</span><br><span class="line">    m, n = len(s), len(t)</span><br><span class="line">    table = [[0] * (n) for _ in range(m)]</span><br><span class="line"></span><br><span class="line">    for i in range(n):</span><br><span class="line">        if s[0] == t[i]:</span><br><span class="line">            table[0][i] = i - 0</span><br><span class="line">        elif i != 0:</span><br><span class="line">            table[0][i] = table[0][i - 1] + 1</span><br><span class="line">        else:</span><br><span class="line">            table[0][i] = 1</span><br><span class="line"></span><br><span class="line">    for i in range(m):</span><br><span class="line">        if s[i] == t[0]:</span><br><span class="line">            table[i][0] = i - 0</span><br><span class="line">        elif i != 0:</span><br><span class="line">            table[i][0] = table[i - 1][0] + 1</span><br><span class="line">        else:</span><br><span class="line">            table[i][0] = 1</span><br><span class="line"></span><br><span class="line">    for i in range(1, m):</span><br><span class="line">        for j in range(1, n):</span><br><span class="line">            table[i][j] = min(1 + table[i - 1][j], 1 + table[i][j - 1], int(s[i] != t[j]) + table[i - 1][j - 1])</span><br><span class="line"></span><br><span class="line">    print(table)</span><br><span class="line">    return table[-1][-1]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def common_substring_dp(s: str, t: str) -&gt; int:</span><br><span class="line">    m, n = len(s), len(t)</span><br><span class="line">    table = [[0] * (n + 1) for _ in range(m + 1)]</span><br><span class="line">    for i in range(1, m + 1):</span><br><span class="line">        for j in range(1, n + 1):</span><br><span class="line">            table[i][j] = max(table[i - 1][j], table[i][j - 1], int(s[i - 1] == t[j - 1]) + table[i - 1][j - 1])</span><br><span class="line">    return table[-1][-1]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">    s = &quot;mitcmu&quot;</span><br><span class="line">    t = &quot;mtacnu&quot;</span><br><span class="line"></span><br><span class="line">    print(levenshtein_dp(s, t))</span><br><span class="line">    print(common_substring_dp(s, t))</span><br><span class="line"></span><br><span class="line">    s = &quot;kitten&quot;</span><br><span class="line">    t = &quot;sitting&quot;</span><br><span class="line"></span><br><span class="line">    print(levenshtein_dp(s, t))</span><br><span class="line">    print(common_substring_dp(s, t))</span><br><span class="line"></span><br><span class="line">    s = &quot;flaw&quot;</span><br><span class="line">    t = &quot;lawn&quot;</span><br><span class="line"></span><br><span class="line">    print(levenshtein_dp(s, t))</span><br><span class="line">    print(common_substring_dp(s, t))</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/21/dp003/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -640,564 +1125,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/21/dp001/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/21/dp001/" itemprop="url">dp001</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-21T13:15:36+08:00">
-                2019-03-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/03/21/dp001/" class="leancloud_visitors" data-flag-title="dp001">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  358
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>动态规化</p>
-<p>寻求最优解 比如最大值 最小值 降低时间复杂度</p>
-<h3 id="0-1背包"><a href="#0-1背包" class="headerlink" title="0-1背包"></a>0-1背包</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">from typing import List, Tuple</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def bag(items_info: List[int], capacity: int) -&gt; int:</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    固定容量的背包，计算能装进背包的物品组合的最大重量</span><br><span class="line">    :param items_info: 每个物品的重量</span><br><span class="line">    :param capacity: 背包容量</span><br><span class="line">    :return: 最大装载重量</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    n = len(items_info)</span><br><span class="line">    memo = [[-1]*(capacity+1) for i in range(n)]</span><br><span class="line">    memo[0][0] = 1</span><br><span class="line">    if items_info[0] &lt;= capacity:</span><br><span class="line">        memo[0][items_info[0]] = 1</span><br><span class="line"></span><br><span class="line">    for i in range(1, n):</span><br><span class="line">        for cur_weight in range(capacity+1):</span><br><span class="line">            if memo[i-1][cur_weight] != -1:</span><br><span class="line">                memo[i][cur_weight] = memo[i-1][cur_weight]   # 不选</span><br><span class="line">                if cur_weight + items_info[i] &lt;= capacity:    # 选</span><br><span class="line">                    memo[i][cur_weight + items_info[i]] = 1</span><br><span class="line"></span><br><span class="line">    for w in range(capacity, -1, -1):</span><br><span class="line">        if memo[-1][w] != -1:</span><br><span class="line">            return w</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def bag_with_max_value(items_info: List[Tuple[int, int]], capacity: int) -&gt; int:</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    固定容量的背包，计算能装进背包的物品组合的最大价值</span><br><span class="line">    :param items_info: 物品的重量和价值</span><br><span class="line">    :param capacity: 背包容量</span><br><span class="line">    :return: 最大装载价值</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    n = len(items_info)</span><br><span class="line">    memo = [[-1]*(capacity+1) for i in range(n)]</span><br><span class="line">    memo[0][0] = 0</span><br><span class="line">    if items_info[0][0] &lt;= capacity:</span><br><span class="line">        memo[0][items_info[0][0]] = items_info[0][1]</span><br><span class="line"></span><br><span class="line">    for i in range(1, n):</span><br><span class="line">        for cur_weight in range(capacity+1):</span><br><span class="line">            if memo[i-1][cur_weight] != -1:</span><br><span class="line">                memo[i][cur_weight] = memo[i-1][cur_weight]</span><br><span class="line">                if cur_weight + items_info[i][0] &lt;= capacity:</span><br><span class="line">                    memo[i][cur_weight + items_info[i][0]] = max(memo[i][cur_weight + items_info[i][0]],</span><br><span class="line">                                                                 memo[i-1][cur_weight] + items_info[i][1])</span><br><span class="line">    return max(memo[-1])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    # [weight, ...]</span><br><span class="line">    items_info = [2, 2, 4, 6, 3]</span><br><span class="line">    capacity = 9</span><br><span class="line">    print(bag(items_info, capacity))</span><br><span class="line"></span><br><span class="line">    # [(weight, value), ...]</span><br><span class="line">    items_info = [(3, 5), (2, 2), (1, 4), (1, 2), (4, 10)]</span><br><span class="line">    capacity = 8</span><br><span class="line">    print(bag_with_max_value(items_info, capacity))</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/21/字符串之字典树/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/21/字符串之字典树/" itemprop="url">字符串之字典树</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-21T09:48:57+08:00">
-                2019-03-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/03/21/字符串之字典树/" class="leancloud_visitors" data-flag-title="字符串之字典树">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  152
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">class TrieNode:</span><br><span class="line">    def __init__(self, data: str):</span><br><span class="line">        self._data = data</span><br><span class="line">        self._children = [None] * 26</span><br><span class="line">        self._is_ending_char = False</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line">class Trie:</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self._root = TrieNode(&quot;/&quot;)</span><br><span class="line"></span><br><span class="line">    def insert(self, text: str) -&gt; None:</span><br><span class="line">        node = self._root</span><br><span class="line">        for index, char in map(lambda x: (ord(x) - ord(&quot;a&quot;), x), text):</span><br><span class="line">            if not node._children[index]:</span><br><span class="line">                node._children[index] = TrieNode(char)</span><br><span class="line">            node = node._children[index]</span><br><span class="line">        node._is_ending_char = True</span><br><span class="line">    </span><br><span class="line">    def find(self, pattern: str) -&gt; bool:</span><br><span class="line">        node = self._root</span><br><span class="line">        for index in map(lambda x: ord(x) - ord(&quot;a&quot;), pattern):</span><br><span class="line">            if not node._children[index]: return False</span><br><span class="line">            node = node._children[index]</span><br><span class="line">        return node._is_ending_char</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line"></span><br><span class="line">    strs = [&quot;how&quot;, &quot;hi&quot;, &quot;her&quot;, &quot;hello&quot;, &quot;so&quot;, &quot;see&quot;]</span><br><span class="line">    trie = Trie()</span><br><span class="line">    for s in strs:</span><br><span class="line">        trie.insert(s)</span><br><span class="line">    </span><br><span class="line">    for s in strs:</span><br><span class="line">        print(trie.find(s))</span><br><span class="line">    </span><br><span class="line">    print(trie.find(&quot;swift&quot;))</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/20/字符串匹配-kmp/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/20/字符串匹配-kmp/" itemprop="url">字符串匹配-kmp</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-20T17:24:59+08:00">
-                2019-03-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/03/20/字符串匹配-kmp/" class="leancloud_visitors" data-flag-title="字符串匹配-kmp">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  268
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">from typing import List</span><br><span class="line"></span><br><span class="line">def kmp(s: int, pattern: int) -&gt; int:</span><br><span class="line">    m = len(pattern)</span><br><span class="line">    partial_match_table = _get_partial_match_table(pattern)</span><br><span class="line">    j = 0</span><br><span class="line">    for i in range(len(s)):</span><br><span class="line">        while j &gt;= 0 and s[i] != pattern[j]:</span><br><span class="line">            j = partial_match_table[j]</span><br><span class="line">        j += 1</span><br><span class="line">        if j == m:</span><br><span class="line">            return i - m + 1</span><br><span class="line">    return -1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def _get_partial_match_table(pattern: int) -&gt; List[int]:</span><br><span class="line">    # Denote πᵏ(i) as π applied to i for k times,</span><br><span class="line">    # i.e., π²(i) = π(π(i)).</span><br><span class="line">    # Then we have the result:</span><br><span class="line">    #    π(i) = πᵏ(i-1) + 1,</span><br><span class="line">    # where k is the smallest integer such that</span><br><span class="line">    # pattern[πᵏ(i-1)+1] == pattern[i].</span><br><span class="line"></span><br><span class="line">    # The value of π means the maximum length</span><br><span class="line">    # of proper prefix/suffix.</span><br><span class="line">    # The index of π means the length of the prefix</span><br><span class="line">    # considered for pattern.</span><br><span class="line">    # For example, π[2] means we are considering the first 2 characters</span><br><span class="line">    # of the pattern.</span><br><span class="line">    # If π[2] == 1, it means for the prefix of the pattern, P[0]P[1],</span><br><span class="line">    # it has a maximum length proper prefix of 1, which is also the</span><br><span class="line">    # suffix of P[0]P[1].</span><br><span class="line">    # We also add a π[0] == -1 for easier handling of boundary</span><br><span class="line">    # condition.</span><br><span class="line">    </span><br><span class="line">    m = len(pattern)</span><br><span class="line">    π = [0] * (m + 1)</span><br><span class="line">    π[0] = k = -1  # We use k here to represent πᵏ(i)</span><br><span class="line">    for i in range(1, m + 1):</span><br><span class="line">        while k &gt;= 0 and pattern[k] != pattern[i - 1]:</span><br><span class="line">            k = π[k]</span><br><span class="line">        k += 1</span><br><span class="line">        π[i] = k</span><br><span class="line">    return π</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line"></span><br><span class="line">    s = &quot;abc abcdab abcdabcdabde&quot;</span><br><span class="line">    pattern = &quot;bcdabd&quot;</span><br><span class="line">    print(kmp(s, pattern), s.find(pattern))</span><br><span class="line"></span><br><span class="line">    s = &quot;hello&quot;</span><br><span class="line">    pattern = &quot;ll&quot;</span><br><span class="line">    print(kmp(s, pattern), s.find(pattern))</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/20/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/20/">20</a><span class="page-number current">21</span><a class="page-number" href="/zhangdavids.github.io/page/22/">22</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/103/">103</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/22/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/20/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/20/">20</a><span class="page-number current">21</span><a class="page-number" href="/zhangdavids.github.io/page/22/">22</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/104/">104</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/22/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1247,7 +1179,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">513</span>
+                  <span class="site-state-item-count">516</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1362,7 +1294,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共202k字</span>
+  <span class="post-count">博客全站共202.1k字</span>
 </div>
 
         
