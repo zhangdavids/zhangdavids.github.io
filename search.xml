@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[自定义日志记录中间件]]></title>
+    <url>%2Fzhangdavids.github.io%2F2019%2F05%2F08%2F%E8%87%AA%E5%AE%9A%E4%B9%89%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95%E4%B8%AD%E9%97%B4%E4%BB%B6%2F</url>
+    <content type="text"><![CDATA[1234567891011121314151617181920212223242526# -*- coding: utf-8 -*-from __future__ import unicode_literalsimport loggingimport jsonclass ApiLoggingMiddleware(object): def __init__(self, get_response): self.get_response = get_response self.apiLogger = logging.getLogger(&apos;api&apos;) def __call__(self, request): try: body = json.loads(request.body) except Exception: body = dict() body.update(dict(request.POST)) response = self.get_response(request) if request.method != &apos;GET&apos;: self.apiLogger.info(&quot;&#123;&#125; &#123;&#125; &#123;&#125; &#123;&#125; &#123;&#125; &#123;&#125;&quot;.format( request.user, request.method, request.path, body, response.status_code, response.reason_phrase)) return response]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[练笈攻略0003]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F05%2F07%2F%E7%BB%83%E7%AC%88%E6%94%BB%E7%95%A50003%2F</url>
     <content type="text"></content>

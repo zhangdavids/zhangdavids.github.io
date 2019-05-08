@@ -309,6 +309,167 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/05/08/自定义日志记录中间件/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/05/08/自定义日志记录中间件/" itemprop="url">自定义日志记录中间件</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-08T09:58:58+08:00">
+                2019-05-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/05/08/自定义日志记录中间件/" class="leancloud_visitors" data-flag-title="自定义日志记录中间件">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  86
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line">from __future__ import unicode_literals</span><br><span class="line"></span><br><span class="line">import logging</span><br><span class="line">import json</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class ApiLoggingMiddleware(object):</span><br><span class="line">    def __init__(self, get_response):</span><br><span class="line">        self.get_response = get_response</span><br><span class="line">        self.apiLogger = logging.getLogger(&apos;api&apos;)</span><br><span class="line"></span><br><span class="line">    def __call__(self, request):</span><br><span class="line">        try:</span><br><span class="line">            body = json.loads(request.body)</span><br><span class="line">        except Exception:</span><br><span class="line">            body = dict()</span><br><span class="line">        body.update(dict(request.POST))</span><br><span class="line">        response = self.get_response(request)</span><br><span class="line">        if request.method != &apos;GET&apos;:</span><br><span class="line">            self.apiLogger.info(&quot;&#123;&#125; &#123;&#125; &#123;&#125; &#123;&#125; &#123;&#125; &#123;&#125;&quot;.format(</span><br><span class="line">                request.user, request.method, request.path, body,</span><br><span class="line">                response.status_code, response.reason_phrase))</span><br><span class="line">        return response</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/05/07/练笈攻略0003/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -968,222 +1129,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/05/06/优秀的程序员（知乎）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/05/06/优秀的程序员（知乎）/" itemprop="url">优秀的程序员（知乎）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-06T08:34:09+08:00">
-                2019-05-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/05/06/优秀的程序员（知乎）/" class="leancloud_visitors" data-flag-title="优秀的程序员（知乎）">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  2.5k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  8
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>优秀的程序员会告诉你打根基的重要性，会劝你在厚积薄发前要隐忍。</p>
-<p>优秀的码农会告诉你学啥底层、啥啥啥一拖就好了，学了python还要啥自行车啊，数据结构排序函数二分搜索这不都内置了吗？工作中永远用不到，学算法有啥用啊？成为高手有很多种方法汇编是个屁啊？</p>
-<p>+++基础的分割线+++</p>
-<p>列举几个我认为比较重要的根基并附入门书</p>
-<p>编程语言，《程序设计语言-实践之路》《concepts of programming languages》</p>
-<p>计算机通用知识，《csapp》</p>
-<p>算法、数据结构，《算法导论》</p>
-<p>程序设计、结构，没有书推荐</p>
-<p>软件工程，这个词大家理解不同，我以为，《人月》《代码大全》《the pragmatic programmer》《sicp》、讲测试讲重构的都是软件工程，其实上面设计模式也是软件工程，哈哈</p>
-<p>这些书，初时读来感觉全无作用，而且要读多次才能体会其中意味，所以叫它根基也是十分合适，你根基越深才能爬得越高嘛。</p>
-<p>+++方向的分割线+++</p>
-<p>啥是优秀程序员？</p>
-<p>记者和很多网民说熊猫烧香作者是高手</p>
-<p>公司里你出什么bug他都能告诉你原因用什么软件有问题他都能回答你的你就觉得是高手</p>
-<p>有人说徒手做产品的全栈才是高手</p>
-<p>各语言的作者都是高手</p>
-<p>有不写代码，扔出一个restful论文的</p>
-<p>还有人说高德纳是神，他如果是神，那他那些代码一定是在考验我们，嗯</p>
-<p>。。。。</p>
-<p>上面这些的确都算是高手，我琢磨着前两年被开掉的moto公司员工里肯定也有做功能机的高手和写廉价板驱动的高手</p>
-<p>你想自己选自己的方向还是被人忽悠方向？</p>
-<p>我的想法是自己都尝试玩玩，然后做自己喜欢的方向。当然，程序员的生态金字塔是上面做工具、基础设施给下面人用来给普通人编程序，所以你选方向可以参考一下这个金字塔模型</p>
-<p>+++爬坑的分割线+++</p>
-<p>方向定下，然后就是做事了，一大误区就是 【追求最好的东西】，于是非得弄清楚：</p>
-<p>php是最好的语言吗？<br>OpenGL比directx差吗？<br>程序员要先学数学吗？<br>最好的c语言书是谭浩强写的吗？<br>放屁要先脱裤子吗？<br>linux发行版那么多该选哪个？<br>某大牛说IDE不如编辑器<br>听说黑客都是用记事本写程序的<br>C#是升调记号应该读csharp而java不应念 [加wa（轻声）]<br>。。。</p>
-<p>如果你是一个*nix世界的玩家的话，你应该知道有一个jargon来上面的毛病，叫yak-shaving，我以前提过几次yak-shaving，但是很多人看不懂，它的字面意思是Any seemingly pointless activity which is actually necessary to solve a problem which solves a problem which, several levels of recursion later, solves the real problem you’re working on.</p>
-<p>但一般都引申其意使用它，我这里举例一下：</p>
-<p>你本来要打开软件写一个helloworld，软件提示你升级，你点了升级，提示你xx库不够新，然后你更新xx库，提示你要升级yy驱动，然后你升级yy驱动，系统告诉你要编译这个驱动，你必须下载s.f版本的编译器和库，你更新编译器，系统说s.f版本编译器必须在e.n系统上运行，然后你就升级系统了，几个小时过去，你发现系统升级导致了几个软件损坏，然后你更新那些软件，去找解决问题的方法，不知不觉到了半夜，你累成了狗，却发现问题还有一大堆，而helloworld也没写成。。。。</p>
-<p>这些问题我都遇到过，我的建议是挑一本大牛说的书就是了，看会了其他也会了。当然，如果你不幸不认识大牛（都上知乎了只要会搜索这种事情不可能发生），或者单纯好奇——就像我当年那样的话，那就每种都试试，不过有的答案你自己知道就好，像是编辑器emacs比vim更好，写程序ide比编辑器更好这种话，你是不应该乱说出来的。</p>
-<p>对了，像是不同范式的编程语言、不同的开发环境是应该尝试体验一下的，不过这种建议书上都写了，我这里说显得有些废话了。</p>
-<p>所以说，不能被无关的东西弄偏了目标，要专注，坚持。</p>
-<p>等你学深了一门语言，就算是学另一们其他范式的语言也不会太难，你学会了opengl，dx也就看看就能写了。</p>
-<p>你看看武侠小说里，段誉就是一个傻逼，仗着有时发出有时发不出的脉冲波和绕圈圈就能快跑直线的bug技就加上一门佛学能独步武林最终迎娶了白富美，出任了CEO，走向了人生巅峰，乔峰永远是一招降龙十八掌，更夸张。而慕容复文武双才，基本精通天下武学，每天读书4时辰练功4时辰，论用功谁能和他比啊。。。可到了30多岁还是一事无成，pk连段誉这种新手都搞不过，最后被人抢了老婆，就是因为方向不对，而且太不专注了。</p>
-<p>所以求多不如求专，深度到了，再花20%的时间去扩展一下广度即可。</p>
-<p>+++重要的分割线+++</p>
-<p>以上东西你都做好了，要花个2年时间的样子，对于学生来说，如果你有一个好的学校背景，人生可以就此扬帆起步了</p>
-<p>但这不是终点，俗话说人靠衣装，美靠包装。包装是门学问，这里的包装不是让你西装领带亮皮鞋黑丝套裙白衬衫整一个营销狗hr的造型，是说专业技能上的包装。</p>
-<p>为什么这是最重要的部分呢？因为别人一般不和你说这么多，尤其是懂得包装的人，更不会传你这些不传之秘啦。。。。。</p>
-<p>包装自己的第一步是提高实力</p>
-<p>没有实力的包装那是空中楼阁，只能靠每天日常搞外包的忽悠架构大数据云计算过活，明眼人也能看出来，所以纯属作秀，没有意义。</p>
-<p>在某个领域（编译器、虚拟机、开发架构、前端。。。）成为专家（专家的定义嘛，，我的理解是能在简历里写精通）后，包装的实力就算具备了。</p>
-<p>包装的第二步是定位</p>
-<p>提到美国会有一大堆人跳出来说是人类的希望民主的大救星，提到google就是最纯的技术公司不作恶、软件业的翘楚开发界的标杆、心美人美白莲花。。。哪怕你列举google卖假药、恶意打压yelp、挟持web标准等等等等这些事，他们也会说百度更差（咦这不5角钱常用的语句吗怎么被民主进步人士盗取了？。。。），可我根本没提到百度好吗。。。</p>
-<p>这全是包装造成的，所以包装的巨大威力，以此可窥之。</p>
-<p>google是搜索引擎，百度难道也说自己是搜索引擎？不，百度说自己是最懂中文的搜索引擎。。。哈哈哈，你别笑，这的确很管用，就像google说自己不作恶是好女孩一样。</p>
-<p>程序员的包装定位，无非稀缺和独特这两点。物以稀为贵，稀缺就是要做到不可替代，这很好理解，比如你知道世界第一高峰是珠穆朗玛峰，如果没看过禅师精选集你很难知道第二高峰是乔戈里峰，但文青特别偏好乞力马扎罗山，不爬不跟你结婚，为啥？独特性嘛。。。我不跟你比高，我和你比文化底蕴，于是就赢了。</p>
-<p>由于你有实力，所以你应该尽量把自己的实力包装成稀缺属性，你是专家嘛。。然后你实力多，应该把独特的实力包装出来，避免和他人共同曝光，以免被人压在身下。</p>
-<p>我说一个我朋友包装自己的故事，他进公司接手了一个项目，已经是被隔壁组开发了3，4个月的一个软件，其实这软件2个月也能做好的，但是隔壁人忙而且也不上心，不熟悉这个技术，加上又不是自己的老板，所以做事拖沓了那么久才做好。他接手后一刻没闲，晚上带回家也做，做到半夜，10天做成，然后整个公司的人都知道他的名字了，他也就立稳脚跟了。</p>
-<p>这个包装的主题是，技术实力强，开发速度快。</p>
-<p>包装的第三步是推广</p>
-<p>推广就是让人知道你做得好，强化你的个人品牌，可以用博客、知乎、mailing-list、github等，通过写文章、参加线下聚会演讲、回答问题、帮助他人等方法。这个用好了是门学问，用不好就是装逼，不展开了。。。</p>
-<p>记住不要匿名，匿名你基本啥也得不到</p>
-<p>有人明明技术实力强，但是由于没有包装好，或被埋没了才能，或被贴上了各种不应该有的标签，或被人偏见看待。比如 赵劼 的c#和 vczh 的微软标签</p>
-<p>有人明明实力一般，但是善于鼓动小白，包装得好，所以有一批忠实粉丝，这种人我都不太敢说名字了，呵呵。。</p>
-<p>所以优秀的程序员应该善用包装啊</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1238,7 +1183,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">516</span>
+                  <span class="site-state-item-count">517</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1353,7 +1298,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共202.1k字</span>
+  <span class="post-count">博客全站共202.2k字</span>
 </div>
 
         
