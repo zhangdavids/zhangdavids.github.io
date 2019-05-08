@@ -309,6 +309,191 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/05/02/python装饰器总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/05/02/python装饰器总结/" itemprop="url">python装饰器总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-02T10:39:13+08:00">
+                2019-05-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/05/02/python装饰器总结/" class="leancloud_visitors" data-flag-title="python装饰器总结">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  357
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="写一个记录函数运行时间的装饰器"><a href="#写一个记录函数运行时间的装饰器" class="headerlink" title="写一个记录函数运行时间的装饰器"></a>写一个记录函数运行时间的装饰器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">from functools import wraps</span><br><span class="line">import time</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 使用直接装饰器 @listener(Monitor)</span><br><span class="line">class Monitor(object):</span><br><span class="line">    @staticmethod</span><br><span class="line">    def start_monitor():</span><br><span class="line">        return time.clock()</span><br><span class="line"></span><br><span class="line">    @staticmethod</span><br><span class="line">    def end_monitor():</span><br><span class="line">        return time.clock()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def listener(listen):</span><br><span class="line">    def log(func):</span><br><span class="line">        @wraps(func)</span><br><span class="line">        def wrapper(*args, **kw):</span><br><span class="line">            startime = listen.start_monitor()</span><br><span class="line">            f = func(*args, **kw)</span><br><span class="line">            endtime = listen.end_monitor()</span><br><span class="line">            print(&quot;total time is &#123;0&#125;&quot;.format(startime-endtime))</span><br><span class="line">            return  f</span><br><span class="line">        return wrapper</span><br><span class="line">    return log</span><br></pre></td></tr></table></figure>
+<h3 id="一个函数-挂多个装饰器的执行顺序"><a href="#一个函数-挂多个装饰器的执行顺序" class="headerlink" title="一个函数 挂多个装饰器的执行顺序"></a>一个函数 挂多个装饰器的执行顺序</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># -*- coding: utf-8 -*-</span><br><span class="line"></span><br><span class="line">import functools</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 采用functools.wraps的目的是为了使装饰器返回的类型始终是func的类型，否则将返回嵌套高阶函数的中的类型，例如返回的是wraper</span><br><span class="line"># 采用参数*args ,**kw是解决函数多参数的问题</span><br><span class="line">def log(func):</span><br><span class="line">	@functools.wraps(func)</span><br><span class="line">	def wrapper(*args, **kw):</span><br><span class="line">		print(&apos;call %s():&apos; % func.__name__)</span><br><span class="line">		return func(*args, **kw)</span><br><span class="line">	return wrapper</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 修饰器参数的情况</span><br><span class="line">def logger(pram):</span><br><span class="line">	def log(func):</span><br><span class="line">		@functools.wraps(func)</span><br><span class="line">		def wrapper(*args, **kw):</span><br><span class="line">			print(&apos;call %s(): and parsms is %s&apos; %(func.__name__,pram))</span><br><span class="line">			return func(*args, **kw)</span><br><span class="line">		return wrapper</span><br><span class="line">	return log</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@log</span><br><span class="line">def showMesage(name,age):</span><br><span class="line">	print(&quot;my name is &#123;0&#125; and my age is &#123;1&#125;&quot;.format(name,age))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">@logger(&quot;hello&quot;)</span><br><span class="line">def getMessage(name,age):</span><br><span class="line">	print(&quot;my name is &#123;0&#125; and my age is &#123;1&#125;&quot;.format(name,age))</span><br><span class="line"></span><br><span class="line"># 添加多个修饰器来拓展所需的功能</span><br><span class="line">@log</span><br><span class="line">@logger(&quot;hello15466&quot;)</span><br><span class="line">def recieveMessage(name,age):</span><br><span class="line">	print(&quot;my name is &#123;0&#125; and my age is &#123;1&#125;&quot;.format(name,age))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__==&apos;__main__&apos;:</span><br><span class="line">	# showMesage(&quot;ddd&quot;,21)</span><br><span class="line">	# getMessage(&quot;aaa&quot;,43)</span><br><span class="line">	recieveMessage(&quot;ccc&quot;,34)</span><br></pre></td></tr></table></figure>
+<h3 id="类装饰器"><a href="#类装饰器" class="headerlink" title="类装饰器"></a>类装饰器</h3><h3 id="带参数的装饰器"><a href="#带参数的装饰器" class="headerlink" title="带参数的装饰器"></a>带参数的装饰器</h3>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/05/01/python-web的未来/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1132,167 +1317,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/04/29/提升工作效率的方法论005/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/04/29/提升工作效率的方法论005/" itemprop="url">提升工作效率的方法论005</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-29T21:40:38+08:00">
-                2019-04-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/04/29/提升工作效率的方法论005/" class="leancloud_visitors" data-flag-title="提升工作效率的方法论005">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  0
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1347,7 +1371,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">517</span>
+                  <span class="site-state-item-count">518</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1462,7 +1486,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共202.4k字</span>
+  <span class="post-count">博客全站共209.8k字</span>
 </div>
 
         

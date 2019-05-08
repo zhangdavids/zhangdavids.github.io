@@ -309,6 +309,199 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/04/01/关注最后一步-部署/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/04/01/关注最后一步-部署/" itemprop="url">关注最后一步-部署</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-04-01T15:04:40+08:00">
+                2019-04-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/04/01/关注最后一步-部署/" class="leancloud_visitors" data-flag-title="关注最后一步-部署">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  716
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="gunicorn"><a href="#gunicorn" class="headerlink" title="gunicorn"></a>gunicorn</h2><h3 id="1-Gunicorn设计"><a href="#1-Gunicorn设计" class="headerlink" title="1.Gunicorn设计"></a>1.Gunicorn设计</h3><p>　　Gunicorn 是一个 master 进程，spawn 出数个工作进程的 web 服务器。master 进程控制工作进程的产生与消亡，工作进程只需要接受请求并且处理。这样分离的方式使得 reload 代码非常方便，也很容易增加或减少工作进程。 工作进程这块作者给了很大的扩展余地，它可以支持不同的IO方式，如 Gevent,Sync 同步进程，Asyc 异步进程，Eventlet 等等。master 跟 worker 进程完全分离，使得 Gunicorn 实质上就是一个控制进程的服务。</p>
+<h3 id="2-Gunicorn源码结构"><a href="#2-Gunicorn源码结构" class="headerlink" title="2.Gunicorn源码结构"></a>2.Gunicorn源码结构</h3><p>　　从 Application.run() 开始，首先初始化配置，从文件读取，终端读取等等方式完成 configurate。然后启动 Arbiter，Arbiter 是实质上的 master 进程的核心，它首先从配置类中读取并设置，然后初始化信号处理函数，建立 socket。然后就是开始 spawn 工作进程，根据配置的工作进程数进行 spawn。然后就进入了轮询状态，收到信号，处理信号然后继续。这里唤醒进程的方式是建立一个 PIPE，通过信号处理函数往 pipe 里 write，然后 master 从 select.select() 中唤醒。</p>
+<p>工作进程在 spawn 后，开始初始化，然后同样对信号进行处理，并且开始轮询，处理 HTTP 请求，调用 WSGI 的应用端，得到 resopnse 返回。然后继续。</p>
+<p>Sync 同步进程的好处在于每个 request 都是分离的，每个 request 失败都不会影响其他 request，但这样导致了性能上的瓶颈。</p>
+<p>没有对错，找个框架入门好了~</p>
+<p>flask 上手快，插件多，但是随着项目的深入，慢慢就是变成一个 django，绝对的<br>django 一上来就是大而全，但胜在什么都有，什么都不用自己折腾</p>
+<p>tornado 这货从一出生就开始用到现在，没有啥好也没啥不好，就是用习惯了。flask 的上手快是以各种插件为代价的，模板你要去找 jinja 吧？ orm 要找 sqlachemy 吧？这些都需要你自己去熟悉一下</p>
+<p>而且，各种用 flask 和 django 的同学可能忽略了一个基本是事实就是，如果你有工作需要深入到源代码的话，那么 tornado 是一个极好的参考。django 的代码体系复杂而且庞大我就不说了，看 flask 的代码底层还要考虑 Werkzeug，其基于全局变量的 context 处理起来其实也不容易的。</p>
+<p>顺便的，部署 tornado 的项目可以少拖一个 gunicorn 或者 uwsgi 之如此类，少很多坑</p>
+<p>上面那些提及到性能的同学，完全没有必要进行对比。在 pypy/aiohttp/uvloop 的加持下，不是我非要针对谁，你们说的性能都是垃圾。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/31/完美数/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1108,189 +1301,6 @@ defer toolbox.StopTask()
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/28/1024-2-poisonous-40/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/28/1024-2-poisonous-40/" itemprop="url">1024-2-poisonous-40</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-28T13:58:38+08:00">
-                2019-03-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/03/28/1024-2-poisonous-40/" class="leancloud_visitors" data-flag-title="1024-2-poisonous-40">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  353
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  2
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">from random import randrange</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def to_b4(n):</span><br><span class="line">    return [n/4**k%4 for k in range(5)]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def fr_b4(li):</span><br><span class="line">    return sum([li[k]*4**k for k in range(5)])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def drink(p1,p2):</span><br><span class="line">    li1,li2 = to_b4(p1),to_b4(p2)</span><br><span class="line">    g0 = [li1[k]==0 or li2[k]==0 for k in range(5)]</span><br><span class="line">    g1 = [li1[k]==1 or li2[k]==1 for k in range(5)]</span><br><span class="line">    g2 = [li1[k]==2 or li2[k]==2 for k in range(5)]</span><br><span class="line">    g3 = [li1[k]==3 or li2[k]==3 for k in range(5)]</span><br><span class="line">    gc,gf = &#123;&#125;,&#123;&#125;</span><br><span class="line">    for i in range(4):</span><br><span class="line">        for j in range(i+1,5):</span><br><span class="line">            diff1 = abs(li1[i]-li1[j])</span><br><span class="line">            diff2 = abs(li2[i]-li2[j])</span><br><span class="line">            gc[i,j] = diff1 == 1 or diff2 == 1</span><br><span class="line">            gf[i,j] = diff1 &gt; 1 or diff2 &gt; 1</span><br><span class="line">    return g0,g1,g2,g3,gc,gf</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def check(u,v,d1,d2,c,f):</span><br><span class="line">    a = [[0,1,2,2],[1,0,1,2],[2,1,0,1],[2,2,1,0]]</span><br><span class="line">    a11 = a[u][d1]</span><br><span class="line">    a22 = a[v][d2]</span><br><span class="line">    c1 = a11 == 1 or a22 == 1</span><br><span class="line">    f1 = a11 == 2 or a22 == 2</span><br><span class="line">    if c == c1 and f == f1:</span><br><span class="line">        return u,v</span><br><span class="line">    else:</span><br><span class="line">        return v,u</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def test(g0,g1,g2,g3,gc,gf):</span><br><span class="line">    diff = 5</span><br><span class="line">    t1,t2 = range(5),range(5)</span><br><span class="line">    for k in range(4,-1,-1):</span><br><span class="line">        li = [g0[k],g1[k],g2[k],g3[k]]</span><br><span class="line">        u = li.index(True)</span><br><span class="line">        if (li.count(True) == 1):</span><br><span class="line">            t1[k],t2[k] = u,u</span><br><span class="line">        else:</span><br><span class="line">            li[u] = False</span><br><span class="line">            v = li.index(True)</span><br><span class="line">            if diff == 5:</span><br><span class="line">                diff = k</span><br><span class="line">                t1[k],t2[k] = u,v</span><br><span class="line">            else:</span><br><span class="line">                t1[k],t2[k] = check(u,v,t1[diff],t2[diff],gc[k,diff],gf[k,diff])</span><br><span class="line">    return fr_b4(t1),fr_b4(t2)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">poison1 = randrange(1024)</span><br><span class="line">poison2 = (poison1 + randrange(1,1024)) % 1024</span><br><span class="line">g0,g1,g2,g3,gc,gf = drink(poison1,poison2)</span><br><span class="line">target1,target2 = test(g0,g1,g2,g3,gc,gf)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">print poison1,poison2</span><br><span class="line">print to_b4(poison1)</span><br><span class="line">print to_b4(poison2)</span><br><span class="line">print &quot;0:&quot;,g0</span><br><span class="line">print &quot;1:&quot;,g1</span><br><span class="line">print &quot;2:&quot;,g2</span><br><span class="line">print &quot;3:&quot;,g3</span><br><span class="line">print &quot;c:&quot;,gc</span><br><span class="line">print &quot;f:&quot;,gf</span><br><span class="line">print target1,target2</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1345,7 +1355,7 @@ defer toolbox.StopTask()
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">517</span>
+                  <span class="site-state-item-count">518</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1460,7 +1470,7 @@ defer toolbox.StopTask()
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共202.4k字</span>
+  <span class="post-count">博客全站共209.8k字</span>
 </div>
 
         
