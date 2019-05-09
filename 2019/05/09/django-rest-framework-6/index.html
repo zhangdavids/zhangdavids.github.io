@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="python," />
 
 
 
@@ -91,7 +91,7 @@ ViewSet类几乎和View类一样，除了它们提供像read或update操作，�
 <meta property="og:description" content="REST framework包含一个抽象概念来处理ViewSets，它使得开发者可以集中精力对 API的state和interactions建模，留下URL构造被自动处理，基于共同约定。
 ViewSet类几乎和View类一样，除了它们提供像read或update操作，但没有处理get和put的方法。
 一个ViewSet类只是绑定到一组方法处理程序在最后一刻，在它被实例化到一组视图的时候，通常是使用">
-<meta property="og:updated_time" content="2019-05-09T00:51:38.234Z">
+<meta property="og:updated_time" content="2019-05-09T01:23:53.063Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="django-rest-framework-6">
 <meta name="twitter:description" content="REST framework包含一个抽象概念来处理ViewSets，它使得开发者可以集中精力对 API的state和interactions建模，留下URL构造被自动处理，基于共同约定。
@@ -355,6 +355,28 @@ ViewSet类几乎和View类一样，除了它们提供像read或update操作，�
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/drf/" itemprop="url" rel="index">
+                    <span itemprop="name">drf</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -387,7 +409,7 @@ ViewSet类几乎和View类一样，除了它们提供像read或update操作，�
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.2k
+                  1.3k
                 </span>
               
 
@@ -403,7 +425,7 @@ ViewSet类几乎和View类一样，除了它们提供像read或update操作，�
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  4
+                  5
                 </span>
               
             </div>
@@ -430,39 +452,91 @@ ViewSet类几乎和View类一样，除了它们提供像read或update操作，�
 <p>使用ViewSets来重构</p>
 <p>让我们取出当前集合的views，使用view sets将它们重构。</p>
 <p>首先让我们重构我们的UserListView和UserDetailViewviews成一个UserViewSet。我们可以移除两个views，用一个类来替换它们。</p>
-<p>class UserViewSet(viewsets.ReadOnlyModelViewSet):<br>    “””<br>    This viewset automatically provides <code>list</code> and <code>detail</code> actions.<br>    “””<br>    queryset = User.objects.all()<br>    serializer_class = UserSerializer<br>在这里我们将使用ReadOnlyModelViewSet类来自动地提供默认的’read-only’操作。正如我们在使用常规的views做的，我们还是会设置queryset和serializer_class属性，但我们不再需要提供相同的信息给两个独立的类。</p>
+<pre><code>class UserViewSet(viewsets.ReadOnlyModelViewSet):
+    &quot;&quot;&quot;
+    This viewset automatically provides `list` and `detail` actions.
+    &quot;&quot;&quot;
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+</code></pre><p>在这里我们将使用ReadOnlyModelViewSet类来自动地提供默认的’read-only’操作。正如我们在使用常规的views做的，我们还是会设置queryset和serializer_class属性，但我们不再需要提供相同的信息给两个独立的类。</p>
 <p>下一步我们将替换SnippetList,SnippetDetial和SnippetHighlightview类。我们可以移除这三个views，再次用一个类来替换它们。</p>
-<p>from rest_framework import viewsets<br>from rest_framework.decorators import link</p>
-<p>class SnippetViewSet(viewsets.ModelViewSet):<br>    “””<br>    This viewset automatically provides <code>list</code>, <code>create</code>, <code>retrieve</code>,<br>    <code>update</code> and <code>destroy</code> actions.</p>
-<pre><code>Additionally we also provide an extra `highlight` action. 
-&quot;&quot;&quot;
-queryset = Snippet.objects.all()
-serializer_class = SnippetSerializer
-permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-                      IsOwnerOrReadOnly,)
+<pre><code>from rest_framework import viewsets
+from rest_framework.decorators import link
 
-@link(renderer_classes=[renderers.StaticHTMLRenderer])
-def highlight(self, request, *args, **kwargs):
-    snippet = self.get_object()
-    return Response(snippet.highlighted)
+class SnippetViewSet(viewsets.ModelViewSet):
+    &quot;&quot;&quot;
+    This viewset automatically provides `list`, `create`, `retrieve`,
+    `update` and `destroy` actions.
 
-def pre_save(self, obj):
-    obj.owner = self.request.user
+    Additionally we also provide an extra `highlight` action. 
+    &quot;&quot;&quot;
+    queryset = Snippet.objects.all()
+    serializer_class = SnippetSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly,)
+
+    @link(renderer_classes=[renderers.StaticHTMLRenderer])
+    def highlight(self, request, *args, **kwargs):
+        snippet = self.get_object()
+        return Response(snippet.highlighted)
+
+    def pre_save(self, obj):
+        obj.owner = self.request.user
 </code></pre><p>这次我们将使用ModelViewSet类为了得到默认read和write操作的完整集合。</p>
 <p>注意我们还使用@link修饰符来创建一个自定义动作名为highlight。这个修饰符可以用来添加任何自定义endpoints，不用符合标准的create/update/delete样式。</p>
 <p>用@link修饰符创建的自定义动作将会对GET请亲做出响应。我们也可以使用@action修饰符代替如果我们想要一个对POST请求做出响应的动作。</p>
 <p>明确地绑定ViewSets到URLs</p>
 <p>handler method仅仅在我们定义URLConf的时候绑定到动作(actions)上。去看看盖子下发生了什么首先从我们的ViewSets明确地创建一个views集合。</p>
 <p>在urls.py文件中我们绑定了我们的ViewSet类到一个具体views的集合。</p>
-<p>from snippets.views import SnippetViewSet, UserViewSet</p>
-<p>snippet_list = SnippetViewSet.as_view({<br>    ‘get’: ‘list’,<br>    ‘post’: ‘create’<br>})<br>snippet_detail = SnippetViewSet.as_view({<br>    ‘get’: ‘retrieve’,<br>    ‘put’: ‘update’,<br>    ‘patch’: ‘partial_update’,<br>    ‘delete’: ‘destroy’<br>})<br>snippet_highlight = SnippetViewSet.as_view({<br>    ‘get’: ‘highlight’<br>})<br>user_list = UserViewSet.as_view({<br>    ‘get’: ‘list’<br>})<br>user_detail = UserViewSet.as_view({<br>    ‘get’: ‘retrieve’<br>})<br>注意我们怎么样从每个ViewSet类创建多样的views，通过绑定http methods到每个view所需的动作(by binding the http methods to the required aciotn for each view)</p>
+<pre><code>from snippets.views import SnippetViewSet, UserViewSet
+
+snippet_list = SnippetViewSet.as_view({
+    &apos;get&apos;: &apos;list&apos;,
+    &apos;post&apos;: &apos;create&apos;
+})
+snippet_detail = SnippetViewSet.as_view({
+    &apos;get&apos;: &apos;retrieve&apos;,
+    &apos;put&apos;: &apos;update&apos;,
+    &apos;patch&apos;: &apos;partial_update&apos;,
+    &apos;delete&apos;: &apos;destroy&apos;
+})
+snippet_highlight = SnippetViewSet.as_view({
+    &apos;get&apos;: &apos;highlight&apos;
+})
+user_list = UserViewSet.as_view({
+    &apos;get&apos;: &apos;list&apos;
+})
+user_detail = UserViewSet.as_view({
+    &apos;get&apos;: &apos;retrieve&apos;
+})
+</code></pre><p>注意我们怎么样从每个ViewSet类创建多样的views，通过绑定http methods到每个view所需的动作(by binding the http methods to the required aciotn for each view)</p>
 <p>现在我们已经绑定我们的资源到具体的views，我们可以像往常一样注册views和URL conf。</p>
-<p>urlpatterns = format_suffix_patterns(patterns(‘snippets.views’,<br>    url(r’^$’, ‘api_root’),<br>    url(r’^snippets/$’, snippet_list, name=’snippet-list’),<br>    url(r’^snippets/(?P<pk>[0-9]+)/$’, snippet_detail, name=’snippet-detail’),<br>    url(r’^snippets/(?P<pk>[0-9]+)/highlight/$’, snippet_highlight, name=’snippet-highlight’),<br>    url(r’^users/$’, user_list, name=’user-list’),<br>    url(r’^users/(?P<pk>[0-9]+)/$’, user_detail, name=’user-detail’)<br>))<br>使用Routers</pk></pk></pk></p>
+<pre><code>urlpatterns = format_suffix_patterns(patterns(&apos;snippets.views&apos;,
+    url(r&apos;^$&apos;, &apos;api_root&apos;),
+    url(r&apos;^snippets/$&apos;, snippet_list, name=&apos;snippet-list&apos;),
+    url(r&apos;^snippets/(?P&lt;pk&gt;[0-9]+)/$&apos;, snippet_detail, name=&apos;snippet-detail&apos;),
+    url(r&apos;^snippets/(?P&lt;pk&gt;[0-9]+)/highlight/$&apos;, snippet_highlight, name=&apos;snippet-highlight&apos;),
+    url(r&apos;^users/$&apos;, user_list, name=&apos;user-list&apos;),
+    url(r&apos;^users/(?P&lt;pk&gt;[0-9]+)/$&apos;, user_detail, name=&apos;user-detail&apos;)
+))
+</code></pre><p>使用Routers</p>
 <p>因为我们使用ViewSet类而不是View类，我们实际上不用自己设计URL conf。连接resources到views和urls的约定可以使用Router类自动处理。我们要做的仅仅是用一个router注册适当的view集合，and let it do the rest</p>
 <p>这里我们重连接urls.py文件</p>
-<p>from snippets import views<br>from rest_framework.routers import DefaultRouter</p>
-<h1 id="Create-a-router-and-register-our-viewsets-with-it"><a href="#Create-a-router-and-register-our-viewsets-with-it" class="headerlink" title="Create a router and register our viewsets with it."></a>Create a router and register our viewsets with it.</h1><p>router = DefaultRouter()<br>router.register(r’snippets’, views.SnippetViewSet)<br>router.register(r’users’, views.UserViewSet)</p>
-<h1 id="The-API-URLs-are-now-determined-automatically-by-the-router"><a href="#The-API-URLs-are-now-determined-automatically-by-the-router" class="headerlink" title="The API URLs are now determined automatically by the router."></a>The API URLs are now determined automatically by the router.</h1><h1 id="Additionally-we-include-the-login-URLs-for-the-browseable-API"><a href="#Additionally-we-include-the-login-URLs-for-the-browseable-API" class="headerlink" title="Additionally, we include the login URLs for the browseable API."></a>Additionally, we include the login URLs for the browseable API.</h1><p>urlpatterns = patterns(‘’,<br>    url(r’^’, include(router.urls)),<br>    url(r’^api-auth/‘, include(‘rest_framework.urls’, namespace=’rest_framework’))<br>)<br>用router注册viewsets和提供一个urlpattern很像。我们有两个参数——给views的URL前缀和viewset自身。</p>
+<pre><code>from snippets import views
+from rest_framework.routers import DefaultRouter
+
+# Create a router and register our viewsets with it.
+router = DefaultRouter()
+router.register(r&apos;snippets&apos;, views.SnippetViewSet)
+router.register(r&apos;users&apos;, views.UserViewSet)
+
+# The API URLs are now determined automatically by the router.
+# Additionally, we include the login URLs for the browseable API.
+urlpatterns = patterns(&apos;&apos;,
+    url(r&apos;^&apos;, include(router.urls)),
+    url(r&apos;^api-auth/&apos;, include(&apos;rest_framework.urls&apos;, namespace=&apos;rest_framework&apos;))
+)
+</code></pre><p>用router注册viewsets和提供一个urlpattern很像。我们有两个参数——给views的URL前缀和viewset自身。</p>
 <p>DefaultRouter类自动为我们创建API root vies，所以我们现在可以从我们的views方法中删除api_root方法。</p>
 <p>权衡views VS viewsets</p>
 <p>使用viewset可以是一个真正有用的抽象。它帮助确保URL约定可以对你的API始终如一，使你需要编写的代码数量最小化，使得你可以集中精力在你API的交互和表现上，而不是URL conf的细节上。</p>
@@ -484,6 +558,12 @@ def pre_save(self, obj):
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/zhangdavids.github.io/tags/python/" rel="tag"># python</a>
+          
+        </div>
       
 
       
@@ -554,17 +634,8 @@ def pre_save(self, obj):
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -594,7 +665,7 @@ def pre_save(self, obj):
               
               <div class="site-state-item site-state-categories">
                 <a href="/zhangdavids.github.io/categories/index.html">
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">31</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -652,22 +723,6 @@ def pre_save(self, obj):
       </section>
 
       
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Create-a-router-and-register-our-viewsets-with-it"><span class="nav-number">1.</span> <span class="nav-text">Create a router and register our viewsets with it.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#The-API-URLs-are-now-determined-automatically-by-the-router"><span class="nav-number">2.</span> <span class="nav-text">The API URLs are now determined automatically by the router.</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Additionally-we-include-the-login-URLs-for-the-browseable-API"><span class="nav-number">3.</span> <span class="nav-text">Additionally, we include the login URLs for the browseable API.</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
 
       
 
@@ -714,7 +769,7 @@ def pre_save(self, obj):
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共212.1k字</span>
+  <span class="post-count">博客全站共212.2k字</span>
 </div>
 
         
