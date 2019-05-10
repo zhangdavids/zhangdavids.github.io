@@ -309,6 +309,336 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/02/28/about-flask/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2018/02/28/about-flask/" itemprop="url">about-flask</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-28T20:47:07+08:00">
+                2018-02-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2018/02/28/about-flask/" class="leancloud_visitors" data-flag-title="about-flask">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.7k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  7
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>谈一谈 flask</p>
+<p>从http 请求开始到响应</p>
+<p>前置技能 wsgi</p>
+<p>WSGI，全称 Web Server Gateway Interface，或者 Python Web Server Gateway Interface ，是为 Python 语言定义的 Web 服务器和 Web 应用程序或框架之间的一种简单而通用的接口。自从 WSGI 被开发出来以后，许多其它语言中也出现了类似接口。</p>
+<p>WSGI 的官方定义是，the Python Web Server Gateway Interface。从名字就可以看出来，这东西是一个Gateway，也就是网关。网关的作用就是在协议之间进行转换。</p>
+<p>WSGI 是作为 Web 服务器与 Web 应用程序或应用框架之间的一种低级别的接口，以提升可移植 Web 应用开发的共同点。WSGI 是基于现存的 CGI 标准而设计的。</p>
+<p>很多框架都自带了 WSGI server ，比如 Flask，webpy，Django、CherryPy等等。当然性能都不好，自带的 web server 更多的是测试用途，发布时则使用生产环境的 WSGI server或者是联合 nginx 做 uwsgi 。</p>
+<p>在网上搜过WSGI的人应该会看到一个图，左边是Server，右边是APP，中间有一个连接纽带是WSGI。</p>
+<p>不过，我看了源码以后的理解和这个有些不同，我个人觉得，实际上不应该单独写一个APP，因为，这个WSGI的使用方法实际上也是包含在APP里面的，最右端的app实际上应该指的是逻辑功能，包括URL和view function的对应关系。</p>
+<p>WSGI其实是作为一个接口，来接受Server传递过来的信息, 然后通过这个接口调用后台app里的view function进行响应。</p>
+<p><strong>起到一个接口的功能，前面对接服务器，后面对接app的具体功能</strong></p>
+<pre><code>def application(environ, start_response):               # 一个符合wsgi协议的应用程序写法应该接受2个参数
+    start_response(&apos;200 OK&apos;, [(&apos;Content-Type&apos;, &apos;text/html&apos;)])  # environ为http的相关信息，如请求头等 start_response则是响应信息
+    return [b&apos;&lt;h1&gt;Hello, web!&lt;/h1&gt;&apos;]        # return出来是响应内容
+</code></pre><p>但是，作为app本身，你就算启动了程序，你也没办法给application传递参数？</p>
+<p>所以，实际上，调用application和传递2个参数的动作，是服务器来进行的，比如Gunicorn.</p>
+<p>而这个叫做application的东西，在Flask框架内部的名字，叫做wsgi_app，请看下面章节的源码。</p>
+<pre><code>from flask import Flask  
+
+app = Flask(__name__)         #生成app实例  
+
+@app.route(&apos;/&apos;)  
+def index():  
+        return &apos;Hello World&apos;  
+</code></pre><p>这样，一个flask app就生成了</p>
+<p>但是这里有一个概念必须要搞清楚，就是当你的gunicorn收到http请求，去调用app的时候，他实际上是用了Flask 的 <strong>call</strong>方法，这点非常重要！！！</p>
+<p>因为<strong>call</strong>方法怎么写，决定了你整个流程从哪里开始。</p>
+<p>flask类的<strong>call</strong>方法</p>
+<pre><code>class Flask(_PackageBoundObject):        #Flask类  
+
+#中间省略一些代码  
+
+    def __call__(self, environ, start_response):    #Flask实例的__call__方法  
+        &quot;&quot;&quot;Shortcut for :attr:`wsgi_app`.&quot;&quot;&quot;  
+        return self.wsgi_app(environ, start_response)  #注意他的return，他返回的时候，实际上是调用了wsgi_app这个功能      
+</code></pre><p>如此一来，我们便知道，当http请求从server发送过来的时候，他会启动<strong>call</strong>功能，最终实际是调用了wsgi_app功能并传入environ和start_response</p>
+<pre><code class="python">
+<span class="class"><span class="keyword">class</span> <span class="title">Flask</span><span class="params">(_PackageBoundObject)</span>:</span>  
+
+<span class="comment">#中间省略一些代码  </span>
+                                <span class="comment">#请注意函数的说明，说得非常准确，这个wsgi_app是一个真正的WSGI应用  </span>
+    <span class="function"><span class="keyword">def</span> <span class="title">wsgi_app</span><span class="params">(self, environ, start_response)</span>:</span>    <span class="comment">#他扮演的是一个中间角色  </span>
+        <span class="string">"""The actual WSGI application.  This is not implemented in 
+        `__call__` so that middlewares can be applied without losing a 
+        reference to the class.  So instead of doing this:: 
+
+            app = MyMiddleware(app) 
+
+        It's a better idea to do this instead:: 
+
+            app.wsgi_app = MyMiddleware(app.wsgi_app) 
+
+        Then you still have the original application object around and 
+        can continue to call methods on it. 
+
+        :param environ: a WSGI environment 
+        :param start_response: a callable accepting a status code, 
+                               a list of headers and an optional 
+                               exception context to start the response 
+        """</span>  
+        ctx = self.request_context(environ)  
+        ctx.push()  
+        error = <span class="keyword">None</span>  
+        <span class="keyword">try</span>:  
+            <span class="keyword">try</span>:  
+                response = self.full_dispatch_request()    <span class="comment">#full_dispatch_request起到了预处理和错误处理以及分发请求的作用  </span>
+            <span class="keyword">except</span> Exception <span class="keyword">as</span> e:  
+                error = e  
+                response = self.make_response(self.handle_exception(e))  <span class="comment">#如果有错误发生，则生成错误响应  </span>
+            <span class="keyword">return</span> response(environ, start_response)       <span class="comment">#如果没有错误发生，则正常响应请求，返回响应内容  </span>
+        <span class="keyword">finally</span>:  
+            <span class="keyword">if</span> self.should_ignore_error(error):  
+                error = <span class="keyword">None</span>  
+            ctx.auto_pop(error)
+</code></pre>
+<h3 id="WSGI-APP-的内部流程"><a href="#WSGI-APP-的内部流程" class="headerlink" title="WSGI_APP 的内部流程"></a>WSGI_APP 的内部流程</h3><ol>
+<li>生成request请求对象和请求上下文环境</li>
+<li><p>请求进入预处理，错误处理及请求转发到响应的过程</p>
+<pre><code>class Flask(_PackageBoundObject):  
+
+#此处省略一些代码  
+
+def full_dispatch_request(self):  
+    &quot;&quot;&quot;Dispatches the request and on top of that performs request 
+    pre and postprocessing as well as HTTP exception catching and 
+    error handling. 
+
+    .. versionadded:: 0.7 
+    &quot;&quot;&quot;  
+    self.try_trigger_before_first_request_functions()  #进行发生真实请求前的处理  
+    try:  
+        request_started.send(self)                     #socket部分的操作  
+        rv = self.preprocess_request()                 #进行请求的预处理  
+        if rv is None:  
+            rv = self.dispatch_request()  
+    except Exception as e:  
+        rv = self.handle_user_exception(e)  
+    response = self.make_response(rv)  
+    response = self.process_response(response)  
+    request_finished.send(self, response=response)  
+    return response  
+</code></pre></li>
+</ol>
+<ol>
+<li>请求分发</li>
+</ol>
+<pre><code class="python">
+<span class="class"><span class="keyword">class</span> <span class="title">Flask</span><span class="params">(_PackageBoundObject)</span>:</span>  
+
+<span class="comment">#省略一些代码  </span>
+
+    <span class="function"><span class="keyword">def</span> <span class="title">dispatch_request</span><span class="params">(self)</span>:</span>   <span class="comment">#看函数定义，matches the URL and returns the value of the view or error.  </span>
+        <span class="string">"""Does the request dispatching.  Matches the URL and returns the 
+        return value of the view or error handler.  This does not have to 
+        be a response object.  In order to convert the return value to a 
+        proper response object, call :func:`make_response`. 
+
+        .. versionchanged:: 0.7 
+           This no longer does the exception handling, this code was 
+           moved to the new :meth:`full_dispatch_request`. 
+        """</span>  
+        req = _request_ctx_stack.top.request  
+        <span class="keyword">if</span> req.routing_exception <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:  
+            self.raise_routing_exception(req)  
+        rule = req.url_rule  
+        <span class="comment"># if we provide automatic options for this URL and the  </span>
+        <span class="comment"># request came with the OPTIONS method, reply automatically  </span>
+        <span class="keyword">if</span> getattr(rule, <span class="string">'provide_automatic_options'</span>, <span class="keyword">False</span>) \  
+           <span class="keyword">and</span> req.method == <span class="string">'OPTIONS'</span>:  
+            <span class="keyword">return</span> self.make_default_options_response()  
+        <span class="comment"># otherwise dispatch to the handler for that endpoint  </span>
+        <span class="keyword">return</span> self.view_functions[rule.endpoint](**req.view_args)   <span class="comment">#最终进入view_functions，取出url对应的视图函数的返回值</span>
+</code></pre>
+<p> req = _request_ctx_stack.top.request 可以暂时理解为，将请求对象赋值给req</p>
+<p>这里先简单讲下，每个url进来以后，他都会对应一个view_function</p>
+<p>另外说下view_functions 是一个字典形式，他的key和value的关系是endpoint ——&gt; view function</p>
+<p>所以每个有效的URL进来，都能找到他对应的视图函数view function，取得返回值并赋值给  rv</p>
+<p>这时候，通过make_response函数，将刚才取得的 rv 生成响应，重新赋值response</p>
+<p>再通过process_response功能主要是处理一个after_request的功能，比如你在请求后，要把数据库连接关闭等动作，和上面提到的before_request对应和类似。</p>
+<p>之后再进行request_finished.send的处理，也是和socket处理有关，暂时不详细深入。</p>
+<p>之后返回新的response对象</p>
+<p>这里特别需要注意的是，make_response函数是一个非常重要的函数，他的作用是返回一个response_class的实例对象，也就是可以接受environ和start_reponse两个参数的对象</p>
+<ol>
+<li>返回wsgi_app 内部</li>
+</ol>
+<p>当response从刚刚的full_dispatch_request功能返回之后，函数会对这个response加上environ, start_response的参数并返回给Gunicorn</p>
+<p>至此，一个HTTP从请求到响应的流程就完毕了.  </p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/02/26/python-text/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1006,204 +1336,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2018/02/22/2月好书推荐201802/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2018/02/22/2月好书推荐201802/" itemprop="url">2月好书推荐201802</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-22T16:52:48+08:00">
-                2018-02-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/suibi/" itemprop="url" rel="index">
-                    <span itemprop="name">suibi</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2018/02/22/2月好书推荐201802/" class="leancloud_visitors" data-flag-title="2月好书推荐201802">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  40
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>精益数据分析</p>
-<p>定位  视觉锤</p>
-<p>毛主席语录</p>
-<p>金字塔原理</p>
-<p>学会提问</p>
-<p>鬼谷子</p>
-<p>零秒思考</p>
-<hr>
-<p>SWOT分析法</p>
-<p>竞争分析</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/89/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/89/">89</a><span class="page-number current">90</span><a class="page-number" href="/zhangdavids.github.io/page/91/">91</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/104/">104</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/91/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/89/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/89/">89</a><span class="page-number current">90</span><a class="page-number" href="/zhangdavids.github.io/page/91/">91</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/105/">105</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/91/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1253,7 +1390,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">520</span>
+                  <span class="site-state-item-count">521</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1368,7 +1505,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共212.4k字</span>
+  <span class="post-count">博客全站共212.5k字</span>
 </div>
 
         

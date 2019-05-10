@@ -309,6 +309,191 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/19/leetcode-bigintmulti/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/19/leetcode-bigintmulti/" itemprop="url">leetcode-bigintmulti</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-19T18:37:00+08:00">
+                2019-03-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/03/19/leetcode-bigintmulti/" class="leancloud_visitors" data-flag-title="leetcode-bigintmulti">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  958
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">def karatsuba(x, y):</span><br><span class="line">    &quot;&quot;&quot;Function to multiply 2 numbers in a more efficient manner than the grade school algorithm&quot;&quot;&quot;</span><br><span class="line">    if len(str(x)) == 1 or len(str(y)) == 1:</span><br><span class="line">        return x * y</span><br><span class="line">    else:</span><br><span class="line">        n = max(len(str(x)), len(str(y)))</span><br><span class="line">        nby2 = n / 2</span><br><span class="line"></span><br><span class="line">        a = x / 10**(nby2)</span><br><span class="line">        b = x % 10**(nby2)</span><br><span class="line">        c = y / 10**(nby2)</span><br><span class="line">        d = y % 10**(nby2)</span><br><span class="line"></span><br><span class="line">        ac = karatsuba(a, c)</span><br><span class="line">        bd = karatsuba(b, d)</span><br><span class="line">        ad_plus_bc = karatsuba(a + b, c + d) - ac - bd</span><br><span class="line"></span><br><span class="line">        # this little trick, writing n as 2*nby2 takes care of both even and</span><br><span class="line">        # odd n</span><br><span class="line">        prod = ac * 10**(2 * nby2) + (ad_plus_bc * 10**nby2) + bd</span><br><span class="line"></span><br><span class="line">        return prod</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">    print(karatsuba(86123457, 12345678))</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#! /usr/local/bin/python3.6</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">Multiplication of big-digit values with Toom-Cook 3-way method</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">import random</span><br><span class="line">import sys</span><br><span class="line">import traceback</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class MultiplyToomCook3:</span><br><span class="line">    D_MAX = 729  # Maximum number of digits (power of 3)</span><br><span class="line">    D     = 729  # Digits of computation (&lt;= D_MAX)</span><br><span class="line"></span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.a = [random.randrange(10) for _ in range(self.D)]</span><br><span class="line">        self.b = [random.randrange(10) for _ in range(self.D)]</span><br><span class="line"></span><br><span class="line">    def compute(self):</span><br><span class="line">        &quot;&quot;&quot; Computation of multiplication &quot;&quot;&quot;</span><br><span class="line">        try:</span><br><span class="line">            for i in range(self.D_MAX - len(self.a)):</span><br><span class="line">                self.a.append(0)</span><br><span class="line">            for i in range(self.D_MAX - len(self.b)):</span><br><span class="line">                self.b.append(0)</span><br><span class="line">            z = self.__multiply_toom_cook_3(self.a, self.b)</span><br><span class="line">            z = self.__do_carry(z)</span><br><span class="line">            self.__display(self.a, self.b, z)</span><br><span class="line">        except Exception as e:</span><br><span class="line">            raise</span><br><span class="line"></span><br><span class="line">    def __multiply_normal(self, a, b):</span><br><span class="line">        &quot;&quot;&quot; Normal multiplication</span><br><span class="line">        :param  list a</span><br><span class="line">        :param  list b</span><br><span class="line">        :return list z</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        try:</span><br><span class="line">            a_len, b_len = len(a), len(b)</span><br><span class="line">            z = [0 for _ in range(a_len + b_len)]</span><br><span class="line">            for j in range(b_len):</span><br><span class="line">                for i in range(a_len):</span><br><span class="line">                    z[j + i] += a[i] * b[j]</span><br><span class="line">            return z</span><br><span class="line">        except Exception as e:</span><br><span class="line">            raise</span><br><span class="line"></span><br><span class="line">    def __multiply_toom_cook_3(self, a, b):</span><br><span class="line">        &quot;&quot;&quot; Toom-Cook 3-way multiplication</span><br><span class="line">        :param  list a</span><br><span class="line">        :param  list b</span><br><span class="line">        :return list z</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        a_m1, a_m2, a_0, a_1, a_inf = [], [], [], [], []</span><br><span class="line">        b_m1, b_m2, b_0, b_1, b_inf = [], [], [], [], []</span><br><span class="line">        c_m1, c_m2, c_0, c_1, c_inf = [], [], [], [], []</span><br><span class="line">        c0, c1, c2, c3, c4          = [], [], [], [], []</span><br><span class="line">        try:</span><br><span class="line">            t_len = len(a)</span><br><span class="line">            # ９桁（配列９個）になった場合は標準乗算</span><br><span class="line">            if t_len &lt;= 9:</span><br><span class="line">                return self.__multiply_normal(a, b)</span><br><span class="line">            a0 = a[:(t_len // 3)]</span><br><span class="line">            a1 = a[(t_len // 3):(t_len * 2 // 3)]</span><br><span class="line">            a2 = a[(t_len * 2 // 3):]</span><br><span class="line">            b0 = b[:(t_len // 3)]</span><br><span class="line">            b1 = b[(t_len // 3):(t_len * 2 // 3)]</span><br><span class="line">            b2 = b[(t_len * 2 // 3):]</span><br><span class="line">            for i in range(t_len // 3):</span><br><span class="line">                a_m2.append((a2[i] &lt;&lt; 2) - (a1[i] &lt;&lt; 1) + a0[i])</span><br><span class="line">                b_m2.append((b2[i] &lt;&lt; 2) - (b1[i] &lt;&lt; 1) + b0[i])</span><br><span class="line">            for i in range(t_len // 3):</span><br><span class="line">                a_m1.append(a2[i] - a1[i] + a0[i])</span><br><span class="line">                b_m1.append(b2[i] - b1[i] + b0[i])</span><br><span class="line">            a_0, b_0 = a0, b0</span><br><span class="line">            for i in range(t_len // 3):</span><br><span class="line">                a_1.append(a2[i] + a1[i] + a0[i])</span><br><span class="line">                b_1.append(b2[i] + b1[i] + b0[i])</span><br><span class="line">            a_inf, b_inf= a2, b2</span><br><span class="line">            c_m2  = self.__multiply_toom_cook_3(a_m2, b_m2)</span><br><span class="line">            c_m1  = self.__multiply_toom_cook_3(a_m1, b_m1)</span><br><span class="line">            c_0   = self.__multiply_toom_cook_3(a_0, b_0)</span><br><span class="line">            c_1   = self.__multiply_toom_cook_3(a_1, b_1)</span><br><span class="line">            c_inf = self.__multiply_toom_cook_3(a_inf, b_inf)</span><br><span class="line">            c4 = c_inf</span><br><span class="line">            for i in range((t_len // 3) * 2):</span><br><span class="line">                c  = -c_m2[i]</span><br><span class="line">                c += (c_m1[i] &lt;&lt; 1) + c_m1[i]</span><br><span class="line">                c -= (c_0[i] &lt;&lt; 1) + c_0[i]</span><br><span class="line">                c += c_1[i]</span><br><span class="line">                c += (c_inf[i] &lt;&lt; 3) + (c_inf[i] &lt;&lt; 2)</span><br><span class="line">                c  = c // 6</span><br><span class="line">                c3.append(c)</span><br><span class="line">            for i in range((t_len // 3) * 2):</span><br><span class="line">                c  = (c_m1[i] &lt;&lt; 1) + c_m1[i]</span><br><span class="line">                c -= (c_0[i] &lt;&lt; 2) + (c_0[i] &lt;&lt; 1)</span><br><span class="line">                c += (c_1[i] &lt;&lt; 1) + c_1[i]</span><br><span class="line">                c -= (c_inf[i] &lt;&lt; 2) + (c_inf[i] &lt;&lt; 1)</span><br><span class="line">                c  = c // 6</span><br><span class="line">                c2.append(c)</span><br><span class="line">            for i in range((t_len // 3) * 2):</span><br><span class="line">                c  = c_m2[i]</span><br><span class="line">                c -= (c_m1[i] &lt;&lt; 2) + (c_m1[i] &lt;&lt; 1)</span><br><span class="line">                c += (c_0[i] &lt;&lt; 1) + c_0[i]</span><br><span class="line">                c += (c_1[i] &lt;&lt; 1)</span><br><span class="line">                c -= (c_inf[i] &lt;&lt; 3) + (c_inf[i] &lt;&lt; 2)</span><br><span class="line">                c  = c // 6</span><br><span class="line">                c1.append(c)</span><br><span class="line">            c0 = c_0</span><br><span class="line">            z = c0 + c2 + c4</span><br><span class="line">            for i in range((t_len // 3) * 2):</span><br><span class="line">                z[i + t_len // 3] += c1[i]</span><br><span class="line">            for i in range((t_len // 3) * 2):</span><br><span class="line">                z[i + t_len] += c3[i]</span><br><span class="line">            return z</span><br><span class="line">        except Exception as e:</span><br><span class="line">            raise</span><br><span class="line"></span><br><span class="line">    def __do_carry(self, a):</span><br><span class="line">        &quot;&quot;&quot; Process of carrying</span><br><span class="line">        :param  list a</span><br><span class="line">        :return list a</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        cr = 0</span><br><span class="line"></span><br><span class="line">        try:</span><br><span class="line">            for i in range(len(a)):</span><br><span class="line">                a[i] += cr</span><br><span class="line">                cr = a[i] // 10</span><br><span class="line">                a[i] -= cr * 10</span><br><span class="line">            if cr != 0:</span><br><span class="line">                print(&quot;[ OVERFLOW!! ] &quot;, cr)</span><br><span class="line">            return a</span><br><span class="line">        except Exception as e:</span><br><span class="line">            raise</span><br><span class="line"></span><br><span class="line">    def __display(self, a, b, z):</span><br><span class="line">        &quot;&quot;&quot; Display</span><br><span class="line">        :param list a</span><br><span class="line">        :param list b</span><br><span class="line">        :param list z</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        a_len = self.D_MAX</span><br><span class="line">        b_len = self.D_MAX</span><br><span class="line">        z_len = self.D_MAX * 2</span><br><span class="line">        try:</span><br><span class="line">            while a[a_len - 1] == 0:</span><br><span class="line">                if a[a_len - 1] == 0:</span><br><span class="line">                    a_len -= 1</span><br><span class="line">            while b[b_len - 1] == 0:</span><br><span class="line">                if b[b_len - 1] == 0:</span><br><span class="line">                    b_len -= 1</span><br><span class="line">            while z[z_len - 1] == 0:</span><br><span class="line">                if z[z_len - 1] == 0:</span><br><span class="line">                    z_len -= 1</span><br><span class="line">            print(&quot;a =&quot;)</span><br><span class="line">            for i in reversed(range(a_len)):</span><br><span class="line">                print(a[i], end=&quot;&quot;)</span><br><span class="line">                if (a_len - i) % 10 == 0:</span><br><span class="line">                    print(&quot; &quot;, end=&quot;&quot;)</span><br><span class="line">                if (a_len - i) % 50 == 0:</span><br><span class="line">                    print()</span><br><span class="line">            print()</span><br><span class="line">            print(&quot;b =&quot;)</span><br><span class="line">            for i in reversed(range(b_len)):</span><br><span class="line">                print(b[i], end=&quot;&quot;)</span><br><span class="line">                if (b_len - i) % 10 == 0:</span><br><span class="line">                    print(&quot; &quot;, end=&quot;&quot;)</span><br><span class="line">                if (b_len - i) % 50 == 0:</span><br><span class="line">                    print()</span><br><span class="line">            print()</span><br><span class="line">            print(&quot;z =&quot;)</span><br><span class="line">            for i in reversed(range(z_len)):</span><br><span class="line">                print(z[i], end=&quot;&quot;)</span><br><span class="line">                if (z_len - i) % 10 == 0:</span><br><span class="line">                    print(&quot; &quot;, end=&quot;&quot;)</span><br><span class="line">                if (z_len - i) % 50 == 0:</span><br><span class="line">                    print()</span><br><span class="line">            print()</span><br><span class="line">        except Exception as e:</span><br><span class="line">            raise</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    try:</span><br><span class="line">        obj = MultiplyToomCook3()</span><br><span class="line">        obj.compute()</span><br><span class="line">    except Exception as e:</span><br><span class="line">        traceback.print_exc()</span><br><span class="line">        sys.exit(1)</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/19/leetcode-linklist/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1073,210 +1258,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/18/leetcode-hash/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/18/leetcode-hash/" itemprop="url">leetcode-hash</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-18T19:20:01+08:00">
-                2019-03-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/03/18/leetcode-hash/" class="leancloud_visitors" data-flag-title="leetcode-hash">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.1k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  6
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>两数之和</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    vector&lt;int&gt; twoSum(vector&lt;int&gt;&amp; nums, int target) &#123;</span><br><span class="line">        unordered_map&lt;int,int&gt; record;</span><br><span class="line">        for(int i = 0 ; i &lt; nums.size() ; i ++)&#123;</span><br><span class="line">            int complement = target - nums[i];</span><br><span class="line">            if(record.find(complement) != record.end())&#123;</span><br><span class="line">                int res[] = &#123;i, record[complement]&#125;;</span><br><span class="line">                return vector&lt;int&gt;(res, res + 2);</span><br><span class="line">            &#125;</span><br><span class="line">            record[nums[i]] = i;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>无重复字符的最长子串</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int lengthOfLongestSubstring(string s) &#123;</span><br><span class="line">        int freq[256] = &#123;0&#125;;</span><br><span class="line">        int l = 0, r = -1; //滑动窗口为s[l...r]</span><br><span class="line">        int res = 0;</span><br><span class="line">        // 整个循环从 l == 0; r == -1 这个空窗口开始</span><br><span class="line">        // 到l == s.size(); r == s.size()-1 这个空窗口截止</span><br><span class="line">        // 在每次循环里逐渐改变窗口, 维护freq, 并记录当前窗口中是否找到了一个新的最优值</span><br><span class="line">        while(l &lt; s.size())&#123;</span><br><span class="line">            if(r + 1 &lt; s.size() &amp;&amp; freq[s[r+1]] == 0)&#123;</span><br><span class="line">                r++;</span><br><span class="line">                freq[s[r]]++;</span><br><span class="line">            &#125;else &#123;   //r已经到头 || freq[s[r+1]] == 1</span><br><span class="line">                freq[s[l]]--;</span><br><span class="line">                l++;</span><br><span class="line">            &#125;</span><br><span class="line">            res = max(res, r-l+1);</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int lengthOfLongestSubstring(string s) &#123;</span><br><span class="line">        int res = 0, left = -1, n = s.size();</span><br><span class="line">        unordered_map&lt;int, int&gt; m;</span><br><span class="line">        for (int i = 0; i &lt; n; ++i) &#123;</span><br><span class="line">            if (m.count(s[i]) &amp;&amp; m[s[i]] &gt; left) &#123;</span><br><span class="line">                left = m[s[i]];  </span><br><span class="line">            &#125;</span><br><span class="line">            m[s[i]] = i;</span><br><span class="line">            res = max(res, i - left);            </span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>三数之和</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    vector&lt;vector&lt;int&gt;&gt; threeSum(vector&lt;int&gt;&amp; nums) &#123;</span><br><span class="line">        vector&lt;vector&lt;int&gt;&gt; res;</span><br><span class="line">        sort(nums.begin(), nums.end());</span><br><span class="line">        if (nums.empty() || nums.back() &lt; 0 || nums.front() &gt; 0) return &#123;&#125;;</span><br><span class="line">        for (int k = 0; k &lt; nums.size(); ++k) &#123;</span><br><span class="line">            if (nums[k] &gt; 0) break;</span><br><span class="line">            if (k &gt; 0 &amp;&amp; nums[k] == nums[k - 1]) continue;</span><br><span class="line">            int target = 0 - nums[k];</span><br><span class="line">            int i = k + 1, j = nums.size() - 1;</span><br><span class="line">            while (i &lt; j) &#123;</span><br><span class="line">                if (nums[i] + nums[j] == target) &#123;</span><br><span class="line">                    res.push_back(&#123;nums[k], nums[i], nums[j]&#125;);</span><br><span class="line">                    while (i &lt; j &amp;&amp; nums[i] == nums[i + 1]) ++i;</span><br><span class="line">                    while (i &lt; j &amp;&amp; nums[j] == nums[j - 1]) --j;</span><br><span class="line">                    ++i; --j;</span><br><span class="line">                &#125; else if (nums[i] + nums[j] &lt; target) ++i;</span><br><span class="line">                else --j;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>重复的dna序列</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    vector&lt;string&gt; findRepeatedDnaSequences(string s) &#123;</span><br><span class="line">        vector&lt;string&gt; res;</span><br><span class="line">        if (s.size() &lt;= 10) return res;</span><br><span class="line">        int mask = 0x7ffffff, cur = 0;</span><br><span class="line">        unordered_map&lt;int, int&gt; m;</span><br><span class="line">        for (int i = 0; i &lt; 9; ++i) &#123;</span><br><span class="line">            cur = (cur &lt;&lt; 3) | (s[i] &amp; 7);</span><br><span class="line">        &#125;</span><br><span class="line">        for (int i = 9; i &lt; s.size(); ++i) &#123;</span><br><span class="line">            cur = ((cur &amp; mask) &lt;&lt; 3) | (s[i] &amp; 7);</span><br><span class="line">            if (m.count(cur)) &#123;</span><br><span class="line">                if (m[cur] == 1) res.push_back(s.substr(i - 9, 10));</span><br><span class="line">                ++m[cur]; </span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                m[cur] = 1;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>两个数组的交集</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">// 时间复杂度: O(nlogn)</span><br><span class="line">// 空间复杂度: O(n)</span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    vector&lt;int&gt; intersection(vector&lt;int&gt;&amp; nums1, vector&lt;int&gt;&amp; nums2) &#123;</span><br><span class="line">        set&lt;int&gt; record;</span><br><span class="line">        for( int i = 0 ; i &lt; nums1.size() ; i ++ )&#123;</span><br><span class="line">            record.insert(nums1[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        set&lt;int&gt; resultSet;</span><br><span class="line">        for( int i = 0 ; i &lt; nums2.size() ; i ++ )&#123;</span><br><span class="line">            if(record.find(nums2[i]) != record.end())&#123;</span><br><span class="line">                resultSet.insert(nums2[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        vector&lt;int&gt; resultVector;</span><br><span class="line">        for(set&lt;int&gt;::iterator iter = resultSet.begin(); iter != resultSet.end(); iter ++ )&#123;</span><br><span class="line">            resultVector.push_back(*iter);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return resultVector;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>两个数组的交集 II</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">// 时间复杂度: O(nlogn)</span><br><span class="line">// 空间复杂度: O(n)</span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    vector&lt;int&gt; intersect(vector&lt;int&gt;&amp; nums1, vector&lt;int&gt;&amp; nums2) &#123;</span><br><span class="line">        map&lt;int, int&gt; record;</span><br><span class="line">        for(int i = 0 ; i &lt; nums1.size() ; i ++)&#123;</span><br><span class="line">             record[nums1[i]] += 1;</span><br><span class="line">        &#125;</span><br><span class="line">        vector&lt;int&gt; resultVector;</span><br><span class="line">        for(int i = 0 ; i &lt; nums2.size() ; i ++)&#123;</span><br><span class="line">            if(record[nums2[i]] &gt; 0)&#123;</span><br><span class="line">                resultVector.push_back(nums2[i]);</span><br><span class="line">                record[nums2[i]] --;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return resultVector;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>回旋镖的数量</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">// 时间复杂度: O(n^2)</span><br><span class="line">// 空间复杂度: O(n)</span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int numberOfBoomerangs(vector&lt;pair&lt;int, int&gt;&gt;&amp; points) &#123;</span><br><span class="line">        int res = 0;</span><br><span class="line">        for( int i = 0 ; i &lt; points.size() ; i ++ )&#123;</span><br><span class="line">            // record中存储 点i 到所有其他点的距离出现的频次</span><br><span class="line">            unordered_map&lt;int, int&gt; record;</span><br><span class="line">            for(int j = 0 ; j &lt; points.size() ; j ++)&#123;</span><br><span class="line">                if(j != i)&#123;</span><br><span class="line">                    // 计算距离时不进行开根运算, 以保证精度</span><br><span class="line">                    record[dis(points[i], points[j])] += 1;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            for(unordered_map&lt;int, int&gt;::iterator iter = record.begin() ; iter != record.end() ; iter ++)&#123;</span><br><span class="line">                res += (iter-&gt;second) * (iter-&gt;second - 1);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">private:</span><br><span class="line">    int dis(const pair&lt;int,int&gt; &amp;pa, const pair&lt;int,int&gt; &amp;pb)&#123;</span><br><span class="line">        return (pa.first - pb.first) * (pa.first - pb.first) +</span><br><span class="line">               (pa.second - pb.second) * (pa.second - pb.second);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>四个数相加</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">// 时间复杂度: O(n^2)</span><br><span class="line">// 空间复杂度: O(n^2)</span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int fourSumCount(vector&lt;int&gt;&amp; A, vector&lt;int&gt;&amp; B, vector&lt;int&gt;&amp; C, vector&lt;int&gt;&amp; D) &#123;</span><br><span class="line">        unordered_map&lt;int,int&gt; hashtable;</span><br><span class="line">        for(int i = 0 ; i &lt; A.size() ; i ++)&#123;</span><br><span class="line">            for(int j = 0 ; j &lt; B.size() ; j ++)&#123;</span><br><span class="line">                 hashtable[A[i]+B[j]] += 1;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        int res = 0;</span><br><span class="line">        for(int i = 0 ; i &lt; C.size() ; i ++)&#123;</span><br><span class="line">            for(int j = 0 ; j &lt; D.size() ; j ++)&#123;</span><br><span class="line">                if(hashtable.find(-C[i]-D[j]) != hashtable.end())&#123;</span><br><span class="line">                    res += hashtable[-C[i]-D[j]];</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/23/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/23/">23</a><span class="page-number current">24</span><a class="page-number" href="/zhangdavids.github.io/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/104/">104</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/25/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/zhangdavids.github.io/page/23/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/zhangdavids.github.io/">1</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/23/">23</a><span class="page-number current">24</span><a class="page-number" href="/zhangdavids.github.io/page/25/">25</a><span class="space">&hellip;</span><a class="page-number" href="/zhangdavids.github.io/page/105/">105</a><a class="extend next" rel="next" href="/zhangdavids.github.io/page/25/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1326,7 +1312,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">520</span>
+                  <span class="site-state-item-count">521</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1441,7 +1427,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共212.4k字</span>
+  <span class="post-count">博客全站共212.5k字</span>
 </div>
 
         
