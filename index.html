@@ -309,6 +309,171 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/05/14/斐波那契数列的计算/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/05/14/斐波那契数列的计算/" itemprop="url">斐波那契数列的计算</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-14T13:39:40+08:00">
+                2019-05-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/05/14/斐波那契数列的计算/" class="leancloud_visitors" data-flag-title="斐波那契数列的计算">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  331
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>python 使用numpy的做法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">import numpy as np</span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">    使用numpy的做法</span><br><span class="line">    </span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">def fib_matrix(n):</span><br><span class="line">    res = pow((np.matrix([[1, 1], [1, 0]])), n) * np.matrix([[1], [0]])</span><br><span class="line">    return res[0][0]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">for i in range(10):</span><br><span class="line">    print(int(fib_matrix(i)), end=&apos; &apos;)</span><br><span class="line"></span><br><span class="line">### 2</span><br><span class="line"># 使用矩阵计算斐波那契数列</span><br><span class="line">def Fibonacci_Matrix_tool(n):</span><br><span class="line">    Matrix = np.matrix(&quot;1 1;1 0&quot;)</span><br><span class="line">    # 返回是matrix类型</span><br><span class="line">    return pow(Matrix, n)  # pow函数速度快于 使用双星好 **</span><br><span class="line"></span><br><span class="line">def Fibonacci_Matrix(n):</span><br><span class="line">    result_list = []</span><br><span class="line">    for i in range(0, n):</span><br><span class="line">        result_list.append(np.array(Fibonacci_Matrix_tool(i))[0][0])</span><br><span class="line">    return result_list</span><br><span class="line"># 调用</span><br><span class="line"># Fibonacci_Matrix(10)</span><br></pre></td></tr></table></figure>
+<p>标准库的做法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># encoding=utf-8</span><br><span class="line"></span><br><span class="line">from functools import reduce</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">   标准库的做法</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Solution(object):</span><br><span class="line">    # 矩阵相乘</span><br><span class="line">    def mul(self, a, b):</span><br><span class="line">        r = [[0, 0], [0, 0]]</span><br><span class="line">        r[0][0] = a[0][0] * b[0][0] + a[0][1] * b[1][0]</span><br><span class="line">        r[0][1] = a[0][0] * b[0][1] + a[0][1] * b[1][1]</span><br><span class="line">        r[1][0] = a[1][0] * b[0][0] + a[1][1] * b[1][0]</span><br><span class="line">        r[1][1] = a[1][0] * b[0][1] + a[1][1] * b[1][1]</span><br><span class="line">        return r</span><br><span class="line"></span><br><span class="line">    # 递归加速计算斐波那契数列 O(n^2) -&gt; O(logn)</span><br><span class="line">    def helper(self, n):</span><br><span class="line">        if n == 0:</span><br><span class="line">            return [[1, 0], [0, 1]]</span><br><span class="line">        if n == 1:</span><br><span class="line">            return [[1, 1], [1, 0]]</span><br><span class="line">        if n&amp;1 == 0 :</span><br><span class="line">            return self.mul(self.helper(n/2), self.helper(n/2))</span><br><span class="line">        else:</span><br><span class="line">            return reduce(self.mul,[self.helper((n-1)/ 2),self.helper((n-1)/ 2),[[1, 1], [1, 0]]])</span><br><span class="line">        </span><br><span class="line">    def fib(self, N):</span><br><span class="line">        return self.helper(N-1)[0][0]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">    for i in range(1, 11):</span><br><span class="line">        print(i-1, Solution().fib(i))</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/05/14/CPython源码分析0003/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -383,7 +548,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  1.9k
                 </span>
               
 
@@ -399,7 +564,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  7
                 </span>
               
             </div>
@@ -422,7 +587,57 @@
       
         
           
-            
+            <h2 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h2><p>Python多线程机制是在GIL(Global Interpreter Lock)全局解释锁的基础上建立的。</p>
+<p>要支持多线程的话，一个基本的要求就是不同线程对共享资源访问的互斥，所以Python中引入了GIL，当然这是第一个原因。</p>
+<p>Python中的GIL是一个非常霸道的互斥实现，在一个线程拥有了解释器的访问权之后，其它的所有线程都必须等待它释放解释器的访问权，即使这些线程的下一条指令并不会互相影响。</p>
+<p>这样的说法也就意味着，无论如何，在同一时间，只能有一个线程能访问Python提供的API。因为单处理器的本质是不可能并行的，这里的同一时间确实对于单处理器是毫无意义的，但是对于多处理器，同一时间，确实可以有多个时间独立运行。然而正是由于GIL限制了这样的情形，使得多处理器最终退化为单处理器，性能大打折扣。那么，为什么还要使用GIL呢？这里就要提到第二个原因。</p>
+<p>当然，Python社区也早都认识到了这个问题，并且在不断探索，Greg Stein和Mark Hammond两位老兄曾经创建过一份去除GIL的branch，但是很不幸，这个分支在很多的基准测试中，尤其是在单线程的测试上，效率只有使用GIL的一半左右。</p>
+<p>使用GIL时，保护机制的粒度比较大，也就是我们似乎只需要将可能被多个线程共享的资源保护起来即可，对于不会被多个线程共享的资源，完全可以不用保护。但是，如果使用更细粒度的锁机制进行保护，那么，会导致大量的加锁和解锁功能，加锁和解锁对于操作系统来说，是一个比较重量级的动作，同时，没有GIL的保护，编写Python的扩展模块的难度也大大增加。</p>
+<p>所以，目前为止，GIL仍然是多线程机制的基石。</p>
+<p>对于Python而言，字节码解释器是Python的核心所在，所以Python通过GIL来互斥不同线程对解释器的使用。这里举个例子进行说明：</p>
+<p>假设，现在有三个线程A、B和C，它们都需要解释器来执行字节码，进行对应的计算，那么在这之前，它们必须获得GIL。那么现在假设线程A获得了GIL，其它线程只能等A释放GIL之后，才能获得。</p>
+<p>对！是这样没错，于是，有两个问题：</p>
+<ol>
+<li><p>线程A何时释放GIL呢（如果A使用完解释器之后才释放GIL，那么，并行的计算退化为串行，多线程的意义何在？）</p>
+</li>
+<li><p>线程B和C谁将在A释放GIL之后获得GIL呢？</p>
+</li>
+</ol>
+<p>所以毫无疑问的，Python拥有其自己的一套线程调度机制。</p>
+<p>和操作系统的进程调度一样，线程调度机制主要解决两个问题：</p>
+<ol>
+<li><p>在何时挂起当前线程，选择处于等待状态的下一个线程？</p>
+</li>
+<li><p>在众多处于等待状态的线程中，应该选择激活哪个线程？</p>
+</li>
+</ol>
+<p>对于何时进行线程调度的问题，是由Python自身决定的。我们可以联想操作系统进行进程切换的问题，当一个进程执行了一段时间之后，发生了时钟中断，于是操作系统响应时钟中断，并在这时开始进程的调度。</p>
+<p>与此类似，Python中通过软件模拟了这样的中断，来激活线程的调度。Python的字节码解释器是按照指令的顺序一条一条的顺序执行从而工作的，Python内部维护着这样一个数值，作为Python内部的时钟，假设这个值为N，那么Python将在执行了N条指令之后立刻启动线程调度机制。</p>
+<p>也就是说，当一个线程获得GIL后，Python内部的监测机制就开始启动，当这个线程执行了N条指令后，Python解释器将强制挂起当前线程，开始切换到下一个处于等待状态的线程。</p>
+<p>下一个问题，Python会在众多等待的线程中选择哪一个呢？</p>
+<p>答案是，不知道。因为这个问题是交给了底层的操作系统来解决的，Python借用了底层操作系统所提供的线程调度机制来决定下一个获得GIL进入解释器的线程是谁。</p>
+<p>所以说，Python中的线程实际上就是操作系统所支持的原生线程。</p>
+<p>Python中多线程常用的两个模块：Thread和在其之上的threading。其中Thread是使用C实现的，而Threading是用python实现。</p>
+<p>首先从创建线程说起，在threadmodule.c中，thread_PyThread_start_new_thread()函数通过三个主要的动作完成一个线程的创建：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">//创建bootstate结构</span><br><span class="line">boot = PyMem_NEW(struct bootstate, 1);</span><br><span class="line">if (boot == NULL)</span><br><span class="line">return PyErr_NoMemory();</span><br><span class="line">boot-&gt;interp = PyThreadState_GET()-&gt;interp;</span><br><span class="line">boot-&gt;func = func;</span><br><span class="line">boot-&gt;args = args;</span><br><span class="line">boot-&gt;keyw = keyw;</span><br><span class="line">boot-&gt;tstate = _PyThreadState_Prealloc(boot-&gt;interp);</span><br><span class="line">if (boot-&gt;tstate == NULL) &#123;</span><br><span class="line">PyMem_DEL(boot);</span><br><span class="line">return PyErr_NoMemory();</span><br><span class="line">&#125;</span><br><span class="line">Py_INCREF(func);</span><br><span class="line">Py_INCREF(args);</span><br><span class="line">Py_XINCREF(keyw);</span><br><span class="line">// 初始化多线程环境</span><br><span class="line">PyEval_InitThreads(); </span><br><span class="line">//创建线程</span><br><span class="line">ident = PyThread_start_new_thread(t_bootstrap, (void*) boot);</span><br><span class="line">if (ident == -1) &#123;</span><br><span class="line">PyErr_SetString(ThreadError, &quot;can&apos;t start new thread&quot;);</span><br><span class="line">Py_DECREF(func);</span><br><span class="line">Py_DECREF(args);</span><br><span class="line">Py_XDECREF(keyw);</span><br><span class="line">PyThreadState_Clear(boot-&gt;tstate);</span><br><span class="line">PyMem_DEL(boot);</span><br><span class="line">return NULL;</span><br><span class="line">&#125;</span><br><span class="line">return PyInt_FromLong(ident);</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>创建并初始化bootstate结构boot，在boot中，将保存关于Python的一切信息（线程过程，线程过程参数等)。</p>
+</li>
+<li><p>初始化Python的多线程环境。</p>
+</li>
+<li><p>以boot为参数，创建操作系统的原生线程。</p>
+</li>
+</ol>
+<p>从以上代码可以看出，Python在刚启动时，并不支持多线程，也就是说，Python中支持多线程的数据结构以及GIL都是没有创建的。当然这是因为大多数的Python程序都不需要Python的支持。</p>
+<p>在Python虚拟机启动时，多线程机制并没有被激活，它只支持单线程，一旦用户调用thread.start_new_thread，明确的告诉Python虚拟机需要创建新的线程，这时Python意识到用户需要多线程的支持，这个时候，Python虚拟机会自动建立多线程需要的数据结构、环境以及GIL。</p>
+<p>建立多线程环境，主要就是创建GIL。那么GIL是如何实现的呢？<br>打开”python/ceval.c”：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">static PyThread_type_lock interpreter_lock = 0; /* This is the GIL */</span><br><span class="line">static PyThread_type_lock pending_lock = 0; /* for pending calls */</span><br><span class="line">static long main_thread = 0;</span><br><span class="line"></span><br><span class="line">int</span><br><span class="line">PyEval_ThreadsInitialized(void)</span><br><span class="line">&#123;</span><br><span class="line">return interpreter_lock != 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void</span><br><span class="line">PyEval_InitThreads(void)</span><br><span class="line">&#123;</span><br><span class="line">if (interpreter_lock)</span><br><span class="line">return;</span><br><span class="line">interpreter_lock = PyThread_allocate_lock();</span><br><span class="line">PyThread_acquire_lock(interpreter_lock, 1);</span><br><span class="line">main_thread = PyThread_get_thread_ident();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这段代码中，iterpreter_lock就是GIL。</p>
+<p>无论创建多少个线程，Python建立多线程环境的动作只会执行一次。在创建GIL之前，Python会检查GIL是否已经被创建，如果是，则不再进行任何动作，否则，就会去创建这个GIL。</p>
+<p>在上述代码中，我们可以看到，创建GIL使用的是Pythread_allocate_lock完成的，下面看看该函数的内部实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">PyThread_type_lock</span><br><span class="line">PyThread_allocate_lock(void)</span><br><span class="line">&#123;</span><br><span class="line">PNRMUTEX aLock;</span><br><span class="line"></span><br><span class="line">dprintf((&quot;PyThread_allocate_lock called\n&quot;));</span><br><span class="line">if (!initialized)</span><br><span class="line">PyThread_init_thread();</span><br><span class="line"></span><br><span class="line">aLock = AllocNonRecursiveMutex() ;</span><br><span class="line"></span><br><span class="line">dprintf((&quot;%ld: PyThread_allocate_lock() -&gt; %p\n&quot;, PyThread_get_thread_ident(), aLock));</span><br><span class="line"></span><br><span class="line">return (PyThread_type_lock) aLock;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>GIL中的owned是指示GIL是否可用的变量，它的值被初始化为-1，Python会检查这个值是否为1，如果是，则意味着GIL可用，必须将其置为0，当owned为0后，表示该GIL已经被一个线程占用，不可再用；同时，当一个线程开始等待GIL时，其owned就会被增加1；当一个线程最终释放GIL时，一定会将GIL的owned减1，这样，当所有需要GIL的线程都最终释放了GIL之后，owned将再次变为-1，意味着GIL再次变为可用。</p>
+
           
         
       
@@ -544,7 +759,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  907
                 </span>
               
 
@@ -560,7 +775,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  3
                 </span>
               
             </div>
@@ -583,7 +798,17 @@
       
         
           
-            
+            <p>python 内置了dict list等</p>
+<p>Python中的的PyListObject是对列表的一个抽象，内置了插入、添加、删除等操作。不同List中存储的元素的个数会是不同的，所以PyListObject是一个变长对象。而PyListObject中支持插入删除等操作，可以在运行时动态地调整其所维护的内存和元素，所以它又是一个可变对象。</p>
+<p>我们知道，用户选用list正是为了可以频繁的执行插入或删除等操作，如果是需要存多少就申请多大的内存，这种内存管理显然是低效的。那么Python内部是怎么实现的呢？这就与刚才所提到的allocated有关了，我们知道，在PyObject_VAE_HEAD中有一个ob_size，在PyListObject中，每一次需要申请内存时，总会申请一大块内存存，这时申请的总内存的大小记录记录在allocated中，而其中实际被使用了的内存的数量则记录在ob_size中。</p>
+<p>在列表对象的实现文件listObject.c文件中，我们可以看到，Python对于创建一个列表，提供了唯一的一条途径，就是PyList_New（）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">PyObject *</span><br><span class="line">PyList_New(Py_ssize_t size)</span><br><span class="line">&#123;</span><br><span class="line">PyListObject *op;</span><br><span class="line">size_t nbytes;</span><br><span class="line">#ifdef SHOW_ALLOC_COUNT</span><br><span class="line">static int initialized = 0;</span><br><span class="line">if (!initialized) &#123;</span><br><span class="line">Py_AtExit(show_alloc);</span><br><span class="line">initialized = 1;</span><br><span class="line">&#125;</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">if (size &lt; 0) &#123;</span><br><span class="line">PyErr_BadInternalCall();</span><br><span class="line">return NULL;</span><br><span class="line">&#125;</span><br><span class="line">//进行溢出检查</span><br><span class="line">if ((size_t)size &gt; PY_SIZE_MAX / sizeof(PyObject *))</span><br><span class="line">return PyErr_NoMemory();</span><br><span class="line">nbytes = size * sizeof(PyObject *);</span><br><span class="line">//为PyListObject对象申请空间，使用到缓冲池技术</span><br><span class="line">if (numfree) &#123;</span><br><span class="line">numfree--;</span><br><span class="line">op = free_list[numfree];</span><br><span class="line">_Py_NewReference((PyObject *)op);</span><br><span class="line">#ifdef SHOW_ALLOC_COUNT</span><br><span class="line">count_reuse++;</span><br><span class="line">#endif</span><br><span class="line">&#125; else &#123;</span><br><span class="line">op = PyObject_GC_New(PyListObject, &amp;PyList_Type);</span><br><span class="line">if (op == NULL)</span><br><span class="line">return NULL;</span><br><span class="line">#ifdef SHOW_ALLOC_COUNT</span><br><span class="line">count_alloc++;</span><br><span class="line">#endif</span><br><span class="line">&#125;</span><br><span class="line">//为PyListObject对象中维护的元素列表申请空间</span><br><span class="line">if (size &lt;= 0)</span><br><span class="line">op-&gt;ob_item = NULL;</span><br><span class="line">else &#123;</span><br><span class="line">op-&gt;ob_item = (PyObject **) PyMem_MALLOC(nbytes);</span><br><span class="line">if (op-&gt;ob_item == NULL) &#123;</span><br><span class="line">Py_DECREF(op);</span><br><span class="line">return PyErr_NoMemory();</span><br><span class="line">&#125;</span><br><span class="line">memset(op-&gt;ob_item, 0, nbytes);</span><br><span class="line">&#125;</span><br><span class="line">Py_SIZE(op) = size;</span><br><span class="line">op-&gt;allocated = size;</span><br><span class="line">_PyObject_GC_TRACK(op);</span><br><span class="line">return (PyObject *) op;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>首先，进行溢出检查。接下来，就是List对象的创建了，Python中的list对象实际上是分为两部分的，一是PyListObject对象本身，二是PyListObject对象维护的元素列表，而这两块内存是通过ob_item建立联系的。</p>
+<p>　　在创建PyListObject对象时，首先检查缓冲池中free_list是否有可用的对象，如果有，则直接使用，若没有可用对象，则通过PyObject_GC_New在系统堆中申请内存，
+　　</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">int</span><br><span class="line">PyList_SetItem(register PyObject *op, register Py_ssize_t i,</span><br><span class="line">register PyObject *newitem)</span><br><span class="line">&#123;</span><br><span class="line">register PyObject *olditem;</span><br><span class="line">register PyObject **p;</span><br><span class="line">if (!PyList_Check(op)) &#123;</span><br><span class="line">Py_XDECREF(newitem);</span><br><span class="line">PyErr_BadInternalCall();</span><br><span class="line">return -1;</span><br><span class="line">&#125;</span><br><span class="line">//索引检查</span><br><span class="line">if (i &lt; 0 || i &gt;= Py_SIZE(op)) &#123;</span><br><span class="line">Py_XDECREF(newitem);</span><br><span class="line">PyErr_SetString(PyExc_IndexError,</span><br><span class="line">&quot;list assignment index out of range&quot;);</span><br><span class="line">return -1;</span><br><span class="line">&#125;</span><br><span class="line">//存放元素</span><br><span class="line">p = ((PyListObject *)op) -&gt; ob_item + i;</span><br><span class="line">olditem = *p;</span><br><span class="line">*p = newitem;</span><br><span class="line">Py_XDECREF(olditem);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在创建PyListObject对象时，会首先检查缓冲区中的free_lists中是否有可用的对象。<br>　　在创建一个新的的对象时，实际也是分为两部，首先创建PyListObject对象，然后创建PyListObject对象所维护的元素列表，与之对应，在销毁一个list时，销毁的过程也是分离的，首先销毁PyListObject所维护的元素列表，然后释放PyListObject对象自身。。<br>　　在删除PylsitObject对象自身时，Python会先检查我们开始提到的那个缓冲池free_list，查看其中缓存的PyListObject的数量是否已经满了，如果没有，就将待删除的PyListObject对象放到缓冲池中，以备后用。<br>　　因此，那个在Python启动时空荡荡的缓冲池原来都是被本应该死去的PyListObject对象给填充了，在以后需要创建新的PyListObject的时候，Python会首先唤醒这些对象，重新分配Pyobject*元素列表占用的内存，重新拥抱新的对象。</p>
+
           
         
       
@@ -943,199 +1168,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/05/13/CPython源码分析0001/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/05/13/CPython源码分析0001/" itemprop="url">CPython源码分析0001</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-13T16:32:14+08:00">
-                2019-05-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/zhangdavids.github.io/categories/CPython/" itemprop="url" rel="index">
-                    <span itemprop="name">CPython</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/05/13/CPython源码分析0001/" class="leancloud_visitors" data-flag-title="CPython源码分析0001">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.5k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  5
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h3><p>对象可以说是Python最核心的一个概念，在Python的世界里，一切都是对象。我们知道Python是由C编写的，C并不是一个面向对象语言，而由C编写的Python确实面向对象的，那么它的对象机制是如何实现的呢？</p>
-<p>　　对于人的思维，对象是可以形象描述的，但是对于计算机而言，对象是一个抽象的概念，计算机所知道的一切都是字节。关于对象，通常的说法是，对象是数据以及基于这些数据的操作的集合，在计算机中，一个对象实际就是把一片被分配的内存空间，且这片内存在更高层次可作为一个整体，这个整体就是一个对象。</p>
-<p>　　在Python中，对象就是C中的结构体在堆上申请的一块内存。</p>
-<h3 id="对象的基石"><a href="#对象的基石" class="headerlink" title="对象的基石"></a>对象的基石</h3><p>在Python中，所有的东西都是对象，而所有的对象都拥有一些相同的内容，Python中的这些内容都是在object.h中的Pyobject中定义的。</p>
-<h3 id="定长对象和变长对象"><a href="#定长对象和变长对象" class="headerlink" title="定长对象和变长对象"></a>定长对象和变长对象</h3><p>Python除了Pyobject对象之外，还有一个表示这类对象的结构体pyVarObject，pyVarobject其实就是对pyobject的一个扩展。<br>那么站在源码的角度上分析，变长对象是在pyVarobject中添加了可变长度数据的对象，也就是ob_size，定义了所容纳元素的个数。定长对象和变长对象的区别是：定长对象的不同对象占用的内存大小是一样的，变长对象的不同对象占用的内存可能是不一样的。比如整数对象’1’和’100’占用的内存大小都是sizeof(PyIntObject），而字符串对象”me”和”you”占用的内存大小就不一样。</p>
-<h3 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h3><p>面向对象中一个重要的特性是多态，那么Python是如何实现多态的呢？<br>　　在Python创建一个对象时，会分配内存，进行初始化，然后Python内部会使用一个PyObject<em>变量来保存和维护这个对象，Python中的所有对象均是如此。比如创建一个PyIntObject对象（整数对象），不是通过PyIntObject </em>变量来保存和维护这个对象，而是通过PyObject <em>，正因为所有对象均如此，所以Python内部各个函数之间传递的都是一种范型指针（Pyobject</em>)，而这个指针所指的对象究竟是什么类型的，我们是不知道的，只能从指针所指对象的ob_type域动态进行判断，而正是这个域，Python实现了多态。</p>
-<h3 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h3><p>和C或C++不同，Python选择使用语言本身负责内存的管理和维护，也就是垃圾收集机制，代替程序员进行繁重的内存管理工作，而引用计数刚好是Python垃圾收集机制的一部分。<br>　　Python通过对一个对象的引用计数来管理和维护对象在内存中的存在与否。Python中的一切皆是对象，在所有的对象中有一个ob_refcent变量，维护这对象的引用计数，从而也决定该对象的创建与消亡。<br>在Python中，使用Py_INCREF(op)和Py_DECREF(op)两个宏来增加和减少一个对象的引用计数，在每一个对象创建的时候，Python提供了一个Py_NewReference(op)宏来将对象的引用计数初始化为1。<br>　　当一个对象的引用计数为0时，与该对象对应的析构函数将被调用， 但是调用析构函数并不一定是调用free释放内存空间，为了避免频繁的申请、释放内存空间，Python中使用的是内存对象池，维护一定大小的内存对象池，调用析构函数时，对象占用的空间将归还到内存池中。</p>
-<h3 id="小整数对象"><a href="#小整数对象" class="headerlink" title="小整数对象"></a>小整数对象</h3><p>在实际的编程中，数值比较小的整数，比如1,2,等等，这些在程序中是频繁使用到的，而Python中，所有的对象都存活在系统堆上，也就是说，如果没有特殊的机制，对于小整数对象，Python将一次次的malloc在堆上申请空间，然后free，这样的操作将大大降低了运行效率。<br>那么如何解决呢？Python中，对小整数对象使用了对象池技术。<br>那么又有一个问题了，Python中的大对象和小对象如何区分呢？嗯，Python中确实有一种方法，用户可以调整大整数和小整数的分界点，从而动态的确定小整数的对象池中应该有多少个小整数对象，但是调整的方法只有自己修改源代码，然后重新编译。</p>
-<h3 id="大整数对象"><a href="#大整数对象" class="headerlink" title="大整数对象"></a>大整数对象</h3><p>对于小整数，小整数对象池中完全的缓存PyIntObject对象，对于其它对象，Python将提供一块内存空间，这些内存空间将由这些大整数轮流使用，也就是谁需要的时候谁使用。<br>　　比如，在Python中有一个PyIntBlock结构，维护了一块内存，其中保存了一些PyIntObject对象，维护对象的个数也可以做动态的调整。在Python运行的某个时刻，有一些内存已经被使用，而另一些内存则处于空闲状态，而这些空闲的内存必须组织起来，那样，当Python需要新的内存时，才能快速的获得所需的内存，在Python中使用一个单向链表(free_list）来管理所有的空闲内存。</p>
-<p>主要分为两步：<br>　　如果小整数对象池机制被激活，则尝试使用小整数对象池；如果不能使用小整数对象池，则使用通用整数对象池。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1190,7 +1222,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">531</span>
+                  <span class="site-state-item-count">532</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1305,7 +1337,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共215.9k字</span>
+  <span class="post-count">博客全站共219.1k字</span>
 </div>
 
         

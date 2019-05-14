@@ -309,6 +309,199 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/05/13/CPython源码分析0001/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/05/13/CPython源码分析0001/" itemprop="url">CPython源码分析0001</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-13T16:32:14+08:00">
+                2019-05-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/CPython/" itemprop="url" rel="index">
+                    <span itemprop="name">CPython</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/05/13/CPython源码分析0001/" class="leancloud_visitors" data-flag-title="CPython源码分析0001">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.5k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h3><p>对象可以说是Python最核心的一个概念，在Python的世界里，一切都是对象。我们知道Python是由C编写的，C并不是一个面向对象语言，而由C编写的Python确实面向对象的，那么它的对象机制是如何实现的呢？</p>
+<p>　　对于人的思维，对象是可以形象描述的，但是对于计算机而言，对象是一个抽象的概念，计算机所知道的一切都是字节。关于对象，通常的说法是，对象是数据以及基于这些数据的操作的集合，在计算机中，一个对象实际就是把一片被分配的内存空间，且这片内存在更高层次可作为一个整体，这个整体就是一个对象。</p>
+<p>　　在Python中，对象就是C中的结构体在堆上申请的一块内存。</p>
+<h3 id="对象的基石"><a href="#对象的基石" class="headerlink" title="对象的基石"></a>对象的基石</h3><p>在Python中，所有的东西都是对象，而所有的对象都拥有一些相同的内容，Python中的这些内容都是在object.h中的Pyobject中定义的。</p>
+<h3 id="定长对象和变长对象"><a href="#定长对象和变长对象" class="headerlink" title="定长对象和变长对象"></a>定长对象和变长对象</h3><p>Python除了Pyobject对象之外，还有一个表示这类对象的结构体pyVarObject，pyVarobject其实就是对pyobject的一个扩展。<br>那么站在源码的角度上分析，变长对象是在pyVarobject中添加了可变长度数据的对象，也就是ob_size，定义了所容纳元素的个数。定长对象和变长对象的区别是：定长对象的不同对象占用的内存大小是一样的，变长对象的不同对象占用的内存可能是不一样的。比如整数对象’1’和’100’占用的内存大小都是sizeof(PyIntObject），而字符串对象”me”和”you”占用的内存大小就不一样。</p>
+<h3 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h3><p>面向对象中一个重要的特性是多态，那么Python是如何实现多态的呢？<br>　　在Python创建一个对象时，会分配内存，进行初始化，然后Python内部会使用一个PyObject<em>变量来保存和维护这个对象，Python中的所有对象均是如此。比如创建一个PyIntObject对象（整数对象），不是通过PyIntObject </em>变量来保存和维护这个对象，而是通过PyObject <em>，正因为所有对象均如此，所以Python内部各个函数之间传递的都是一种范型指针（Pyobject</em>)，而这个指针所指的对象究竟是什么类型的，我们是不知道的，只能从指针所指对象的ob_type域动态进行判断，而正是这个域，Python实现了多态。</p>
+<h3 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h3><p>和C或C++不同，Python选择使用语言本身负责内存的管理和维护，也就是垃圾收集机制，代替程序员进行繁重的内存管理工作，而引用计数刚好是Python垃圾收集机制的一部分。<br>　　Python通过对一个对象的引用计数来管理和维护对象在内存中的存在与否。Python中的一切皆是对象，在所有的对象中有一个ob_refcent变量，维护这对象的引用计数，从而也决定该对象的创建与消亡。<br>在Python中，使用Py_INCREF(op)和Py_DECREF(op)两个宏来增加和减少一个对象的引用计数，在每一个对象创建的时候，Python提供了一个Py_NewReference(op)宏来将对象的引用计数初始化为1。<br>　　当一个对象的引用计数为0时，与该对象对应的析构函数将被调用， 但是调用析构函数并不一定是调用free释放内存空间，为了避免频繁的申请、释放内存空间，Python中使用的是内存对象池，维护一定大小的内存对象池，调用析构函数时，对象占用的空间将归还到内存池中。</p>
+<h3 id="小整数对象"><a href="#小整数对象" class="headerlink" title="小整数对象"></a>小整数对象</h3><p>在实际的编程中，数值比较小的整数，比如1,2,等等，这些在程序中是频繁使用到的，而Python中，所有的对象都存活在系统堆上，也就是说，如果没有特殊的机制，对于小整数对象，Python将一次次的malloc在堆上申请空间，然后free，这样的操作将大大降低了运行效率。<br>那么如何解决呢？Python中，对小整数对象使用了对象池技术。<br>那么又有一个问题了，Python中的大对象和小对象如何区分呢？嗯，Python中确实有一种方法，用户可以调整大整数和小整数的分界点，从而动态的确定小整数的对象池中应该有多少个小整数对象，但是调整的方法只有自己修改源代码，然后重新编译。</p>
+<h3 id="大整数对象"><a href="#大整数对象" class="headerlink" title="大整数对象"></a>大整数对象</h3><p>对于小整数，小整数对象池中完全的缓存PyIntObject对象，对于其它对象，Python将提供一块内存空间，这些内存空间将由这些大整数轮流使用，也就是谁需要的时候谁使用。<br>　　比如，在Python中有一个PyIntBlock结构，维护了一块内存，其中保存了一些PyIntObject对象，维护对象的个数也可以做动态的调整。在Python运行的某个时刻，有一些内存已经被使用，而另一些内存则处于空闲状态，而这些空闲的内存必须组织起来，那样，当Python需要新的内存时，才能快速的获得所需的内存，在Python中使用一个单向链表(free_list）来管理所有的空闲内存。</p>
+<p>主要分为两步：<br>　　如果小整数对象池机制被激活，则尝试使用小整数对象池；如果不能使用小整数对象池，则使用通用整数对象池。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/05/13/面试几个点/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -970,168 +1163,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/05/10/python-iterator/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/05/10/python-iterator/" itemprop="url">python-iterator</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-10T22:35:27+08:00">
-                2019-05-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/05/10/python-iterator/" class="leancloud_visitors" data-flag-title="python-iterator">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  32
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>迭代器</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">def negated(seq):</span><br><span class="line">    for i in seq:</span><br><span class="line">        yield -i</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; chain = negated(squared(integers()))</span><br><span class="line">&gt;&gt;&gt; list(chain)</span><br><span class="line">[-1, -4, -9, -16, -25, -36, -49, -64]</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1186,7 +1217,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">531</span>
+                  <span class="site-state-item-count">532</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1301,7 +1332,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共215.9k字</span>
+  <span class="post-count">博客全站共219.1k字</span>
 </div>
 
         

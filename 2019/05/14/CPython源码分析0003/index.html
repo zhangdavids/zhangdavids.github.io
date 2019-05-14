@@ -81,16 +81,22 @@
 
 
 
-<meta name="description" content="improve your python skills">
+<meta name="description" content="多线程Python多线程机制是在GIL(Global Interpreter Lock)全局解释锁的基础上建立的。
+要支持多线程的话，一个基本的要求就是不同线程对共享资源访问的互斥，所以Python中引入了GIL，当然这是第一个原因。
+Python中的GIL是一个非常霸道的互斥实现，在一个线程拥有了解释器的访问权之后，其它的所有线程都必须等待它释放解释器的访问权，即使这些线程的下一条指令并不会互相">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CPython源码分析0003">
 <meta property="og:url" content="https://zhangdavids.github.io/2019/05/14/CPython源码分析0003/index.html">
 <meta property="og:site_name" content="上药三品，神与气精">
-<meta property="og:description" content="improve your python skills">
-<meta property="og:updated_time" content="2019-05-14T01:41:28.242Z">
+<meta property="og:description" content="多线程Python多线程机制是在GIL(Global Interpreter Lock)全局解释锁的基础上建立的。
+要支持多线程的话，一个基本的要求就是不同线程对共享资源访问的互斥，所以Python中引入了GIL，当然这是第一个原因。
+Python中的GIL是一个非常霸道的互斥实现，在一个线程拥有了解释器的访问权之后，其它的所有线程都必须等待它释放解释器的访问权，即使这些线程的下一条指令并不会互相">
+<meta property="og:updated_time" content="2019-05-14T03:06:50.022Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CPython源码分析0003">
-<meta name="twitter:description" content="improve your python skills">
+<meta name="twitter:description" content="多线程Python多线程机制是在GIL(Global Interpreter Lock)全局解释锁的基础上建立的。
+要支持多线程的话，一个基本的要求就是不同线程对共享资源访问的互斥，所以Python中引入了GIL，当然这是第一个原因。
+Python中的GIL是一个非常霸道的互斥实现，在一个线程拥有了解释器的访问权之后，其它的所有线程都必须等待它释放解释器的访问权，即使这些线程的下一条指令并不会互相">
 
 
 
@@ -381,7 +387,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  1.9k
                 </span>
               
 
@@ -397,7 +403,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  7
                 </span>
               
             </div>
@@ -418,7 +424,57 @@
       
 
       
-        
+        <h2 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h2><p>Python多线程机制是在GIL(Global Interpreter Lock)全局解释锁的基础上建立的。</p>
+<p>要支持多线程的话，一个基本的要求就是不同线程对共享资源访问的互斥，所以Python中引入了GIL，当然这是第一个原因。</p>
+<p>Python中的GIL是一个非常霸道的互斥实现，在一个线程拥有了解释器的访问权之后，其它的所有线程都必须等待它释放解释器的访问权，即使这些线程的下一条指令并不会互相影响。</p>
+<p>这样的说法也就意味着，无论如何，在同一时间，只能有一个线程能访问Python提供的API。因为单处理器的本质是不可能并行的，这里的同一时间确实对于单处理器是毫无意义的，但是对于多处理器，同一时间，确实可以有多个时间独立运行。然而正是由于GIL限制了这样的情形，使得多处理器最终退化为单处理器，性能大打折扣。那么，为什么还要使用GIL呢？这里就要提到第二个原因。</p>
+<p>当然，Python社区也早都认识到了这个问题，并且在不断探索，Greg Stein和Mark Hammond两位老兄曾经创建过一份去除GIL的branch，但是很不幸，这个分支在很多的基准测试中，尤其是在单线程的测试上，效率只有使用GIL的一半左右。</p>
+<p>使用GIL时，保护机制的粒度比较大，也就是我们似乎只需要将可能被多个线程共享的资源保护起来即可，对于不会被多个线程共享的资源，完全可以不用保护。但是，如果使用更细粒度的锁机制进行保护，那么，会导致大量的加锁和解锁功能，加锁和解锁对于操作系统来说，是一个比较重量级的动作，同时，没有GIL的保护，编写Python的扩展模块的难度也大大增加。</p>
+<p>所以，目前为止，GIL仍然是多线程机制的基石。</p>
+<p>对于Python而言，字节码解释器是Python的核心所在，所以Python通过GIL来互斥不同线程对解释器的使用。这里举个例子进行说明：</p>
+<p>假设，现在有三个线程A、B和C，它们都需要解释器来执行字节码，进行对应的计算，那么在这之前，它们必须获得GIL。那么现在假设线程A获得了GIL，其它线程只能等A释放GIL之后，才能获得。</p>
+<p>对！是这样没错，于是，有两个问题：</p>
+<ol>
+<li><p>线程A何时释放GIL呢（如果A使用完解释器之后才释放GIL，那么，并行的计算退化为串行，多线程的意义何在？）</p>
+</li>
+<li><p>线程B和C谁将在A释放GIL之后获得GIL呢？</p>
+</li>
+</ol>
+<p>所以毫无疑问的，Python拥有其自己的一套线程调度机制。</p>
+<p>和操作系统的进程调度一样，线程调度机制主要解决两个问题：</p>
+<ol>
+<li><p>在何时挂起当前线程，选择处于等待状态的下一个线程？</p>
+</li>
+<li><p>在众多处于等待状态的线程中，应该选择激活哪个线程？</p>
+</li>
+</ol>
+<p>对于何时进行线程调度的问题，是由Python自身决定的。我们可以联想操作系统进行进程切换的问题，当一个进程执行了一段时间之后，发生了时钟中断，于是操作系统响应时钟中断，并在这时开始进程的调度。</p>
+<p>与此类似，Python中通过软件模拟了这样的中断，来激活线程的调度。Python的字节码解释器是按照指令的顺序一条一条的顺序执行从而工作的，Python内部维护着这样一个数值，作为Python内部的时钟，假设这个值为N，那么Python将在执行了N条指令之后立刻启动线程调度机制。</p>
+<p>也就是说，当一个线程获得GIL后，Python内部的监测机制就开始启动，当这个线程执行了N条指令后，Python解释器将强制挂起当前线程，开始切换到下一个处于等待状态的线程。</p>
+<p>下一个问题，Python会在众多等待的线程中选择哪一个呢？</p>
+<p>答案是，不知道。因为这个问题是交给了底层的操作系统来解决的，Python借用了底层操作系统所提供的线程调度机制来决定下一个获得GIL进入解释器的线程是谁。</p>
+<p>所以说，Python中的线程实际上就是操作系统所支持的原生线程。</p>
+<p>Python中多线程常用的两个模块：Thread和在其之上的threading。其中Thread是使用C实现的，而Threading是用python实现。</p>
+<p>首先从创建线程说起，在threadmodule.c中，thread_PyThread_start_new_thread()函数通过三个主要的动作完成一个线程的创建：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">//创建bootstate结构</span><br><span class="line">boot = PyMem_NEW(struct bootstate, 1);</span><br><span class="line">if (boot == NULL)</span><br><span class="line">return PyErr_NoMemory();</span><br><span class="line">boot-&gt;interp = PyThreadState_GET()-&gt;interp;</span><br><span class="line">boot-&gt;func = func;</span><br><span class="line">boot-&gt;args = args;</span><br><span class="line">boot-&gt;keyw = keyw;</span><br><span class="line">boot-&gt;tstate = _PyThreadState_Prealloc(boot-&gt;interp);</span><br><span class="line">if (boot-&gt;tstate == NULL) &#123;</span><br><span class="line">PyMem_DEL(boot);</span><br><span class="line">return PyErr_NoMemory();</span><br><span class="line">&#125;</span><br><span class="line">Py_INCREF(func);</span><br><span class="line">Py_INCREF(args);</span><br><span class="line">Py_XINCREF(keyw);</span><br><span class="line">// 初始化多线程环境</span><br><span class="line">PyEval_InitThreads(); </span><br><span class="line">//创建线程</span><br><span class="line">ident = PyThread_start_new_thread(t_bootstrap, (void*) boot);</span><br><span class="line">if (ident == -1) &#123;</span><br><span class="line">PyErr_SetString(ThreadError, &quot;can&apos;t start new thread&quot;);</span><br><span class="line">Py_DECREF(func);</span><br><span class="line">Py_DECREF(args);</span><br><span class="line">Py_XDECREF(keyw);</span><br><span class="line">PyThreadState_Clear(boot-&gt;tstate);</span><br><span class="line">PyMem_DEL(boot);</span><br><span class="line">return NULL;</span><br><span class="line">&#125;</span><br><span class="line">return PyInt_FromLong(ident);</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>创建并初始化bootstate结构boot，在boot中，将保存关于Python的一切信息（线程过程，线程过程参数等)。</p>
+</li>
+<li><p>初始化Python的多线程环境。</p>
+</li>
+<li><p>以boot为参数，创建操作系统的原生线程。</p>
+</li>
+</ol>
+<p>从以上代码可以看出，Python在刚启动时，并不支持多线程，也就是说，Python中支持多线程的数据结构以及GIL都是没有创建的。当然这是因为大多数的Python程序都不需要Python的支持。</p>
+<p>在Python虚拟机启动时，多线程机制并没有被激活，它只支持单线程，一旦用户调用thread.start_new_thread，明确的告诉Python虚拟机需要创建新的线程，这时Python意识到用户需要多线程的支持，这个时候，Python虚拟机会自动建立多线程需要的数据结构、环境以及GIL。</p>
+<p>建立多线程环境，主要就是创建GIL。那么GIL是如何实现的呢？<br>打开”python/ceval.c”：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">static PyThread_type_lock interpreter_lock = 0; /* This is the GIL */</span><br><span class="line">static PyThread_type_lock pending_lock = 0; /* for pending calls */</span><br><span class="line">static long main_thread = 0;</span><br><span class="line"></span><br><span class="line">int</span><br><span class="line">PyEval_ThreadsInitialized(void)</span><br><span class="line">&#123;</span><br><span class="line">return interpreter_lock != 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void</span><br><span class="line">PyEval_InitThreads(void)</span><br><span class="line">&#123;</span><br><span class="line">if (interpreter_lock)</span><br><span class="line">return;</span><br><span class="line">interpreter_lock = PyThread_allocate_lock();</span><br><span class="line">PyThread_acquire_lock(interpreter_lock, 1);</span><br><span class="line">main_thread = PyThread_get_thread_ident();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这段代码中，iterpreter_lock就是GIL。</p>
+<p>无论创建多少个线程，Python建立多线程环境的动作只会执行一次。在创建GIL之前，Python会检查GIL是否已经被创建，如果是，则不再进行任何动作，否则，就会去创建这个GIL。</p>
+<p>在上述代码中，我们可以看到，创建GIL使用的是Pythread_allocate_lock完成的，下面看看该函数的内部实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">PyThread_type_lock</span><br><span class="line">PyThread_allocate_lock(void)</span><br><span class="line">&#123;</span><br><span class="line">PNRMUTEX aLock;</span><br><span class="line"></span><br><span class="line">dprintf((&quot;PyThread_allocate_lock called\n&quot;));</span><br><span class="line">if (!initialized)</span><br><span class="line">PyThread_init_thread();</span><br><span class="line"></span><br><span class="line">aLock = AllocNonRecursiveMutex() ;</span><br><span class="line"></span><br><span class="line">dprintf((&quot;%ld: PyThread_allocate_lock() -&gt; %p\n&quot;, PyThread_get_thread_ident(), aLock));</span><br><span class="line"></span><br><span class="line">return (PyThread_type_lock) aLock;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>GIL中的owned是指示GIL是否可用的变量，它的值被初始化为-1，Python会检查这个值是否为1，如果是，则意味着GIL可用，必须将其置为0，当owned为0后，表示该GIL已经被一个线程占用，不可再用；同时，当一个线程开始等待GIL时，其owned就会被增加1；当一个线程最终释放GIL时，一定会将GIL的owned减1，这样，当所有需要GIL的线程都最终释放了GIL之后，owned将再次变为-1，意味着GIL再次变为可用。</p>
+
       
     </div>
     
@@ -451,6 +507,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/zhangdavids.github.io/2019/05/14/斐波那契数列的计算/" rel="prev" title="斐波那契数列的计算">
+                斐波那契数列的计算 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -502,8 +562,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -522,7 +591,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">531</span>
+                  <span class="site-state-item-count">532</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -591,6 +660,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#多线程"><span class="nav-number">1.</span> <span class="nav-text">多线程</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -637,7 +722,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共215.9k字</span>
+  <span class="post-count">博客全站共219.1k字</span>
 </div>
 
         
