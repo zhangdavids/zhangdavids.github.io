@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[2019-go-33]]></title>
+    <url>%2Fzhangdavids.github.io%2F2019%2F05%2F16%2F2019-go-33%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
+    <title><![CDATA[2019-go-32]]></title>
+    <url>%2Fzhangdavids.github.io%2F2019%2F05%2F16%2F2019-go-32%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
+    <title><![CDATA[2019-go-31]]></title>
+    <url>%2Fzhangdavids.github.io%2F2019%2F05%2F16%2F2019-go-31%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
+    <title><![CDATA[2019-go-30]]></title>
+    <url>%2Fzhangdavids.github.io%2F2019%2F05%2F16%2F2019-go-30%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
+    <title><![CDATA[2019-go-29]]></title>
+    <url>%2Fzhangdavids.github.io%2F2019%2F05%2F16%2F2019-go-29%2F</url>
+    <content type="text"><![CDATA[go 语言的类型推断 可以带来哪些好处？ 主要体现在代码重构上 变量的重声明是什么意思？ 短变量声明 通过使用 可以对同一个代码块中的变量进行重声明 sync 包 同步 用通讯的方式共享数据 通过共享数据的方式 传递信息和协调线程运行的做法更加主流 竞态条件 会破坏共享数据的一致性 没有协调线程的写入操作 难以发现和定位 排查的成本很高 避免多个线程在同一个时刻操作同一个数据块 另一个是协调多个线程 以避免在同一个时刻执行同一个代码块 多个并行运行的线程对这个共享资源的访问是完全串行的 临界区 Mutex 互斥量 互斥锁当作是针对某一个临界区的唯一访问令牌 致命错误 是无法被恢复的 recover 起不到作用]]></content>
+  </entry>
+  <entry>
     <title><![CDATA[斐波那契数列的计算]]></title>
     <url>%2Fzhangdavids.github.io%2F2019%2F05%2F14%2F%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97%E7%9A%84%E8%AE%A1%E7%AE%97%2F</url>
     <content type="text"><![CDATA[python 使用numpy的做法 123456789101112131415161718192021222324252627282930import numpy as np&quot;&quot;&quot; 使用numpy的做法 &quot;&quot;&quot;def fib_matrix(n): res = pow((np.matrix([[1, 1], [1, 0]])), n) * np.matrix([[1], [0]]) return res[0][0]for i in range(10): print(int(fib_matrix(i)), end=&apos; &apos;)### 2# 使用矩阵计算斐波那契数列def Fibonacci_Matrix_tool(n): Matrix = np.matrix(&quot;1 1;1 0&quot;) # 返回是matrix类型 return pow(Matrix, n) # pow函数速度快于 使用双星好 **def Fibonacci_Matrix(n): result_list = [] for i in range(0, n): result_list.append(np.array(Fibonacci_Matrix_tool(i))[0][0]) return result_list# 调用# Fibonacci_Matrix(10) 标准库的做法 123456789101112131415161718192021222324252627282930313233343536373839# encoding=utf-8from functools import reduce&quot;&quot;&quot; 标准库的做法&quot;&quot;&quot;class Solution(object): # 矩阵相乘 def mul(self, a, b): r = [[0, 0], [0, 0]] r[0][0] = a[0][0] * b[0][0] + a[0][1] * b[1][0] r[0][1] = a[0][0] * b[0][1] + a[0][1] * b[1][1] r[1][0] = a[1][0] * b[0][0] + a[1][1] * b[1][0] r[1][1] = a[1][0] * b[0][1] + a[1][1] * b[1][1] return r # 递归加速计算斐波那契数列 O(n^2) -&gt; O(logn) def helper(self, n): if n == 0: return [[1, 0], [0, 1]] if n == 1: return [[1, 1], [1, 0]] if n&amp;1 == 0 : return self.mul(self.helper(n/2), self.helper(n/2)) else: return reduce(self.mul,[self.helper((n-1)/ 2),self.helper((n-1)/ 2),[[1, 1], [1, 0]]]) def fib(self, N): return self.helper(N-1)[0][0]if __name__ == &quot;__main__&quot;: for i in range(1, 11): print(i-1, Solution().fib(i))]]></content>
