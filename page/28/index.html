@@ -309,6 +309,395 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/19/leetcode-queue/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/19/leetcode-queue/" itemprop="url">leetcode-queue</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-19T15:56:03+08:00">
+                2019-03-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/03/19/leetcode-queue/" class="leancloud_visitors" data-flag-title="leetcode-queue">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  316
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>有效的括号</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public boolean isValid(String s) &#123;</span><br><span class="line">        Stack&lt;Character&gt; stack = new Stack&lt;&gt;();</span><br><span class="line">        char[] chars = s.toCharArray();</span><br><span class="line">        for (char aChar : chars) &#123;</span><br><span class="line">            if (stack.size() == 0) &#123;</span><br><span class="line">                stack.push(aChar);</span><br><span class="line">            &#125; else if (isSym(stack.peek(), aChar)) &#123;</span><br><span class="line">                stack.pop();</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                stack.push(aChar);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return stack.size() == 0;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private boolean isSym(char c1, char c2) &#123;</span><br><span class="line">        return (c1 == &apos;(&apos; &amp;&amp; c2 == &apos;)&apos;) || (c1 == &apos;[&apos; &amp;&amp; c2 == &apos;]&apos;) || (c1 == &apos;&#123;&apos; &amp;&amp; c2 == &apos;&#125;&apos;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>两个栈  实现队列</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Stack&lt;Integer&gt; in = new Stack&lt;Integer&gt;();</span><br><span class="line">Stack&lt;Integer&gt; out = new Stack&lt;Integer&gt;();</span><br><span class="line"></span><br><span class="line">public void push(int node) &#123;</span><br><span class="line">    in.push(node);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public int pop() throws Exception &#123;</span><br><span class="line">    if (out.isEmpty())</span><br><span class="line">        while (!in.isEmpty())</span><br><span class="line">            out.push(in.pop());</span><br><span class="line"></span><br><span class="line">    if (out.isEmpty())</span><br><span class="line">        throw new Exception(&quot;queue is empty&quot;);</span><br><span class="line"></span><br><span class="line">    return out.pop();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>栈的压入 弹出序列</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public boolean IsPopOrder(int[] pushSequence, int[] popSequence) &#123;</span><br><span class="line">    int n = pushSequence.length;</span><br><span class="line">    Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();</span><br><span class="line">    for (int pushIndex = 0, popIndex = 0; pushIndex &lt; n; pushIndex++) &#123;</span><br><span class="line">        stack.push(pushSequence[pushIndex]);</span><br><span class="line">        while (popIndex &lt; n &amp;&amp; !stack.isEmpty() </span><br><span class="line">                &amp;&amp; stack.peek() == popSequence[popIndex]) &#123;</span><br><span class="line">            stack.pop();</span><br><span class="line">            popIndex++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return stack.isEmpty();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>包含min 函数的栈</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">private Stack&lt;Integer&gt; dataStack = new Stack&lt;&gt;();</span><br><span class="line">private Stack&lt;Integer&gt; minStack = new Stack&lt;&gt;();</span><br><span class="line"></span><br><span class="line">public void push(int node) &#123;</span><br><span class="line">    dataStack.push(node);</span><br><span class="line">    minStack.push(minStack.isEmpty() ? node : Math.min(minStack.peek(), node));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public void pop() &#123;</span><br><span class="line">    dataStack.pop();</span><br><span class="line">    minStack.pop();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public int top() &#123;</span><br><span class="line">    return dataStack.peek();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public int min() &#123;</span><br><span class="line">    return minStack.peek();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>计算器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>其他题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/19/leetcode-bit/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/19/leetcode-bit/" itemprop="url">leetcode-bit</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-19T09:27:52+08:00">
+                2019-03-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/zhangdavids.github.io/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/zhangdavids.github.io/2019/03/19/leetcode-bit/" class="leancloud_visitors" data-flag-title="leetcode-bit">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  410
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>数1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int hammingWeight(uint32_t n) &#123;</span><br><span class="line">        int res = 0;</span><br><span class="line">        for (int i = 0; i &lt; 32; ++i) &#123;</span><br><span class="line">            res += (n &amp; 1);</span><br><span class="line">            n = n &gt;&gt; 1;</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>2的幂</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    bool isPowerOfTwo(int n) &#123;</span><br><span class="line">        int cnt = 0;</span><br><span class="line">        while (n &gt; 0) &#123;</span><br><span class="line">            cnt += (n &amp; 1);</span><br><span class="line">            n &gt;&gt;= 1;</span><br><span class="line">        &#125;</span><br><span class="line">        return cnt == 1;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    bool isPowerOfTwo(int n) &#123;</span><br><span class="line">        return (n &gt; 0) &amp;&amp; (!(n &amp; (n - 1)));</span><br><span class="line">    &#125; </span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>数字范围按位与</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int rangeBitwiseAnd(int m, int n) &#123;</span><br><span class="line">        int d = INT_MAX;</span><br><span class="line">        while ((m &amp; d) != (n &amp; d)) &#123;</span><br><span class="line">            d &lt;&lt;= 1;</span><br><span class="line">        &#125;</span><br><span class="line">        return m &amp; d;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>重复的dna序列</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    vector&lt;string&gt; findRepeatedDnaSequences(string s) &#123;</span><br><span class="line">        vector&lt;string&gt; res;</span><br><span class="line">        if (s.size() &lt;= 10) return res;</span><br><span class="line">        int mask = 0x7ffffff, cur = 0;</span><br><span class="line">        unordered_map&lt;int, int&gt; m;</span><br><span class="line">        for (int i = 0; i &lt; 9; ++i) &#123;</span><br><span class="line">            cur = (cur &lt;&lt; 3) | (s[i] &amp; 7);</span><br><span class="line">        &#125;</span><br><span class="line">        for (int i = 9; i &lt; s.size(); ++i) &#123;</span><br><span class="line">            cur = ((cur &amp; mask) &lt;&lt; 3) | (s[i] &amp; 7);</span><br><span class="line">            if (m.count(cur)) &#123;</span><br><span class="line">                if (m[cur] == 1) res.push_back(s.substr(i - 9, 10));</span><br><span class="line">                ++m[cur]; </span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                m[cur] = 1;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    vector&lt;string&gt; findRepeatedDnaSequences(string s) &#123;</span><br><span class="line">        unordered_set&lt;string&gt; res;</span><br><span class="line">        unordered_set&lt;int&gt; st;</span><br><span class="line">        unordered_map&lt;int, int&gt; m&#123;&#123;&apos;A&apos;, 0&#125;, &#123;&apos;C&apos;, 1&#125;, &#123;&apos;G&apos;, 2&#125;, &#123;&apos;T&apos;, 3&#125;&#125;;</span><br><span class="line">        int cur = 0;</span><br><span class="line">        for (int i = 0; i &lt; 9; ++i) cur = cur &lt;&lt; 2 | m[s[i]];</span><br><span class="line">        for (int i = 9; i &lt; s.size(); ++i) &#123;</span><br><span class="line">            cur = ((cur &amp; 0x3ffff) &lt;&lt; 2) | (m[s[i]]);</span><br><span class="line">            if (st.count(cur)) res.insert(s.substr(i - 9, 10));</span><br><span class="line">            else st.insert(cur);</span><br><span class="line">        &#125;</span><br><span class="line">        return vector&lt;string&gt;(res.begin(), res.end());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>还有  格雷码 翻转位 两数相除等等</p>
+<p>只出现一次的数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int singleNumber(vector&lt;int&gt;&amp; nums) &#123;</span><br><span class="line">        int res = 0;</span><br><span class="line">        for (auto num : nums)</span><br><span class="line">            res ^= num;</span><br><span class="line">        return res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/18/leetcode-sort/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -883,328 +1272,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/17/leetcode-0006/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/17/leetcode-0006/" itemprop="url">leetcode-0006</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-17T15:38:52+08:00">
-                2019-03-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/03/17/leetcode-0006/" class="leancloud_visitors" data-flag-title="leetcode-0006">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  138
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">func convert(s string, numRows int) string &#123;</span><br><span class="line">    if numRows == 1 || len(s) &lt;= numRows &#123;</span><br><span class="line">        return s</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    res := bytes.Buffer&#123;&#125;</span><br><span class="line">    // p pace 步距</span><br><span class="line">    p := numRows*2 - 2</span><br><span class="line"></span><br><span class="line">    // 处理第一行</span><br><span class="line">    for i := 0; i &lt; len(s); i += p &#123;</span><br><span class="line">        res.WriteByte(s[i])</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 处理中间的行</span><br><span class="line">    for r := 1; r &lt;= numRows-2; r++ &#123;</span><br><span class="line">        // 添加r行的第一个字符</span><br><span class="line">        res.WriteByte(s[r])</span><br><span class="line"></span><br><span class="line">        for k := p; k-r &lt; len(s); k += p &#123;</span><br><span class="line">            res.WriteByte(s[k-r])</span><br><span class="line">            if k+r &lt; len(s) &#123;</span><br><span class="line">                res.WriteByte(s[k+r])</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 处理最后一行</span><br><span class="line">    for i := numRows - 1; i &lt; len(s); i += p &#123;</span><br><span class="line">        res.WriteByte(s[i])</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return res.String()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/zhangdavids.github.io/2019/03/17/leetcode-0005/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/zhangdavids.github.io/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/zhangdavids.github.io/2019/03/17/leetcode-0005/" itemprop="url">leetcode-0005</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-17T15:38:44+08:00">
-                2019-03-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/zhangdavids.github.io/2019/03/17/leetcode-0005/" class="leancloud_visitors" data-flag-title="leetcode-0005">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  104
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">func longestPalindrome(s string) string &#123;</span><br><span class="line">    if len(s) &lt; 2 &#123; </span><br><span class="line">        return s</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    begin, maxLen := 0, 1</span><br><span class="line"></span><br><span class="line">    for i := 0; i &lt; len(s); &#123; </span><br><span class="line">        if len(s)-i &lt;= maxLen/2 &#123;</span><br><span class="line">            break</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        b, e := i, i</span><br><span class="line">        for e &lt; len(s)-1 &amp;&amp; s[e+1] == s[e] &#123;</span><br><span class="line">            e++</span><br><span class="line">        &#125;</span><br><span class="line">        i = e + 1</span><br><span class="line"></span><br><span class="line">        for e &lt; len(s)-1 &amp;&amp; b &gt; 0 &amp;&amp; s[e+1] == s[b-1] &#123;</span><br><span class="line">            e++</span><br><span class="line">            b--</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        newLen := e + 1 - b</span><br><span class="line">        if newLen &gt; maxLen &#123;</span><br><span class="line">            begin = b</span><br><span class="line">            maxLen = newLen</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return s[begin : begin+maxLen]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1259,7 +1326,7 @@
               
                 <a href="/zhangdavids.github.io/archives/">
               
-                  <span class="site-state-item-count">537</span>
+                  <span class="site-state-item-count">539</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1374,7 +1441,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共219.4k字</span>
+  <span class="post-count">博客全站共219.8k字</span>
 </div>
 
         
