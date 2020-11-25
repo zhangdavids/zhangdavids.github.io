@@ -585,7 +585,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  2k
                 </span>
               
 
@@ -601,7 +601,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  8
                 </span>
               
             </div>
@@ -624,7 +624,61 @@
       
         
           
-            
+            <p>协程库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import select</span><br><span class="line"></span><br><span class="line">from collections import deque</span><br><span class="line">from socket import socket, AF_INET, SOCK_STREAM, SOL_SOCKET, SO_REUSEADDR</span><br><span class="line"></span><br><span class="line">def create_listen_socket(bind_addr=&apos;0.0.0.0&apos;, bind_port=55555, backlogs=102400):</span><br><span class="line">    sock = socket(AF_INET, SOCK_STREAM)</span><br><span class="line">    sock.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)</span><br><span class="line">    sock.bind((bind_addr, bind_port))</span><br><span class="line">    sock.listen(backlogs)</span><br><span class="line">    return sock</span><br><span class="line"></span><br><span class="line">class Future:</span><br><span class="line"></span><br><span class="line">    def __init__(self, loop):</span><br><span class="line">        self.loop = loop</span><br><span class="line">        self.done = False</span><br><span class="line">        self.result = None</span><br><span class="line">        self.co = None</span><br><span class="line"></span><br><span class="line">    def set_coroutine(self, co):</span><br><span class="line">        self.co = co</span><br><span class="line"></span><br><span class="line">    def set_result(self, result):</span><br><span class="line">        self.done = True</span><br><span class="line">        self.result = result</span><br><span class="line"></span><br><span class="line">        if self.co:</span><br><span class="line">            self.loop.add_coroutine(self.co)</span><br><span class="line"></span><br><span class="line">    def __await__(self):</span><br><span class="line">        if not self.done:</span><br><span class="line">            yield self</span><br><span class="line">        return self.result</span><br><span class="line"></span><br><span class="line">class AsyncSocket:</span><br><span class="line"></span><br><span class="line">    def __init__(self, sock, loop):</span><br><span class="line">        sock.setblocking(False)</span><br><span class="line"></span><br><span class="line">        self.sock = sock</span><br><span class="line">        self.loop = loop</span><br><span class="line"></span><br><span class="line">    def fileno(self):</span><br><span class="line">        return self.sock.fileno()</span><br><span class="line"></span><br><span class="line">    def create_future_for_events(self, events):</span><br><span class="line">        future = self.loop.create_future()</span><br><span class="line"></span><br><span class="line">        def handler(fileno, active_events):</span><br><span class="line">            loop.unregister_from_polling(self.fileno())</span><br><span class="line">            future.set_result(active_events)</span><br><span class="line"></span><br><span class="line">        self.loop.register_for_polling(self.fileno(), events, handler)</span><br><span class="line"></span><br><span class="line">        return future</span><br><span class="line"></span><br><span class="line">    async def accept(self):</span><br><span class="line">        while True:</span><br><span class="line">            try:</span><br><span class="line">                sock, addr = self.sock.accept()</span><br><span class="line">                return AsyncSocket(sock=sock, loop=self.loop), addr</span><br><span class="line">            except BlockingIOError:</span><br><span class="line">                future = self.create_future_for_events(select.EPOLLIN)</span><br><span class="line">                await future</span><br><span class="line"></span><br><span class="line">    async def recv(self, bufsize):</span><br><span class="line">        while True:</span><br><span class="line">            try:</span><br><span class="line">                return self.sock.recv(bufsize)</span><br><span class="line">            except BlockingIOError:</span><br><span class="line">                future = self.create_future_for_events(select.EPOLLIN)</span><br><span class="line">                await future</span><br><span class="line"></span><br><span class="line">    async def send(self, data):</span><br><span class="line">        while True:</span><br><span class="line">            try:</span><br><span class="line">                return self.sock.send(data)</span><br><span class="line">            except BlockingIOError:</span><br><span class="line">                future = self.create_future_for_events(select.EPOLLOUT)</span><br><span class="line">                await future</span><br><span class="line"></span><br><span class="line">class EventLoop:</span><br><span class="line"></span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.epoll = select.epoll()</span><br><span class="line"></span><br><span class="line">        self.runnables = deque()</span><br><span class="line">        self.handlers = &#123;&#125;</span><br><span class="line"></span><br><span class="line">    def create_future(self):</span><br><span class="line">        return Future(loop=self)</span><br><span class="line"></span><br><span class="line">    def create_listen_socket(self, bind_addr, bind_port, backlogs=102400):</span><br><span class="line">        sock = create_listen_socket(bind_addr, bind_port, backlogs)</span><br><span class="line">        return AsyncSocket(sock=sock, loop=loop)</span><br><span class="line"></span><br><span class="line">    def register_for_polling(self, fileno, events, handler):</span><br><span class="line">        print(&apos;register fileno=&#123;&#125; for events &#123;&#125;&apos;.format(fileno, events))</span><br><span class="line">        self.handlers[fileno] = handler</span><br><span class="line">        self.epoll.register(fileno, events)</span><br><span class="line"></span><br><span class="line">    def unregister_from_polling(self, fileno):</span><br><span class="line">        print(&apos;unregister fileno=&#123;&#125;&apos;.format(fileno))</span><br><span class="line">        self.epoll.unregister(fileno)</span><br><span class="line">        self.handlers.pop(fileno)</span><br><span class="line"></span><br><span class="line">    def add_coroutine(self, co):</span><br><span class="line">        self.runnables.append(co)</span><br><span class="line"></span><br><span class="line">    def run_coroutine(self, co):</span><br><span class="line">        try:</span><br><span class="line">            future = co.send(None)</span><br><span class="line">            future.set_coroutine(co)</span><br><span class="line">        except StopIteration as e:</span><br><span class="line">            print(&apos;coroutine &#123;&#125; stopped&apos;.format(co.__name__))</span><br><span class="line"></span><br><span class="line">    def schedule_runnable_coroutines(self):</span><br><span class="line">        while self.runnables:</span><br><span class="line">            self.run_coroutine(co=self.runnables.popleft())</span><br><span class="line"></span><br><span class="line">    def run_forever(self):</span><br><span class="line">        while True:</span><br><span class="line">            self.schedule_runnable_coroutines()</span><br><span class="line"></span><br><span class="line">            events = self.epoll.poll(1)</span><br><span class="line">            for fileno, event in events:</span><br><span class="line">                handler = self.handlers.get(fileno)</span><br><span class="line">                if handler:</span><br><span class="line">                    handler(fileno, events)</span><br><span class="line"></span><br><span class="line">class TcpServer:</span><br><span class="line"></span><br><span class="line">    def __init__(self, loop, bind_addr=&apos;0.0.0.0&apos;, bind_port=55555):</span><br><span class="line">        self.loop = loop</span><br><span class="line">        self.listen_sock = self.loop.create_listen_socket(bind_addr=bind_addr, bind_port=bind_port)</span><br><span class="line">        self.loop.add_coroutine(self.serve_forever())</span><br><span class="line"></span><br><span class="line">    async def serve_client(self, sock):</span><br><span class="line">        while True:</span><br><span class="line">            data = await sock.recv(1024)</span><br><span class="line">            if not data:</span><br><span class="line">                print(&apos;client disconnected&apos;)</span><br><span class="line">                break</span><br><span class="line"></span><br><span class="line">            await sock.send(data.upper())</span><br><span class="line"></span><br><span class="line">    async def serve_forever(self):</span><br><span class="line">        while True:</span><br><span class="line">            sock, (addr, port) = await self.listen_sock.accept()</span><br><span class="line">            print(&apos;client connected addr=&#123;&#125; port=&#123;&#125;&apos;.format(addr, port))</span><br><span class="line"></span><br><span class="line">            self.loop.add_coroutine(self.serve_client(sock))</span><br><span class="line"></span><br><span class="line">if __name__ == &apos;__main__&apos;:</span><br><span class="line">    loop = EventLoop()</span><br><span class="line">    server = TcpServer(loop=loop)</span><br><span class="line">    loop.run_forever()</span><br></pre></td></tr></table></figure>
+<p>我们模仿常见协程库，引入 Future ，代表一个在未来才能获取到的数据。Future 一般由协程创建，典型的场景是这样的：协程在等待一个 IO 事件，这时它便创建一个 Future 对象，并把执行权归还给事件循环。</p>
+<p>例子中的 Future 类，有 4 个重要的属性：</p>
+<ul>
+<li>loop ，当前事件循环对象；</li>
+<li>done ，标识目标数据是否就绪；</li>
+<li>result ，目标数据；</li>
+<li>co ，关联协程，Future 就绪后，事件循环 loop 将把它放入可执行队列重新调度；</li>
+</ul>
+<p>注意到，Future 是一个 可等待对象 ( awaitable )，它实现了 <strong>await</strong> 方法。当数据未就绪时，通过 yield 让出执行权，这时事件循环将协程记录在 Future 中。当数据就绪后，事件循环将协程放回可执行队列重新调度。</p>
+<p>协程库还将套接字进行 异步化 封装，抽象出 AsyncSocket 类，接口与原生 socket 对象类似。除了保存原生 socket 对象，它还保存事件循环对象，以便通过事件循环订阅 IO 事件。</p>
+<p>create_future_for_events 方法创建一个 Future 对象，来等待一个不知何时发生的 IO 事件。创建完 Future 对象后，进一步调用 loop 相关方法，将感兴趣的 IO 事件注册到 epoll 。当相关事件就绪时，事件循环将执行回调函数 handler ，它解除 epoll 注册，并将活跃事件作为目标数据设置到 Future 上(注意 set_result 将唤醒协程)。</p>
+<p>然后是套接字系列操作函数，以 accept 为例，它不断尝试调用原生套接字，而原生套接字已被设为非阻塞。如果套接字已就绪，accept 将直接返回新连接，协程无须等待。</p>
+<p>否则，accept 方法抛出 BlockingIOError 异常。这时，协程调用 create_future_for_events 方法创建一个 Future 订阅读事件( EPOLLIN )，并等待事件到达。</p>
+<p>recv 、send 方法封装也是类似的，不同的是 send 需要订阅 可写事件 ( EPOLLOUT )。</p>
+<p>好了，终于来到协程库了主角事件循环 EventLoop 对象了，它有 3 个重要属性：</p>
+<ul>
+<li>epoll ，这是一个 epoll 描述符，用于订阅 IO 事件；</li>
+<li>runnables ，可执行协程队列；</li>
+<li>handlers ，IO 事件回调处理函数映射表；</li>
+</ul>
+<p>register_for_polling 方法注册感兴趣的 IO 事件和处理函数，它以文件描述符为键，将处理函数记录到映射表中，然后调用 epoll 完成事件订阅。unregister_from_polling 方法则刚好相反，用于取消注册。</p>
+<p>add_coroutine 将一个可运行的协程加入队列。run_coroutine 则调度一个可执行协程，它调用 send 将执行权交给协程。如果协程执行完毕，它将输出提示；协程需要等待时，会通过 yield 归还执行权并提交 Future 对象，它将协程记录到 Future 上下文。schedule_runnable_coroutines 将可执行协程逐个取出并调度，直到队列为空。</p>
+<p>run_forever 是事件循环的主体逻辑，这是一个永久循环。每次循环时，先调度可执行协程；然后通过 poll 等待协程注册的 IO 事件；当有新事件到达时，取出回调函数 handler 函数并调用。</p>
+<p>TcpServer 只是一个普通的协程式应用，无须赘述。接下来，我们逐步分析，看看程序启动后都发生什么事情：</p>
+<ol>
+<li>创建事件循环 EventLoop 对象，它将创建 epoll 描述符；</li>
+<li>创建 TcpServer 对象，它通过事件循环 loop 创建监听套接字，并将 serve_forever 协程放入可执行队列；</li>
+<li>事件循环 loop.run_forever 开始执行，它先调度可执行队列；</li>
+<li>可执行队列一开始只有一个协程 TcpServer.serve_forever ，它将开始执行(由 run_coroutine 驱动)；</li>
+<li>执行权来到 TcpServer.serve_forever 协程，它调用 AsyncSocket.accept 准备接受一个新连接；</li>
+<li>假设原生套接字未就绪，它将抛出 BlockingIOError 异常；</li>
+<li>由于 IO 未就绪，协程创建一个 Future 对象，用来等待一个未来的 IO 事件( AsyncSocket.accept )；</li>
+<li>于此同时，协程调用事件循环 register_for_polling 方法订阅 IO 事件，并注册回调处理函数 handler ；</li>
+<li>future 是可以个可等待对象，await future 将执行权交给它的 __await__ 函数；</li>
+<li>由于一开始 future 是未就绪的，这时 yield 将协程执行逐层归还给事件循环，future 对象也被同时上报；</li>
+<li>执行权回到事件循环，run_coroutine 收到协程上报的 future 后将协程设置进去，以便 future 就绪后重新调度协程；</li>
+<li>可执行队列变空后，事件循环开始调用 epoll.poll 等待协程注册的 IO 事件( serve_forever )；</li>
+<li>当注册事件到达后，事件循环取出回调处理函数并调用；</li>
+<li>handler 先将套接字从 epoll 解除注册，然后调用 set_result 将活跃事件作为目标数据记录到 future 中；</li>
+<li>set_result 将协程重新放回可执行队列；</li>
+<li>IO 事件处理完毕，进入下一次事件循环；</li>
+<li>事件循环再次调度可执行队列，这时 TcpServer.serve_forever 协程再次拿到执行权；</li>
+<li>TcpServer.serve_forever 协程从 yield 语句恢复执行，开始返回目标数据，也就是先前设置的活跃事件；</li>
+<li>AsyncSocket.accept 内 await future 语句取得活跃事件，然后循环继续；</li>
+<li>循环再次调用原生套接字，这时它早已就绪，得到一个新套接字，简单包装后作为结果返回给调用者；</li>
+<li>TcpServer.serve_forever 拿到代表新连接的套接字后，创建一个 serve_client 协程并交给事件循环 loop ；</li>
+<li>TcpServer.serve_forever 进入下一次循环，调用 accept 准备接受下一个客户端连接；</li>
+<li>如果监听套接字未就绪，执行权再次回到事件循环；</li>
+<li>事件循环接着调度可执行队列里面的协程，<em>TcpServer.</em>serve_client 协程也开始执行了；</li>
+<li>etc</li>
+</ol>
+<p>这看着就像一个精密的机械装置，有条不紊的运行着，环环相扣！</p>
+
           
         
       
@@ -746,7 +800,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  834
                 </span>
               
 
@@ -762,7 +816,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -785,7 +839,27 @@
       
         
           
-            
+            <p>再重新看看 GIL的问题</p>
+<p> list 、 dict 等内建对象是 线程安全 的吗？</p>
+<p>在 Python 层面，list 、dict 等内建对象是线程安全的，这是最基本的常识。研究 list、dict 等内建对象源码时，我们并没有看到任何 互斥锁 的痕迹，这多少有点令人意外。</p>
+<p>Python 虚拟机维护了一个 全局锁 ，这就是众所周知的 GIL。Python 线程想在虚拟机中执行字节码，必须取得全局锁。这样一来，不管任何时刻，只有一个线程在虚拟机中运行。那么，虚拟机如何交替执行不同线程呢？</p>
+<p>Python 线程调度实现方式参考了操作系统进程调度中 时间片 的思路，只不过将时间片换成 字节码 。当一个线程取得 GIL 全局锁并开始执行字节码时，对已执行字节码进行计数。当执行字节码达到一定数量 (比如 100 条) 时，线程主动释放 GIL 全局锁并唤醒其他线程。其他等待 GIL 全局锁的线程取得锁后，将得到虚拟机控制权并开始执行。因此，虚拟机就像一颗软件 CPU ，Python 线程交替在虚拟机上执行</p>
+<p>在 GIL 的束缚下，Python 虚拟机同一时刻只能执行一个线程。这是否意味着多线程完全无法优化程序性能呢？由于程序运行特征千差万别，这个问题得分情况讨论。开始之前，我们先来了解两种不同的运行特征：</p>
+<p>程序在运行时，一般都处于两种状态：</p>
+<ul>
+<li>可执行 状态，包括 Running 以及 Ready 两种情况，这时竞争处理器资源；</li>
+<li>阻塞 状态，一般为等待 IO 处理，这时让出处理器资源；</li>
+</ul>
+<p>根据程序分别处于 Running 以及 IO Blocked 两种状态的时间占比，可分为两种：</p>
+<ul>
+<li>计算密集型 ，程序执行时大部分时间处于 Running 状态；</li>
+<li>IO 密集型 ，程序执行时大部分时间处于 IO Blocked 状态；</li>
+</ul>
+<p>多线程的网络爬虫程序可以极大缩减时间</p>
+<p>计算密集型的话 只能使用多进程</p>
+<p>GIL是为了方便解释器开发人员而设置的, 尤其是在内存管理方面。 假设没有GIL, 那么两个线程在销毁同一个对象的时候, 就会出现悬空指针的问题。 于是python引用了GIL, 它是以字节码为单位的, 不管何时, 只有一个线程在执行字节码。 如果当前的某条字节码没有执行完, 那么是不会发生线程切换的, 因此这样就保证了以字节码为单位的安全性。 但是我们在写python代码时, 由于一行代码一般会对应多条字节码, 所以这个时候会再通过threading.Lock()进行加锁 所以: GIL是以字节码为单位的, 它保证了每条字节码在执行的时候不会被打断 而threading.Lock()是以代码为单位的, 它是保证python层面上的一行或多行代码在执行时不会被打断</p>
+<p>发展几十年 有一些尝试 但是仍然不成熟 官方也没有</p>
+
           
         
       
@@ -833,7 +907,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/05/23/CPython源码分析0006/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/05/23/CPython源码分析0004/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -852,7 +926,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/05/23/CPython源码分析0006/" itemprop="url">CPython源码分析0006</a></h1>
+                <a class="post-title-link" href="/2019/05/23/CPython源码分析0004/" itemprop="url">CPython源码分析0004</a></h1>
         
 
         <div class="post-meta">
@@ -864,7 +938,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-23T15:42:18+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-23T15:41:56+08:00">
                 2019-05-23
               </time>
             
@@ -882,7 +956,7 @@
 
           
           
-             <span id="/2019/05/23/CPython源码分析0006/" class="leancloud_visitors" data-flag-title="CPython源码分析0006">
+             <span id="/2019/05/23/CPython源码分析0004/" class="leancloud_visitors" data-flag-title="CPython源码分析0004">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -907,7 +981,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  867
                 </span>
               
 
@@ -923,7 +997,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  3
                 </span>
               
             </div>
@@ -946,7 +1020,42 @@
       
         
           
-            
+            <p>dict 的分析</p>
+<p>哈希表的实现</p>
+<p>key是不可以重复的 因为会按照key找对应的value</p>
+<p>数据插入后，我们发现 dict 对象内存使用量保存不变。看来， dict 对象也有一种类似 list 对象的 预分配机制 。</p>
+<p>哈希表结构决定了 dict 的删除操作也很快，平均时间复杂度也是 O(1)O(1) 。实际上， dict 插入、删除、查找的平均时间复杂度都是 ，O(1)O(1)最坏时间复杂度是 O(n)O(n) 。因此，哈希函数的选择就至关重要，一个好的哈希函数应该将键尽可能 均匀 地映射到哈希空间中，最大限度地避免 哈希冲突 。</p>
+<p> dict 对象在 Python 内部由结构体 PyDictObject 表示， PyDictObject 在头文件 Include/dictobject.h 中定义</p>
+<p> dict 对象理论上应该是一种变长对象，但 PyObject_HEAD 头部告诉我们， Python 其实把它作为普通对象实现。除了对象公共头部外， PyDictObject 还包括以下几个字段：</p>
+<ol>
+<li>ma_used ，对象当前所保存的 键值对个数 ；</li>
+<li>ma_version_tag ，对象当前 版本号 ，每次修改时更新；</li>
+<li>ma_keys ，指向按键对象映射的 哈希表 结构；</li>
+<li>ma_values ， 分离模式下指向由所有 值对象 组成的数组。</li>
+</ol>
+<p>_dictkeysobject 结构体包含 dict 对象哈希表实现的所有秘密，结合注释可以解读其中的关键字段：</p>
+<ul>
+<li>dk_refcnt ，引用计数，跟 映射视图 的实现有关，有点类似对象引用计数；</li>
+<li>dk_size ，哈希表大小，必须是 2^n2 </li>
+<li>n</li>
+<li>，这样可将模运算优化成 按位与 运算；</li>
+<li>dk_lookup ， 哈希查找函数 指针，可根据 dict 当前状态选用最优函数版本；</li>
+<li>dk_usable ，键值对数组 可用个数 ；</li>
+<li>dk_nentries ，键值对数组 已用个数 ；</li>
+<li>dk_indices ，哈希表 起始地址 ，哈希表后紧接着 键值对数组 dk_entries 。</li>
+</ul>
+<p>哈希表越密集，哈希冲突则越频繁，性能也就越差。因此，哈希表必须是一种 稀疏 的表结构，越稀疏则性能越好。由于 内存开销 的制约，哈希表不可能无限度稀疏，需要在时间和空间上进行权衡。实践经验表明，一个0.5-0.67 满的哈希表，性能较为理想——以相对合理的 内存 换取相对高效的 执行性能 。</p>
+<p>为保证哈希表的稀疏程度，进而控制哈希冲突频率， Python 通过 USABLE_FRACTION 宏将哈希表内元素控制在 0.5-0.67 以内。USABLE_FRACTION 宏根据哈希表规模 n ，计算哈希表可存储元素个数，也就是 键值对数组 的长度。以长度为 8 的哈希表为例，最多可以保持 5 个键值对，超出则需要扩容。USABLE_FRACTION 是一个非常重要的宏定义，位于源文件 Objects/dictobject.c 中</p>
+<ul>
+<li>dict 是一种高效的关联式容器，每秒完成高达 200 多万次搜索操作；</li>
+<li>dict 内部由哈希表实现，哈希表的 稀疏 特性意味着昂贵的内存开销；</li>
+<li>为优化内存使用， Python 将 dict 哈希表分为 哈希索引 和 键值对 两个数组来实现；</li>
+<li>哈希表在 0.5-0.67 满时，性能较为理想，较好地平衡了 内存开销 与 搜索效率 ；</li>
+</ul>
+<p>解决哈希冲突的常用方法有两种：</p>
+<p>分离链接法 ( separate chaining ) ；<br>开放地址法 ( open addressing )；</p>
+<p>​      </p>
+
           
         
       
@@ -994,7 +1103,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/05/23/CPython源码分析0005/">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/05/18/架构师之路012/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="John Cheung">
@@ -1013,7 +1122,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/05/23/CPython源码分析0005/" itemprop="url">CPython源码分析0005</a></h1>
+                <a class="post-title-link" href="/2019/05/18/架构师之路012/" itemprop="url">架构师之路012</a></h1>
         
 
         <div class="post-meta">
@@ -1025,8 +1134,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-23T15:42:09+08:00">
-                2019-05-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-18T21:49:02+08:00">
+                2019-05-18
               </time>
             
 
@@ -1036,6 +1145,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/架构课/" itemprop="url" rel="index">
+                    <span itemprop="name">架构课</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -1043,7 +1174,7 @@
 
           
           
-             <span id="/2019/05/23/CPython源码分析0005/" class="leancloud_visitors" data-flag-title="CPython源码分析0005">
+             <span id="/2019/05/18/架构师之路012/" class="leancloud_visitors" data-flag-title="架构师之路012">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -1196,7 +1327,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">545</span>
+                  <span class="site-state-item-count">543</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1311,7 +1442,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共221.6k字</span>
+  <span class="post-count">博客全站共225.7k字</span>
 </div>
 
         

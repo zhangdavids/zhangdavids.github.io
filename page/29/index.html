@@ -309,398 +309,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/03/19/leetcode-linklist/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/19/leetcode-linklist/" itemprop="url">leetcode-linklist</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-19T16:07:02+08:00">
-                2019-03-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/03/19/leetcode-linklist/" class="leancloud_visitors" data-flag-title="leetcode-linklist">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.3k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  6
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>输出单链表倒数第k个节点</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">// 双指针法</span><br><span class="line"></span><br><span class="line">ListNode* findKthTail(ListNode *pHead, int K)&#123;</span><br><span class="line">    if (NULL == pHead || K == 0)</span><br><span class="line">        return NULL;</span><br><span class="line">    //p1，p2均指向头节点</span><br><span class="line">    ListNode *p1 = pHead;</span><br><span class="line">    ListNode *p2 = pHead;</span><br><span class="line">    //p1先出发，前进K个节点</span><br><span class="line">    for (int i = 0; i &lt; K; i++) &#123;</span><br><span class="line">        if (p1)//防止k大于链表节点的个数</span><br><span class="line">            p1 = p1-&gt;_next;</span><br><span class="line">        else</span><br><span class="line">            return NULL;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    while (p1)//如果p1没有到达链表结尾，则p1，p2继续遍历</span><br><span class="line">    &#123;</span><br><span class="line">        p1 = p1-&gt;_next;</span><br><span class="line">        p2 = p2-&gt;_next;</span><br><span class="line">    &#125;</span><br><span class="line">    return p2;//当p1到达末尾时，p2正好指向倒数第K个节点</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>链表中存在环的问题</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isExistLoop</span><span class="params">(ListNode* pHead)</span>  </span>&#123;  </span><br><span class="line">    ListNode* fast;<span class="comment">//慢指针，每次前进一个节点</span></span><br><span class="line">    ListNode* slow;<span class="comment">//快指针，每次前进2个节点 </span></span><br><span class="line">    slow = fast = pHead ;  <span class="comment">//两个指针均指向链表头节点</span></span><br><span class="line">    <span class="comment">//当没有到达链表结尾，则继续前进</span></span><br><span class="line">    <span class="keyword">while</span> (slow != <span class="literal">NULL</span> &amp;&amp; fast -&gt; next != <span class="literal">NULL</span>)  &#123;  </span><br><span class="line">        slow = slow -&gt; next ; <span class="comment">//慢指针前进一个节点</span></span><br><span class="line">        fast = fast -&gt; next -&gt; next ; <span class="comment">//快指针前进两个节点</span></span><br><span class="line">        <span class="keyword">if</span> (slow == fast)  <span class="comment">//若两个指针相遇，且均不为NULL则存在环</span></span><br><span class="line">            return <span class="literal">true</span> ;  </span><br><span class="line">    &#125;  </span><br><span class="line">    <span class="comment">//到达末尾仍然没有相遇，则不存在环</span></span><br><span class="line">    return <span class="literal">false</span> ;  </span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line"><span class="comment">// 快慢指针 </span></span><br><span class="line"></span><br><span class="line"><span class="comment">//找到环中的相遇节点</span></span><br><span class="line"><span class="function">ListNode* <span class="title">getMeetingNode</span><span class="params">(ListNode* pHead)</span> <span class="comment">// 假设为带头节点的单链表</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    ListNode* fast;<span class="comment">//慢指针，每次前进一个节点</span></span><br><span class="line">    ListNode* slow;<span class="comment">//快指针，每次前进2个节点 </span></span><br><span class="line">    slow = fast = pHead ;  <span class="comment">//两个指针均指向链表头节点</span></span><br><span class="line">    <span class="comment">//当没有到达链表结尾，则继续前进</span></span><br><span class="line">    <span class="keyword">while</span> (slow != <span class="literal">NULL</span> &amp;&amp; fast -&gt; next != <span class="literal">NULL</span>)&#123;  </span><br><span class="line">        slow = slow -&gt; next ; <span class="comment">//慢指针前进一个节点</span></span><br><span class="line">        fast = fast -&gt; next -&gt; next ; <span class="comment">//快指针前进两个节点</span></span><br><span class="line">        <span class="keyword">if</span> (slow == fast)  <span class="comment">//若两个指针相遇，且均不为NULL则存在环</span></span><br><span class="line">            return slow;  </span><br><span class="line">    &#125;  </span><br><span class="line"></span><br><span class="line">    <span class="comment">//到达末尾仍然没有相遇，则不存在环</span></span><br><span class="line">    return <span class="literal">NULL</span> ;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//找出环的入口节点</span></span><br><span class="line"><span class="function">ListNode* <span class="title">getEntryNodeOfLoop</span><span class="params">(ListNode* pHead)</span></span>&#123;</span><br><span class="line">    ListNode* meetingNode = getMeetingNode(pHead); <span class="comment">// 先找出环中的相遇节点</span></span><br><span class="line">    <span class="keyword">if</span> (meetingNode == <span class="literal">NULL</span>)</span><br><span class="line">        return <span class="literal">NULL</span>;</span><br><span class="line">    ListNode* p1 = meetingNode;</span><br><span class="line">    ListNode* p2 = pHead;</span><br><span class="line">    <span class="keyword">while</span> (p1 != p2) <span class="comment">// p1和p2以相同的速度向前移动，当p2指向环的入口节点时，p1已经围绕着环走了n圈又回到了入口节点。</span></span><br><span class="line">    &#123;</span><br><span class="line">        p1 = p1-&gt;next;</span><br><span class="line">        p2 = p2-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//返回入口节点</span></span><br><span class="line">    return p1;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 计算环的长度</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">getLoopLength</span><span class="params">(ListNode* head)</span></span>&#123;</span><br><span class="line">    ListNode* slow = head;</span><br><span class="line">    ListNode* fast = head;</span><br><span class="line">    <span class="keyword">while</span> ( fast &amp;&amp; fast-&gt;next )&#123;</span><br><span class="line">        slow = slow-&gt;next;</span><br><span class="line">        fast = fast-&gt;next-&gt;next;</span><br><span class="line">        <span class="keyword">if</span> ( slow == fast )<span class="comment">//第一次相遇</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//slow与fast继续前进</span></span><br><span class="line">    slow = slow-&gt;next;</span><br><span class="line">    fast = fast-&gt;next-&gt;next;</span><br><span class="line">    <span class="keyword">int</span> length = <span class="number">1</span>;       <span class="comment">//环长度</span></span><br><span class="line">    <span class="keyword">while</span> ( fast != slow )<span class="comment">//再次相遇</span></span><br><span class="line">    &#123;</span><br><span class="line">        slow = slow-&gt;next;</span><br><span class="line">        fast = fast-&gt;next-&gt;next;</span><br><span class="line">        length ++;        <span class="comment">//累加</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//当slow与fast再次相遇，得到环长度</span></span><br><span class="line">    return length;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>使用链表实现大数相加</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">ListNode* numberAddAsList(ListNode* l1, ListNode* l2) &#123;</span><br><span class="line">        ListNode *ret = l1, *pre = l1;</span><br><span class="line">        int up = 0;</span><br><span class="line">        while (l1 != NULL &amp;&amp; l2 != NULL) &#123;</span><br><span class="line">            //数值相加</span><br><span class="line">            l1-&gt;val = l1-&gt;val + l2-&gt;val + up;</span><br><span class="line">            //计算是否有进位</span><br><span class="line">            up = l1-&gt;val / 10;</span><br><span class="line">            //保留计算结果的个位</span><br><span class="line">            l1-&gt;val %= 10;</span><br><span class="line">            //记录当前节点位置</span><br><span class="line">            pre = l1;</span><br><span class="line">            //同时向后移位</span><br><span class="line">            l1 = l1-&gt;next;</span><br><span class="line">            l2 = l2-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        //若l1到达末尾，说明l1长度小于l2</span><br><span class="line">        if (l1 == NULL)</span><br><span class="line">            //pre-&gt;next指向l2的当前位置</span><br><span class="line">            pre-&gt;next = l2;</span><br><span class="line">        //l1指针指向l2节点当前位置</span><br><span class="line">        l1 = pre-&gt;next;</span><br><span class="line">        //继续计算剩余节点</span><br><span class="line">        while (l1 != NULL) &#123;</span><br><span class="line">            l1-&gt;val = l1-&gt;val + up;</span><br><span class="line">            up = l1-&gt;val / 10;</span><br><span class="line">            l1-&gt;val %= 10;</span><br><span class="line">            pre = l1;</span><br><span class="line">            l1 = l1-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //最高位计算有进位，则新建一个节点保留最高位</span><br><span class="line">        if (up != 0) &#123;</span><br><span class="line">            ListNode *tmp = new ListNode(up);</span><br><span class="line">            pre-&gt;next = tmp;</span><br><span class="line">        &#125;</span><br><span class="line">        //返回计算结果链表</span><br><span class="line">        return ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>有序链表合并</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">ListNode* mergeTwoOrderedLists(ListNode* pHead1, ListNode* pHead2)&#123;</span><br><span class="line">    ListNode* newHead = NULL;</span><br><span class="line">    if (NULL == pHead1)&#123;</span><br><span class="line">        return pHead2;</span><br><span class="line">    &#125;else if(NULL ==pHead2)&#123;</span><br><span class="line">        return pHead2;</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        if (pHead1-&gt;data &lt; pHead2-&gt;data)&#123;</span><br><span class="line">            newHead = pHead1;</span><br><span class="line">            newHead-&gt;next = mergeTwoOrderedLists(pHead1-&gt;next, pHead2);</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            newHead = pHead2;</span><br><span class="line">            newHead-&gt;next = mergeTwoOrderedLists(pHead1, pHead2-&gt;next);</span><br><span class="line">         &#125;</span><br><span class="line">        return newHead;</span><br><span class="line">    &#125;   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>删除链表中节点 要求时间复杂度为1</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">void deleteNode(ListNode **pHead, ListNode* pDelNode) &#123;</span><br><span class="line">        if(pDelNode == NULL)</span><br><span class="line">            return;</span><br><span class="line">        if(pDelNode-&gt;next != NULL)&#123;</span><br><span class="line">            ListNode *pNext = pDelNode-&gt;next;</span><br><span class="line">            //下一个节点值赋给待删除节点</span><br><span class="line">            pDelNode-&gt;val   =  pNext-&gt;val;</span><br><span class="line">            //待删除节点指针指后面第二个节点</span><br><span class="line">            pDelNode-&gt;next  = pNext-&gt;next;</span><br><span class="line">            //删除待删除节点的下一个节点</span><br><span class="line">            delete pNext;</span><br><span class="line">            pNext = NULL;</span><br><span class="line">        &#125;else if(*pHead == pDelNode)//删除的节点是头节点</span><br><span class="line">         &#123;</span><br><span class="line">            delete pDelNode;</span><br><span class="line">            pDelNode= NULL;</span><br><span class="line">            *pHead = NULL;</span><br><span class="line">        &#125; else//删除的是尾节点</span><br><span class="line">        &#123;</span><br><span class="line">            ListNode *pNode = *pHead;</span><br><span class="line">            while(pNode-&gt;next != pDelNode) &#123;</span><br><span class="line">                pNode = pNode-&gt;next;</span><br><span class="line">            &#125;</span><br><span class="line">            pNode-&gt;next = NULL;</span><br><span class="line">            delete pDelNode;</span><br><span class="line">            pDelNode= NULL;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p>从尾到头打印链表</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    vector&lt;int&gt; printListFromTailToHead(ListNode* head) &#123;</span><br><span class="line">        vector&lt;int&gt; value;</span><br><span class="line">        ListNode *p=NULL;</span><br><span class="line">        p=head;</span><br><span class="line">        stack&lt;int&gt; stk;</span><br><span class="line">        while(p!=NULL)&#123;</span><br><span class="line">            stk.push(p-&gt;val);</span><br><span class="line">            p=p-&gt;next;</span><br><span class="line">        &#125;</span><br><span class="line">        while(!stk.empty())&#123;</span><br><span class="line">            value.push_back(stk.top());</span><br><span class="line">            stk.pop();</span><br><span class="line">        &#125;</span><br><span class="line">        return value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    vector&lt;int&gt; value;</span><br><span class="line">    vector&lt;int&gt; printListFromTailToHead(ListNode* head) &#123;</span><br><span class="line">        ListNode *p=NULL;</span><br><span class="line">        p=head;</span><br><span class="line">        if(p!=NULL)&#123;</span><br><span class="line">            if(p-&gt;next!=NULL)&#123;</span><br><span class="line">                printListFromTailToHead(p-&gt;next);</span><br><span class="line">            &#125;</span><br><span class="line">            value.push_back(p-&gt;val);</span><br><span class="line">        &#125;</span><br><span class="line">        return value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>反转链表</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">// 迭代</span><br><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    ListNode* reverseList(ListNode* head) &#123;</span><br><span class="line">        ListNode* pre = NULL;</span><br><span class="line">        ListNode* cur = head;</span><br><span class="line">        while(cur != NULL)&#123;</span><br><span class="line">            ListNode* next = cur-&gt;next;</span><br><span class="line">            cur-&gt;next = pre;</span><br><span class="line">            pre = cur;</span><br><span class="line">            cur = next;</span><br><span class="line">        &#125;</span><br><span class="line">        return pre;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//递归</span><br><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    ListNode* reverseList(ListNode* head) &#123;</span><br><span class="line">        // 递归终止条件</span><br><span class="line">        if(head == NULL || head-&gt;next == NULL)</span><br><span class="line">            return head;</span><br><span class="line"></span><br><span class="line">        ListNode* rhead = reverseList(head-&gt;next);</span><br><span class="line">        // head-&gt;next此刻指向head后面的链表的尾节点</span><br><span class="line">        // head-&gt;next-&gt;next = head把head节点放在了尾部</span><br><span class="line">        head-&gt;next-&gt;next = head;</span><br><span class="line">        head-&gt;next = NULL;</span><br><span class="line">        return rhead;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/03/19/leetcode-queue/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/03/19/leetcode-queue/" itemprop="url">leetcode-queue</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-19T15:56:03+08:00">
-                2019-03-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">leetcode</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/03/19/leetcode-queue/" class="leancloud_visitors" data-flag-title="leetcode-queue">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  316
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>有效的括号</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public boolean isValid(String s) &#123;</span><br><span class="line">        Stack&lt;Character&gt; stack = new Stack&lt;&gt;();</span><br><span class="line">        char[] chars = s.toCharArray();</span><br><span class="line">        for (char aChar : chars) &#123;</span><br><span class="line">            if (stack.size() == 0) &#123;</span><br><span class="line">                stack.push(aChar);</span><br><span class="line">            &#125; else if (isSym(stack.peek(), aChar)) &#123;</span><br><span class="line">                stack.pop();</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                stack.push(aChar);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return stack.size() == 0;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private boolean isSym(char c1, char c2) &#123;</span><br><span class="line">        return (c1 == &apos;(&apos; &amp;&amp; c2 == &apos;)&apos;) || (c1 == &apos;[&apos; &amp;&amp; c2 == &apos;]&apos;) || (c1 == &apos;&#123;&apos; &amp;&amp; c2 == &apos;&#125;&apos;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>两个栈  实现队列</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Stack&lt;Integer&gt; in = new Stack&lt;Integer&gt;();</span><br><span class="line">Stack&lt;Integer&gt; out = new Stack&lt;Integer&gt;();</span><br><span class="line"></span><br><span class="line">public void push(int node) &#123;</span><br><span class="line">    in.push(node);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public int pop() throws Exception &#123;</span><br><span class="line">    if (out.isEmpty())</span><br><span class="line">        while (!in.isEmpty())</span><br><span class="line">            out.push(in.pop());</span><br><span class="line"></span><br><span class="line">    if (out.isEmpty())</span><br><span class="line">        throw new Exception(&quot;queue is empty&quot;);</span><br><span class="line"></span><br><span class="line">    return out.pop();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>栈的压入 弹出序列</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public boolean IsPopOrder(int[] pushSequence, int[] popSequence) &#123;</span><br><span class="line">    int n = pushSequence.length;</span><br><span class="line">    Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();</span><br><span class="line">    for (int pushIndex = 0, popIndex = 0; pushIndex &lt; n; pushIndex++) &#123;</span><br><span class="line">        stack.push(pushSequence[pushIndex]);</span><br><span class="line">        while (popIndex &lt; n &amp;&amp; !stack.isEmpty() </span><br><span class="line">                &amp;&amp; stack.peek() == popSequence[popIndex]) &#123;</span><br><span class="line">            stack.pop();</span><br><span class="line">            popIndex++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return stack.isEmpty();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>包含min 函数的栈</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">private Stack&lt;Integer&gt; dataStack = new Stack&lt;&gt;();</span><br><span class="line">private Stack&lt;Integer&gt; minStack = new Stack&lt;&gt;();</span><br><span class="line"></span><br><span class="line">public void push(int node) &#123;</span><br><span class="line">    dataStack.push(node);</span><br><span class="line">    minStack.push(minStack.isEmpty() ? node : Math.min(minStack.peek(), node));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public void pop() &#123;</span><br><span class="line">    dataStack.pop();</span><br><span class="line">    minStack.pop();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public int top() &#123;</span><br><span class="line">    return dataStack.peek();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public int min() &#123;</span><br><span class="line">    return minStack.peek();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>计算器</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p>其他题</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/03/19/leetcode-bit/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1272,6 +880,364 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/03/18/leetcode-tree/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/18/leetcode-tree/" itemprop="url">leetcode-tree</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-18T10:08:42+08:00">
+                2019-03-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/leetcode/" itemprop="url" rel="index">
+                    <span itemprop="name">leetcode</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/03/18/leetcode-tree/" class="leancloud_visitors" data-flag-title="leetcode-tree">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  728
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>前序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">    public List&lt;Integer&gt; preorderTraversal(TreeNode root) &#123;</span><br><span class="line">        Stack&lt;TreeNode&gt; stack = new Stack&lt;&gt;();</span><br><span class="line">        List&lt;Integer&gt; list = new LinkedList&lt;&gt;();</span><br><span class="line">        if(root == null)&#123;</span><br><span class="line">            return list;</span><br><span class="line">        &#125;</span><br><span class="line">        //第一步是将根节点压入栈中</span><br><span class="line">        stack.push(root);</span><br><span class="line">        //当栈不为空时，出栈的元素插入list尾部。</span><br><span class="line">        while(!stack.isEmpty())&#123;</span><br><span class="line">            root = stack.pop();</span><br><span class="line">            list.add(root.val);</span><br><span class="line">            if(root.right != null) stack.push(root.right);</span><br><span class="line">            if(root.left != null) stack.push(root.left);</span><br><span class="line">        &#125;</span><br><span class="line">        return list;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>中序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">class Solution &#123;</span><br><span class="line">        public List&lt;Integer&gt; inorderTraversal(TreeNode root) &#123;</span><br><span class="line">            List&lt;Integer&gt; list = new ArrayList&lt;&gt;();</span><br><span class="line">            Stack&lt;TreeNode&gt; stack = new Stack&lt;&gt;();</span><br><span class="line">            TreeNode cur = root;</span><br><span class="line">            while (cur != null || !stack.isEmpty()) &#123;</span><br><span class="line">                if (cur != null) &#123;</span><br><span class="line">                    stack.push(cur);</span><br><span class="line">                    cur = cur.left;</span><br><span class="line">                &#125; else &#123;</span><br><span class="line">                    cur = stack.pop();</span><br><span class="line">                    list.add(cur.val);</span><br><span class="line">                    cur = cur.right;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            return list;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>后序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public class Solution &#123;</span><br><span class="line">    public List&lt;Integer&gt; postorderTraversal(TreeNode root) &#123;</span><br><span class="line">    List&lt;Integer&gt; res = new ArrayList&lt;Integer&gt;();</span><br><span class="line">    if(root == null)</span><br><span class="line">        return res;</span><br><span class="line">    Stack&lt;TreeNode&gt; stack = new Stack&lt;TreeNode&gt;();</span><br><span class="line">    stack.push(root);</span><br><span class="line">    while(!stack.isEmpty())&#123;</span><br><span class="line">        TreeNode node = stack.pop();</span><br><span class="line">        if(node.left != null) stack.push(node.left);//和传统先序遍历不一样，先将左结点入栈</span><br><span class="line">        if(node.right != null) stack.push(node.right);//后将右结点入栈</span><br><span class="line">        res.add(0,node.val);                        //逆序添加结点值</span><br><span class="line">    &#125;     </span><br><span class="line">    return res;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>层次</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">public List&lt;List&lt;Integer&gt;&gt; levelOrder(TreeNode root) &#123;</span><br><span class="line">    if(root == null)</span><br><span class="line">        return new ArrayList&lt;&gt;();</span><br><span class="line">    List&lt;List&lt;Integer&gt;&gt; res = new ArrayList&lt;&gt;();</span><br><span class="line">    Queue&lt;TreeNode&gt; queue = new LinkedList&lt;TreeNode&gt;();</span><br><span class="line">    queue.add(root);</span><br><span class="line">    while(!queue.isEmpty())&#123;</span><br><span class="line">        int count = queue.size();</span><br><span class="line">        List&lt;Integer&gt; list = new ArrayList&lt;Integer&gt;();</span><br><span class="line">        while(count &gt; 0)&#123;</span><br><span class="line">            TreeNode node = queue.poll();</span><br><span class="line">            list.add(node.val);</span><br><span class="line">            if(node.left != null)</span><br><span class="line">                queue.add(node.left);</span><br><span class="line">            if(node.right != null)</span><br><span class="line">                queue.add(node.right);</span><br><span class="line">            count--;</span><br><span class="line">        &#125;</span><br><span class="line">        res.add(list);</span><br><span class="line">    &#125;</span><br><span class="line">    return res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>平衡二叉树</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    private boolean isBalanced = true;</span><br><span class="line">    public boolean isBalanced(TreeNode root) &#123;</span><br><span class="line">        getDepth(root);</span><br><span class="line">        return isBalanced;</span><br><span class="line">    &#125;</span><br><span class="line">    public int getDepth(TreeNode root) &#123;</span><br><span class="line">      if (root == null)</span><br><span class="line">            return 0;</span><br><span class="line">        int left = getDepth(root.left);</span><br><span class="line">        int right = getDepth(root.right);</span><br><span class="line">        if (Math.abs(left - right) &gt; 1) &#123;</span><br><span class="line">            isBalanced = false;</span><br><span class="line">        &#125;</span><br><span class="line">        return right &gt; left ? right + 1 : left + 1;</span><br><span class="line">      &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对称二叉树</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public boolean isSymmetric(TreeNode root) &#123;</span><br><span class="line">        if(root == null) return true;</span><br><span class="line">        //把问题变成判断两棵树是否是对称的</span><br><span class="line">        return isSym(root.left, root.right);</span><br><span class="line">    &#125;</span><br><span class="line">    //判断的是根节点为r1和r2的两棵树是否是对称的</span><br><span class="line">    public boolean isSym(TreeNode r1, TreeNode r2)&#123;</span><br><span class="line">        if(r1 == null &amp;&amp; r2 == null) return true;</span><br><span class="line">        if(r1 == null || r2 == null) return false;</span><br><span class="line">        //这两棵树是对称需要满足的条件：</span><br><span class="line">        //1.俩根节点相等。 2.树1的左子树和树2的右子树，树2的左子树和树1的右子树都得是对称的</span><br><span class="line">        return r1.val == r2.val &amp;&amp; isSym(r1.left, r2.right) </span><br><span class="line">                            &amp;&amp; isSym(r1.right, r2.left);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>重建二叉树</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">// 缓存中序遍历数组每个值对应的索引</span><br><span class="line">private Map&lt;Integer, Integer&gt; indexForInOrders = new HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">public TreeNode reConstructBinaryTree(int[] pre, int[] in) &#123;</span><br><span class="line">    for (int i = 0; i &lt; in.length; i++)</span><br><span class="line">        indexForInOrders.put(in[i], i);</span><br><span class="line">    return reConstructBinaryTree(pre, 0, pre.length - 1, 0);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private TreeNode reConstructBinaryTree(int[] pre, int preL, int preR, int inL) &#123;</span><br><span class="line">    if (preL &gt; preR)</span><br><span class="line">        return null;</span><br><span class="line">    TreeNode root = new TreeNode(pre[preL]);</span><br><span class="line">    int inIndex = indexForInOrders.get(root.val);</span><br><span class="line">    int leftTreeSize = inIndex - inL;</span><br><span class="line">    root.left = reConstructBinaryTree(pre, preL + 1, preL + leftTreeSize, inL);</span><br><span class="line">    root.right = reConstructBinaryTree(pre, preL + leftTreeSize + 1, preR, inL + leftTreeSize + 1);</span><br><span class="line">    return root;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/03/17/leetcode-0006/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/17/leetcode-0006/" itemprop="url">leetcode-0006</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-17T15:38:52+08:00">
+                2019-03-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/03/17/leetcode-0006/" class="leancloud_visitors" data-flag-title="leetcode-0006">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  138
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">func convert(s string, numRows int) string &#123;</span><br><span class="line">    if numRows == 1 || len(s) &lt;= numRows &#123;</span><br><span class="line">        return s</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    res := bytes.Buffer&#123;&#125;</span><br><span class="line">    // p pace 步距</span><br><span class="line">    p := numRows*2 - 2</span><br><span class="line"></span><br><span class="line">    // 处理第一行</span><br><span class="line">    for i := 0; i &lt; len(s); i += p &#123;</span><br><span class="line">        res.WriteByte(s[i])</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 处理中间的行</span><br><span class="line">    for r := 1; r &lt;= numRows-2; r++ &#123;</span><br><span class="line">        // 添加r行的第一个字符</span><br><span class="line">        res.WriteByte(s[r])</span><br><span class="line"></span><br><span class="line">        for k := p; k-r &lt; len(s); k += p &#123;</span><br><span class="line">            res.WriteByte(s[k-r])</span><br><span class="line">            if k+r &lt; len(s) &#123;</span><br><span class="line">                res.WriteByte(s[k+r])</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    // 处理最后一行</span><br><span class="line">    for i := numRows - 1; i &lt; len(s); i += p &#123;</span><br><span class="line">        res.WriteByte(s[i])</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return res.String()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -1326,7 +1292,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">545</span>
+                  <span class="site-state-item-count">543</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1441,7 +1407,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共221.6k字</span>
+  <span class="post-count">博客全站共225.7k字</span>
 </div>
 
         

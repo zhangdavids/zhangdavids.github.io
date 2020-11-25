@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="python," />
 
 
 
@@ -91,7 +91,7 @@ Python中的的PyListObject是对列表的一个抽象，内置了插入、添�
 <meta property="og:description" content="python 内置了dict list等
 Python中的的PyListObject是对列表的一个抽象，内置了插入、添加、删除等操作。不同List中存储的元素的个数会是不同的，所以PyListObject是一个变长对象。而PyListObject中支持插入删除等操作，可以在运行时动态地调整其所维护的内存和元素，所以它又是一个可变对象。
 我们知道，用户选用list正是为了可以频繁的执行插入或删除等操">
-<meta property="og:updated_time" content="2019-05-14T02:25:23.934Z">
+<meta property="og:updated_time" content="2020-11-25T07:21:33.286Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CPython源码分析0002">
 <meta name="twitter:description" content="python 内置了dict list等
@@ -355,6 +355,28 @@ Python中的的PyListObject是对列表的一个抽象，内置了插入、添�
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CPython/" itemprop="url" rel="index">
+                    <span itemprop="name">CPython</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -387,7 +409,7 @@ Python中的的PyListObject是对列表的一个抽象，内置了插入、添�
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  907
+                  1.3k
                 </span>
               
 
@@ -403,7 +425,7 @@ Python中的的PyListObject是对列表的一个抽象，内置了插入、添�
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3
+                  5
                 </span>
               
             </div>
@@ -433,7 +455,19 @@ Python中的的PyListObject是对列表的一个抽象，内置了插入、添�
 <p>　　在创建PyListObject对象时，首先检查缓冲池中free_list是否有可用的对象，如果有，则直接使用，若没有可用对象，则通过PyObject_GC_New在系统堆中申请内存，
 　　</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">int</span><br><span class="line">PyList_SetItem(register PyObject *op, register Py_ssize_t i,</span><br><span class="line">register PyObject *newitem)</span><br><span class="line">&#123;</span><br><span class="line">register PyObject *olditem;</span><br><span class="line">register PyObject **p;</span><br><span class="line">if (!PyList_Check(op)) &#123;</span><br><span class="line">Py_XDECREF(newitem);</span><br><span class="line">PyErr_BadInternalCall();</span><br><span class="line">return -1;</span><br><span class="line">&#125;</span><br><span class="line">//索引检查</span><br><span class="line">if (i &lt; 0 || i &gt;= Py_SIZE(op)) &#123;</span><br><span class="line">Py_XDECREF(newitem);</span><br><span class="line">PyErr_SetString(PyExc_IndexError,</span><br><span class="line">&quot;list assignment index out of range&quot;);</span><br><span class="line">return -1;</span><br><span class="line">&#125;</span><br><span class="line">//存放元素</span><br><span class="line">p = ((PyListObject *)op) -&gt; ob_item + i;</span><br><span class="line">olditem = *p;</span><br><span class="line">*p = newitem;</span><br><span class="line">Py_XDECREF(olditem);</span><br><span class="line">return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在创建PyListObject对象时，会首先检查缓冲区中的free_lists中是否有可用的对象。<br>　　在创建一个新的的对象时，实际也是分为两部，首先创建PyListObject对象，然后创建PyListObject对象所维护的元素列表，与之对应，在销毁一个list时，销毁的过程也是分离的，首先销毁PyListObject所维护的元素列表，然后释放PyListObject对象自身。。<br>　　在删除PylsitObject对象自身时，Python会先检查我们开始提到的那个缓冲池free_list，查看其中缓存的PyListObject的数量是否已经满了，如果没有，就将待删除的PyListObject对象放到缓冲池中，以备后用。<br>　　因此，那个在Python启动时空荡荡的缓冲池原来都是被本应该死去的PyListObject对象给填充了，在以后需要创建新的PyListObject的时候，Python会首先唤醒这些对象，重新分配Pyobject*元素列表占用的内存，重新拥抱新的对象。</p>
+<p>在创建PyListObject对象时，会首先检查缓冲区中的free_lists中是否有可用的对象。<br>　　在创建一个新的的对象时，实际也是分为两部，首先创建PyListObject对象，然后创建PyListObject对象所维护的元素列表，与之对应，在销毁一个list时，销毁的过程也是分离的，首先销毁PyListObject所维护的元素列表，然后释放PyListObject对象自身。。<br>　　在删除PylsitObject对象自身时，Python会先检查我们开始提到的那个缓冲池free_list，查看其中缓存的PyListObject的数量是否已经满了，如果没有，就将待删除的PyListObject对象放到缓冲池中，以备后用。<br>　　因此，那个在Python启动时空荡荡的缓冲池原来都是被本应该死去的PyListObject对象给填充了，在以后需要创建新的PyListObject的时候，Python会首先唤醒这些对象，重新分配Pyobject*元素列表占用的内存，重新拥抱新的对象。<br>　　<br>　　<br>insert  追加元素性能极差 谨慎使用<br>append 常数级别<br>pop 从头部弹出也需要挪动整个列表<br>pop 从尾部弹出元素 常数级别</p>
+<p>list 对象可以根据元素个数进行自动扩容</p>
+<p>内部结构在头文件 include/listobject.h 当中</p>
+<p>变长对象 包含变长对象公共头部 内部维护了一个动态数组</p>
+<p>尾部增删可以快速完成 无需挪动其他元素</p>
+<p>如果list对象内部数组已经用满 再添加元素的时候 需要进行扩容</p>
+<p>由于内部数组扩容时，需要将列表元素从旧数组拷贝到新数组，时间复杂度为 O(N)，开销较大，需要尽量避免。为此， Python 在为内部数组扩容时，会预留一定裕量，一般是 </p>
+<p>1/8 左右。假设为长度为 1000 的列表对象扩容， Python 会预留大约 125 个空闲位置，分配一个长度 1125 的新数组。 也就是基数上增加0.125   </p>
+<p>由于扩容操作的存在， append 方法最坏情况下时间复杂度为 </p>
+<p>O(n) 。由于扩容操作不会频繁发生，将扩容操作时的元素拷贝开销平摊到多个 append 操作中，平均时间复杂度还是 O(1) 。</p>
+<p>拷贝</p>
+<p>浅拷贝 只是对列表对象进行浅拷贝 对信列表可变元素的修改对旧列表依然可见</p>
+<p>拷贝的是元素对象的指针</p>
 
       
     </div>
@@ -448,6 +482,12 @@ Python中的的PyListObject是对列表的一个抽象，内置了插入、添�
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+        </div>
       
 
       
@@ -542,7 +582,7 @@ Python中的的PyListObject是对列表的一个抽象，内置了插入、添�
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">545</span>
+                  <span class="site-state-item-count">543</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -657,7 +697,7 @@ Python中的的PyListObject是对列表的一个抽象，内置了插入、添�
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共221.6k字</span>
+  <span class="post-count">博客全站共225.7k字</span>
 </div>
 
         

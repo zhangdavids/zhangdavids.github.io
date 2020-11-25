@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="python," />
 
 
 
@@ -81,16 +81,28 @@
 
 
 
-<meta name="description" content="improve your python skills">
+<meta name="description" content="dict 的分析
+哈希表的实现
+key是不可以重复的 因为会按照key找对应的value
+数据插入后，我们发现 dict 对象内存使用量保存不变。看来， dict 对象也有一种类似 list 对象的 预分配机制 。
+哈希表结构决定了 dict 的删除操作也很快，平均时间复杂度也是 O(1)O(1) 。实际上， dict 插入、删除、查找的平均时间复杂度都是 ，O(1)O(1)最坏时间复杂度是 O(">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CPython源码分析0004">
 <meta property="og:url" content="https://zhangdavids.github.io/2019/05/23/CPython源码分析0004/index.html">
 <meta property="og:site_name" content="上药三品，神与气精">
-<meta property="og:description" content="improve your python skills">
-<meta property="og:updated_time" content="2019-05-23T07:41:57.030Z">
+<meta property="og:description" content="dict 的分析
+哈希表的实现
+key是不可以重复的 因为会按照key找对应的value
+数据插入后，我们发现 dict 对象内存使用量保存不变。看来， dict 对象也有一种类似 list 对象的 预分配机制 。
+哈希表结构决定了 dict 的删除操作也很快，平均时间复杂度也是 O(1)O(1) 。实际上， dict 插入、删除、查找的平均时间复杂度都是 ，O(1)O(1)最坏时间复杂度是 O(">
+<meta property="og:updated_time" content="2020-11-25T07:41:18.855Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CPython源码分析0004">
-<meta name="twitter:description" content="improve your python skills">
+<meta name="twitter:description" content="dict 的分析
+哈希表的实现
+key是不可以重复的 因为会按照key找对应的value
+数据插入后，我们发现 dict 对象内存使用量保存不变。看来， dict 对象也有一种类似 list 对象的 预分配机制 。
+哈希表结构决定了 dict 的删除操作也很快，平均时间复杂度也是 O(1)O(1) 。实际上， dict 插入、删除、查找的平均时间复杂度都是 ，O(1)O(1)最坏时间复杂度是 O(">
 
 
 
@@ -381,7 +393,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0
+                  867
                 </span>
               
 
@@ -397,7 +409,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1
+                  3
                 </span>
               
             </div>
@@ -418,7 +430,42 @@
       
 
       
-        
+        <p>dict 的分析</p>
+<p>哈希表的实现</p>
+<p>key是不可以重复的 因为会按照key找对应的value</p>
+<p>数据插入后，我们发现 dict 对象内存使用量保存不变。看来， dict 对象也有一种类似 list 对象的 预分配机制 。</p>
+<p>哈希表结构决定了 dict 的删除操作也很快，平均时间复杂度也是 O(1)O(1) 。实际上， dict 插入、删除、查找的平均时间复杂度都是 ，O(1)O(1)最坏时间复杂度是 O(n)O(n) 。因此，哈希函数的选择就至关重要，一个好的哈希函数应该将键尽可能 均匀 地映射到哈希空间中，最大限度地避免 哈希冲突 。</p>
+<p> dict 对象在 Python 内部由结构体 PyDictObject 表示， PyDictObject 在头文件 Include/dictobject.h 中定义</p>
+<p> dict 对象理论上应该是一种变长对象，但 PyObject_HEAD 头部告诉我们， Python 其实把它作为普通对象实现。除了对象公共头部外， PyDictObject 还包括以下几个字段：</p>
+<ol>
+<li>ma_used ，对象当前所保存的 键值对个数 ；</li>
+<li>ma_version_tag ，对象当前 版本号 ，每次修改时更新；</li>
+<li>ma_keys ，指向按键对象映射的 哈希表 结构；</li>
+<li>ma_values ， 分离模式下指向由所有 值对象 组成的数组。</li>
+</ol>
+<p>_dictkeysobject 结构体包含 dict 对象哈希表实现的所有秘密，结合注释可以解读其中的关键字段：</p>
+<ul>
+<li>dk_refcnt ，引用计数，跟 映射视图 的实现有关，有点类似对象引用计数；</li>
+<li>dk_size ，哈希表大小，必须是 2^n2 </li>
+<li>n</li>
+<li>，这样可将模运算优化成 按位与 运算；</li>
+<li>dk_lookup ， 哈希查找函数 指针，可根据 dict 当前状态选用最优函数版本；</li>
+<li>dk_usable ，键值对数组 可用个数 ；</li>
+<li>dk_nentries ，键值对数组 已用个数 ；</li>
+<li>dk_indices ，哈希表 起始地址 ，哈希表后紧接着 键值对数组 dk_entries 。</li>
+</ul>
+<p>哈希表越密集，哈希冲突则越频繁，性能也就越差。因此，哈希表必须是一种 稀疏 的表结构，越稀疏则性能越好。由于 内存开销 的制约，哈希表不可能无限度稀疏，需要在时间和空间上进行权衡。实践经验表明，一个0.5-0.67 满的哈希表，性能较为理想——以相对合理的 内存 换取相对高效的 执行性能 。</p>
+<p>为保证哈希表的稀疏程度，进而控制哈希冲突频率， Python 通过 USABLE_FRACTION 宏将哈希表内元素控制在 0.5-0.67 以内。USABLE_FRACTION 宏根据哈希表规模 n ，计算哈希表可存储元素个数，也就是 键值对数组 的长度。以长度为 8 的哈希表为例，最多可以保持 5 个键值对，超出则需要扩容。USABLE_FRACTION 是一个非常重要的宏定义，位于源文件 Objects/dictobject.c 中</p>
+<ul>
+<li>dict 是一种高效的关联式容器，每秒完成高达 200 多万次搜索操作；</li>
+<li>dict 内部由哈希表实现，哈希表的 稀疏 特性意味着昂贵的内存开销；</li>
+<li>为优化内存使用， Python 将 dict 哈希表分为 哈希索引 和 键值对 两个数组来实现；</li>
+<li>哈希表在 0.5-0.67 满时，性能较为理想，较好地平衡了 内存开销 与 搜索效率 ；</li>
+</ul>
+<p>解决哈希冲突的常用方法有两种：</p>
+<p>分离链接法 ( separate chaining ) ；<br>开放地址法 ( open addressing )；</p>
+<p>​      </p>
+
       
     </div>
     
@@ -432,6 +479,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+        </div>
       
 
       
@@ -452,8 +505,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/05/23/CPython源码分析0005/" rel="prev" title="CPython源码分析0005">
-                CPython源码分析0005 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/05/23/CPython源码分析0007/" rel="prev" title="CPython源码分析0007">
+                CPython源码分析0007 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -526,7 +579,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">545</span>
+                  <span class="site-state-item-count">543</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -641,7 +694,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共221.6k字</span>
+  <span class="post-count">博客全站共225.7k字</span>
 </div>
 
         
