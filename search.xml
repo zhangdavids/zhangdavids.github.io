@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[prometheus_operator]]></title>
+    <url>%2F2020%2F11%2F26%2Fprometheus-operator%2F</url>
+    <content type="text"><![CDATA[谈谈监控的选型相关问题 传统的主机监控类 zabbix 很早有许多使用 zabbix 做相关监控的 核心组件的话 是agent server 模式的agent负责采集数据 主动或者被动的方式发送到 server/proxy为了扩展 还可以进行自定义脚本的监控等等 数据存储默认是选择的mysql 提供一个php web的页面来做查询 因为是使用关系型数据库 因此在大规模集群的时候 有点捉襟见肘 4.2版本之后开始采用时序的数据库 但是成熟度不算很高 open-falcon 是小米成熟的开源项目 目前在市面上也有很多公司选用 小米 滴滴（在此基础上做了夜莺系统拥抱开源） 美团等 采用golang 开发的daemon 程序 运行在每台linux机器上 采集主机的各种指标 heartbeat server 心跳服务 周期性的通过RPC 的方式上报信息 主机名 ip agent版本 插件版本等 transfer 负责接收发送的监控数据 并对数据进行数据整理 过滤之后通过一致性哈希发送到judge/graph graph 是基于RRD的数据上报 归档 存储组件 judge 模块 触发用户的告警规则 满足的情况下 会触发邮件 微信或者是回调接口 为了避免重复告警引入redis暂存告警 从而完成告警的合并和抑制 dashboard 面向用户的监控数据查询和告警配置页面 腾讯蓝鲸 腾讯开源的一整套系统 相对来说 是比较重的资产 要全套使用 系统配置相当之繁琐 prometheus 2016 年 CNCF 的第二大开源项目 通过http 周期性抓取被监控组件的状态 任意组件只要提供对应的http接口并且符合定义的数据格式 就可以接入到监控之中 prometheus server pull 多个 exporter 的数据 pull这种方式降低了客户端的复杂性 不需了解服务端情况 监控数据如果达到告警阀值 会将告警发送到 altermanger 邮件或者webhook的方式来通知消息 页面展示的话 一般选择还是grafana 一般情况下拉取的数据还是会存储在本地的 tidb 开发语言上来看 java占据业务开发 c占据底层开发 golang 在中间件的开发需求 在开源中间件重应用广泛 再就是容器角度 在云原生蓬勃发展的时代 成为主导容器监控的标配]]></content>
+      <tags>
+        <tag>golang</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[gaobingfa]]></title>
     <url>%2F2020%2F11%2F23%2Fgaobingfa%2F</url>
     <content type="text"><![CDATA[python项目的高并发选择 一般的高并发选择 gunicorn/uwsgi + nginx 改框架 搭配其他手段来提升并发 最大的开销还是在io 上 cdn 缓存 负载均衡 缓存代理等手段 辅助提高 百万并发问题不大 拆开来看的话 就是 三种情况 侧重读 侧重写 读写并重 读的情况下 搜索引擎 商品搜索 策略类加缓存 空间换时间 本地或者远程缓存/主从/cdn动静分离并发读 异步rpc 冗余请求 侧重写的情况 广告计算 策略 数据分片任务分片任务和数据分片相结合异步化 异步处理/异步罗盘 凡是不阻碍主流程的业务逻辑都可以进行异步化批量处理串行化+多进程单线程+异步IO nginx/redis 读写并重 电商的缓存和秒杀系统 支付系统和红包 IM 微博 朋友圈]]></content>
@@ -2122,7 +2130,7 @@
   <entry>
     <title><![CDATA[2darraySearch]]></title>
     <url>%2F2019%2F02%2F25%2F2darraySearch%2F</url>
-    <content type="text"><![CDATA[12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849 public class Solution &#123; public boolean Find(int target, int [][] array) &#123; // 特殊情况处理 if (array == null || array.length == 0 || array[0].length == 0) &#123; return false; &#125; int h = array.length - 1; int w = array[0].length - 1; // 如果目标值小于最小值 或者 目标值大于最大值，那肯定不存在 if (array[0][0] &gt; target || array[h][w] &lt; target) &#123; return false; &#125; return binarySearchIn2DArray(array, target, 0, h, 0, w); &#125; public static boolean binarySearchIn2DArray(int[][] array, int target, int startX, int endX, int startY, int endY) &#123; if (startX &gt; endX || startY &gt; endY) &#123; return false; &#125; //首先，根据二分法找出中间行 int x = startX + (endX - startX) / 2; //对该行进行二分查找 int result = binarySearch(array[x], target, startY, endY); //找到的值位于 x 行，result 列 if (array[x][result] == target) &#123; return true; // 如果找到则成功 &#125; //对剩余的两部分分别进行递归查找 return binarySearchIn2DArray(array, target, startX, x - 1, result + 1, endY) || binarySearchIn2DArray(array, target, x + 1, endX, startY, result); &#125; public static int binarySearch(int[] array, int target, int start, int end) &#123; int i = start + (end - start) / 2; if (array[i] == target || start &gt; end) &#123; return i; &#125; else if (array[i] &gt; target) &#123; return binarySearch(array, target, start, i - 1); &#125; else &#123; return binarySearch(array, target, i + 1, end); &#125; &#125;&#125;]]></content>
+    <content type="text"><![CDATA[二维数组的查找 java解法 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849 public class Solution &#123; public boolean Find(int target, int [][] array) &#123; // 特殊情况处理 if (array == null || array.length == 0 || array[0].length == 0) &#123; return false; &#125; int h = array.length - 1; int w = array[0].length - 1; // 如果目标值小于最小值 或者 目标值大于最大值，那肯定不存在 if (array[0][0] &gt; target || array[h][w] &lt; target) &#123; return false; &#125; return binarySearchIn2DArray(array, target, 0, h, 0, w); &#125; public static boolean binarySearchIn2DArray(int[][] array, int target, int startX, int endX, int startY, int endY) &#123; if (startX &gt; endX || startY &gt; endY) &#123; return false; &#125; //首先，根据二分法找出中间行 int x = startX + (endX - startX) / 2; //对该行进行二分查找 int result = binarySearch(array[x], target, startY, endY); //找到的值位于 x 行，result 列 if (array[x][result] == target) &#123; return true; // 如果找到则成功 &#125; //对剩余的两部分分别进行递归查找 return binarySearchIn2DArray(array, target, startX, x - 1, result + 1, endY) || binarySearchIn2DArray(array, target, x + 1, endX, startY, result); &#125; public static int binarySearch(int[] array, int target, int start, int end) &#123; int i = start + (end - start) / 2; if (array[i] == target || start &gt; end) &#123; return i; &#125; else if (array[i] &gt; target) &#123; return binarySearch(array, target, start, i - 1); &#125; else &#123; return binarySearch(array, target, i + 1, end); &#125; &#125;&#125;]]></content>
       <categories>
         <category>suanfa</category>
       </categories>
@@ -4155,7 +4163,7 @@
   <entry>
     <title><![CDATA[2018-python-new]]></title>
     <url>%2F2018%2F01%2F01%2F2018-python-new%2F</url>
-    <content type="text"><![CDATA[值得关注的 python 库 [] sanic web 开发领域 类似flask 但是更快 [] pipenv 包管理 k神新作 [] requestium 爬虫 结合了chrome的headless 无头特性 [] caffe2 深度学习框架 [] flashtext 文本处理 [] upterm 最强终端 [] pypython 交互式解释器 [] anaconda 包管理必备 [] sublime 3 编辑器 [] codesandbox 前端在线编辑器]]></content>
+    <content type="text"><![CDATA[2018 年值得关注的 python 库 [] sanic web 开发领域 类似flask 但是更快 [] pipenv 包管理 k神新作 [] requestium 爬虫 结合了chrome的headless 无头特性 [] caffe2 深度学习框架 [] flashtext 文本处理 [] upterm 最强终端 [] pypython 交互式解释器 [] anaconda 包管理必备 [] sublime 3 编辑器 [] codesandbox 前端在线编辑器]]></content>
       <categories>
         <category>web</category>
       </categories>
