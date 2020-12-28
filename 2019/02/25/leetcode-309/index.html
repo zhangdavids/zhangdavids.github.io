@@ -81,16 +81,16 @@
 
 
 
-<meta name="description" content="12345678910111213141516171819202122232425262728293031n = len(prices)    if n &amp;lt; 2:        return 0    # k is big enougth to cover all ramps.    if k &amp;gt;= n / 2:        return sum(i - j">
+<meta name="description" content="12345678910111213141516171819202122232425262728293031n = len(prices)if n &amp;lt; 2:    return 0# k is big enougth to cover all ramps.if k &amp;gt;= n / 2:    return sum(i - j               for i, j in zip(pr">
 <meta property="og:type" content="article">
 <meta property="og:title" content="leetcode-309">
 <meta property="og:url" content="https://zhangdavids.github.io/2019/02/25/leetcode-309/index.html">
 <meta property="og:site_name" content="上药三品，神与气精">
-<meta property="og:description" content="12345678910111213141516171819202122232425262728293031n = len(prices)    if n &amp;lt; 2:        return 0    # k is big enougth to cover all ramps.    if k &amp;gt;= n / 2:        return sum(i - j">
-<meta property="og:updated_time" content="2019-02-27T07:59:29.900Z">
+<meta property="og:description" content="12345678910111213141516171819202122232425262728293031n = len(prices)if n &amp;lt; 2:    return 0# k is big enougth to cover all ramps.if k &amp;gt;= n / 2:    return sum(i - j               for i, j in zip(pr">
+<meta property="og:updated_time" content="2020-12-28T08:00:37.099Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="leetcode-309">
-<meta name="twitter:description" content="12345678910111213141516171819202122232425262728293031n = len(prices)    if n &amp;lt; 2:        return 0    # k is big enougth to cover all ramps.    if k &amp;gt;= n / 2:        return sum(i - j">
+<meta name="twitter:description" content="12345678910111213141516171819202122232425262728293031n = len(prices)if n &amp;lt; 2:    return 0# k is big enougth to cover all ramps.if k &amp;gt;= n / 2:    return sum(i - j               for i, j in zip(pr">
 
 
 
@@ -440,7 +440,7 @@
       
 
       
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">n = len(prices)</span><br><span class="line">    if n &lt; 2:</span><br><span class="line">        return 0</span><br><span class="line">    # k is big enougth to cover all ramps.</span><br><span class="line">    if k &gt;= n / 2:</span><br><span class="line">        return sum(i - j</span><br><span class="line">                   for i, j in zip(prices[1:], prices[:-1]) if i - j &gt; 0)</span><br><span class="line">    globalMax = [[0] * n for _ in xrange(k + 1)]</span><br><span class="line">    for i in xrange(1, k + 1):</span><br><span class="line">        # The max profit with i transations and selling stock on day j.</span><br><span class="line">        localMax = [0] * n</span><br><span class="line">        for j in xrange(1, n):</span><br><span class="line">            profit = prices[j] - prices[j - 1]</span><br><span class="line">            localMax[j] = max(</span><br><span class="line">                # We have made max profit with (i - 1) transations in</span><br><span class="line">                # (j - 1) days.</span><br><span class="line">                # For the last transation, we buy stock on day (j - 1)</span><br><span class="line">                # and sell it on day j.</span><br><span class="line">                globalMax[i - 1][j - 1] + profit,</span><br><span class="line">                # We have made max profit with (i - 1) transations in</span><br><span class="line">                # (j - 1) days.</span><br><span class="line">                # For the last transation, we buy stock on day j and</span><br><span class="line">                # sell it on the same day, so we have 0 profit, apparently</span><br><span class="line">                # we do not have to add it.</span><br><span class="line">                globalMax[i - 1][j - 1],  # + 0,</span><br><span class="line">                # We have made profit in (j - 1) days.</span><br><span class="line">                # We want to cancel the day (j - 1) sale and sell it on</span><br><span class="line">                # day j.</span><br><span class="line">                localMax[j - 1] + profit)</span><br><span class="line">            globalMax[i][j] = max(globalMax[i][j - 1], localMax[j])</span><br><span class="line">    return globalMax[k][-1]</span><br></pre></td></tr></table></figure>
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">n = len(prices)</span><br><span class="line">if n &lt; 2:</span><br><span class="line">    return 0</span><br><span class="line"># k is big enougth to cover all ramps.</span><br><span class="line">if k &gt;= n / 2:</span><br><span class="line">    return sum(i - j</span><br><span class="line">               for i, j in zip(prices[1:], prices[:-1]) if i - j &gt; 0)</span><br><span class="line">globalMax = [[0] * n for _ in xrange(k + 1)]</span><br><span class="line">for i in xrange(1, k + 1):</span><br><span class="line">    # The max profit with i transations and selling stock on day j.</span><br><span class="line">    localMax = [0] * n</span><br><span class="line">    for j in xrange(1, n):</span><br><span class="line">        profit = prices[j] - prices[j - 1]</span><br><span class="line">        localMax[j] = max(</span><br><span class="line">            # We have made max profit with (i - 1) transations in</span><br><span class="line">            # (j - 1) days.</span><br><span class="line">            # For the last transation, we buy stock on day (j - 1)</span><br><span class="line">            # and sell it on day j.</span><br><span class="line">            globalMax[i - 1][j - 1] + profit,</span><br><span class="line">            # We have made max profit with (i - 1) transations in</span><br><span class="line">            # (j - 1) days.</span><br><span class="line">            # For the last transation, we buy stock on day j and</span><br><span class="line">            # sell it on the same day, so we have 0 profit, apparently</span><br><span class="line">            # we do not have to add it.</span><br><span class="line">            globalMax[i - 1][j - 1],  # + 0,</span><br><span class="line">            # We have made profit in (j - 1) days.</span><br><span class="line">            # We want to cancel the day (j - 1) sale and sell it on</span><br><span class="line">            # day j.</span><br><span class="line">            localMax[j - 1] + profit)</span><br><span class="line">        globalMax[i][j] = max(globalMax[i][j - 1], localMax[j])</span><br><span class="line">return globalMax[k][-1]</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -481,8 +481,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/02/26/位运算之异或/" rel="prev" title="位运算之异或">
-                位运算之异或 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/02/26/位运算之异或/" rel="prev" title="leetcode 位运算之异或">
+                leetcode 位运算之异或 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -555,7 +555,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">544</span>
+                  <span class="site-state-item-count">543</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -577,7 +577,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">45</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -670,7 +670,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共226.4k字</span>
+  <span class="post-count">博客全站共226.3k字</span>
 </div>
 
         

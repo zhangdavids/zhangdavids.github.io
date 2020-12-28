@@ -30,7 +30,7 @@
   <entry>
     <title><![CDATA[CPython源码分析0007]]></title>
     <url>%2F2019%2F05%2F23%2FCPython%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%900007%2F</url>
-    <content type="text"><![CDATA[再重新看看 GIL的问题 list 、 dict 等内建对象是 线程安全 的吗？ 在 Python 层面，list 、dict 等内建对象是线程安全的，这是最基本的常识。研究 list、dict 等内建对象源码时，我们并没有看到任何 互斥锁 的痕迹，这多少有点令人意外。 Python 虚拟机维护了一个 全局锁 ，这就是众所周知的 GIL。Python 线程想在虚拟机中执行字节码，必须取得全局锁。这样一来，不管任何时刻，只有一个线程在虚拟机中运行。那么，虚拟机如何交替执行不同线程呢？ Python 线程调度实现方式参考了操作系统进程调度中 时间片 的思路，只不过将时间片换成 字节码 。当一个线程取得 GIL 全局锁并开始执行字节码时，对已执行字节码进行计数。当执行字节码达到一定数量 (比如 100 条) 时，线程主动释放 GIL 全局锁并唤醒其他线程。其他等待 GIL 全局锁的线程取得锁后，将得到虚拟机控制权并开始执行。因此，虚拟机就像一颗软件 CPU ，Python 线程交替在虚拟机上执行 在 GIL 的束缚下，Python 虚拟机同一时刻只能执行一个线程。这是否意味着多线程完全无法优化程序性能呢？由于程序运行特征千差万别，这个问题得分情况讨论。开始之前，我们先来了解两种不同的运行特征： 程序在运行时，一般都处于两种状态： 可执行 状态，包括 Running 以及 Ready 两种情况，这时竞争处理器资源； 阻塞 状态，一般为等待 IO 处理，这时让出处理器资源； 根据程序分别处于 Running 以及 IO Blocked 两种状态的时间占比，可分为两种： 计算密集型 ，程序执行时大部分时间处于 Running 状态； IO 密集型 ，程序执行时大部分时间处于 IO Blocked 状态； 多线程的网络爬虫程序可以极大缩减时间 计算密集型的话 只能使用多进程 GIL是为了方便解释器开发人员而设置的, 尤其是在内存管理方面。 假设没有GIL, 那么两个线程在销毁同一个对象的时候, 就会出现悬空指针的问题。 于是python引用了GIL, 它是以字节码为单位的, 不管何时, 只有一个线程在执行字节码。 如果当前的某条字节码没有执行完, 那么是不会发生线程切换的, 因此这样就保证了以字节码为单位的安全性。 但是我们在写python代码时, 由于一行代码一般会对应多条字节码, 所以这个时候会再通过threading.Lock()进行加锁 所以: GIL是以字节码为单位的, 它保证了每条字节码在执行的时候不会被打断 而threading.Lock()是以代码为单位的, 它是保证python层面上的一行或多行代码在执行时不会被打断 发展几十年 有一些尝试 但是仍然不成熟 官方也没有]]></content>
+    <content type="text"><![CDATA[重新看看 GIL的问题 list 、 dict 等内建对象是 线程安全 的吗？ 在 Python 层面，list 、dict 等内建对象是线程安全的，这是最基本的常识。研究 list、dict 等内建对象源码时，我们并没有看到任何 互斥锁 的痕迹，这多少有点令人意外。 Python 虚拟机维护了一个 全局锁 ，这就是众所周知的 GIL。Python 线程想在虚拟机中执行字节码，必须取得全局锁。这样一来，不管任何时刻，只有一个线程在虚拟机中运行。那么，虚拟机如何交替执行不同线程呢？ Python 线程调度实现方式参考了操作系统进程调度中 时间片 的思路，只不过将时间片换成 字节码 。当一个线程取得 GIL 全局锁并开始执行字节码时，对已执行字节码进行计数。当执行字节码达到一定数量 (比如 100 条) 时，线程主动释放 GIL 全局锁并唤醒其他线程。其他等待 GIL 全局锁的线程取得锁后，将得到虚拟机控制权并开始执行。因此，虚拟机就像一颗软件 CPU ，Python 线程交替在虚拟机上执行 在 GIL 的束缚下，Python 虚拟机同一时刻只能执行一个线程。这是否意味着多线程完全无法优化程序性能呢？由于程序运行特征千差万别，这个问题得分情况讨论。开始之前，我们先来了解两种不同的运行特征： 程序在运行时，一般都处于两种状态： 可执行 状态，包括 Running 以及 Ready 两种情况，这时竞争处理器资源； 阻塞 状态，一般为等待 IO 处理，这时让出处理器资源； 根据程序分别处于 Running 以及 IO Blocked 两种状态的时间占比，可分为两种： 计算密集型 ，程序执行时大部分时间处于 Running 状态； IO 密集型 ，程序执行时大部分时间处于 IO Blocked 状态； 多线程的网络爬虫程序可以极大缩减时间 计算密集型的话 只能使用多进程 GIL是为了方便解释器开发人员而设置的, 尤其是在内存管理方面。 假设没有GIL, 那么两个线程在销毁同一个对象的时候, 就会出现悬空指针的问题。 于是python引用了GIL, 它是以字节码为单位的, 不管何时, 只有一个线程在执行字节码。 如果当前的某条字节码没有执行完, 那么是不会发生线程切换的, 因此这样就保证了以字节码为单位的安全性。 但是我们在写python代码时, 由于一行代码一般会对应多条字节码, 所以这个时候会再通过threading.Lock()进行加锁 所以: GIL是以字节码为单位的, 它保证了每条字节码在执行的时候不会被打断 而threading.Lock()是以代码为单位的, 它是保证python层面上的一行或多行代码在执行时不会被打断 发展几十年 有一些尝试 但是仍然不成熟 官方也没有]]></content>
       <tags>
         <tag>python</tag>
       </tags>
@@ -99,6 +99,9 @@
     <title><![CDATA[CPython源码分析0003]]></title>
     <url>%2F2019%2F05%2F14%2FCPython%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%900003%2F</url>
     <content type="text"><![CDATA[多线程Python多线程机制是在GIL(Global Interpreter Lock)全局解释锁的基础上建立的。 要支持多线程的话，一个基本的要求就是不同线程对共享资源访问的互斥，所以Python中引入了GIL，当然这是第一个原因。 Python中的GIL是一个非常霸道的互斥实现，在一个线程拥有了解释器的访问权之后，其它的所有线程都必须等待它释放解释器的访问权，即使这些线程的下一条指令并不会互相影响。 这样的说法也就意味着，无论如何，在同一时间，只能有一个线程能访问Python提供的API。因为单处理器的本质是不可能并行的，这里的同一时间确实对于单处理器是毫无意义的，但是对于多处理器，同一时间，确实可以有多个时间独立运行。然而正是由于GIL限制了这样的情形，使得多处理器最终退化为单处理器，性能大打折扣。那么，为什么还要使用GIL呢？这里就要提到第二个原因。 当然，Python社区也早都认识到了这个问题，并且在不断探索，Greg Stein和Mark Hammond两位老兄曾经创建过一份去除GIL的branch，但是很不幸，这个分支在很多的基准测试中，尤其是在单线程的测试上，效率只有使用GIL的一半左右。 使用GIL时，保护机制的粒度比较大，也就是我们似乎只需要将可能被多个线程共享的资源保护起来即可，对于不会被多个线程共享的资源，完全可以不用保护。但是，如果使用更细粒度的锁机制进行保护，那么，会导致大量的加锁和解锁功能，加锁和解锁对于操作系统来说，是一个比较重量级的动作，同时，没有GIL的保护，编写Python的扩展模块的难度也大大增加。 所以，目前为止，GIL仍然是多线程机制的基石。 对于Python而言，字节码解释器是Python的核心所在，所以Python通过GIL来互斥不同线程对解释器的使用。这里举个例子进行说明： 假设，现在有三个线程A、B和C，它们都需要解释器来执行字节码，进行对应的计算，那么在这之前，它们必须获得GIL。那么现在假设线程A获得了GIL，其它线程只能等A释放GIL之后，才能获得。 对！是这样没错，于是，有两个问题： 线程A何时释放GIL呢（如果A使用完解释器之后才释放GIL，那么，并行的计算退化为串行，多线程的意义何在？） 线程B和C谁将在A释放GIL之后获得GIL呢？ 所以毫无疑问的，Python拥有其自己的一套线程调度机制。 和操作系统的进程调度一样，线程调度机制主要解决两个问题： 在何时挂起当前线程，选择处于等待状态的下一个线程？ 在众多处于等待状态的线程中，应该选择激活哪个线程？ 对于何时进行线程调度的问题，是由Python自身决定的。我们可以联想操作系统进行进程切换的问题，当一个进程执行了一段时间之后，发生了时钟中断，于是操作系统响应时钟中断，并在这时开始进程的调度。 与此类似，Python中通过软件模拟了这样的中断，来激活线程的调度。Python的字节码解释器是按照指令的顺序一条一条的顺序执行从而工作的，Python内部维护着这样一个数值，作为Python内部的时钟，假设这个值为N，那么Python将在执行了N条指令之后立刻启动线程调度机制。 也就是说，当一个线程获得GIL后，Python内部的监测机制就开始启动，当这个线程执行了N条指令后，Python解释器将强制挂起当前线程，开始切换到下一个处于等待状态的线程。 下一个问题，Python会在众多等待的线程中选择哪一个呢？ 答案是，不知道。因为这个问题是交给了底层的操作系统来解决的，Python借用了底层操作系统所提供的线程调度机制来决定下一个获得GIL进入解释器的线程是谁。 所以说，Python中的线程实际上就是操作系统所支持的原生线程。 Python中多线程常用的两个模块：Thread和在其之上的threading。其中Thread是使用C实现的，而Threading是用python实现。 首先从创建线程说起，在threadmodule.c中，thread_PyThread_start_new_thread()函数通过三个主要的动作完成一个线程的创建： 123456789101112131415161718192021222324252627282930//创建bootstate结构boot = PyMem_NEW(struct bootstate, 1);if (boot == NULL)return PyErr_NoMemory();boot-&gt;interp = PyThreadState_GET()-&gt;interp;boot-&gt;func = func;boot-&gt;args = args;boot-&gt;keyw = keyw;boot-&gt;tstate = _PyThreadState_Prealloc(boot-&gt;interp);if (boot-&gt;tstate == NULL) &#123;PyMem_DEL(boot);return PyErr_NoMemory();&#125;Py_INCREF(func);Py_INCREF(args);Py_XINCREF(keyw);// 初始化多线程环境PyEval_InitThreads(); //创建线程ident = PyThread_start_new_thread(t_bootstrap, (void*) boot);if (ident == -1) &#123;PyErr_SetString(ThreadError, &quot;can&apos;t start new thread&quot;);Py_DECREF(func);Py_DECREF(args);Py_XDECREF(keyw);PyThreadState_Clear(boot-&gt;tstate);PyMem_DEL(boot);return NULL;&#125;return PyInt_FromLong(ident); 创建并初始化bootstate结构boot，在boot中，将保存关于Python的一切信息（线程过程，线程过程参数等)。 初始化Python的多线程环境。 以boot为参数，创建操作系统的原生线程。 从以上代码可以看出，Python在刚启动时，并不支持多线程，也就是说，Python中支持多线程的数据结构以及GIL都是没有创建的。当然这是因为大多数的Python程序都不需要Python的支持。 在Python虚拟机启动时，多线程机制并没有被激活，它只支持单线程，一旦用户调用thread.start_new_thread，明确的告诉Python虚拟机需要创建新的线程，这时Python意识到用户需要多线程的支持，这个时候，Python虚拟机会自动建立多线程需要的数据结构、环境以及GIL。 建立多线程环境，主要就是创建GIL。那么GIL是如何实现的呢？打开”python/ceval.c”： 1234567891011121314151617181920static PyThread_type_lock interpreter_lock = 0; /* This is the GIL */static PyThread_type_lock pending_lock = 0; /* for pending calls */static long main_thread = 0;intPyEval_ThreadsInitialized(void)&#123;return interpreter_lock != 0;&#125;voidPyEval_InitThreads(void)&#123;if (interpreter_lock)return;interpreter_lock = PyThread_allocate_lock();PyThread_acquire_lock(interpreter_lock, 1);main_thread = PyThread_get_thread_ident();&#125; 在这段代码中，iterpreter_lock就是GIL。 无论创建多少个线程，Python建立多线程环境的动作只会执行一次。在创建GIL之前，Python会检查GIL是否已经被创建，如果是，则不再进行任何动作，否则，就会去创建这个GIL。 在上述代码中，我们可以看到，创建GIL使用的是Pythread_allocate_lock完成的，下面看看该函数的内部实现： 123456789101112131415PyThread_type_lockPyThread_allocate_lock(void)&#123;PNRMUTEX aLock;dprintf((&quot;PyThread_allocate_lock called\n&quot;));if (!initialized)PyThread_init_thread();aLock = AllocNonRecursiveMutex() ;dprintf((&quot;%ld: PyThread_allocate_lock() -&gt; %p\n&quot;, PyThread_get_thread_ident(), aLock));return (PyThread_type_lock) aLock;&#125; GIL中的owned是指示GIL是否可用的变量，它的值被初始化为-1，Python会检查这个值是否为1，如果是，则意味着GIL可用，必须将其置为0，当owned为0后，表示该GIL已经被一个线程占用，不可再用；同时，当一个线程开始等待GIL时，其owned就会被增加1；当一个线程最终释放GIL时，一定会将GIL的owned减1，这样，当所有需要GIL的线程都最终释放了GIL之后，owned将再次变为-1，意味着GIL再次变为可用。]]></content>
+      <tags>
+        <tag>python</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[CPython源码分析0002]]></title>
@@ -146,11 +149,6 @@
     <content type="text"><![CDATA[1234567891011121314151617181920212223242526272829303132333435363738394041424344 # -*- coding: utf-8 -*-&quot;&quot;&quot;发布和订阅 publish and subscribe订阅者负责订阅频道， 发送者负责向频道发送二进制字符串消息&quot;&quot;&quot;import threadingimport timeimport redisconn = redis.Redis()def publisher(n): time.sleep(1) for i in xrange(n): conn.publish(&quot;channel&quot;, i) time.sleep(1)def run_pubsub(): &quot;&quot;&quot; 启动发送者线程，并让它发送三条消息 &quot;&quot;&quot; threading.Thread(target=publisher, args=(3,)).start() pubsub = conn.pubsub() pubsub.subscribe([&quot;channel&quot;]) count = 0 for item in pubsub.listen(): print item count += 1 # 在接收到一条订阅反馈消息和三条 发布者发送的消息之后，执行退订操作 停止监听消息 if count == 4: pubsub.unsubscribe() # 收到退订反馈消息之后不再接收消息 if count == 5: breakif __name__ == &quot;__main__&quot;: run_pubsub()]]></content>
   </entry>
   <entry>
-    <title><![CDATA[bitmex]]></title>
-    <url>%2F2019%2F05%2F12%2Fbitmex%2F</url>
-    <content type="text"><![CDATA[123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475# -*- coding: utf-8 -*-import timeimport loggingtry: import threadexcept ImportError: import _thread as threadfrom websocket import create_connectiondef on_message(ws, message): print(message)def on_error(ws, error): print(error)def on_close(ws): print(&quot;### closed ###&quot;)def on_open(ws): def run(*args): for i in range(3): time.sleep(1) ws.send(&quot;Hello %d&quot; % i) time.sleep(1) ws.close() print(&quot;thread terminating...&quot;) thread.start_new_thread(run, ())class BitMEXWebsocket(object): MAX_TABLE_LEN = 200 def __init__(self): self.logger = logging.getLogger(&quot;&quot;) self.__reset def __del__(self): self.exit() def connect(self. endpoint=&quot;&quot;, symbol=&quot;&quot;, needAuth=True): self.logger.debug(&quot;Connecting WebSocket.&quot;) self.symbol = symbol self.needAuth = needAuth subscriptions = &quot;&quot;if __name__ == &quot;__main__&quot;:# websocket.enableTrace(True)# ws = websocket.WebSocket()# ws.connect(&quot;wss://www.bitmex.com/realtime&quot;,# http_proxy_host=&quot;127.0.0.1&quot;,# http_proxy_port=3128)# ws = websocket.WebSocketApp(&quot;wss://www.bitmex.com/realtime&quot;,# on_message = on_message,# on_error = on_error,# on_close = on_close)# ws.on_open = on_open# ws.run_forever() ws = create_connection(&quot;wss://www.bitmex.com/realtime&quot;) print(&quot;Sending &apos;Hello, World&apos;...&quot;) ws.send(&#123;&quot;op&quot;: &quot;subscribe&quot;, &quot;args&quot;: [&quot;orderBookL2:XBTUSD&quot;]&#125;)# ws.send(&#123;&quot;op&quot;: &quot;subscribe&quot;,# &quot;args&quot;: [&quot;quoteBin5m&quot;]# &#125;) print(&quot;Sent&quot;) print(&quot;Receiving...&quot;) result = ws.recv() print(result) ws.close()]]></content>
-  </entry>
-  <entry>
     <title><![CDATA[python-exception]]></title>
     <url>%2F2019%2F05%2F10%2Fpython-exception%2F</url>
     <content type="text"><![CDATA[12345678910111213141516171819def validate(name): if len(name) &lt; 10: raise ValueError&gt;&gt;&gt; validate(&apos;joe&apos;)Traceback (most recent call last): File &quot;&lt;input&gt;&quot;, line 1, in &lt;module&gt; validate(&apos;joe&apos;) File &quot;&lt;input&gt;&quot;, line 3, in validate raise ValueErrorValueErrorclass NameTooShortError(ValueError): passdef validate(name): if len(name) &lt; 10: raise NameTooShortError(name)]]></content>
@@ -169,6 +167,9 @@
     <title><![CDATA[more-pythonic-code]]></title>
     <url>%2F2019%2F05%2F09%2Fmore-pythonic-code%2F</url>
     <content type="text"><![CDATA[12input = [&apos;Duration&apos;, &apos;F0&apos;, &apos;F1&apos;, &apos;F2&apos;, &apos;F3&apos;]output = &#123;&apos;Duration&apos;: 0, &apos;F0&apos;: 1, &apos;F1&apos;: 2, &apos;F2&apos;: 3, &apos;F3&apos;: 4&#125; 如何写出来？ 字典推导式 1&#123;f:i for f, i in zip(input, range(len(input)))&#125; 其他 123456789dict(zip(input, range(len(input))))list(enumerate(input))dict(enumerate(input))&#123;f: i for i, f in enumerate(input)&#125; 字符串翻转的办法 1234567891011121314151617def reverse_string3(s): &quot;&quot;&quot;Return a reversed copy of `s`&quot;&quot;&quot; chars = list(s) for i in range(len(s) // 2): tmp = chars[i] chars[i] = chars[len(s) - i - 1] chars[len(s) - i - 1] = tmp return &apos;&apos;.join(chars) def reverse_string2(s): &quot;&quot;&quot;Return a reversed copy of `s`&quot;&quot;&quot; return &quot;&quot;.join(reversed(s)) def reverse_string1(s): &quot;&quot;&quot;Return a reversed copy of `s`&quot;&quot;&quot; return s[::-1]]]></content>
+      <tags>
+        <tag>python</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[django-rest-framework-6]]></title>
@@ -190,6 +191,9 @@
     <title><![CDATA[自定义日志记录中间件]]></title>
     <url>%2F2019%2F05%2F08%2F%E8%87%AA%E5%AE%9A%E4%B9%89%E6%97%A5%E5%BF%97%E8%AE%B0%E5%BD%95%E4%B8%AD%E9%97%B4%E4%BB%B6%2F</url>
     <content type="text"><![CDATA[1234567891011121314151617181920212223242526# -*- coding: utf-8 -*-from __future__ import unicode_literalsimport loggingimport jsonclass ApiLoggingMiddleware(object): def __init__(self, get_response): self.get_response = get_response self.apiLogger = logging.getLogger(&apos;api&apos;) def __call__(self, request): try: body = json.loads(request.body) except Exception: body = dict() body.update(dict(request.POST)) response = self.get_response(request) if request.method != &apos;GET&apos;: self.apiLogger.info(&quot;&#123;&#125; &#123;&#125; &#123;&#125; &#123;&#125; &#123;&#125; &#123;&#125;&quot;.format( request.user, request.method, request.path, body, response.status_code, response.reason_phrase)) return response]]></content>
+      <tags>
+        <tag>django</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[练笈攻略0003]]></title>
@@ -210,6 +214,9 @@
     <title><![CDATA[leetcode-1023]]></title>
     <url>%2F2019%2F05%2F06%2Fleetcode-1023%2F</url>
     <content type="text"><![CDATA[直接扫描的做法 1234567891011vector&lt;bool&gt; camelMatch(vector&lt;string&gt;&amp; qs, string pattern, vector&lt;bool&gt; res = &#123;&#125;) &#123; for (auto i = 0, j = 0, p = 0; i &lt; qs.size(); ++i) &#123; for (j = 0, p = 0; j &lt; qs[i].size(); ++j) &#123; if (p &lt; pattern.size() &amp;&amp; qs[i][j] == pattern[p]) ++p; else if (!islower(qs[i][j])) break; &#125; res.push_back(j == qs[i].size() &amp;&amp; p == pattern.size()); &#125; return res;&#125;]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[优秀的程序员（知乎）]]></title>
@@ -900,7 +907,7 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[lfu-cache]]></title>
+    <title><![CDATA[leetcode-lfu-cache]]></title>
     <url>%2F2019%2F04%2F10%2Flfu-cache%2F</url>
     <content type="text"><![CDATA[123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869import collectionsimport functoolsfrom itertools import filterfalsefrom heapq import nsmallestfrom operator import itemgetterclass Counter(dict): def __missing__(self, key): return 0def lfu_cache(maxsize=100): def decorating_function(user_function): cache = &#123;&#125; # mapping of args to results use_count = Counter() # times each key has been accessed kwd_mark = object() # separate positional and keyword args @functools.wraps(user_function) def wrapper(*args, **kwds): key = args if kwds: key += (kwd_mark,) + tuple(sorted(kwds.items())) use_count[key] += 1 # get cache entry or compute if not found try: result = cache[key] wrapper.hits += 1 except KeyError: result = user_function(*args, **kwds) cache[key] = result wrapper.misses += 1 # purge least frequently used cache entry if len(cache) &gt; maxsize: for key, _ in nsmallest(maxsize // 10, use_count.items(), key=itemgetter(1)): del cache[key], use_count[key] return result def clear(): cache.clear() use_count.clear() wrapper.hits = wrapper.misses = 0 wrapper.hits = wrapper.misses = 0 wrapper.clear = clear return wrapper return decorating_functionif __name__ == &apos;__main__&apos;: @lfu_cache(maxsize=20) def f(x, y): return 3 * x + y domain = range(5) from random import choice for i in range(1000): r = f(choice(domain), choice(domain)) print(f.hits, f.misses)]]></content>
       <categories>
@@ -932,9 +939,12 @@
     <content type="text"><![CDATA[先进行划分 划分到两个或者一个 再两两合并 1234567891011121314151617181920212223242526272829303132333435363738394041class Solution &#123; public ListNode mergeKLists(ListNode[] lists)&#123; if(lists.length == 0) return null; if(lists.length == 1) return lists[0]; if(lists.length == 2)&#123; return mergeTwoLists(lists[0],lists[1]); &#125; int mid = lists.length/2; ListNode[] l1 = new ListNode[mid]; for(int i = 0; i &lt; mid; i++)&#123; l1[i] = lists[i]; &#125; ListNode[] l2 = new ListNode[lists.length-mid]; for(int i = mid,j=0; i &lt; lists.length; i++,j++)&#123; l2[j] = lists[i]; &#125; return mergeTwoLists(mergeKLists(l1),mergeKLists(l2)); &#125; public ListNode mergeTwoLists(ListNode l1, ListNode l2) &#123; if (l1 == null) return l2; if (l2 == null) return l1; ListNode head = null; if (l1.val &lt;= l2.val)&#123; head = l1; head.next = mergeTwoLists(l1.next, l2); &#125; else &#123; head = l2; head.next = mergeTwoLists(l1, l2.next); &#125; return head; &#125;&#125;]]></content>
   </entry>
   <entry>
-    <title><![CDATA[lru-cache]]></title>
+    <title><![CDATA[leetcode lru-cache]]></title>
     <url>%2F2019%2F04%2F08%2Flru-cache%2F</url>
     <content type="text"><![CDATA[1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677import collectionsimport functoolsfrom itertools import ifilterfalsedef lru_cache(maxsize=100, on_purge=None): &quot;&quot;&quot;Least-recently-used cache decorator. Arguments to the cached function must be hashable. Clear the cache with f.clear(). &quot;&quot;&quot; maxqueue = maxsize * 10 def decorating_function(user_function): cache = &#123;&#125; queue = collections.deque() refcount = collections.defaultdict(int) sentinel = object() kwd_mark = object() # lookup optimizations (ugly but fast) queue_append, queue_popleft = queue.append, queue.popleft queue_appendleft, queue_pop = queue.appendleft, queue.pop @functools.wraps(user_function) def wrapper(*args, **kwargs): # cache key records both positional and keyword args key = args if kwargs: key += (kwd_mark,) + tuple(sorted(kwargs.items())) # record recent use of this key queue_append(key) refcount[key] += 1 # get cache entry or compute if not found try: result = cache[key] except KeyError: result = user_function(*args, **kwargs) cache[key] = result # purge least recently used cache entry if len(cache) &gt; maxsize: key = queue_popleft() refcount[key] -= 1 while refcount[key]: key = queue_popleft() refcount[key] -= 1 if on_purge: on_purge(cache[key]) del cache[key], refcount[key] # periodically compact the queue by eliminating duplicate keys # while preserving order of most recent access if len(queue) &gt; maxqueue: refcount.clear() queue_appendleft(sentinel) for key in ifilterfalse(refcount.__contains__, iter(queue_pop, sentinel)): queue_appendleft(key) refcount[key] = 1 return result def clear(): if on_purge: for value in cache.itervalues(): on_purge(value) cache.clear() queue.clear() refcount.clear() wrapper._cache = cache wrapper.clear = clear return wrapper return decorating_function]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[编程范式01]]></title>
@@ -1018,9 +1028,12 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[完美数]]></title>
+    <title><![CDATA[leetcode完美数]]></title>
     <url>%2F2019%2F03%2F31%2F%E5%AE%8C%E7%BE%8E%E6%95%B0%2F</url>
     <content type="text"><![CDATA[完美数12345678910111213class Solution &#123;public: bool checkPerfectNumber(int num) &#123; int sum = 1; for (int i = 2; i * i &lt;= num; ++i) &#123; if (num % i == 0) &#123; sum += i + (num / i == i ? 0 : num / i); &#125; &#125; return num != 1 &amp;&amp; sum == num; &#125;&#125;; 1234567class Solution &#123;public: bool checkPerfectNumber(int num) &#123; return num == 6 || num == 28 || num == 496 || num == 8128 || num == 33550336; &#125;&#125;;]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[2019-go-28]]></title>
@@ -1096,6 +1109,9 @@
     <title><![CDATA[dijkstra]]></title>
     <url>%2F2019%2F03%2F25%2Fdijkstra%2F</url>
     <content type="text"><![CDATA[123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127#!/usr/bin/python# -*- coding: UTF-8 -*-from typing import List, Generatorimport heapqclass Graph: def __init__(self, vertex_count: int) -&gt; None: self.adj = [[] for _ in range(vertex_count)] def add_edge(self, s: int, t: int, w: int) -&gt; None: edge = Edge(s, t, w) self.adj[s].append(edge) def __len__(self) -&gt; int: return len(self.adj)class Vertex: def __init__(self, v: int, dist: int) -&gt; None: self.id = v self.dist = dist def __gt__(self, other) -&gt; bool: return self.dist &gt; other.dist def __repr__(self) -&gt; str: return str((self.id, self.dist))class Edge: def __init__(self, source: int, target: int, weight: int) -&gt; None: self.s = source self.t = target self.w = weightclass VertexPriorityQueue: def __init__(self) -&gt; None: self.vertices = [] def get(self) -&gt; Vertex: return heapq.heappop(self.vertices) def put(self, v: Vertex) -&gt; None: self.vertices.append(v) self.update_priority() def empty(self) -&gt; bool: return len(self.vertices) == 0 def update_priority(self) -&gt; None: heapq.heapify(self.vertices) def __repr__(self) -&gt; str: return str(self.vertices)def dijkstra(g: Graph, s: int, t: int) -&gt; int: size = len(g) pq = VertexPriorityQueue() # 节点队列 in_queue = [False] * size # 已入队标记 vertices = [ # 需要随时更新离s的最短距离的节点列表 Vertex(v, float(&apos;inf&apos;)) for v in range(size) ] predecessor = [-1] * size # 先驱 vertices[s].dist = 0 pq.put(vertices[s]) in_queue[s] = True while not pq.empty(): v = pq.get() if v.id == t: break for edge in g.adj[v.id]: if v.dist + edge.w &lt; vertices[edge.t].dist: # 当修改了pq中的元素的优先级后： # 1. 有入队操作：触发了pq的堆化，此后出队可以取到优先级最高的顶点 # 2. 无入队操作：此后出队取到的顶点可能不是优先级最高的，会有bug # 为确保正确，需要手动更新一次 vertices[edge.t].dist = v.dist + edge.w predecessor[edge.t] = v.id pq.update_priority() # 更新堆结构 if not in_queue[edge.t]: pq.put(vertices[edge.t]) in_queue[edge.t] = True for n in print_path(s, t, predecessor): if n == t: print(t) else: print(n, end=&apos; -&gt; &apos;) return vertices[t].distdef print_path(s: int, t: int, p: List[int]) -&gt; Generator[int, None, None]: if t == s: yield s else: yield from print_path(s, p[t], p) yield tif __name__ == &apos;__main__&apos;: g = Graph(6) g.add_edge(0, 1, 10) g.add_edge(0, 4, 15) g.add_edge(1, 2, 15) g.add_edge(1, 3, 2) g.add_edge(2, 5, 5) g.add_edge(3, 2, 1) g.add_edge(3, 5, 12) g.add_edge(4, 5, 10) print(dijkstra(g, 0, 5)) # 下面这个用例可以暴露更新队列元素优先级的问题 # g = Graph(4) # g.add_edge(0, 1, 18) # g.add_edge(0, 2, 3) # g.add_edge(2, 1, 1) # g.add_edge(1, 3, 5) # g.add_edge(2, 3, 8) # g.add_edge(0, 3, 15) # print(dijkstra(g, 0, 3))]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[tg_sort]]></title>
@@ -1269,21 +1285,33 @@
     <title><![CDATA[leetcode-0006]]></title>
     <url>%2F2019%2F03%2F17%2Fleetcode-0006%2F</url>
     <content type="text"><![CDATA[1234567891011121314151617181920212223242526272829303132333435func convert(s string, numRows int) string &#123; if numRows == 1 || len(s) &lt;= numRows &#123; return s &#125; res := bytes.Buffer&#123;&#125; // p pace 步距 p := numRows*2 - 2 // 处理第一行 for i := 0; i &lt; len(s); i += p &#123; res.WriteByte(s[i]) &#125; // 处理中间的行 for r := 1; r &lt;= numRows-2; r++ &#123; // 添加r行的第一个字符 res.WriteByte(s[r]) for k := p; k-r &lt; len(s); k += p &#123; res.WriteByte(s[k-r]) if k+r &lt; len(s) &#123; res.WriteByte(s[k+r]) &#125; &#125; &#125; // 处理最后一行 for i := numRows - 1; i &lt; len(s); i += p &#123; res.WriteByte(s[i]) &#125; return res.String()&#125;]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[leetcode-0005]]></title>
     <url>%2F2019%2F03%2F17%2Fleetcode-0005%2F</url>
     <content type="text"><![CDATA[123456789101112131415161718192021222324252627282930313233func longestPalindrome(s string) string &#123; if len(s) &lt; 2 &#123; return s &#125; begin, maxLen := 0, 1 for i := 0; i &lt; len(s); &#123; if len(s)-i &lt;= maxLen/2 &#123; break &#125; b, e := i, i for e &lt; len(s)-1 &amp;&amp; s[e+1] == s[e] &#123; e++ &#125; i = e + 1 for e &lt; len(s)-1 &amp;&amp; b &gt; 0 &amp;&amp; s[e+1] == s[b-1] &#123; e++ b-- &#125; newLen := e + 1 - b if newLen &gt; maxLen &#123; begin = b maxLen = newLen &#125; &#125; return s[begin : begin+maxLen]&#125;]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[leetcode-0004]]></title>
     <url>%2F2019%2F03%2F17%2Fleetcode-0004%2F</url>
     <content type="text"><![CDATA[123456789101112131415161718192021222324252627282930313233class Solution: def findMedianSortedArrays(self, A, B): m, n = len(A), len(B) if m &gt; n: A, B, m, n = B, A, n, m if n == 0: raise ValueError imin, imax, half_len = 0, m, (m + n + 1) / 2 while imin &lt;= imax: i = (imin + imax) / 2 j = half_len - i if i &lt; m and B[j-1] &gt; A[i]: # i is too small, must increase it imin = i + 1 elif i &gt; 0 and A[i-1] &gt; B[j]: # i is too big, must decrease it imax = i - 1 else: # i is perfect if i == 0: max_of_left = B[j-1] elif j == 0: max_of_left = A[i-1] else: max_of_left = max(A[i-1], B[j-1]) if (m + n) % 2 == 1: return max_of_left if i == m: min_of_right = B[j] elif j == n: min_of_right = A[i] else: min_of_right = min(A[i], B[j]) return (max_of_left + min_of_right) / 2.0]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[leetcode-0003]]></title>
     <url>%2F2019%2F03%2F15%2Fleetcode-0003%2F</url>
     <content type="text"><![CDATA[1234567891011121314151617class Solution &#123;public: int lengthOfLongestSubstring(string s) &#123; set&lt;char&gt; t; int res = 0, left = 0, right = 0; while (right &lt; s.size()) &#123; if (t.find(s[right]) == t.end()) &#123; t.insert(s[right++]); res = max(res, (int)t.size()); &#125; else &#123; t.erase(s[left++]); &#125; &#125; return res; &#125;&#125;;]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[2019-go-25]]></title>
@@ -1341,11 +1369,14 @@
     <title><![CDATA[leetcode-0002]]></title>
     <url>%2F2019%2F03%2F13%2Fleetcode-0002%2F</url>
     <content type="text"><![CDATA[12345678910111213141516171819202122232425262728# Definition for singly-linked list.class ListNode(object): def __init__(self, x): self.val = x self.next = Noneclass Solution(object): def addTwoNumbers(self, l1, l2): &quot;&quot;&quot; :type l1: ListNode :type l2: ListNode :rtype: ListNode &quot;&quot;&quot; carry = 0 root = n = ListNode(0) while l1 or l2 or carry: v1 = v2 = 0 if l1: v1 = l1.val l1 = l1.next if l2: v2 = l2.val l2 = l2.next carry, val = divmod(v1+v2+carry, 10) n.next = ListNode(val) n = n.next return root.next]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[leetcode-0001]]></title>
     <url>%2F2019%2F03%2F13%2Fleetcode-0001%2F</url>
-    <content type="text"><![CDATA[123456789class Solution: # @return a tuple, (index1, index2) def twoSum(self, num, target): d = dict() for i, n in enumerate(num): if target-n in d: return (d[target-n], i) d[n] = i]]></content>
+    <content type="text"><![CDATA[123456789class Solution: # @return a tuple, (index1, index2) def twoSum(self, num, target): d = &#123;&#125; for i, n in enumerate(num): if target-n in d: return (d[target-n], i) d[n] = i]]></content>
   </entry>
   <entry>
     <title><![CDATA[2019-go-20]]></title>
@@ -1431,6 +1462,9 @@
     <title><![CDATA[django-ldap]]></title>
     <url>%2F2019%2F03%2F07%2Fdjango-ldap%2F</url>
     <content type="text"><![CDATA[简单记录一下ldap LDAP用户验证基本原理每个用户在LDAP系统中有一个唯一的DN值，例如配置文件中默认的admin用户在LDAP中的DN值是uid=admin,ou=system,dc=eoncloud,dc=com, 其中eoncloud.com是域名，system是组名，admin是用户名，有些LDAP用cn而不是uid来生成DN，在这种系统中admin的DN看起来像这样cn=admin,ou=system,dc=eoncloud,dc=com，无论是uid还是cn或是别的前缀，django-ldap-auth都是用dn来验证用户和获取用户信息的. 假设用户输入的帐号及密码是： test, password. django-auth-ldap有２个方式来获取用户的DN 使用AUTH_LDAP_USER_DN_TEMPLATE提供的模板生成DN．如uid=%(user)s,ou=users,dc=eoncloud,dc=com, 其中%(user)s会被替换成用户名，这样最终的DN就是uid=test,ou=users,dc=eonclooud,dc=com.使用AUTH_LDAP_GROUP_SEARCH．如果没有配置AUTH_LDAP_USER_DN_TEMPLATE，那么django-auth-ldap会使用AUTH_LDAP_BIND_DN和AUTH_LDAP_BIND_PASSWORD提供的dn与密码根据AUTH_LDAP_GROUP_SEARCH提供的查询条件去查找test用户，如果查不到，验证失败，如果查到用户，就使用返回的数据生成test的DN. 利用第2步生成DN值与密码尝试访问LDAP系统，如果访问成功，则验证共过，否则验证失败．基本配置AUTH_LDAP_SERVER_URI． LDAP系统的地址及端口号AUTH_LDAP_BIND_DN, AUTH_LDAP_BIND_PASSWORD. 查找用户及相关信息的默认用户信息AUTH_LDAP_USER_SEARCH． 第一个参数指指定询目录，第三个参数是过滤条件，过滤条件可以很复杂，有需要请查看相关文档．AUTH_LDAP_USER_DN_TEMPLATE． 用户DN模板，配置该参数后django-auth-ldap会用生成的DN配合密码验证该用户．AUTH_LDAP_USER_ATTR_MAP. LDAP与User model映射．AUTH_LDAP_ALWAYS_UPDATE_USER. 是否同步LDAP修改．用户组配置如果需要，django-auth-ldap可以从ldap系统获取用户的组信息，也可以限定某个组里的用户访问，或者阻止某个组里的用户访问，无论是使用哪个功能都需要先配置组类型AUTH_LDAP_GROUP_TYPE及AUTH_LDAP_GROUP_SEARCH, 因为LDAP里组的种类非常多，具体信息请查询相关资料． AUTH_LDAP_GROUP_TYPE 值类型: LDAPGroupType的子类实例．LDAPGroupType有２个初始化参数:member_attr, name_attr．member_attr是组成员的属性名, name_attr是组名称的属性名．作用: AUTH_LDAP_GROUP_SEARCH返回的组的类型，并用来判断用户与组的从属关系AUTH_LDAP_GROUP_SEARCH 值类型: LDAPSearch实例．作用: 用户组的查询条件AUTH_LDAP_REQUIRE_GROUP 值类型: 组的DN作用: 只有指定组的用户可以访问AUTH_LDAP_DENY_GROUP指定的 值类型: 组的DN作用： 禁止指定组的用户访问AUTH_LDAP_MIRROR_GROUPS 值类型: bool值作用: 导入用户的组信息 AUTH_LDAP_MIRROR_GROUPS=True 这个参数是为了在用户登录的时候把用户的域组关系也获取并记录下来。不过开启这个参数会带来另外一个问题：每次用户登录时，都会把用户的组关系删除，重新从ldap中进行同步。由于我们的系统中除了域组还有些自定义的组关系，这样一来自定义组的用户关系就不能持久保留了。按照我们的需求，其实只希望在用户第一次登录的时候同步组关系，以后的登录并不需要。这个需求可以通过对django-auth-ldap的源码（backend.py）进行微调来实现。]]></content>
+      <tags>
+        <tag>django</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[2019-go-15]]></title>
@@ -1509,7 +1543,7 @@
   <entry>
     <title><![CDATA[leetcode-lru]]></title>
     <url>%2F2019%2F03%2F05%2Fleetcode-lru%2F</url>
-    <content type="text"><![CDATA[设计一个LRU cache，实现两个功能： (cache中存放着（key,value）键值对) get(key):获取key对应的value，如果key不在cache中那么返回-1（value 总是为正数）； set(key, value):如果key在cache中则更新它的value；如果不在则插入，如果cache已满则先删除最近最少使用的一项后在插入。 对于get，如果key在cache中，那个get(key）表示了对key的一次访问；而set(key，value)则总是表示对key的一次访问。 使用一个list来记录访问的顺序，最先访问的放在list的前面，最后访问的放在list的后面，故cache已满时，则删除list[0]，然后插入新项； 12345678910111213141516171819202122class LRUCache(object): def __init__(self, capacity): self.cache = dict() self.used_list = list() self.capacity = capacity def get(self, key): if key in self.cache: if key != self.used_list[-1]: self.used_list.remove(key) self.used_list.append(key) return self.cache[key] else: return -1 def set(self, key, value): if key in self.cache: self.used_list.remove(key) elif len(self.cache) == self.capacity: self.cache.pop(self.used_list.pop(0)) self.used_list.append(key) self.cache[key] = value]]></content>
+    <content type="text"><![CDATA[设计一个LRU cache，实现两个功能： (cache中存放着（key,value）键值对) get(key):获取key对应的value，如果key不在cache中那么返回-1（value 总是为正数）； set(key, value):如果key在cache中则更新它的value；如果不在则插入，如果cache已满则先删除最近最少使用的一项后在插入。 对于get，如果key在cache中，那个get(key）表示了对key的一次访问；而set(key，value)则总是表示对key的一次访问。 使用一个list来记录访问的顺序，最先访问的放在list的前面，最后访问的放在list的后面，故cache已满时，则删除list[0]，然后插入新项； 基本方案在py 当中还是 双链表加上哈希表的方法 12345678910111213141516171819202122class LRUCache(object): def __init__(self, capacity): self.cache = dict() self.used_list = list() self.capacity = capacity def get(self, key): if key in self.cache: if key != self.used_list[-1]: self.used_list.remove(key) self.used_list.append(key) return self.cache[key] else: return -1 def set(self, key, value): if key in self.cache: self.used_list.remove(key) elif len(self.cache) == self.capacity: self.cache.pop(self.used_list.pop(0)) self.used_list.append(key) self.cache[key] = value]]></content>
       <categories>
         <category>leetcode</category>
       </categories>
@@ -2079,7 +2113,7 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[位运算之异或]]></title>
+    <title><![CDATA[leetcode 位运算之异或]]></title>
     <url>%2F2019%2F02%2F26%2F%E4%BD%8D%E8%BF%90%E7%AE%97%E4%B9%8B%E5%BC%82%E6%88%96%2F</url>
     <content type="text"><![CDATA[12345678910111213#include&lt;stdio.h&gt;int main() &#123; int a[] = &#123;1, 1, 2, 2, 3, 3, 4, 4, 5&#125;; int sz = sizeof(a) / sizeof(a[0]); int i = 0; int x = 0; for (i = 0; i &lt; sz; i++) &#123; x ^= a[i]; //将所有的数异或一下 &#125; printf("%d\n", x); return 0;&#125; 任何一个数字 异或它自己都等于0123456789101112131415161718192021222324252627282930#include&lt;stdio.h&gt;int main() &#123; int a[] = &#123;1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 7&#125;; int i = 0; int sz = sizeof(a) / sizeof(a[0]); int n = 0; int pos = 0; int x = 0; int y = 0; for (i = 0; i &lt; sz; i++) &#123; n ^= a[i]; //将所有的数异或 得到 6^7 的结果 &#125; for (i = 0; i &lt; 32; i++) &#123; if (((n &gt;&gt; i) &amp; 1) == 1) &#123; pos = i; //找到 6^7 的二进制数中为1的一位 break; &#125; &#125; for (i = 0; i &lt; sz; i++) //开始分组 &#123; if (((a[i] &gt;&gt; pos) &amp; 1) == 1) &#123; x ^= a[i]; //得到一个数 &#125; else &#123; y ^= a[i]; //得到另一个数 &#125; &#125; printf(&quot;%d %d\n&quot;, x, y); return 0;&#125;]]></content>
       <categories>
@@ -2092,7 +2126,7 @@
   <entry>
     <title><![CDATA[leetcode-309]]></title>
     <url>%2F2019%2F02%2F25%2Fleetcode-309%2F</url>
-    <content type="text"><![CDATA[12345678910111213141516171819202122232425262728293031n = len(prices) if n &lt; 2: return 0 # k is big enougth to cover all ramps. if k &gt;= n / 2: return sum(i - j for i, j in zip(prices[1:], prices[:-1]) if i - j &gt; 0) globalMax = [[0] * n for _ in xrange(k + 1)] for i in xrange(1, k + 1): # The max profit with i transations and selling stock on day j. localMax = [0] * n for j in xrange(1, n): profit = prices[j] - prices[j - 1] localMax[j] = max( # We have made max profit with (i - 1) transations in # (j - 1) days. # For the last transation, we buy stock on day (j - 1) # and sell it on day j. globalMax[i - 1][j - 1] + profit, # We have made max profit with (i - 1) transations in # (j - 1) days. # For the last transation, we buy stock on day j and # sell it on the same day, so we have 0 profit, apparently # we do not have to add it. globalMax[i - 1][j - 1], # + 0, # We have made profit in (j - 1) days. # We want to cancel the day (j - 1) sale and sell it on # day j. localMax[j - 1] + profit) globalMax[i][j] = max(globalMax[i][j - 1], localMax[j]) return globalMax[k][-1]]]></content>
+    <content type="text"><![CDATA[12345678910111213141516171819202122232425262728293031n = len(prices)if n &lt; 2: return 0# k is big enougth to cover all ramps.if k &gt;= n / 2: return sum(i - j for i, j in zip(prices[1:], prices[:-1]) if i - j &gt; 0)globalMax = [[0] * n for _ in xrange(k + 1)]for i in xrange(1, k + 1): # The max profit with i transations and selling stock on day j. localMax = [0] * n for j in xrange(1, n): profit = prices[j] - prices[j - 1] localMax[j] = max( # We have made max profit with (i - 1) transations in # (j - 1) days. # For the last transation, we buy stock on day (j - 1) # and sell it on day j. globalMax[i - 1][j - 1] + profit, # We have made max profit with (i - 1) transations in # (j - 1) days. # For the last transation, we buy stock on day j and # sell it on the same day, so we have 0 profit, apparently # we do not have to add it. globalMax[i - 1][j - 1], # + 0, # We have made profit in (j - 1) days. # We want to cancel the day (j - 1) sale and sell it on # day j. localMax[j - 1] + profit) globalMax[i][j] = max(globalMax[i][j - 1], localMax[j])return globalMax[k][-1]]]></content>
       <categories>
         <category>leetcode</category>
       </categories>
@@ -2114,7 +2148,7 @@
   <entry>
     <title><![CDATA[leetcode-122]]></title>
     <url>%2F2019%2F02%2F25%2Fleetcode-122%2F</url>
-    <content type="text"><![CDATA[123456789int total = 0; //遍历所有交易日 for (int i = 0; i &lt; prices.length - 1; i++) &#123; //只要是后一天比前一天贵,就卖出 if (prices[i + 1] &gt; prices[i]) total += prices[i + 1] - prices[i]; &#125; return total;]]></content>
+    <content type="text"><![CDATA[123456789int total = 0;//遍历所有交易日for (int i = 0; i &lt; prices.length - 1; i++) &#123; //只要是后一天比前一天贵,就卖出 if (prices[i + 1] &gt; prices[i]) total += prices[i + 1] - prices[i];&#125;return total;]]></content>
       <categories>
         <category>leetcode</category>
       </categories>
@@ -2218,7 +2252,7 @@
   <entry>
     <title><![CDATA[leetcode-986]]></title>
     <url>%2F2019%2F02%2F18%2Fleetcode-986%2F</url>
-    <content type="text"><![CDATA[12345678910111213141516171819202122232425262728293031# Definition for an interval.class Interval(object): def __init__(self, s=0, e=0): self.start = s self.end = eclass Solution(object): def intervalIntersection(self, A, B): &quot;&quot;&quot; :type A: List[Interval] :type B: List[Interval] :rtype: List[Interval] &quot;&quot;&quot; a, b, res, i, j = len(A), len(B), [], 0, 0 while i &lt; a and j &lt; b: left_a, right_a = A[i].start, A[i].end left_b, right_b = B[j].start, B[j].end if left_a &lt; left_b: left = left_b else: left = left_a if right_a &lt; right_b: right = right_a i += 1 else: right = right_b j += 1 if right &gt;= left: res.append(Interval(left, right)) return res]]></content>
+    <content type="text"><![CDATA[12345678910111213141516171819202122232425262728293031合并区间# Definition for an interval.class Interval(object): def __init__(self, s=0, e=0): self.start = s self.end = eclass Solution(object): def intervalIntersection(self, A, B): &quot;&quot;&quot; :type A: List[Interval] :type B: List[Interval] :rtype: List[Interval] &quot;&quot;&quot; a, b, res, i, j = len(A), len(B), [], 0, 0 while i &lt; a and j &lt; b: left_a, right_a = A[i].start, A[i].end left_b, right_b = B[j].start, B[j].end if left_a &lt; left_b: left = left_b else: left = left_a if right_a &lt; right_b: right = right_a i += 1 else: right = right_b j += 1 if right &gt;= left: res.append(Interval(left, right)) return res]]></content>
       <categories>
         <category>leetcode</category>
       </categories>
@@ -2364,11 +2398,17 @@
     <title><![CDATA[leetcode-801]]></title>
     <url>%2F2019%2F01%2F25%2Fleetcode-801%2F</url>
     <content type="text"></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[leetcode-799]]></title>
     <url>%2F2019%2F01%2F25%2Fleetcode-799%2F</url>
     <content type="text"><![CDATA[123456789101112131415161718class Solution &#123;public: double champagneTower(int poured, int query_row, int query_glass) &#123; double result[101][101] = &#123;0.0&#125;; result[0][0] = poured; for (int i = 0; i &lt; 100; i++) &#123; for (int j = 0; j &lt;= i; j++) &#123; if (result[i][j] &gt;= 1) &#123; result[i + 1][j] += (result[i][j] - 1) / 2.0; result[i + 1][j + 1] += (result[i][j] - 1) / 2.0; result[i][j] = 1; &#125; &#125; &#125; return result[query_row][query_glass]; &#125;&#125;;]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[leetcode-798]]></title>
@@ -2920,6 +2960,9 @@
     <title><![CDATA[AIOps]]></title>
     <url>%2F2018%2F12%2F08%2FAIOps%2F</url>
     <content type="text"><![CDATA[1）开始尝试应用AI能力，还无较成熟单点应用 2）具备单场景的AI运维能力，可以初步形成供内部使用的学件 3）有由多个单场景AI运维模块串联起来的流程化AI运维能力，可以对外提供可靠的运维AI学件 4）主要运维场景均已实现流程化免干预AI运维能力，可以对外提供可靠的AIOps服务。 5） 有核心中枢AI，可以在成本、质量、效率间从容调整，达到业务不同生命周期对三个方面不同的指标要求，可实现多目标下的最优或按需最优。 “学件”（Learnware）一词是南京大学周志华老师的原创，学件（Learnware）= 模型（model）+规约（specification），具有可重用、可演进、可了解的特性。 “可重用”的特性使得能够获取大量不同的样本； “可演进”的特性使得可以适应环境的变化； “可了解”的特性使得能有效地了解模型的能力。 +++++++ AIOps作为一个团队，由不同角色组成，一般有三种不同角色，他们是运维专家、数据科学家、智能运维研发工程师，以下介绍三种角色分工： 1）运维工程师 特征：具有丰富的运维领域知识、熟悉较为复杂的运维问题、具备解决运维难题能力。 职责：运用机器帮助运维人员完成基础性和重复性的基层运维工作；人工处理机器还不能处理好的运维难题；基于经验对于较为复杂的运维问题给出最终决策—不断训练机器。 2）运维数据工程师 特征：具备编程、数学、统计学、数据可视化、机器学习等能力。 职责： 致力于智能运维平台架构、模型标准、数据分析方法；不断应用最新的机器学习技术设计优化智能运维算法；监督智能运维系统性能并实施优化和改进。 3）运维开发工程师 特征：良好的开发语言基础、大数据处理技术能力。 职责：数据采集、自动化处理、实现和运用算法等。 一、稳定性：运维的本质就是维护系统的稳定性，如何能让系统平稳的运行，变更更加稳定，故障全面治理是首要考量的，所以稳定性方面的智能运维技术演进大致是： 异常检测(Reactive)-&gt; 根因分析(Root Cause Analysis)-&gt;根源定位(real time) -&gt; 故障自愈(auto-healing)-&gt; 故障预测(proactive) 无人值守发布中应用的是异常检测的算法，而智能故障定位需要用到的就是后两种技术。 二、效率：在稳定的基础上我们希望能看到极致的运维的效率，极低的运维成本。 智能运维的场景很多，在运维的每层都有用武之地。每个点的微创新的累积最终会给智能运维带来颠覆性的变化。真正实现这种专家经验和”拍脑袋“运维模式转变为基于算法和人工智能的自动化运维，最终走向无人化运维。 “无人化”当然短期内只是一个“自动化程度非常高的”的代名词，在可以看到的未来，“无人化”还是由人来干预或者参与的，尤其是故障处理。 其实自动化被叫做“自働化”更为合理， 人和机器更多是职能上的区别，需要优势互补，人不再做具体的操作了，由机器替代，但人依然是运维的灵魂，是运维的制定者和修改者，机器只是执行者，机器只是帮助人或者提醒人来完成运维操作。 Gartner Group 提出的 AIOps 中的 AI，其实是 Algorithmic IT 的缩写，而不是很多人以为的 Artificial Intelligence 的缩写，但不管是哪种写法，都意味着利用机器学习算法对线上运行的真实数据和日志等作出故障预判，从而执行相应的运维操作。 AIOps 可以说是自动化运维的升级版，所以并非 DevOps 的取代者，而是 DevOps 更高级别的落实者。 ChatOps 的理念由 DevOps 延伸而来，又结合 AI（人工智能）落地，可以说是人工智能和新型工作理念结合的产物。它也是一种新型智能工作方式，帮助团队利用 ChatBot 机器人使成员和各项辅助工具连接在一起，以沟通驱动的方式完成工作。同时解决人与人、人与工具、工具与工具之间的信息孤岛问题，从而有更高的工作效率和更好的协作体验。 2013 年，GitHub 在其内部最早开始推行 ChatOps，希望能以聊天的方式更容易更快速地去完成 DevOps 承载的工作。 ChatOps 主要由四个部分组成：自动化的理念、一个沟通承载平台、一系列连接人与工具的机器人，以及一些后台工具和服务（基础设施）。它不仅可以应用在技术团队中，还可以发展为适应不同种类团队的方法模型，这也是 ChatOps 这个概念提出的背景之一。随着全行业的发展和人力成本的攀升，ChatOps 也可以说是应用于全行业的 DevOps。]]></content>
+      <tags>
+        <tag>python</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[asyncio篇]]></title>
@@ -2978,22 +3021,34 @@
   <entry>
     <title><![CDATA[linux-optimize000]]></title>
     <url>%2F2018%2F11%2F29%2Flinux-optimize000%2F</url>
-    <content type="text"></content>
+    <content type="text"><![CDATA[性能分析和优化 是一个痛点 对应用程序和系统的几个基本原理 再进行大量的实战练习 建立整体性能的全局观 高并发和响应快 吞吐和延时 从应用负载的视角来考察性能 必要的性能工具 不能把性能工具当作学习的全部 不要一开始就抓住所有的细节 学习和实践 思考 反思 总结]]></content>
+      <tags>
+        <tag>linux</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[linux-optimize005]]></title>
     <url>%2F2018%2F11%2F29%2Flinux-optimize005%2F</url>
     <content type="text"></content>
+      <tags>
+        <tag>linux</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[linux-optimize004]]></title>
     <url>%2F2018%2F11%2F29%2Flinux-optimize004%2F</url>
     <content type="text"></content>
+      <tags>
+        <tag>linux</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[linux-optimize003]]></title>
     <url>%2F2018%2F11%2F29%2Flinux-optimize003%2F</url>
     <content type="text"></content>
+      <tags>
+        <tag>linux</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[linux-optimize002]]></title>
@@ -3009,7 +3064,7 @@
   <entry>
     <title><![CDATA[linux-optimize001]]></title>
     <url>%2F2018%2F11%2F29%2Flinux-optimize001%2F</url>
-    <content type="text"><![CDATA[什么是平均负载？如何彻底理解现象背后的本质原理，用起来更加灵活，也更有底气。 uptime 命令 每一列的输出含义 当前时间 系统运行时间 正在登录的用户数 依次是过去一分钟 五分钟 15分钟的平均负载 平均负载是其实简单理解 就是平均活跃进程数 平均负载为2 时 代表什么？ 在2核的cpu的系统上 代表所有的cpu都刚好被完全占用 在4核的cpu的系统上 代表有50%的空闲 在1核的cpu的系统上 意味着有一半的进程竞争不到cpu 那么 平均负载为多少时合理？一般而言 最理想的情况是等于cpu的个数 首先得知道系统有几个cpu 1grep &apos;model name&apos; /proc/cpuinfo | wc -l 有了cpu的个数 可以判断出平均负载比cpu的个数还大的时候，系统已经出现了过载。 一半当平均负载高于cpu数量70%的时候，就应该分析排查负载高的问题了 平均负载是单位时间内，处于可运行状态和不可中断状态的进程数，因此不止包括了正在使用cpu的进程，还包括等待cpu和等待io的进程 cpu使用率 是单位时间内cpu繁忙情况的统计 跟平均负载并不一定完全对应 cpu密集型时 两者一致 io密集时 等待io也会导致平均负载很高 但是cpu使用率不一定很高 大量等待cpu的进程调度也会导致平均负载升高，此时的cpu使用率也会比较高 善于使用工具使用iostat mpstat pidstat 等工具 找到平均负载升高的根源在哪里 1apt install stress sysstat -y 压力测试工具 异常进程模拟平均负载升高的场景 1stress --cpu 1 --timeout 600 1watch -d uptime 1mpstat -P ALL 5 1pidstat -u 5 1 1stress -i 1 --timeout 600 模拟大量进程 1stress -c 8 --timeout 600 iowait 无法升高的原因 是因为使用的是sync()系统调用 作用是刷新缓冲内存到磁盘中 可以使用下一代 stress-ng htop atop 命令 也可以使用]]></content>
+    <content type="text"><![CDATA[什么是平均负载？如何彻底理解现象背后的本质原理，用起来更加灵活，也更有底气。 uptime 命令 每一列的输出含义 当前时间 系统运行时间 正在登录的用户数 依次是过去一分钟 五分钟 15分钟的平均负载 平均负载是其实简单理解 就是平均活跃进程数 平均负载为2 时 代表什么？ 在2核的cpu的系统上 代表所有的cpu都刚好被完全占用 在4核的cpu的系统上 代表有50%的空闲 在1核的cpu的系统上 意味着有一半的进程竞争不到cpu 那么 平均负载为多少时合理？一般而言 最理想的情况是等于cpu的个数 首先得知道系统有几个cpu 1grep &apos;model name&apos; /proc/cpuinfo | wc -l 有了cpu的个数 可以判断出平均负载比cpu的个数还大的时候，系统已经出现了过载。 一半当平均负载高于cpu数量70%的时候，就应该分析排查负载高的问题了 平均负载是单位时间内，处于可运行状态和不可中断状态的进程数，因此不止包括了正在使用cpu的进程，还包括等待cpu和等待io的进程 cpu使用率 是单位时间内cpu繁忙情况的统计 跟平均负载并不一定完全对应 cpu密集型时 两者一致 io密集时 等待io也会导致平均负载很高 但是cpu使用率不一定很高 大量等待cpu的进程调度也会导致平均负载升高，此时的cpu使用率也会比较高 善于使用工具使用 iostat mpstat pidstat 等工具 找到平均负载升高的根源在哪里 1apt install stress sysstat -y 压力测试工具 异常进程模拟平均负载升高的场景 1stress --cpu 1 --timeout 600 1watch -d uptime 1mpstat -P ALL 5 1pidstat -u 5 1 1stress -i 1 --timeout 600 模拟大量进程 1stress -c 8 --timeout 600 iowait 无法升高的原因 是因为使用的是sync()系统调用 作用是刷新缓冲内存到磁盘中 可以使用下一代 stress-ng htop atop 命令 也可以使用]]></content>
       <categories>
         <category>linux</category>
       </categories>
@@ -3021,6 +3076,9 @@
     <title><![CDATA[leetcode-212]]></title>
     <url>%2F2018%2F11%2F27%2Fleetcode-212%2F</url>
     <content type="text"><![CDATA[1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950from collections import defaultdictdx = [-1, 1, 0, 0]dy = [0, 0, -1, 1]END_OF_WORD = &quot;#&quot;class Solution(object): def findWords(self, board, words): if not board or not board[0]: return [] if not words: return [] self.result = set() root = defaultdict() for word in words: node = root for char in word: node = node.setdefault(char, defaultdict()) node[END_OF_WORD] = END_OF_WORD self.m, self.n = len(board), len(board[0]) for i in xrange(self.m): for j in xrange(self.n): if board[i][j] in root: self._dfs(board, i, j, &quot;&quot;, root) return list(self.result) def _dfs(self, board, i, j, cur_word, cur_dict): cur_word += board[i][j] cur_dict = cur_dict[board[i][j]] if END_OF_WORD in cur_dict: self.result.add(cur_word) tmp, board[i][j] = board[i][j], &quot;@&quot; for k in xrange(4): x, y = i + dx[k], j + dy[k] if 0 &lt;= x &lt; self.m and 0 &lt;= y &lt; self.n \ and board[x][y] != &quot;@&quot; and board[x][y] in cur_dict: self._dfs(board, x, y, cur_word, cur_dict) board[i][j] = tmp]]></content>
+      <tags>
+        <tag>leetcode</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[oracle-django-研发记录]]></title>
@@ -3119,6 +3177,9 @@
     <title><![CDATA[linux常用命令总结]]></title>
     <url>%2F2018%2F09%2F28%2Flinux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93%2F</url>
     <content type="text"><![CDATA[ssh123ssh-keygen -t rsassh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.1.101 文件相关操作系统相关]]></content>
+      <tags>
+        <tag>linux</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[协程的探索]]></title>
@@ -3481,7 +3542,7 @@
   <entry>
     <title><![CDATA[django-cache]]></title>
     <url>%2F2018%2F08%2F17%2Fdjango-cache%2F</url>
-    <content type="text"><![CDATA[谈一谈 django 的缓存架构动态网站的一个基本权衡就是他们是动态的，每次一个用户请求一个页面，web服务器进行各种各样的计算， 从数据库查询到模板渲染到业务逻辑 从生成站点到访问者看到的页面。从处理开销的角度来说，相比标准的从文件系统读取文件的服务器调度，这是昂贵了不少。但是对大多数网站来说，这种开销不是什么大的问题。因为大多数的网站都是小到中型的站点，流量特别少。但是对于中到大型的网站来说，必须尽可能的减少开销，这就是缓存的由来。 缓存的意义在于把昂贵的计算结果保存起来一遍下次的访问，有缓存的站点的流程大概是这样子的： 给定一个url，检查页面是否在缓存中 如果在，返回缓存的页面 否则，生成该页面，把生成的页面保存在缓存中，返回生成的页面 django自带一个强大的缓存系统，提供不同层次的缓存粒度：你可以缓存某个视图函数的输出，或者只是某个特别难生成的部分或者是整个站点。 同时django也有类似“上流”缓存的东西，类似于Squid和基于浏览器的缓存，这类缓存是你无法直接控制但是你可以通过一些提示（比如http头 部）指定你网站的那些部分需要和如何缓存。 设置缓存缓存系统需要少量的配置才能使用，你必须告诉系统你的缓存数据存放在哪里-数据库还是文件系统亦或是直接存在缓存中-这是一个重要的决定，直接影响到你的缓存性能；当然，一些缓存类型本来就是比其他的快，这我们无法回避。 在项目的配置文件里面可以通过CACHES配置缓存，下面我们一一讲解django中可用的缓存系统 Memcached 是一个高性能的分布式内存对象缓存系统，用于动态Web应用以减轻数据库负载从而显著提供网站性能，也是django中到目前为止最有效率的可用缓存。 Memcached作为一个后台进程运行，并分配一个指定的内存量，它所做的全是提供一个添加，检索和删除缓存中任意数据的快速接口，所有的数据都是直接存储在内存中，所以就没有了数据库或者文件系统使用的额外开销了。 在安装Memcached之后，你还需要安装一个绑定Memcached的东西，这里当做是插件之类的东西，最常用的两个是python-mencached和pylibmc。 在django中使用Memcached，你需要在配置文件里的CACHES做如下设置： 根据你选择的插件，选择对应的后端(BACKEND)django.core.cache.backens.memcached.MemcachedCache或者django.core.cache.backends.memcached.PyLibMCCache 给LOCATION设置ip:port值，其中ip是Memcached进程的IP地址，port是Memcached运行的端口，或者unix:path值，其中path是Memcached Unix socket文件所在的路径 CACHES = { &apos;default&apos;: { &apos;BACKEND&apos;: &apos;django.core.cache.backends.memcached.MemcachedCache&apos;, &apos;LOCATION&apos;: [ &apos;172.19.26.240:11211&apos;, &apos;172.19.26.242:11211&apos;, &apos;172.19.26.244:11213&apos;, ] } }]]></content>
+    <content type="text"><![CDATA[谈一谈 django 的缓存架构动态网站的一个基本权衡就是他们是动态的，每次一个用户请求一个页面，web服务器进行各种各样的计算， 从数据库查询到模板渲染到业务逻辑 从生成站点到访问者看到的页面。从处理开销的角度来说，相比标准的从文件系统读取文件的服务器调度，这是昂贵了不少。但是对大多数网站来说，这种开销不是什么大的问题。因为大多数的网站都是小到中型的站点，流量特别少。但是对于中到大型的网站来说，必须尽可能的减少开销，这就是缓存的由来。 缓存的意义在于把昂贵的计算结果保存起来一遍下次的访问，有缓存的站点的流程大概是这样子的： 给定一个url，检查页面是否在缓存中 如果在，返回缓存的页面 否则，生成该页面，把生成的页面保存在缓存中，返回生成的页面 django自带一个强大的缓存系统，提供不同层次的缓存粒度：你可以缓存某个视图函数的输出，或者只是某个特别难生成的部分或者是整个站点。 同时django也有类似“上流”缓存的东西，类似于Squid和基于浏览器的缓存，这类缓存是你无法直接控制但是你可以通过一些提示（比如http头 部）指定你网站的那些部分需要和如何缓存。 设置缓存缓存系统需要少量的配置才能使用，你必须告诉系统你的缓存数据存放在哪里-数据库还是文件系统亦或是直接存在缓存中-这是一个重要的决定，直接影响到你的缓存性能；当然，一些缓存类型本来就是比其他的快，这我们无法回避。 在项目的配置文件里面可以通过CACHES配置缓存，下面我们一一讲解django中可用的缓存系统 Memcached 是一个高性能的分布式内存对象缓存系统，用于动态Web应用以减轻数据库负载从而显著提供网站性能，也是django中到目前为止最有效率的可用缓存。 Memcached作为一个后台进程运行，并分配一个指定的内存量，它所做的全是提供一个添加，检索和删除缓存中任意数据的快速接口，所有的数据都是直接存储在内存中，所以就没有了数据库或者文件系统使用的额外开销了。 在安装Memcached之后，你还需要安装一个绑定Memcached的东西，这里当做是插件之类的东西，最常用的两个是python-mencached和pylibmc。 在django中使用Memcached，你需要在配置文件里的CACHES做如下设置： 根据你选择的插件，选择对应的后端(BACKEND)django.core.cache.backens.memcached.MemcachedCache或者django.core.cache.backends.memcached.PyLibMCCache 给LOCATION设置ip:port值，其中ip是Memcached进程的IP地址，port是Memcached运行的端口，或者unix:path值，其中path是Memcached Unix socket文件所在的路径 12345678910CACHES = &#123; &apos;default&apos;: &#123; &apos;BACKEND&apos;: &apos;django.core.cache.backends.memcached.MemcachedCache&apos;, &apos;LOCATION&apos;: [ &apos;172.19.26.240:11211&apos;, &apos;172.19.26.242:11211&apos;, &apos;172.19.26.244:11213&apos;, ] &#125;&#125; ​]]></content>
       <categories>
         <category>web</category>
       </categories>
@@ -3492,7 +3553,7 @@
   <entry>
     <title><![CDATA[django or say python web architecture]]></title>
     <url>%2F2018%2F08%2F16%2Fdjango-or-say-python-web-architecture%2F</url>
-    <content type="text"><![CDATA[一个django 网站 比如 著名的 disqus 它是如何支持 两个亿的月活 于2007年 创办 第三方社会化评论系统 为网站提供评论托管服务 中国目前有 多说 友言 评论啦 与之相似。 1.缓存为什么要存在 因为 用户量的增加 所做的计算越来越多 但是 应用服务器资源是有限的 数据库每秒接受请求的次数也是有限的 如何解决 减少计算量 缩短请求流程（减少网络io或者硬盘io） 在标准的流程中 任何一个环节都可以被切断， 这样请求可以直接从缓存里取到数据直接返回 2.缓存存在于哪些地方 理论上来说 缓存可以存在于请求的任意一个环节 根据数据的变化特征 将数据特征总结为一段时间内变或者不变 3.缓存的属性 命中率 最大元素（可以存放的最大元素的个数） 清空策略（FIFO LRU） 4.缓存介质 内存 硬盘文件 数据库 根据缓存和应用的耦合程度划分为本地和远程缓存 本地有ehcache oscache 远程有 memcached 缓存的使用是架构师的必备技能 根据数据的类型，业务的场景来确定使用何种类型的缓存。 但是没有一种缓存可以解决任何的业务场景或者数据类型，每种都各有优缺点！！！]]></content>
+    <content type="text"><![CDATA[一个django 网站 比如 著名的 disqus 它是如何支持 两个亿的月活 于2007年 创办 第三方社会化评论系统 为网站提供评论托管服务 中国目前有 多说 友言 评论啦 与之相似。 1.缓存为什么要存在 因为 用户量的增加 所做的计算越来越多 但是 应用服务器资源是有限的 数据库每秒接受请求的次数也是有限的 如何解决 减少计算量 缩短请求流程（减少网络io或者硬盘io） 在标准的流程中 任何一个环节都可以被切断， 这样请求可以直接从缓存里取到数据直接返回 2.缓存存在于哪些地方 理论上来说 缓存可以存在于请求的任意一个环节 根据数据的变化特征 将数据特征总结为一段时间内变或者不变 3.缓存的属性 命中率 最大元素（可以存放的最大元素的个数） 清空策略（FIFO LRU） 4.缓存介质 内存 硬盘文件 数据库 根据缓存和应用的耦合程度划分为本地和远程缓存 本地有ehcache oscache 远程有 memcached 缓存的使用是架构师的必备技能 根据数据的类型，业务的场景来确定使用何种类型的缓存。 但是没有一种缓存可以解决任何的业务场景或者数据类型，每种都各有优缺点！]]></content>
       <categories>
         <category>web</category>
       </categories>
@@ -3637,7 +3698,7 @@
   <entry>
     <title><![CDATA[cha-duoshao]]></title>
     <url>%2F2018%2F08%2F13%2Fcha-duoshao%2F</url>
-    <content type="text"><![CDATA[1.用于去研究不懂的代码 2.精通代码调试 3.优化迭代速度 4.系统性的思考方式 5.重视能够节省时间的工具]]></content>
+    <content type="text"><![CDATA[1.去研究不懂的代码 2.精通代码调试 3.优化迭代速度 4.系统性的思考方式 5.重视能够节省时间的工具]]></content>
       <categories>
         <category>growth</category>
       </categories>
@@ -3706,7 +3767,10 @@
   <entry>
     <title><![CDATA[linux高级命令]]></title>
     <url>%2F2018%2F05%2F20%2Flinux%E9%AB%98%E7%BA%A7%E5%91%BD%E4%BB%A4%2F</url>
-    <content type="text"><![CDATA[1.找出以 .conf结尾的文件 并且分类 1234567891011121314 find / -name *.conf -type f -print | xargs file``` 2.找出系统内存使用量较高的进程```bash ps -aux | sort -rnk 4 | head 20``` 3.cpu(上条sort 处改为3)4.持续ping将结果记录到日志 ping api.jpush.cn | awk```]]></content>
+    <content type="text"><![CDATA[1.找出以 .conf结尾的文件 并且分类 1find / -name *.conf -type f -print | xargs file 2.找出系统内存使用量较高的进程 1ps -aux | sort -rnk 4 | head 20 3.cpu(上条sort 处改为3) 4.持续ping将结果记录到日志 1ping api.jpush.cn | awk ​​]]></content>
+      <tags>
+        <tag>linux</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[hadoop-intro]]></title>
@@ -3822,7 +3886,7 @@
   <entry>
     <title><![CDATA[blockchain-note]]></title>
     <url>%2F2018%2F03%2F27%2Fblockchain-note%2F</url>
-    <content type="text"><![CDATA[区块链中本聪2008年发表了《比特币：一种点对点式的电子现金系统》的论文。以太坊是2013年开创的项目。 区块 账户 共识 智能合约 本质上是一种健壮和安全的分布式状态机，五项核心能力： 存储数据共有数据分布式防篡改与隐私保护数字化合约三个方面可信： 数据可信 合约履行 历史可证明 目前典型的区块链账本设计为区块的单链表结构，只有增加没有减少，全局来说只有顺序处理，无法实现并行度。 目前涉及到的知识：分布式 存储 密码学 网络通讯 芯片技术 经济学 法律等。 应用场景 供应链领域 金融领域 政务及公共服务领域 其他领域： 保险防欺诈、大数据安全 原则 面向业务、标准化、松耦合与模块化、安全可审计、简洁与效率。 对 python的认识1.上下文管理器 with open(&apos;data.txt&apos;) as source, open(&apos;target.txt&apos;) as target: target.write(source.read()) 上下文管理器协议 需要实现 __enter__(), __exit__() 2.装饰器 装饰器本质上就是一个函数，这个函数接收其他函数作为参数，并将其以一个新的修改后的函数进行替换。 import functools import inspect def check_is_admin(f): @functools.wraps(f) def wrapper(*args, **kwargs): func_args = inspect.getcallargs(f, *args, **kwargs) print func_args if func_args.get(&apos;username&apos;) != &apos;admin&apos;: raise Exception(&quot;This user is not allowed to get food&quot;) return f(*args, **kwargs) return wrapper @check_is_admin def get_food(username, food=&apos;chocolate&apos;): return &quot;{0} get food: {1}&quot;.format(username, food) def main(): print get_food(&apos;admin&apos;) if __name__ == &apos;__main__&apos;: main() 装饰器不必检查参数username是基于位置的参数还是基于关键字的参数，而只需在字典中查找即可。 def makebold(fn): def wrapped(): return &quot;&lt;b&gt;&quot; + fn() + &quot;&lt;/b&gt;&quot; return wrapped def makeitalic(fn): def wrapped(): return &quot;&lt;i&gt;&quot; + fn() + &quot;&lt;/i&gt;&quot; return wrapped @makebold @makeitalic def hello(): return &quot;hello world&quot; print hello() ## returns &lt;b&gt;&lt;i&gt;hello world&lt;/i&gt;&lt;/b&gt; 3.全局变量 4.时间复杂度 list实质上是一个数组 使用链表的时候，应该用collection.deque 双向链表 set的实现是hash标，判断元素是否在某个集合中使用set，时间复杂度低。 5.python中的else 循环使用else 不建议try…except 中else 建议加else]]></content>
+    <content type="text"><![CDATA[区块链中本聪2008年发表了《比特币：一种点对点式的电子现金系统》的论文。以太坊是2013年开创的项目。 区块 账户 共识 智能合约 本质上是一种健壮和安全的分布式状态机，五项核心能力： 存储数据共有数据分布式防篡改与隐私保护数字化合约三个方面可信： 数据可信 合约履行 历史可证明 目前典型的区块链账本设计为区块的单链表结构，只有增加没有减少，全局来说只有顺序处理，无法实现并行度。 目前涉及到的知识：分布式 存储 密码学 网络通讯 芯片技术 经济学 法律等。 应用场景 供应链领域 金融领域 政务及公共服务领域 其他领域： 保险防欺诈、大数据安全 原则 面向业务、标准化、松耦合与模块化、安全可审计、简洁与效率。 对 python的认识1.上下文管理器 with open(&apos;data.txt&apos;) as source, open(&apos;target.txt&apos;) as target: target.write(source.read()) 上下文管理器协议 需要实现 __enter__(), __exit__() ​2.装饰器 装饰器本质上就是一个函数，这个函数接收其他函数作为参数，并将其以一个新的修改后的函数进行替换。 import functools import inspect def check_is_admin(f): @functools.wraps(f) def wrapper(*args, **kwargs): func_args = inspect.getcallargs(f, *args, **kwargs) print func_args if func_args.get(&apos;username&apos;) != &apos;admin&apos;: raise Exception(&quot;This user is not allowed to get food&quot;) return f(*args, **kwargs) return wrapper ​ @check_is_admin def get_food(username, food=’chocolate’): return “{0} get food: {1}”.format(username, food) ​ def main(): print get_food(‘admin’) if __name__ == &apos;__main__&apos;: main() ​装饰器不必检查参数username是基于位置的参数还是基于关键字的参数，而只需在字典中查找即可。 def makebold(fn): def wrapped(): return &quot;&lt;b&gt;&quot; + fn() + &quot;&lt;/b&gt;&quot; return wrapped def makeitalic(fn): def wrapped(): return &quot;&lt;i&gt;&quot; + fn() + &quot;&lt;/i&gt;&quot; return wrapped @makebold @makeitalic def hello(): return &quot;hello world&quot; print hello() ## returns &lt;b&gt;&lt;i&gt;hello world&lt;/i&gt;&lt;/b&gt; 3.全局变量 4.时间复杂度 list实质上是一个数组 使用链表的时候，应该用collection.deque 双向链表 set的实现是hash标，判断元素是否在某个集合中使用set，时间复杂度低。 5.python中的else 循环使用else 不建议try…except 中else 建议加else ​]]></content>
       <categories>
         <category>AI</category>
       </categories>
@@ -3833,7 +3897,7 @@
   <entry>
     <title><![CDATA[云计算综述]]></title>
     <url>%2F2018%2F03%2F23%2F%E4%BA%91%E8%AE%A1%E7%AE%97%E7%BB%BC%E8%BF%B0%2F</url>
-    <content type="text"><![CDATA[neutron nova keystone 各种组件 网络技术领域知识 平安科技（深圳）有限公司 1.image 创建命令： glance image-create --name cirros --file /tmp/cirros-0.3.4-x86_64-disk.img -- disk-format qcow2 --container-format bare --progress 2.详细命令： keystone user-list # 被取代 openstack user list glance image-create glance image-delete glance image-update glance image-list glance image-show neutron net-create neutron net -delete neutron net -update neutron net -list neutron net –show neutron subnet-create neutron subnet -delete neutron subnet -update neutron subnet -list neutron subnet–show nova boot nova delete nova list nova show # 每个对象都有id tcp/ip协议不是一个协议，而是一个协议族的统称。里面包括了IP协议，IMCP协议，TCP协议，以及我们更加熟悉的http、ftp、pop3协议等等 1．为什么建立连接协议是三次握手，而关闭连接却是四次握手呢？ 这是因为服务端的LISTEN状态下的SOCKET当收到SYN报文的建连请求后，它可以把ACK和SYN（ACK起应答作用，而SYN起同步作用）放在一个报文里来发送。但关闭连接时，当收到对方的FIN报文通知时，它仅仅表示对方没有数据发送给你了；但未必你所有的数据都全部发送给对方了，所以你可以未必会马上会关闭SOCKET,也即你可能还需要发送一些数据给对方之后，再发送FIN报文给对方来表示你同意现在可以关闭连接了，所以它这里的ACK报文和FIN报文多数情况下都是分开发送的。 2．为什么TIME_WAIT状态还需要等2MSL后才能返回到CLOSED状态？ 这是因为虽然双方都同意关闭连接了，而且握手的4个报文也都协调和发送完毕，按理可以直接回到CLOSED状态（就好比从SYN_SEND状态到ESTABLISH状态那样）；但是因为我们必须要假想网络是不可靠的，你无法保证你最后发送的ACK报文会一定被对方收到，因此对方处于LAST_ACK状态下的SOCKET可能会因为超时未收到ACK报文，而重发FIN报文，所以这个TIME_WAIT状态的作用就是用来重发可能丢失的ACK报文。 sdn SDN采用与传统网络截然不同的控制架构，将网络控制平面分离和转发平面分离，采用集中控制替代原有分布式控制，并通过开放和可编程接口实现“软件定义”。与传统的网络架构相比，SDN通过软硬件分离，实现了网络虚拟化、IT化及软件化，并降低了设备的复杂度、简化网络运维、提高网络利用率、加速网络创新。 evpn EVPN是一种虚拟私有网络，那么在一套物理设备上必然可以有多个同时存在的EVPN实例，每个实例独立存在。每个EVI连接了一组或者多组用户网络，构成一个或者多个跨地域的二层网络。 vxlan 虚拟可拓展局域网 from multiprocessing import Poolfrom multiprocessing.dummy import Pool哪个速度快就用那个。尽量在写兼容的方式，这样在多线程/多进程之间切换非常方便。 现在，如果一个任务拿不准是CPU密集还是I/O密集型，且没有其它不能选择多进程方式的因素，都统一直接上多进程模式。 使用多线程(threading)和多进程(multiprocessing)完成常规的需求，在启动的时候start、jon等步骤不能省，复杂的需要还要用1-2个队列。随着需求越来越复杂，如果没有良好的设计和抽象这部分的功能层次，代码量越多调试的难度就越大。有没有什么好的方法把这些步骤抽象一下呢，让我们不关注这些细节，轻装上阵呢？ 答案是：有的。 从Python3.2开始一个叫做concurrent.futures被纳入了标准库，而在Python2它属于第三方的futures库，需要手动安装： 这个模块中有2个类：ThreadPoolExecutor和ProcessPoolExecutor，也就是对threading和multiprocessing的进行了高级别的抽象，暴露出统一的接口，帮助开发者非常方便的实现异步调用 lsvirtualenv: 列出全部的虚拟环境 showvirtualenv: 列出单个虚拟环境的信息 rmvirtualenv: 删除一个虚拟环境 cpvirtualenv: 拷贝虚拟环境 allvirtualenv: 对当前虚拟环境执行统一的命令。 比如， 要给 venv1 和 venv2 都安装flask, 就可以用allvirtualenv pip install flask cdvirtualenv: 可以直接切换到虚拟环境的子目录里面]]></content>
+    <content type="text"><![CDATA[neutron nova keystone 各种组件 网络技术领域知识 平安科技（深圳）有限公司 1.image 创建命令： 12glance image-create --name cirros --file /tmp/cirros-0.3.4-x86_64-disk.img --disk-format qcow2 --container-format bare --progress 2.详细命令： keystone user-list # 被取代 openstack user list glance image-create glance image-delete glance image-update glance image-list glance image-show neutron net-create neutron net -delete neutron net -update neutron net -list neutron net –show neutron subnet-create neutron subnet -delete neutron subnet -update neutron subnet -list neutron subnet–show nova boot nova delete nova list nova show # 每个对象都有id tcp/ip协议不是一个协议，而是一个协议族的统称。里面包括了IP协议，IMCP协议，TCP协议，以及我们更加熟悉的http、ftp、pop3协议等等 1．为什么建立连接协议是三次握手，而关闭连接却是四次握手呢？ 这是因为服务端的LISTEN状态下的SOCKET当收到SYN报文的建连请求后，它可以把ACK和SYN（ACK起应答作用，而SYN起同步作用）放在一个报文里来发送。但关闭连接时，当收到对方的FIN报文通知时，它仅仅表示对方没有数据发送给你了；但未必你所有的数据都全部发送给对方了，所以你可以未必会马上会关闭SOCKET,也即你可能还需要发送一些数据给对方之后，再发送FIN报文给对方来表示你同意现在可以关闭连接了，所以它这里的ACK报文和FIN报文多数情况下都是分开发送的。 2．为什么TIME_WAIT状态还需要等2MSL后才能返回到CLOSED状态？ 这是因为虽然双方都同意关闭连接了，而且握手的4个报文也都协调和发送完毕，按理可以直接回到CLOSED状态（就好比从SYN_SEND状态到ESTABLISH状态那样）；但是因为我们必须要假想网络是不可靠的，你无法保证你最后发送的ACK报文会一定被对方收到，因此对方处于LAST_ACK状态下的SOCKET可能会因为超时未收到ACK报文，而重发FIN报文，所以这个TIME_WAIT状态的作用就是用来重发可能丢失的ACK报文。 sdn SDN采用与传统网络截然不同的控制架构，将网络控制平面分离和转发平面分离，采用集中控制替代原有分布式控制，并通过开放和可编程接口实现“软件定义”。与传统的网络架构相比，SDN通过软硬件分离，实现了网络虚拟化、IT化及软件化，并降低了设备的复杂度、简化网络运维、提高网络利用率、加速网络创新。 evpn EVPN是一种虚拟私有网络，那么在一套物理设备上必然可以有多个同时存在的EVPN实例，每个实例独立存在。每个EVI连接了一组或者多组用户网络，构成一个或者多个跨地域的二层网络。 vxlan 虚拟可拓展局域网 from multiprocessing import Poolfrom multiprocessing.dummy import Pool哪个速度快就用那个。尽量在写兼容的方式，这样在多线程/多进程之间切换非常方便。 现在，如果一个任务拿不准是CPU密集还是I/O密集型，且没有其它不能选择多进程方式的因素，都统一直接上多进程模式。 使用多线程(threading)和多进程(multiprocessing)完成常规的需求，在启动的时候start、jon等步骤不能省，复杂的需要还要用1-2个队列。随着需求越来越复杂，如果没有良好的设计和抽象这部分的功能层次，代码量越多调试的难度就越大。有没有什么好的方法把这些步骤抽象一下呢，让我们不关注这些细节，轻装上阵呢？ 答案是：有的。 从Python3.2开始一个叫做concurrent.futures被纳入了标准库，而在Python2它属于第三方的futures库，需要手动安装： 这个模块中有2个类：ThreadPoolExecutor和ProcessPoolExecutor，也就是对threading和multiprocessing的进行了高级别的抽象，暴露出统一的接口，帮助开发者非常方便的实现异步调用 lsvirtualenv: 列出全部的虚拟环境 showvirtualenv: 列出单个虚拟环境的信息 rmvirtualenv: 删除一个虚拟环境 cpvirtualenv: 拷贝虚拟环境 allvirtualenv: 对当前虚拟环境执行统一的命令。 比如， 要给 venv1 和 venv2 都安装flask, 就可以用allvirtualenv pip install flask cdvirtualenv: 可以直接切换到虚拟环境的子目录里面]]></content>
       <categories>
         <category>compute</category>
       </categories>
@@ -3844,7 +3908,10 @@
   <entry>
     <title><![CDATA[mac-use-tips]]></title>
     <url>%2F2018%2F03%2F19%2Fmac-use-tips%2F</url>
-    <content type="text"><![CDATA[快捷键与触摸板 cmd 为 command 按键，通常情况下为所有桌面程序通用性的快捷键。 ctrl ，通常情况下是针对程序的功能进行加强，并且此功能往往是非 cmd 类（窗口操作，选择，复制粘贴等等）操作。 shift 按键通常用于加强操作。一般会让操作更进一步 or 相反操作。 cmd+tab =~ alt+tab 程序之间的切换 cmd+` 应用内窗口切换 cmd+h 窗口 hide cmd+m 窗口 minimize cmd+n 新建窗口 cmd+o 打开 cmd+s 保存 cmd+shift+s 另存为 cmd+p 打印 print cmd+w 关闭 cmd+q quit cmd+a select all cmd+i show info cmd+n create a new folder cmd+f search cmd+c copy cmd+v paste cmd+delete 删除选中文件 cmd+shift+delete 清空回收站 cmd+= 放大 cmd+- 缩小 cmd+t 新建选项卡 cmd+r 刷新 cmd+shift+3 截取整个屏幕 cmd+shift+4 截取选择区域 cmd+shift+4+SPACE 截取选择窗口 cmd+ 鼠标点击 -&gt; 选中不连续文件 control+ 鼠标点击 -&gt; 相当于 win 中右键点击 fn+left home fn+right end fn+up pageup fn+down pagedown 触摸板手势： 点击 单指点击 - 单击 单指滑动 - 滑动鼠标光标 双指点击 - 相当于 Windows 的鼠标右键 三指点击 - 划词查找 滑动与缩放 双指上下滑动 - 滚动 双指缩放 - 与 Android 上图片缩放一致 双指双击 - 只能缩放 双指旋转 - 旋转 双指左右滑动 - 应用内切换网页 双指头从右往左 三指头左右滑动 - 全屏幕 App 切换 三指拖动 - 扔掉鼠标必备 （谢评论区提醒） 大拇指和食中无名缩放 - launchpad openopen 命令用于打开文件、目录或执行程序。就等同于在命令行模式下，重复图形界面“双击”的动作。例如这个命令与在 Finder 中双击 Safari 是一样的： open /Applications/Safari.app/ 如果 open 一个文件，则会使用关联的程序打开之。例如 open screenshot.png 会在 Preview 中查看图片。 可以使用 -a 选项要求自行选择打开的程序，或使用 -e 强制在 TextEdit 中编辑此文件。 open 一个目录会在 Finder 窗口中打开此目录。一个很有用的技巧是 open . 打开当前目录。 Finder 和终端的交互是双向的——把文件从 Finder 中拖入终端，就等同于把文件的完整路径粘贴到命令行中。 pbcopy 和 pbpaste这两个工具可以打通命令行和剪贴板。当然用鼠标操作复制粘贴也可以——但这两个工具的真正威力，发挥在将其用作Unix工具的时候。意思就是说：可以将这两个工具用作管道、IO重定向以及和其他命令的整合。例如： ls ~ | pbcopy可以将主目录的文件列表复制到剪贴板。 也可以把任意文件的内容读入剪贴板： pbcopy &lt; blogpost.txt做点更疯狂的尝试：获取最新 Google 纪念徽标（doodle）的 URL 并复制到剪贴板： curl http://www.google.com/doodles#oodles/archive | grep -A5 &apos;latest-doodle on&apos; | grep &apos;img src&apos; | sed s/.*&apos;&lt;img src=&quot;\/\/&apos;/&apos;&apos;/ | sed s/&apos;&quot; alt=&quot;.*&apos;/&apos;&apos;/ | pbcopy 使用管道语法配合 pbcopy 工具可以简单的抓取命令的输出，而不必向上滚动翻阅终端窗口。可以用于和他人分享命令行的标准和错误输出。 pbcopy 和 pbpaste 也可以用于自动化或加速执行一些事情。例如把一些邮件的主题存为任务列表，就可以先从 Mail.app 中复制主题，再运行： pbpaste &gt;&gt; tasklist.txt mdfind许多 Linux 用户都发现 Linux 下查找文件的方法在 OS X 上不好用。当然经典的 Unix find 命令总是可以，但既然 OS X 有杀手级搜索工具 Spotlight ，为什么不在命令行上也使用一下呢？ 这就是mdfind命令了。 Spotlight 能做的查找， mdfind 也能做。包括搜索文件的内容和元数据（metadata）。 mdfind还提供更多的搜索选项。例如-onlyin选项可以约束搜索范围为一个目录： mdfind -onlyin ~/Documents essaymdfind 的索引数据库在后台自动更新，不过你也可以使用 mdutil 工具诊断数据库的问题，诊断 mdfind 的问题也等同于诊断 Spotlight 。如果 Spotlight 的工作不正确，mdutil -E命令可以强制重建索引数据库。也可以用 mdutil -i 彻底关闭文件索引。 screencapturescreencapture 命令可以截图。和 Grab.app 与 cmd + shift + 3 或 cmd + shift + 4 热键相似，但更加的灵活。 抓取包含鼠标光标的全屏幕，并以 image.png 插入到新邮件的附件中： screencapture -C -M image.png用鼠标选择抓取窗口（及阴影）并复制到剪贴板： screencapture -c -W延时10秒后抓屏，并在Preview中打开之： screencapture -T 10 -P image.png用鼠标截取一个矩形区域，抓取后存为pdf文件： screencapture -s -t pdf image.pdf更多用法请参阅 screencapture –help 。 launchctllaunchctl 管理 OS X 的启动脚本，控制启动计算机时需要开启的服务。也可以设置定时执行特定任务的脚本，就像 Linux cron 一样。 例如，开机时自动启动 Apache 服务器： sudo launchctl load -w /System/Library/LaunchDaemons/org.apache.httpd.plist 运行 launchctl list 显示当前的启动脚本。 sudo launchctl unload [path/to/script] 停止正在运行的启动脚本，再加上 -w 选项即可去除开机启动。用这个方法可以一次去除 Adobe 或 Microsoft Office 所附带的所有“自动更新”后台程序。 Launchd 脚本存储在以下位置： ~/Library/LaunchAgents /Library/LaunchAgents /Library/LaunchDaemons /System/Library/LaunchAgents /System/Library/LaunchDaemons saysay 是一个文本转语音（TTS）的有趣的工具，引擎和 OS X 使用的一样也是 VoiceOver 。如果不加其他选项，则会简单的语音朗读你给定的字符串： say “Never trust a computer you can’t lift.”用-f选项朗读特定文本文件，-o选项将朗读结果存为音频文件而不是播放：say -f mynovel.txt -o myaudiobook.aiffsay 命令可以用于在脚本中播放警告或提示。例如你可以设置 Automator 或 Hazel 脚本处理文件，并在任务完成时用 say 命令语音提示。 最好玩（不过也负罪感十足）的用法是：通过 SSH 连接到朋友或同事的计算机，然后用 say 命令给他们一个大大大惊喜…… 可以在系统设置 （System Preferences） 的字典和语音 （Dictation &amp; Speech） 选项中调整系统的语音选项甚至是语音的语言。 diskutildiskutil 是 OS X 磁盘工具应用的命令行版。既可以完成图形界面应用的所有任务，也可以做一些全盘填0、全盘填随机数等额外的任务。先使用 diskutil list 查看所有磁盘的列表和所在路径，然后对特定的磁盘执行命令。 警告：不正确使用 diskutil 可能意外的破坏磁盘数据。请小心。 brewHomebrew 程序提供的 brew ，严格来讲不是一个 OS X 的原生命令，但任何一个 OS X 的专业用户都不会错过它。“ OS X 缺少的包管理器”这个评价是恰如其分的。如果你曾经在 Linux 上使用过 apt-get （或其他包管理器——译者注），你就会发现 Homebrew 基本上是一样的。 使用 brew 可以简单的获取数千种开源工具和函数库。例如 brew install imagemagick 就可以安装 ImageMagick （几乎可以处理任何图像问题，转换任何格式的图像工具）， brew install node 可以安装 Node.js （当前大热的服务器端 JavaScript 编程工具）。 也可以通过 Homebrew 做有趣的事情： brew install archey 会安装 Archey （在启动命令行时显示苹果 LOGO 和计算机硬件参数的小工具）。 Homebrew 能安装的工具数量庞大，并且一直保持更新。Homebrew 最棒的一点是：所有的文件都被约束在 /usr/local/ 一个位置之下。也就是说可以通过 Homebrew 安装新版软件的同时，保持系统内置的依赖库或其他软件不变。同时如果想彻底删除 Homebrew ，也变得非常简单。 （注：删除 Homebrew 最好还是不要直接删除 /usr/local/ 。应当用这个卸载脚本点击预览。） #!/bin/sh # Just copy and paste the lines below (all at once, it won&apos;t work line by line!) # MAKE SURE YOU ARE HAPPY WITH WHAT IT DOES FIRST! THERE IS NO WARRANTY! function abort { echo &quot;$1&quot; exit 1 } set -e /usr/bin/which -s git || abort &quot;brew install git first!&quot; test -d /usr/local/.git || abort &quot;brew update first!&quot; cd `brew --prefix` git checkout master git ls-files -z | pbcopy rm -rf Cellar bin/brew prune pbpaste | xargs -0 rm rm -r Library/Homebrew Library/Aliases Library/Formula Library/Contributions test -d Library/LinkedKegs &amp;&amp; rm -r Library/LinkedKegs rmdir -p bin Library share/man/man1 2&gt; /dev/null rm -rf .git rm -rf ~/Library/Caches/Homebrew rm -rf ~/Library/Logs/Homebrew rm -rf /Library/Caches/Homebrew]]></content>
+    <content type="text"><![CDATA[快捷键与触摸板 cmd 为 command 按键，通常情况下为所有桌面程序通用性的快捷键。 ctrl ，通常情况下是针对程序的功能进行加强，并且此功能往往是非 cmd 类（窗口操作，选择，复制粘贴等等）操作。 shift 按键通常用于加强操作。一般会让操作更进一步 or 相反操作。 cmd+tab =~ alt+tab 程序之间的切换 cmd+` 应用内窗口切换 cmd+h 窗口 hide cmd+m 窗口 minimize cmd+n 新建窗口 cmd+o 打开 cmd+s 保存 cmd+shift+s 另存为 cmd+p 打印 print cmd+w 关闭 cmd+q quit cmd+a select all cmd+i show info cmd+n create a new folder cmd+f search cmd+c copy cmd+v paste cmd+delete 删除选中文件 cmd+shift+delete 清空回收站 cmd+= 放大 cmd+- 缩小 cmd+t 新建选项卡 cmd+r 刷新 cmd+shift+3 截取整个屏幕 cmd+shift+4 截取选择区域 cmd+shift+4+SPACE 截取选择窗口 cmd+ 鼠标点击 -&gt; 选中不连续文件 control+ 鼠标点击 -&gt; 相当于 win 中右键点击 fn+left home fn+right end fn+up pageup fn+down pagedown 触摸板手势： 点击 单指点击 - 单击 单指滑动 - 滑动鼠标光标 双指点击 - 相当于 Windows 的鼠标右键 三指点击 - 划词查找 ​ 滑动与缩放 双指上下滑动 - 滚动 双指缩放 - 与 Android 上图片缩放一致 双指双击 - 只能缩放 双指旋转 - 旋转 双指左右滑动 - 应用内切换网页 双指头从右往左 三指头左右滑动 - 全屏幕 App 切换 三指拖动 - 扔掉鼠标必备 （谢评论区提醒） 大拇指和食中无名缩放 - launchpad ​ openopen 命令用于打开文件、目录或执行程序。就等同于在命令行模式下，重复图形界面“双击”的动作。例如这个命令与在 Finder 中双击 Safari 是一样的： open /Applications/Safari.app/ 如果 open 一个文件，则会使用关联的程序打开之。例如 open screenshot.png 会在 Preview 中查看图片。 可以使用 -a 选项要求自行选择打开的程序，或使用 -e 强制在 TextEdit 中编辑此文件。 open 一个目录会在 Finder 窗口中打开此目录。一个很有用的技巧是 open . 打开当前目录。 Finder 和终端的交互是双向的——把文件从 Finder 中拖入终端，就等同于把文件的完整路径粘贴到命令行中。 pbcopy 和 pbpaste这两个工具可以打通命令行和剪贴板。当然用鼠标操作复制粘贴也可以——但这两个工具的真正威力，发挥在将其用作Unix工具的时候。意思就是说：可以将这两个工具用作管道、IO重定向以及和其他命令的整合。例如： ls ~ | pbcopy可以将主目录的文件列表复制到剪贴板。 也可以把任意文件的内容读入剪贴板： pbcopy &lt; blogpost.txt做点更疯狂的尝试：获取最新 Google 纪念徽标（doodle）的 URL 并复制到剪贴板： curl http://www.google.com/doodles#oodles/archive | grep -A5 &apos;latest-doodle on&apos; | grep &apos;img src&apos; | sed s/.*&apos;&lt;img src=&quot;\/\/&apos;/&apos;&apos;/ | sed s/&apos;&quot; alt=&quot;.*&apos;/&apos;&apos;/ | pbcopy 使用管道语法配合 pbcopy 工具可以简单的抓取命令的输出，而不必向上滚动翻阅终端窗口。可以用于和他人分享命令行的标准和错误输出。 pbcopy 和 pbpaste 也可以用于自动化或加速执行一些事情。例如把一些邮件的主题存为任务列表，就可以先从 Mail.app 中复制主题，再运行： pbpaste &gt;&gt; tasklist.txt mdfind许多 Linux 用户都发现 Linux 下查找文件的方法在 OS X 上不好用。当然经典的 Unix find 命令总是可以，但既然 OS X 有杀手级搜索工具 Spotlight ，为什么不在命令行上也使用一下呢？ 这就是mdfind命令了。 Spotlight 能做的查找， mdfind 也能做。包括搜索文件的内容和元数据（metadata）。 mdfind还提供更多的搜索选项。例如-onlyin选项可以约束搜索范围为一个目录： mdfind -onlyin ~/Documents essaymdfind 的索引数据库在后台自动更新，不过你也可以使用 mdutil 工具诊断数据库的问题，诊断 mdfind 的问题也等同于诊断 Spotlight 。如果 Spotlight 的工作不正确，mdutil -E命令可以强制重建索引数据库。也可以用 mdutil -i 彻底关闭文件索引。 screencapturescreencapture 命令可以截图。和 Grab.app 与 cmd + shift + 3 或 cmd + shift + 4 热键相似，但更加的灵活。 抓取包含鼠标光标的全屏幕，并以 image.png 插入到新邮件的附件中： screencapture -C -M image.png用鼠标选择抓取窗口（及阴影）并复制到剪贴板： screencapture -c -W延时10秒后抓屏，并在Preview中打开之： screencapture -T 10 -P image.png用鼠标截取一个矩形区域，抓取后存为pdf文件： screencapture -s -t pdf image.pdf更多用法请参阅 screencapture –help 。 launchctllaunchctl 管理 OS X 的启动脚本，控制启动计算机时需要开启的服务。也可以设置定时执行特定任务的脚本，就像 Linux cron 一样。 例如，开机时自动启动 Apache 服务器： sudo launchctl load -w /System/Library/LaunchDaemons/org.apache.httpd.plist 运行 launchctl list 显示当前的启动脚本。 sudo launchctl unload [path/to/script] 停止正在运行的启动脚本，再加上 -w 选项即可去除开机启动。用这个方法可以一次去除 Adobe 或 Microsoft Office 所附带的所有“自动更新”后台程序。 Launchd 脚本存储在以下位置： ~/Library/LaunchAgents /Library/LaunchAgents /Library/LaunchDaemons /System/Library/LaunchAgents /System/Library/LaunchDaemons saysay 是一个文本转语音（TTS）的有趣的工具，引擎和 OS X 使用的一样也是 VoiceOver 。如果不加其他选项，则会简单的语音朗读你给定的字符串： say “Never trust a computer you can’t lift.”用-f选项朗读特定文本文件，-o选项将朗读结果存为音频文件而不是播放：say -f mynovel.txt -o myaudiobook.aiffsay 命令可以用于在脚本中播放警告或提示。例如你可以设置 Automator 或 Hazel 脚本处理文件，并在任务完成时用 say 命令语音提示。 最好玩（不过也负罪感十足）的用法是：通过 SSH 连接到朋友或同事的计算机，然后用 say 命令给他们一个大大大惊喜…… 可以在系统设置 （System Preferences） 的字典和语音 （Dictation &amp; Speech） 选项中调整系统的语音选项甚至是语音的语言。 diskutildiskutil 是 OS X 磁盘工具应用的命令行版。既可以完成图形界面应用的所有任务，也可以做一些全盘填0、全盘填随机数等额外的任务。先使用 diskutil list 查看所有磁盘的列表和所在路径，然后对特定的磁盘执行命令。 警告：不正确使用 diskutil 可能意外的破坏磁盘数据。请小心。 brewHomebrew 程序提供的 brew ，严格来讲不是一个 OS X 的原生命令，但任何一个 OS X 的专业用户都不会错过它。“ OS X 缺少的包管理器”这个评价是恰如其分的。如果你曾经在 Linux 上使用过 apt-get （或其他包管理器——译者注），你就会发现 Homebrew 基本上是一样的。 使用 brew 可以简单的获取数千种开源工具和函数库。例如 brew install imagemagick 就可以安装 ImageMagick （几乎可以处理任何图像问题，转换任何格式的图像工具）， brew install node 可以安装 Node.js （当前大热的服务器端 JavaScript 编程工具）。 也可以通过 Homebrew 做有趣的事情： brew install archey 会安装 Archey （在启动命令行时显示苹果 LOGO 和计算机硬件参数的小工具）。 Homebrew 能安装的工具数量庞大，并且一直保持更新。Homebrew 最棒的一点是：所有的文件都被约束在 /usr/local/ 一个位置之下。也就是说可以通过 Homebrew 安装新版软件的同时，保持系统内置的依赖库或其他软件不变。同时如果想彻底删除 Homebrew ，也变得非常简单。 （注：删除 Homebrew 最好还是不要直接删除 /usr/local/ 。应当用这个卸载脚本点击预览。） #!/bin/sh # Just copy and paste the lines below (all at once, it won&apos;t work line by line!) # MAKE SURE YOU ARE HAPPY WITH WHAT IT DOES FIRST! THERE IS NO WARRANTY! function abort { echo &quot;$1&quot; exit 1 } set -e /usr/bin/which -s git || abort &quot;brew install git first!&quot; test -d /usr/local/.git || abort &quot;brew update first!&quot; cd `brew --prefix` git checkout master git ls-files -z | pbcopy rm -rf Cellar bin/brew prune pbpaste | xargs -0 rm rm -r Library/Homebrew Library/Aliases Library/Formula Library/Contributions test -d Library/LinkedKegs &amp;&amp; rm -r Library/LinkedKegs rmdir -p bin Library share/man/man1 2&gt; /dev/null rm -rf .git rm -rf ~/Library/Caches/Homebrew rm -rf ~/Library/Logs/Homebrew rm -rf /Library/Caches/Homebrew]]></content>
+      <tags>
+        <tag>mac</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[elk+redis]]></title>
@@ -4139,6 +4206,9 @@
     <title><![CDATA[linux test]]></title>
     <url>%2F2018%2F01%2F20%2Flinux-test%2F</url>
     <content type="text"><![CDATA[cron 后台常驻程序 daemon 用于 管理系统日常任务的调度 块设备 硬盘 一次显示一页内容 more 当前目录下还有多大的空间 du . 更改文件的权限设置 chmod 需要找出/etc/my.conf 文件属于哪个包执行什么命令 假如当前系统是在 level 3 运行 怎么样不重启可以切换到 level 5 运行 用于改变ide 硬盘的设置 列出定义在以后特定时间运行一次的所有任务 命令的作用 作为一个管理员你希望在每一个新用户的目录下放一个文件 那么你应该在哪个目录下放这个文件 以便新用户创建主目录时自动将这个文件复制到自己的目录下 export 的作用是什么 在使用了 shadow 口令的系统中 /ect/passwd /etc/shadow 两个文件的权限正确的是 删除一个用户的同时删除用户的主目录 crontab 使用 卸载一个已装载的文件系统 umask 设置为022 缺省的创建文件的权限为 查找一个二进制命令 Xconfigurator 装载所有在 /etc/fstab 中定义的文件系统 运行一个脚本 用户不需要什么样的权限 选择题目 21．在Linux中，如何标识接在IDE0上的slave硬盘的第2个扩展分区？A. /dev/hdb2B. /dev/hd1b2C. /dev/hdb6D. /dev/hd1b6 22．在应用程序起动时，如何设置进程的优先级？A. priorityB. niceC. reniceD. setpri 23．在 bash 中, 在一条命令后加入”1&gt;&amp;2” 意味着：A. 标准错误输出重定向到标准输入B. 标准输入重定向到标准错误输出C. 标准输出重定向到标准错误输出D. 标准输出重定向到标准输入 24．下面哪条命令可以把f1.txt复制为f2.txt?A. cp f1.txt | f2.txtB. cat f1.txt | f2.txtC. cat f1.txt &gt; f2.txtD. copy f1.txt | f2.txt 25．显示一个文件最后几行的命令是：A. tacB. tailC. rearD. last 26.如何快速切换到用户John的主目录下？A. cd @JohnB. cd #JohnC. cd &amp;JohnD. cd ~John 27.把一个流中所有字符转换成大写字符，可以使用下面哪个命令？A. tr a-z A-ZB. tac a-z A-ZC.sed /a-z/A-ZD. sed –toupper 28.使用什么命令可以查看Linux的启动信息？A. mesg -dB. dmesgC. cat /etc/mesgD. cat /var/mesg 29.运行级定义在：A. in the kernelB. in /etc/inittabC. in /etc/runlevelsD. using the rl command 30.如何装载(mount)上在 /etc/fstab 文件中定义的所有文件系统？A. mount -aB. mount /mnt/*C. mountD. mount /etc/fstab 31.使用ln命令将生成了一个指向文件old的符号链接new，如果你将文件old删除，是否还能够访问文件中的数据？A. 不可能再访问B. 仍然可以访问C. 能否访问取决于文件的所有者D. 能否访问取决于文件的权限 32.xt2fs文件系统中，缺省的为root用户保留多大的空间？A. 3%B. 5%C. 10%D. 15% 33.哪个命令用来显示系统中各个分区中inode的使用情况？A. df -iB. df -HC. free -bD. du -a -c / 34.多数Linux发行版本中，图形方式的运行级定义为？A. 1B. 2C. 3D. 5 35.在系统文档中找到关于print这个单词的所有说明？A. man printB. which printC. locate printD. apropos print 36.man 5 passwd 含义是？A. 显示 passwd 命令的使用方法B. 显示 passwd 文件的结构C. 显示 passwd 命令的说明的前五行D. 显示关于passwd的前五处说明文档。 37.如何在文件中查找显示所有以”“打头的行？A. find \ fileB. wc -l &lt; fileC. grep -n fileD. grep ‘^*’ file 38.在ps命令中什么参数是用来显示所有用户的进程的？A. aB. bC. uD. x 39.显示二进制文件的命令是？A. odB. vilC. viewD. binview 40.如何显示Linux系统中注册的用户数（包含系统用户）？A. account -lB. nl /etc/passwd |headC. wc –users /etc/passwdD. wc –lines /etc/passwd 41.在一行结束位置加上什么符号，表示未结束，下一行继续？A. /B. \C. ;D. | 42.命令 kill 9 的含义是：A. kills the process whose PID is 9.B. kills all processes belonging to UID 9.C. sends SIGKILL to the process whose PID is 9.D. sends SIGTERM to the process whose PID IS 9. 43.如何删除一个非空子目录/tmp？A. del /tmp/B. rm -rf /tmpC. rm -Ra /tmp/D. rm -rf /tmp/* 44.使用什么命令可以在今天午夜运行命令 cmd1 ？A. at midnight cmd1B. cron -at “00:00” cmd1C. batch -t “00:00” &lt; cmd1D. echo “cmd1” | at midnight 45.你的系统使用增量备份策略，当需要恢复系统时，你需要按什么顺序恢复备份数据？A. 最后一次全备份，然后从最早到最近的增量备份B. 最后一次全备份，然后从最近到最早的增量备份C. 最早到最近的增量备份，然后最后一次全备份D. 最近到最早的增量备份，然后最后一次全备份 46.对所有用户的变量设置，应当放在哪个文件下？A. /etc/bashrcB. /etc/profileC. ~/.bash_profileD. /etc/skel/.bashrc 47.Linux系统中，一般把命令 ls 定义为 ls –color 的别名，以便以不同颜色来标识不同类型的文件。但是，如何能够使用原先的ls命令？A. \lsB. ;lsC. ls $$D. ls –noalias 48.在Linux系统中的脚本文件一般以什么开头？A. $/bin/shB. #!/bin/shC. use /bin/shD. set shell=/bin/sh 49.下面哪种写法表示如果cmd1成功执行，则执行cmd2命令？A. cmd1&amp;&amp;cmd2B. cmd1|cmd2C. cmd1;cmd2D. cmd1||cmd2 50.在哪个文件中定义网卡的I/O地址？A. cat /proc/modulesB. cat /proc/devicesC. cat /proc/ioportsD. cat /io/dma 51.Linux中，提供TCP/IP包过滤功能的软件叫什么？A. rarpB. routeC. iptablesD. filter 52.如何暂停一个打印队列？A. lprB. lpqC. lpcD. lpd 53.在vi中退出不保存的命令是？A. :qB. :wC. :wqD. :q! 54.在 XFree86 3.x 中, 缺省的字体服务器为：A. xfsB. xfservC. fontsD. xfstt 55.使用什么命令检测基本网络连接？A. pingB. routeC. netstatD. ifconfig 56.下面哪个协议使用了二个以上的端口？A. telnetB. FTPC. rshD. HTTP 57.在PPP协议中，哪个认证协议不以明文传递密码？A. PAMB. PAPC. PGPD. CHAP 58.下面哪个文件系统应该分配最大的空间？A. /usrB. /libC. /rootD. /bin 59.如何在Debian系统中安装rpm包？A. alien pkgname.rpmB. dpkg –rpm pkgname.rpmC. dpkg –alien pkgname.rpmD. alien pkganme.rpm ; dpkg -i pkganme.deb 60.在安装软件时下面哪一步需要root权限？A. makeB. make depsC. make configD. make install 61.什么命令用来只更新已经安装过的rpm软件包？A. rpm -U .rpmB. rpm -F .rpmC. rpm -e .rpmD. rpm -q .rpm 62.在 windows 与 Linux 双起动的系统中，如果要让LILO 管理引导，则 LILO 应该放在：A. MBRB. /C. root分区的首扇区D. /LILO 63.ldconfig的配置文件是A. /lib/ld.soB. /etc/ld.so.confC. /etc/ld.so.cacheD. /etc/modules.conf 64.下面哪个命令可以压缩部分文件：A. tar -dzvf filename.tgz B. tar -tzvf filename.tgz C. tar -czvf filename.tgz D. tar -xzvf filename.tgz 65.网络服务的daemon是：A. lpdB. netdC. httpdD. inetd 66.Linux与windows 的网上领居互联，需要提供什么daemon?A. bindB. smbdC. nmbdD. shard 67.对于Apache服务器，提供的子进程的缺省的用户是：A. rootB. apachedC. httpdD. nobody 68.sendmail中缺省的未发出信件的存放位置是：A. /var/mail/B. /var/spool/mail/C. /var/spool/mqueue/D. /var/mail/deliver/ 69.apache的主配置文件是：A. httpd.confB. httpd.cfgC. access.cfgD. apache.conf 70.关于可装载的模块，装载时的参数，如I/O地址等的存放位置是：A. /etc/conf.modulesB. /etc/lilo.confC. /boot/System.mapD. /etc/sysconfig 71.在 Linux 中，如何关闭邮件提示？A. biff nB. mesg nC. notify offD. set notify=off 72.在 bash shell 环境下，当一命令正在执行时，按下 control-Z 会：A. 中止前台任务B. 给当前文件加上 EOF.C. 将前台任务转入后台D. 注销当前用户 73.定义bash环境的用户文件是：A. bash &amp; .bashrcB. bashrc &amp; .bash_confC. bashrc &amp; bash_profileD. .bashrc &amp; .bash_profile 74.下面哪条命令用来显示一个程序所使用的库文件？A. lddB. ld soC. modprobeD. ldconfig 75.如何查看一个RPM软件的配置文件的存放位置？A. rpm -qc rpm1B. rpm -Vc rpm1C. rpm –config rpm1D. rpm -qa –config rpm1 76.如何查看一个RPM软件的修改记录？A. rpm -Vc postfixB. rpm -qpil postfixC. rpm –changelog postfixD. rpm -q –changelog postfix 77.通过Makefile来安装已编译过的代码的命令是：A. makeB. installC. make dependD. make install 78.什么命令解压缩tar文件？A. tar -czvf filename.tgzB. tar -xzvf filename.tgzC. tar -tzvf filename.tgzD. tar -dzvf filename.tgz 79.在 XF86Config 配置文件中，哪个段用来设置字体文件？A. The Fonts section.B. The Files section.C. The xfsCodes section.D. The Graphics section. 80.8 bit color 指的是：A. 64K colorsB. 16K colorsC. 256 colorsD. 16M colors 81.下面哪个文件用来设置 X window 的显示分辨率？A. xinitB. xinitrcC. XF86SetupD. XF86Config 82.哪个变量用来指定一个远程X应用程序将输出放到哪个X server上？A. DISPLAYB. TERMC. ECHOD. OUTPUT 83.在xdm的配置目录中，哪个文件用来设置在用户通过xdm登录后自动起动的应用程序？A. The Xsession fileB. The Xsetup_0 fileC. The Xstart_up fileD. The GiveConsole file 84.命令 netstat -a 停了很长时间没有响应，这可能是哪里的问题？A. NFS.B. DNS.C. NIS.D. routing. 85.ping使用的协议是：A. TCPB. UDPC. SMBD. ICMP 86.下面哪个命令不是用来查看网络故障的？A. pingB. initC. telnetD. netstat 87.拨号上网使用的协议通常是：A. PPPB. UUCPC. SLIPD. Ethernet 88.TCP/IP中，哪个协议是用来进行IP自动分配的？A. ARPB. NFSC. DHCPD. DNS 89.下面哪个文件定义了网络服务的端口？A. /etc/netportB. /etc/servicesC. /etc/serverD. /etc/netconf 90.下面哪个功能用来生成一个文件的校验码？A. md5B. tarC. cryptD. md5sum 91.缺省的，用户邮件放在：A. ~/mail/B. /var/mail/C. /var/mail/spool/D. /var/spool/mail/ 92.下面哪个文件包含了供 NFS daemon 使用的目录列表？A. /etc/nfsB. /etc/nfs.confC. /etc/exportsD. /etc/netdir 93.如何停止一台机器的telnet服务？A. Put NONE in /etc/telnet.allowB. Put a line ‘ALL:ALL’ in /etc/hosts.denyC. Comment the telnet entry in /etc/inittabD. Comment the telnet entry in /etc/xinetd.conf 94.在哪个文件中保存了sendmail的别名？A. /etc/aliasesB. /etc/mailaliasesC. /etc/sendmail.aliasesD. /etc/sendmail/aliases 95.smbd and nmbddaemons 的配置文件是：A. /etc/exportsB. /etc/smb.confC. /etc/samba/configD. /usr/local/samba.cfg 96.下面哪个命令用来卸载一个内核模块？A. rmmodB. unmodC. delmodD. modprobe 97.什么情况下必须运行liloA. once a day from cronB. once a week from cronC. after installing a new kernelD. after installing a new module 98.什么命令显示所有装载的模块？A. lsmodB. dirmodC. modulesD. modlist 99.下面哪个命令刷新打印机队列？A. lpflushB. lprm -C. lpclearD. lprm all 100.下面哪个命令可以查看网卡的中断？A. cat /proc/ioportsB. cat /proc/interruptsC. cat /proc/memoryinfoD. which interrupts]]></content>
+      <tags>
+        <tag>linux</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[about python]]></title>
@@ -4155,6 +4225,9 @@
     <title><![CDATA[mnist-keras]]></title>
     <url>%2F2018%2F01%2F06%2Fmnist-keras%2F</url>
     <content type="text"><![CDATA[keras 训练卷积神经网络： 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566import numpy as npfrom keras.datasets import mnist# 引入卷积模块from keras.models import Sequentialfrom keras.layers import Dense, Dropout, Flattenfrom keras.layers.convolutional import Conv2D, MaxPooling2D# 读入数据(X_train, y_train), (X_test, y_test) = mnist.load_data()print(X_train[0].shape)print(y_train[0])# 图像是 28 * 28 的格式 标签是0-9的数字# 手写黑白字体变成四维张量形式 样本数量 长 宽 1X_train = X_train.reshape(X_train.shape[0], 28, 28, 1).astype('float32')X_test = X_test.reshape(X_test.shape[0], 28, 28, 1).astype('float32')X_train /= 255X_test /= 255def tran_y(y): y_ohe = np.zeros(10) y_ohe[y] = 1 return y_ohey_train_ohe = np.array([tran_y(y_train[i]) for i in range(len(y_train))])y_test_ohe = np.array([tran_y(y_test[i]) for i in range(len(y_test))])model = Sequential()# 第一层卷积 64个过滤器 每个覆盖范围3*3*1 图像四周补0， relu进行非线性变化model.add(Conv2D(filters=64, kernel_size=(3, 3), strides=(1, 1), padding='same', input_shape=(28, 28, 1), activation='relu'))model.add(MaxPooling2D(pool_size=(2, 2)))# 设立 dropout 层model.add(Dropout(0.5))model.add(Conv2D(128, kernel_size=(3, 3), strides=(1, 1), padding='same', activation='relu'))model.add(MaxPooling2D(pool_size=(2, 2)))model.add(Dropout(0.5))model.add(Conv2D(256, kernel_size=(3, 3), strides=(1, 1), padding='same', activation='relu'))model.add(MaxPooling2D(pool_size=(2, 2)))model.add(Dropout(0.5))# 当前层节点展平model.add(Flatten())# 构造全连接神经网络层model.add(Dense(128, activation='relu'))model.add(Dense(64, activation='relu'))model.add(Dense(32, activation='relu'))model.add(Dense(10, activation='softmax'))# 损失函数选择交叉熵model.compile(loss='categorical_crossentropy', optimizer='adagrad', metrics=['accuracy'])model.fit(X_train, y_train_ohe, validation_data=(X_test, y_test_ohe), epochs=20, batch_size=128)scores = model.evaluate(X_test, y_test_ohe, verbose=0)]]></content>
+      <tags>
+        <tag>keras</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[sanic-01]]></title>
@@ -4290,6 +4363,9 @@
     <title><![CDATA[lagou-spider]]></title>
     <url>%2F2017%2F11%2F05%2Flagou-spider%2F</url>
     <content type="text"><![CDATA[很久没有写爬虫了今天试着爬了一下 拉勾网站 深圳 python 的前 150 个职位 12345678910111213141516171819202122232425262728293031323334353637import timeimport requestsfrom pprint import pprintfrom fake_useragent import UserAgentua = UserAgent()import pymongoclient = pymongo.MongoClient("localhost", 27017)db = client.jobuser_agent = ua.randomurl = 'https://www.lagou.com/jobs/positionAjax.json?px=default&amp;city=%E6%B7%B1%E5%9C%B3&amp;needAddtionalResult=false&amp;isSchoolJob=0'headers = &#123; "Cookie": "user_trace_token=20171105173814-0b824fa6-c20d-11e7-978b-5254005c3644; LGUID=20171105173814-0b825535-c20d-11e7-978b-5254005c3644; index_location_city=%E6%B7%B1%E5%9C%B3; TG-TRACK-CODE=index_search; SEARCH_ID=5bb5150d5d314f32a34bdb68f6e2dbbc; _gid=GA1.2.1886275699.1509874693; _ga=GA1.2.1197843841.1509874693; LGRID=20171105173909-2cac9846-c20d-11e7-978b-5254005c3644; Hm_lvt_4233e74dff0ae5bd0a3d81c6ccf756e6=1509874693; Hm_lpvt_4233e74dff0ae5bd0a3d81c6ccf756e6=1509874749; JSESSIONID=ABAAABAAAFCAAEG674AE53B34CFB49996425F9659B657CF", "Referer": "https://www.lagou.com/jobs/list_python?px=default&amp;city=%E6%B7%B1%E5%9C%B3", "User-Agent": user_agent&#125;def get_job_data(num): for i in range(num): payload = &#123; "first": "false", "pn": str(i+1), "kd": "python" &#125; response = requests.post(url, data=payload, headers=headers) time.sleep(5) # pprint(response.json()['content']['positionResult']['result']) for item in response.json()['content']['positionResult']['result']: db.my_collection.insert_one(item)if __name__ == '__main__': get_job_data(10) 还想着做一些可视化的东西。。。]]></content>
+      <tags>
+        <tag>scrapy</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[how fabric works]]></title>
@@ -4332,6 +4408,9 @@
     <title><![CDATA[make a forum with django]]></title>
     <url>%2F2017%2F08%2F24%2Fmake-a-forum-with-django%2F</url>
     <content type="text"><![CDATA[每次想写点东西的时候，总是自己骗自己说，哎呀，哪有时间去搞这些东西。 决定还是一点点尝试写一个论坛系统出来。 Django这个框架非常庞大，可能在实际的开发过程中，我们用到的只是一小部分，比如创建model，view，然后根据这些写一些html的文件等。 再在页面调试的过程当中发现一些问题，对代码进行不断地修正。]]></content>
+      <tags>
+        <tag>django</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[wechat-delete-friends]]></title>
@@ -4492,6 +4571,9 @@
     <title><![CDATA[macdown语法简介]]></title>
     <url>%2F2016%2F05%2F15%2Fmacdown%E8%AF%AD%E6%B3%95%E7%AE%80%E4%BB%8B%2F</url>
     <content type="text"><![CDATA[#markdown语法简介 1.标题1）使用＝和－标记一级和二级标题使用方法是文字下方加上＝＝＝＝＝＝这样 一级标题 2） 使用＃，可以表示1-6级标题 ##二级标题 2.段落段落的前后要有空行，所谓的空行是指没有文字内容。若想在段内强制换行的方式是使用两个以上空格加上回车（引用中换行省略回车）。 3.区块引用在段落的每行或者只在第一行使用符号&gt;,还可以使用多个嵌套引用，如： 区块引用 嵌套引用 4.代码区块代码区块的建立是在每行加上4个空格或者一个制表符（如同写代码一样）。如普通段落： void main() { printf(&quot;Hello, Markdown.&quot;); } 注意:需要和普通段落之间存在空行。 5.强调在强调内容两侧分别加上或者_，如： , 还是斜体 粗体， 还是粗体 6.列表使用*、+、或-标记无序列表，如： 为什么 怎么办 啥时候 有序列表的标记方式是将上述的符号换成数字,并且加上点 第一点 7.分割线 分割线最常使用就是三个或以上*，还可以使用_。 大道至简 道法三千 杏杏冥冥 8.链接链接可以由两种形式生成：行内式和参考式。 行内式：markdown库 参考式：younghz的Markdown库1younghz的Markdown库2 9.图片 添加图片的形式和链接相似，只需在链接的基础上前方加一个！。10.反斜杠\ 相当于反转义作用。使符号成为普通符号。 11.符号`` 起到表记作用。如： ctrl+a 12.表格 Tables Are Cool col 3 is right-aligned $1600 col 2 is centered $12 zebra stripes are neat $1]]></content>
+      <tags>
+        <tag>markdown</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[爬虫实践教程3-多进程]]></title>

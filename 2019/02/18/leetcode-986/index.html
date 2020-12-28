@@ -81,16 +81,16 @@
 
 
 
-<meta name="description" content="12345678910111213141516171819202122232425262728293031# Definition for an interval.class Interval(object):    def __init__(self, s=0, e=0):        self.start = s        self.end = eclass Solution(objec">
+<meta name="description" content="12345678910111213141516171819202122232425262728293031合并区间# Definition for an interval.class Interval(object):    def __init__(self, s=0, e=0):        self.start = s        self.end = eclass Solution(o">
 <meta property="og:type" content="article">
 <meta property="og:title" content="leetcode-986">
 <meta property="og:url" content="https://zhangdavids.github.io/2019/02/18/leetcode-986/index.html">
 <meta property="og:site_name" content="上药三品，神与气精">
-<meta property="og:description" content="12345678910111213141516171819202122232425262728293031# Definition for an interval.class Interval(object):    def __init__(self, s=0, e=0):        self.start = s        self.end = eclass Solution(objec">
-<meta property="og:updated_time" content="2019-02-18T01:22:14.466Z">
+<meta property="og:description" content="12345678910111213141516171819202122232425262728293031合并区间# Definition for an interval.class Interval(object):    def __init__(self, s=0, e=0):        self.start = s        self.end = eclass Solution(o">
+<meta property="og:updated_time" content="2020-12-28T08:32:15.549Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="leetcode-986">
-<meta name="twitter:description" content="12345678910111213141516171819202122232425262728293031# Definition for an interval.class Interval(object):    def __init__(self, s=0, e=0):        self.start = s        self.end = eclass Solution(objec">
+<meta name="twitter:description" content="12345678910111213141516171819202122232425262728293031合并区间# Definition for an interval.class Interval(object):    def __init__(self, s=0, e=0):        self.start = s        self.end = eclass Solution(o">
 
 
 
@@ -403,7 +403,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  113
+                  117
                 </span>
               
 
@@ -440,7 +440,7 @@
       
 
       
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># Definition for an interval.</span><br><span class="line">class Interval(object):</span><br><span class="line">    def __init__(self, s=0, e=0):</span><br><span class="line">        self.start = s</span><br><span class="line">        self.end = e</span><br><span class="line"></span><br><span class="line">class Solution(object):</span><br><span class="line">    def intervalIntersection(self, A, B):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        :type A: List[Interval]</span><br><span class="line">        :type B: List[Interval]</span><br><span class="line">        :rtype: List[Interval]</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        a, b, res, i, j = len(A), len(B), [], 0, 0</span><br><span class="line">        while i &lt; a and j &lt; b:</span><br><span class="line">            left_a, right_a = A[i].start, A[i].end</span><br><span class="line">            left_b, right_b = B[j].start, B[j].end</span><br><span class="line">            if left_a &lt; left_b:</span><br><span class="line">                left = left_b</span><br><span class="line">            else:</span><br><span class="line">                left = left_a</span><br><span class="line">            if right_a &lt; right_b:</span><br><span class="line">                right = right_a</span><br><span class="line">                i += 1</span><br><span class="line">            else:</span><br><span class="line">                right = right_b</span><br><span class="line">                j += 1</span><br><span class="line">            if right &gt;= left:</span><br><span class="line">                res.append(Interval(left, right))</span><br><span class="line">        return res</span><br></pre></td></tr></table></figure>
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">合并区间</span><br><span class="line"># Definition for an interval.</span><br><span class="line">class Interval(object):</span><br><span class="line">    def __init__(self, s=0, e=0):</span><br><span class="line">        self.start = s</span><br><span class="line">        self.end = e</span><br><span class="line"></span><br><span class="line">class Solution(object):</span><br><span class="line">    def intervalIntersection(self, A, B):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        :type A: List[Interval]</span><br><span class="line">        :type B: List[Interval]</span><br><span class="line">        :rtype: List[Interval]</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        a, b, res, i, j = len(A), len(B), [], 0, 0</span><br><span class="line">        while i &lt; a and j &lt; b:</span><br><span class="line">            left_a, right_a = A[i].start, A[i].end</span><br><span class="line">            left_b, right_b = B[j].start, B[j].end</span><br><span class="line">            if left_a &lt; left_b:</span><br><span class="line">                left = left_b</span><br><span class="line">            else:</span><br><span class="line">                left = left_a</span><br><span class="line">            if right_a &lt; right_b:</span><br><span class="line">                right = right_a</span><br><span class="line">                i += 1</span><br><span class="line">            else:</span><br><span class="line">                right = right_b</span><br><span class="line">                j += 1</span><br><span class="line">            if right &gt;= left:</span><br><span class="line">                res.append(Interval(left, right))</span><br><span class="line">        return res</span><br></pre></td></tr></table></figure>
       
     </div>
     
@@ -554,7 +554,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">544</span>
+                  <span class="site-state-item-count">543</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -576,7 +576,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">45</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -669,7 +669,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共226.4k字</span>
+  <span class="post-count">博客全站共226.3k字</span>
 </div>
 
         

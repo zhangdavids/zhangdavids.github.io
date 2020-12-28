@@ -309,287 +309,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/05/09/django-rest-framework-6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Cheung">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/pingan.jpeg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="上药三品，神与气精">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/09/django-rest-framework-6/" itemprop="url">django-rest-framework-6</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-09T08:49:05+08:00">
-                2019-05-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/drf/" itemprop="url" rel="index">
-                    <span itemprop="name">drf</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2019/05/09/django-rest-framework-6/" class="leancloud_visitors" data-flag-title="django-rest-framework-6">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1.3k
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  5
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>REST framework包含一个抽象概念来处理ViewSets，它使得开发者可以集中精力对 API的state和interactions建模，留下URL构造被自动处理，基于共同约定。</p>
-<p>ViewSet类几乎和View类一样，除了它们提供像read或update操作，但没有处理get和put的方法。</p>
-<p>一个ViewSet类只是绑定到一组方法处理程序在最后一刻，在它被实例化到一组视图的时候，通常是使用一个Router类——为你处理定义URL conf的复杂性。</p>
-<p>使用ViewSets来重构</p>
-<p>让我们取出当前集合的views，使用view sets将它们重构。</p>
-<p>首先让我们重构我们的UserListView和UserDetailViewviews成一个UserViewSet。我们可以移除两个views，用一个类来替换它们。</p>
-<pre><code>class UserViewSet(viewsets.ReadOnlyModelViewSet):
-    &quot;&quot;&quot;
-    This viewset automatically provides `list` and `detail` actions.
-    &quot;&quot;&quot;
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-</code></pre><p>在这里我们将使用ReadOnlyModelViewSet类来自动地提供默认的’read-only’操作。正如我们在使用常规的views做的，我们还是会设置queryset和serializer_class属性，但我们不再需要提供相同的信息给两个独立的类。</p>
-<p>下一步我们将替换SnippetList,SnippetDetial和SnippetHighlightview类。我们可以移除这三个views，再次用一个类来替换它们。</p>
-<pre><code>from rest_framework import viewsets
-from rest_framework.decorators import link
-
-class SnippetViewSet(viewsets.ModelViewSet):
-    &quot;&quot;&quot;
-    This viewset automatically provides `list`, `create`, `retrieve`,
-    `update` and `destroy` actions.
-
-    Additionally we also provide an extra `highlight` action. 
-    &quot;&quot;&quot;
-    queryset = Snippet.objects.all()
-    serializer_class = SnippetSerializer
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
-                          IsOwnerOrReadOnly,)
-
-    @link(renderer_classes=[renderers.StaticHTMLRenderer])
-    def highlight(self, request, *args, **kwargs):
-        snippet = self.get_object()
-        return Response(snippet.highlighted)
-
-    def pre_save(self, obj):
-        obj.owner = self.request.user
-</code></pre><p>这次我们将使用ModelViewSet类为了得到默认read和write操作的完整集合。</p>
-<p>注意我们还使用@link修饰符来创建一个自定义动作名为highlight。这个修饰符可以用来添加任何自定义endpoints，不用符合标准的create/update/delete样式。</p>
-<p>用@link修饰符创建的自定义动作将会对GET请亲做出响应。我们也可以使用@action修饰符代替如果我们想要一个对POST请求做出响应的动作。</p>
-<p>明确地绑定ViewSets到URLs</p>
-<p>handler method仅仅在我们定义URLConf的时候绑定到动作(actions)上。去看看盖子下发生了什么首先从我们的ViewSets明确地创建一个views集合。</p>
-<p>在urls.py文件中我们绑定了我们的ViewSet类到一个具体views的集合。</p>
-<pre><code>from snippets.views import SnippetViewSet, UserViewSet
-
-snippet_list = SnippetViewSet.as_view({
-    &apos;get&apos;: &apos;list&apos;,
-    &apos;post&apos;: &apos;create&apos;
-})
-snippet_detail = SnippetViewSet.as_view({
-    &apos;get&apos;: &apos;retrieve&apos;,
-    &apos;put&apos;: &apos;update&apos;,
-    &apos;patch&apos;: &apos;partial_update&apos;,
-    &apos;delete&apos;: &apos;destroy&apos;
-})
-snippet_highlight = SnippetViewSet.as_view({
-    &apos;get&apos;: &apos;highlight&apos;
-})
-user_list = UserViewSet.as_view({
-    &apos;get&apos;: &apos;list&apos;
-})
-user_detail = UserViewSet.as_view({
-    &apos;get&apos;: &apos;retrieve&apos;
-})
-</code></pre><p>注意我们怎么样从每个ViewSet类创建多样的views，通过绑定http methods到每个view所需的动作(by binding the http methods to the required aciotn for each view)</p>
-<p>现在我们已经绑定我们的资源到具体的views，我们可以像往常一样注册views和URL conf。</p>
-<pre><code>urlpatterns = format_suffix_patterns(patterns(&apos;snippets.views&apos;,
-    url(r&apos;^$&apos;, &apos;api_root&apos;),
-    url(r&apos;^snippets/$&apos;, snippet_list, name=&apos;snippet-list&apos;),
-    url(r&apos;^snippets/(?P&lt;pk&gt;[0-9]+)/$&apos;, snippet_detail, name=&apos;snippet-detail&apos;),
-    url(r&apos;^snippets/(?P&lt;pk&gt;[0-9]+)/highlight/$&apos;, snippet_highlight, name=&apos;snippet-highlight&apos;),
-    url(r&apos;^users/$&apos;, user_list, name=&apos;user-list&apos;),
-    url(r&apos;^users/(?P&lt;pk&gt;[0-9]+)/$&apos;, user_detail, name=&apos;user-detail&apos;)
-))
-</code></pre><p>使用Routers</p>
-<p>因为我们使用ViewSet类而不是View类，我们实际上不用自己设计URL conf。连接resources到views和urls的约定可以使用Router类自动处理。我们要做的仅仅是用一个router注册适当的view集合，and let it do the rest</p>
-<p>这里我们重连接urls.py文件</p>
-<pre><code>from snippets import views
-from rest_framework.routers import DefaultRouter
-
-# Create a router and register our viewsets with it.
-router = DefaultRouter()
-router.register(r&apos;snippets&apos;, views.SnippetViewSet)
-router.register(r&apos;users&apos;, views.UserViewSet)
-
-# The API URLs are now determined automatically by the router.
-# Additionally, we include the login URLs for the browseable API.
-urlpatterns = patterns(&apos;&apos;,
-    url(r&apos;^&apos;, include(router.urls)),
-    url(r&apos;^api-auth/&apos;, include(&apos;rest_framework.urls&apos;, namespace=&apos;rest_framework&apos;))
-)
-</code></pre><p>用router注册viewsets和提供一个urlpattern很像。我们有两个参数——给views的URL前缀和viewset自身。</p>
-<p>DefaultRouter类自动为我们创建API root vies，所以我们现在可以从我们的views方法中删除api_root方法。</p>
-<p>权衡views VS viewsets</p>
-<p>使用viewset可以是一个真正有用的抽象。它帮助确保URL约定可以对你的API始终如一，使你需要编写的代码数量最小化，使得你可以集中精力在你API的交互和表现上，而不是URL conf的细节上。</p>
-<p>这并不意味着它总是正确的方法。有一个类似的权衡在使用class-based views代替function-based views上。单独构建views比使用viewsets更加清楚。</p>
-<p>回顾我们的工作 如果我们打开浏览器来看看之前的API，会发现它们可以用链接的方式工作了。</p>
-<p>当你查看snippet实例的 ‘highlight’ 链接时，你会直接看到代码高亮的HTML呈现。</p>
-<p>我们目前已经完成了全套的Web API。可以浏览，支持认证，对象粒度的权限，以及多种返回格式。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/05/08/http状态码大全/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1314,6 +1033,193 @@ urlpatterns = patterns(&apos;&apos;,
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhangdavids.github.io/2019/05/07/练笈攻略0001/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Cheung">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/pingan.jpeg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="上药三品，神与气精">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/05/07/练笈攻略0001/" itemprop="url">练笈攻略0001</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-07T14:36:48+08:00">
+                2019-05-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/05/07/练笈攻略0001/" class="leancloud_visitors" data-flag-title="练笈攻略0001">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  152
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>python和js 作为入门语言</p>
+<p>操作系统<br>编程工具</p>
+<p>再就是java C++ golang</p>
+<p>编程的ide 版本管理git </p>
+<p>有修养的程序员才可能成长为真正的工程师和架构师<br>没有修养的只能沦为码农</p>
+<ul>
+<li>英文能力</li>
+<li>提问的能力</li>
+<li>写代码的修养</li>
+<li>安全防范意识</li>
+<li>软件工程</li>
+<li>上线规范</li>
+<li>编程规范</li>
+</ul>
+<ul>
+<li>现实和理论的差距</li>
+<li>技术能力的瓶颈</li>
+<li><p>技术太多学不过来</p>
+</li>
+<li><p>一定要坚持</p>
+</li>
+<li>一定要动手</li>
+<li>一定要学会思考</li>
+<li>不要好高骛远 夯实基础</li>
+<li>回顾历史</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -1368,7 +1274,7 @@ urlpatterns = patterns(&apos;&apos;,
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">544</span>
+                  <span class="site-state-item-count">543</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1390,7 +1296,7 @@ urlpatterns = patterns(&apos;&apos;,
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">45</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1483,7 +1389,7 @@ urlpatterns = patterns(&apos;&apos;,
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共226.4k字</span>
+  <span class="post-count">博客全站共226.3k字</span>
 </div>
 
         
